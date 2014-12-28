@@ -1,0 +1,77 @@
+<div id="form" class="alert alert-block alert-new ">
+	<h4 class="alert-heading">选择要展示的贺卡</h4>
+	<table width="100%">
+	
+		<tr>
+			<td colspan=2>
+				<div class="reply-news-edit-button">
+					<button class="btn" style="width:100%;" type="button" onclick="popwin = $('#modal-module-menus').modal();">选择要展示的贺卡</button>
+				</div>
+			</td>
+		</tr>
+					<tr>
+				<th><label for="">是否显示贺卡</label></th>
+				<td>
+					<label class="checkbox inline"><input type="radio" name="is_show" value="1"  {if $reply['is_show']=='1'}checked="checked"{/if} > 是</label>
+					<label class="checkbox inline"><input type="radio" name="is_show" value="0" {if $reply['is_show']=='0'}checked="checked"{/if}> 否</label>
+
+				</td>
+			</tr>
+		<tr >
+			<td id="entry" colspan=2>
+			{if $reply }
+				<div class="alert alert-info reply-news-list reply-news-list-first" id="preview_0">
+					<div class="reply-news-list-cover">
+						<img alt="" src="./source/modules/sheka/images/img/small-{$reply['cid']}.jpg">
+					</div>
+					<div class="reply-news-list-detail">
+						<div class="title">{php echo $this->turlar[$reply['cid']]['name']}</div>
+						<div class="content">{php echo $this->turlar[$reply['cid']]['name']}</div>
+					</div>
+				</div>
+						<input type="hidden" name="cid" value="{$reply['cid']}"/>
+			{/if}
+			</td>
+		</tr>
+	</table>
+			
+</div>
+<div id="modal-module-menus" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true" style=" width:600px;">
+	<div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3>选择要展示的分类</h3></div>
+	<div class="modal-body">
+		<table class="tb">
+			<tr>
+				<th><label for="">搜索关键字</label></th>
+				<td>
+					<div class="input-append" style="display:block;">
+						<input type="text" class="span3" name="keyword" value="" id="search-kwd" /><button type="button" class="btn" onclick="search_entries();">搜索</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div id="module-menus"></div>
+	</div>
+	<div class="modal-footer"><a href="#" class="btn" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+</div>
+<script type="text/javascript">
+	var popwin;
+	function search_entries() {
+		var kwd = $.trim($('#search-kwd').val());
+		$.post('{php echo $this->createWebUrl('query');}', {keyword: kwd}, function(dat){
+			$('#module-menus').html(dat);
+		});
+	}
+	function select_entry(o) {
+		var html = '<div id="preview_0" class="alert alert-info reply-news-list">' +
+					'<div class="reply-news-list-cover"><img src="./source/modules/sheka/images/img/small-'+o.id+'.jpg" alt=""></div>' +
+					'<div class="reply-news-list-detail"><div class="title">'+o.name+'</div>' +
+					'<div class="content">'+o.description+'</div></div></div>' +
+					'<input type="hidden" name="cid" value="'+o.id+'"/>';
+					'<input type="hidden" name="title" value="'+o.name+'"/>';
+		var obj = $(html);
+
+			obj.addClass('reply-news-list-first');
+
+		$('#entry').html(obj);
+	}
+</script>

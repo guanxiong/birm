@@ -1,0 +1,106 @@
+{template 'common/header'}
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}" />
+		<h4>中奖详情</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">姓名</label></th>
+				<td>
+					<input type="text" name="realname" class="span3" value="{$item['profile']['realname']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">手机号</label></th>
+				<td>
+					<input type="text" name="mobile" class="span3" value="{$item['profile']['mobile']}" />
+				</td>
+			</tr>
+			<tr>
+				<th>备注</th>
+				<td>
+					<textarea class="span7 richtext-clone" name="remark" cols="70">{$item['remark']}</textarea>
+				</td>
+			</tr>
+		<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		</table>
+	</form>
+</div>
+{elseif $operation == 'display'}
+<div class="main">
+	<div class="search">
+		<form action="site.php" method="get">
+		<input type="hidden" name="act" value="module" />
+		<input type="hidden" name="do" value="manage" />
+		<input type="hidden" name="op" value="display" />
+		<input type="hidden" name="name" value="shake" />
+		<input type="hidden" name="id" value="{$_GPC['id']}" />
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th>姓名</th>
+					<td>
+						<input class="span6" name="realname" id="" type="text" value="{$_GPC['realname']}">
+					</td>
+				</tr>
+				</tr>
+				<tr>
+				 <tr class="search-submit">
+					<td colspan="2"><button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button></td>
+				 </tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:30px;"></th>
+					<th style="min-width:150px;">姓名</th>
+					<th style="width:100px;">手机号</th>
+					<th style="width:200px;">摇动值</th>
+					<th>备注</th>
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td></td>
+					<td>{$fans[$item['openid']]['realname']}</td>
+					<td>{$fans[$item['openid']]['mobile']}</td>
+					<td><span id="label_{$item['id']}">{$item['shakecount']}</span> <button id="btn_{$item['id']}" type="button" class="btn" onclick="addShakecount('{$item['id']}');" value="true">增加摇动值</button></td>
+					<td>{$item['remark']}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('manage', array('id' => $item['id'], 'op' => 'post'))}">编辑</a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+</div>
+<script type="text/javascript">
+<!--
+	function addShakecount(id) {
+		var obj = '#btn_' + id;
+		var label = '#label_' + id;
+		$(obj).attr('disabled', true);
+		$.getJSON('{php echo $this->createWebUrl('addshakecount')}&id=' + id, function(s) {
+			$(obj).attr('disabled', false);
+			$(label).html(s.message);
+		});
+	}
+//-->
+</script>
+{/if}
+{template 'common/footer'}

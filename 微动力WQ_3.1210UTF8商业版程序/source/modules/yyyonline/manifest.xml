@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[摇一摇非现场]]></name>
+		<identifie><![CDATA[yyyonline]]></identifie>
+		<version><![CDATA[2.5]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[在线摇一摇]]></ability>
+		<description><![CDATA[摇一摇，锻炼身体。]]></description>
+		<author><![CDATA[微信通]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="中奖名单" do="awardlist" state="" />
+			
+		</rule>
+		
+	</bindings>
+	<install><![CDATA[
+
+DROP TABLE IF EXISTS `ims_yyyonline_reply`;
+CREATE TABLE `ims_yyyonline_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `weid` int(10) DEFAULT '0',
+  `picture` varchar(100) NOT NULL COMMENT '活动图片',
+  `qrcode` varchar(100) NOT NULL DEFAULT '',
+  `clientpic` varchar(100) NOT NULL,
+  `screenpic` varchar(100) NOT NULL COMMENT '大屏图像',
+  `description` varchar(100) NOT NULL COMMENT '活动描述',
+  `rule` varchar(1000) NOT NULL COMMENT '规则描述',
+  `ruletype` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `shaketimes` int(10) unsigned NOT NULL DEFAULT '60',
+  `endtime` int(10) NOT NULL DEFAULT '0',
+  `starttime` int(10) unsigned NOT NULL COMMENT '活动开始时间',
+  `shakespace` int(10) NOT NULL DEFAULT '100',
+  `shakestrong` int(10) NOT NULL DEFAULT '3000',
+  `shaketype` int(10) NOT NULL DEFAULT '0',
+  `clienttime` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `ims_yyyonline_winner`;
+CREATE TABLE `ims_yyyonline_winner` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `weid` int(10) NOT NULL DEFAULT '0',
+  `from_user` varchar(50) NOT NULL COMMENT '用户唯一身份ID',
+  `count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '摇的次数',
+  `status` smallint(1) NOT NULL DEFAULT '0',
+  `endtime` double(15,2) NOT NULL,
+  `createtime` double(15,2) NOT NULL DEFAULT '0.00',
+  `nickname` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`,`from_user`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+	]]></install>
+	<uninstall><![CDATA[
+	
+	DROP TABLE IF EXISTS `ims_yyyonline_winner`;
+	DROP TABLE IF EXISTS `ims_yyyonline_reply`;
+	
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

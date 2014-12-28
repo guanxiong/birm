@@ -1,0 +1,79 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<!-- 规则创建 -->
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加活动规则</h4>
+	<table>
+		<tbody>
+			<tr>
+				<th>项目编号</th>
+				<td>{$reply['rid']}，添加完规则后，生成的编号用于打印程序配置填写
+				</td>
+			</tr>
+			<tr>
+				<th>管理码</th>
+				<td>
+					<input type="text" value="{$reply['mpwd']}" class="span7" name="mpwd">
+					<div class="help-block">增加粉丝可打印次数用到此管理码，设置5位以内数字即可</div>
+				</td>
+			</tr>
+			<tr>
+				<th>状态</th>
+				<td>
+					<label for="radio_1" class="radio inline"><input type="radio" name="wpstatus" id="radio_1" value="0" {if empty($rid)}disabled{/if} {if $reply['status'] == 0 || empty($reply['status'])} checked{/if} /> 停用</label>
+					<label for="radio_2" class="radio inline"><input type="radio" name="wpstatus" id="radio_2" value="1" {if empty($rid)}disabled{/if} {if $reply['status'] == 1} checked{/if} /> 启用</label> 
+				</td>
+			</tr>
+			<tr>
+				<th>动态参与码</th>
+				<td>
+					<label for="radio_5" class="radio inline"><input type="radio" name="ispwd" id="radio_5" value="0" {if empty($rid)}disabled{/if} {if $reply['ispwd'] == 0 || empty($reply['ispwd'])} checked{/if} /> 停用</label>
+					<label for="radio_6" class="radio inline"><input type="radio" name="ispwd" id="radio_6" value="1" {if empty($rid)}disabled{/if} {if $reply['ispwd'] == 1} checked{/if} /> 启用</label>  如果启用初始密码为：111111
+				</td>
+			</tr>
+			<tr>
+				<th>粉丝可参与次数</th>
+				<td>
+					<input type="text" value="{$reply['maxnum']}" class="span7" name="maxnum">
+					<div class="help-block">用户可以打印照片次数，如填 10 以下的数字</div>
+				</td>
+			</tr>
+			<tr>
+				<th>粉丝留言</th>
+				<td>
+					<label for="radio_3" class="radio inline"><input type="radio" name="wplyok" id="radio_3" value="0" {if empty($rid)}disabled{/if} {if $reply['lyok'] == 0 || empty($reply['lyok'])} checked{/if} /> 停用</label>
+					<label for="radio_4" class="radio inline"><input type="radio" name="wplyok" id="radio_4" value="1" {if empty($rid)}disabled{/if} {if $reply['lyok'] == 1} checked{/if} /> 启用</label> 
+				</td>
+			</tr>
+			<tr>
+				<th>照片竖拍模板</th>
+				<td>{php echo tpl_form_field_image('picture1', $reply['picture1'])}JPG格式（600*900,150DPI）</td>
+			</tr>
+			<tr>
+				<th>照片横拍模板</th>
+				<td>{php echo tpl_form_field_image('picture2', $reply['picture2'])}JPG格式（600*900,150DPI）</td>
+			</tr>
+			<tr>
+				<th>进入提示内容</th>
+				<td>
+					<textarea style="height:150px;" name="msg" class="span7" cols="60">{$reply['msg']}</textarea>
+					<div class="help-block">用户在进入微拍活动的提示语。如：欢迎进入微拍活动。</div>
+				</td>
+			</tr>
+			<tr>
+				<th>参与活动成功提示内容</th>
+				<td>
+					<textarea style="height:150px;" name="msg_succ" class="span7" cols="60">{$reply['msg_succ']}</textarea>
+					<div class="help-block">参与活动成功提示内容。如：参与活动成功。</div>
+				</td>
+			</tr>
+			<tr>
+				<th>参与活动失败提示内容</th>
+				<td>
+					<textarea style="height:150px;" name="msg_fail" class="span7" cols="60">{$reply['msg_fail']}</textarea>
+					<div class="help-block">参与活动失败提示内容。如：提交失败，请重试。。</div>
+				</td>
+			</tr>
+ 		</tbody>
+	</table>
+ </div>

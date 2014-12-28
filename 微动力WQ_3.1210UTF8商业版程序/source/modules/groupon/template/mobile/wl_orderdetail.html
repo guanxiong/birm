@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>团购首页</title>
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link href="/source/modules/groupon/style/css/main.css" rel="stylesheet" />
+    <link href="/source/modules/groupon/style/css/dialog.css" rel="stylesheet" />
+
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+});
+</script>
+
+    <script src="/source/modules/groupon/style/js/jquery.min.js"></script>
+    <script src="/source/modules/groupon/style/js/tg/swipe.js"></script>
+    <script src="/source/modules/groupon/style/js/dialog_min.js"></script>
+    <script src="/source/modules/groupon/style/js/global.js"></script>
+</head>
+<body onselectstart="return true;" ondragstart="return false;" class="gbuy_orderDetail">
+
+<div>
+    <div id="container" class="container animate">
+        <header></header>
+        <div class="body">
+            <section class="section_orderDetail">
+                <header>
+                    <ul class="tbox">
+                        <li>
+                            <h3>商品信息</h3>
+                        </li>
+                        <li>
+                            <label class="pre">总价：<span>￥{$item['totalprice']}</span></label>
+                        </li>
+                    </ul>
+                </header>
+                <article>
+                    <p>商品名称： {$item['title']}</p>
+                    <p>商品数量： {$item['totalnum']}</p>
+                    <p>商品单价： ￥{$item['price']}</p>
+                </article>
+            </section>
+            <section class="section_orderDetail">
+                <header>
+                    <ul class="tbox">
+                        <li>
+                            <h3>订单信息</h3>
+                        </li>
+                    </ul>
+                </header>
+                <article>
+                    <p>订单编号：{$item['ordersn']}</p>
+                    <p>下单时间：{php echo date('Y-m-d H:i:s',$item['createtime'])}</p>
+                    <p>支付方式：在线支付-支付宝</p>
+                    <p>支付时间：{if !empty($item['paytime'])}{php echo date('Y-m-d H:i:s',$item['paytime'])}{/if}</p>
+					<p>使用时间：{if !empty($item['usedtime'])}{php echo date('Y-m-d H:i:s',$item['usedtime'])}{/if}</p>
+                    <p>订单状态：{if $item['status']==-1}已失效{/if}  {if $item['ispay']==1}已付款{else}待付款{/if}</p>
+                </article>
+            </section>
+        </div>
+        <footer>
+			{if ($item['ispay']==1 && $item['status']==-1)}
+			<section class="header_nav">
+                <ul class="tbox">
+					<li><a href="javascript:history.go(-1);" class="icons icons_back">&nbsp;</a></li>
+					<li><a href="javascript:;">失效订单</a></li>
+				</ul>
+            </section>			 
+			{elseif $item['ispay']==1}
+            <section class="header_nav">
+                <ul class="tbox">
+                    <li><a href="javascript:history.go(-1);" class="icons icons_back">&nbsp;</a></li>
+					<li><a href="javascript:refund();" class="btn">申请退款</label></li>
+				</ul>
+            </section>			 
+			{else}
+            <section class="header_nav">
+                <ul class="tbox">
+                    <li><a href="javascript:history.go(-1);" class="icons icons_back">&nbsp;</a></li>
+					<li><a href="{php echo $this->createMobileUrl('wlpayment', array('orderid' => $item['id']));}" class="btn">支付</label></li>
+				</ul>
+            </section>
+			{/if}
+
+        </footer>
+    </div>
+</div>
+<script>
+    function refund(){
+        var req = {
+            order_id: '758'
+        }
+        //
+        loading(true);
+        $.ajax({
+            url: "{php echo $this->createMobileUrl('wlorderdetail', array('subcp'=>'refund','oid' => $item['id']));}",
+            type:"post",
+            data:req,
+            dataType:"JSON",
+            success: function(res){
+                loading(false);
+                if(1 == res.result){
+                    confirm('<p class="article" style="font-size:20px;">您的退款申请已提交 请耐心等待商家处理</p>', function(){
+                        history.go(-1);
+                        console.log("del");
+                    });
+                }else{
+                    confirm('<p class="article" style="font-size:20px;">操作失败<label style="font-size:14px;color:#aaaaaa;display:block;">请稍后再试</label></p>', function(){
+                        console.log("del");
+                    });
+                }
+            }
+        });
+        //
+    }
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideOptionMenu');
+});
+</script>
+
+</body>
+
+</html>

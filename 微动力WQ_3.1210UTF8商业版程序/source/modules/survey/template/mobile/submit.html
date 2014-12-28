@@ -1,0 +1,221 @@
+{template 'header'}
+<link rel="stylesheet" type="text/css" href="./source/modules/survey/template/mobile/common.css" media="all">
+<link rel="stylesheet" type="text/css" href="./source/modules/survey/template/mobile/survey.css" media="all">
+<div style="height: 25px;"></div>
+<div class="content-w1 survey-title">
+	<div class="content-w2">
+		<div class="content">
+			<div class="title">{$activity['title']}</div>
+			<img class="connect" src="./source/modules/survey/template/mobile/connect.png">
+			<div class="desc-cont">
+				{$activity['content']}
+				{if $pererror == "1"}<div style="margin-top:20px; color:red;">抱歉，您已经提交过该调研，请下次再来哦！ ^_^</div>{/if}
+			</div>
+			{if $pererror!="1"}<!-- 提交调研超过设定的次数，不显示按钮 -->
+			<a class="next-btn" href="javascript:void(0)" style="text-decoration:none;">马上开始</a>
+			{/if}
+		</div>
+	</div>
+</div>
+<form action="" method="post" id="form">
+	<div class="question" style="overflow:hidden;">
+	{if $userinfo=='0'}
+		<div class="xuan">
+			<div class="inner-cont">
+				<div class="qtitle">请先填写您的资料：</div>
+	
+				<div class="field-contain">
+					<label for="username" class="input-label">请输入您的名称:</label>
+							<input type="text" name="username" id="username" class="input-text" value="{$user['realname']}">
+				</div>
+				<div class="field-contain">
+					<label for="phone" class="input-label">请输入您的手机号码:</label>
+							<input type="tel" name="telephone" id="phone" class="input-text" value="{$user['mobile']}">
+					<span class="tip" style="margin-left:0">*请务必填写正确，此信息将作为您以后领奖的依据</span>
+				</div>
+				<div class="btn-wrapper">
+					<input  type="button" id="save-btn" class="next-btn" style="width:100px" value="开始">
+				</div>
+			</div>
+		</div>
+	{/if}
+		{loop $ds $key $row}
+			{if $row['type']=="radio" || $row['type']=="checkbox"}
+				<div class="xuan">
+					<div class="title">{$row['title']}</div>
+					<div class="tip">{if $row['type']=="radio"}注：本题最多能选择1个答案！{elseif $row['type']=="checkbox"}注：本题可选择多个答案！{/if}</div>
+					<div class="options"{if $row['type']=="radio"}title="1"{elseif $row['type']=="checkbox"}title="2"{/if} >
+						{loop $row['options'] $v}
+							<div class="option">
+								<img class="oimg" src="./source/modules/survey/template/mobile/option_bg.png">
+								<img class="oimg-sel" src="./source/modules/survey/template/mobile/option_sel_bg.png">
+								<div class="text">
+									<div class="otext">{$v}</div>
+								</div>
+							</div>				 
+						{/loop}
+						<input type="hidden" name="field_{$row['sfid']}" class="hidden" id="hidden_{$key}">
+					</div>
+					<div class="tip" style="padding-right:20px">说明：{$row['description']}</div>
+					<div class="submit" {if $row['type']=="radio"}title="1"{elseif $row['type']=="checkbox"}title="100"{/if}>
+						<img src="./source/modules/survey/template/mobile/next_btn.png">
+						<span>下一步</span>
+					</div>
+				</div>
+		{else}
+				<div class="content-w1 xuan">
+					<div class="content-w2">
+						<div class="content">
+							<div class="title" style="font-size:16px;font-weight:bold">{$row['title']}</div>
+							<img class="connect" src="./source/modules/survey/template/mobile//connect.png">
+							<div class="desc-cont">
+								<textarea  class="textarea" name="field_{$row['sfid']}" rows="5" style="font-color:#ccc"></textarea>
+							</div>
+							<input type="button" class="next-btn next-step" value="下一步">		
+						</div>
+					</div>			
+				</div>							
+		{/if}
+	{/loop}
+
+	{if $activity['suggest_status']=="1"}		
+		<div class="content-w1 xuan">
+			<div class="content-w2">
+				<div class="content">
+					<div class="title" style="font-size:16px;font-weight:bold;color:#000;">意见和建议</div>
+					<img class="connect" src="./source/modules/survey/template/mobile//connect.png">
+					<div class="desc-cont">
+						<textarea id="suggest" name="suggest" rows="5" style="font-color:#ccc">有什么建议给我们？</textarea>
+					</div>
+					<div>感谢您的参与</div>
+						<input type="hidden" name="token" value="{$_W['token']}" />
+						<input type="submit" class="next-btn" id="finish" value="立即提交" name="submit">		
+				</div>
+			</div>
+		</div>
+	{else}
+		<div class="content-w1 xuan">
+			<div class="content-w2">
+				<div class="content">
+					<div class="title" style="font-size:16px;font-weight:bold"></div>
+					<img class="connect" src="./source/modules/survey/template/mobile//connect.png">	
+					<div>感谢您的参与</div>
+						<input type="hidden" name="token" value="{$_W['token']}" />
+						<input type="submit" class="next-btn" id="finish" value="立即提交" name="submit">
+				</div>
+			</div>
+		</div>
+	{/if}
+</div>
+</form>
+<audio id="musicClick" src="./source/modules/survey/template/mobile/click.mp3" preload="auto"></audio>
+
+<script>
+$(function(){
+	$(".content-w1,.question").hide();
+	$(".content-w1").css("display", "inline-block");
+	$(".xuan").hide();
+	
+	$(".next-btn").click(function(){
+		$(".survey-title,.question").hide();
+		$(".question").show();	
+	});
+	
+	$(".xuan:first").show();	
+	$(".option").on("click",function(){
+		var $option = $(this);
+		var parent=$(this).parent();
+		var type=parent.attr("title");	
+		if(type=='1'){
+			//单选赋值
+			parent.find('.option').removeClass('option-sel');
+			$option.toggleClass("option-sel");
+			parent.find(".hidden").val(parent.find(".option-sel .otext").html());		
+		}else if(type=='2'){
+			//多选赋值
+			$option.toggleClass("option-sel");
+			var valarr=new Array();
+			parent.find(".option-sel .otext").each(function(index){
+				valarr[index]=$(this).html();		
+			})
+			var valstr=valarr.join('||');
+			parent.find(".hidden").val(valstr);		
+		}
+		$("#musicClick")[0].play();
+	});
+	
+	$(".submit").click(function(){
+		var parent=$(this).parent();
+		var maxsel = $(this).attr("title");
+		var $btn = $(this);
+		if($btn.hasClass("disabled")) return;
+		var $answer = parent.find(".options .option-sel");
+		if($answer.size() == 0){
+			alert("请选择一个答案!");
+			return;
+		}
+		if($answer.size() > maxsel){
+			alert("本题最多只能选择个"+maxsel+"答案!");
+			return;
+		}
+		
+		$(".xuan").hide();
+		parent.next().show();
+	});
+	
+	$("#suggest").focus(function(){
+		$(this).val("");	
+	});
+	$("#suggest").blur(function(){
+		var val=$(this).val();	
+		if(val=="有什么建议给我们？" || val==""){
+			$(this).val("有什么建议给我们？");
+		}
+	});
+	
+	$(".next-step").click(function(){
+		var parent=$(this).parent().parent().parent();
+		$(".xuan").hide();
+		parent.next().show();
+	});
+	
+	$("#save-btn").on("click",function(){
+		var $username = $("#username");
+		var username = $username.val();
+		var $phone = $("#phone");
+		var phone = $phone.val();
+		if(username == ""){
+			alert("请输入用户名!");
+			$username.focus();
+			return false;
+		}
+		if(phone == ""){
+			alert("请输入手机号码!");
+			$phone.focus();
+			return false;
+		}
+		var regu =/^[0-9]{11}$/;
+		var re = new RegExp(regu);
+		if(!re.test(phone)){
+			alert("请输入正确的手机号码!");
+			$phone.focus();
+			return false;
+		}
+		var parent=$(this).parent().parent().parent();
+		$(".xuan").hide();
+		parent.next().show();
+	});
+	
+	$("#finish").click(function(){
+		$("#form").submit();
+	});
+});
+//调整高度
+$(function() {
+	$(".main").height($(window).height());
+});
+$(window).resize(function(){
+	$(".main").height($(window).height());
+});
+</script>
+{template 'footer'}

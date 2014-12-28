@@ -1,0 +1,33 @@
+﻿{template 'common/header'}
+{php echo $this -> set_tabbar($action);}
+<div class="main">
+    <form action="" method="post" class="form-horizontal form" onsubmit="return formcheck(this)">
+        <h4>会员卡{$title}充值日志</h4>
+        <a class="btn btn-primary" href="{php echo create_url('site/module', array('do' => 'rechargelogexcel', 'name' => 'icard', 'cardid'=>$cardid))}">导出会员日志</a>
+        <a class="btn btn-primary" href="javascript:location.reload()"><i class="icon-refresh"></i>刷新</a>
+        <div style="padding-top: 15px;"></div>
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+            <tr>
+                <th>编号</th>
+                <th>充值类型</th>
+                <th style="width:100px;">充值数量</th>
+                <th style="width:100px;">操作门店</th>
+                <th style="width:80px;">操作时间</th>
+            </tr>
+            </thead>
+            <tbody id="level-list">
+            {loop $list $item}
+            <tr>
+                <td>{$item['id']}</td>
+                <td>{if $item['type']==2}积分{else}金额{/if}</td>
+                <td>{$item['score']}</td>
+                <td><font color="green">{if empty($outlet[$item['outletid']])}后台{else}{$outlet[$item['outletid']]}{/if}</font></td>
+                <td>{php echo date('Y-m-d H:i:s', $item['dateline'])}</td>
+            </tr>
+            {/loop}
+            </tbody>
+        </table>
+    </form>
+    {$pager}
+</div>

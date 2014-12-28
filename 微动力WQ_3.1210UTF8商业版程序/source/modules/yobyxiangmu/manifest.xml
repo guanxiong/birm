@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="true">
+		<name><![CDATA[项目客户管理]]></name>
+		<identifie><![CDATA[yobyxiangmu]]></identifie>
+		<version><![CDATA[1.0.0]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[项目管理,主要用来管理客户的需求以及客户反馈的问题]]></ability>
+		<description><![CDATA[项目管理,管理项目和客户资料]]></description>
+		<author><![CDATA[yoby]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="客户资料管理" do="kehuziliao"  />
+			<entry title="项目管理" do="xiangmuguanli"  />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+	CREATE TABLE `ims_yoby_kehu` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` smallint(5) DEFAULT NULL COMMENT '微信平台数',
+  `username` varchar(20) DEFAULT NULL COMMENT '客户姓名',
+  `qq` varchar(20) DEFAULT NULL COMMENT 'qq',
+  `mobile` varchar(20) DEFAULT NULL COMMENT '手机',
+  `weixin` varchar(100) DEFAULT NULL COMMENT '微信号',
+  `address` varchar(255) DEFAULT NULL COMMENT '详细地址',
+  `mode` varchar(20) DEFAULT NULL COMMENT '合作方式',
+  `num` int(10) DEFAULT '0' COMMENT '合作次数',
+  `logo` varchar(255) DEFAULT NULL COMMENT '企业logo或个人头像',
+  `createtime` int(10) DEFAULT NULL COMMENT '合作时间',
+  `isfinish` tinyint(2) DEFAULT '0' COMMENT '是否结束合做',
+  `rank` int(10) DEFAULT '0' COMMENT '排行榜',
+  `txt` text COMMENT '附加资料',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_yoby_xiangmu` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `kid` int(10) DEFAULT NULL COMMENT '客户id',
+  `appname` varchar(50) DEFAULT NULL COMMENT '项目名称',
+  `appen` varchar(50) DEFAULT NULL COMMENT '英文名称',
+  `appxuqiu` text COMMENT '需求和资料',
+  `txt` text COMMENT '最终效果',
+  `createtime` int(10) DEFAULT NULL,
+  `weid` smallint(5) DEFAULT NULL,
+  `vtime` int(10) DEFAULT NULL COMMENT '交付时间',
+  `rmb` varchar(50) DEFAULT NULL COMMENT '价格',
+  `qq` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_yoby_kehu`;
+	DROP TABLE IF EXISTS `ims_yoby_xiangmu`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

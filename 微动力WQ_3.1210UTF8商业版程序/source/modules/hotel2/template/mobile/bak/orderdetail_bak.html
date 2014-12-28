@@ -1,0 +1,271 @@
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>在线预订</title>
+    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+     
+<script type="text/javascript" src="./source/modules/hotel/template/style/js/jquery.js"></script>
+    <link type="text/css" rel="stylesheet" href="./resource/style/bootstrap.css">
+  <link type="text/css" rel="stylesheet" href="./resource/style/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="./resource/style/datetimepicker.css" />  
+    <link href="./source/modules/hotel/template/style/css/hotels.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="./resource/script/datetimepicker.js"></script>
+<script type="text/javascript" src="./source/modules/hotel/template/style/js/alert.js"></script>
+
+  </head>
+  <body id="hotelsno" class="mode_webapp">
+    <div class="qiandaobanner">
+
+        <img src="{php echo img_url($room['thumb'])}" />
+
+    </div>
+    <div class="cardexplain">
+	
+	<form id="form1" name="form1" method="POST" action="" onsubmit='return formcheck()' >
+	
+      <ul class="round">
+        <li class="title mb">
+          <span class="none">{php echo date("m月d日 H点i分",$detail['time']); }订单详情
+            {if $item['status']==0}<em class="no">未处理</em>{elseif $item['status']==1}
+			<em class="ok">成功</em>{else}
+			<em class="error">失败</em>{/if}
+		  </span>
+        </li>
+        <li class="nob">
+          <div class="beizhu">此订单可重新修改后再提交！</div>
+        </li>
+           <li class="nob">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+            <tr>
+              <th>预订酒店</th>
+              <td>
+                <input name="style" class="px" id="style" value="{$reply['title']}" type="text" readonly="readonly" />
+              </td>
+            </tr>
+          </table>
+        </li>
+         <li class="nob">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+            <tr>
+              <th>房型</th>
+              <td>
+                <input name="style" class="px" id="style" value="{$detail['style']}" type="text" readonly="readonly" />
+              </td>
+            </tr>
+          </table>
+        </li>
+        <li class="nob">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+            <tr>
+              <th>预订人</th>
+              <td>
+                <input name="realname" type="text" class="px" id="realname" value="{$detail['name']}"
+                placeholder="请输入您的真实姓名" />
+              </td>
+            </tr>
+          </table>
+        </li>
+        <li class="nob">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+            <tr>
+              <th>联系电话</th>
+              <td>
+                <input name="mobile" class="px" id="mobile" value="{$detail['mobile']}" type="text" placeholder="请输入您的电话" />
+              </td>
+            </tr>
+          </table>
+        </li>
+        <li class="nob">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+            <tr>
+              <th>到店时间</th>
+              <td><input name="btime" class="px datepicker" id="btime" value="{php echo date('Y-m-d',$detail['btime'])}" type="text" readonly="readonly" />
+              </td>
+            </tr>
+          </table>
+        </li>
+        <li class="nob">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+            <tr>
+              <th>离店时间</th>
+              <td><input name="etime" class="px datepicker" id="etime" value="{php echo date('Y-m-d',$detail['etime'])}" type="text" readonly="readonly" />
+              </td>
+            </tr>
+          </table>
+        </li>
+       
+        <li class="nob">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+            <tr>
+              <th>预订数量</th>
+              <td>
+                   <input name="nums" type="text" class="px" id="nums" value="{$detail['nums']}" placeholder="请输入预订数量" />
+                
+              </td>
+            </tr>
+          </table>
+        </li>
+        <li class="nob">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+            <tr>
+              <th>原价</th>
+			  <td>
+				<input name="oprice" class="px" id="oprice" style="border:0px;solid #c00;" value="{$room['oprice']}" type="text" readonly="readonly" />
+              </td>
+            </tr>
+          </table>
+        </li>
+        <li class="nob">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+            <tr>
+              <th>现价</th>
+			  <td>
+				<input name="cprice" class="px" id="cprice" style="border:0px;solid #c00;color:#FF0000;" value="{$room['cprice']}" type="text" readonly="readonly" />
+              </td>
+            </tr>
+          </table>
+        </li>
+        <li class="nob">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+            <tr>
+              <th>为你节省</th>
+			  <td>
+				<input name="price3" class="px" id="price3" style="border:0px;solid #c00;color:green;" value="{$save}" type="text" readonly="readonly" />
+			  </td>
+            </tr>
+          </table>
+        </li>
+        <li class="nob">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+            <tr>
+              <th valign="top" class="thtop">备注</th>
+              <td>
+                <textarea name="info" class="pxtextarea" style=" height:99px;overflow-y:visible" id="info" placeholder="请输入备注信息">{$detail['info']}</textarea>
+              </td>
+            </tr>
+          </table>
+        </li>
+      </ul>
+      <div class="footReturn">
+        <ul>
+          <li class="footerbtn">
+			<input name="delete" type="submit" style="width:100%" id="delete"   class="del right3"  value="删除订单" /> 
+          </li>
+          <li class="footerbtn">
+			<input name="submit" type="submit" style="width:100%" id="submit"   class="submit left3"  value="提交订单" /> 
+          </li>
+        </ul>
+        <div class="clr"></div>
+  
+      </div>
+	  
+	  <input type="hidden" name="token" value="{$_W['token']}" />
+	  </form>
+	  
+      <script type="text/javascript">
+ unction formcheck(){
+    
+if($.trim($("#realname").val())==''){alert('请输入您的名字!');$("#realname").focus();return false;}   
+if($.trim($("#mobile").val())==''){alert('请输入您的电话号码!');$("#mobile").focus();return false;} 
+if($.trim($("#btime").val())==''){alert('请选择到店时间');return false;}
+if($.trim($("#etime").val())==''){alert('请选择离店时间');return false;}
+return true;
+}
+function dothis(nums){
+ 
+var str1 = {$room['oprice']}*nums;
+var str2 = {$room['cprice']}*nums;
+var str3 = ({$room['oprice']}-{$room['cprice']})*nums;
+$("#oprice").val(str1);
+$("#cprice").val(str2);
+$("#price3").val(str3);
+}
+
+</script>
+ 
+ 
+      <script type="text/javascript">
+            $(function(){
+          
+            $('.datepicker').each(function(){
+            $(this).datetimepicker({
+            format: "yyyy-mm-dd",
+                    minView: "2",
+                    pickerPosition: "top-right",
+                    autoclose: true
+            });
+            });
+            });</script>
+    </div>
+
+<script src="./source/modules/hotel/template/style/js/plugback.js" type="text/javascript" type="text/javascript"></script>
+
+<div class="footermenu">
+
+    <ul>
+	
+		<li>
+		
+				<a href="javascript:history.go(-1);">
+				
+				<img src="./source/modules/hotel/template/style/img/i_back.png">
+				
+				<p>返回</p>
+				
+				</a>
+				
+		</li>
+		
+		<li>
+		
+				<a href="{php echo $this->createMobileUrl('index', array('rid' => $rid));}">
+				
+				<img src="./source/modules/hotel/template/style/img/i_home.png">
+				
+				<p>首页</p>
+			   
+				</a>
+				
+		</li>
+		
+		<li>
+				
+				<a href="{php echo $this->createMobileUrl('about', array('rid' => $rid));}">
+				
+				<img src="./source/modules/hotel/template/style/img/i_about.png">
+				
+				<p>关于</p>
+				
+				</a>
+				
+		</li>
+
+		<li>
+				
+				<a  class="active" href="{php echo $this->createMobileUrl('record', array('rid' => $rid));}">
+				
+				{if $ordernum!= 0 }<span class="num" >{$ordernum}</span>{/if}
+				
+				<img src="./source/modules/hotel/template/style/img/i_order.png">
+				
+				<p>订单</p>
+				
+				</a>
+				
+		</li>
+	
+    </ul>
+	
+</div>
+    <script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideToolbar');
+});
+</script>
+  </body>
+</html>

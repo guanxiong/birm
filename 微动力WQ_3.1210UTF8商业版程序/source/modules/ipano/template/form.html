@@ -1,0 +1,183 @@
+<!--360全景-->
+<!--作者:迷失卍国度-->
+<!--qq : 15595755-->
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">360全景</h4>
+	<table>
+		<tbody>
+            {if !empty($reply)}
+            <tr>
+                <th>VIEW</th>
+                <td>
+                    <a class="btn" href="{php echo create_url('mobile/module/index', array('name' => 'ipano', 'weid' => $_W['weid'], 'rid' => $reply['rid']))}" target="_blank"><i class="icon-camera-retro"></i> 预览</a>
+                </td>
+            </tr>
+            {/if}
+            <tr>
+                <th>标题</th>
+                <td>
+                    <input type="text" value="{$reply['title']}" class="span7" name="title">
+                </td>
+            </tr>
+            <tr>
+                <th>展示案例</th>
+                <td>
+                    <select id="casetype" name="casetype"  class="location">
+                        <option value=-1 {if empty($reply['type'])}selected{/if}>自定义</option>
+                        <option value=1 {if $reply['type']==1}selected{/if}>案例1——巴西里约热内卢</option>
+                        <option value=2 {if $reply['type']==2}selected{/if}>案例2——曼德拉的房间</option>
+                        <option value=3 {if $reply['type']==3}selected{/if}>案例3——李嘉诚办公室</option>
+                        <!--<option value=4 {if $reply['type']==4}selected{/if}>案例四</option>-->
+                    </select>
+                    <a class="btn use" data-codeid="showimage" href="javascript:void(0)" title="自定义图片设置"><i class="icon-check"></i>自定义图片设置</a>
+                </td>
+            </tr>
+            <tr>
+                <th>音乐链接</th>
+                <td>
+                    <input type="text" value="{$reply['music']}" class="span7" name="music">
+                    <span class="help-block">留空为不播放音乐.</span>
+                </td>
+            </tr>
+			<tr>
+				<th>封面图片</th>
+				<td>
+                    <div id="" class="uneditable-input reply-edit-cover">
+                        <div class="detail">
+                            <span class="pull-right">大图片建议尺寸：700像素 * 300像素</span>
+                            <input type="button" id="egg-picture" fieldname="picture{$namesuffix}" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+                            <button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'egg-picture-value')" style="{if empty($reply['picture'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+                        </div>
+                        {if !empty($reply['picture'])}
+                        <input type="hidden" name="picture-old" value="{$reply['picture']}">
+                        <div id="upload-file-view" class="upload-view">
+                            <input type="hidden" id="egg-picture-value" value="{$reply[picture]}">
+                            <img width="100" src="{$_W['attachurl']}{$reply['picture']}">
+                        </div>
+                        {else}
+                        <div id="upload-file-view"></div>
+                        {/if}
+                    </div>
+                    <div class="help-block">用于图文显示的图片</div>
+				</td>
+			</tr>
+			<!--<tr>-->
+				<!--<th>活动简介</th>-->
+				<!--<td>-->
+					<!--<textarea style="height:150px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>-->
+					<!--<div class="help-block">用于图文显示的简介</div>-->
+				<!--</td>-->
+			<!--</tr>-->
+		</tbody>
+	</table>
+</div>
+<div id="myModal" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <input type="hidden" name="pid" value="{$pid}">
+                <input type="hidden" name="type" value="{$type}">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"><i class="icon-check"></i>360全景图片设置</h4>
+                </div>
+                <div class="modal-body">
+                    <table>
+                        <tr>
+                            <td style="text-align: center;">前</td>
+                            <td style="text-align: center;">右</td>
+                            <td style="text-align: center;">后</td>
+                            <td style="text-align: center;">左</td>
+                            <td style="text-align: center;">上</td>
+                            <td style="text-align: center;">下</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="fileupload-preview thumbnail" style="width: 132px; height: 100px;">{if $reply['picture1']}<img src="{$_W['attachurl']}{$reply['picture1']}" width="130" />{/if}</div>
+
+                                    <div>
+                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="picture1" type="file" /></span>
+                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                    </div>
+                                    <input type="hidden" name="picture1" value="{$reply['picture1']}" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="fileupload-preview thumbnail" style="width: 132px; height: 100px;">{if $reply['picture2']}<img src="{$_W['attachurl']}{$reply['picture2']}" width="130" />{/if}</div>
+                                    <div>
+                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="picture2" type="file" /></span>
+                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                    </div>
+                                    <input type="hidden" name="picture2" value="{$reply['picture2']}" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="fileupload-preview thumbnail" style="width: 132px; height: 100px;">{if $reply['picture3']}<img src="{$_W['attachurl']}{$reply['picture3']}" width="130" />{/if}</div>
+                                    <div>
+                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="picture3" type="file" /></span>
+                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                    </div>
+                                    <input type="hidden" name="picture3" value="{$reply['picture3']}" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="fileupload-preview thumbnail" style="width: 132px; height: 100px;">{if $reply['picture4']}<img src="{$_W['attachurl']}{$reply['picture4']}" width="130" />{/if}</div>
+                                    <div>
+                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="picture4" type="file" /></span>
+                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                    </div>
+                                    <input type="hidden" name="picture4" value="{$reply['picture4']}" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="fileupload-preview thumbnail" style="width: 132px; height: 100px;">{if $reply['picture5']}<img src="{$_W['attachurl']}{$reply['picture5']}" width="130" />{/if}</div>
+                                    <div>
+                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="picture5" type="file" /></span>
+                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                    </div>
+                                    <input type="hidden" name="picture5" value="{$reply['picture5']}" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="fileupload-preview thumbnail" style="width: 132px; height: 100px;">{if $reply['picture6']}<img src="{$_W['attachurl']}{$reply['picture6']}" width="130" />{/if}</div>
+                                    <div>
+                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="picture6" type="file" /></span>
+                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                    </div>
+                                    <input type="hidden" name="picture6" value="{$reply['picture6']}" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("tr").delegate(".use", "click", function () {
+            $("#myModal").modal("show").css({
+                width: 'auto',
+                'margin-left': function () {
+                    return -($(this).width() / 2);
+                }
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+kindeditor($('#rule'));
+kindeditorUploadBtn($('#egg-picture'));
+</script>

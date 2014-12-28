@@ -1,0 +1,49 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<table>
+		<tbody>
+			<tr>
+				<th></th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>活动图片</th>
+				<td>
+					<div id="" class="uneditable-input reply-edit-cover">
+						<div class="detail">
+							<span class="pull-right">大图片建议尺寸：700像素 * 300像素</span>
+							<input type="button" id="ccc-picture" fieldname="picture{$namesuffix}" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+							<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'ccc-picture-value')" style="{if empty($reply['picture'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+						</div>
+						{if !empty($reply['picture'])}
+						<input type="hidden" name="picture-old" value="{$reply['picture']}">
+						<div id="upload-file-view" class="upload-view">
+							<input type="hidden" id="ccc-picture-value" value="{$reply[picture]}">
+							<img width="100" src="{$_W['attachurl']}{$reply['picture']}">&nbsp;&nbsp;
+						</div>
+						{else}
+						<div id="upload-file-view"></div>
+						{/if}
+					</div>
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<th>活动简介</th>
+				<td>
+					<textarea style="height:150px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于图文显示的简介</div>
+				</td>
+			</tr>
+			
+		</tbody>
+	</table>
+</div>
+
+<script type="text/javascript">
+kindeditor($('#rule'));
+kindeditorUploadBtn($('#ccc-picture'));
+
+
+</script>

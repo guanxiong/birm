@@ -1,0 +1,105 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="./source/modules/icard/template/css/card.css?v={php echo $this->cur_version}" media="all">
+    <script type="text/javascript" src="./source/modules/icard/template/js/jQuery.js"></script>
+    <script type="text/javascript" src="./source/modules/icard/template/js/accordian_pack.js"></script>
+    <title>礼品卡</title>
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body id="cardpower" ondragstart="return false;" onselectstart="return false;">
+    {php include $this->template('wap_header');}
+    <section class="body">
+		<div id="basic-accordian">
+            {php $index = 0;}
+            {loop $gifts $gift}
+            <div id="test{$index}-header" class="accordion_headings {if $index==0}header_highlight{/if}">
+                <div class="tab gift">
+                    <span class="title">{$gift['title']}<p>{php echo date('Y-m-d', $gift['endtime']);}</p></span>
+                </div>
+                <div id="test{$index}-content" style="display: block; overflow: hidden;  {if $index==0}opacity: 0;{else}opacity: 1;{/if}">
+                    <div class="accordion_child">
+                        <div style="text-align:center">
+                            <img src="{$_W['attachurl']}{$gift['picture']}" style="width:150px;height:150px;margin:auto;">
+                        </div>
+                        <div style="padding: 5px;">
+                            <p>兑换礼品所需积分:<label style="font-weight: bold;">{$gift['needscore']}</label></p>
+                            <p>可兑换积分:<label style="font-weight: bold;">{$card['balance_score']}</label></p>
+                        </div>
+                        <div style="padding: 5px;">
+                            <p>详情说明</p>
+                            <p>{php echo htmlspecialchars_decode($gift['content']);}</p>
+                        </div>
+                        <div class="explain_sn" style="5px auto;color: #fff;">
+                            {if TIMESTAMP<$gift['starttime']}
+                            <div style="height: 25px;line-height: 25px;font-size:14px;" class="disabled">未开始</div>
+                            {else}
+                                {if $gift['count']==0}
+                                    <a style="height: 25px;line-height: 25px;font-size:14px;" class="submit" href="{php echo create_url('mobile/module', array('do' => 'wapmakesncode', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid, 'type' => $type, 'id' => $gift['id']))}">兑换</a>
+                                <p class="explain_sn">
+                                <span style="font-size:12px;line-height:16px;text-align:left;padding:5px 0 5px 16px;">请点击上面的按钮使用或由商家扫描二维码</span>
+                                {php echo $this->getQRImage('gift_'.$gift['id'],create_url('mobile/module', array('do' => 'wapmakesncodeadmin', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid, 'type' => $type, 'id' => $gift['id'])));}
+                                </p>
+                                {elseif $giftcount_arr[$gift['id']]>=$gift['count']}
+                                    <div style="height: 25px;line-height: 25px;font-size:14px;" class="disabled">已使用</div>
+                                {else}
+                                    <a style="height: 25px;line-height: 25px;font-size:14px;" class="submit" href="{php echo create_url('mobile/module', array('do' => 'wapmakesncode', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid, 'type' => $type, 'id' => $gift['id']))}">兑换</a>
+                                <p class="explain_sn">
+                                <span style="font-size:12px;line-height:16px;text-align:left;padding:5px 0 5px 16px;">请点击上面的按钮使用或由商家扫描二维码</span>
+                                {php echo $this->getQRImage('gift_'.$gift['id'],create_url('mobile/module', array('do' => 'wapmakesncodeadmin', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid, 'type' => $type, 'id' => $gift['id'])));}
+                                </p>
+                                {/if}
+                            {/if}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {php $index++;}
+            {/loop}
+		</div>
+		<div class="plugback">
+			<a href="javascript:history.back(-1)">
+				<div class="plugbg themeStyle">
+				<span class="plugback"></span>
+				</div>
+			</a>
+		</div>
+        {php include $this->template('footer');}
+<script>
+window.onload = function(){
+	new Accordian('basic-accordian',2,'header_highlight');
+}
+</script>
+<script>
+		var jQ = jQuery.noConflict();
+		function gift(i,sncode,gid){
+			var parssword =  document.getElementById('parssword'+i).value;
+			var submitData = {
+				parssword:parssword,
+				sncode: sncode,
+				gid: gid,
+				action: "gift"
+			};
+			jQ.post('index.php?ac=cardpower3&tid=574&c=o5JGbjuFTr6lumWIyyW3yfP-G5m0', submitData,
+				function(data) {
+					if (data.password == true) {
+						document.getElementById('queren'+i).style.display='none';
+						document.getElementById('sn'+i).innerHTML=data.msg;
+						document.getElementById('parssword'+i).value = '';
+						alert(data.msg);
+						return;
+					} else{
+						document.getElementById('parssword'+i).value=data.msg;
+					}
+				},
+			"json");
+		}
+		function alert(title){ 
+			$("#windowcenter").slideToggle("slow"); 
+			$("#txt").html(title);
+		}
+</script>
+</section>
+
+</body></html>

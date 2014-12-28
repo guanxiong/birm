@@ -1,0 +1,334 @@
+<style type="text/css">
+    .help-block1 { margin:0px 10px;color: #c09853;vertical-align: middle;}
+</style>
+<link rel="stylesheet" type="text/css" href="./source/modules/stonefish_grabgifts/template/images/times/daterangepicker.css?2014-08-28" media="all" />
+<script type="text/javascript" src="./source/modules/stonefish_grabgifts/template/images/times/jQuery.js?2014-08-28"></script>
+<script type="text/javascript" src="./source/modules/stonefish_grabgifts/template/images/times/daterangepicker.js?2014-08-28"></script>
+<script type="text/javascript" src="./source/modules/stonefish_grabgifts/template/images/times/moment_min.js?2014-08-28"></script>
+<script type="text/javascript" src="./source/modules/stonefish_grabgifts/template/images/times/inside.js?2014-08-28"></script>
+
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">全民抢礼品活动设置</h4>
+	<table>
+		<tbody>	
+			<tr>
+				<th>活动状态</th>
+				<td>
+				    <label for="aaa" class="radio inline"><input id="aaa" type="radio" name="doings" value="1" {if $reply['status'] == 1}checked="checked"{/if}> 开始活动</label>
+					<label for="bbb" class="radio inline"><input id="bbb" type="radio" name="doings" value="0" {if $reply['status'] == 0}checked="checked"{/if}> 关闭活动（前台显示为暂停）</label>
+				</td>
+			</tr>
+			<tr>
+				<th>活动标题</th>
+				<td><input type="text" name="title" value="{$reply['title']}" class="span7"> </td>
+			</tr>
+            <tr>
+				<th>活动时间</th>
+				<th><input type="text" name="activitytime" id="activity-time" value="{php echo date('Y-m-d H:i', $reply['start_time'])} - {php echo date('Y-m-d H:i', $reply['end_time'])}" class="daterangepick input-xlarge" data-rule-required="true" readonly="true" />
+                </th>
+			</tr>	
+			<tr>
+				<th>消息图片</th>
+				<td>
+						<div style="display:block; margin-top:5px;" class="input-append">
+						<input type="text" value="{$reply['picture']}" name="picture" id="upload-image-url-picture" class="span3" autocomplete="off">
+						<input type="hidden" value="{$picture}" name="picture_old" id="upload-image-url-picture-old">
+						<input name="shouquan" type="hidden" value="{$shouquan}" ><input name="we7_ValidCode_server" type="hidden" id="we7_ValidCode_server" ><button class="btn" type="button" id="upload-image-picture">选择图片</button>
+						</div>
+						<div id="upload-image-preview-picture" style="margin-top:10px;"><img src="{$picture}" width="100%" /></div><div class="help-block">大图片建议尺寸：900像素 * 500像素</div>
+				</td>
+			</tr>
+			<tr>
+				<th>活动简介</th>
+				<td>
+					<textarea style="height:50px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于图文显示的简介</div>
+				</td>
+			</tr>
+			<tr>
+				<th>活动详情</th>
+				<td>
+					<textarea style="height:200px; width:535px;" class="span7 richtext-clone" name="content" cols="70" id="reply-add-text">{$reply['content']}</textarea>					
+					<div class="help-block">分享图文的详细内容（注意在内容最后加上分享示意图提示）</div>
+				</td>
+			</tr> 
+			<tr>
+				<th colspan="2"><h4 class="alert-heading">幸运拆礼盒分享设置</h4></th>
+			</tr>			
+			<tr>
+				<th>分享标题</th>
+				<td>
+					<input type="text" name="sharetitle" value="{$reply['sharetitle']}" class="span7"> 
+					<div class="help-block">此设置用于领取礼盒后让别人帮拆礼盒时的分享语，且分享到朋友圈时只显示标题</div>
+				</td>
+			</tr>
+			<tr>
+				<th>分享内容</th>
+				<td>
+					<textarea style="height:50px;" name="sharecontent" class="span7" cols="60">{$reply['sharecontent']}</textarea>
+					<div class="help-block">此设置用于领取礼盒后让别人帮拆礼盒时的分享语，且分享到朋友圈时只显示标题</div>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="2"><div class="help-block">分享标题、分享内容 可用变量：<br/>#参与人数# （参与活动人数+虚拟人数）<br/>#参与人名#（参与人真实姓名）</div></th>
+			</tr>
+			<tr>
+				<th colspan="2"><h4 class="alert-heading">全民抢礼品辅助设置</h4></th>
+			</tr>			
+			<tr>
+				<th>参与是否关注</th>
+				<td><label for="subscribe_1" class="radio inline"><input id="subscribe_1" type="radio" name="subscribe" value="1" {if $reply['subscribe'] == 1}checked="checked"{/if}> 关注参与</label>
+					<label for="subscribe_0" class="radio inline"><input id="subscribe_0" type="radio" name="subscribe" value="0"  {if $reply['subscribe'] == 0}checked="checked"{/if}> 任意参与</label>
+				    <div class="help-block">是否强制用户关注公众号才能参与活动</div></td>
+			</tr>
+			<tr>
+				<th>引导关注网址</th>
+				<td>
+				<input type="text" name="shareurl" value="{$reply['shareurl']}" class="span7"> 
+				<div class="help-block">你可以在公众号平台素材库里新建图文，把网址填在上面。未关注用户即可通过此网址引导一键关注，也只有官方的公众号平台素材库才能做这个一键关注功能！</div>
+				</td>
+			</tr>			
+			<tr>
+				<th>奖品资格</th>
+				<td><label for="opensubscribe_4" class="radio inline"><input id="opensubscribe_4" type="radio" name="opensubscribe" value="4" {if $reply['opensubscribe'] == 4}checked="checked"{/if}> 参与活动</label>
+					<label for="opensubscribe_3" class="radio inline"><input id="opensubscribe_3" type="radio" name="opensubscribe" value="3"  {if $reply['opensubscribe'] == 3}checked="checked"{/if}> 好友助威</label>
+					<label for="opensubscribe_2" class="radio inline"><input id="opensubscribe_2" type="radio" name="opensubscribe" value="2" {if $reply['opensubscribe'] == 2}checked="checked"{/if}> 参与访问</label>
+					<label for="opensubscribe_1" class="radio inline"><input id="opensubscribe_1" type="radio" name="opensubscribe" value="1"  {if $reply['opensubscribe'] == 1}checked="checked"{/if}> 参与互访</label>
+					<label for="opensubscribe_0" class="radio inline"><input id="opensubscribe_0" type="radio" name="opensubscribe" value="0"  {if $reply['opensubscribe'] == 0}checked="checked"{/if}> 访问活动</label>
+				    <div class="help-block">参与活动:被邀请人必需第一次通过分享链接参与活动获取一个资格<br/>好友助威:被邀请人已参与活动且第一次访问邀请人分享的链接获取一个资格<br/>参与访问:被邀请人已参与活动访问邀请人分享的链接获取一个资格<br/>参与互访:所有参与人员互相访问获取一个资格<br/>访问活动:被邀请人访问邀请人分享的链接获取一个资格</div></td>
+			</tr>			
+			<tr>
+				<th>是否互访</th>
+				<td><label for="isvisits_1" class="radio inline"><input id="isvisits_1" type="radio" name="isvisits" value="1" {if $reply['isvisits'] == 1}checked="checked"{/if}> 开启互访</label>
+					<label for="isvisits_0" class="radio inline"><input id="isvisits_0" type="radio" name="isvisits" value="0"  {if $reply['isvisits'] == 0}checked="checked"{/if}> 禁止互访</label>
+				    <div class="help-block">所有参与活动的人员是否可以互访来为彼此增加资格 注意开启此选项必需把上面奖品资格不要选择为访问活动，才能起作用！</div></td>
+			</tr>
+			<tr>
+				<th>爆表排行榜</th>
+				<td><div class="input-prepend input-append">
+                    <span class="add-on">每加载一次显示</span>
+                    <input type="text" class="span1" name="biaobiaonum" id="biaobiaonum" value="{$reply['biaobiaonum']}" />
+                    <span class="add-on">位参与用户到排行榜</span>
+                </div></td>
+			</tr>
+			<tr>
+				<th colspan="2"><h4 class="alert-heading">全民抢礼品显示设置</h4></th>
+			</tr>
+			<tr>
+				<th>虚拟人数显示</th>
+				<td><div class="input-prepend input-append">
+                    <span class="add-on">首页显示</span>
+                    <input type="text" class="span1" name="xuninum" id="xuninum" value="{$reply['xuninum']}" />
+                    <span class="add-on">位虚拟人数+真实参与人数　此数值随下面设置自动变化</span>
+                </div></td>
+			</tr>
+			<tr>
+				<th>虚拟人数设置</th>
+				<td><div class="input-prepend input-append">
+                    <span class="add-on">每次间隔</span>
+                    <input type="text" class="span1" name="xuninumtime" id="xuninumtime" value="{$reply['xuninumtime']}" />
+                    <span class="add-on">秒　系统自动增加</span>
+					<input type="text" class="span1" name="xuninuminitial" id="xuninuminitial" value="{$reply['xuninuminitial']}" />
+					<span class="add-on">至</span>
+					<input type="text" class="span1" name="xuninumending" id="xuninumending" value="{$reply['xuninumending']}" />
+					<span class="add-on">名虚拟人参与本活动</span>
+                </div></td>
+			</tr>
+			<tr>
+				<th>显示用户设置</th>
+				<td><div class="input-prepend input-append">
+                    <span class="add-on">每加载一次显示</span>
+                    <input type="text" class="span1" name="share_shownum" id="share_shownum" value="{$reply['share_shownum']}" />
+                    <span class="add-on">位参与用户显示到列表页</span>
+                </div></td>
+			</tr>		
+			<tr>
+				<th>兑奖参数项</th>
+				<td>
+				    <label for="isrealname" class="checkbox inline"><input id="isrealname" type="checkbox" name="isrealname" value="1" {if $reply['isrealname'] == 1}checked="checked"{/if}> 姓名</label>
+				    <label for="ismobile" class="checkbox inline"><input id="ismobile" type="checkbox" name="ismobile" value="1" {if $reply['ismobile'] == 1}checked="checked"{/if}> 手机</label>
+					<label for="isweixin" class="checkbox inline"><input id="isweixin" type="checkbox" name="isweixin" value="1" {if $reply['isweixin'] == 1}checked="checked"{/if}> 微信号</label>
+					<label for="isqqhao" class="checkbox inline"><input id="isqqhao" type="checkbox" name="isqqhao" value="1" {if $reply['isqqhao'] == 1}checked="checked"{/if}> QQ号</label>
+					<label for="isemail" class="checkbox inline"><input id="isemail" type="checkbox" name="isemail" value="1" {if $reply['isemail'] == 1}checked="checked"{/if}> 邮箱</label>
+					<label for="isaddress" class="checkbox inline"><input id="isaddress" type="checkbox" name="isaddress" value="1" {if $reply['isaddress'] == 1}checked="checked"{/if}> 地址</label>
+					<div class="help-block">必需选择一个参数兑奖 活动开启后最好不要修改 请谨慎选择</div></td>
+			</tr>
+            <tr>
+				<th>参与提示语</th>
+				<td>
+					<input type="text" name="userinfo" value="{$reply['userinfo']}" class="span7"> 
+					<div class="help-block">需要用户输入信息时的提示语</div>
+				</td>
+			</tr>
+			<tr>
+				<th>参数项同步</th>
+				<td><label for="isfans_1" class="radio inline"><input id="isfans_1" type="radio" name="isfans" value="1" {if $reply['isfans'] == 1}checked="checked"{/if}> 参数项同步更新至官方FANS表中</label>
+					<label for="isfans_0" class="radio inline"><input id="isfans_0" type="radio" name="isfans" value="0"  {if $reply['isfans'] == 0}checked="checked"{/if}> 参数项只保留本模块下</label></td>
+			</tr>
+			<tr>
+				<th>版权显示</th>
+				<td><label for="iscopyright_1" class="radio inline"><input id="iscopyright_1" type="radio" name="iscopyright" value="0" {if $reply['iscopyright'] == 0}checked="checked"{/if}> 公众号版权</label>
+					<label for="iscopyright_0" class="radio inline"><input id="iscopyright_0" type="radio" name="iscopyright" value="1"  {if $reply['iscopyright'] == 1}checked="checked"{/if}> 自定义版权</label></td>
+			</tr>
+			<tr>
+				<th>版权设置</th>
+				<td>
+					<input type="text" name="copyright" value="{$reply['copyright']}" class="span2"> <input type="text" name="copyrighturl" value="{$reply['copyrighturl']}" class="span5"> 
+					<div class="help-block">需要输入完整的链接如：http://www.qq.com/</div>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="2"><h4 class="alert-heading">全民抢礼品显示颜色设置</h4></th>
+			</tr>			
+			<tr>
+				<th>背景色</th>
+				<td>{php echo tpl_form_field_color('bgcolor', $reply['bgcolor'])}<span class="help-block1">活动所有页的背景颜色</span></td>
+			</tr>
+			<tr>
+				<th>文字色</th>
+				<td>{php echo tpl_form_field_color('textcolor', $reply['textcolor'])}<span class="help-block1">活动所有页的文字颜色</span></td>
+			</tr>
+			<tr>
+				<th>突出色</th>
+				<td>{php echo tpl_form_field_color('textcolort', $reply['textcolort'])}<span class="help-block1">活动所有页特别显示的文字颜色（如姓名，人数等）</span></td>
+			</tr>
+			<tr>
+				<th>边框色</th>
+				<td>{php echo tpl_form_field_color('textcolorb', $reply['textcolorb'])}<span class="help-block1">活动所有页奖品或参与人的边框色</span></td>
+			</tr>
+			<tr>
+				<th>底部导航背景色</th>
+				<td>{php echo tpl_form_field_color('bgcolorbottom', $reply['bgcolorbottom'])}<span class="help-block1">活动所有页的底部导航背景色</span></td>
+			</tr>			
+			<tr>
+				<th>底部导航按钮色</th>
+				<td>{php echo tpl_form_field_color('bgcolorbottoman', $reply['bgcolorbottoman'])}<span class="help-block1">活动所有页的底部导航按钮色</span></td>
+			</tr>
+			<tr>
+				<th>底部导航文字色</th>
+				<td>{php echo tpl_form_field_color('textcolorbottom', $reply['textcolorbottom'])}<span class="help-block1">活动所有页的底部导航文字色</span></td>
+			</tr>
+			<tr>
+				<th>兑奖按钮背景色</th>
+				<td>{php echo tpl_form_field_color('bgcolorjiang', $reply['bgcolorjiang'])}<span class="help-block1">活动所有页的底部导航背景色</span></td>
+			</tr>			
+			<tr>
+				<th>兑奖按钮文字色</th>
+				<td>{php echo tpl_form_field_color('textcolorjiang', $reply['textcolorjiang'])}<span class="help-block1">活动所有页的底部导航按钮色</span></td>
+			</tr>
+            <tr>
+				<th colspan="2"><h4 class="alert-heading">奖品设置</h4></th>
+		    </tr>
+		    <tr>
+				<th colspan="2">重要说明,奖品需要资格应该分阶提高</th>
+		    </tr>			
+		</tbody>	
+	</table>
+	<div id="append-list" class="list">
+		{if !empty($award)}
+			{php $prize = 1;}
+			{loop $award $item}
+			<div class="item" id="ccc-item-{$item['id']}">
+			{php include $this->template('item');}
+			</div>
+			{php $prize++;}
+			{/loop}
+		{/if}
+	</div>
+	<div class="reply-news-edit-button"><a href="javascript:;" onclick="cccHandler.buildAddForm('ccc-form-html', $('#append-list'))" class="btn"><i class="icon-plus"></i> 添加奖品</a></div>
+</div>
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<script type="text/javascript">
+	kindeditor($('.richtext-clone'));
+	//document.getElementById("we7_ValidCode_server").value=we7_ValidCode_server;
+    var editor = KindEditor.editor({
+		allowFileManager : true,
+		uploadJson : "./index.php?act=attachment&do=upload",
+		fileManagerJson : "./index.php?act=attachment&do=manager",
+		afterUpload : function(url, data) {
+		}
+	});
+	{php $prize = 1;}
+	{loop $award $item}	
+			
+	$("#upload-image-awardpic{$item['id']}").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-awardpic{$item['id']}").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-awardpic{$item['id']}-old").val($("#upload-image-url-awardpic{$item['id']}").val());
+					$("#upload-image-url-awardpic{$item['id']}").val(val);
+					$("#upload-image-preview-awardpic{$item['id']}").html('<img src="'+url+'" width="180" />');
+				}
+			});
+		});
+	});
+	{php $prize++;}
+	{/loop}
+	
+	$("#upload-image-picture").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-picture").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-picture-old").val($("#upload-image-url-picture").val());
+					$("#upload-image-url-picture").val(val);
+					$("#upload-image-preview-picture").html('<img src="'+url+'" width="100%" />');
+				}
+			});
+		});
+	});	
+	
+</script>
+<script type="text/html" id="ccc-form-html">
+{php unset($item); include $this->template('item');}
+</script>
+<script type="text/javascript">
+var cccHandler = {
+	'buildAddForm' : function(id, targetwrap) {
+		var obj = buildAddForm(id, targetwrap);
+		obj.html(obj.html().replace(/\(wrapitemid\)/gm, obj.attr('id')));
+
+		//中奖类型提示
+		$("#append-list .item #award-inkind label").mouseenter(function() {
+			$(this).popover('show');
+		});
+		$("#append-list .item #award-inkind label").mouseout(function() {
+			$(this).popover('hide');
+		});
+	}
+};
+
+//奖品类型切换
+$("#append-list").delegate("#award-inkind input", "click", function(){
+	if($(this).val() == 0) {
+		$(this).parents(".item").find(".num").css("display", "none");
+		$(this).parents(".item").find("tr:eq(4),tr:eq(5)").show();
+	} else {
+		$(this).parents(".item").find(".num").css("display", "inline-block");
+		$(this).parents(".item").find("tr:eq(4),tr:eq(5)").hide();
+	}
+});
+</script>

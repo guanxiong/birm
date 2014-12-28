@@ -1,0 +1,82 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+<li{if $_GPC['do'] == 'buildlists'} class="active"{/if}><a href="{php echo $this->createWeburl('buildlists');}">楼盘管理</a></li>
+    	<li{if $_GPC['do'] == 'billadd'} class="active"{/if}><a href="{php echo $this->createWeburl('billadd',array('id'=>$id,'hid'=>$hid));}">楼盘海报</a></li>
+      </ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="hid" value="{$hid}">
+    <input type="hidden" name="id" value="{$id}">
+  <h4>海报设置</h4>
+	<table class="tb">
+		<tr>
+			<th width="68">海报名称：</th>
+			<td width="222"><input type="text" name="title" value="{$item['title']}" class="span5" />
+		    * 必填</td>
+		</tr>
+        		<tr>
+			<th>海报1：</th>
+			<td><div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getindexpic($item['pic'])}" width="200" /></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+						
+					建议尺寸：宽400像素，高720像素</div>
+				</div></td>
+		</tr>
+        
+        <tr>
+			<th>海报2：</th>
+			<td><div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getindexpic($item['pic1'])}" width="200" /></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic1" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+						
+					建议尺寸：宽400像素，高720像素</div>
+				</div></td>
+		</tr>
+        <tr>
+			<th>海报3：</th>
+			<td><div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getindexpic($item['pic2'])}" width="200" /></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic2" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+						建议尺寸：宽400像素，高720像素
+					</div>
+				</div></td>
+		</tr>
+        <tr>
+			<th>海报4：</th>
+			<td><div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getindexpic($item['pic3'])}" width="200" /></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic3" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+						
+					建议尺寸：宽400像素，高720像素</div>
+				</div></td>
+		</tr>
+        <tr>
+			<th>海报5：</th>
+			<td><div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getindexpic($item['pic4'])}" width="200" /></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic4" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+						
+					建议尺寸：宽400像素，高720像素</div>
+				</div></td>
+		</tr>
+        
+        <tr>
+			<th>&nbsp;</th>
+			<td>
+            	 <button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+            	 <input type="hidden" name="token" value="{$_W['token']}" /></td>
+		</tr>
+	</table>
+</form>
+{template 'common/footer'}

@@ -1,0 +1,42 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="dns-prefetch" href="{php echo rtrim(str_replace('http:', '', $_W['attachurl']),'/')}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{$title}</title>
+    <meta name="description" content="{$pagedes}">
+    <meta name="keywords" content="{$pagekey}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="./source/modules/shouse/template/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./source/modules/shouse/template/css/main.css">
+    <script>var require = {urlArgs: new Date().getTime()};</script>
+    <script src="./source/modules/shouse/template/js/require.js"></script>
+    <script src="./source/modules/shouse/template/js/config.js"></script>
+    <script>
+        var uid = {php echo (int) $user['uid']};
+        var weid = '{$_W[weid]}';
+        var module = '{php echo $this->module[name]}';
+        var cookiepre = '{$_W['config']['cookie']['pre']}';
+    </script>
+</head>
+<body id="module-{php echo $this->do}">
+
+{if empty($header_off)}
+    <header class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+            <nav>
+                <ul class="nav navbar-nav">
+                    <li{if $this->do=='index'} class="active"{/if}> <a href="{php echo $this->createMobileUrl('index')}"><span class="glyphicon glyphicon-home"></span> 首页</a> </li>
+                    <li{if $this->do=='house'} class="active"{/if}><a href="{php echo $this->createMobileUrl('house')}"><span class="glyphicon glyphicon-list-alt"></span> 信息</a></li>
+                    <li{if $this->do=='news'} class="active"{/if}><a href="{php echo $this->createMobileUrl('news')}"><span class="glyphicon glyphicon-list"></span> 资讯</a></li>
+                    <li{if $this->do=='member'} class="active"{/if}><a href="{php echo $this->createMobileUrl('member')}"><span class="glyphicon glyphicon-user"></span> 我的</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+{/if}

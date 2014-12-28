@@ -1,0 +1,42 @@
+{if empty($item)}
+{php $namesuffix = '-new[(wrapitemid)]';}
+{php $itemid = '(itemid)';}
+{else}
+{php $namesuffix = '['.$item['id'].']';}
+{php $itemid = 'dqq-item-' . $item['id'];}
+{/if}
+<div class="alert alert-info reply-market-list">
+	<table class="tb reply-news-edit">
+		<tr>
+			<th>操作：</th>
+			<td id="award-inkind">
+				<span class="pull-right">{if empty($item)}<a href="javascript:;" onclick="doDeleteItem('{$itemid}')">删除</a>{else}<a href="{php echo create_url('index/module/delete', array('name' => 'dqq', 'id' => $item['id']))}" onclick="doDeleteItem('{$itemid}', this.href)">删除</a>{/if}</span>
+				<label for="radio_0_{$itemid}" ><input type="hidden" name="award-inkind{$namesuffix}" id="radio_0_{$itemid}" value="0" /> </label>
+			</td>
+		</tr>
+		<tr>
+			<th>奖品名称：</th>
+			<td>
+				<input type="text" value="{$item['title']}" style="width:275px;" name="award-title{$namesuffix}">
+				<label style="display:inline-block;">中奖率：<input type="text" value="{$item['probalilty']}" name="award-probalilty{$namesuffix}" style="padding-right:30px;width:48px;"><em class="percentage">%</em></label>
+				<label {if $item['inkind'] == 0}style="display:none;"{else}style="display:inline-block;"{/if} class="num">数量：<input type="text" value="{$item['total']}" style="width:45px;" name="award-total{$namesuffix}"></label>
+			</td>
+		</tr>
+		<tr>
+			<th>奖品描述：</th>
+			<td>
+				<textarea style="height:80px;" name="award-description{$namesuffix}" class="span7" cols="70" id="">{$item['description']}</textarea>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>中奖积分：</th>
+			<td>
+				<input type="text" value="{$item['get_jf']}" style="width:75px;" name="get_jf{$namesuffix}">
+				
+			</td>
+		</tr>
+		
+		
+	</table>
+</div>

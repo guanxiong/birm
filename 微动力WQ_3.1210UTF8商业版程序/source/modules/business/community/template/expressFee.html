@@ -1,0 +1,54 @@
+{template 'common/header'}
+<div class="main">
+	<form class="form-horizontal form" action="site.php" method="post" role="form">
+		<h4> {$express['name']} - 报价</h4>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th class="row-hover" style="width: 15%;">省</th>
+					<th class="row-hover" style="width: 15%;">市</th>
+					<th class="row-hover" style="width: 15%;">县</th>
+					<th class="row-hover" style="width: 15%;">首重</th>
+					<th class="row-hover" style="width: 15%;">首重金额</th>
+					<th class="row-hover" style="width: 15%;">续重单价</th>
+					<th class="row-hover" style="text-align:right;">操作</th>
+				</tr>
+			</thead>
+			<tbody id="status-items">
+			{loop $list $e}
+				<tr>
+					<td><input name="fees[{$e['id']}][province]" type="text" value="{$e['province']}"></td>
+					<td><input name="fees[{$e['id']}][city]" type="text" value="{$e['city']}"></td>
+					<td><input name="fees[{$e['id']}][district]" type="text" value="{$e['district']}"></td>
+					<td><input name="fees[{$e['id']}][pricefirst]" type="text" value="{$e['pricefirst']}"></td>
+					<td><input name="fees[{$e['id']}][weightfirst]" type="text" value="{$e['weightfirst']}"></td>
+					<td><input name="fees[{$e['id']}][priceaddition]" type="text" value="{$e['priceaddition']}"></td>
+					<td style="text-align:right;">
+						<a onclick="if (confirm('删除操作不可恢复，确认吗？')){ $(this).parent().parent().remove(); return true;} else {return false;}" href="{php echo $this->createWebUrl('expressFee', array('op' => 'delete', 'id' => $e['id']))}" class="btn btn-mini" title="删除"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+			{/loop}
+			</tbody>
+		</table>
+		<table class="tb">
+			<tr>
+				<td>
+					<span class="help-block">新增费用,格式为: "省名称:市名称:区名称:首重:首重金额:续重金额", 同时填多个另起一行</span>
+					<textarea rows="10" cols="80" style="width: 98%;" class="form-control" name="content"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="act" value="{$_GPC['act']}" />
+					<input type="hidden" name="do" value="{$_GPC['do']}" />
+					<input type="hidden" name="name" value="{$_GPC['name']}" />
+					<input type="hidden" name="id" value="{$express['id']}" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+{template 'common/footer'}

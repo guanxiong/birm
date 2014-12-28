@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[砸金蛋]]></name>
+		<identifie><![CDATA[smashegg]]></identifie>
+		<version><![CDATA[1.5]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[砸金蛋，抽奖营销活动，带兑换页面]]></ability>
+		<description><![CDATA[砸金蛋，抽奖营销活动，带兑换页面]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<home>
+			<entry title="砸金蛋微站" do="index" />
+		</home>	
+		<menu>
+			<entry title="砸金蛋管理" do="manage" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_award` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `rid` int(11) NOT NULL,
+  `type` varchar(20) DEFAULT NULL,
+  `fansID` int(11) DEFAULT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `prizetype` varchar(10) DEFAULT NULL,
+  `award_sn` varchar(50) DEFAULT NULL,
+  `createtime` int(10) DEFAULT NULL,
+  `consumetime` int(10) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_smashegg_fans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `fansID` int(11) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `tel` varchar(20) DEFAULT NULL,
+  `todaynum` int(11) NOT NULL,
+  `totalnum` int(11) NOT NULL,
+  `awardnum` int(11) DEFAULT '0',
+  `last_time` int(10) NOT NULL,
+  `createtime` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_smashegg_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `content` varchar(200) DEFAULT NULL,
+  `start_picurl` varchar(200) NOT NULL,
+  `isshow` tinyint(1) DEFAULT NULL,
+  `keyword` varchar(100) DEFAULT NULL,
+  `ticket_information` varchar(200) DEFAULT NULL,
+  `starttime` int(10) DEFAULT NULL,
+  `endtime` int(10) DEFAULT NULL,
+  `Repeat_lottery_reply` varchar(50) DEFAULT NULL,
+  `end_theme` varchar(50) DEFAULT NULL,
+  `end_instruction` varchar(200) DEFAULT NULL,
+  `end_picurl` varchar(200) DEFAULT NULL,
+  `c_type_one` varchar(20) DEFAULT NULL,
+  `c_name_one` varchar(50) DEFAULT NULL,
+  `c_num_one` int(11) DEFAULT '0',
+  `c_draw_one` int(11) DEFAULT '0',
+  `c_pic_one` varchar(200) DEFAULT NULL,
+  `c_type_two` varchar(20) DEFAULT NULL,
+  `c_name_two` varchar(50) DEFAULT NULL,
+  `c_num_two` int(11) DEFAULT NULL,
+  `c_draw_two` int(11) DEFAULT '0',
+  `c_pic_two` varchar(200) DEFAULT NULL,
+  `c_type_three` varchar(20) DEFAULT NULL,
+  `c_name_three` varchar(50) DEFAULT NULL,
+  `c_num_three` int(11) DEFAULT '0',
+  `c_draw_three` int(11) DEFAULT '0',
+  `c_pic_three` int(200) DEFAULT NULL,
+  `c_type_four` varchar(20) DEFAULT NULL,
+  `c_name_four` varchar(50) DEFAULT NULL,
+  `c_num_four` int(11) DEFAULT '0',
+  `c_draw_four` int(11) DEFAULT '0',
+  `c_pic_four` varchar(200) DEFAULT NULL,
+  `c_type_five` varchar(20) DEFAULT NULL,
+  `c_name_five` varchar(50) DEFAULT NULL,
+  `c_num_five` int(11) DEFAULT NULL,
+  `c_draw_five` int(11) DEFAULT '0',
+  `c_pic_five` varchar(200) DEFAULT NULL,
+  `c_type_six` varchar(20) DEFAULT NULL,
+  `c_name_six` varchar(50) DEFAULT NULL,
+  `c_num_six` int(11) DEFAULT '0',
+  `c_draw_six` int(10) DEFAULT '0',
+  `c_pic_six` varchar(200) DEFAULT NULL,
+  `total_num` int(11) DEFAULT NULL COMMENT '总获奖人数(自动加)',
+  `probability` double DEFAULT NULL,
+  `award_times` int(11) DEFAULT '0',
+  `number_times` int(11) DEFAULT '0',
+  `most_num_times` int(11) DEFAULT '0',
+  `sn_code` tinyint(4) DEFAULT '0',
+  `sn_rename` varchar(20) DEFAULT NULL,
+  `tel_rename` varchar(20) DEFAULT NULL,
+  `copyright` varchar(20) DEFAULT NULL,
+  `show_num` tinyint(2) DEFAULT NULL,
+  `viewnum` int(11) DEFAULT '0',
+  `fansnum` int(11) DEFAULT '0',
+  `createtime` int(10) DEFAULT NULL,
+  `win_info` varchar(40) DEFAULT NULL,
+  `no_win_info` varchar(40) DEFAULT NULL,
+  `share_title` varchar(200) DEFAULT NULL,
+  `share_desc` varchar(300) DEFAULT NULL,
+  `share_url` varchar(100) DEFAULT NULL,
+  `share_txt` varchar(500) DEFAULT NULL,
+  `accept_passwrod` varchar(20) DEFAULT NULL,
+  `is_default` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></install>
+	<uninstall><![CDATA[DROP TABLE ims_smashegg_fans;
+	DROP TABLE ims_smashegg_reply;]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

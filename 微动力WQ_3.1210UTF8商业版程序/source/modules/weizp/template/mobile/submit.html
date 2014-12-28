@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html>
+<head time='1398418777'>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    
+    <meta name="description" content="..........."/>
+    <meta name="keywords" content="" />
+    
+    <title>提交作品</title>
+    <script type="text/javascript">
+        window.g_module = [];
+        var STATIC_DOMAIN = '',
+            ARS_TIME = '1398418777';
+        
+        var g_tsBase = new Date(),g_ts = {};
+        var PathUtil = {
+            getCPath: function() {
+                return STATIC_DOMAIN + '';
+            }
+        };
+        
+        g_ts.css_start=new Date();
+        var pageName = '';
+		var UploadUrl = '{php echo $this->createMobileUrl('imgupload',array('rid'=>$rid))}';
+    </script>
+      <!--debug-->
+       <script type="text/javascript">
+        var sId = 216014388,
+            tId = 0,
+            uId = 4594220,
+            isNullNick = '0' | false,
+            isManager = 0,
+            authUrl = '',
+            siteLogo = '',
+            CSRFToken = "5ded74c4",
+            debug = '' | false,
+            DOMAIN = '',
+            _speedMark = new Date(),
+            isWX = '' | false,
+            isMQ = '' | false,
+            isAppBar = '' | false,
+                        newMsgCount = '',
+            enabledSmiley = '1|2';
+    </script>
+
+  
+  
+</head>
+<body class="pt"><form method="post" action="" id="newthread">
+    <div class="sendInfo">
+            <input type="hidden" name="token" value="{$_W['token']}">
+            <input type="hidden" name="submit" value="submit">
+            <div class="sendBorder" style="margin-bottom:10px;">
+            	<input type="text" name="title" value="" placeholder="作品标题" style="border:none;width:100%;">
+             </div>
+             <div class="sendBorder">
+                <textarea id="content" name="content" cols="" rows="" class="sInput" placeholder="作品描述（500字以内）"></textarea>
+                 </div> 
+                
+            </div>
+            <div class="sendOperate">
+                                
+                <div class="operBtn db fr">
+                    <span class="pText" id="pText">500</span>
+                    <a href="javascript:;" id="cBtn" class="cancelBtn db" title="">取消</a>
+                    <a href="javascript:;" class="sendBtn c1 db" title="" id="submitButton">提交</a>
+                </div>
+            </div>
+    </div>
+
+    <div class="tipLayer">
+        <div class="photoList">
+            <ul>
+                <li class="on" id="addPic">
+                <input type="file" class="on needsclick" style="z-index:200;opacity:0;filter:alpha(opacity=0);-ms-filter:'alpha(opacity=0)';" id="uploadFile" accept="image/*" single>
+                </li>
+            </ul>
+            <p class="textTip">最多可上传8张作品</p>
+        </div>
+        
+<script id="tmpl_expreBox" type="text/html">
+    <div class="expreList" style="display:none;">
+    <div class="expressionTab">
+        <% var def = null %>
+        <% for (var i in cate) {%>
+        <% if (def === null) { def = i }%>
+        <a href="javascript:;"<% if (def == i) {%> class="on"<%}%> id="emo<%=i%>" title="<%=cate[i]%>"><%=cate[i]%></a>
+        <% }%>
+    </div>
+    <% var pageNum = []%>
+    <div class="expreBox">
+        <% for (var i in emo) {%>
+        <ul class="expreCon <%=emo[i].ulClass%>" id="exp_emo<%=i%>" style="<%if(i != def) {%>display:none;<%}%>">
+            <% var emoNum = 0%>
+            <% var page = 0%>
+        <% for (var j in emo[i].icon) {%>
+            <% ++emoNum%>
+            <% if (emoNum % emo[i].perPage == 1) { %>
+                <% ++page%>
+                <% pageNum[i] = page%>
+                <li class="<%=emo[i].liClass%><%=page%>">
+            <% } %>
+                <a href="javascript:;" title="<%=j%>"></a>
+            <% if (emoNum % emo[i].perPage == 0) { %>
+                <%if (emo[i].delBtn) {%><a href="javascript:;"></a><%}%>
+                </li>
+            <% } %>
+        <% }%>
+        </ul>
+        <% }%>
+    </div>
+    <% for (var k in pageNum) {%>
+    <p class="pNumCon" id="exp_emo<%=k%>_page"<% if (def != k) {%> style="display:none;"<%}%>>
+        <% for(var i = 1; i <= pageNum[k]; i++) { %>
+        <a href="javascript:;" class="<% if(i == 1) { %> pNumOn <% } %> pNum db"></a>
+        <%}%>
+    </p>
+    <% }%>
+    </div>
+    </script>
+    </div>
+
+</form>
+            <div class="topBar">
+    <div class="bottomBarCon">
+        <a href="{php echo $this->createMobileUrl('index',array('rid'=>$rid));}" class="qBackBtn" id="goback"><i class="upBtn db"></i>返回</a>
+        <!--<a href="javascript:;" class="qBackBtn qOn"><i class="upBtn db"></i>返回</a>-->
+        <h2 class="qTitle">提交您的作品</h2>
+                 <a href="{php echo $this->createMobileUrl('my',array('rid'=>$rid));}" id="mqOption" class="moreC qMore db" style="width:80px;background: -webkit-gradient(linear,0% 0%, 0% 100%, from(#85c429), to(#67a809));height: 34px;padding-top: 0; border: none;margin: 4px;font-size:16px;line-height:34px;">我的作品</a>
+        </div>
+</div>
+<script type="text/javascript">
+
+g_module.push('module/topBar');
+</script>    
+<script type="text/javascript" charset="utf-8" src="http://dzqun.gtimg.cn/quan/scripts/jpegmeta.js"></script>
+<script type="text/javascript" charset="utf-8" src="http://dzqun.gtimg.cn/quan/scripts/jpeg.encoder.basic.js"></script>
+<script type="text/javascript" charset="utf-8" src="http://dzqun.gtimg.cn/quan/scripts/image_compress.js?t=1398418777"></script>
+
+<script type="text/javascript">
+g_module.push('module/newthread');
+</script>
+
+	<script src="./source/modules/weizp/template/src/lib/jquery.min.js"></script>
+	<script src="./source/modules/weizp/template/src/lib/global.js"></script>
+    <script src="./source/modules/weizp/template/src/lib/fastclick.js"></script>
+    <script src="./source/modules/weizp/template/src/lib/template.min.js"></script>
+    <script src="./source/modules/weizp/template/src/module/newthread.js"></script>
+    <link rel="stylesheet" href="./source/modules/weizp/template/src/css/comm.css?t=1398418777"  onload="g_ts.css_end = new Date();" onerror="g_ts.css_end = new Date();">
+
+<!--<script type="text/javascript" charset="utf-8" src="./source/modules/weizp/template/src/seajs-0.1.5.js?t=1398418777"></script>
+-->
+
+
+</body>
+</html>

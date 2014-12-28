@@ -1,0 +1,44 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo create_url('site/module/group',array('name'=>'fans','state'=>''));}">同步粉丝</a></li>
+	<li><a href="">粉丝列表</a></li>
+	<li><a href="{php echo create_url('site/module/addgroup',array('name'=>'ifans','state'=>''));}">新建分组</a></li>
+</ul>
+<div class="main">
+	<div class="stat">
+		<div class="stat-div">
+			<div class="sub-item" id="table-list">
+				<h4 class="sub-title">同步所有粉丝信息</h4>
+				<div class="sub-content">
+					<!--<table class="table table-hover">
+						<thead class="navbar-inner">
+							<tr>
+								<th style="width:40px;">总粉丝数</th>
+								<th style="width:100px;">同步成功</th>
+								<th style="width:100px;">同步失败</th>
+								<th style="width:100px;">同步时间</th>
+								<th style="width:150px;">备注</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td style="text-align:center;">{$settings['total']}</td>
+								<td style="text-align:center;">{$settings['success']}</td>
+								<td style="text-align:center;">{$settings['total']-$settings['success']}</td>
+								<td style="text-align:center;">{$settings['time']}</td>
+								<td style="font-size:12px; color:#666;text-align:center;">
+									{$settings['beizhu']}
+								</td>
+							</tr>
+						</tbody>
+					</table>-->
+						<form action="" method="post">
+							<input type="submit" name="submit"value="获取粉丝信息" class="btn span2" />
+							<input type="hidden" name="token" value="{$_W['token']}" />
+						</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{template 'common/footer'}

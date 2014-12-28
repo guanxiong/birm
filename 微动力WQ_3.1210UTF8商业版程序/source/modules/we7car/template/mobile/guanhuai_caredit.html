@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="./source/modules/we7car/style/css/reset.css" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/we7car/style/css/common1.css" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/we7car/style/css/datepicker_car.css" media="all" />
+<script type="text/javascript" src="./source/modules/we7car/style/js/jQuery.js"></script>
+<script type="text/javascript" src="./source/modules/we7car/style/js/bootstrap_datepicker.js"></script>
+<script type="text/javascript" src="./source/modules/we7car/style/js/category.js"></script>
+<title>车主关怀</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+        <!-- Mobile Devices Support @begin -->
+            <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+            <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+            <meta content="no-cache" http-equiv="pragma">
+            <meta content="0" http-equiv="expires">
+            <meta content="telephone=no, address=no" name="format-detection">
+            <meta content="width=device-width, initial-scale=1.0" name="viewport">
+            <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <!-- Mobile Devices Support @end -->
+        <style>img{width:100%!important;}</style>
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;">
+        
+		<script>
+			$().ready(function(){
+				var now = new Date();
+				var nowArr = [now.getFullYear(), now.getMonth()+1, now.getDate()];
+				$("#dpd1, #dpd2, #dpd3").each(function(k,v){
+					var ndate = $(v).datepicker({
+						format:"yyyy-mm-dd",
+					 	onRender: function(date) {
+						   return date.valueOf() > now.valueOf() ? 'disabled' : '';
+						}
+					}).on("changeDate", function(date){
+						if('days' == date.viewMode){
+							ndate.datepicker('hide');
+						}
+					});
+					v.value = nowArr.join("-");
+				});
+			});
+
+			function checkInfo(){
+				var form = document.getElementById("form1");
+				var obj = {
+					car_model: form.car_model.value,
+					car_series: form.car_series.value,
+					car_type: trim(form.car_type.value),
+
+					car_no: trim(form.car_no.value),
+					car_userName: trim(form.car_userName.value),
+					car_startTime: form.car_startTime.value,
+					fileCover: form.car_photo.value,
+
+					car_insurance_lastDate: form.car_insurance_lastDate.value,
+					car_insurance_lastCost: trim(form.car_insurance_lastCost.value),
+					
+					car_care_mileage: trim(form.car_care_mileage.value),
+					car_care_lastDate: form.car_care_lastDate.value,
+					car_care_lastCost: trim(form.car_care_lastCost.value)
+				}
+
+				if('0' == obj.car_model){
+					if(obj.car_type.length <= 0){
+						alert("请选择车型或直接输入");return false;
+					}
+				}
+				if(obj.car_no.length<=0){
+					alert("请输入车牌号码");return false;
+				}
+				if(obj.car_userName.length<=0){
+					alert("请输入车主姓名");return false;
+				}
+				if(obj.car_insurance_lastCost.length<=0 || !validNo(obj.car_insurance_lastCost)){
+					alert("请输入正确的保险费用");return false;
+				}
+				if(obj.car_care_mileage.length<=0 || !validNo(obj.car_care_mileage)){
+					alert("请输入正确的保养里程");return false;
+				}
+				if(obj.car_care_lastCost.length<=0 || !validNo(obj.car_care_lastCost)){
+					alert("请输入正确的保养费用");return false;
+				}
+				return true;
+			}
+
+			function trim(str){
+				str = str.length? str:"";
+				return str.replace(/^\s+|\s+$/gi, "");
+			}
+			function validNo(str){
+				str +=str;
+				var yes = (/^\d+$/g.test(str));
+				return yes;
+			}
+
+		</script>
+
+	<body onselectstart="return true;" ondragstart="return false;">
+		<div id="bookBody" class="body">
+			<section>
+				<form id="form1" action="" method="post" onsubmit="return checkInfo();" enctype="multipart/form-data">
+					<div class="pb_5 pl_10 pr_10 pt_10">
+						<dl class="list_book">
+							<dt><label>添加车型</label></dt>
+							<dd>
+								<div>
+									<select name="car_model" id="field1">
+									</select>
+								</div>
+							</dd>
+							<dd>
+								<div>
+									<select name="car_series" id="field2">
+									</select>
+								</div>
+							</dd>
+							<dd>
+								<div><input type="text" name="car_type" placeholder="或者您也可以直接输入" maxlength="30" value="{$guan['car_type']}"/></div>
+							</dd>
+						</dl>
+					</div>
+					<!---------->
+					<div class="pb_5 pl_10 pr_10">
+						<dl class="list_book">
+							<dt><label>基本信息</label></dt>
+							<dd class="tbox">
+								<div><label>车牌号码</label></div>
+								<div><input type="text" name="car_no" placeholder="如：沪A123456" maxlength="15" value="{$guan['car_no']}"/></div>
+							</dd>
+							<dd class="tbox">
+								<div><label>车主姓名</label></div>
+								<div><input type="text" name="car_userName" placeholder="如：王百万" maxlength="15" value="{$guan['car_userName']}"/></div>
+							</dd>
+							<dd class="tbox">
+								<div><label>上牌时间</label></div>
+								<div><input type="text" name="car_startTime" id="dpd1" readonly="readonly" value="{$guan['car_startTime']}"/></div>
+							</dd>
+
+							<dd class="tbox">
+								<div><label>爱车靓照</label></div>
+								<div class="relative">
+									<input type="text" placeholder="添加照片" name="fileCover" id="fileCover" value=""/>
+									<input type="file" name="car_photo" accept="image/*" onchange="changeFile(this,event);"/>
+									<span style="color:red;">建议图片尺寸640*320，大小不超过1M</span>
+								</div>
+							</dd>
+							{if $guan['car_photo']}
+							<dd>
+								<div>
+									<input type="image" class="img_loading" src="{$_W['attachurl']}{$guan['car_photo']}" id="fileShow" name="fileShow" style="max-height:180px;padding:0!important;height:auto;" onclick="return false;"/> 
+								</div>
+							</dd>
+							{else}
+							<dd>
+								<div>
+									<input type="image" class="img_loading" src="" id="fileShow" name="fileShow" style="max-height:180px;padding:0!important;height:auto;" onclick="return false;"/> 
+								</div>
+							</dd>
+							
+							{/if}
+
+						</dl>
+					</div>
+					<!---------->
+					<div class="pb_5 pl_10 pr_10">
+						<dl class="list_book">
+							<dt><label>保险信息</label></dt>
+							<dd class="tbox">
+								<div><label>上次保险日期</label></div>
+								<div><input type="text" name="car_insurance_lastDate" id="dpd2" readonly="readonly" value="{$guan['car_insurance_lastDate']}" /></div>
+							</dd>
+							<dd class="tbox">
+								<div><label>上次保险费用</label></div>
+								<div style="width:100%;"><input type="number" name="car_insurance_lastCost" maxlength="15" value="{$guan['car_insurance_lastCost']}"/></div>
+								<div>元</div>
+							</dd>
+						</dl>
+					</div>
+					<!---------->
+					<div class="pb_5 pl_10 pr_10">
+						<dl class="list_book">
+							<dt><label>保养信息</label></dt>
+							<dd class="tbox">
+								<div><label>上次保养里程</label></div>
+								<div style="width:100%;"><input type="number" name="car_care_mileage" maxlength="8" value="{$guan['car_care_mileage']}"/></div>
+								<div><pre>公里</pre></div>
+							</dd>
+							<dd class="tbox">
+								<div><label>上次保养时间</label></div>
+								<div><input type="text" name="car_care_lastDate" id="dpd3" readonly="readonly" value="{$guan['car_care_lastDate']}"/></div>
+							</dd>
+							<dd class="tbox">
+								<div><label>上次保养费用</label></div>
+								<div style="width:100%;"><input type="number" name="car_care_lastCost" maxlength="8" value="{$guan['car_care_lastCost']}"/></div>
+								<div>元</div>
+							</dd>
+						</dl>
+					</div>
+					<div style="margin:10px;text-align: center;">
+						<input type="submit" name="submit" value="确定" class="btn_submit">
+					</div>
+				</form>
+			</section>
+			<footer class="nav_footer">
+				<ul class="box">
+					<li><a href="javascript:history.go(-1);" >返回</a></li>
+					<li><a href="javascript:history.go(1);" >前进</a></li>
+					<li><a href="{php echo create_url('index/module', array('do' => 'index', 'name' => 'weicar', 'id' => $_GPC['id'],'from_user' => $_GPC['from_user']))}">首页</a></li>
+					<li><a href="javascript:location.reload();" >刷新</a></li>
+				</ul>
+			</footer>
+		</div>
+	<script type="text/javascript">
+		new CS("field1", "field2", "{$guan['car_model']}", "{$guan['car_series']}", '{$choose}');
+//	$(document).ready(function () {
+//		$("#dateline" ).datepicker({ dateFormat: "yy-mm-dd" });
+//	});
+
+		function changeFile(thi, evt){
+			for (var i=0, f; f = evt.target.files[i]; i++) {
+				var type = {".jp":"image/jpeg",".pn":"image/png",".gi":"image/gif"}[f.name.match(/\.(\w){2}/g)[0]||".jp"];
+				f.type2 = f.type||type;
+
+				var fileCover = document.getElementById('fileCover');
+				var fileShow = document.getElementById('fileShow');
+				fileShow.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+				var reader = new FileReader();
+				reader.onload = (function(theFile) {
+					return function(e) {
+						var ori = e.target.result;
+						ori = ori.replace(/^.+(,)/, "data:"+theFile.type2+";base64,");
+						fileCover.value = evt.target.files[0].name;
+						fileShow.src = ori;
+					};
+				  })(f);
+				reader.readAsDataURL(f);	
+			 }
+		}
+
+
+	</script>
+	</body>        		<div mark="stat_code" style="width:0px; height:0px; display:none;">
+					</div>
+	</body>
+</html>

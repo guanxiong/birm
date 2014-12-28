@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[留言墙]]></name>
+		<identifie><![CDATA[message]]></identifie>
+		<version><![CDATA[1.3]]></version>
+		<type><![CDATA[customer]]></type>
+		<ability><![CDATA[留言墙]]></ability>
+		<description><![CDATA[留言墙，带审核，审核以后可以前台查看，也可以免审核。]]></description>
+		<author><![CDATA[超级无聊]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="留言墙入口设置" do="list" />
+		</cover>
+		<menu>
+			<entry title="基本设置" do="set" state="" direct="false" />
+			<entry title="留言管理" do="list" state="" direct="false" />
+		</menu>
+		<home>
+			<entry title="留言墙" do="list" />
+		</home>
+	</bindings>
+	<install><![CDATA[CREATE TABLE `ims_message_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `nickname` varchar(30) DEFAULT NULL,
+  `info` varchar(200) DEFAULT NULL,
+  `fid` int(11) DEFAULT '0',
+  `isshow` tinyint(1) DEFAULT '0',
+  `create_time` int(11) DEFAULT NULL,
+  `from_user` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_message_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `status` int(1) NOT NULL,
+  `isshow` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></install>
+	<uninstall><![CDATA[DROP TABLE ims_message_list;DROP TABLE ims_message_reply;]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[微路由]]></name>
+		<identifie><![CDATA[lxyrtrouter]]></identifie>
+		<version><![CDATA[0.5]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[微名片]]></ability>
+		<description><![CDATA[支持RippleTek路由器接口实现微信与路由器之间的各项应用交互]]></description>
+		<author><![CDATA[大路货 QQ:792454007]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="路由器管理" do="routerlist" state="" direct="false" />
+			<entry title="认证记录" do="authlist" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[	
+	CREATE TABLE `ims_lxy_rtrouter_authentication` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `routerid` int(11) DEFAULT NULL,
+  `fromuser` varchar(100) DEFAULT NULL,
+  `createtime` int(11) DEFAULT NULL,
+  `result` int(11) DEFAULT NULL,
+  `resultmemo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_lxy_rtrouter_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `iurl` varchar(255) DEFAULT NULL,
+  `rname` varchar(100) DEFAULT NULL,
+  `appid` varchar(100) DEFAULT NULL,
+  `appkey` varchar(100) DEFAULT NULL,
+  `nodeid` varchar(100) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_lxy_rtrouter_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+  `oktip` varchar(255) NOT NULL COMMENT '规则标题',
+  `routerid` int(10) unsigned NOT NULL COMMENT '名片id',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '开关状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

@@ -1,0 +1,158 @@
+{template wl_header} 
+<script>
+$(function(){
+    new Swipe(document.getElementById('banner_box'), {
+        speed:500,
+       // auto:3000,
+        callback: function(){
+           var lis = $(this.element).next("ol").children();
+           lis.removeClass("on").eq(this.index).addClass("on");
+        }
+    });
+    //
+    //notStart();
+    //
+});
+function notStart(){
+    var d = new iDialog();
+    d.open({
+        classList: "waiting",
+        title:"已加入开团提醒",
+        close:"<span class='close'>×</span>",
+        content:'<p class="article">您可以在信息设置中<br/>对提醒时间进行设置</p>',
+        btns:[
+            {id:"", name:"确认", onclick:"fn.call();", fn: function(self){
+                self.die();
+            }},
+            {id:"", name:"去设置", onclick:"fn.call();", fn: function(self){
+                self.die();
+            }}
+        ]
+    });
+}</script>
+<div>
+    <div id="container" class="container animate">
+        <header></header>
+        <div class="body">
+            <section>
+                 <div id="banner_box" class="box_swipe">
+                    <ul >
+							{php $groupon['phout_url']=explode('|',$groupon['thumb_list']);}
+								{loop $groupon['phout_url'] $row2}
+								{php if (empty($row2)) continue;}
+								<li><img src="{$_W['attachurl']}{$row2}" /></li>
+							{/loop}
+							</ul>
+                    <ol>
+							{loop $groupon['phout_url'] $key $row2}
+								{php if (empty($row2)) continue;}
+								<li {if $key==0}class="on"{/if}></li>
+							{/loop}
+                    </ol>
+                </div>
+            </section>
+            <div class="br1" >&nbsp;</div>
+            <section class="detail_price">
+                <ul class="header">
+                    <ol class="tbox" id="nav_2">
+                        <li style="width:100%;"><label>￥{$groupon['price']}<span><s>￥{$groupon['market_price']}</s></span></label></li>
+                        <li>
+							<a href="{php echo $this->createMobileUrl('wlcheck',array('tid'=>$groupon['id']));}" >立即参团</a>
+						</li>
+                    </ol>
+                </ul>
+                <article>
+                    <h3>{$groupon['title']}</h3>
+                    <div class="p">{$groupon['summary']}</div>
+                    <div class="f">
+                        <p>
+                           {if $groupon['random_refund']==1} <a class="pre">√  支持随时退订</a>{/if}
+                           {if $groupon['expired_refund']==1}<a class="pre">√  支持过期退订</a>{/if}
+                        <p>
+                        <p class="ofh">
+                            <label>已售 {php echo ($groupon['sell_nums']+$groupon['virtual_sales'])}</label>
+                            <!--<a href="javascript:;" class="collect fr"><span class="icons icons_collect on">&nbsp;</span>已收藏</a>
+                            <a href="javascript:;" class="collect fr"><span class="icons icons_collect">&nbsp;</span>收藏</a>-->
+                            <label class="fr" id="times">{php $rangetime=$groupon['endtime']-time()}
+											{if ($rangetime<604800 )}
+											截止:{php echo(date('Y-m-d H:i:s',$groupon['endtime']))}{else}3天以上{/if}</label>
+                        </p>
+                    </div>
+                </article>
+            </section>
+
+            <section class="detail_section new_msg">
+                <h6>最新通知</h6>
+                <article>
+                    <p> {$groupon['notice']}</p>
+                </article>
+            </section>
+            <section class="detail_section detail_info">
+                <h6>团购须知</h6>
+                <article>
+                    <p> {$groupon['tips']}</p>
+                </article>
+            </section>
+			<style>
+			.content img {
+				max-width:300px;
+				width:auto;
+				-width:expression(width>300?"300px":true);
+				height:auto;
+			}
+			</style>
+            <section class="detail_section detail_info">
+                <h6>团购详情</h6>
+                <article><div class="content">{$groupon['info']}</div></article>
+            </section>
+        </div>
+
+    </div>
+</div>
+{template wl_footer} 
+<script>
+    $(function(){
+        var nav_2 = document.getElementById("nav_2");
+        function listingScroll(){
+            var offset = nav_2.parentNode.offsetTop;
+            setTimeout(function(){
+                if(document.body.scrollTop>=offset){
+                    nav_2.classList.add("on");
+                }else{
+                    nav_2.classList.remove("on");
+                }
+            }, 100);
+        }
+        window.onscroll = function(){
+            listingScroll();
+        }
+        listingScroll();
+    });
+</script>
+{if ($rangetime<604800)||1==1 }
+<SCRIPT LANGUAGE="JavaScript">
+function fresh()
+{
+        var endtime=new Date("{php echo(date('Y/m/d,H:i:s',$groupon['endtime']))}");
+        var nowtime = new Date();
+        var leftsecond=parseInt((endtime.getTime()-nowtime.getTime())/1000);
+        d=parseInt(leftsecond/3600/24);
+        h=parseInt((leftsecond/3600)%24);
+        m=parseInt((leftsecond/60)%60);
+        s=parseInt(leftsecond%60);
+       
+//        document.getElementById("times").innerHTML=__h+"小时"+__m+"分"+__s+"秒";
+		document.getElementById("times").innerHTML=d+'天'+h+"小时"+m+"分"+s+"秒";
+        if(leftsecond<=0){
+        document.getElementById("times").innerHTML="抢购已结束";
+        clearInterval(sh);
+        }
+}
+fresh()
+var sh;
+sh=setInterval(fresh,1000);
+</script>
+{/if}
+</body>
+
+</html>

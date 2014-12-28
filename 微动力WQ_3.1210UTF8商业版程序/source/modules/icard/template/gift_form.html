@@ -1,0 +1,131 @@
+{template 'common/header'}
+{php echo $this -> set_tabbar($action);}
+<div class="main">
+        <form action="" method="post" onsubmit="return check();" class="form-horizontal form" enctype="multipart/form-data">
+        <h4>{$title} - <a href="{php echo create_url('site/module', array('do' => 'SetRule', 'name' => 'icard'));}" style="font-size:0.8em">入口设置</a></h4>
+        <input type="hidden" id="id" name="id" value="{$reply['id']}"/>
+		<table class="tb">
+			<tr>
+				<th><label for="">礼品名称</label></th>
+				<td>
+                    <input type="text" name="title" value="{$reply['title']}" id="title" class="span4" placeholder="请输入礼品名称"/>
+                    <div class="help-block">不超过30个字符</div>
+				</td>
+			</tr>
+            <tr>
+                <th><label for="">礼品图片</label></th>
+                <td>
+                    <div id="" class="uneditable-input reply-edit-cover">
+                        <div class="detail">
+                            <span class="pull-right">大图片建议尺寸：200像素 * 200像素</span>
+                            <input type="button" id="btnpicture" fieldname="hidpicture" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+                            <button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'hidpicture')" style="{if empty($reply['logo'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+                        </div>
+                        {if !empty($reply['picture'])}
+                        <input type="hidden" name="hidpicture-old" value="{$reply['logo']}">
+                        <div id="upload-file-view" class="upload-view">
+                            <input type="hidden" id="hidpicture" name="hidpicture" value="{$reply[picture]}">
+                            <img width="100" src="{$_W['attachurl']}{$reply['picture']}">
+                        </div>
+                        {else}
+                        <div id="upload-file-view"></div>
+                        {/if}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="">兑换礼品所需积分</label></th>
+                <td>
+                    <input type="text" id="needscore" name="needscore" value="{$reply['needscore']}" class="span4" placeholder="请输入兑换礼品所需积分" />
+                </td>
+            </tr>
+            <tr>
+                <th><label for="">有效期</label></th>
+                <td>
+                    <link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css?v={TIMESTAMP}" />
+                    <script type="text/javascript" src="./resource/script/daterangepicker.js?v={TIMESTAMP}"></script>
+                    <input name="starttime" type="hidden" value="{php echo date('Y-m-d H:i', $starttime)}" />
+                    <input name="endtime" type="hidden" value="{php echo date('Y-m-d H:i', $endtime)}" />
+                    <button class="btn" id="date-range" class="date" type="button"><span class="date-title">{php echo date('Y-m-d H:i:s', $starttime)} 至 {php echo date('Y-m-d  H:i:s', $endtime)}</span> <i class="icon-caret-down"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="">使用次数</label></th>
+                <td>
+                    每个用户可以使用：<input type="text" name="count" value="{if empty($reply)}0{else}{$reply['count']}{/if}" id="count" class="span1" /> 设为0表示不限次数
+                </td>
+            </tr>
+			<tr>
+				<th><label for="">使用说明</label></th>
+				<td>
+                    <textarea style="height:200px; width:600px;" class="richtext-clone" name="content" id="content">{$reply['content']}</textarea>
+				</td>
+			</tr>
+            <tr>
+                <th><label for="">排序</label></th>
+                <td>
+                    <input type="text" name="displayorder" value="{if empty($reply)}0{else}{$reply['displayorder']}{/if}" id="displayorder" class="span1" />
+                </td>
+            </tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+        function check() {
+            if($.trim($('#title').val()) == '') {
+                message('没有输入标题.', '', 'error');
+                return false;
+            }
+            if($.trim($('#title').val()).length > 30) {
+                message('标题不能多于30个字.', '', 'error');
+                return false;
+            }
+            var needscore = $.trim($('#needscore').val());
+            if(isNaN(needscore)){
+                message('兑换积分必须为数字.', '', 'error');
+                return false;
+            }
+            if(needscore == '') {
+                message('没有输入兑换积分.', '', 'error');
+                return false;
+            }
+
+            return true;
+        }
+        </script>
+<script type="text/javascript">
+    kindeditor($('.richtext-clone'));
+    kindeditorUploadBtn($('#btnpicture'));
+</script>
+<script type="text/javascript">
+    $('#date-range').daterangepicker({
+        format: 'YYYY-MM-DD H:m',
+        startDate: $(':hidden[name=starttime]').val(),
+        endDate: $(':hidden[name=endtime]').val(),
+        startTime:$(':hidden[name=starttime]').val(),
+        endTime:$(':hidden[name=endtime]').val(),
+        locale: {
+            applyLabel: '确定',
+            cancelLabel: '取消',
+            fromLabel: '从',
+            toLabel: '至',
+            weekLabel: '周',
+            customRangeLabel: '日期范围',
+            daysOfWeek: moment()._lang._weekdaysMin.slice(),
+            monthNames: moment()._lang._monthsShort.slice(),
+            firstDay: 0
+        }
+    }, function(start, end){
+        $('#date-range .date-title').html(start.format('YYYY-MM-DD H:m') + ' 至 ' + end.format('YYYY-MM-DD H:m'));
+        $(':hidden[name=starttime]').val(start.format('YYYY-MM-DD H:m'));
+        $(':hidden[name=endtime]').val(end.format('YYYY-MM-DD H:m'));
+    });
+</script>
+{template 'common/footer'}

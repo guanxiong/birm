@@ -1,0 +1,46 @@
+{template 'common/header'}
+<div class="main">
+<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="brand">奖品发放</span>
+					</div>
+				</div>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="{$item['id']}">
+  <h4>奖品发放</h4>
+  <table class="tb">
+     <tr>
+		  <th width="90">姓名</th>
+			<td width="354">{$item['name']}</td>
+	  </tr>
+      <tr>
+		  <th width="90">累计签到奖发放</th>
+			<td width="354"><input type="text" id="sendwsumdays" name="sendwsumdays" value=""  class="span2"  />
+			/{$item['wsumdays']}
+			</td>
+	  </tr>
+      <tr>
+		  <th width="90">连续签到奖发放</th>
+			<td width="354"><input type="text" id="sendwcontinuedays" name="sendwcontinuedays" value=""  class="span2"  />
+/{$item['wcontinuedays']} </td>
+	  </tr>
+      <tr>
+		  <th width="90">累计NO.1奖发放</th>
+			<td width="354"><input type="text" id="sendwsumfirst" name="sendwsumfirst" value=""  class="span2"  />
+/{$item['wsumfirst']} </td>
+	  </tr>
+        <tbody>
+		<tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+        </tbody>
+	</table>
+</form>
+
+ 
+
+{template 'common/footer'}

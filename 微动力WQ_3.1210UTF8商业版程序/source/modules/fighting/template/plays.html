@@ -1,0 +1,67 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('site/module', array('do' => 'addquestion', 'name' => 'fighting'));}">添加题目</a></li>
+	<li><a href="{php echo create_url('site/module', array('do' => 'detail', 'name' => 'fighting'));}">管理题目</a></li>
+	<li class="active"><a href="{php echo create_url('site/module', array('do' => 'ShowPlay', 'name' => 'fighting'));}">活动列表</a></li>
+</ul>
+<div class="main">
+	<div class="search">
+		<table class="table table-bordered tb">
+			<div class="sub-item" id="table-list">
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover2">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</th>
+									<th style="width:200px;">活动名称</th>
+									<th class="width:200px;">活动简介</th>
+									<th style="width:50px;">题数</th>
+									<th style="width:100px;">活动状态</th>
+									<th style="width:150px;">开始时间</th>
+									<th style="width:150px;">结束时间</th>
+									<th style="width:110px;">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $row}
+								<tr>
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+									<td>
+										<div class="mainContent">
+											<div class="nickname" style="text-align:left;">{$row[id]}、{php echo substr($row[title],0,69);}</div>
+										</div>
+									</td>
+									<td style="text-align:left;">{$row[description]}</td>
+									<td style="text-align:left;">{$row[qnum]}</td>
+									<td style="text-align:left;font-size:12px; color:#666;">
+										<div style="margin-bottom:10px;">{if $row['status_fighting'] == '1'}暂停{else if $row['status_fighting'] == '2'}结束{else} 正常{/if}</div>
+									</td>
+									<td style="text-align:left;">{php echo date('Y-m-d <br /> h:i:s', $row['start']);}</td>
+									<td style="text-align:left;">{php echo date('Y-m-d <br /> h:i:s', $row['end']);}</td>
+									<td style="text-align: left;">
+										<a href="{php echo create_url('site/module', array('do' => 'Players', 'name' => 'fighting', 'id' => $row[id]))}">查看</a>
+										<a href="{php echo create_url('site/module', array('do' => 'PlayEdit', 'name' => 'fighting', 'id' => $row[id]))}">修改</a>
+										<a href="{php echo create_url('site/module', array('do' => 'delquestion', 'name' => 'fighting', 'id' => $row[id]))}">删除</a>
+									</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr>
+								<td style="width:40px;" class="row-first"><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+								<td colspan="4">
+									<input type="submit" name="delete" value="删除选中" class="btn btn-primary" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					</form>
+					{$pager}
+				</div>
+		</table>
+	</div>
+</div>
+{template 'common/footer'}

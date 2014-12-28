@@ -1,0 +1,191 @@
+@charset "utf-8";
+
+body{margin:0;padding:0;background: #f3f3f3;}
+ul,li,dl,dt,dd{ margin:0px; padding:0px; list-style: none;}
+a{text-decoration:none;}
+a:link{}
+a:visited{}
+a:hover{text-decoration:underline;}
+a:active{}
+img{border:0;padding:0; margin:0;}
+p{padding:0; margin:0;}
+
+
+#header{
+    width: 100%; height: 65px; overflow: hidden; border-top: 5px solid #67ad03; background: #f3f3f3;
+}
+.main{
+    width: 960px; overflow: hidden; margin: 0 auto;
+}
+#logo{
+    width: 350px; height: 40px; overflow: hidden; float: left; _display: inline; margin-top: 12px;
+}
+
+#banner{
+    width: 100%; height: 400px; overflow: hidden; background: url("http://www.ziyangren.cn/weiqing/1/topbanner2.jpg") top center no-repeat #000;
+}
+#loginbox{
+    width: 316px; height: 220px; padding: 25px 35px; background: url("http://www.ziyangren.cn/weiqing/1/bantouming.png"); 
+    border: 1px #c6c6c6 solid; border-radius: 5px; float: right; margin-top: 30px;
+}
+#logintitle{
+    width: auto; height: 30px; overflow: hidden; font: 21px/30px "微软雅黑"; color: #333; margin-bottom: 15px;
+}
+#loginname{
+    width: auto; height: 40px; overflow: hidden; border: 1px solid #666; background: #fff; 
+    font: 14px/40px "微软雅黑"; color: #666; padding: 3px 0; vertical-align: middle; border-radius: 4px 4px 0 0;
+}
+#loginpassword{
+    width: auto; height: 40px; overflow: hidden; border: 1px solid #666; background: #fff; 
+    border-top: none; font: 14px/40px "微软雅黑"; color: #666; padding: 3px 0; border-radius: 0 0 4px 4px;
+}
+.icon{
+    margin: 0 15px; vertical-align: middle; line-height: 0px; display: inline-block;
+}
+.login1{
+    width: 24px; height: 24px; overflow: hidden; background: url("http://www.ziyangren.cn/weiqing/1/icon_login.png") no-repeat; display: inline-block; vertical-align: middle;
+}
+.login2{
+    width: 24px; height: 24px; overflow: hidden; background: url("http://www.ziyangren.cn/weiqing/1/icon_login.png") -48px 0 no-repeat; display: inline-block; vertical-align: middle;
+}
+.iconinput{
+    width: 240px; height: 40px; overflow: hidden; border: 0px; background: none; padding: 0px; margin: 0px; font: 14px/40px "微软雅黑"; color: #666;
+}
+.iconinput:hover{
+    background: none;
+}
+#loginbtn{
+    width: 100px; height: 30px; overflow: hidden; margin-top: 15px; float: left; border: 1px solid #0b674e;
+}
+#loginbtn input{
+    width: 100px; height: 30px; overflow: hidden; cursor: pointer; border: none;
+    background: #199372; font: 14px/30px "微软雅黑"; color: #fff; text-align: center; padding: 0px; margin: 0px;
+}
+#loginbtn input:hover{
+    background: #066;
+}
+#regbtn{
+    width: 100px; height: 30px; overflow: hidden; border: 1px solid #0b674e; cursor: pointer; float: left; margin-left: 15px;
+    background: #199372; font: 14px/30px "微软雅黑"; color: #fff; text-align: center; margin-top: 15px; display: block;
+}
+#regbtn:hover{
+    background: #066; text-decoration: none;
+}
+
+#news{
+    width: 958px; height: 36px; overflow: hidden; border:1px solid #dbdbdb; margin: 20px auto; background: #f3f3f3; border-radius:4px;
+}
+#news dt{
+    float: left; font: 14px/36px "微软雅黑"; color: #666; margin-left: 10px; margin-right: 10px;
+}
+#news dt i{
+    background: url("http://www.ziyangren.cn/weiqing/1/icon20_tip.png") no-repeat; width: 19px; height: 16px; vertical-align: middle; display: inline-block; margin: 0 5px;
+}
+#news dd{
+    float: left; font: 14px/36px "微软雅黑"; color: #666; margin-left: 25px;
+}
+#news dd span{
+    width: auto; height: 36px; vertical-align: middle; margin: 0 5px; font: bold 14px/36px "微软雅黑"; color: #ccc;
+}
+#news dd a{
+    font: 14px/36px "微软雅黑"; color: #666;
+}
+
+#photowalk{
+    width: 958px; height: 330px; overflow: hidden; background: #f3f3f3; border:1px solid #dbdbdb; margin: 0px auto; background: #f8f8f8; border-radius:4px;
+}
+
+#footer{
+    width: 100%; height: 50px; overflow: hidden; background: #666; margin-top: 20px; padding-top: 20px;
+}
+.footline{
+    width: auto; height: 24px; overflow: hidden; text-align: center; font: 14px/24px "微软雅黑"; color: #fff; 
+}
+.footline span,.footline a{
+    font: 14px/24px "微软雅黑"; color: #fff; margin: 0 14px;
+}
+.linebox{
+    width: 100%; height: auto; overflow: hidden;
+}
+.linemain{
+    width: 1000px; height: auto; overflow: hidden; margin: 15px auto;
+}
+
+#arc1{
+    width: 520px; height: auto; overflow: hidden; float: left; margin: 0 10px;
+}
+#img1{
+    width: 400px; height: 400px; overflow: hidden; float: right; background: url("http://www.ziyangren.cn/weiqing/1/tp1.jpg") no-repeat;
+}
+
+#arc2{
+    width: 520px; height: auto; overflow: hidden; float: right; margin: 0 10px;
+}
+#img2{
+    width: 419px; height: 336px; overflow: hidden; float: left; background: url("http://www.ziyangren.cn/weiqing/1/tp2.jpg") no-repeat;
+}
+#arc3{
+    width: 580px; height: auto; overflow: hidden; float: left; margin: 0 10px;
+}
+#img3{
+    width: 360px; height: 300px; overflow: hidden; float: right; background: url("http://www.ziyangren.cn/weiqing/1/tp3.jpg") no-repeat;
+}
+#arc4{
+    width: 580px; height: auto; overflow: hidden; float: right; margin: 0 10px;
+}
+#img4{
+    width: 338px; height: 358px; overflow: hidden; float: left; background: url("http://www.ziyangren.cn/weiqing/1/tp4.jpg") no-repeat;
+}
+#arc5{
+    width: 570px; height: auto; overflow: hidden; float: left; margin: 0 10px;
+}
+#img5{
+    width: 384px; height: 330px; overflow: hidden; float: right; background: url("http://www.ziyangren.cn/weiqing/1/tp5.jpg") no-repeat;
+}
+#arc6{
+    width: 560px; height: auto; overflow: hidden; float: right; margin: 0 10px;
+}
+#img6{
+    width: 375px; height: 330px; overflow: hidden; float: left; background: url("http://www.ziyangren.cn/weiqing/1/tp6.jpg") no-repeat;
+}
+#arc7{
+    width: 600px; height: auto; overflow: hidden; float: left; margin: 0 10px;
+}
+#img7{
+    width: 320px; height: 360px; overflow: hidden; float: right; background: url("http://www.ziyangren.cn/weiqing/1/tp7.jpg") no-repeat;
+}
+#arc8{
+    width: 580px; height: auto; overflow: hidden; float: right; margin: 0 10px;
+}
+#img8{
+    width: 324px; height: 376px; overflow: hidden; float: left; background: url("http://www.ziyangren.cn/weiqing/1/tp8.jpg") no-repeat;
+}
+
+.arc_title{
+    width: auto; height: 30px; overflow: hidden; text-align: center; cursor: default; margin-top: 40px;
+    font: bold 20px/30px "微软雅黑"; color: #ff6600;
+}
+.arc_info{
+    width: auto; height: auto; overflow: hidden; cursor: default; margin-top: 20px; text-indent: 28px;
+    font: 14px/28px "微软雅黑"; color: #333;
+}
+
+.arc_btn{
+    width: 145px; height: 40px; overflow: hidden; background: url("http://www.ziyangren.cn/weiqing/1/btn.gif") no-repeat; cursor: pointer; margin-top: 30px;
+}
+
+#ruzhu{
+    width: 1000px; height: 525px; overflow: hidden; margin: 15px auto; background: url("http://www.ziyangren.cn/weiqing/1/shuzhu.jpg") top center no-repeat;
+}
+#footer{
+    width: 1000px; height: auto; overflow: hidden; margin: 0 auto; padding: 15px 0;
+}
+.line{
+    height: 24px; overflow: hidden; text-align: center; font: 12px/24px "微软雅黑"; color: #666;
+}
+.line a{
+    font: 12px/24px "微软雅黑"; color: #666; margin: 0 10px;
+}
+.line span{
+    font: 12px/24px "微软雅黑"; color: #666; margin: 0 10px;
+}

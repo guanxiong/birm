@@ -1,0 +1,84 @@
+body {
+	font-family:微软雅黑,宋体,Arial,sans-serif
+}
+h1,h2,h3,h4,h5,h6 {
+	padding:0;
+	margin:0
+}
+.row {
+	width:950px;
+	margin:20px 0 30px 20px;
+	position:relative
+}
+.area {
+	border:1px solid #cdced0;
+	width:700px
+}
+#memberChart {
+	height:250px;
+	width:100%
+}
+#snConsumeChart {
+	height:250px;
+	width:100%
+}
+#memberRight {
+	width:200px
+}
+.total {
+	border-top:1px solid #cdced0;
+	padding:7px 0 7px 15px
+}
+.right {
+	position:absolute;
+	top:0;
+	right:15px;
+	border:1px solid #cdced0;
+	height:286px;
+	width:210px;
+	text-align:center;
+	background-color:#eeeff1
+}
+.sep {
+	height:1px;
+	background-color:#cdced0
+}
+.txt-1 {
+	padding:15px;
+	color:#1f4171
+}
+.txt-2 {
+	padding:5px;
+	color:#ff7900;
+	font-weight:normal
+}
+.txt-3 {
+	padding:5px;
+	padding-bottom:20px;
+	color:#beaa8f;
+	font-weight:normal
+}
+.txt-4 {
+	position:relative;
+	top:6px;
+	left:-20px;
+	color:#2d3645
+}
+.count-1 {
+	padding-top:25px;
+	color:#ff7900
+}
+.count-2 {
+	margin-top:20px;
+	color:#beaa8f
+}
+.start-time {
+	margin-right:10px
+}
+.end-time {
+	margin-left:10px;
+	margin-right:5px
+}
+.info-block {
+	text-align:center
+}

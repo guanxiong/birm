@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+<meta name="viewport" content="width=421px,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<title>打气球送积分</title>
+	
+	
+	<script type="text/javascript" src="./resource/script/jquery-1.7.2.min.js"></script>
+
+
+<script> 
+window.onload=function(){ 
+if(document.documentElement.scrollHeight <= document.documentElement.clientHeight) { 
+bodyTag = document.getElementsByTagName('body')[0]; 
+bodyTag.style.height = document.documentElement.clientWidth / screen.width * screen.height + 'px'; 
+} 
+setTimeout(function() { 
+window.scrollTo(0, 1) 
+}, 0); 
+}; 
+</script>
+<style type="text/css">
+
+
+@charset "utf-8";
+html{background:#FFF;color:#000;}
+body, div, dl, dt, dd, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset, img{border:0;}
+address, caption, cite, code, dfn,  th, var{font-style:normal;font-weight:normal;}
+ol, ul{list-style:none;}
+caption, th{text-align:left;}
+h1, h2, h3, h4, h5, h6{font-size:100%;font-weight:normal;}
+q:before, q:after{content:'';}
+abbr, acronym{border:0;font-variant:normal;}
+sup{vertical-align:text-top;}
+sub{vertical-align:text-bottom;}
+input, textarea, select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+input, textarea, select{font-size:100%;}
+legend{color:#000;}
+html{background-color:#f8f7f5;}
+body{background:#f8f7f5;color:#222;font-family:Helvetica, STHeiti STXihei, Microsoft JhengHei, Microsoft YaHei, Tohoma, Arial;height:100%;position:relative;}
+body > .tips{display:none;left:50%;padding:20px;position:fixed;text-align:center;top:50%;width:200px;z-index:100;}
+.page{padding:15px;}
+.page .page-error, .page .page-loading{line-height:30px;position:relative;text-align:center;}
+.btn{background-color:#fcfcfc;border:1px solid #cccccc;border-radius:5px;box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);color:#222;cursor:pointer;display:block;font-size:15px;font-weight:bold;margin:15px 0;moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);padding:10px;text-align:center;text-decoration:none;webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);}
+.vm{vertical-align:middle;}
+.tc{text-align:center;}
+.db{display:block;}
+.dib{display:inline-block;}
+.b{font-weight:700;}
+.clr{clear:both;}
+.text img{max-width:100%;}
+.page-url{padding-top:18px;}
+.page-url-link{color:#607FA6;font-size:14px;text-decoration:none;text-shadow:0 1px #ffffff;-webkit-text-shadow:0 1px #ffffff;-moz-text-shadow:0 1px #ffffff;}
+#footer{text-align:center; background-color:#DADADA; border-top:1px solid #B9B9B9;}
+#footer .copyright{border-top: 1px solid #CACACA;color: #7B7B7B;height: 35px;line-height: 35px;font-size: 12px;}
+#footer .copyright a{display: block;width: 100%;height: 100%;}
+
+
+/*适应手机端的div样式*/
+	.mobile-div{border:1px #CCC solid; margin:10px 5px; background:#FFF;}
+	.mobile-hd{
+		height:35px;
+		line-height:35px;
+		padding:0 10px;
+		color: #666;
+		text-shadow: 0 1px #FFF;
+		border-bottom:1px solid #C6C6C6;
+		background-color:#E1E1E1;
+		background-image: linear-gradient(bottom, #E7E7E7 0%, #f9f9f9 100%);
+		background-image: -o-linear-gradient(bottom, #E7E7E7 0%, #f9f9f9 100%);
+		background-image: -moz-linear-gradient(bottom, #E7E7E7 0%, #f9f9f9 100%);
+		background-image: -webkit-linear-gradient(bottom, #E7E7E7 0%, #f9f9f9 100%);
+		background-image: -ms-linear-gradient(bottom, #E7E7E7 0%, #f9f9f9 100%);
+		background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, #E7E7E7),
+		color-stop(1, #f9f9f9)
+		);
+		-webkit-box-shadow: 0 1px 0 #FFFFFF inset, 0 1px 0 #EEEEEE;
+		-moz-box-shadow: 0 1px 0 #FFFFFF inset, 0 1px 0 #EEEEEE;
+		box-shadow: 0 1px 0 #FFFFFF inset, 0 1px 0 #EEEEEE;
+		-webkit-border-radius: 5px 5px 0 0;
+		-moz-border-radius: 5px 5px 0 0;
+		-o-border-radius: 5px 5px 0 0;
+		border-radius: 5px 5px 0 0;
+	}
+	.mobile-hd i{line-height:35px;}
+	.mobile-content{margin:10px;}
+	.mobile-content .help-block{margin-bottom:0; margin-top:3px; color:#AAA;}
+	.mobile-img img{width:100%;}
+	.mobile-submit{margin:0 5px;}
+	.mobile-li{display:block; text-decoration:none; color:#666; height:35px; line-height:35px; font-size:14px; padding:0 10px; border-top:1px #CCC solid;}
+	.mobile-li:first-child{border-top:0;}
+	.mobile-li i{line-height:35px;}
+	.mobile-li:hover{text-decoration:none; color:#333;}
+	.img-rounded {
+  -webkit-border-radius: 6px;
+	 -moz-border-radius: 6px;
+		  border-radius: 6px;
+}
+body{background:#ECECEC;}
+.researchx-thumb{width:100%;}
+
+.box{background:#F9EDBC;border:5px solid #A6324A;position:relative;color:#333;overflow:hidden;}
+.box .description{float:left;margin:0 0 0 12px;width:240px;line-height:26px;}
+ 
+#bg{width:421px;height:680px;background:url(./source/modules/dqq/template/images/bg.png) no-repeat;overflow:hidden;margin:0 auto;}
+#cabinet{margin:5px auto;width:421px;height:464px;background:url(./source/modules/dqq/template/images/cabinet.png);overflow:hidden;}
+ #cabinet ul{margin:10px 0 0 12px;}
+  #cabinet li{width:99px;height:110px;float:left;list-style:none;overflow:hidden;}
+  #cabinet li span{display:block;width:99px;height:110px;}
+  #cabinet li span.red{background:url(./source/modules/dqq/template/images/red.png);_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/red.png',sizingMethod='crop');}
+  #cabinet li.burst span.red{background:url(./source/modules/dqq/template/images/red2.png);_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/red2.png',sizingMethod='crop');}
+  #cabinet li span.green{background:url(./source/modules/dqq/template/images/green.png);_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/green.png',sizingMethod='crop');}
+  #cabinet li.burst span.green{background:url(./source/modules/dqq/template/images/green2.png);_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/green2.png',sizingMethod='crop');}
+  #cabinet li span.orange{background:url(./source/modules/dqq/template/images/orange.png);_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/orange.png',sizingMethod='crop');}
+  #cabinet li.burst span.orange{background:url(./source/modules/dqq/template/images/orange2.png);_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/orange2.png',sizingMethod='crop');}
+  #cabinet li span.yellow{background:url(./source/modules/dqq/template/images/yellow.png);_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/yellow.png',sizingMethod='crop');}
+  #cabinet li.burst span.yellow{background:url(./source/modules/dqq/template/images/yellow2.png);_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/yellow2.png',sizingMethod='crop');}
+  #cabinet li span.blue{background:url(./source/modules/dqq/template/images/blue.png);_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/blue.png',sizingMethod='crop');}
+  #cabinet li.burst span.blue{background:url(./source/modules/dqq/template/images/blue2.png);_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/blue2.png',sizingMethod='crop');}
+  #cabinet li.burst1{background:url(./source/modules/dqq/template/images/burst.png) 0 -330px;_background:url(./source/modules/dqq/template/images/burst_ie6.png) 0 -330px;}
+  #cabinet li.burst2{background:url(./source/modules/dqq/template/images/burst.png) 0 -220px;_background:url(./source/modules/dqq/template/images/burst_ie6.png) 0 -220px;}
+  #cabinet li.burst3{background:url(./source/modules/dqq/template/images/burst.png) 0 -110px;_background:url(./source/modules/dqq/template/images/burst_ie6.png) 0 -110px;}
+  #cabinet li.burst4{background:url(./source/modules/dqq/template/images/burst.png) 0 0;_background:url(./source/modules/dqq/template/images/burst_ie6.png) 0 0;}
+  #cabinet li.burst0{background:none;color:yellow;font-weight:bold;font-size:14px;text-align:center;line-height:110px;}
+#manBox{width:121px;height:190px;margin:0 auto;position:relative;}
+ #manBox .bow_arrow{width:138px;height:117px;background:url(./source/modules/dqq/template/images/bow_arrow.gif);position:absolute;top:0;left:0;z-index:9;}
+ #manBox .bow{width:95px;height:55px;background:url(./source/modules/dqq/template/images/bow.png);_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/bow.png',sizingMethod='crop');position:absolute;top:28px;left:8px;z-index:9;}
+ #manBox .man{width:121px;height:143px;background:url(./source/modules/dqq/template/images/man.png);_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/man.png',sizingMethod='crop');position:absolute;top:37px;left:0;z-index:10;}
+</style>
+</head>
+<body id="activity-detail">
+	{if $dqq['maxlottery'] && $total >= $dqq['maxlottery']}
+<div class="box" style="display: block; opacity: 1; height: 126px; width: 270px; overflow: hidden; z-index: 999999; position: absolute; top:100px; left:50%; margin-left:-150px; }">
+    
+    
+  
+    <div class="description">今天没机会啦，明天再来吧</div>
+</div>
+{/if}
+<div id="bg">
+
+    <div id="cabinet">
+        <ul>
+            <li><span class="red"></span></li>
+            <li><span class="blue"></span></li>
+            <li><span class="orange"></span></li>
+            <li><span class="yellow"></span></li>
+            <li><span class="red"></span></li>
+            <li><span class="green"></span></li>
+            <li><span class="red"></span></li>
+            <li><span class="blue"></span></li>
+            <li><span class="green"></span></li>
+            <li><span class="yellow"></span></li>
+            <li><span class="orange"></span></li>
+            <li><span class="blue"></span></li>
+            <li><span class="green"></span></li>
+            <li><span class="blue"></span></li>
+            <li><span class="red"></span></li>
+            <li><span class="yellow"></span></li>
+        </ul>
+    </div>
+    <div id="manBox">
+        <p class="bow_arrow"></p>
+        <p class="man"></p>
+    </div>
+
+</div>
+
+
+
+<div class="researchx">
+	
+	<div class="mobile-div img-rounded">
+		<div class="mobile-hd">游戏规则</div>
+		<div class="mobile-content">
+		{$dqq['rule']}
+		</div>
+	</div>
+	
+	<div class="mobile-div img-rounded">
+		
+		<div class="mobile-content">
+		<li class='mobile-li'>	{if !empty($member['mobile']) && !empty($member['realname'])}我的奖品
+			{else}<a href="{php echo $this->createMobileUrl('register', array('id' => $id))}">登记后领奖</a>{/if}</li>
+		
+		
+			<li class='mobile-li'>我的奖品</li>
+		
+		<li class='mobile-li'>积分排行</li>
+		
+		</div>
+	</div>
+	
+
+</div>
+
+<script type="text/javascript">
+    //预加载抽奖效果中用到的图片，使效果流畅。
+    var images = new Array()
+    function preload() {
+        for (i = 0; i < preload.arguments.length; i++) {
+            images[i] = new Image()
+            images[i].src = preload.arguments[i]
+        }
+    }
+    preload(
+        'source/modules/dqq/template/images/burst.png',
+        'source/modules/dqq/template/images/bow.png',
+        'source/modules/dqq/template/images/red2.png',
+        'source/modules/dqq/template/images/blue2.png',
+        'source/modules/dqq/template/images/green2.png',
+        'source/modules/dqq/template/images/orange2.png',
+        'source/modules/dqq/template/images/yellow2.png'
+    );
+</script>
+
+{if $dqq['maxlottery'] && $total < $dqq['maxlottery']}
+
+
+<script type="text/javascript">
+var award;//奖品名称
+var running_flag = false;//“正在抽奖中”标志
+function burst(obj,i){
+    $(obj).attr('class','burst burst'+i);
+    if(i > 0){
+        setTimeout(function(){burst(obj,--i);},60);
+    }else{
+        $(obj).find('span').html(award);
+        $('#manBox .bow').attr('class','bow_arrow');
+        running_flag = false;
+    }
+}
+$(function(){
+    $('#cabinet li').click(function(){
+		$('embed').remove(); 
+        $('body').append('<embed src="source/modules/dqq/template/images/notify.wav" autostart="true" hidden="true" loop="false">');
+        if(running_flag){
+            //alert('正在抽奖，请等待抽奖结果！');
+            return false;
+        }
+        running_flag = true;
+        var obj = $(this);
+        $.ajax({
+            url: "{php echo $this->createMobileUrl('getaward', array('id' => $id))}&r="+new Date().getTime(),
+            type: "post",
+            data:null,
+            dataType: "json",
+            timeout: 20000,
+            cache: false,
+            beforeSend: function(){// 提交之前
+            },
+            error: function(){//出错
+                running_flag = false;
+            },
+            success: function(res){//成功
+                if(typeof(res.message) != 'undefined'){
+                    award = res.message.message;
+                    burst(obj,5);
+                    $('#manBox .bow_arrow').attr('class','bow');
+                    $(obj).unbind('click');
+                }else{
+                    running_flag = false;
+                    alert(res.err);
+                }
+            }
+        });
+    });
+});
+
+
+
+</script>
+
+{/if}
+{template 'footer'}

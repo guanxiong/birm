@@ -1,0 +1,60 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <title>{$type['typename']}</title>
+      <link rel="stylesheet" type="text/css" href="{APP_PUBLIC}template/mobile/survey/survey.css?v=1.2">
+   </head>
+<body>
+<div class="window">
+    <div class="page-loading-mask"></div>
+    <div class="pages">
+        <div class="page home">
+            <div class="page-content">
+                <h1 style="display: none;">{$item['title']}</h1>
+                <div class="start"><div><span> 开始 </span></div></div>
+            </div>
+        </div>
+        <div class="page result">
+            <div class="page-content">
+                <div class="score">
+                    <b>60</b>
+                    <span>你的<i>geek</i>指数</span>
+                </div>
+                <p class="discription"></p>
+                <ul class="options">
+                    <li><span class="share">给好友看看</span></li>
+                    <li>再玩一次</li>
+                    <li>点击进入微信公众号</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="share_overmask">
+        <div class="share_arrow"></div>
+        <div class="share_words"></div>
+    </div>
+    <div class="banner_ad">{$banner}</div>
+</div>
+<script type="text/javascript">
+    window.page_config = {
+        "subject":{$item['subject']},
+        "result":{$item['result']},
+        "share":{ "icon":"{$item['cover']}", "title":"{$item['title']}", "abstract":"{$item['smalltext']}"},
+        "show_score":false,
+        "index":{"name":""},
+        "weixin":{"username":"","nickname":"{$_W['account']['name']}"},
+        "style":{ "color":"#37b9a1", "cover":"{$item['cover']}?m=xx", "banner":"{$item['banner']}?m=xx", "color_action":"#108872", "color_result":"#E84C36" },
+        "next":{$item['next']},
+        "banner_link":"",
+        "publish_url":"#","voteid":"10008197"
+    };
+</script>
+<script type="text/javascript" src="{APP_PUBLIC}template/mobile/js/require.js" charset="UTF-8"></script>
+<script type="text/javascript" src="{APP_PUBLIC}template/mobile/survey/survey.js?v=1.2" charset="UTF-8"></script>
+</body>
+</html>

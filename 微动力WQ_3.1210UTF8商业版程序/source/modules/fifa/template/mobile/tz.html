@@ -1,0 +1,107 @@
+{template 'header'}
+<style>
+.chart {
+        list-style: none;
+        font-family: '宋体';
+        font-size: 14px;
+        margin: 0;
+		width:100%;
+		color:#000;
+      }
+      .chart li {
+        width:33.33%;
+        height:140px;
+        float:left;
+        background:#fff url(./source/modules/fifa/images/o_pillar.gif) center center repeat-y;
+      }
+      .chart li em,  .chart li span,.chart li strong {
+        display:block;
+        height:20px;
+        text-align:center;
+      }
+      .chart li em,  .chart li strong{
+		font-style:normal;
+        background: #fff;
+      }
+      .chart li span {
+        height:100px;
+        background:transparent url(./source/modules/fifa/images/o_mask.jpg)  no-repeat;
+      }
+</style>
+<script>
+var GAMEGUESSURL="";
+</script>
+    <!-- content -->
+    <section class="content">
+<form action="" method="post" >
+ <div class="tab">
+            
+            <div class="tab-content active">
+                <div class="tab-panel panel">
+                    <div class="tz-box">
+                    <div class="tz-box-head">竞猜下注</div>
+                    <div class="tz-box-body">
+                        <ul class="clearfix">
+                            <li>
+                               <label for="big-logo-{$race_detail['groupa']}"> 
+							   <span class="bet-icon big-logo-{$race_detail['groupa']}"></span></label><br />
+							   <input type="radio" id="big-logo-{$race_detail['groupa']}" name="whowin" value="{$race_detail['groupa']}"><br />{$race_detail['teama']}
+                               
+                            </li>
+                            <li> <label for="big-logo-0"><img src="./source/modules/fifa/template/images/vs.jpg"  /></label><br /><input type="radio" id="big-logo-0" name="whowin" value="0"><br />打平
+							</li>
+                            <li>
+                               <label for="big-logo-{$race_detail['groupb']}"><span class="bet-icon big-logo-{$race_detail['groupb']}"></span></label><br /><input type="radio" id="big-logo-{$race_detail['groupb']}" name="whowin" value="{$race_detail['groupb']}"><br />{$race_detail['teamb']}
+                               
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+
+                   
+					
+					<input type="hidden" name="token" value="{$_W['token']}" />
+
+                    <div class="well-lg text-center">
+					{if $race_detail['racetime'] > TIMESTAMP }
+
+						{if $isbeat}
+							<span class="btn btn-lg"  >你已竞猜过</span>
+                    
+						{else}
+							<button type="submit" class="btn btn-lg"  name="submit" value="提交竞猜">提交竞猜</button>
+                    
+						{/if}
+					{else} 
+						<span class="btn btn-lg"  > 错过竞猜时间</span> 
+					{/if}                     
+                    </div>
+                    <div class="clearfix">
+                        <div class="column half text-center">{$race_detail['racedate']} {$weeksday}</div>
+                        <div class="column half text-center">地点：{$race_detail['places']}    </div>
+                    </div>
+
+                </div>
+				<div>
+				<!--div class="tz-box">
+					<div class="tz-box-body">
+						<ul class="chart">
+							<li><span style="background-position: center -{$teamas}px"></span><strong>{$teamas}%</strong><strong>{$teama}</strong></li>
+							<li><span style="background-position: center -{$team0s}px"></span><strong>{$team0s}%</strong><strong>{$team0}</strong></li>
+							<li><span style="background-position: center -{$teambs}px"></span><strong>{$teambs}%</strong><strong>{$teamb}</strong></li>
+      
+						</ul>
+					</div>
+				</div-->
+				<div>
+                <div class="panel">竞猜人数：{$allbeat}</div>
+                <div class="panel text-left">
+                    </div>
+            </div>
+        </div>
+</form>
+    </section>
+	
+    <!-- footer -->
+{template 'footer'}

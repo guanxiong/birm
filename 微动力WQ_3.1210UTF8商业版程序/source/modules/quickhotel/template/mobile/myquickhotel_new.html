@@ -1,0 +1,35 @@
+{template 'header'}
+    <title>我的订单</title>
+	<link type="text/css" rel="stylesheet" href="./source/modules/quickhotel/style/base.css" />
+	<link type="text/css" rel="stylesheet" href="./source/modules/quickhotel/style/style.css" />
+	<script type="text/javascript" src="./source/modules/quickhotel/script/script.js"></script>
+	<section class="order">
+    	<!--content-->
+        <section class="order_content">
+			{loop $quickhotel_list $item}
+        	<!--item-->
+            <section class="order_item">
+				<aside>{$item['title']}</aside>
+                <article>
+				<section class="order_item_l"><img src="{php echo $_W['attachurl'].$item['logo']}" /></section>
+                	<section class="order_item_r">
+					<p>预订价格：<span class="red20">{$item['price']}</span> 元/天</p>
+					<p>预订日期： {php echo date('Y-m-d H:i:s', $item['createtime'])}</p> 
+					<p>预订间数：{$item['room_count']}间</p>
+                </section>
+                </article>
+            </section>
+            <!--item end-->
+			{/loop}
+        </section>
+        <!--content end-->
+	</section>
+	<script type="text/javascript">
+		$(function() {
+				$("a").click(function(){
+					WeixinJSBridge.call('closeWindow');
+					}
+					);
+				});
+</script>
+{template 'footer'}

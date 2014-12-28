@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{if empty($_W['setting']['copyright']['sitename'])}微动力 - 微信公众平台自助引擎{else}{$_W['setting']['copyright']['sitename']}{/if}</title>
+<meta name="keywords" content="{if empty($_W['setting']['copyright']['keywords'])}微动力,微信,微信公众平台{else}{$_W['setting']['copyright']['keywords']}{/if}" />
+<meta name="description" content="{if empty($_W['setting']['copyright']['description'])}微信公众平台自助引擎，简称微动力，微动力是一款免费开源的微信公众平台管理系统。{else}{$_W['setting']['copyright']['description']}{/if}" />
+<link rel="stylesheet" href="/themes/web/wdl08/common/new/css/start_v5.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/themes/web/wdl08/common/css/top_v5.css"/>
+<link rel="shortcut icon" href="/favicon.ico" />
+<script type="text/javascript" src="/themes/web/wdl08/common/new/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/themes/web/wdl08/common/new/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="/themes/web/wdl08/common/new/js/jquery.tipsy.js"></script>
+<script type="text/javascript" src="/themes/web/wdl08/common/new/js/start_v5.js"></script>
+<script type="text/javascript" src="/themes/web/wdl08/common/new/js/sea.js"></script>
+<script type="text/javascript">seajs.use("/themes/web/wdl08/common/new/js/base_common.js")</script>
+<style>
+.item_6 .banner {
+	border: 7px solid #CCC;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+.item_6 .banner img {
+	display: block;
+	width: 100%;
+}
+</style>
+</head>
+<body>
+	<div id="top_banner">
+		<div id="focus">
+        <ul><li><a href="/themes/web/wdl08/wdl/update.html" target="_blank"><img class="top_banner_img" src="/themes/web/wdl08/common/new/images/banner13.jpg"/></a></li>
+                 <li><a href="/themes/web/wdl08/wdl/update.html" target="_blank"><img class="top_banner_img" src="/themes/web/wdl08/common/new/images/banner10.jpg"/></a></li>
+                <li><a href="/themes/web/wdl08/wdl/home.html" target="_blank"><img class="top_banner_img" src="/themes/web/wdl08/common/new/images/banner8.jpg"/></a></li>
+                <li><a href="/themes/web/wdl08/wdl/service.html" target="_blank"><img class="top_banner_img" src="/themes/web/wdl08/common/new/images/banner9.jpg"/></a></li>
+				<li><a href="/themes/web/wdl08/wdl/login.html" target="_blank"><img class="top_banner_img" src="/themes/web/wdl08/common/new/images/banner12.jpg"/></a></li>
+				<li><a href="/themes/web/wdl08/wdl/login.html" target="_blank"><img class="top_banner_img" src="/themes/web/wdl08/common/new/images/banner11.jpg"/></a></li>
+			</ul>
+		</div>
+		<a href="javascript:;" class="top_banner_close"><img style="position: absolute;right: 20px;top: 20px;" src="/themes/web/wdl08/common/new/images/close.png"></a>
+	</div>
+    <script type="text/javascript" src="/themes/web/wdl08/common/new/js/top_banner_v1.js"></script>
+	<div class="wrap">
+		<div class="navwrap">
+			<div class="nav nav_1 cur" inx="1" title="返回首页"></div>
+			<div class="nav nav_2" inx="2" title="微结盟是什么？"></div>
+			<div class="nav nav_3" inx="3" title="经典案例"></div>
+			<div class="nav nav_4" inx="4" title="功能介绍"></div>
+			<div class="nav nav_5" inx="5" title="渠道代理"></div>
+			<div class="nav nav_6" inx="6" title="程序更新"></div>
+			<div class="nav nav_7" inx="7" title="关于微结盟"></div>
+		</div>
+		<div class="main">
+			<div class="item item_1">
+				<div class="loading"><div class="load">&nbsp;</div></div>
+				<div class="bgwrap"></div>
+				<div class="honor">
+                <p>&nbsp;</p>
+				</div>
+				<div class="footer fn-clear">
+					<p class="lt copyright">{$_W['setting']['copyright']['sitename']}版权所有 ©2013-2014 {weiwin::C('ipc')} | <a href="/">{$_W['setting']['copyright']['sitename']}</a>  <a href="/themes/web/wdl08/wdl/about.html">关于我们</a></p>
+					<div class="rt cert-cont fn-clear">
+						<div class="cert3 lt"><img class="lazy" src="/themes/web/wdl08/common/new/images/cert4.png" /></a></div>
+					</div>
+
+				</div>
+{template 'wdl/header'}
+				<div class="content">
+					<div class="header">
+						<img class="wjj_tm" src="/themes/web/wdl08/common/new/images/138logo.png" />
+					</div>
+					<div class="sub_header">在任何地方，在任何时间 微结盟，帮你打造最专业的微信智能公众平台</div>
+					<div class="btn_wrap fn-clear">
+						<a href="javascript:;" class="login">登录</a>
+						<a href="/themes/web/wdl08/wdl/login.html" target="_blank" class="reg">注册<img src="/themes/web/wdl08/common/new/images/reg_forfree.png" style="display: block;position: absolute;left: 285px;top: -40px;" /></a>
+						<a href="javascript:;" class="review">知道更多<b>&gt;</b>
+							<img style="position: absolute;top: 0px;right: 7px;" class="wjj_update" src="/themes/web/wdl08/common/new/images/update.png" />
+							<img style="position: absolute;top: -28px;right: 18px;" class="video_tip" src="/themes/web/wdl08/common/new/images/video_tip.png" />
+						</a>
+					</div>
+					<div class="nav_btn_wrap fn-clear">
+						<a href="javascript:;">了解微结盟</a>
+						<a href="javascript:;">经典案例</a>
+						<a href="javascript:;">功能介绍</a>
+						<a href="javascript:;" style="position: relative;">渠道代理<img style="position: absolute;left: 12px;top: -8px;" class="hot" src="/themes/web/wdl08/common/new/images/hot.gif" /></a>
+						<a href="javascript:;">查看更新</a>
+					</div>
+					<div class="m-login ztag" id="loginbox">
+						<div class="arr"><span class="ztag arml">&nbsp;</span></div>
+						<div class="cont ztag" style="">
+							<div class="contc f-cb">
+								<div class="contl">
+									<h3>使用微结盟账号</h3>
+									<form method="post" class="ztag" action="">
+										<ul class="w-user w-user-1">
+											<li class="w0">
+												<div class="inpt ztag">
+													<label class="ztag">微结盟账号</label>
+													<input type="text" class="txt" name="username">
+												</div>
+											</li>
+											<li class="w0">
+												<div class="inpt"><label class="ztag">密码</label><input name="password" type="password" class="txt ztag" autocomplete="off"></div>
+											</li>
+											<li class="w0 w2">
+												<button id="btn_submit" type="submit" class="btn ztag"><span>登录</span></button>
+											</li>
+											<li class="w0 w3 f-cb">
+												<a class="fgt" href="#" target="_blank">忘记密码</a>
+											</li>
+										</ul>
+					           		</form>
+              </div>
+              <div class="contr">
+                <h3>使用社交帐号登录</h3>
+                <div class="others"> <span class="sepln"></span> <span class="septxt">或</span>
+                  <ul class="w-user w-user-3" id="otherLogin1">
+                    <li class="w1 sina"> <a href="#">使用新浪微博登录</a> </li>
+                    <li class="w1 qq"> <a href="/index.php?g=Auth&m=Test&a=login&type=qq">使用腾讯QQ登录</a> </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+	$(".item").css("height",document.documentElement.clientHeight);
+	</script>
+    <div class="item item_2">
+      <div class="content">
+        <div class="header"><img src="/themes/web/wdl08/common/new/images/h2.png" /></div>
+        <div class="sub_header">微结盟平台，全网最牛的互动营销微信智能服务平台；我们倾注的不仅仅是技术，还有更好的服务！</div>
+        <div class="banner">
+          <embed src="http://player.youku.com/player.php/sid/XNTc4MTMzODc2/v.swf" allowFullScreen="true" quality="high" width="960" height="100%" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+        </div>
+      </div>
+    </div>
+    <div class="item item_3">
+      <div class="content">
+        <div class="header"><img class="lazy" data-original="/themes/web/wdl08/common/new/images/h3.png" /></div>
+        <div class="sub_header">移动互联网正在改变我们身边的一切，每一个行业都应该从中受益，我们也希望和你一起在推动这种进步</div>
+        <div class="feature_wrap">
+          <div class="arrow"></div>
+          <div class="feature_item"><img title="微结盟平台，媒体/电视/电台" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_01.jpg"/></div>
+          <div class="feature_item"><img title="娱乐/KTV/酒吧" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_02.jpg"/></div>
+          <div class="feature_item"><img title="影院影城" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_03.jpg"/></div>
+          <div class="feature_item"><img title="金融保险" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_04.jpg"/></div>
+          <div class="feature_item"><img title="政府机构" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_05.jpg"/></div>
+          <div class="feature_item"><img title="地产" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_06.jpg"/></div>
+          <div class="feature_item"><img title="汽车4S店" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_07.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-婚庆" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_08.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-摄影" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_09.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-酒店/客栈" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_10.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-健康医疗" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_11.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-旅游" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_12.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-地方微生活" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_13.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-美容养生" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_14.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-零售商超" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_15.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-教育培训" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_16.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-电子商务" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_17.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-家装建材" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_18.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-公益事业" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_19.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-快消行业" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_20.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-运营商" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_21.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-小区物业" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_22.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-企业品牌" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_23.jpg"/></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-明星/名人" class="lazy" data-original="/themes/web/wdl08/common/new/images/item3/item3_24.jpg"/></div>
+          <div class="feature_item" style="display: block;padding-top: 0px;"><a href="{php echo create_url('home/case');}" target="_blank"><img style="width: 100%;height: 100%;" class="lazy" data-original="/themes/web/wdl08/common/new/images/banner3.jpg"/></a></div>
+        </div>
+        <div class="feature_list">
+          <ul>
+            <li class="feature">媒体/电视/电台</li>
+            <li class="sep">|</li>
+            <li class="feature">娱乐/KTV/酒吧</li>
+            <li class="sep">|</li>
+            <li class="feature">影院影城</li>
+            <li class="sep">|</li>
+            <li class="feature">金融保险</li>
+            <li class="sep">|</li>
+            <li class="feature">政府机构</li>
+            <li class="sep">|</li>
+            <li class="feature">地产</li>
+            <li class="sep">|</li>
+            <li class="feature">汽车4S店</li>
+            <li class="sep">|</li>
+            <li class="feature">婚庆</li>
+            <li class="sep">|</li>
+            <li class="feature">摄影</li>
+            <li class="sep">|</li>
+            <li class="feature">酒店/客栈</li>
+            <li class="sep">|</li>
+            <li class="feature">健康医疗</li>
+            <li class="sep">|</li>
+            <li class="feature">旅游</li>
+            <li class="sep">|</li>
+            <li class="feature">地方微生活</li>
+            <li class="sep">|</li>
+            <li class="feature">美容养生</li>
+            <li class="sep">|</li>
+            <li class="feature">零售商超</li>
+            <li class="sep">|</li>
+            <li class="feature">教育培训</li>
+            <li class="sep">|</li>
+            <li class="feature">电子商务</li>
+            <li class="sep">|</li>
+            <li class="feature">家装建材</li>
+            <li class="sep">|</li>
+            <li class="feature">公益事业</li>
+            <li class="sep">|</li>
+            <li class="feature">快消行业</li>
+            <li class="sep">|</li>
+            <li class="feature">运营商</li>
+            <li class="sep">|</li>
+            <li class="feature">小区物业</li>
+            <li class="sep">|</li>
+            <li class="feature">企业品牌</li>
+            <li class="sep">|</li>
+            <li class="feature">明星/名人</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="item item_4">
+      <div class="content">
+        <div class="header"><img class="lazy" data-original="/themes/web/wdl08/common/new/images/h4.png" /></div>
+        <div class="sub_header">满足用户的需求才是关键；量身订做的微信互动营销平台，只为追求最极限完美。</div>
+        <div class="feature_wrap">
+          <div class="arrow"></div>
+          <div class="qrcode"> <img class="lazy" data-original="/themes/web/wdl08/common/new/images/qrcode.jpg" /><br />
+            <p>扫描二维码体验功能</p>
+          </div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-微官网" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/01.jpg" /></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-微会员" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/02.jpg" /></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-微活动" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/03.jpg" /></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-微游戏" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/04.jpg" /></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-微服务" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/05.jpg" /></div>
+          <div class="feature_item"><img title="微统计" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/06.jpg" /></div>
+          <div class="feature_item"><img title="微留言" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/07.jpg" /></div>
+          <div class="feature_item"><img title="微社区" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/08.jpg" /></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-微相册" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/09.jpg" /></div>
+          <div class="feature_item"><img title="自定义菜单" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/10.jpg" /></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-LBS位置服务" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/11.jpg" /></div>
+          <div class="feature_item"><img title="微调研" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/12.jpg" /></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-微投票" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/13.jpg" /></div>
+          <div class="feature_item"><img title="微预约" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/14.jpg" /></div>
+          <div class="feature_item"><img title="微地产" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/15.jpg" /></div>
+          <div class="feature_item"><img title="微酒店" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/16.jpg" /></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-微医疗" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/17.jpg" /></div>
+          <div class="feature_item"><img title="微婚庆" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/18.jpg" /></div>
+          <div class="feature_item"><img title="微电商" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/19.jpg" /></div>
+          <div class="feature_item"><img title="微餐饮" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/20.jpg" /></div>
+          <div class="feature_item"><img title="微影楼" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/21.jpg" /></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-微美容" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/22.jpg" /></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-微旅游" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/23.jpg" /></div>
+          <div class="feature_item"><img title="微影视" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/24.jpg" /></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-地方微生活" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/25.jpg" /></div>
+          <div class="feature_item"><img title="微外卖" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/26.jpg" /></div>
+          <div class="feature_item"><img title="微政务" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/27.jpg" /></div>
+          <div class="feature_item"><img title="微结盟平台，全网最牛的互动营销微信智能服务平台-微汽车" class="lazy" data-original="/themes/web/wdl08/common/new/images/guide/28.jpg" /></div>
+          <div class="feature_item" style="display: block;padding-top: 0px;"><a href="/themes/web/wdl08/wdl/service.html" target="_blank"><img style="width: 100%;height: 100%;" class="lazy" data-original="/themes/web/wdl08/common/new/images/banner4.jpg"/></a></div>
+        </div>
+        <div class="feature_list">
+          <ul>
+            <li class="feature">微官网</li>
+            <li class="sep">|</li>
+            <li class="feature">微会员</li>
+            <li class="sep">|</li>
+            <li class="feature">微活动</li>
+            <li class="sep">|</li>
+            <li class="feature">微游戏</li>
+            <li class="sep">|</li>
+            <li class="feature">微服务</li>
+            <li class="sep">|</li>
+            <li class="feature">微统计</li>
+            <li class="sep">|</li>
+            <li class="feature">微留言</li>
+            <li class="sep">|</li>
+            <li class="feature">微社区</li>
+            <li class="sep">|</li>
+            <li class="feature">微相册</li>
+            <li class="sep">|</li>
+            <li class="feature">自定义菜单</li>
+            <li class="sep">|</li>
+            <li class="feature">LBS位置服务</li>
+            <li class="sep">|</li>
+            <li class="feature">微调研</li>
+            <li class="sep">|</li>
+            <li class="feature">微投票</li>
+            <li class="sep">|</li>
+            <li class="feature">微预约</li>
+            <li class="sep">|</li>
+            <li class="feature">微地产</li>
+            <li class="sep">|</li>
+            <li class="feature">微酒店</li>
+            <li class="sep">|</li>
+            <li class="feature">微医疗</li>
+            <li class="sep">|</li>
+            <li class="feature">微婚庆</li>
+            <li class="sep">|</li>
+            <li class="feature">微电商</li>
+            <li class="sep">|</li>
+            <li class="feature">微餐饮</li>
+            <li class="sep">|</li>
+            <li class="feature">微影楼</li>
+            <li class="sep">|</li>
+            <li class="feature">微美容</li>
+            <li class="sep">|</li>
+            <li class="feature">微旅游</li>
+            <li class="sep">|</li>
+            <li class="feature">微影视</li>
+            <li class="sep">|</li>
+            <li class="feature">地方微生活</li>
+            <li class="sep">|</li>
+            <li class="feature">微外卖</li>
+            <li class="sep">|</li>
+            <li class="feature">微政务</li>
+            <li class="sep">|</li>
+            <li class="feature">微汽车</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="item item_5">
+      <div class="content">
+        <div class="header"><img class="lazy" data-original="/themes/web/wdl08/common/new/images/h5.png" /></div>
+        <div class="sub_header">梦想面前，人人平等！我们邀请你的加盟不仅仅因为这是个亿万的市场，更多的是我们有共同的梦想</div>
+        <div class="feature_wrap">
+          <div class="arrow"></div>
+          <div class="daili">
+            <p style="text-indent: 0px;">尊敬的各位伙伴：</p>
+            <p>首先非常感谢您对微结盟平台的认可和支持，信任是合作的基础，这是我们一直强调的核心价值观。</p>
+            <p>微结盟平台在大家的共同努力下，目前已经成长为在微信第三方平台中拥有较高知名度和用户数量的第三方平台。为了能使更多的用户享受微结盟平台提供的高品质的微信营销产品和服务，目前我们正在全国范围内大力发展代理伙伴。我们的目标是：通过发展一批有实力的区域和行业代理商作为稳定的合作伙伴来承担销售业务，建立微结盟平台的营销战略合作伙伴体系，共同投身于微信营销的事业。</p>
+            <p>微结盟平台通过市场与技术支持、各种媒体宣传、促消活动及完善的售后服务，为微结盟平台的代理商提供及时的、量身定做的高效特色服务及全面支持。</p>
+            <p>无论您在何方，不管您有多远，无论是个人还是团体，我们都欢迎您成为我们的一员，微结盟平台希望每个人都能通过微结盟平台实现价值，正像微信公众平台提出的一样：“再小的个体，也有自己的品牌。”我们将与您始终保持零距离的接触，提供零距离的服务。欢迎全国各地、各广告商、渠道代理商踊跃加盟，微结盟平台对有意成为合作伙伴的朋友致以诚挚的谢意，感谢您对微结盟平台的支持和信任。</p>
+            <br />
+            <p class="contact">合作及代理联系方式：加盟QQ：{if !empty($_W['setting']['copyright']['qq'])}{$_W['setting']['copyright']['qq']}{/if}</p>
+          </div>
+          <a href="/themes/web/wdl08/wdl/join.html" target="_blank"><img class="lazy" data-original="/themes/web/wdl08/common/new/images/banner5.jpg" style="display: block;"/></a> </div>
+        <div class="feature_list">
+          <ul>
+            <li class="feature">渠道代理政策</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="item item_6">
+      <div class="content">
+        <div class="header"><img class="lazy" data-original="/themes/web/wdl08/common/new/images/h6.png" /></div>
+        <div class="sub_header">微结盟技术员每天根据用户的反馈对平台进行更新和优化，共同打造了一个活的平台</div>
+        <div class="banner"><a href="/themes/web/wdl08/wdl/update.html" target="_blank"><img class="lazy" data-original="/themes/web/wdl08/common/new/images/banner6.jpg" /></a> </div>
+        <p> <a style="margin: 0px 0 0 6px;font-size: 13px;" href="/themes/web/wdl08/wdl/update.html" target="_blank">>>查看更新记录</a> </p>
+      </div>
+    </div>
+    <div class="item item_7">
+      <div class="content">
+        <div class="header"><img class="lazy" data-original="/themes/web/wdl08/common/new/images/h7.png" /></div>
+        <div class="sub_header">没有什么是不能打破的，没有什么是不能被颠覆的，他们的创意和坚持只为更美好的互联网</div>
+        <div class="banner"> <img class="lazy" data-original="/themes/web/wdl08/common/new/images/huaer_logo.png" /> </div>
+        <div style="position: absolute;bottom: 10px;left: 0px;width: 910px;">
+          <div class="footer fn-clear">
+            <p class="lt"><a href="/themes/web/wdl08/wdl/home.html">智慧WIFI</a> | <a href="/themes/web/wdl08/wdl/about.html">关于我们</a> | </p>
+            <p class="rt">{$_W['setting']['copyright']['sitename']}版权所有 ©2013-2014 {weiwin::C('ipc')}</p>
+          </div>
+          <div class="cert-cont fn-clear">
+            <div class="cert1 lt"><img class="lazy" data-original="/themes/web/wdl08/common/new/images/cert1.png" /></div>
+            <div class="cert2 lt"><img class="lazy" data-original="/themes/web/wdl08/common/new/images/cert2.png" /></div>
+            <div class="cert3 lt"><img class="lazy" data-original="/themes/web/wdl08/common/new/images/cert3.jpg" /></div>
+            <div class="cert4 lt"><img class="lazy" data-original="/themes/web/wdl08/common/new/images/cert4.png" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="goto_top"></div>
+	<div id="online_qq_layer">
+	    <div id="online_qq_tab">
+	        <div class="online_icon">
+	            <a title="联系我们" id="floatTrigger" href="javascript:void(0);"></a>
+	        </div>
+	    </div>
+  <div id="onlineService">
+    <div class="online_windows overz">
+      <div class="online_w_top"> </div>
+      <!--online_w_top end-->
+      <div class="online_w_c overz">
+        <div class="online_bar collapse" id="onlineSort1">
+          <h2> <a href="javascript:;">在线技术支持</a> </h2>
+          <div class="online_content overz" id="onlineType1" style="display: block;">
+            <ul class="overz">
+	                            
+	                            <li>
+                                <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=微动力qq:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
+	                            </li>
+              <li>  </li>
+            </ul>
+          </div>
+          <!--online_content end-->
+        </div>
+        <!--online_bar end-->
+        <div class="online_bar collapse" id="onlineSort2">
+          <h2> <a href="javascript:;">加盟合作咨询</a> </h2>
+          <div class="online_content overz" id="onlineType2" style="display: block;">
+            <ul class="overz">
+              <li>
+                <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=微动力qq:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
+              </li>
+              <li>  </li>
+            </ul>
+          </div>
+        </div>
+        <!--online_bar end-->
+        <div class="online_bar collapse" id="onlineSort3">
+          <h2> <a href="javascript:;">扫一扫，体验功能</a> </h2>
+          <div class="online_content overz" id="onlineType3" style="display: block;"> <img src="/themes/web/wdl08/common/new/images/qrcode.jpg" style="display: block;margin: 0 auto 5px;width: 90px" /> </div>
+        </div>
+        <!--online_bar end-->
+      </div>
+      <!--online_w_c end-->
+      <div class="online_w_bottom"> </div>
+      <!--online_w_bottom end-->
+    </div>
+    <!--online_windows end-->
+  </div>
+</div>
+</body>
+</html>

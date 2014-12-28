@@ -1,0 +1,115 @@
+{template 'common/header'}
+<style>
+.sub-search input,.sub-search select{margin-bottom:0;}
+</style>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo create_url('site/module/groups',array('name'=>'ifans','state'=>''));}">分组列表</a></li>
+	<li><a href="">粉丝列表</a></li>
+	<li><a href="{php echo create_url('site/module/addgroup',array('name'=>'ifans','state'=>''));}">新建分组</a></li>
+</ul>
+	<div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">分组信息</h4>
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</th>
+									<th style="width:100px;">分组ID</th>
+									<th style="width:100px;">组名</th>
+									<th style="width:100px;">组成员个数</th>
+									<th style="width:150px;">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $row}
+								<tr>
+									<td class="row-first"><input type="checkbox" value="{$row['id']}" /></td>
+									<td style="text-align:center;">{$row['id']}</td>
+									<td style="text-align:center;"><a href="{php echo create_url('site/module/groupdisplay', array('name' => 'ifans', 'groupid' => $row['id'],'state' => ''))}">{$row['name']}</a></td>
+									<td style="text-align:center;">{$row['count']}</td>
+									<td style="font-size:12px; color:#666;text-align:center;">
+										<a href="{php echo create_url('site/module/editgroup', array('name' => 'ifans', 'id' => $row['id'],'groupname' => $row['name'],'state' => ''))}">修改分组名</a>
+										<a href="{php echo create_url('site/module/groupdisplay', array('name' => 'ifans', 'groupid' => $row['id'],'state' => ''))}">查看分组成员</a>
+										<!--<a href="{php echo create_url('site/module/groupsend', array('name' => 'ifans', 'groupid' => $row['id'],'state' => ''))}">群发信息</a>-->
+									</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr>
+								<td>
+									<a href="{php echo create_url('site/module/addgroup', array('name' => 'ifans','state' => ''))}" class="btn btn-primary" />新建分组</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+				{$pager}
+				</div>
+			</div>
+		</div>
+	</div>
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script>
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+	$('#date-range').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=start]').val(),
+		endDate: $(':hidden[name=end]').val(),
+		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=start]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=end]').val(end.format('YYYY-MM-DD'));
+	});
+});
+</script>
+{template 'common/footer'}

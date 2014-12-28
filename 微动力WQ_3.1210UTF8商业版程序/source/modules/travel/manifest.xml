@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[微游记]]></name>
+		<identifie><![CDATA[travel]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[展示一个手机网页来介绍你的旅游线路]]></ability>
+		<description><![CDATA[展示一个手机网页来介绍你的旅游线路，可关联预定等]]></description>
+		<author><![CDATA[珊瑚海]]></author>
+		<url><![CDATA[#]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="游记管理" do="article" />
+			<entry title="游记分类" do="category" />
+		</menu>
+		<home call="getCategoryTiles"></home>
+    </bindings>
+	<install><![CDATA[
+
+CREATE TABLE IF NOT EXISTS `ims_travel` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `type` varchar(30) NOT NULL DEFAULT '',
+  `pcate` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '一级分类',
+  `ccate` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '二级分类',
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `content` text NOT NULL,
+  `thumb` varchar(100) NOT NULL DEFAULT '' COMMENT '缩略图',
+  `source` varchar(50) NOT NULL DEFAULT '' COMMENT '来源',
+  `author` varchar(50) NOT NULL COMMENT '作者',
+  `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `idx_type` (`type`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_travel_category` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属帐号',
+  `nid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '关联导航id',
+  `name` varchar(50) NOT NULL COMMENT '分类名称',
+  `parentid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级分类ID,0为第一级',
+  `displayorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `enabled` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否开启',
+  `icon` varchar(100) NOT NULL DEFAULT '' COMMENT '分类图标',
+  `description` varchar(100) NOT NULL DEFAULT '' COMMENT '分类描述',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_travel_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `articleid` int(11) NOT NULL,
+  `isfill` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

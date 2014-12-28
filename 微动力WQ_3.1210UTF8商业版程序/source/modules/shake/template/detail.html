@@ -1,0 +1,149 @@
+{template 'common/header'}
+<style>
+body{font-family: MicroSoft YaHei,simHei;background:#a87480 url('./source/modules/shake/template/image/bg.jpg');background-position:center;background-attachment:fixed;margin:0;padding:0;}
+a{text-decoration: none;}
+.common-bg{filter:Alpha(opacity=70); background:#000; background:rgba(0, 0, 0, 0.7); -moz-border-radius:4px; border-radius:4px;}
+.shake{width:1000px; margin:0 auto; padding:0 10px;}
+.shake-top{height:120px; padding-top:20px; background:url('{$_W['attachurl']}{$reply['logo']}') no-repeat 0 15px;}
+.shake-top-info{width:630px; height:100px;}
+.shake-topic{margin:0 10px; color:#EEE; line-height:50px;}
+.shake-topic .msg_tit{display:block; height:50px; font-size:32px; font-family: simHei; font-weight:bold; line-height:60px; margin:0;}
+.shake-topic .msg_cnt{display:block; height:50px; font-size:16px; font-weight:bold;}
+.shake-topic .msg_tit strong, .shake-topic .msg_cnt span{color:#ef2e2e;}
+.shake-box{height:610px; overflow:hidden;}
+.shake-box > .pull-right{width:630px; margin:0;}
+.shake-box li{display:block; height:35px; margin-bottom:23px; border:1px #000 solid; -moz-border-radius:4px; border-radius:4px;}
+.shake-box li .img-circle{width:53px; height:53px; line-height:70px; text-align:center; background:#e93f3f; border:1px #000 solid; position:absolute; margin-top:-10px; margin-left:-1px; overflow:hidden;}
+.shake-box li .img-circle i{font-size:40px; color:#FFF;}
+.shake-box li .shake-progress{display:inline-block; height:5px; width:10%; background:#e93f3f; border:1px #000 solid; margin-top:15px; margin-right:-11%; -moz-border-radius:4px; border-radius:4px;}
+.shake-box li.even .img-circle{background:#98d110;}
+.shake-box li.even .shake-progress{background:#98d110;}
+.shake-box li .pull-right{width:70%;}
+.shake-box li .pull-left{line-height:37px; height:37px; width:30%; overflow:hidden;}
+.shake-box li .shake-num{display:inline-block; font-size:28px; color:#FFF; position:absolute; width:35px; text-align:right;}
+.shake-box li .shake-name{display:inline-block; color:#FFF; font-size:14px; width:74%; padding-left:23%; padding-right:3%; text-align:right;}
+.shake-box > .pull-left{width:360px;}
+.shake-time{margin:0 auto; width:200px; height:200px; line-height:200px; text-align:center; color:#EEE; font-size:80px; background:rgba(0, 0, 0, 0.7); border:8px #EEE solid; margin-top:100px;}
+.shake-button{margin:0 auto; width:200px; height:50px; line-height:50px; text-align:center; color:#FFF; font-size:25px; margin-top:30px; cursor:pointer;}
+.shake-qrcode{display:block; width:430px; height:430px; margin:30px auto 0 auto;}
+.shake-pic{width:360px; margin-bottom:10px; overflow:hidden;}
+.shake-info{color:#FFF; font-size:20px; padding:10px;}
+</style>
+<div class="shake">
+	<div class="shake-top">
+		<div class="shake-top-info common-bg pull-right">
+			<div class="shake-topic">
+				<h1 class="msg_tit" style="display: block;">搜索公众号 <strong>{$_W['account']['name']}</strong></h1>
+				<h1 class="msg_tit" style="display: none;">添加公众号 <strong></strong></h1>
+				<span class="msg_cnt">发送 {loop $reply['keyword'] $row}<span class="red Topic_cnt">{$row['content']}</span>，{/loop} 登记后进入摇一摇界面</span>
+			</div>
+		</div>
+	</div>
+	<div class="shake-box">
+		{if $reply['status'] == 0}
+		<div class="pull-left">
+			<div class="shake-time img-circle" id="description">{$reply['countdown']}</div>
+			<div class="shake-button common-bg" onclick="start()">开始</div>
+		</div>
+		<div class="pull-right">
+			<img class="img-rounded shake-qrcode" src="{$_W['attachurl']}/qrcode_{$_W['weid']}.jpg">
+		</div>
+		{else}
+		<!-- 开始 -->
+		<div class="pull-left">
+			{if $reply['background']}
+			<div class="shake-pic img-rounded">
+				<img src="{$_W['attachurl']}{$reply['background']}">
+			</div>
+			{/if}
+			{if $reply['rule']}
+			<div class="shake-info common-bg">
+				{$reply['rule']}
+			</div>
+			{/if}
+		</div>
+		<ul class="pull-right">
+			{php $i = 1;}
+			{loop $list $item}
+				<li class="common-bg {if $i%2==0}even{/if}">
+					<div class="pull-left">
+						<span class="shake-num">{php echo $i++;}</span>
+						<span class="shake-name"><?php echo preg_replace('/(\d{3})\d{4}(\d{4})/', '\1****\2', $fans[$item['openid']]['mobile']) ?></span>
+					</div>
+					<div class="pull-right">
+						<span class="shake-progress" style="{if $item['shakecount']}width:{php echo round($item['shakecount'] / $reply['maxshake'], 4) * 100}%;{else}width:10%;{/if}"></span>
+						<span class="img-circle"><i class="icon-fighter-jet"></i></span>
+					</div>
+				</li>
+			{/loop}
+		</ul>
+		{/if}
+	</div>
+</div>
+
+{if $reply['status'] == 0}<!-- 未开始，倒计时 -->
+<script type="text/javascript">
+<!--
+	var countdown = {php echo $reply['countdown'] ? $reply['countdown'] : 10};
+	function start() {
+		$('#description').html(countdown--);
+		if (countdown <= 0) {
+			//更新摇一摇状态
+			ajaxopen('{php echo $this->createWebUrl('changestatus', array('id' => $reply['rid'], 'status' => 1))}', function(){
+				location.reload();
+			});
+			return false;
+		} else {
+			setTimeout(function(){
+				start();
+			}, 1000);
+		}
+	}
+//-->
+</script>
+{elseif $reply['status'] == 1}<!-- 正在进行中，列表排名 -->
+<script type="text/javascript">
+<!--
+	function refresh() {
+		$.getJSON('{php echo $this->createWebUrl('getrank', array('id' => $reply['id'], 'weid' => $_W['weid']))}', function(s){
+			if (s.message.status == 1) {
+				var html = '';
+				var progress, num = 1;
+				for (i in s.message.message) {
+					progress = Math.round(s.message.message[i].shakecount/{$reply['maxshake']}*10000)/100;
+					if(progress < 10) progress = 10;
+					html += '<li class="common-bg">';
+					html += '	<div class="pull-left">';
+					html += '		<span class="shake-num">'+num+'</span>';
+					html += '		<span class="shake-name">'+s.message.fans[s.message.message[i].openid].realname+'</span>';
+					html += '	</div>';
+					html += '	<div class="pull-right">';
+					html += '		<span class="shake-progress" style="width:'+progress+'%;"></span>';
+					html += '		<span class="img-circle"><i class="icon-fighter-jet"></i></span>';
+					html += '	</div>';
+					html += '</li>';
+					//html += '<li>'+s.message.message[i].openid+', '+s.message.message[i].shakecount+'</li>';
+					num = num + 1;
+				}
+				$('.shake-box ul.pull-right').html(html);
+			} else {
+				if (s.redirect) {
+					location.href = s.redirect;
+				}
+				return false;
+			}
+			setTimeout(function(){
+				refresh();
+			}, 1000);
+		});
+	}
+
+	$(function(){
+		refresh();
+	});
+//-->
+</script>
+{else}
+{/if}
+</body>
+</html>

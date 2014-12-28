@@ -1,0 +1,174 @@
+{template 'common/header'}
+{php echo $this -> set_tabbar($action);}
+<script type="text/javascript" src="./source/modules/icard/template/js/highcharts.js?v=1"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#highcharts-0').highcharts({
+            chart: {
+                renderTo: 'memberChart',
+                type: 'line',
+                marginRight: 30,
+                marginBottom: 25
+            },
+            title: {
+                text: '最近一月新增会员趋势图',
+                align: 'left'
+            },
+            xAxis: {
+                type: 'datetime',
+                labels: {
+                    formatter: function () {
+                        return getFormatDate(this.value);
+                    },
+                    style: {
+                        color: '#2f7ed8'
+                    }
+                },
+                gridLineWidth: 1,
+                tickInterval: 7 * 24 * 3600 * 1000// one week
+            },
+            yAxis: {
+                title: {
+                    text: '<span>最近一月新增会员趋势图</span>'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }],
+                min: 0
+            },
+            tooltip: {
+                formatter: function () {
+                    return getFormatDate(this.x) + ': <span style="color:red">' + this.y + '人<span>';
+                }
+            },
+            series: [{
+                name: "新增会员人数",
+                data: [{$user_str}],
+                pointStart: Date.UTC({$y},{$m},{$d}),
+                pointInterval: 24 * 3600 * 1000 // one day
+            }],
+            legend: { enabled: false }
+        });
+
+        $('#highcharts-4').highcharts({
+            chart: {
+                renderTo: 'snConsumeChart',
+                type: 'line',
+                marginRight: 30,
+                marginBottom: 25
+            },
+            colors: [
+                '#8bbc21'
+            ],
+            title: {
+                text: '最近一月消费次数趋势图',
+                align: 'left'
+            },
+            xAxis: {
+                type: 'datetime',
+                labels: {
+                    formatter: function () {
+                        return getFormatDate(this.value);
+                    },
+                    style: {
+                        color: '#2f7ed8'
+                    }
+                },
+                gridLineWidth: 1
+            },
+            yAxis: {
+                title: {
+                    text: '<span>最近一月消费次数趋势图</span>'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }],
+                min: 0
+            },
+            tooltip: {
+                formatter: function () {
+                    return getFormatDate(this.x) + ': <span style="color:red">' + this.y + '次<span>';
+                }
+            },
+            series: [{
+                name: "新增消费次数",
+                data: [{$money_str}],
+                pointStart: Date.UTC({$y},{$m},{$d}),
+                pointInterval: 24 * 3600 * 1000 // one day
+            }],
+            legend: { enabled: false, verticalAlign: "top" }
+        });
+
+        function getFormatDate(v) {
+            var d = new Date(v);
+            return d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+        }
+    });
+</script>
+<div id="main">
+    <link href="./source/modules/icard/template/css/wei.css" rel="stylesheet" type="text/css">
+    <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" style="padding: 0 15px;
+margin-bottom:13px;margin-top:13px;overflow: hidden;">
+    <h4 style="display: block;width: 100%;padding: 0;font-size: 21px;font-weight: normal;line-height: 40px;color: #333;border-bottom: 1px solid #E5E5E5;">会员卡数据统计 - <a href="{php echo create_url('site/module', array('do' => 'SetRule', 'name' => 'icard'));}" style="font-size:0.8em">入口设置</a></h4>
+    </form>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="box">
+                    <div class="box-content">
+                        <div class="row">
+                            <div class="area">
+                                <div id="memberChart" data-highcharts-chart="0">
+                                    <div class="highcharts-container" id="highcharts-0" style="position: relative; overflow: hidden; width: 700px; height: 250px; text-align: left; line-height: normal; z-index: 0; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, Helvetica, sans-serif; font-size: 12px;">
+                                    </div>
+                                </div>
+                                <div class="total">
+                                    <span class="start-time">{$premonth}</span>
+                                    到<span class="end-time">{$nowmonth}</span>
+                                    共新增{$usercount}名会员
+                                </div>
+                                </div>
+                                <div class="right">
+                                    <h4 class="txt-1">新增会员</h4>
+                                    <div class="sep sep1"></div>
+                                    <h1 class="count-1">{$user_today_count}</h1>
+                                    <h4 class="txt-2">今日新增会员</h4>
+                                    <h1 class="count-2">{$user_yesterday_count}</h1>
+                                    <h4 class="txt-3">昨日新增会员</h4>
+                                    <div class="sep sep2"></div>
+                                    <span class="txt-4">目前会员共计{$user_total_count}人</span>
+                                </div>
+                            </div>
+                            <div class="row consume">
+                                <div class="area">
+                                    <div id="snConsumeChart" data-highcharts-chart="1">
+                                        <div class="highcharts-container" id="highcharts-4" style="position: relative; overflow: hidden; width: 700px; height: 250px; text-align: left; line-height: normal; z-index: 0; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, Helvetica, sans-serif; font-size: 12px;"></div>
+                                    </div>
+                                    <div class="total">
+                                        <span class="start-time">{$premonth}</span>
+                                        到<span class="end-time">{$nowmonth}</span>
+                                        共消费{$moneycount}次
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <h4 class="txt-1">消费次数</h4>
+                                    <div class="sep sep1"></div>
+                                    <h1 class="count-1">{$consume_today_count}</h1>
+                                    <h4 class="txt-2">今日消费次数</h4>
+                                    <h1 class="count-2">{$consume_yesterday_count}</h1>
+                                    <h4 class="txt-3">昨日消费次数</h4>
+                                    <div class="sep sep2"></div>
+                                    <span class="txt-4">目前消费共计{$consume_total_count}次</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{template 'common/footer'}

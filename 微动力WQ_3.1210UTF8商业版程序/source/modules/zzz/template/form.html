@@ -1,0 +1,91 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加活动</h4>
+	<table>
+		<tbody>
+			<tr>
+				<th>查看内容</th>
+				<td><a href="{php echo $this->createWebUrl('awardlist', array('id' => $reply['rid']))}" target="_blank">查看排名</a></td>
+			</tr>
+			<tr>
+				<th>标题</th>
+				<td><input type="text" value="{$reply['title']}" class="span4" name="title" >
+					<div class="help-block">显示在网页头中</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>活动图片</th>
+				<td>{php echo tpl_form_field_image('picture',$reply['picture']);}
+					<div class="help-block">建议尺寸：700像素 * 300像素</div>
+				</td>
+			</tr>
+			<tr>
+				<th>背景图片</th>
+				<td>{php echo tpl_form_field_image('bgurl',$reply['bgurl']);}
+					<div class="help-block">建议尺寸：640*620</div>
+				</td>
+			</tr>
+			
+			
+			 <tr>
+                <th> 活动时间</th>
+                <td>{php echo tpl_form_field_date('start_time', date('Y-m-d H:m', $reply['start_time']), true)}-
+				{php echo tpl_form_field_date('end_time', date('Y-m-d H:m', $reply['end_time']), true)}
+                 </td>
+            </tr>
+			
+			
+			<tr>
+				<th>我也要玩</th>
+				<td><input type="text" value="{$reply['guzhuurl']}" class="span4" name="guzhuurl" >
+					<div class="help-block">我也要玩的链接,强列建议为活动做个推送图文<span style="#f90">不能为空</span></div>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>活动简介</th>
+				<td>
+					<textarea style="height:150px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于图文显示的简介</div>
+					
+				</td>
+			</tr>
+			<tr>
+				<th>活动规则</th>
+				<td>
+					<textarea id="rule" style="height:150px;" name="rule" class="span7" cols="60">{$reply['rule']}</textarea>
+					<div class="help-block">活动的相关说明和活动奖品介绍。</div>
+				</td>
+			</tr>
+			<tr>
+				<th>单位</th>
+				<td><span class="uneditable-input span7">大单位 <input type="text" value="{$reply['bigunit']}" class="span1" name="bigunit" >
+					小单位 <input type="text" value="{$reply['smallunit']}" class="span1" name="smallunit" ></span>
+					<div class="help-block"></div>
+				</td>
+			</tr>
+			<tr>
+				<th>周期</th>
+				<td>
+					<span class="uneditable-input span7"><input type="hidden" value="1" class="span1" name="periodlottery" >
+					每天系统送
+						<input type="text" value="{$reply['maxlottery']}" class="span1" name="maxlottery" placeholder="填数字">
+						次体力（单位10）,每天可使用外部获取的体力
+						<input type="text" value="{$reply['prace_times']}" class="span1" name="prace_times" placeholder="填数字">(单位10）
+					</span>
+					<div class="help-block">如:每撒一次系统随机给100-300冰花<br />
+						2000冰花可以做杯创冰
+					</div>
+				</td>
+			</tr>
+			
+		</tbody>
+	</table>
+
+	
+</div>
+<script type="text/javascript">
+kindeditor($('#rule'));
+</script>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html{if $initNG} ng-app{/if}>
+    <head>
+        <title>{if $title}{$title}{else}{if !empty($_W['account']['name'])}{$_W['account']['name']}{/if}{/if}{if $_W['account']['siteinfo']['sitename']}{$_W['account']['siteinfo']['sitename']}{/if}</title>
+        <meta name="keywords" content="{if empty($_W['setting']['copyright']['keywords'])}微信,微信公众平台{else}{$_W['setting']['copyright']['keywords']}{/if}{if $_W['account']['siteinfo']['keywords']}{$_W['account']['siteinfo']['keywords']}{/if}" />
+        <meta name="description" content="{if empty($_W['setting']['copyright']['description'])}微信公众平台自助引擎。{else}{$_W['setting']['copyright']['description']}{/if}{if $_W['account']['siteinfo']['description']}{$_W['account']['siteinfo']['description']}{/if}" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=480" />
+        <link rel="stylesheet" href="./themes/mobile/style126/templets/m2013/css/reset.css" />
+        <link rel="stylesheet" href="./themes/mobile/style126/templets/m2013/css/mainCssRed.css" />
+        <script type="text/javascript" src="./themes/mobile/style126/templets/m2013/js/klass.min.js"></script>
+        <script type="text/javascript" src="./themes/mobile/style126/templets/m2013/js/jquery.min.js"></script>
+        <script type="text/javascript" src="./themes/mobile/style126/templets/m2013/js/flexslider.js"></script>
+        <script type="text/javascript" src="./themes/mobile/style126/templets/m2013/js/MainJS.js"></script>
+        <link type="text/css" rel="stylesheet" href="./resource/style/font-awesome.min.css" />
+        <!--        Hides URL bar on iPhone-->
+        <script type="application/x-javascript">
+            if (navigator.userAgent.indexOf('iPhone') != -1) {
+            addEventListener("load", function() {
+            setTimeout(hideURLbar, 0);
+            }, false);
+            }
+
+            function hideURLbar() {
+            window.scrollTo(0, 1);
+            }
+        </script>
+    </head>
+    <body>
+        <!--            headlineSection-->
+        <div id="Headline">
+            <h1>{$_W['account']['name']}</h1>
+        </div> 
+        <!--            Main Nav Section-->
+        <div id="MainNav">
+            <div class="flexslider-nav"> 
+                <ul class="slides">
+                    <li>
+                        {loop $_W['nav'] $nav}
+                        <a href="{$nav['url']}">
+                            <p>{$nav['name']}</p><p class="NavItemInfo">{$nav['description']}</p>
+                        </a>
+                        {/loop}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <ul id="ShowingRibbons">
+            <li id="RBNShowMenu"><img src="./themes/mobile/style126/templets/m2013/img/RED/dropdown_show.png" alt="Show Menu" /></li>
+            <li><a href="mobile.php?act=channel&name=index&weid={$_W['weid']}"><img src="./themes/mobile/style126/templets/m2013/img/RED/dropdown_index.png" alt="Back to homepage" /></a></li>
+        </ul>

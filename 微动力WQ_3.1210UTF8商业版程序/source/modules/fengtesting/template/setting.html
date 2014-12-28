@@ -1,0 +1,44 @@
+{template 'common/header'}
+<div class="main">
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+    <h4>基本设置</h4>
+    <table class="tb">
+        <tr>
+            <th>是否启用系统题库</th>
+            <td>
+                <div class="make-switch" data-on-label="是" data-off-label="否">
+                    <input type="checkbox" name='add[istesting]' value="1"{if $settings['istesting']} checked="checked"{/if} />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>banner图片</th>
+            <td>
+                {php echo tpl_form_field_image('banner', $settings['banner'])}
+                <span class="help-block">顶部banner图片，尺寸：640*120</span>
+            </td>
+        </tr>
+        <tr>
+            <th>banner图片链接</th>
+            <td>
+                <input type="text" id="banner_url" class="span5" name="add[banner_url]" value="{$settings['banner_url']}">
+                <span class="help-block">顶部banner图片链接</span>
+            </td>
+        </tr>
+        <tr>
+            <th>分享后跳转链接</th>
+            <td>
+                <input type="text" id="share_url" class="span5" name="add[share_url]" value="{$settings['share_url']}">
+                <span class="help-block">用户分享后将会跳转至该链接。建议做一条引导关注的图文素材，为空不跳转。例：<a href="http://mp.weixin.qq.com/s?__biz=MjM5ODU0NzQ0Mg==&mid=200074867&idx=1&sn=5a529a8cf2369731f535d5f3885d140e#rd" target="_black">点击查看</a></span>
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>
+                <button type="submit" class="btn btn-primary span3" name="submit" value="提交"> 提交 </button>
+                <input type="hidden" name="token" value="{$_W['token']}" />
+            </td>
+        </tr>
+    </table>
+</form>
+{template 'common/footer'}

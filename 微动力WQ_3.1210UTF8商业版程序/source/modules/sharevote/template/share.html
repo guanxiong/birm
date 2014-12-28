@@ -1,0 +1,140 @@
+<script>
+    //alert(window.location.href);
+    var item = '{$item}';   //分享的是哪一个条目
+    var itemid = '{$itemid}';   //该分享内容对应的id
+    var imgUrl = '{$imgUrl}';
+    var title = '{$title}';
+    var content = '{$desc}';
+    var link = "{$_W['siteroot']}{php echo create_url('index/module', array('do' => 'preview_'.$item, 'name' => 'sharevote','id'=>$itemid))}";
+    window.shareData = {"appid":"wx75ce9fefe6a1449b","imgUrl":imgUrl,"timeLineLink":link,"tTitle":title,"tContent":content,"sendFriendLink":link,"fTitle":title,"fContent":content,"wContent":content,"wLink":null};
+    var ticket = 'DA-hu0IBAABJoZNS',
+            ticketSource = '',
+            wticket = 'ebef12b4b0be0b253edcbdbb16539cc2',
+            qrcode = 'q13801790088305';
+    var pageName = pageName ? pageName : '';
+
+    // 分享
+    function shareFriend(appid, imgUrl, sendFriendLink, fContent, fTitle) {
+        WeixinJSBridge.invoke('sendAppMessage',{
+            "appid":appid,
+            "img_url":imgUrl,
+            "img_width":"640",
+            "img_height":"640",
+            "link":sendFriendLink,
+            "desc":fContent,
+            "title":fTitle
+        }, function(res) {
+            _report('send_msg', res.err_msg);
+        })
+    }
+    function shareTimeline(imgUrl, timeLineLink, tContent, tTitle) {
+        WeixinJSBridge.invoke('shareTimeline',{
+            "img_url":imgUrl,
+            "img_width":"640",
+            "img_height":"640",
+            "link":timeLineLink,
+            "desc": tContent,
+            "title": tTitle
+        }, function(res) {
+            _report('timeline', res.err_msg);
+        });
+    }
+    function shareWeibo(wContent, wLink) {
+        WeixinJSBridge.invoke('shareWeibo',{
+            "content":wContent,
+            "url":wLink,
+        }, function(res) {
+            _report('weibo', res.err_msg);
+        });
+    }
+    // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function(argv){
+            if (pageName == 'menuFilled') {
+
+                var params = {
+                    'qrcode' : qrcode,
+                    'ticket' : ticket,
+                    'ticketSource' : ticketSource
+                };
+
+                MLoading.show('加载中');
+                setTimeout(function(){MLoading.hide();},3000);
+                _doAjax('/weixin/dish/share', 'POST', params, function(ret){
+                    MLoading.hide();
+                    if (ret['code'] != 0) {
+                        alert(ret['message']);
+                        return;
+                    }
+                    var result = ret['result']['data'];
+
+                    shareFriend(result.appid, result.img_url, result.link,  result.desc, result.title);
+                });
+
+            } else {
+                $.ajax({url:"{$_W['siteroot']}{php echo create_url('index/module', array('do' => 'ajax_share', 'name' => 'sharevote'))}", data:"item="+item+"&itemid="+itemid});
+               shareFriend(window.shareData.appid, window.shareData.imgUrl, window.shareData.sendFriendLink, window.shareData.fContent, window.shareData.fTitle);
+            }
+        });
+
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function(argv){
+            if (pageName == 'menuFilled') {
+
+                var params = {
+                    'qrcode' : qrcode,
+                    'ticket' : ticket,
+                    'ticketSource' : ticketSource
+                };
+
+                MLoading.show('加载中');
+                setTimeout(function(){MLoading.hide();},3000);
+                _doAjax('/weixin/dish/share', 'POST', params, function(ret){
+                    MLoading.hide();
+                    if (ret['code'] != 0) {
+                        alert(ret['message']);
+                        return;
+                    }
+                    var result = ret['result']['data'];
+
+                    shareTimeline(result.img_url, result.link, result.desc, result.title);
+                });
+
+            } else {
+                $.ajax({url:"{$_W['siteroot']}{php echo create_url('index/module', array('do' => 'ajax_share', 'name' => 'sharevote'))}", data:"item="+item+"&itemid="+itemid});
+                shareTimeline(window.shareData.imgUrl, window.shareData.timeLineLink, window.shareData.tContent, window.shareData.tTitle);
+            }
+        });
+
+        // 分享到微博
+        WeixinJSBridge.on('menu:share:weibo', function(argv){
+            if (pageName == 'menuFilled') {
+
+                var params = {
+                    'qrcode' : qrcode,
+                    'ticket' : ticket,
+                    'ticketSource' : ticketSource
+                };
+
+                MLoading.show('加载中');
+                setTimeout(function(){MLoading.hide();},3000);
+                _doAjax('/weixin/dish/share', 'POST', params, function(ret){
+                    MLoading.hide();
+                    if (ret['code'] != 0) {
+                        alert(ret['message']);
+                        return;
+                    }
+                    var result = ret['result']['data'];
+
+                    shareWeibo(result.title, result.link);
+                });
+
+            } else {
+
+                shareWeibo(window.shareData.wContent, window.shareData.wLink);
+            }
+        });
+    }, false)
+</script>

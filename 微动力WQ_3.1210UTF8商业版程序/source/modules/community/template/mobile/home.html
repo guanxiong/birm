@@ -1,0 +1,83 @@
+{template 'header'}
+{if !empty($member['status'])}
+<div class="home-box">
+	<a href="{php echo $this->createMobileUrl('repair', array('op' => 'post'))}">
+		<div>
+			<i class="icon-wrench"></i>
+			<span>{php echo $this->getMobileTitle('repair');}</span>
+		</div>
+	</a>
+	<a href="{php echo $this->createMobileUrl('report', array('op' => 'post'))}">
+		<div>
+			<i class="icon-legal"></i>
+			<span>{php echo $this->getMobileTitle('report');}</span>
+		</div>
+	</a>
+	<a href="{php echo $this->createMobileUrl('homemaking', array('op'=>'post'))}">
+	<div>
+		<i class="icon-group"></i>
+		<span>{php echo $this->getMobileTitle('homemaking');}</span>
+	</div>
+	<a href="{php echo $this->createMobileUrl('houselease', array('op'=>'post'))}">
+	<div>
+		<i class="icon-info"></i>
+		<span>{php echo $this->getMobileTitle('houselease');}</span>
+	</div>
+	</a>
+	<a href="{php echo $this->createMobileUrl('announcement')}">
+		<div>
+			<i class="icon-bullhorn"></i>
+			<span>{php echo $this->getMobileTitle('announcement');}</span>
+		</div>
+	</a>
+	<a href="{php echo $this->createMobileUrl('phone')}">
+		<div>
+			<i class="icon-phone"></i>
+			<span>{php echo $this->getMobileTitle('phone');}</span>
+		</div>
+	</a>
+	<a href="{php echo $this->createMobileUrl('member')}">
+		<div>
+			<i class="icon-user"></i>
+			<span>{php echo $this->getMobileTitle('member');}</span>
+		</div>
+	</a>
+	<a href="{php echo $this->createMobileUrl('help')}">
+		<div>
+			<i class="icon-search"></i>
+			<span>{php echo $this->getMobileTitle('help');}</span>
+		</div>
+	</a>
+	<a href="{php echo $this->createMobileUrl('express')}">
+		<div>
+			<i class="icon-search"></i>
+			<span>{php echo $this->getMobileTitle('express');}</span>
+		</div>
+	</a>
+</div>
+{else}
+<div class="tips img-rounded">
+	{if !empty($member)}
+	<div class="icon"><i class="icon-spinner"></i></div>
+	<div class="text-danger" style="margin-bottom:10px;">请耐心等待审核</div>
+	<table class="table">
+		<tr>
+			<td style="text-align:left; width:80px;">所属小区</td>
+			<td style="text-align:right; font-size:14px;">{$member['regionname']}</td>
+		</tr>
+		<tr>
+			<td style="text-align:left;">物业电话</td>
+			<td style="text-align:right; font-size:14px;"><a href="tel:{php echo $this->module['config']['phone']}">{php echo $this->module['config']['phone']}</a></td>
+		</tr>
+		<tr>
+			<td style="text-align:left;">地址</td>
+			<td style="text-align:right; font-size:14px;">{php echo $this->module['config']['address']}</td>
+		</tr>
+	</table>
+	{else}
+	<div class="icon"><i class="icon-info-sign"></i></div>
+	您需要先 <a href="{php echo $this->createMobileUrl('register');}" > 注册</a> 个人信息。
+	{/if}
+</div>
+{/if}
+{template 'footer'}

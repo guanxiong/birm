@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[送祝福]]></name>
+		<identifie><![CDATA[bless]]></identifie>
+		<version><![CDATA[1.1]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[送祝福，分享利器，生成圣诞祝福，春节祝福贺卡分享给朋友等等。]]></ability>		<description><![CDATA[发送关键词“送祝福”即可生成一张赠与朋友的圣诞贺卡或春节贺卡，分享到朋友圈之后，会带来大量回流。后台提供分享祝福的详细分析报告，让您清晰明了的看到用户访问和分享情况！]]></description>
+		<author><![CDATA[微鼎]]></author>
+		<url><![CDATA[http://www.weidim.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="查看祝福贺卡" do="blesslist" state="" />			
+		</rule>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE `ims_bless_card` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`rid` int(10) unsigned NOT NULL COMMENT '规则id',
+`from_user` varchar(50) not null default '' COMMENT '用户openid',
+`to_name` varchar(20) NOT NULL COMMENT '收件人',
+`from_name` varchar(20) NOT NULL COMMENT '寄件人',
+`content` varchar(100) NOT NULL COMMENT '祝福语',
+`viewnum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '访问量',
+`sharenum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分享量',
+`createtime` int unsigned NOT NULL COMMENT '创建时间',
+`status` tinyint unsigned NOT NULL default 1 comment '是否隐藏',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;	
+
+CREATE TABLE `ims_bless_reply` (
+`id` int( 10 ) unsigned NOT NULL AUTO_INCREMENT ,
+`rid` int( 10 ) unsigned NOT NULL default 0 comment '规则id',
+`title` varchar( 50 ) NOT NULL comment '规则标题',
+`description` varchar( 255 ) NOT NULL comment '描述',
+`picture` varchar( 100 ) NOT NULL comment '图片',
+`bgimage` varchar( 100 ) NOT NULL comment '祝福卡背景图片',
+`start_time` int unsigned NOT NULL comment '开始时间',
+`end_time` int unsigned NOT NULL comment '结束时间',
+`status` tinyint unsigned NOT NULL default 1 comment '开关状态',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;
+
+	]]></install>
+	<uninstall><![CDATA[
+drop table `ims_bless_card`;
+drop table `ims_bless_reply`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

@@ -1,0 +1,142 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $do == 'post'}class="active"{/if}><a href="{php echo create_url('member/group/post');}">{if $id}编辑{else}添加{/if}用户组</a></li>
+	<li {if $do == 'display'}class="active"{/if}><a href="{php echo create_url('member/group/display');}">用户组列表</a></li>
+</ul>
+{if $do == 'post'}
+<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+<div class="main">
+	<input type="hidden" name="id" value="{$id}" />
+	<input type="hidden" name="templateid" value="{$template['id']}">
+	<h4>用户组管理</h4>
+	<table class="tb">
+		<tr>
+			<th><label for="">名称</label></th>
+			<td>
+				<input type="text" class="span4" name="name" id="name" value="{$item['name']}" />
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">公众号数量</label></th>
+			<td>
+				<input type="text" class="span4" name="maxaccount" value="{$item['maxaccount']}" />
+				<span class="help-block">限制公众号的数量，为0则不限制。</span>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">子公众号数量</label></th>
+			<td>
+				<input type="text" class="span4" name="maxsubaccount" value="{$item['maxsubaccount']}" />
+				<span class="help-block">限制子公众号的数量，为0则不允许添加。</span>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">设置当前用户允许访问的模块</h4>
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</th>
+									<th>模块名称</th>
+									<th>模块标识</th>
+									<th>功能简介</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $modules $module}
+								<tr>
+									<td class="row-first">{if !$module['issystem']}<input class="modules" type="checkbox" value="{$module['mid']}" name="modules[]" {if !empty($item['modules']) && in_array($module['mid'], $item['modules'])}checked{/if} />{else}<input class="modules" type="checkbox" value="{$module['mid']}" name="modules[]" disabled checked />{/if}</td>
+									<td>{$module['title']}</td>
+									<td>{$module['name']}</td>
+									<td>{$module['ability']}</td>
+									<td>{if $module['issystem']}<span class="label label-success">系统模块</span>{/if}</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">设置当前用户允许访问的模板</h4>
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</th>
+									<th>模板名称</th>
+									<th>模板标识</th>
+									<th>功能简介</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $templates $temp}
+								<tr>
+									<td class="row-first">{if $temp['name'] != 'default'}<input class="modules" type="checkbox" value="{$temp['id']}" name="templates[]" {if !empty($item['templates']) && in_array($temp['id'], $item['templates'])}checked{/if} />{else}<input class="modules" type="checkbox" value="{$temp['id']}" name="templates[]" disabled checked />{/if}</td>
+									<td>{$temp['title']}</td>
+									<td>{$temp['name']}</td>
+									<td>{$temp['description']}</td>
+									<td></td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>
+				<input name="token" type="hidden" value="{$_W['token']}" />
+				<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+			</td>
+		</tr>
+	</table>
+</div>
+</form>
+{elseif $do == 'display'}
+<form action="" method="post">
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:30px;">删？</th>
+					<th style="width:150px;">名称</th>
+					<th>公众号数量</th>
+					<th>子公众号数量</th>
+					<th style="min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td><input type="checkbox" name="delete[]" value="{$item['id']}" /></td>
+					<td>{$item['name']}</td>
+					<td>{if empty($item['maxaccount'])}不限{else}{$item['maxaccount']}{/if}</td>
+					<td>{if empty($item['maxsubaccount'])}无权限{else}{$item['maxsubaccount']}{/if}</td>
+					<td><span><a href="{php echo create_url('member/group/post', array('id' => $item['id']))}">编辑</a></span></td>
+				</tr>
+				{/loop}
+			</tbody>
+			<tr>
+				<th></th>
+				<td>
+					<input name="token" type="hidden" value="{$_W['token']}" />
+					<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+</form>
+{/if}
+{template 'common/footer'}

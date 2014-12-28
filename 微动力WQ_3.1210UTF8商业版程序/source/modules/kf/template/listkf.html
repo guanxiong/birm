@@ -1,0 +1,132 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+	
+					<li><a target="_blank" href="{php echo create_url('site/module/kfset', array('type' => '3', 'name' => 'kf', 'set' => 1))}">客服列表</a></li>
+					<li class="current"><a href="{php echo create_url('site/module/manage', array('name' => 'reg'))}">设置客服</a></li>
+					
+</ul>
+
+<div class="main">
+	<div class="stat">
+		<div class="stat-div">
+			<div class="navbar navbar-static-top">
+				<div class="navbar-inner">
+					<span class="brand">添加客服</span>
+				</div>
+			</div>
+           
+           <form action="{php echo create_url('site/module/kfset', array('type' => '3', 'name' => 'kf', 'set' => 1))}" method="post" class="form-horizontal form" onsubmit="return formcheck(this)">          
+           
+				<table class="tb" style="margin-top:10px; margin-left:10px;">
+				<tr>
+					<th style="width:90px;"><label for="uid">UID</label></th>
+					<td>
+						
+                       <input type="text"  name="uid" value="712" class="span6"  />
+						<span class="help-block">客服ID(*即会员组中的会员ID，此项必填也必须填正确)</span>
+                        
+					</td>
+				</tr>
+                <tr>
+					<th style="width:90px;"><label for="oid">OPENID</label></th>
+					<td>
+						
+                       <input type="text"  name="oid" value="oZJWHt-235hG4MK9C0kafu5RT54k" class="span6"  />
+						<span class="help-block">客服OPENID(*即会员组中的会员openID，此项必填也必须填正确)</span>
+                        
+					</td>
+				</tr>
+                
+				<tr>
+					<th style="width:90px;"><label for="nickname">昵称</label></th>
+					<td>
+						
+                       <input type="text"  name="nickname" value="昵称" class="span6"  />
+						<span class="help-block">客服名</span>
+                        
+					</td>
+				</tr>
+                
+				
+				<tr>
+					<td colspan="2">
+						<input type="submit" class="btn btn-primary " name="submit"  value="提交" /><input type="hidden" name="token" value="{$_W['token']}" />
+					</td>
+				</tr>
+			</table>
+            
+			</form>
+            
+		</div>
+    	<div class="sub-item" id="table-list">
+					<h4 class="sub-title">客服列表</h4>  
+                   
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</th>
+                                    <th style="width:110px;">工号</th>
+                                     <th style="width:60px;">客服名</th>
+									<th style="width:110px;">状态<i></i></th>
+									
+									<th style="width:110px;">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+                          
+								{loop $list $row}
+								<tr>
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['uid']}" /></td>
+                                    <td style="font-size:12px;  color:#666;">{$row['uid']}</td>
+                                    <td >
+                                    <img src="{if $row['avatar']}{if strexists($row['avatar'], 'source/modules')}{$_W['siteroot']}{else}{$_W['attachurl']}{/if}{$row['avatar']}{else}/resource/image/noavatar_middle.gif{/if}" class="avatar" style="width:45px; height:45px;" />
+                                    <br />
+                                    	{$row['nickname']}
+                                    </td>
+                                    <td >
+										{if $row['kfzt']==1}在线{else if $row['kfzt']==2}忙碌{else}离线{/if} 
+									</td>
+									
+									<td><a href="{php echo create_url('site/module/kfset', array('type' => '3', 'name' => 'kf', 'uid' => $row['uid'], 'set' => 2))}">编辑客服</a>
+                                  
+                                    
+                                    </td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr style="width:40px;" class="row-first">
+								<td><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+								<td>
+									<input type="submit" name="del" value="删除" class="btn btn-primary" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					</form>
+					{$pager}  
+                      
+        </div>
+</div>
+<script type="text/javascript">
+	function formcheck(form) {
+		if (!form['groupname'].value) {
+			alert('请填写群组名！');
+			form['groupname'].focus();
+			return false;
+		}
+		
+		if (!form['credit'].value ) {
+			alert('请输入积分上限');
+			form['credit'].focus();
+			return false;
+		}
+		
+	}
+	</script>
+{template 'common/footer'}

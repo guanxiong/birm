@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ch">
+	<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+	<meta HTTP-EQUIV="Expires" CONTENT="-1">
+<title>{if $item['title']}{$item['title']}{else}{微动力}{/if}</title>
+	<!--浏览器兼容HTML5标签-->
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="./html5.js"></script>
+	<![endif]-->
+	<!--移动端版本兼容 -->
+	<script type="text/javascript">
+		var phoneWidth =  parseInt(window.screen.width);
+		var phoneScale = phoneWidth/640;
+		var ua = navigator.userAgent;
+		if (/Android (\d+\.\d+)/.test(ua)){
+			var version = parseFloat(RegExp.$1);
+			if(version>2.3){
+				document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+			}else{
+				document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+			}
+		} else {
+			document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+		}
+	</script>
+	<!--移动端版本兼容 end -->
+	<link href="./source/modules/ebook/css/all.css?2014081101" rel="stylesheet" type="text/css">
+	</head>
+	<body>   
+	<input type="hidden" value='{$item['id']}' id='activeId'>
+	<!-- 活动id -->
+	<section class="p-index"> 
+      <!--fn-声音提示 -->
+      <div class="audio_txt">
+    <p class="txt">点击开启/关闭音效</p>
+    <p></p>
+  	</div>
+   <!--fn-声音提示 end--> 
+      <!--fn-声音显示 -->
+      <section class="fn-audio">
+    	<div class="btn">
+          <p class="btn_audio"><span class='css_sprite01 audio_open'></span>
+          <span class='css_sprite01 audio_close'></span></p>
+          <audio id="car_audio" controls preload="preload">
+        <source src="{if $item['music']}{$item['music']}{else}{php echo $this->geturl(2);}{/if} " type="audio/mpeg">
+        		您的浏览器不支持HTML5音频格式 
+        </audio>
+        </div>
+  	</section>
+      <!--fn-声音显示 end--> 
+      
+      <!--index 封面-->
+      {loop $hslists $index $v}
+      	<section data-page="1" class="m-page m-page1" data-id='4388' data-type='info_pic2'>
+			<div class="m-img m-img01" style="background: url({$_W['attachurl']}{$v['attachment']}) center no-repeat; background-size: cover;">
+			</div>
+			<img data-share-logo="" src="{$_W['attachurl']}{$v['attachment']}" style="display: none;">
+		</section>
+      {/loop}
+	<!--index 封面 end-->
+
+	<!--全屏大图-->
+      <section data-page="2" class="m-page m-page20 hide" data-id='7302' data-type='info_nomore'>
+    <div class="m-img m-img01 " data-bk="{if $item[index_pic]}{$_W['attachurl']}{$item[index_pic]}{else}{php echo $_W['siteroot'].$this->geturl(1);}{/if}"  
+    style="background:url({if $item[index_pic]}{$_W['attachurl']}{$item[index_pic]}{else}{php echo $_W['siteroot'].$this->geturl(1);}{/if}) center no-repeat; background-size:cover;">
+      <div class="logo_res"> 
+        <form action=" " method="post" id="form"   name="form">
+          <dl>
+            <dd style="background:rgba(58,62,74,0.8) none repeat scroll !important; background:#3A3E4A; filter:Alpha(opacity=80);padding:5px 0px; margin:10px 0px;">
+				<span class="logo_left" style="line-height:50px;text-align: right;font-size:50px;">姓名</span>
+                  <input style="width:60%; float:right; height:50px;background-color: transparent; font-size:50px; color:#fff; margin-right:9%; border:0px; " id="truename" name="truename"/>
+            </dd>
+
+            <dd style="background:rgba(58,62,74,0.8) none repeat scroll !important; background:#3A3E4A; filter:Alpha(opacity=80); padding:5px 0px; margin:10px 0px;"">
+            <span class="logo_left"  style="line-height:50px;text-align: right;font-size:50px;">电话</span>
+                  <input name="tel" id="tel" style="width:60%; float:right; height:50px;background-color: transparent; font-size:50px; color:#fff; margin-right:9%; border:0px; "/>
+            </dd>
+
+            <dd id="ljyy">
+                  <input height="50" value="立即预约" id="showcard" type="button" name="sub" style="font-size:50px;"/>
+            </dd>
+            <br />
+          </dl>
+        </form>
+      </div>
+        </div>
+  </section>
+  
+      <div class="popup-txt">向下滑动，返回首页</div>
+      <!--pageLoading-->
+      <section class="pageLoading"> <img src="./source/modules/ebook/images/load.gif" alt="loading" /> </section>
+      <!--pageLoading end--> 
+      <!--微信分享 -->
+      <section class='weixin-share' onclick='cancle_share_weixin(this);'> <img class='lazy-bk' 
+      data-bk='./source/modules/ebook/images/guanzhu.png'/> </section>
+      <!--微信分享 end  --> 
+    </section>
+
+<!--脚本加载--> 
+<script type="text/javascript" src="./source/modules/ebook/js/all.js" defer async></script> 
+<script src="./source/modules/ebook/js/Calendar5.js"></script> 
+<script type="text/javascript">
+      var c = new Calendar("c");
+      document.write(c);
+  </script> 
+<script type="text/javascript" language="javascript">
+$(document).ready(function() {
+	$("#showcard").click(function() {
+		if($("#truename").val()==''){
+			alert('名字不能为空');
+			return false;
+		} 
+		if($("#tel").val()==''){
+			alert('电话不能为空');
+			return false;
+		} 
+		 
+		var submitData = {
+			truename: $("#truename").val(),
+			tel: $("#tel").val()
+		};
+		$.post('{php echo $this->createMobileUrl('yysave')}', submitData, function(data) {
+			if(1==data.errno){
+				alert('预约成功,请等待工作人员联系');
+				//location.href = data.url;
+				return;
+			 }else if(2 == data.errno){
+		        alert('提交信息不对,请重新输入');
+	        }else if(3 == data.errno){
+	            alert(data.msg);
+	            location.href = data.url;
+	        }else{
+	          alert("非常抱歉,请重新打开此页面.");
+	        }
+		}, "json");
+	});
+});
+
+</script>
+<!--脚本加载 end-->
+</body>
+</html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[三维全景]]></name>
+		<identifie><![CDATA[panorama]]></identifie>
+		<version><![CDATA[1.7]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[三维全景]]></ability>
+		<description><![CDATA[三维全景]]></description>
+		<author><![CDATA[x_fengnet]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+      		<entry title="全景管理" do="Panoramaset" />
+   		</menu>
+   		<cover>
+			<entry title="全景入口设置" do="Index" state="" direct="false" />
+		</cover>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_panorama_manage` (
+   `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` varchar(60) NOT NULL DEFAULT '',
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `intro` varchar(300) NOT NULL DEFAULT '',
+  `frontpic` varchar(100) NOT NULL DEFAULT '',
+  `rightpic` varchar(100) NOT NULL DEFAULT '',
+  `backpic` varchar(100) NOT NULL DEFAULT '',
+  `leftpic` varchar(100) NOT NULL DEFAULT '',
+  `toppic` varchar(100) NOT NULL DEFAULT '',
+  `bottompic` varchar(100) NOT NULL DEFAULT '',
+  `keyword` varchar(60) NOT NULL DEFAULT '',
+  `time` int(10) NOT NULL DEFAULT '0',
+  `taxis` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+		]]></install>
+	<uninstall><![CDATA[
+drop table ims_panorama_manage;
+		]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

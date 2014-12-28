@@ -1,0 +1,60 @@
+{template 'common/header'}
+<div class="main">
+
+	<ul class="nav nav-tabs">
+ <li {if $_GPC['do'] == 'wzpindex'} class="active"{/if}><a href="{php echo  $this->createWebUrl('wzpindex');}">企业招聘信息</a>
+  </li>
+<li {if $_GPC['do'] == 'wzpadmin'} class="active"{/if}><a href="{php echo  $this->createWebUrl('wzpadmin',array('id'=>$id));}">在线求职管理</a></li>
+	</ul>
+<div class="search">
+		本次收集简历总数：<span class="redamount">{$count}</span>个　　投递成功：<span class="redamount">{$ok_count}</span>个　　投递失败：<span class="redamount">{$lost_count}</span>个　　未处理简历：<span class="redamount">{$no_count}</span>个
+	</div>
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+                <tr>
+                    <th width="40">序号</th>
+                    <th width="100">求职人</th>
+                    <th width="100">电话</th>
+                    <th width="80">求职岗位</th>
+                    <th width="80">性别</th>
+                    <th width="80">年龄</th>
+                    <th width="200">履历</th>
+                    <th width="150">投递时间</th>
+                    <th width="50">简历状态</th>
+                    <th >操作</th>
+                </tr>
+              </thead>
+              <tbody>
+<tr></tr>
+{loop $list $item}
+<form action="{php echo $this->createWebUrl('wzpadmin', array('id' => $item['id']))}" method="post"> 
+{php $i;$i++; }
+<tr>
+<td>{$i}</td>
+<td>{$item['people']}</td>
+<td>{$item['tel']}</td>
+<td>{$item['title']}</td>
+<td>{$item['sex']}</td>
+<td>{$item['older']}</td>
+<td>{$item['experience']}</td>
+ <td>{php echo date('Y-m-d H:i:s',$item['createtime'])}</td>
+  <td>{if ($item['order_status']==1)}<span class="label" style="background:#4169e1;">已查看</span>{else}未查看{/if}</td>
+<td colspan="10" class="norightborder">  
+{if $item['order_status']!=1}
+<a href="{php echo $this->createWebUrl('setread', array('id' => $item['id'],'hid'=>$hid))}" class="btn btn-small">设为已阅</a>
+{/if}
+</td>
+<input name="token" type="hidden" value="{$_W['token']}" />
+</tr>
+</form>
+{/loop}
+				<td colspan="8">
+					</td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</div>
+
+{template 'common/footer'}

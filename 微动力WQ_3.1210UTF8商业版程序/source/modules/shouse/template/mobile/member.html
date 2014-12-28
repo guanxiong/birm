@@ -1,0 +1,64 @@
+
+{php $header_off=0;}
+{template 'header'}
+<div class="container">
+    <div class="mt15">
+        <div class="list-group">
+            <div class="profile clearfix">
+                <a href="{php echo $this->createMobileUrl('reg',array('foo' =>'my'))}">
+    {if empty($user['id'])}
+                    <img src="./source/modules/shouse/template/img/default-avatar.png" class="img-rounded avatar">未登录
+    {else}
+                    <img src="./source/modules/shouse/template/img/default-avatar.png" class="img-rounded avatar">
+                    {if empty($user['nickname'])} 未设置昵称 {else} {$user['nickname']} {/if}
+    {/if}
+                    <div class="pull-right ">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="list-group">
+                    <!-- <a class="list-group-item" href="{php echo $this->createMobileUrl('reg',array('foo' => 'my'))}">
+                <span class="glyphicon glyphicon-star"></span> 我的信息
+                <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+            </a> -->
+            <a class="list-group-item" href="{php echo $this->createMobileUrl('member',array('foo'=>'look'))}">
+                <span class="glyphicon glyphicon-eye-open"></span> 意向信息
+                <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+            </a>
+            <a class="list-group-item" href="{php echo $this->createMobileUrl('member',array('foo'=>'fava'))}">
+                <span class="glyphicon glyphicon-star"></span> 我的收藏
+                <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+            </a>
+            
+        </div>
+
+        <div class="list-group">
+            <a class="list-group-item" href="{php echo $this->createMobileUrl('house')}">
+                <span class="glyphicon glyphicon-list-alt"></span> 最新信息
+                <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+            </a>
+            <a class="list-group-item" href="{php echo $this->createMobileUrl('news')}">
+                <span class="glyphicon glyphicon-globe"></span> 地产资讯
+                <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+            </a>
+            <!-- <a class="list-group-item" href="{php echo $this->createMobileUrl('news')}">
+                <span class="glyphicon glyphicon-comment"></span> 微 社 区
+                <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+            </a> -->
+            <a class="list-group-item" href="{php echo $this->createMobileUrl('member',array('foo'=>'about'))}">
+                <span class="glyphicon glyphicon-leaf"></span> 关于我们
+                <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+{if $user['uid']}
+    <div class="mt15">
+        <a class="btn btn-block btn-success" href="{php echo $this->createMobileUrl('member',array('foo'=>'exit'))}">
+            <span class="glyphicon glyphicon-log-out"></span> 退出会员中心
+        </a>
+    </div>
+{/if}
+</div>
+{php $footer_off=1;} {php $stat_off=1;} {template 'footer'}

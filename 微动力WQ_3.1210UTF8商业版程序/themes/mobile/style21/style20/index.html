@@ -1,0 +1,43 @@
+{template 'header'}
+<link href="./themes/mobile/style44/index_files/index_0.css" rel="stylesheet" type="text/css">
+<link href="./themes/mobile/style44/index_files/plugmenu.css" rel="stylesheet" type="text/css">
+<script src="./themes/mobile/style44/index_files/iscroll.js" type="text/javascript"></script>
+<script type="text/javascript">
+            var myScroll;
+
+            function loaded() {
+                myScroll = new iScroll('wrapper', {
+                    snap: true,
+                    momentum: false,
+                    hScrollbar: false,
+                    onScrollEnd: function () {
+                        document.querySelector('#indicator > li.active').className = '';
+                        document.querySelector('#indicator > li:nth-child(' + (this.currPageX+1) + ')').className = 'active';
+                    }
+                });
+ 
+            }
+
+            document.addEventListener('DOMContentLoaded', loaded, false);
+        </script>
+    <style>
+body{font:{$_W['styles']['fontsize']} {$_W['styles']['fontfamily']}; color:{$_W['styles']['fontcolor']};padding:0;margin:0;background-image:url('{if empty($_W['styles']['indexbgimg'])}./themes/mobile/sjz88/index_files/bg_index.jpg{else}{$_W['styles']['indexbgimg']}{/if}');background-size:cover;{if !empty($_W['styles']['indexbgcolor'])} background-color:{$_W['styles']['indexbgcolor']};{/if}{$_W['styles']['indexbgextra']}}
+</style>
+<body><div class="wrap">
+    <div class="main">
+    	<ul>
+		{loop $navs $nav}
+		<li id="m1">
+                	<a href="{$nav['url']}">
+					<span class="icon">{if !empty($nav['icon'])}
+					<em style="background:url({$_W['attachurl']}{$nav['icon']}) center 0 no-repeat;background-size:160px 65px;"></em>{else}
+				<em class="{$nav['css']['icon']['icon']}" style="{$nav['css']['icon']['style']}">	</em>{/if}
+					
+					</span><span class="title">{$nav['name']}</span></a></li>
+			{/loop}   
+				</ul>
+  </div>
+</div>
+        <div id="insert2"></div>
+        <div style="display:none"> </div>
+</body></html>

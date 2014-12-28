@@ -1,0 +1,144 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">设置活动信息</h4>
+	<table>
+		<tbody>
+			{if !empty($reply['id'])}
+			<tr>
+				<th>查看内容</th>
+				<td><a href="{php echo create_url('index/module', array('do' => 'userlist', 'name' => 'user', 'id' => $reply['rid']))}">查看会员名单</a></td>
+			</tr>{/if}
+			<tr>
+				<th>活动标题</th>
+				<td>
+					<input type="text" id="" class="span7" placeholder="" name="title" value="{$reply['title']}">
+				</td>
+			</tr>        
+			<tr>
+				<th>题目个数</th>
+				<td>
+					<input type="text" id="" class="span4" placeholder="" name="qnum" value="{$reply['qnum']}">
+				</td>
+			</tr>
+			<tr>
+				<th>是否允许跳过</th>
+				<td>
+					<div class="radio inline"><input type="radio" name="tiao" value="1" id="tiao_1" {if $reply['tiao'] == '1'}checked="true"{/if}><label for="tiao_1">允许</label></div>
+					<div class="radio inline"><input type="radio" name="tiao" value="0" id="tiao_0"  {if $reply['tiao'] == '0'}checked="true"{/if}><label for="tiao_0">不允许</label></div>
+					<div class="help-block">此项设置为不允许后下一项设置无效</div>
+				</td>
+			</tr>
+			<tr>
+				<th>跳过所扣积分</th>
+				<td>
+					<input type="text" id="" class="span4" placeholder="" name="tgkf" value="{$reply['tgkf']}">
+				</td>
+			</tr>
+			<tr>
+				<th>答题时间</th>
+				<td>
+					<input type="text" id="" class="span4" placeholder="" name="answertime" value="{$reply['answertime']}"><span>单位：秒 若不作限制请设置为0</span>
+				</td>
+			</tr>
+			<tr>
+				<th>活动状态</th>
+				<td>
+					<div class="radio inline"><input type="radio" name="status_fighting" value="2" id="status_02" {if $reply['status_fighting'] == '2'}checked="true"{/if}><label for="status_02">结束</label></div>
+					<div class="radio inline"><input type="radio" name="status_fighting" value="1" id="status_01" {if $reply['status_fighting'] == '1'}checked="true"{/if}><label for="status_01">暂停</label></div>
+					<div class="radio inline"><input type="radio" name="status_fighting" value="0" id="status_00"  {if $reply['status_fighting'] == '0'}checked="true"{/if}><label for="status_00">正常</label></div>
+					<div class="help-block">可以随时暂停或结束活动的进程</div>
+				</td>
+			</tr>
+			<tr>
+				<th>活动时间</th>
+				<td>
+					{if !empty($reply['start'])}
+					<button style="margin:0;" class="btn span5" id="date-range" type="button"><span class="date-title">{php echo date('Y-m-d', $reply['start'])} 至 {php echo date('Y-m-d', $reply['end'])}</span> <i class="icon-caret-down"></i></button>
+					<input name="start" type="hidden" value="{php echo date('Y-m-d', $reply['start'])}" />
+					<input name="end" type="hidden" value="{php echo date('Y-m-d', $reply['end'])}" />
+					{else}
+					<button style="margin:0;" class="btn span5" id="date-range" type="button"><span class="date-title">{php echo date('Y-m-d')} 至 {php echo date('Y-m-d')}</span> <i class="icon-caret-down"></i></button>
+					<input name="start" type="hidden" value="{php echo date('Y-m-d')}" />
+					<input name="end" type="hidden" value="{php echo date('Y-m-d')}" />
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<th>活动简介</th>
+				<td>
+					<textarea style="height:50px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于活动的简单介绍</div>
+				</td>
+			</tr>
+			<tr>
+				<th>进入答题欢迎语</th>
+				<td>
+					<textarea style="height:50px;" name="reply4" class="span7" cols="60">{$reply['reply4']}</textarea>
+					<div class="help-block">进入游戏时的欢迎语，动态标签 昵称:{nickname} 总积分:{credit} 活动主题：{title} 题目个数：{num} 跳过所扣积分：{tgkf}</div>
+				</td>
+			</tr>
+			<tr>
+				<th>未绑定回复</th>
+				<td>
+					<textarea style="height:50px;" name="reply1" class="span7" cols="60">{$reply['reply1']}</textarea>
+					<div class="help-block">未绑定昵称（fans表nickname）时回复语，例如：您还未在本平台绑定账号，回复 绑定 进行信息绑定！</div>
+				</td>
+			</tr>
+			<tr>
+				<th>未开始回复</th>
+				<td>
+					<textarea style="height:50px;" name="reply2" class="span7" cols="60">{$reply['reply2']}</textarea>
+					<div class="help-block">用于活动未开始的时候的简单回复 例如：该活动尚未开始</div>
+				</td>
+			</tr>
+			<tr>
+				<th>已结束回复</th>
+				<td>
+					<textarea style="height:50px;" name="reply3" class="span7" cols="60">{$reply['reply3']}</textarea>
+					<div class="help-block">用于活动已结束的时候的简单回复 例如：该活动已经结束</div>
+				</td>
+			</tr>
+			<tr>
+				<th>暂停回复</th>
+				<td>
+					<textarea style="height:50px;" name="reply5" class="span7" cols="60">{$reply['reply5']}</textarea>
+					<div class="help-block">用于活动暂停的时候的简单回复 例如：该活动暂停中</div>
+				</td>
+			</tr>
+ 		</tbody>
+	</table>
+ </div>
+ <link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script>
+$(function() {
+	//详细数据相关操作
+	$('#date-range').daterangepicker({
+        format: 'YYYY-MM-DD',
+        startDate: $(':hidden[name=start]').val(),
+        endDate: $(':hidden[name=end]').val(),
+        locale: {
+            applyLabel: '确定',
+            cancelLabel: '取消',
+            fromLabel: '从',
+            toLabel: '至',
+            weekLabel: '周',
+            customRangeLabel: '日期范围',
+            daysOfWeek: moment()._lang._weekdaysMin.slice(),
+            monthNames: moment()._lang._monthsShort.slice(),
+            firstDay: 0
+        }
+    }, function(start, end){
+        $('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+        $(':hidden[name=start]').val(start.format('YYYY-MM-DD'));
+        $(':hidden[name=end]').val(end.format('YYYY-MM-DD'));
+    });
+});
+</script>
+<script type="text/javascript">
+kindeditor($('#rule'));
+kindeditorUploadBtn($('#user-picture'));
+
+ 
+</script>

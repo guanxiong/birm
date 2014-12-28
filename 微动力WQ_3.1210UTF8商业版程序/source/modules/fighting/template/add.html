@@ -1,0 +1,93 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="">添加题目</a></li>
+	<li><a href="{php echo create_url('site/module', array('do' => 'detail', 'name' => 'fighting'));}">管理题目</a></li>
+	<li><a href="{php echo create_url('site/module', array('do' => 'ShowPlay', 'name' => 'fighting'));}">活动列表</a></li>
+</ul>
+<div class="main">
+	<div class="search">
+		<form action="{php echo create_url('site/module', array('do' => 'addok', 'name' => 'fighting'));}" method="post">
+			<input type="hidden" name="id" value="{$list['id']}" />
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th>题目</th>
+					<td>
+							<input class="span8" name="question" id="" type="text" value="">
+					</td>
+				</tr>
+				<tr>
+					<th>题目类型</th>
+					<td>
+							<input class="span4" name="classify" id="" type="text" value="">
+					</td>
+				</tr>
+				<tr>
+					<th>分值</th>
+					<td>
+							<input class="span4" name="figure" id="" type="text" value="">
+					</td>
+				</tr>
+				<tr>
+					<th>正确答案</th>
+					<td>
+							<input class="span4" name="answer" id="" type="text" value=""><span>直接输入选项即可，如单选：A 多选：AB</span>
+					</td>
+				</tr>
+				<tr>
+					<th>选项个数</th>
+					<td>
+							<input class="span4" name="option_num" id="" type="text" value=""><span> 对应下面的填写几个选择项</spam>
+					</td>
+				</tr>
+				<tr>
+					<th>选项类型</th>
+					<td>
+							<input class="span4" name="question_types" id="" type="text" value="1"><span> 任意输入1、2、3、4均可，暂不涉及此项</span>
+					</td>
+				</tr>
+				<tr>
+					<th>选项A</th>
+					<td>
+							<input class="span6" name="optionA" id="" type="text" value="{$list['optionA']}">
+					</td>
+				</tr>
+				<tr>
+					<th>选项B</th>
+					<td>
+							<input class="span6" name="optionB" id="" type="text" value="{$list['optionB']}">
+					</td>
+				</tr>
+				<tr>
+					<th>选项C</th>
+					<td>
+							<input class="span6" name="optionC" id="" type="text" value="{$list['optionC']}">
+					</td>
+				</tr>
+				<tr>
+					<th>选项D</th>
+					<td>
+							<input class="span6" name="optionD" id="" type="text" value="{$list['optionD']}">
+					</td>
+				</tr>
+				<tr>
+					<th>选项E</th>
+					<td>
+							<input class="span6" name="optionE" id="" type="text" value="{$list['optionE']}">
+					</td>
+				</tr>
+				<tr>
+					<th>选项F</th>
+					<td>
+							<input class="span6" name="optionF" id="" type="text" value="{$list['optionF']}">
+					</td>
+				</tr>
+				 <tr class="search-submit">
+					<td colspan="2"><input type="submit" name="add" value="完成编辑" class="btn pull-right span2"></td>
+				 </tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+</div>
+{template 'common/footer'}

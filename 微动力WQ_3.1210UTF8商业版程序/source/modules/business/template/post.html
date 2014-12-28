@@ -1,0 +1,83 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+	<li{if $_GPC['do'] == 'display'} class="active"{/if}><a href="{php echo $this->createWebUrl('display');}">商户管理</a></li>
+	<li{if $_GPC['do'] == 'post'} class="active"{/if}><a href="{php echo $this->createWebUrl('post');}">添加商户</a></li>
+</ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="{$item['id']}">
+	<h4>商户基本信息</h4>
+	<table class="tb">
+		<tr>
+			<th>名称</th>
+			<td><input type="text" name="title" value="{$item['title']}" class="span5"></td>
+		</tr>
+		<tr>
+			<th><label for="">宣传图</label></th>
+			<td>
+				{php echo tpl_form_field_image('thumb', $item['thumb'])}
+				<span class="help-block"></span>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">行业</label></th>
+			<td>
+				<select name="industry_1" id="industry_1" value="{$item['industry1']}"></select>
+				<select name="industry_2" id="industry_2" value="{$item['industry2']}"></select>
+			</td>
+		</tr>
+		<tr>
+			<th>简介</th>
+			<td>
+				<textarea style="height:100px;" class="span7 richtext-clone" name="content" cols="70" id="reply-add-text">{$item['content']}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">电话</label></th>
+			<td><input type="text" id="" name="phone" value="{$item['phone']}"  class="span5" /></td>
+		</tr>
+		<tr>
+			<th><label for="">QQ</label></th>
+			<td><input type="text" id="" name="qq" value="{$item['qq']}"  class="span5" /></td>
+		</tr>
+		<tr>
+			<th><label for="">地区</label></th>
+			<td>
+				<select name="resideprovince" id="sel-provance" onChange="selectCity();bmap.searchMapByPCD();" style="width:100px;">
+					<option value="" selected="true">省/直辖市</option>
+				</select>
+				<select name="residecity" id="sel-city" onChange="selectcounty();bmap.searchMapByPCD();" style="width:100px;">
+					<option value="" selected="true">请选择</option>
+				</select>
+				<select name="residedist" id="sel-area" onchange="bmap.searchMapByPCD();" style="width:100px;">
+					<option value="" selected="true">请选择</option>
+				</select>
+				<span class="help-block">先选择地区，可以快速的定位地图位置。</span>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">详细地址</label></th>
+			<td><div class="input-append"><input type="text" name="address" value="{$item['address']}"  class="span5" /></div></td>
+		</tr>
+		<tr>
+			<th><label for="">坐标：</label></th>
+			<td>{php echo tpl_form_field_coordinate('baidumap', $item)}</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		
+	</table>
+</form>
+<script type="text/javascript" src="./resource/script/cascade.js"></script>
+<script type="text/javascript" src="./source/modules/business/images/industry.js"></script> 
+<script type="text/javascript">
+kindeditor($('#reply-add-text'));
+cascdeInit('{$item['province']}','{$item['city']}','{$item['dist']}'); //开启地区三级联动
+</script>
+</div>
+{template 'common/footer'}

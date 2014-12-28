@@ -1,0 +1,67 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li><a href="{php echo $this->createWebUrl('manage');}">测试管理</a></li>
+    <li><a href="{php echo $this->createWebUrl('manage',array('id'=>$id,'po'=>'add'));}">题库管理</a></li>
+    <li><a href="{php echo $this->createWebUrl('type');}">分类管理</a></li>
+    <li class="active"><a href="{php echo $this->createWebUrl('type',array('op'=>'add'));}">{if $id}修改{else}添加{/if}分类</a></li>
+</ul>
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" onsubmit="return check(this)">
+	<input type="hidden" name="id" value="{$item['id']}" />
+		<h4>分类详细设置</h4>
+		<table class="tb">
+			{if !empty($item['typename'])}
+			<tr>
+				<th><label for="">访问地址</label></th>
+				<td>
+					<a href="{php echo $this->createMobileUrl('index', array('id'=>$item['id'],'weid'=> $_W['weid']))}" target="_blank">{php echo $this->createMobileUrl('index', array('id'=>$item['id'],'weid'=> $_W['weid']))}</a>
+					<span class="help-block">您可以根据此地址，添加回复规则，设置访问。</span>
+				</td>
+			</tr>
+			{/if}
+			<tr>
+				<th></th>
+				<td></td>
+			</tr>
+			<tr>
+				<th><label for="">排序</label></th>
+				<td>
+					<input type="text" name="add[myorder]" class="span6" value="{$item['myorder']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">分类名称</label></th>
+				<td>
+					<input type="text" name="add[typename]" class="span6" value="{$item['typename']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">分类描述</label></th>
+				<td>
+					<textarea name="add[summary]" class="span6" cols="70">{$item['summary']}</textarea>
+				</td>
+			</tr>
+		</table>
+		<table class="tb">
+		<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	function check(form) {
+		if (!form['typename'].value) {
+			message('请输入分类名称！', '', 'error');
+			return false;
+		}
+	}
+
+//-->
+</script>
+{template 'common/footer'}

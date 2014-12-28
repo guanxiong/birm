@@ -1,0 +1,32 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>公司信息</h4>
+		<table class="tb">
+			<tr>
+				<th>公司名称</th>
+				<td>
+					<input type="text" name="cname" class="span3" value="{$settings['cname']}" />
+				</td>
+			</tr>
+			<tr>
+				<th>公司电话</th>
+				<td>
+					<input type="text" name="tel" class="span3" value="{$settings['tel']}" />
+				</td>
+			</tr>
+			
+		</table>
+		
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+{template 'common/footer'}

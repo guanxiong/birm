@@ -1,0 +1,108 @@
+{template 'common/header'}
+{php echo $this -> set_tabbar($action);}
+<div class="main">
+    <form action="" method="post" class="form-horizontal form" onsubmit="return formcheck(this)">
+        <h4>{$title}SN码</h4>
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+            <tr>
+                <th>名称</th>
+                <th style="width:60px;">用户名</th>
+                <th style="width:40px;">电话</th>
+                <th style="width:80px;">SN码</th>
+                <th style="width:100px;">派发时间</th>
+                <th style="width:80px;">使用时间</th>
+                <th style="width:60px;">消费门店</th>
+                <th style="width:60px;">消费金额</th>
+                <th style="width:60px;">状态</th>
+                <th style="width:100px;">操作</th>
+            </tr>
+            </thead>
+            <tbody id="level-list">
+            {loop $list $item}
+            <tr>
+                <td>{$gifts[$item['pid']]}</td>
+                <td>{$users[$item['from_user']]['username']}</td>
+                <td>{$users[$item['from_user']]['tel']}</td>
+                <td>{$item['sncode']}</td>
+                <td>{php echo date('Y-m-d', $item['winningtime'])}</td>
+                <td>{if !empty($item['usetime'])}{php echo date('Y-m-d H:i:s', $item['usetime'])}{/if}</td>
+                <td><font color="green">{if $item['outletid']==0}后台{else}{$outlet[$item['outletid']]}{/if}</font></td>
+                <td>{$item['money']}</td>
+                <td>{if $item['state'] == 0}<span class="label" style="background:#56af45;">未使用</span>{else}<span class="label">已使用</span>{/if}</td>
+                <td>
+                    {if $item['state'] == 0}
+                    <a class="btn use" data-codeid="{$item['id']}" href="javascript:void(0)" title="立即使用"><i class="icon-check"></i>立即使用</a>
+                    {/if}
+                </td>
+            </tr>
+            {/loop}
+            </tbody>
+        </table>
+    </form>
+    {$pager}
+
+    <div id="myModal2" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="Form1" action="{php echo create_url('site/module', array('do' => 'UseSncodeAdmin', 'name' => 'icard'))}" method="post" class="form-horizontal ">
+                    <input type="hidden" name="pid" value="{$pid}">
+                    <input type="hidden" name="type" value="{$type}">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title"><i class="icon-check"></i>立即使用</h4>
+                    </div>
+                    <div class="modal-body">
+                        {if $type != 4}
+                        <div class="control-group">
+                            <label class="control-label" for="money">消费金额</label>
+                            <div class="controls">
+                                <div class="input-append">
+                                    <input type="text" placeholder="金额" name="money" id="money" class="input-small">
+                                    <span class="add-on"><i class="icon-cny"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="payment">消费类型</label>
+                            <div class="controls">
+                                <select name="payment" id="payment" class="input-small" style="width:130px;">
+                                    <option value="0">现金消费</option>
+                                    <option value="1">会员卡余额消费</option>
+                                </select>
+                            </div>
+                        </div>
+                        {/if}
+                        <div class="control-group">
+                            <label class="control-label" for="store_id">消费门店</label>
+                            <div class="controls">
+                                <select class="input-medium" name="store_id">
+                                    <option value="0">请选择消费门店</option>
+                                    {loop $outlets $outlet}
+                                    <option value="{$outlet['id']}">{$outlet['title']}</option>
+                                    {/loop}
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" id="snid" name="snid" value="0">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("tr").delegate(".use", "click", function () {
+            $("#price").val("");
+            $("#snid").val($(this).attr("data-codeid"));
+            $("#myModal2").modal("show");
+        });
+    });
+</script>

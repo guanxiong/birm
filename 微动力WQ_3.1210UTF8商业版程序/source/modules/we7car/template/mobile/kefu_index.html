@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="./source/modules/we7car/style/css/reset.css?2013-11-25-1" media="all" />
+		<link rel="stylesheet" type="text/css" href="./source/modules/we7car/style/css/common1.css?2013-11-25-1" media="all" />
+		<script type="text/javascript" src="./source/modules/we7car/style/js/jQuery.js?2013-11-25-1"></script>
+		<title>销售管理</title>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+		<!-- Mobile Devices Support @begin -->
+		<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+		<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+		<meta content="no-cache" http-equiv="pragma">
+		<meta content="0" http-equiv="expires">
+		<meta content="telephone=no, address=no" name="format-detection">
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<!-- Mobile Devices Support @end -->
+		<style>
+		img{width:100%!important;}
+		</style>
+	</head>
+	<body onselectstart="return true;" ondragstart="return false;">
+		
+		<body onselectstart="return true;" ondragstart="return false;">
+			<style>
+				#book_new, #book_list{
+					display:none;
+				}
+				#book_new.on, #book_list.on{
+					display:inherit;
+				}
+				.list_book{
+					border-radius:0;
+					border:0;
+					background:#f2f4f3;
+				}
+				.list_book dt{
+					background:#fff;
+					line-height: 35px;
+					text-align:center;
+				}
+				.list_book dt div:first-of-type{
+					margin-right:10px;
+				}
+				.list_book dt div a{
+					display:block;
+					height:100%;
+					background:#777777;
+					color:#fff;
+				}
+				.book_list {
+					border:0!important;
+				}
+				#nav_contact{
+					border:5px 5px 0 0;
+					overflow: hidden;
+				}
+				#nav_contact a{
+					color:#000;
+					display:block;
+					text-align:center;
+				}
+				#nav_contact div:first-of-type{
+					margin-right:10px;
+				}
+				#nav_contact div{
+					line-height:35px;
+					border-radius:5px 5px 0 0;
+					background:#f2f4f3;
+					overflow:hidden;
+				}
+				#nav_contact div a.on{
+					color:#fff;
+					background-color:#777777;
+				}
+			</style>
+			<div class="body">
+				<section class="p_10">
+					<nav id="nav_contact">
+						<dt class="box">
+						<div><a id="book_new_a" href="javascript:$('#book_list, #book_list_a, #book_new, #book_new_a').toggleClass('on');">售前客服</a></div>
+						<div><a id="book_list_a" href="javascript:$('#book_list, #book_list_a, #book_new, #book_new_a').toggleClass('on');" class="on">售后客服</a></div>
+						</dt>
+					</nav>
+					<div id="book_new" class="on">
+						<dl class="list_book">
+							<ul class="list_contact">
+								
+								{loop $list1 $row}
+								<li class="tbox">
+									<div>{if empty($row['headthumb'])}<img src="./source/modules/weicar/style/img/car_sell.png" style="width: 60px!important;" />{else}<img src="{$_W['attachurl']}{$row['headthumb']}" style="width: 60px!important;" />{/if}</div>
+									<div>
+										<p>{$row['kefuname']}</p>
+										<div>{$row['description']}</div>
+										<p><a href="tel:{$row['kefutel']}">{$row['kefutel']}</a></p>
+									</div>
+								</li>
+								{/loop}
+							</ul>
+						</dl>
+					</div>
+					<div id="book_list">
+						<dl class="list_book">
+							<ul class="list_contact">
+								{loop $list2 $row}
+								<li class="tbox">
+									<div>{if empty($row['headthumb'])}<img src="./source/modules/weicar/style/img/car_sell.png" style="width: 60px!important;" />{else}<img src="{$_W['attachurl']}{$row['headthumb']}" style="width: 60px!important;" />{/if}</div>
+									<div>
+										<p>{$row['kefuname']}</p>
+										<div>{$row['description']}</div>
+										<p><a href="tel:{$row['kefutel']}">{$row['kefutel']}</a></p>
+									</div>
+								</li>
+								{/loop}
+							</ul>
+						</dl>
+					</div>
+					<footer style="text-align:center;line-height:20px;">
+						
+					</footer>
+				</section>
+				<footer class="nav_footer">
+					<ul class="box">
+						<li><a href="javascript:history.go(-1);" >返回</a></li>
+						<li><a href="javascript:history.go(1);" >前进</a></li>
+						<li><a href="{php echo 	create_url('mobile/channel', array('name' => 'index', 'weid' => $_W['weid']))}">首页</a></li>
+						<li><a href="javascript:location.reload();" >刷新</a></li>
+					</ul>
+				</footer>
+			</div>
+			<div mark="stat_code" style="width:0px; height:0px; display:none;">	</div>
+			<script>
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				WeixinJSBridge.call('hideToolbar');
+			});
+			</script>
+		</body>
+	</html>

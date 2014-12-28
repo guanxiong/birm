@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[人脸识别]]></name>
+		<identifie><![CDATA[facechk]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[识别出照片中的人脸]]></ability>
+		<description><![CDATA[通过用户发来的头部照片，识别出性别，年龄等特征。（当然，会存在一定的误差，请挑选脸部清晰的照片上传）]]></description>
+		<author><![CDATA[topone4tvs]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+			<message type="image" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

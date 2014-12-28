@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="微信">
+<title>老虎机</title>
+<link rel="stylesheet" type="text/css" href="./source/modules/slotmac/template/css/page.css" />
+<link href="./source/modules/slotmac/template/css/xym.css" rel="stylesheet" type="text/css" />
+<link href="./source/modules/slotmac/template/css/zwj.css" rel="stylesheet" type="text/css" />
+<script src="./resource/script/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+<div class="m_ggl">
+<div class="m_ylzjxx">
+<table class="ggltb">
+<tr>
+<td class="ggltd"></td>
+<td><h1>{$hd['name']}</h1></td>
+<td class="ggltd"></td>
+</tr>
+</table>
+</div>
+<br/>
+<div class="m_ylzjxx">
+{if $prizestat == false}
+恭喜您已经获得：{$prizenow}
+{else}
+您还没有中奖呢！加油吧！
+{/if}
+</div>
+<div id="zjtzdiv" style="display: none;width: 95%; margin:0; bottom: 10px;z-index:9999;">
+<div class="Pop-upbox" id="usermsg" >
+  <div class="upbox_top">
+      <h1>恭喜中奖：</h1>
+      <a href=""><div class="close" style="display: none;"></div></a>
+  </div>
+  <div class="upbox_cens">
+    <div>
+      恭喜获得奖品:{$jxms}。
+      请留下你的手机号码作为领奖依据。<br/>
+      姓名：<input type="text" id="un" value="{$member['nickname']}" class="sinput">
+    </div>
+    <div style="margin-top: 5px;">
+      电话：<input type="tel" id="tel" value="{$member['mobile']}" class="sinput">
+    </div>
+  </div>
+  <div class="upbox_cen">
+      <a href="javascript:tellcjxxok('xyj')"><div class="button_1"><span>确认信息</span></div></a>
+  </div>
+</div>
+</div>
+<div class="tigerslot ui-content">
+  <div class="machine">
+    <div class="strip left">
+        <div class="box" style="background-position: 0px 0px;"></div>
+        <div class="cover"></div>
+    </div>
+    <div class="strip middle">
+        <div class="box" style="background-position: 0px 0px;"></div>
+        <div class="cover"></div>
+    </div>
+    <div class="strip right">
+        <div class="box" style="background-position: 0px 0px;"></div>
+        <div class="cover"></div>
+    </div>
+    <div class="gamebutton"></div>
+    <div class="light l0 on"></div><div class="light l1 on"></div><div class="light l2 on"></div><div class="light l3 on"></div><div class="light l4 on"></div><div class="light l5 on"></div><div class="light l6 on"></div><div class="light l7 on"></div><div class="light l8 on"></div><div class="light l9"></div><div class="light l10 on"></div><div class="light l11 on"></div><div class="light l12 on"></div><div class="light l13 on"></div><div class="light l14 on"></div><div class="light l15 on"></div><div class="light l16 on"></div><div class="light l17 on"></div><div class="light l18 on"></div><div class="light l19 on"></div><div class="light l20 on"></div><div class="light l0 on"></div><div class="light l1"></div><div class="light l2 on"></div><div class="light l3"></div><div class="light l4 on"></div><div class="light l5"></div><div class="light l6 on"></div><div class="light l7"></div><div class="light l8 on"></div><div class="light l9"></div><div class="light l10 on"></div><div class="light l11"></div><div class="light l12 on"></div><div class="light l13"></div><div class="light l14 on"></div><div class="light l15"></div><div class="light l16 on"></div><div class="light l17"></div><div class="light l18 on"></div><div class="light l19"></div><div class="light l20 on"></div>
+  </div>
+</div>
+
+<div class="m_yljpsm">
+<div class="m_yljpsms">
+<h2 style="background: url('./source/modules/slotmac/template/img/stitle.png') no-repeat; color: white;">奖项设置：</h2>
+<div class="m_yljpsmnr"> 一等奖： {$hd['prize1_name']}。{if $hd['pnum_stat'] == 1}数量：{$hd['prize1_num']}{/if}</div>
+<div class="m_yljpsmnr"> 二等奖： {$hd['prize2_name']}。{if $hd['pnum_stat'] == 1}数量：{$hd['prize2_num']}{/if}</div>
+<div class="m_yljpsmnr"> 三等奖： {$hd['prize3_name']}。{if $hd['pnum_stat'] == 1}数量：{$hd['prize3_num']}{/if}</div>
+</div>
+</div>
+<div class="m_yljpsm">
+<div class="m_yljpsms">
+<h2 style="background: url('./source/modules/slotmac/template/img/stitle.png') no-repeat; color: white;">活动说明：</h2>
+<div class="m_yljpsmnr">您今天还有 <span id="syjhspan">{$sycs}</span> 次参与机会</div>
+<div class="m_yljpsmnr">{$hd['summary']}</div>
+</div>
+</div>
+
+</div>
+
+<input type="hidden" id="hdid" value="{$hd['id']}"/>
+<input type="hidden" id="hdjx" value="{$jx}"/>
+<input type="hidden" id="hdjxmc" value="{$jxmc}"/>
+
+<script src="./source/modules/slotmac/template/js/hammer.js"></script>
+{if $sycs > 0 }
+<script type="text/javascript">
+/// <reference path="jquery-1.10.0.js" />
+/// <reference path="jquery.mobile-1.3.1.js" />
+(function () {
+  var lastTime = 0;
+  var vendors = ['ms', 'moz', 'webkit', 'o'];
+  for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+      window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+      window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame']
+                                 || window[vendors[x] + 'CancelRequestAnimationFrame'];
+  }
+
+  if (!window.requestAnimationFrame)
+      window.requestAnimationFrame = function (callback, element) {
+          var currTime = new Date().getTime();
+          var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+          var id = window.setTimeout(function () { callback(currTime + timeToCall); },
+            timeToCall);
+          lastTime = currTime + timeToCall;
+          return id;
+      };
+
+  if (!window.cancelAnimationFrame)
+      window.cancelAnimationFrame = function (id) {
+          clearTimeout(id);
+      };
+}());
+
+(function () {
+  window.GameTimer = function (fn, timeout) {
+      this.__fn = fn;
+      this.__timeout = timeout;
+      this.__running = false;
+      this.__lastTime = Date.now();
+      this.__stopcallback = null;
+  };
+
+  window.GameTimer.prototype.__runer = function () {
+      if (Date.now() - this.__lastTime >= this.__timeout) {
+          this.__lastTime = Date.now();
+          this.__fn.call(this);
+      }
+      if (this.__running) {
+          window.requestAnimationFrame(this.__runer.bind(this));
+      }
+      else {
+          if (typeof this.__stopcallback === 'function') {
+              window.setTimeout(this.__stopcallback,100);
+          }
+      }
+  };
+
+  window.GameTimer.prototype.start = function () {
+      this.__running = true;
+      this.__runer();
+  };
+  window.GameTimer.prototype.stop = function (callback) {
+      this.__running = false;
+      this.__stopcallback = callback;
+  };
+
+})();
+var lhjjx = [
+{ left:8, middle:8,right:8},
+{ left:2, middle:2,right:2},
+{ left:6, middle:6,right:6},
+{ left:1, middle:1,right:1},
+{ left:4, middle:4,right:4},
+{ left:3, middle:3,right:3}
+];
+$(function () {
+
+  var url_rndprize = '/marketing_fruit/start';//'抽奖的php地址';
+  var url_getprize = '兑奖的php地址';
+  
+  var toLeftIndex = 0;
+  var toMiddleIndex = 0;
+  var toRightIndex = 0;
+  var itemPositions = [
+      0, //苹果
+      100,//芒果
+      200,//布林
+      300,//香蕉
+      400,//草莓
+      500,//梨
+      600,//桔子
+      700,//青苹果
+      800//樱桃
+  ];
+
+  //游戏开始
+  var gameStart = function () {
+      lightFlicker.stop();
+      lightRandom.stop();
+      lightCycle.start();
+
+
+      //游戏开始，指定用户的结果，从左到右，水果编码，从0开始。
+      var prize = $('#hdjxmc').val();
+      var jxint = parseInt($('#hdjx').val());
+      if(jxint){
+        boxCycle.start(lhjjx[jxint-1]);
+      }else{
+        var needsjint = true;
+        while(needsjint){
+          var vv1 = Math.round(Math.random() * 8);
+              var vv2 = Math.round(Math.random() * 8);
+              var vv3 = Math.round(Math.random() * 8);
+              if(vv1 == vv2 && vv2 == vv3){
+                needsjint = true;
+              }else{
+                needsjint = false;
+                boxCycle.start({ left:vv1, middle:vv2,right:vv3});
+              }
+        }       
+          
+      }
+      
+  };
+
+  //游戏结束
+  var gameOver = function (resultData) {
+      lightFlicker.start();
+      lightRandom.stop();
+      lightCycle.stop();
+      $('.machine .gamebutton').removeClass('disabled');
+      
+  };
+
+  
+
+  var $machine = $('.machine');
+  var $slotBox = $('.tigerslot .box');
+  var light_html = '';
+  for (var i = 0; i < 21; i++) {
+      light_html += '<div class="light l'+ i +'"></div>';
+  }
+  var $lights = $(light_html).appendTo($machine);
+  
+  var $gameButton = $('.machine .gamebutton').click(function () {
+      var $this = $(this);
+      if (!$this.hasClass('disabled')) {
+          $this.addClass('disabled');
+          $this.toggleClass(function (index, classname) {
+              if (classname.indexOf('stop') > -1) {
+                  boxCycle.stop(function (resultData) {
+                      gameOver(resultData);
+                      //$this.removeClass('disabled');
+                  });
+              } else {
+                  gameStart();
+                  window.setTimeout(function () {
+                      $this.removeClass('disabled');
+                  },1500);
+              }
+              return 'stop';
+          });
+      }
+  });
+
+  var lightCycle = new function () {
+      var currIndex = 0, maxIndex = $lights.length - 1;
+      $('.l0').addClass('on');
+      var tmr = new GameTimer(function () {
+          $lights.each(function(){
+              var $this = $(this);
+              if($this.hasClass('on')){
+                  currIndex++;
+                  if (currIndex > maxIndex) {
+                      currIndex = 0;
+                  }
+                  $this.removeClass('on');
+                  $('.l' + currIndex).addClass('on');
+                  return false;
+              }
+          });
+      }, 100);
+      this.start = function () {
+          tmr.start();
+      };
+      this.stop = function () {
+          tmr.stop();
+      };
+  };
+  var lightRandom = new function () {
+      var tmr = new GameTimer(function () {
+          $lights.each(function () {
+              var r = Math.random() * 1000;
+              if (r < 400) {
+                  $(this).addClass('on');
+              } else {
+                  $(this).removeClass('on');
+              }
+          });
+      }, 100);
+      this.start = function () {
+          tmr.start();
+      };
+      this.stop = function () {
+          tmr.stop();
+      };
+  };
+
+  var lightFlicker = new function () {
+      $lights.each(function (index) {
+          if ((index >> 1) == index / 2) {
+              $(this).addClass('on');
+          } else {
+              $(this).removeClass('on');
+          }
+      });
+      var tmr = new GameTimer(function () {
+          $lights.toggleClass('on');
+      }, 100);
+      this.start = function () {
+          tmr.start();
+      };
+      this.stop = function () {
+          tmr.stop();
+      };
+  };
+
+  var boxCycle = new function () {
+
+      var speed_left = 0, speed_middle = 0, speed_right = 0, maxSpeed = 25;
+      var running = false, toStop = false, toStopCount = 50;
+      var boxPos_left = 0, boxPos_middle = 0, boxPos_right = 0;
+      
+      var resultData;
+      
+      var $box = $('.tigerslot .box'), $box_left = $('.tigerslot .strip.left .box'), $box_middle = $('.tigerslot .strip.middle .box'), $box_right = $('.tigerslot .strip.right .box');
+
+      var fn_stop_callback = null;
+
+      var tmr = new GameTimer(function () {
+          if (toStop) {
+              toStopCount--;     
+              
+              if (toStopCount < 0) {
+                  speed_right = 0;
+                  boxPos_right = -itemPositions[toRightIndex];
+              }else if (toStopCount < 25) {
+                speed_middle = 0;
+                  boxPos_middle = -itemPositions[toMiddleIndex];
+                  boxPos_right += speed_right;
+              }else{
+                speed_left = 0;
+                  boxPos_left = -itemPositions[toLeftIndex];
+                  boxPos_middle += speed_middle;
+                  boxPos_right += speed_right;
+              }
+          } else {
+              speed_left += 1;
+              speed_middle += 1;
+              speed_right += 1;
+              if (speed_left > maxSpeed) {
+                  speed_left = maxSpeed;
+              }
+              if (speed_middle > maxSpeed) {
+                  speed_middle = maxSpeed;
+              }
+              if (speed_right > maxSpeed) {
+                  speed_right = maxSpeed;
+              }
+              boxPos_left += speed_left;
+              boxPos_middle += speed_middle;
+              boxPos_right += speed_right;
+          }          
+
+          $box_left.css('background-position', '0 ' + boxPos_left + 'px')
+          $box_middle.css('background-position', '0 ' + boxPos_middle + 'px')
+          $box_right.css('background-position', '0 ' + boxPos_right + 'px')
+
+          if (speed_left <= 0 && speed_middle <= 0 && speed_right <= 0) {
+              tmr.stop();
+              tellcjok('xyj');
+          }
+          
+      }, 33);
+
+      this.start = function (data) {
+          toLeftIndex = data.left; toMiddleIndex = data.middle; toRightIndex = data.right;
+          running = true; toStop = false;
+          resultData = data;
+          tmr.start();
+      };
+
+      this.stop = function (fn) {
+          fn_stop_callback = fn;
+          toStop = true;
+          toStopCount = 50;
+      };
+
+
+      this.reset = function () {
+          $box_left.css('background-position', '0 ' + itemPositions[0] + 'px');
+          $box_middle.css('background-position', '0 ' + itemPositions[0] + 'px');
+          $box_right.css('background-position', '0 ' + itemPositions[0] + 'px');
+      };
+      this.reset();
+  };
+  
+  //初始给点欢乐
+  lightFlicker.start();
+  window.setTimeout(function () {
+      lightFlicker.stop();
+  }, 2000)
+
+});
+</script>
+{/if}
+<script>
+  var prizeid = "{$prizeid}";
+  var url = "{php echo create_url('mobile/module',array('name'=>'slotmac','do'=>'slotrecord','weid'=>$weid));}";
+  function tellcjok(fs){
+    $.ajax({
+      url: url,
+      data:{ hid:$('#hdid').val(), pid:prizeid},
+      dataType: 'json',
+      type:'post',
+      success:function(jx){
+        if(jx && jx[0] != '0'){
+          $('#zjtzdiv').slideDown('normal');
+          $('#un').focus();
+          window.lid = jx[1];
+        }else{
+          alert('很遗憾，您没有中奖');
+          setTimeout(function(){
+            location.reload(true);
+          },1888);
+        }
+      }
+    });
+  }
+  function tellcjxxok(fs){
+    var sjh = $.trim($('#tel').val());
+    var un = $.trim($('#un').val());
+    if(sjh!='' && un !=''){
+      $.ajax({
+        url: url,
+        data:{ hid:$('#hdid').val(),sjh:sjh,un:un,lid:window.lid,pid:prizeid},
+        dataType: 'json',
+        type:'post',
+        success:function(jx){
+          alert('提交成功');
+          setTimeout(function(){
+            location.reload(true);
+          },1888);
+          
+        }
+      });
+    }else{
+      alert('请填写完整信息');
+      return false;
+    } 
+  }
+</script>
+</body></html>

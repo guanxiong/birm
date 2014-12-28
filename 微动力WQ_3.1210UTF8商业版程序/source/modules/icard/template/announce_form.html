@@ -1,0 +1,66 @@
+{template 'common/header'}
+{php echo $this -> set_tabbar($action);}
+<div class="main">
+        <form action="" method="post" onsubmit="return check();" class="form-horizontal form" enctype="multipart/form-data">
+        <h4>{$title} - <a href="{php echo create_url('site/module', array('do' => 'SetRule', 'name' => 'icard'));}" style="font-size:0.8em">入口设置</a></h4>
+        <input type="hidden" id="id" name="id" value="{$reply['id']}"/>
+		<table class="tb">
+			<tr>
+				<th><label for="">标题</label></th>
+				<td>
+                    <input type="text" name="title" value="{$reply['title']}" id="title" class="span4" placeholder="请输入标题"/>
+                    <div class="help-block">不超过30个字符</div>
+				</td>
+			</tr>
+            <tr>
+                <th><label for="">选择人群</label></th>
+                <td>
+                    <label class="radio inline">
+                        <input type="radio" name="levelid" value="0" {if empty($reply)}checked="checked"{elseif $reply['levelid']==0}checked="checked"{/if} />所有会员
+                    </label>
+                    {loop $levels $level}
+                    <label class="radio inline">
+                        <input type="radio" name="levelid" value="{$level['id']}" {if $reply['levelid']==$level['id']}checked="checked"{/if} >{$level['levelname']}
+                    </label>
+                    {/loop}
+                </td>
+            </tr>
+			<tr>
+				<th><label for="">详细内容</label></th>
+				<td>
+                    <textarea style="height:200px; width:600px;" class="richtext-clone" name="content" id="content">{$reply['content']}</textarea>
+				</td>
+			</tr>
+            <tr>
+                <th><label for="">排序</label></th>
+                <td>
+                    <input type="text" name="displayorder" value="{if empty($reply)}0{else}{$reply['displayorder']}{/if}" id="displayorder" class="span1" />
+                </td>
+            </tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+        function check() {
+            if($.trim($('#title').val()) == '') {
+                message('没有输入标题.', '', 'error');
+                return false;
+            }
+            if($.trim($('#title').val()).length > 30) {
+                message('图片标题不能多于30个字.', '', 'error');
+                return false;
+            }
+            return true;
+        }
+        </script>
+<script type="text/javascript">
+    kindeditor($('.richtext-clone'));
+</script>
+{template 'common/footer'}

@@ -1,0 +1,12 @@
+{template 'header'}
+<div class="mobile-div img-rounded">
+	<div class="mobile-hd" style="border-bottom:0;">我的充值记录</div>
+	{loop $list $item}
+	<a href="{php echo $this->createMobileUrl('usecoupon', array('id' => $item['id']))}" class="mobile-li">
+		<span class="pull-right">{php echo date('Y-m-d H:i:s', $item['createtime'])}</span>
+		{$item['content']}
+	</a>
+	{/loop}
+</div>
+{$pager}
+{template 'footer'}

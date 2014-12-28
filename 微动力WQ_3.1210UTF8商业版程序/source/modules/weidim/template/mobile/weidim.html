@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>在线预约-微预约</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="./source/modules/weidim/template/css/style.css" rel="stylesheet" type="text/css">
+    <script src="./source/modules/weidim/template/js/jquery-1.8.2.js"></script>
+    <link href="./source/modules/weidim/template/css/reservation.css" rel="stylesheet" type="text/css"> 
+    <script type="text/javascript" src="./source/modules/weidim/template/js/jquery.json-2.4.min.js?v=20130827"></script>
+</head>
+
+<body>
+    <section data-role="page" data-theme="c" data-title="">
+        <article data-role="">
+            <div class="Floatingwindow">
+                <a href="javascript:history.go(-1);" style=" color:#FFF;">返回</a>
+            </div>
+            <div class="Reservation_img">
+            	<img src="{$_W['attachurl']}{$reply['headimage']}" width="100%">
+            </div>
+            <div class="project_det">
+                <h3>预约详细</h3>
+                <div class="project_det_box">{$reply['title']}--{php echo htmlspecialchars_decode($reply['description']);}</div>
+            </div>
+            <div class="project_det">
+	<div class="project_det_box"><a href="tel:{$reply['tel']}">预约电话:{$reply['tel']}</a></div>
+	<div class="project_det_box">商家地址:{$reply['address']}</div>
+            </div>				
+            <!--预约表单开始-->
+                <div class="project_det">
+                    <h3>请认真填写您的预约信息</h3>
+                    <div class="project_det_box">
+                        <table width="100%" id="tablebody">
+{if !empty($items)}		
+	{loop $items $item}	 
+   <tr><td nowrap='nowrap' align='right' style='padding-left:3px;padding-right:3px;'>{$item['fieldname']}：</td>
+  <td width='90%'>
+  {if $item['type']==0}
+   <input name='field{$item['orderid']}' data='{$item['fieldname']}'  type='text' class='project_text' placeholder='{$item['fieldcontent']}' />						   
+  {/if}
+  {if $item['type']==1}
+   <textarea name='field{$item['orderid']}' data='{$item['fieldname']}' class='project_textarea' placeholder='{$item['fieldcontent']}'></textarea>
+  {/if}
+  {if $item['type']==2}
+<select name='field{$item['orderid']}' data='{$item['fieldname']}' class='dropdown_select'><option>{$item['fieldcontent']}</option>{php for($i=0;$i<20;$i++){}<option value='{php echo date('Y-m-d',strtotime('+'.$i.' day'))}'>{php echo date('Y-m-d',strtotime('+'.$i.' day'))}</option>{php }}
+</select>						   
+  {/if}
+  {if $item['type']==3}						   
+  <select name='field{$item['orderid']}' class='dropdown_select' data='{$item['fieldname']}'><option>请选择</option>						   
+  {php $fields=array();$fields=explode('|',$item['fieldcontent']);}					   
+{loop $fields $field}							
+<option value='{$field}'>{$field}</option>
+{/loop}
+</select>
+  {/if}				   
+  </td>
+</tr>
+	{/loop}
+{/if}
+						   </table>
+                    </div>
+                </div>
+                <div class="project_btn">
+                    <a href="javascript:void(0);" class="submit" id="submit" style="color:#FFF;">提交预约信息</a>
+                </div> 
+               
+        </article>
+    </section>
+</body>
+ <script>
+                $(function() {
+                    $("#submit").click(function() {
+                        var data = '';
+                        var jsonData = [];
+			var jsonData2 = '';
+            var valid = true;
+			$("*[name^=field]").each(function(index,item){
+				var $item = $(item);
+				if($item.val() == ""){
+					alert($item.attr("data") + "不能为空！");
+					$item.focus();
+					valid = false;
+					return false;
+				}
+	    		//jsonData[index] = { "name":$item.attr("name"), "value":$item.val() };
+				//jsonData[index] = $item.attr("name")+":"+$item.val();	
+				jsonData[index] = { "name":$item.attr("name"), "value":$item.val() };
+				
+			});
+			
+			if (!valid) {
+				return false;
+			}
+			
+                       $.ajax({
+                           type: "POST",
+                           url: "{$loclurl}",								
+                           data: {                                                                       
+                               jsonData: $.toJSON(jsonData),									
+								action: "setinfo",
+                           },
+                           success: function(data) {
+                           	if (data==1){
+                               	alert("提交成功！请随时留意工作人员的反馈信息。");
+					//alert(data.message);
+                                   window.location.href='';
+                               } else {
+                                   alert(data.message);
+                               }
+                           }
+                       });
+                   });
+               });
+           </script>
+</html>

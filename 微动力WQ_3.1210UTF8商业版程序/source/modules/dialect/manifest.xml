@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="true">
+		<name><![CDATA[地方话]]></name>
+		<identifie><![CDATA[dialect]]></identifie>
+		<version><![CDATA[1.4.3]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[地方话模块，在您发家致富，幸福生活的道路上增砖添瓦！]]></ability>
+		<description><![CDATA[地方话模块，在您发家致富，幸福生活的道路上增砖添瓦！]]></description>
+		<author><![CDATA[冯齐跃]]></author>
+		<url><![CDATA[http://wx.b2ctui.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="地方话管理" do="manage" state="" direct="false" />
+		</menu>
+		<home call="gethometiles"></home>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_feng_dialect` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(10) NOT NULL DEFAULT '0',
+  `weid` int(10) NOT NULL DEFAULT '0',
+  `dialect` char(10) DEFAULT '',
+  `title` varchar(120) DEFAULT '',
+  `photo` varchar(200) DEFAULT '',
+  `smalltext` varchar(255) DEFAULT '',
+  `questions` mediumtext NOT NULL,
+  `scoretext` text NOT NULL,
+  `people` int(10) NOT NULL DEFAULT '0',
+  `viewnum` int(10) NOT NULL DEFAULT '0',
+  `titlenum` smallint(5) NOT NULL DEFAULT '0',
+  `share_title` varchar(100) NOT NULL DEFAULT '',
+  `share_desc` varchar(200) NOT NULL DEFAULT '',
+  `share_cancel` varchar(200) NOT NULL DEFAULT '',
+  `share_url` varchar(200) NOT NULL DEFAULT '',
+  `share_num` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `title` (`title`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[drop table if exists ims_feng_dialect;]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

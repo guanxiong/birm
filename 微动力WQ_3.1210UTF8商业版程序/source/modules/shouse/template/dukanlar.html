@@ -1,0 +1,278 @@
+
+{template 'common/header'}
+<div class="main">
+	{if $operation == 'post'}
+	<ul class="nav nav-tabs">
+		<li>
+			<a href="{php echo $this->createWebUrl('dukan', array('op' => 'display'));}">管理</a>
+		</li>
+		<li {if intval($_GPC['id'])==0}class="active"{/if}>
+			<a href="{php echo $this->createWebUrl('dukan', array('op' => 'post'));}">添加公司</a>
+		</li>
+		{if intval($_GPC['id'])!=0}
+		<li class="active">
+			<a href="{php echo $this->
+				createWebUrl('dukan', array('op'=>'post','id'=>$item['id']));}">编辑公司
+			</a>
+		</li>
+		{/if}
+	</ul>
+	<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}">
+		<h4>公司基本信息</h4>
+		<table class="tb">
+			<tr>
+				<th>名称</th>
+				<td>
+					<input type="text" name="title" value="{$item['title']}" class="span5"></td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">宣传图</label>
+				</th>
+				<td>
+					<div class="fileupload fileupload-new" data-provides="fileupload">
+						<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;">
+							{if $item['thumb']}
+							<img src="{$_W['attachurl']}{$item['thumb']}" width="200" />
+							{/if}
+						</div>
+						<div>
+							<span class="btn btn-file">
+								<span class="fileupload-new">选择图片</span>
+								<span class="fileupload-exists">更改</span>
+								<input name="thumb" type="file" />
+							</span>
+							<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+							{if $item['thumb']}
+							<button type="submit" name="fileupload-delete" value="{$item['thumb']}" class="btn fileupload-new">删除</button>
+							{/if}
+						</div>
+					</div>
+					<span class="help-block"></span>
+				</td>
+			</tr>
+			<!-- <tr>
+				<th>
+					<label for="">地区</label>
+				</th>
+				<td>
+					<select name="classa" id="classa" class="pull-left form-control"   disabled="disabled">
+						<option >省/直辖市</option>
+						{loop $children[1] $val}
+						<option value="{$val['0']}"   {if $val['0']==$settings['classa']}selected="true"{/if} >{$val['1']}</option>
+						{/loop}
+					</select>
+					<select name="classb" id="classb" class="pull-left form-control"   disabled="disabled">
+						{loop $children[2] $val}
+						<option value="{$val['0']}"  {if $val['0']==$settings['classb']}selected="true"{/if}>{$val['1']}</option>
+						{/loop}
+					</select>
+					<select name="classc" id="classc" class="pull-left form-control"    {if $settings['classc']!=0}disabled="disabled"{/if}>
+						<option value="0"  {if $settings['classc']==0}selected="true"{/if}>全部地区</option>
+						{loop $children[3] $val}
+						<option value="{$val['0']}"  {if $val['0']==$item['classc']}selected="true"{/if}>{$val['1']}</option>
+						{/loop}
+					</select>
+
+				</td>
+			</tr> -->
+			<tr>
+				<th>简介</th>
+				<td>
+					<textarea style="height:100px;" class="span7 richtext-clone" name="content" cols="70" id="reply-add-text">{$item['content']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">手机</label>
+				</th>
+				<td>
+					<input type="text" id="" name="phone" value="{$item['phone']}"  class="span5" />
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">电话</label>
+				</th>
+				<td>
+					<input type="text" id="" name="tel" value="{$item['tel']}"  class="span5" />
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">实景地址</label>
+				</th>
+				<td>
+					<input type="text" id="" name="url" value="{$item['url']}"  class="span5" />
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">QQ</label>
+				</th>
+				<td>
+					<input type="text" id="" name="qq" value="{$item['qq']}"  class="span5" />
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">地区</label>
+				</th>
+				<td>
+					<select name="resideprovince" id="sel-provance" onChange="selectCity();bmap.searchMapByPCD();" style="width:100px;">
+						<option value="" selected="true">省/直辖市</option>
+					</select>
+					<select name="residecity" id="sel-city" onChange="selectcounty();bmap.searchMapByPCD();" style="width:100px;">
+						<option value="" selected="true">请选择</option>
+					</select>
+					<select name="residedist" id="sel-area" onchange="bmap.searchMapByPCD();" style="width:100px;">
+						<option value="" selected="true">请选择</option>
+					</select>
+					<span class="help-block">先选择地区，可以快速的定位地图位置。</span>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">详细地址</label>
+				</th>
+				<td>
+					<div class="input-append">
+						<input type="text" id="address" name="address" value="{$item['address']}"  class="span5" />
+						<button type="button" class="btn" name="submit" value="搜索" onclick="bmap.searchMapByAddress($('#address').val())">搜索</button>
+					</div>
+					<span class="help-block">可以通过查询地址，快速定位地图位置。</span>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">坐标：</label>
+				</th>
+				<td>{php echo tpl_form_field_coordinate('baidumap', $item)}</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<div id="baidumap" style="width:600px; height:500px;"></div>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+	<script type="text/javascript">
+    $(document).ready(function(){
+        //一级分类联动二级分类
+        $("#classa").change(function(){
+            var val=$(this).val();
+            //alert(val);
+            $("#classb").load("{php echo $this->createWebUrl('citylist')}",{pid:val});
+        });
+        //二级分类联动三级分类
+        $("#classb").change(function(){
+            var val=$(this).val();
+            //alert(val);
+            $("#classc").load("{php echo $this->createWebUrl('citylist')}",{pid:val});
+        });
+        
+            //三级分类联动四级分类
+        $("#classc").change(function(){
+            var val=$(this).val();
+            //alert(val);
+            $("#classd").load("{php echo $this->createWebUrl('citylist')}",{pid:val});
+        });
+    });
+</script>
+	<script type="text/javascript" src="./resource/script/cascade.js"></script>
+	<script type="text/javascript" src="./source/modules/business/images/industry.js"></script>
+	<script type="text/javascript">
+kindeditor($('#reply-add-text'));
+cascdeInit('{$item['province']}','{$item['city']}','{$item['dist']}'); //开启地区三级联动
+</script>
+
+</div>
+{elseif $operation == 'display'}
+<ul class="nav nav-tabs">
+	<li class="active">
+		<a href="{php echo $this->createWebUrl('dukan', array('op' => 'display'));}">管理</a>
+	</li>
+	<li>
+		<a href="{php echo $this->createWebUrl('dukan', array('op' => 'post'));}">添加公司</a>
+	</li>
+</ul>
+
+<div style="padding:15px;">
+	<table class="table table-hover">
+		<thead class="navbar-inner">
+			<tr>
+				<th style="width:200px;">公司名</th>
+				<th style="width:100px;">电话</th>
+				<th style="">地址</th>
+				<th style="min-width:60px;">经纪人管理</th>
+
+				<th style="min-width:60px;">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{loop $list $item}
+			<tr>
+				<td>{$item['title']}</td>
+
+				<td>{$item['phone']}</td>
+				<td>{$item['address']}</td>
+				<td>
+					<a href="{php echo $this->createWebUrl('dhizmatqi',array('id'=>$item['id']))}">查看经纪人</a>
+				</td>
+				<td>
+					<span>
+						<a href="{php echo $this->createWebUrl('dukan',array('op'=>'post','id'=>$item['id']))}">编辑
+						</a>
+						<a href="{php echo $this->createWebUrl('dukan',array('op'=>'delete','id'=>$item['id']))}" onclick="return confirm('此操作不可恢复，确认吗？');">删除
+						</a>
+					</span>
+				</td>
+			</tr>
+			{/loop}
+		</tbody>
+		<tr>
+			<td colspan="5">
+				<input name="token" type="hidden" value="{$_W['token']}" />
+				<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+			</td>
+		</tr>
+	</table>
+	{$pager}
+</div>
+{/if}
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script type="text/javascript">
+		$('#date-range').daterangepicker({
+			format: 'YYYY-MM-DD',
+			startDate: $(':hidden[name=starttime]').val(),
+			endDate: $(':hidden[name=endtime]').val(),
+			locale: {
+				applyLabel: '确定',
+				cancelLabel: '取消',
+				fromLabel: '从',
+				toLabel: '至',
+				weekLabel: '周',
+				customRangeLabel: '日期范围',
+				daysOfWeek: moment()._lang._weekdaysMin.slice(),
+				monthNames: moment()._lang._monthsShort.slice(),
+				firstDay: 0
+			}
+		}, function(start, end){
+			$('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+			$(':hidden[name=starttime]').val(start.format('YYYY-MM-DD'));
+			$(':hidden[name=endtime]').val(end.format('YYYY-MM-DD'));
+		});
+	</script>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,39 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('list');}">照片墙管理</a></li>
+	<li><a href="{php echo $this->createWebUrl('display',array('rid'=>$rid));}">图片管理</a></li>
+	<li class="active"><a href="">编辑图片</a></li>
+</ul>
+<div class="main">
+	<div class="search">
+		<form action="" method="post">
+			<input type="hidden" name="id" value="{$list['id']}" />
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th>作者ID：</th>
+					<td>
+						<input class="span4" name="from_user" id="" type="text" value="{$list['from_user']}" disabled>
+					</td>
+				</tr>
+				<tr>
+					<th>作者昵称：</th>
+					<td>
+						<input class="span4" name="classify" id="" type="text" value="{$list['from_user']}">
+					</td>
+				</tr>
+				<tr>
+					<th>得票数：</th>
+					<td>
+						<input class="span4" name="classify" id="" type="text" value="{$list['from_user']}">
+					</td>
+				</tr>
+				 <tr class="search-submit">
+					<td colspan="2"><input type="submit" name="edit" value="完成编辑" class="btn pull-right span2"></td>
+				 </tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+</div>
+{template 'common/footer'}

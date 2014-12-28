@@ -1,0 +1,22 @@
+{if empty($item)}
+{php $namesuffix = '-new[(wrapitemid)]';}
+{php $itemid = '(itemid)';}
+{else}
+{php $namesuffix = '['.$item['id'].']';}
+{php $itemid = 'weidim-item-' . $item['id'];}
+{/if}
+                                            <tr id="line{$item['id']}">
+                                                <td><select name="item-type{$namesuffix}" {if $item['isdefault']==1} readonly="readonly"{/if} style="width:100px;">
+													<option value="0" {if $item['type']==0} selected="selected" {/if}>单行文本</option>
+													<option value="1" {if $item['type']==1} selected="selected" {/if}>多行文本</option>
+													<option value="2" {if $item['type']==2} selected="selected" {/if}>日期列表</option>
+													<option value="3" {if $item['type']==3} selected="selected" {/if}>下拉选项</option>
+													<select>
+												</td>
+                                                <td>
+                                                    <input name="item-fieldname{$namesuffix}" type="text" class="wizard-ignore" value="{$item['fieldname']}" {if $item['isdefault']==1} readonly="readonly"{/if}></td>
+                                                <td>
+                                                    <input name="item-fieldcontent{$namesuffix}" type="text"  class="wizard-ignore" value="{$item['fieldcontent']}" {if $item['isdefault']==1} readonly="readonly"{/if}></td>
+
+<td id="award-inkind">{if $item['isdefault']==1}默认<input type="hidden" value="1" name="item-isdefault{$namesuffix}" />{else}{if empty($items)}<a href="javascript:;" onclick="deleteItem('{$item['id']}')">删除</a>{else}<a href="{php echo create_url('site/module/delete', array('name' => 'weidim', 'id' => $item['id'],'rid' =>$item['rid']))}" onclick="deleteItem('{$item['id']}', this.href)">删除</a>{/if}<input type="hidden" value="0" name="item-isdefault{$namesuffix}" />{/if}<input type="hidden" value="{$item['orderid']}" name="item-orderid[{$item['id']}]" /></td>
+                                            </tr>

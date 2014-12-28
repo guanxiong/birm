@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51,0.52">
+    <application setting="false">
+        <name><![CDATA[微商城]]></name>
+        <identifie><![CDATA[shop2]]></identifie>
+        <version><![CDATA[1.8]]></version>
+        <type><![CDATA[trade]]></type>
+        <ability><![CDATA[微商城]]></ability>
+        <description><![CDATA[微商城]]></description>
+        <author><![CDATA[狸小狐]]></author>
+        <url><![CDATA[]]></url>
+    </application>
+    <platform>
+        <subscribes>
+        </subscribes>
+        <handles>
+            <message type="text" />
+        </handles>
+        <rule embed="false" />
+    </platform>
+    <bindings>
+        <cover>
+            <entry title="商城入口设置" do="wlindex" />
+        </cover>
+        <menu>
+            <entry title="基本设置" do="shopset" />
+            <entry title="订单管理" do="order" />
+            <entry title="商品分类" do="category" /> 		
+            <entry title="商品管理" do="goods" />
+            <entry title="模板管理" do="template" />
+        </menu>
+        <home call="getCategoryTiles"></home>
+    </bindings>
+    <install><![CDATA[
+ 
+CREATE TABLE if not exists   `ims_shop2_cart` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) DEFAULT '0',
+  `goodsid` int(11) DEFAULT '0',
+  `goodstype` tinyint(1) DEFAULT '1',
+  `price` varchar(10) DEFAULT '',
+  `from_user` varchar(50) DEFAULT '',
+  `total` int(10) DEFAULT '0',
+  `optionid` int(11) default 0,
+  PRIMARY KEY (`id`),
+  KEY `indx_weid` (`weid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists  `ims_shop2_category` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属帐号',
+  `name` varchar(50) NOT NULL COMMENT '分类名称',
+  `parentid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级分类ID,0为第一级',
+  `displayorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `enabled` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否开启',
+  `thumb` varchar(255) DEFAULT '',
+   `description` text,
+        `isindex` int(11) default 1,
+  PRIMARY KEY (`id`),
+  KEY `indx_weid` (`weid`),
+  KEY `indx_displayorder` (`displayorder`),
+  KEY `indx_parentid` (`parentid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists  `ims_shop2_goods` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) DEFAULT '0',
+  `pcate` int(10) DEFAULT '0',
+  `ccate` int(10) DEFAULT '0',
+  `status` tinyint(1) DEFAULT '1',
+  `displayorder` int(10) DEFAULT '0',
+  `score` int(10) DEFAULT '0',
+  `title` varchar(100) DEFAULT '',
+  `thumb` varchar(100) DEFAULT '',
+  `unit` varchar(5) DEFAULT '',
+  `description` varchar(1000) DEFAULT '',
+  `content` text,
+  `goodssn` varchar(50) DEFAULT '',
+  `productsn` varchar(50) DEFAULT '',
+  `price` int(11) default 0,
+  `marketprice` int(11) default 0,
+  `costprice` int(11) default 0,
+  `total` int(10) DEFAULT '0',
+  `totalcnf` int(11) DEFAULT '0' COMMENT '0 拍下减库存 1 付款减库存 2 永久不减',
+  `sellnums` int(10) DEFAULT '0',
+  `thumb_url` text,
+  `createtime` int(10) DEFAULT '0',
+  `hits` int(10) DEFAULT '0',
+  `isindex` int(11) DEFAULT '0',
+  `maxbuy` int(11) DEFAULT '0' COMMENT '最多购买',
+  `hasoption` int(10) DEFAULT '0' comment '是否开启商品规格',
+  PRIMARY KEY (`id`),
+  KEY `indx_displayorder` (`displayorder`),
+  KEY `indx_weid` (`weid`),
+  KEY `indx_pcate` (`pcate`),
+  KEY `indx_ccate` (`ccate`),
+  KEY `indx_isindex` (`isindex`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE if not exists `ims_shop2_goods_option` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `goodsid` int(10) DEFAULT '0',
+  `title` varchar(50) DEFAULT '',
+  `thumb` varchar(60) DEFAULT '',
+  `price` int(11) default 0,
+  `marketprice` int(11) default 0,
+  `costprice` int(11) default 0,
+  `stock` int(11) DEFAULT '0',
+  `weight` int(11) default 0,
+  `displayorder` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `indx_goodsid` (`goodsid`),KEY `indx_displayorder` (`displayorder`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+        
+CREATE TABLE if not exists `ims_shop2_goods_param` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `goodsid` int(10) DEFAULT '0',
+  `title` varchar(50) DEFAULT '',
+  `value` text,
+  `displayorder` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`),KEY `indx_goodsid` (`goodsid`),KEY `indx_displayorder` (`displayorder`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+        
+
+CREATE TABLE if not exists  `ims_shop2_member` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT '0',
+  `from_user` varchar(255) DEFAULT '',
+  `nickname` varchar(255) DEFAULT '',
+  `mobile` varchar(255) DEFAULT '',
+  `createtime` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `indx_weid` (`weid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists  `ims_shop2_order` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) DEFAULT '0',
+  `from_user` varchar(50) DEFAULT '',
+  `ordersn` varchar(30) DEFAULT '' COMMENT '订单号',
+  `totalnum` tinyint(3) DEFAULT '0' COMMENT '商品数',
+  `dispatch` int(11) DEFAULT '0',
+  `dispatchprice` decimal(10,2) DEFAULT '0.00' COMMENT '运费',
+  `goodsprice` decimal(10,2) DEFAULT '0.00' COMMENT '商品价格',
+  `totalprice` decimal(10,2) DEFAULT '0.00' COMMENT '总价',
+  `status` tinyint(3) DEFAULT '0' COMMENT '-1取消状态 ，0 未支付，1已经支付 2.交易成功',
+  `paytype` tinyint(1) DEFAULT '0' COMMENT '1为余额，2为在线，3为到付',
+  `remark` varchar(1000) DEFAULT '',
+  `createtime` int(10) DEFAULT '0',
+  `paytime` int(11) DEFAULT '0' COMMENT '付款时间',
+  PRIMARY KEY (`id`),
+  KEY `indx_weid` (`weid`),
+  KEY `indx_status` (`status`),
+  KEY `indx_paytype` (`paytype`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists  `ims_shop2_order_goods` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) DEFAULT '0',
+  `orderid` int(10) DEFAULT '0',
+  `goodsid` int(10) DEFAULT '0',
+  `total` int(10) DEFAULT '1',
+  `createtime` int(10) DEFAULT '0',
+  `optionid` int(10) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `indx_weid` (`weid`),
+  KEY `indx_orderid` (`orderid`),
+  KEY `indx_goodsid` (`goodsid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists   `ims_shop2_set` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT '0',
+  `shop2_name` varchar(50) DEFAULT '',
+  `thumb` varchar(255) DEFAULT '',
+  `paytype1` tinyint(1) DEFAULT '0',
+  `paytype2` tinyint(1) DEFAULT '0',
+  `paytype3` tinyint(1) DEFAULT '0',
+  `paytype3_name` varchar(255) DEFAULT '',
+  `content` text,
+  `copyright` varchar(255) DEFAULT '',
+  `template` varchar(255) DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `indx_weid` (`weid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+]]></install>
+
+    <uninstall><![CDATA[
+	
+DROP TABLE IF EXISTS `ims_shop2_cart`;
+            DROP TABLE IF EXISTS `ims_shop2_member`;
+DROP TABLE IF EXISTS `ims_shop2_category`;
+DROP TABLE IF EXISTS `ims_shop2_goods`;
+DROP TABLE IF EXISTS `ims_shop2_goods_option`;
+DROP TABLE IF EXISTS `ims_shop2_goods_param`;
+DROP TABLE IF EXISTS `ims_shop2_order`;
+DROP TABLE IF EXISTS `ims_shop2_order_goods`;
+DROP TABLE IF EXISTS ims_shop2_set;
+
+	]]></uninstall>
+
+    <upgrade><![CDATA[ ]]></upgrade>
+
+</manifest>

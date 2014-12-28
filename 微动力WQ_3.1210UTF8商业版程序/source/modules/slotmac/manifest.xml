@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[老虎机]]></name>
+		<identifie><![CDATA[slotmac]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[老虎机游戏-水果达人]]></ability>
+		<description><![CDATA[类似游戏厅中的老虎机游戏，效果逼真，流畅！互动性很强！]]></description>
+		<author><![CDATA[topone4tvs]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="活动设置" do="Slotmanage" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[DROP TABLE IF EXISTS `ims_slotmac`;
+CREATE TABLE `ims_slotmac` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL COMMENT '活动名称',
+  `starttime` int(11) unsigned NOT NULL COMMENT '开始时间',
+  `endtime` int(11) NOT NULL COMMENT '结束时间',
+  `summary` varchar(255) NOT NULL COMMENT '活动介绍',
+  `per_sum` int(5) NOT NULL COMMENT '每人最多抽奖次数',
+  `perday_sum` int(2) NOT NULL COMMENT '每人每天最多抽奖次数',
+  `per_maxprisum` int(5) NOT NULL COMMENT '每天最多放出奖品数量',
+  `pnum_stat` tinyint(1) NOT NULL DEFAULT '1' COMMENT '抽奖页是否显示奖品数量',
+  `prize1_name` varchar(255) NOT NULL,
+  `prize1_num` int(5) NOT NULL,
+  `prize1_prob` float(5,2) unsigned NOT NULL COMMENT '一等奖概率',
+  `prize2_name` varchar(255) NOT NULL,
+  `prize2_num` int(5) NOT NULL,
+  `prize2_prob` float(5,2) unsigned NOT NULL COMMENT '二等奖概率',
+  `prize3_name` varchar(255) NOT NULL,
+  `prize3_num` int(5) NOT NULL,
+  `prize3_prob` float(5,2) unsigned NOT NULL COMMENT '三等奖概率',
+  `weid` int(10) unsigned NOT NULL COMMENT '所属公众号',
+  `prize1_now` int(5) unsigned DEFAULT NULL COMMENT '已被抽中的次数',
+  `prize2_now` int(5) DEFAULT NULL,
+  `prize3_now` int(5) DEFAULT NULL,
+  `stat` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '活动状态',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `ims_slotmac_record`;
+CREATE TABLE `ims_slotmac_record` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `hid` bigint(20) DEFAULT NULL COMMENT '幸运机id',
+  `tel` char(11) DEFAULT NULL COMMENT '手机号',
+  `jx` tinyint(4) DEFAULT NULL COMMENT '获得的奖项',
+  `jtime` datetime DEFAULT NULL COMMENT '抓奖时间',
+  `jdate` date DEFAULT NULL,
+  `iscom` tinyint(1) DEFAULT '0' COMMENT '是否领奖',
+  `un` varchar(255) DEFAULT NULL,
+  `chatid` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `ims_slotmac_rep`;
+CREATE TABLE `ims_slotmac_rep` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `weid` int(10) unsigned NOT NULL,
+  `reptitle` varchar(100) NOT NULL COMMENT '回复消息标题',
+  `repimg` varchar(255) NOT NULL COMMENT '回复消息封面图片',
+  `repinfo` varchar(255) NOT NULL COMMENT '回复消息简介',
+  `repactive` int(10) unsigned NOT NULL COMMENT '活动id',
+  PRIMARY KEY (`id`,`rid`,`weid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;]]></install>
+	<uninstall></uninstall>
+	<upgrade></upgrade>
+</manifest>

@@ -1,0 +1,72 @@
+{template wl_header} 
+<link href='{RES}css/cart.css' rel='stylesheet' type='text/css' />
+<!--script language="javascript">$(document).ready(shop_obj.payment_init);</script-->
+
+<div id="shop_page_contents">
+	<div id="cover_layer"></div>
+	{template wl_menu} 
+	<div id="payment">
+		<div class="i-ture">
+			<h1 class="t">订单提交成功！</h1>
+			<div class="info">
+				订 单 号：{$order['ordersn']}<br />
+				订单数量：<span class="fc_red">{$order['totalnum']}</span><br />
+				订单总价：<span class="fc_red">￥{$order['totalprice']}</span>
+			</div>
+		</div>
+		<form id="payment_form" action="{php echo $this->createMobileUrl('wlpayment');}" method="post">
+			<div class="i-ture">
+				<h1 class="t">选择支付方式</h1>
+				<ul>
+					<li><input type="radio" name="paytype" value="1" id="out"  /> <label for="out"><strong>余额支付</strong></label>
+					<li><input type="radio" name="paytype" value="2" id="zfb" checked /> <label for="zfb"><strong>在线支付</strong></label></li>
+					<li><input type="radio" name="paytype" value="3" id="out2"  /> <label for="out2"><strong>现金支付</strong></label>
+						<div class="payment_info">
+							<textarea name="PaymentInfo" placeholder="请输入支付信息，如转账帐号、时间等"></textarea>
+						</div>
+					</li>
+					</ul>
+			</div>
+			<div class="payment"><input type="submit" value="下一步" /></div>
+			<input type="hidden" name="orderid" value="{$order['id']}" />
+			<input type="hidden" name="d" value="payment" />
+		</form>
+	</div>
+</div>
+<link rel="stylesheet" type="text/css" href="{RES}css/wei_canyin.css" media="all" />
+<div class="center">
+ <div id="footer_menu" class="footer footer_menu">
+            <ul class="clear">
+                <li><a href="javascript:;" ><span class="icons icons_1"></span><label>智能选餐</label></a></li>
+				 {if ($_GPC['do']!='wlmember' && $_GPC['do']!='wlorder'&& $_GPC['do']!='wlmylike' )}
+                <li><a href="javascript:;" class="onactive" ><span class="icons icons_2"></span><label>点菜</label></a></li>
+				{else}
+				<li><a  href="{php echo  $this->createMobileUrl('wlindex')}" ><span class="icons icons_2"></span><label>点菜</label></a></li>
+				{/if}
+                {if $_GPC['do']=='wlmember'||$_GPC['do']=='wlorder'}
+				<li><a href="{php echo  $this->createMobileUrl('wlmember')}" class="onactive" ><span class="icons icons_3"></span><label>我的订单</label></a></li>
+				{else}
+				<li><a href="{php echo  $this->createMobileUrl('wlmember')}" ><span class="icons icons_3"></span><label>我的订单</label></a></li>
+				{/if}
+                {if $_GPC['do']=='wlmylike'}				
+                <li><a href="javascript:;" class="onactive" ><span class="icons icons_4"></span><label>我喜欢</label></a></li>
+				{else}
+                <li><a href="{php echo  $this->createMobileUrl('wlmylike')}" ><span class="icons icons_4"></span><label>我喜欢</label></a></li>
+				{/if}				
+                <li><a href="{php echo  $this->createMobileUrl('wlcart')}" id="my_menu"><span class="icons icons_5"><label id="num" class="num">{$totalnum}</label></span></a></li>
+            </ul>
+        </div>
+        <script>
+            var footer = document.getElementById("footer_menu");
+            var evtObj = {
+                handleEvent: function(evt){
+                    if("A" == evt.target.tagName){
+                        evt.target.classList.toggle("on");
+                    }
+                }
+            }
+            footer.addEventListener("touchstart", evtObj, false);
+            footer.addEventListener("touchend", evtObj, false);
+        </script>
+    </div>
+

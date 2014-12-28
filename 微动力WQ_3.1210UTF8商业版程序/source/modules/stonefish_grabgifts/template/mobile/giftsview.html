@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$reply['title']}</title>
+<link rel="stylesheet" type="text/css" href="./source/modules/stonefish_grabgifts/template/css/style.css">
+<script language="javascript" src="./source/modules/stonefish_grabgifts/template/js/jquery-1.8.js"></script>
+<script language="javascript" src="./source/modules/stonefish_grabgifts/template/js/common.js"></script>
+<script language="javascript" src="./source/modules/stonefish_grabgifts/template/js/openshare.js"></script>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<meta name="Description" content="{$reply['description']}" />
+<!-- Mobile Devices Support @begin -->
+<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<!-- Mobile Devices Support @end -->
+<style>
+body{background-color:{$reply['bgcolor']};}
+.product {margin-top:10px;}
+.product li{ width: 96%; float: left; padding:0 2%;}
+</style>
+</head>
+<body>
+ <div class="center">
+    <div class="product">
+ 		<ul>
+			<li>
+ 				<dl>
+ 					<dt><img src="{$_W['attachurl']}{$giftinfo['awardpic']}"/></dt>
+ 					<dd>{$giftinfo['title']}</dd>
+ 					<dd>全部<span>{$giftinfo['total']}</span>份  剩余<span>{php echo $giftinfo['total']-$giftinfo['total_winning']}</span>份</dd>
+ 				</dl>
+ 			</li>	
+ 		</ul>
+ 	</div>
+	<div class="wenz">
+		<h3>奖品详细：</h3>
+ 		<p>{php echo htmlspecialchars_decode($giftinfo['description']);}</p>
+		
+		<h3>活动介绍：</h3>
+ 		<p>{$reply['description']}</p>
+ 		<h3>活动时间：</h3>
+ 		<p><span style="color:#ff0000;">{php echo date('Y-m-d H:i', $reply['start_time']);} - {php echo date('Y-m-d H:i', $reply['end_time']);}</span></p>
+ 		<h3>活动详情：</h3>
+ 		<p>{php echo htmlspecialchars_decode($reply['content']);}</p>
+		<div class="copyright">
+		{if $reply['iscopyright']==1}<a href="{$reply['copyrighturl']}">&copy;{$reply['copyright']}</a>{else}<a href="javascript:;">{if empty($footer_off)}&copy;{if empty($_W['account']['name'])}微动力团队{else}{$_W['account']['name']}{/if}&nbsp;&nbsp;{$_W['setting']['copyright']['statcode']}{/if}</a>{/if}
+		</div> 
+ 	</div>
+ 	<div class="sub_b">
+ 		{if !empty($mygift)}
+		    <dl>
+ 			    <dt><span>&nbsp;</span><img src="./source/modules/stonefish_grabgifts/template/images/a4.jpg"/></dt>
+ 			    <dd><a href="{$mygifturl}">我的活动页</a></dd>
+ 		    </dl>
+		{else}
+		    <dl>
+ 			    <dt><span>&nbsp;</span><a href="{$regurl}" class="lb"><img src="./source/modules/stonefish_grabgifts/template/images/a4.jpg" alt="" /></a></dt>
+ 			    <dd><a href="{$regurl}">我要抢</a></dd>
+ 		    </dl>
+		{/if}
+ 	</div>
+ </div>
+<div class="share-layer"></div>
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	window.shareData = {
+		"imgUrl": "{$picture}",
+		"timeLineLink": "{$shareurl}",
+		"sendFriendLink": "{$shareurl}",
+		"weiboLink": "{$shareurl}",
+		"tTitle": "{$reply['sharetitle']}",
+        "fTitle": "{$reply['sharetitle']}",
+        "tContent": "{$reply['sharecontent']}",
+        "fContent": "{$reply['sharecontent']}",
+        "wContent": "{$reply['sharecontent']}" 
+	};
+
+	// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+		WeixinJSBridge.invoke('sendAppMessage', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.sendFriendLink,
+			"desc": window.shareData.fContent,
+			"title": window.shareData.fTitle
+		}, function (res) {
+			_report('send_msg', res.err_msg);
+		})
+	});
+
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function (argv) {
+		WeixinJSBridge.invoke('shareTimeline', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.timeLineLink,
+			"desc": window.shareData.tContent,
+			"title": window.shareData.tTitle
+		}, function (res) {
+			_report('timeline', res.err_msg);
+		});
+	});
+
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function (argv) {
+		WeixinJSBridge.invoke('shareWeibo', {
+			"content": window.shareData.wContent,
+			"url": window.shareData.weiboLink
+		}, function (res) {
+			_report('weibo', res.err_msg);
+		});
+	});
+}, false);
+
+function onBridgeReady(){
+ WeixinJSBridge.call('showOptionMenu');
+}
+
+if (typeof WeixinJSBridge == "undefined"){
+    if( document.addEventListener ){
+        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+    }else if (document.attachEvent){
+        document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+    }
+}else{
+    onBridgeReady();
+}
+</script>
+</body>
+</html>

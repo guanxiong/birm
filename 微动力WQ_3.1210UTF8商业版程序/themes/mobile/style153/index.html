@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{if $title}{$title}{else}{if !empty($_W['account']['name'])}{$_W['account']['name']}{/if}{/if}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Mobile Devices Support @end -->
+    <meta name="keywords" content="微饶,微信,微信公众平台" />
+    <meta name="description" content="微信公众平台自助引擎" />
+
+    <script type="text/javascript" src="{$_W['siteroot']}/resource/script/jquery-1.7.2.min.js"></script>
+ <script type="text/javascript" src="{$_W['siteroot']}/themes/mobile/default/script/swipe.js"></script>
+    <link rel="stylesheet" type="text/css" href="{$_W['siteroot']}/themes/mobile/style15/css/reset.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="{$_W['siteroot']}/themes/mobile/style15/css/style.css" media="all" />
+
+
+</head>
+<style>
+.logo{position: absolute;width: 110px;height: 110px;border: 5px solid #f3f3f3;border-radius: 95px;box-shadow: 1px 0 2px #CCCCCC;background: url(./resource/attachment/headimg_{$_W['account']['weid']}.jpg) no-repeat center center #FFF;background-size: 70% 70%;left: 20px;display: inline-block;bottom:-60px;}
+
+</style>
+<body>
+<div id="pagewarp">
+    <section>
+        <div class="banner slide">
+            {template 'slide'}
+            <div class="logo"></div>
+            <div class="prolife"><a href="weixin://contacts/profile/{$_W['account']['account']}"><h3>{$_W['account']['name']}</h3><p>WelCome!</p></a></div>
+        </div>
+    </section>
+
+    {php $index=1;$html="";}
+    {loop $navs $nav}
+    <?php
+        if($index<5){
+            if($index==1)$html .= '<section><div class="tema"><dl><dt><ul>';
+
+            if($index==4){
+                $html .= '</ul></dt><dd><a href="'.$nav["url"].'"><img src="./resource/attachment/'.$nav["icon"].'" style="width:100%;"></a></dd></dl></div></section>';
+            }else{
+                $html .= '<li><a href="'.$nav["url"].'">'.$nav["name"].'</a></li>';
+            }
+        }else{
+            if($index==5){
+                $html .= '<section><div class="meeting"><dl><dd style="float:left;"><a href="'.$nav["url"].'"><img src="./resource/attachment/'.$nav["icon"].'" style="width:100%;"></a></dd><dt><ul>';
+            }
+            else{
+                $html .= '<li><a href="'.$nav["url"].'">'.$nav["name"].'</a></li>';
+            }
+            if($index==8){
+                $html .= '</ul></dt></dl></div></section>';
+            }
+
+        }
+    ?>
+
+    {php if($index==8)$index=0}
+    {php $index++}
+    {/loop}
+
+    {php echo $html}
+
+
+</div>
+
+
+
+{template 'footer'}

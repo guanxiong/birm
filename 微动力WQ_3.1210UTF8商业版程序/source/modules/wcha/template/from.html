@@ -1,0 +1,25 @@
+<div id="form" class="alert alert-block alert-new ">
+	<h4 class="alert-heading">微餐饮查单</h4>
+	<table id="form" class="tb reply-news-edit">
+	  	
+			<tr>
+					<th><label for="">查询模式</label></th>
+					<td>
+						<label class="radio inline">
+							<input type="radio" name="wtype" value="0" {if $reply['wtype']==0}checked="checked"{/if} />查看订单 
+						</label>
+						<label class="radio inline">
+							<input type="radio" name="wtype" value="1" {if $reply['wtype']==1}checked="checked"{/if} />营收统计
+                        </label>
+					</td>
+				</tr>
+			<tr>
+			<th>管理openid</th>
+			<td>
+				<input type="text" id="openidstr" class="span7" placeholder="" name="openidstr" value="{$reply['openidstr']}">
+				<div class="help-block">支持多个账户查询，请用英文;隔开</div>
+			</td>
+		</tr>
+		 
+	</table>
+</div>

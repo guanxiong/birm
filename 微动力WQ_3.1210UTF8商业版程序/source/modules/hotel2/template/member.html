@@ -1,0 +1,163 @@
+{template 'common/header'}
+<script language='javascript' src='{php echo $this->_script_url}jquery.gcjs.js'></script>
+<script language='javascript' src='{php echo $this->_script_url}jquery.form.js'></script>
+<script language='javascript' src='{php echo $this->_script_url}tooltipbox.js'></script>
+<div class="main">
+    <ul class="nav nav-tabs">		
+        <li class="active"><a href="{php echo $this->createWebUrl('member',array('op'=>'list'));}">用户管理</a></li>    
+        <li><a href="{php echo $this->createWebUrl('member',array('op'=>'edit'));}">添加用户</a></li>	
+    </ul>
+    <div class="search">
+        <form action="site.php" method="get">
+            <input type="hidden" name="act" value="module" />
+            <input type="hidden" name="do" value="member" />
+            <input type="hidden" name="name" value="hotel2" />				
+            <table class="table table-bordered tb">
+                <tbody>
+                    <tr>
+                        <th>姓名</th>
+                        <td>
+                            <input class="span6" name="realname" type="text" value="{$_GPC['realname']}">
+                        </td>
+                    </tr>
+                      <tr>
+                        <th>手机号</th>
+                        <td> <input class="span6" name="mobile" type="text" value="{$_GPC['mobile']}">
+                        </td>
+                    </tr>
+                    <tr class="search-submit">
+                        <td colspan="2"><button class="btn pull-left btn-primary span2" style='margin-left:95px;'><i class="icon-search icon-large"></i> 搜索</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div style="padding:15px;">
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+                <tr><tr><th class='with-checkbox'>
+                    <input type="checkbox" class="check_all" /></th>
+                    <th>序号</th>
+                    <th>微信号</th>
+                    <th>用户名</th>
+                    <th>真实姓名</th>										
+                    <th>电话</th>
+                    <td>加入时间</td>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {loop $list $item}
+                <tr>  <td class="with-checkbox">
+                <input type="checkbox" name="check" value="{$item['id']}"></td>
+                    <td>{$item['id']}</td>
+                    <td>{$item['from_user']}</td>
+                    <td>{$item['username']}</td>
+                    <td>{$item['realname']}</td>
+                    <td>{$item['mobile']}</td>
+                    <td>{php echo date('Y-m-d H:m',$item['createtime'])}</td>
+                    <td>
+                         {if $item['status']==1}
+                        <span class='label label-success'>启用</span>
+                        {else}
+                        <span class='label label-error'>禁用</span>
+                        {/if}
+                    </td>
+                    
+                    <td> 
+                        <a class="btn" rel="tooltip" href="{php echo $this->createWebUrl('member',array('op'=>'edit','id'=>$item['id']))}" title="编辑"><i class="icon-edit"></i></a>
+
+                        {if $item['status']==0}
+                        <a class="btn" title="显示" href="#" onclick="drop_confirm('您确定要启用此用户吗?', '{php echo $this->createWebUrl('member',array('op'=>'status','status'=>1, 'id'=>$item['id']))}');"><i class="icon-play"></i></a>                                       
+                        {elseif $item['status']==1}
+                        <a class="btn" title="隐藏" href="#" onclick="drop_confirm('您确定要禁用此用户吗?', '{php echo $this->createWebUrl('member',array('op'=>'status','status'=>0, 'id'=>$item['id']))}');"><i class="icon-stop"></i></a>                                       														
+                        {/if}
+                        
+                        <a class="btn" rel="tooltip" href="#" onclick="drop_confirm('您确定要删除吗?', '{php echo $this->createWebUrl('member',array('op'=>'delete', 'id'=>$item['id']))}');" title="删除"><i class="icon-remove"></i></a>
+                        
+                    </td>
+                </tr>
+                {/loop}
+                <tr>
+				<td colspan="8">
+				
+					<input type="button" class="btn btn-primary" name="deleteall" value="删除选择的" />
+                    <input type="button" class="btn btn-primary edit_all" name="showall" value="批量启用" />
+                    <input type="button" class="btn btn-primary edit_all" name="hideall" value="批量禁用" />
+
+				</td>
+			</tr>
+            </tbody>
+            <input name="token" type="hidden" value="{$_W['token']}" />
+        </table>
+        {$pager}
+    </div>
+</div>
+
+<script>
+$(function(){
+   
+    $(".check_all").click(function(){
+       var checked = $(this).get(0).checked;
+       $("input[type=checkbox]").attr("checked",checked);
+    });
+
+    $(".edit_all").click(function(){
+        var name = $(this).attr('name');
+        var check = $("input:checked");
+        if(check.length<1){
+            err('请选择要操作的记录!');
+            return false;
+        }
+
+        var id = new Array();
+        check.each(function(i){
+            id[i] = $(this).val();
+        });
+        $.post("{php echo create_url('site/module', array('do' => 'member','op'=>'showall', 'name' => 'hotel2'))}", {idArr:id,show_name:name},function(data){
+            if (data.errno ==0)
+            {
+                location.reload();
+            } else {
+                alert(data.error);
+            }
+        },'json');
+    });
+
+	$("input[name=deleteall]").click(function(){
+ 
+		var check = $("input:checked");
+		if(check.length<1){
+			err('请选择要删除的记录!');
+			return false;
+		}
+        if( confirm("确认要删除选择的记录?")){
+		var id = new Array();
+		check.each(function(i){
+			id[i] = $(this).val();
+		});
+		$.post("{php echo create_url('site/module', array('do' => 'member','op'=>'deleteall', 'name' => 'hotel2'))}", {idArr:id},function(data){
+			if (data.errno ==0)
+			{
+				location.reload();
+			} else {
+				alert(data.error);
+			}
+
+
+		},'json');
+		}
+
+	});
+});
+</script>
+<script>
+function drop_confirm(msg, url){
+    if(confirm(msg)){
+        window.location = url;
+    }
+}
+</script>
+
+{template 'common/footer'}

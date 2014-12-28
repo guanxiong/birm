@@ -1,0 +1,110 @@
+{template 'common/header'}
+<style type="text/css">
+table li{padding:5px 0;}
+small a{color:#999;}
+</style>
+<ul class="nav nav-tabs">
+ 	<li><a href="{php echo create_url('site/module', array('do' => 'Guanhuai', 'op' => 'set','name' => 'car','weid'=>$_W['weid']))}">车主关怀</a></li>	
+ 	<li><a href="{php echo create_url('site/module', array('do' => 'Guanhuai', 'op' => 'car','name' => 'car','weid'=>$_W['weid']))}">车主信息</a></li>	
+ 	{if $id}<li class="active"><a href="{php echo create_url('site/module', array('do' => 'Guanhuai', 'op' => 'car','name' => 'car','weid'=>$_W['weid']))}">车主详情</a></li>{/if}	
+</ul>
+<div class="main">
+	<div class="form form-horizontal">
+		<h4>车主信息详情</h4>
+		<table class="tb">
+			<tr>
+				<th style="width:200px"><label for="">用户</label></th>
+				<td>
+					<a href="{php echo create_url('site/module/profile', array('name' => 'fans', 'from_user' => $carone['from_user']));}">{$carone['from_user']}</a>
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">车主姓名</label></th>
+				<td>
+					{if $carone['realname']!=""} {$carone['car_usderName']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">手机号</label></th>
+				<td>
+					{if $carone['mobile']!=""} {$carone['mobile']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">车型信息</label></th>
+				<td>
+					{if $carone['brand_cn'] && $carone['series_cn']}
+						{$carone['brand_cn']}-{$carone['series_cn']}-{$carone['type_cn']}-{$carone['car_note']}
+					{else}
+						{$carone['car_note']}
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">车牌号码</label></th>
+				<td>
+					{$carone['car_no']}
+				</td>
+			</tr>			
+			<tr>
+				<th><label for="">上牌时间</label></th>
+				<td>
+					{php echo date('Y-m-d', $carone['car_startTime']);}
+				</td>
+			</tr>						
+			<tr>
+				<th><label for="">爱车靓照</label></th>
+				<td>
+					{if $carone['car_photo']}
+						<img src="{$_W['attachurl']}{$carone['car_photo']}">
+					{else}
+						未上传
+					{/if}
+				</td>
+			</tr>	
+			<tr>
+				<th><label for="">上次保险时间</label></th>
+				<td>
+					{php echo date('Y-m-d', $carone['car_insurance_lastDate']);}
+				</td>
+			</tr>	
+			<tr>
+				<th><label for="">上次保险费用</label></th>
+				<td>
+					{$carone['car_insurance_lastCost']} 元
+				</td>
+			</tr>	
+			<tr>
+				<th><label for="">上次保养里程</label></th>
+				<td>
+					{$carone['car_care_mileage']} 公里
+				</td>
+			</tr>	
+			<tr>
+				<th><label for="">上次保养时间</label></th>
+				<td>
+					{php echo date('Y-m-d', $carone['car_care_lastDate']);}
+				</td>
+			</tr>	
+			<tr>
+				<th><label for="">上次保养费用</label></th>
+				<td>
+					{$carone['car_care_lastCost']} 元
+				</td>
+			</tr>	
+			<tr>
+				<th><label for="">用户提交时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $carone['createtime']);}
+				</td>
+			</tr>	
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[小尾巴]]></name>
+		<identifie><![CDATA[tail]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[微信小尾巴，文字版，图文信息版]]></ability>
+		<description><![CDATA[微信小尾巴，文字跟在回复后面，图文跟在后面，超过最后9条，则无图文小尾巴]]></description>
+		<author><![CDATA[超级无聊]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="小尾巴设置" do="setting" state="" direct="false" />
+			<entry title="小尾巴列表" do="list" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_tail_list` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `displayorder` int(11) NOT NULL,
+  `weid` int(10) unsigned NOT NULL,
+  `module` varchar(30) NOT NULL DEFAULT '',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `description` varchar(255) NOT NULL DEFAULT '',
+  `thumb` varchar(255) NOT NULL DEFAULT '',
+  `url` varchar(500) NOT NULL DEFAULT '',
+  `content` text NOT NULL,
+  `times` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_tail_set` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `isshow` tinyint(4) NOT NULL,
+  `itype` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_id_rid` (`id`,`weid`) USING BTREE
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></install>
+	<uninstall><![CDATA[DROP TABLE ims_tail_list;
+	DROP TABLE ims_tail_set;]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

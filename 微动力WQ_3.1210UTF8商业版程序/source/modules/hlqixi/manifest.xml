@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[恶搞七夕]]></name>
+		<identifie><![CDATA[hlqixi]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[恶搞情人节]]></ability>
+		<description><![CDATA[恶搞情人节]]></description>
+		<author><![CDATA[weidongli]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+    <bindings>
+		
+	</bindings>
+
+	<install><![CDATA[
+
+
+
+CREATE TABLE IF NOT EXISTS `ims_hlqixi_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `picture` varchar(100) NOT NULL COMMENT '活动图片',
+  `description` varchar(100) NOT NULL COMMENT '活动描述',
+  `gunzhu` varchar(255) NOT NULL COMMENT '活动描述',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

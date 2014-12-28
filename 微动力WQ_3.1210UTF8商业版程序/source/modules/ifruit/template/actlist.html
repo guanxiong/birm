@@ -1,0 +1,52 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li class="active"><a>活动列表</a></li>
+</ul>
+<div class="main">
+
+    <form action="" method="post" class="form-horizontal form" onsubmit="return formcheck(this)">
+        <h4>{$title}</h4>
+        <a class="btn" href="{php echo create_url('rule/post', array('name' => '幸运机', 'module' => $modulename));}"><i class="icon-plus"></i>添加活动</a> <a class="btn" href="javascript:location.reload()"><i class="icon-refresh"></i>刷新</a>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>活动名称</th>
+                <th>关键字</th>
+                <th style="width:100px;">时间</th>
+                <th style="width:40px;">状态</th>
+                <th style="width:200px;">操作</th>
+            </tr>
+            </thead>
+            <tbody id="level-list">
+            {loop $list $item}
+            <tr>
+                <td>
+                    {$item['title']}
+                </td>
+                <td>{$item['content']}</td>
+                <td>
+                    {php echo date('Y-m-d H:i:s', $item[starttime]);}<br/>
+                    {php echo date('Y-m-d H:i:s', $item[endtime]);}
+                </td>
+                <td>
+                    {if TIMESTAMP < $item['starttime']}<span class="label" style="background:#56af45;">未开始</span>
+                    {elseif TIMESTAMP > $item['starttime'] && TIMESTAMP < $item['endtime']}<span class="label" style="background:#e63a3a;">进行中</span>
+                    {else}<span class="label">已结束</span>{/if}
+                </td>
+                <td>
+                    <a class="btn" href="{php echo create_url('rule/post', array('id' => $item['rid']));}"><i class="icon-edit"></i> 关键字</a>
+                    <a class="btn" href="{php echo create_url('site/module', array('do' => 'detail', 'name' => $modulename, 'rid' => $item['rid']))}"><i class="icon-edit"></i> 编辑</a>
+                    <a class="btn" href="{php echo create_url('site/module', array('do' => 'snlist', 'name' => $modulename, 'rid' => $item['rid']))}"><i class="icon-cog"></i> SN码</a>
+                    <a class="btn" href="{php echo create_url('site/module', array('do' => 'award', 'name' => $modulename, 'rid' => $item['rid']))}"><i class="icon-trophy"></i> 奖品</a>
+                </td>
+            </tr>
+            {/loop}
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </form>
+    {$pager}
+
+</div>
+{template 'common/footer'}

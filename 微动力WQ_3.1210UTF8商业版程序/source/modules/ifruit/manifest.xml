@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+<application setting="false">
+    <name><![CDATA[幸运机]]></name>
+    <identifie><![CDATA[ifruit]]></identifie>
+    <version><![CDATA[1.0]]></version>
+    <type><![CDATA[customer]]></type>
+    <ability><![CDATA[幸运机模块]]></ability>
+    <description><![CDATA[幸运机抽奖]]></description>
+    <author><![CDATA[迷失卍国度]]></author>
+    <url><![CDATA[]]></url>
+</application>
+<platform>
+    <handles>
+        <message type="text" />
+    </handles>
+    <rule embed="true" />
+</platform>
+<bindings>
+    <menu>
+        <entry title="活动管理" do="actlist" />
+    </menu>
+</bindings>
+<install><![CDATA[
+    DROP TABLE IF EXISTS `ims_ifruit_reply`;
+    CREATE TABLE `ims_ifruit_reply` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+        `weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+        `title` varchar(100) NOT NULL DEFAULT '' COMMENT '活动标题',
+        `title_end` varchar(100) NOT NULL DEFAULT '' COMMENT '活动结束标题',
+        `description` varchar(1000) NOT NULL DEFAULT '' COMMENT '活动简介',
+        `description_end` varchar(1000) NOT NULL DEFAULT '' COMMENT '活动结束简介',
+        `picture` varchar(100) NOT NULL DEFAULT '' COMMENT '活动图片',
+        `picture_end` varchar(100) NOT NULL DEFAULT '' COMMENT '活动结束图片',
+        `starttime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '开始日期',
+        `endtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '结束日期',
+        `dateline` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加日期',
+        PRIMARY KEY (`id`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+    DROP TABLE IF EXISTS `ims_ifruit_detail`;
+    CREATE TABLE `ims_ifruit_detail` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+        `weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+        `rule` varchar(1000) NOT NULL DEFAULT '' COMMENT '活动说明',
+        `pwd` varchar(20) NOT NULL DEFAULT '' COMMENT '商家确认密码',
+        `ticket_information` varchar(400) NOT NULL DEFAULT '' COMMENT '用户中奖后兑奖提示信息',
+        `repeat_lottery_reply` varchar(400) NOT NULL DEFAULT '' COMMENT '抽奖提示信息',
+        `lottery_times` tinyint(3) NOT NULL DEFAULT '0' COMMENT '每天抽奖次数',
+        `max_lottery` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '最大抽奖数',
+        `is_repeat_lottery` tinyint(1) NOT NULL DEFAULT '0' COMMENT '允许多次中奖',
+        `show_award_num` tinyint(3) NOT NULL DEFAULT '0' COMMENT '是否显示奖品数量',
+        `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
+        `is_card_score` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否启用会员卡',
+        `card_score` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '兑换积分',
+        `copyright` varchar(400) NOT NULL DEFAULT '' COMMENT '版权信息',
+        `dateline` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加日期',
+        PRIMARY KEY (`id`)
+    )ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+    DROP TABLE IF EXISTS `ims_ifruit_award`;
+    CREATE TABLE IF NOT EXISTS `ims_ifruit_award` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+        `weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+        `title` varchar(50) NOT NULL DEFAULT '' COMMENT '奖品名称',
+        `picture` varchar(100) NOT NULL DEFAULT '' COMMENT '奖品图片',
+        `description` varchar(1000) NOT NULL DEFAULT '' COMMENT '描述',
+        `total` int(11) NOT NULL DEFAULT '0' COMMENT '数量',
+        `probalilty` varchar(5) NOT NULL COMMENT '概率单位%',
+        `level` tinyint(1) NOT NULL DEFAULT '3' COMMENT '奖品等级',
+        `levelname` varchar(50) NOT NULL DEFAULT '三等奖' COMMENT '奖品等级名称',
+        `dateline` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加日期',
+        PRIMARY KEY (`id`)
+    ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+    DROP TABLE IF EXISTS `ims_ifruit_lottery_log`;
+    CREATE TABLE IF NOT EXISTS `ims_ifruit_lottery_log` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+        `weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+        `from_user` varchar(50) NOT NULL COMMENT '微信ID',
+        `awardid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '奖品ID',
+        `description` varchar(1000) NOT NULL DEFAULT '' COMMENT '中奖信息描述',
+        `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:普通抽奖 1:会员卡抽奖',
+        `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0未领奖，1不需要领奖，2已领奖',
+        `dateline` int(10) unsigned NOT NULL COMMENT '添加日期',
+        PRIMARY KEY (`id`)
+    ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+    DROP TABLE IF EXISTS `ims_ifruit_sn`;
+    CREATE TABLE `ims_ifruit_sn` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+        `weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+        `from_user` varchar(50) NOT NULL COMMENT '微信ID',
+        `sn` varchar(100) NOT NULL DEFAULT '' COMMENT 'sn码',
+        `awardid` int(10) NOT NULL DEFAULT '0' COMMENT '奖品ID',
+        `mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号码',
+        `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0:未领取;1:已消费;2:已兑换',
+        `winningtime` int(10) NOT NULL DEFAULT '0' COMMENT 'sn码抽中时间',
+        `usetime` int(10) NOT NULL DEFAULT '0' COMMENT 'sn码使用时间',
+        `dateline` int(10) NOT NULL DEFAULT '0'  COMMENT '添加时间',
+        PRIMARY KEY (`id`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+    ]]></install>
+<uninstall><![CDATA[]]></uninstall>
+<upgrade><![CDATA[]]></upgrade>
+</manifest>

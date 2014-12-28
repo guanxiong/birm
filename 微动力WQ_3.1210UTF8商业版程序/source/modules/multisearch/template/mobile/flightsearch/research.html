@@ -1,0 +1,101 @@
+{template 'header'}
+<link type="text/css" rel="stylesheet" href="./source/modules/multisearch/template/mobile/flightsearch/common.css">
+<nav class="navbar navbar-default mynav" role="navigation">
+	<div class="mynav-brand mynav-right">
+		<a href="tel:4008562636"><i class="icon-phone"></i></a>
+	</div>
+	<div class="mynav-brand mynav-left">
+		<a href="#" onclick="history.go(-1);return false;"><i class="icon-chevron-left"></i></a>
+	</div>
+	<p class="mynav-title">我要预订</p>
+</nav>
+<div class="mobile-content">
+	<form class="form-horizontal" method="post" role="form" onsubmit="return formcheck(this)">
+		<div class="form-group">
+			<label class="col-sm-2 col-xs-4 title"><i class="icon-angle-right"></i>  行程</label>
+			<div class="col-sm-10 col-xs-8"><span class="form-control">从 {$fields['start']} 到 {$fields['end']}</span></div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 col-xs-4 title"><i class="icon-angle-right"></i>  船公司</label>
+			<div class="col-sm-10 col-xs-8"><span class="form-control">{$fields['data']['company']}</span></div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 col-xs-4 title"><i class="icon-angle-right"></i>  有效期</label>
+			<div class="col-sm-10 col-xs-8"><span class="form-control">{$fields['data']['date']}</span></div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 col-xs-4 title"><i class="icon-angle-right"></i>  班期</label>
+			<div class="col-sm-10 col-xs-8"><span class="form-control">{$fields['data']['schedule']}</span></div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 col-xs-4 title"><i class="icon-angle-right"></i>  航程</label>
+			<div class="col-sm-10 col-xs-8"><span class="form-control">{$fields['data']['range']}</span></div>
+		</div>
+		{loop $search['fields'] $field}
+		{if $field['type'] == 2}
+		<div class="form-group">
+			<label class="col-sm-2 col-xs-4 title"><i class="icon-angle-right"></i>  {$field['title']}</label>
+			<div class="col-sm-10 col-xs-8">
+				{if $field['variable'] == 'buytype'}
+				<select class="form-control" name="buytype">
+					<option value="20GP">20GP - {$fields['data']['a']} 元</option>
+					<option value="40GP">40GP - {$fields['data']['b']} 元</option>
+					<option value="40HC">40HC - {$fields['data']['c']} 元</option>
+				</select>
+				{else if $field['variable'] == 'quantity'}
+				<div class="input-group quantity">
+					<span class="input-group-addon"><i class="icon-minus"></i></span>
+					<input type="text" class="form-control" name="quantity" value="1" style="text-align:center;">
+					<span class="input-group-addon"><i class="icon-plus"></i></span>
+				</div>
+				{else}
+					{if isset($this->types[$field['bind']])}
+					{php echo $this->formatForm($field, $research['data'][$field['variable']])}
+					{else}
+					{php echo tpl_fans_form($field['bind'], $fans[$field['bind']])}
+					{/if}
+				{/if}
+			</div>
+		</div>
+		{/if}
+		{/loop}
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+				<button type="submit" name="submit" value="search" class="btn btn-primary pull-right" style="width:100%;"><i class="icon-ok"></i> 提交</button>
+			</div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+$(function() {
+	$(".quantity span:eq(0), .quantity span:eq(1)").click(function() {
+		var a = $(this).parent().find("input");
+		var b = $(this).find("i").hasClass("icon-minus");
+		if(b) {
+			var c = parseInt(a.val()) - 1;
+		} else {
+			var c = parseInt(a.val()) + 1;
+		}
+		if(c<1) {
+			alert("抱歉，购买数量不能小于1！");
+		} else {
+			a.val(c);
+		}
+	});
+});
+<!--
+	function formcheck(form) {
+		{loop $search['fields'] $item}
+		{if $item['required']}
+			if (!form['{$item['variable']}'].value) {
+				alert('请输入{$item['title']}项!');
+				return false;
+			}
+		{/if}
+		{/loop}
+		return true;
+	}
+//-->
+</script>
+{template 'footer'}

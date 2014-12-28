@@ -1,0 +1,98 @@
+{template wl_header} 
+<script type='text/javascript' src='{RES}js/shop.js'></script>
+<link href='{RES}css/cart.css' rel='stylesheet' type='text/css' />
+<script language="javascript">$(document).ready(shop_obj.checkout_init);</script>
+<div id="shop_page_contents"><div id="cover_layer"></div>
+{template wl_menu} 
+<div id="checkout">
+	<form id="checkout_form" action="{php echo $this->createMobileUrl('wlorder');}">
+		<div class="address i-ture">
+			<h1 class="t">联系人信息</h1>
+			<ul>
+				{loop $addresslist $row}
+				<li>
+					<input type="radio" name="AId" value="{$row['id']}" checked id="address-{$row['id']}" />
+					<label for="address-{$row['id']}">【{$row['username']}，{$row['tel']},{$row['address']}】</label>
+				</li>
+				{/loop}
+				<li><input type="radio" name="AId" id="new-address" value="0" {if empty($addresslist)} checked{/if}  /> <label for="new-address">使用新的联系人信息</label></li>
+			</ul>
+			<dl>
+				<dd>
+					姓名 <font class="fc_red">*</font><br />
+					<input type="text" name="username" value="" notnull  class="input_text"/>
+				</dd>
+						
+				<dd>
+					手机 <font class="fc_red">*</font><br />
+					<input type="text" name="tel" value="" pattern="[0-9]*" notnull class="input_text"/>
+				</dd>
+				<dd>
+					地址 <font class="fc_red">*</font><br />
+						<input type="text" name="address" value="" notnull class="input_text"/>
+				</dd>				
+			</dl>
+		</div>
+		<div class="address i-ture">
+			<h1 class="t">选择快递方式</h1>
+			<ul>
+				{if empty($expresslist)}
+					<li>
+						{php  $expressprice=0;$sendtype=0 }
+						<input type="radio" name="sendtype" value="0"  id="express-0" date-price="0" checked/>
+						<label for="express-0">【免费包邮】</label>
+					</li>	
+				{else}
+					{loop $expresslist $row}
+					<li>
+						{if empty($expressprice)}{php  $expressprice=$row['express_price'];$sendtype=$row['id'] }{/if}
+						<input type="radio" name="sendtype" value="{$row['id']}"  id="express-{$row['id']}" date-price="{$row['express_price']}" {if $sendtype==$row['id']}checked{/if} />
+						<label for="express-{$row['id']}">【{$row['express_name']}】(快递费：{$row['express_price']}元)</label>
+					</li>			
+					{/loop}
+				{/if}
+ 			</ul>
+		</div>
+		<div class="i-ture">
+			<h1 class="t">结算详情</h1>
+			<div class="info">
+				订单总价：<span class="fc_red">￥{$totalprice}</span><br />
+				订单运费：<span class="fc_red" id="expressprice">￥{$expressprice}</span><br />
+				<input type="hidden" name="expressprice" class="expressprice" value="{$expressprice}">
+				订单总价：<span class="fc_red" id="totalprice">￥{php echo (floatval($totalprice)+floatval($expressprice));}</span>
+			</div>
+		</div>
+		<div class="remark i-ture">
+			<h1 class="t">订单备注</h1>
+			<div><textarea name="Remark" placeholder="选填，填写您对本订单的特殊需求，如送货时间等" class="input_text"></textarea></div>
+		</div> 
+		<div class="total_price hide" >订单总价:<span class="fc_red"></span></div>
+		<div class="checkout"><input type="button" value="提交订单" /></div>
+		<input type="hidden" name="d" value="checkout" />
+	</form>
+</div>
+</div>
+ {template wl_footer}
+<script type="text/javascript">
+    $('.input_text').focus(function() {
+        $("#footer_points").css("display","none");
+        $("#footer").css("display","none");
+        $("#category").css("display","none");
+    });
+    $('.input_text').blur(function() {
+        $("#footer_points").css("display","");
+        $("#footer").css("display","");
+        $("#category").css("display","");
+    });
+	var totalprice={$totalprice};
+	$('input[name=sendtype]:radio').click(function() {
+		expressprice=$(this).attr("date-price");
+		$("#expressprice").html('￥'+expressprice);
+		$(".expressprice").val(expressprice);		
+		newtotal=totalprice+parseFloat(expressprice);
+		$("#totalprice").html('￥'+newtotal);
+	});
+	
+</script>
+</body>
+</html>

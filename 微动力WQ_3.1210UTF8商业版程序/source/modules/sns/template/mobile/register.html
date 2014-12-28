@@ -1,0 +1,156 @@
+{template 'header'}
+ 
+<script language='javascript' src='./source/modules/sns/style/jquery.form.js'></script>
+<script language='javascript' src='./source/modules/sns/style/jquery.gcjs.js'></script>
+<script language='javascript' src='./source/modules/sns/style/sns.js'></script>
+
+<style>
+    body { background: #efefef}
+    ul.round {
+        border:none;
+        background-color:rgba(255, 255, 255, 0.9);
+        text-align:left;
+        font-size:14px;
+        line-height:24px;
+        border-radius:3px;
+        -webkit-border-radius:3px;
+        -moz-border-radius:3px;
+        -moz-box-shadow:0 1px 1px #f6f6f6;
+        -webkit-box-shadow:0 1px 1px #f6f6f6;
+        box-shadow:0 1px 1px #f6f6f6;
+        margin:5px;
+        display:block;
+    }
+
+    ul.round li {
+
+
+        border-width:0 0 1px 0;
+        padding:10px;height:auto;
+    }
+   input{ margin-top:10px;
+
+}
+#header { background:#fff;
+          -moz-box-shadow:0 1px 1px #efefef;
+        -webkit-box-shadow:0 1px 1px #efefef;
+        box-shadow:0 1px 1px #efefef;}
+#header .base{position: relative;overflow: hidden;padding:10px; }
+#header .base_left {float:left; width:50px; height:50px; }
+#header .base_left .thumb {  width:50px; height:50px;}
+#header .base_left .logo{ -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+ }
+#header .base_right { width:100%;float:right;margin-right:-60px;overflow:hidden}
+#header .base_right .t { overflow: hidden;height:22px;}
+#header .base_right .t1 { color:#000;}
+#header .base_right .t2 { color:#999;font-size:12px;padding-top:5px;}
+</style>
+<link href="./source/modules/sns/style/sns.css" rel="stylesheet" />
+<div id="header">
+        <div class="base">  
+             <div class="base_left">
+                 <div class="thumb">
+                     <img src="{php echo empty($sns['logo'])?'./source/modules/sns/style/sns.png':img_url($sns['logo'])}" class="logo" />
+             
+                 </div>
+             </div>   
+             <div class="base_right">
+                  <div class="t t1">{$sns['title']}</div>
+                  <div class="t t2"><i class="icon-list-alt"></i> {$sns['postcount']} 话题 <i class="icon-user"></i> {$sns['fanscount']} 关注</div>
+             </div>
+         </div>
+</div>
+
+<ul class="round">
+    <li>
+        <form action='' method="post" onsubmit='return check()' enctype="multipart/form-data">
+            <p>
+                {if $update == 1}
+                修改个人资料
+                {else}
+                请先登录您的资料
+                {/if}
+            </p>
+            <br>
+
+            <div>
+                <div style="float:left;width:90px;">
+                    <div class="imgbox_add fileupload fileupload-new" data-provides="fileupload">
+                        <div class="fileupload-preview thumbnail"><img id="user_avatar" src="{$img_avatar}"/></div>
+                 <span class="btn-file"
+                       style="margin-top:-70px;margin-left:8px;display:block;width:60px;height:60px;overflow: hidden">
+
+                 <input name="thumb" id="user_thumb" type="file"/></span><br/><span
+                            style="font-size:12px;padding-left:12px;">选择头像</span>
+                    </div>
+                </div>
+                <div style="float:left;">
+                    <p>
+                        <label class='inline radio'><input type='radio' id='gender1' class='user_gender' name='gender' value='1' {if
+                            $fans['gender']==1}checked{/if} />男</label>
+                        <label class='inline radio'>
+                            <input type='radio' id='gender2' class='user_gender' name='gender' value='2' {if $fans['gender']==2}checked{/if}/>女
+                        </label>
+                    </p>
+
+                    <p style="width: 100%"><input type='text' name='nickname' id='nickname' placeholder='您的昵称' value="{$nickname}" /></p>
+
+                    <p style="width: 100%"><input type='text' name='mobile' id='mobile' placeholder='您的手机' value="{$fans['mobile']}"/></p>
+                </div>
+            </div>
+
+
+            <p><input type='submit' class='btn btn-success' name='submit' value='{if $update == 1}修改{else}立即进入微社区{/if}' style="width:100%;"/></p>
+            <input type='hidden' name='defalut_avatar_type' value="{$defalut_avatar_type}" />
+            <input type='hidden' name='fans_avatar' value="{$fans['avatar']}" />
+        </form>
+    </li>
+
+</ul>
+ 
+<script>
+    $(function(){
+
+        {if $defalut_avatar_type == 3}
+        $(".user_gender").click(function(){
+            var obj = $(this);
+            var user_thumb = $("#user_thumb").val();
+            if (user_thumb == '') {
+                //alert(obj.val());
+                if(obj.val() == '2'){
+                    $("#user_avatar").attr('src', '{php echo $this->_default_avatar2}');
+                }
+                else{
+                    $("#user_avatar").attr('src', '{php echo $this->_default_avatar1}');
+                }
+            }
+        });
+        {/if}
+    });
+
+    function check(){
+          if(!$("#gender1").get(0).checked &&　!$("#gender2").get(0).checked){
+            alert("请输入您的性别!");
+           return false;
+        }
+        if($("#nickname").isEmpty()){
+            alert("请输入您的昵称!");
+            $("#nickname").focus();
+            return false;
+        }
+        if(!$("#mobile").isMobile()){
+            alert("请输入您正确的手机号!");
+            $("#mobile").select();
+            return false;
+        }
+        return true;
+    }
+    </script>
+    <script type="text/javascript">
+        document.addEventListener("WeixinJSBridgeReady", function onBridgeReady() {
+        WeixinJSBridge.call("hideToolbar");
+        });
+    </script>
+{template 'footer'}

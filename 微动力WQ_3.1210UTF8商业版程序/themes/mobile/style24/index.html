@@ -1,0 +1,38 @@
+{template 'header'}
+
+<div id="preloader">
+	<div id="status">
+    	<p class="center-text">
+			Loading the content...
+        </p>
+    </div>
+</div>
+
+<div class="homepage-wrapper">
+	<img class="homepage-logo" src="{$_W['styles']['indexlogo']}"  alt="img">
+    <em class="homepage-logo-sub">微动力</em>
+    
+    <div class="homepage-navigation">
+        {loop $navs $i $nav}
+        	
+    	  <a  style="{if !empty($nav['icon'])}background-image:url({$_W['attachurl']}{$nav['icon']});{else}background-image:url({$_W['siteroot']}/themes/mobile/style24/images/misc/type.png); {/if}"  href="{$nav['url']}"><font class="{$nav['css']['name']}">{$nav['name']}</font></a>
+      	{/loop}
+        <div class="clear"></div>
+    </div>
+    
+    <div class="footer">
+        {if empty($footer_off)}<p class="homepage-copyright">&copy;{if empty($_W['account']['name'])}微动力{else}Copyright 2014. {$_W['account']['name']}{/if}</p>{/if}
+    </div>
+    
+    
+</div>
+
+<div class="homepage-background">
+	<div class="bg-pattern"></div>
+    <div class="bg-overlay"></div>
+	<img id="bg" src="{if empty($_W['styles']['indexbgimg'])}./themes/mobile/default/images/bg_index.jpg{else}{$_W['styles']['indexbgimg']}{/if}" alt="img">
+</div>
+
+
+</body>
+</html>

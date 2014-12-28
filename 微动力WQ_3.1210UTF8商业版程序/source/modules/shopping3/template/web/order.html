@@ -1,0 +1,284 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('order', array('op' => 'display'))}">管理订单</a></li>
+	<li><a href="{php echo $this->createWebUrl('order', array('op' => 'cprint'))}">取消所有未打印订单</a></li>
+</ul>
+{if $operation == 'display'}
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#date-range').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=start]').val(),
+		endDate: $(':hidden[name=end]').val(),
+ 		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=start]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=end]').val(end.format('YYYY-MM-DD'));
+	});
+});
+function range(days) {
+	var start = moment().add('days', 0 - days).format('YYYY-MM-DD');
+	var end = moment().format('YYYY-MM-DD');
+	$('#date-range .date-title').html(start + ' 至 ' + end);
+	$(':hidden[name=start]').val(start);
+	$(':hidden[name=end]').val(end);
+//	$('form[method=get]')[0].submit();
+}
+</script>
+
+<div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="brand">订单统计<small>[不包含截止日期当天]</small></span>
+						<div class="pull-left"></div>
+					</div>
+				</div>
+				<div class="sub-item">
+					<form action="" method="get">
+					<div class="pull-right">
+						<input class="btn btn-primary" type="submit" value="导出Excel">
+					</div>
+					<div class="pull-left">
+						<input name="act" type="hidden" value="module" />
+						<input name="do" type="hidden" value="download" />
+						<input name="name" type="hidden" value="shopping3" />
+ 						<input name="start" type="hidden" value="{php echo date('Y-m-d',strtotime('-1 day'))}" />
+						<input name="end" type="hidden" value="{php echo date('Y-m-d')}" />
+						<button class="btn date" id="date-range" type="button"><span class="date-title">{php echo date('Y-m-d',strtotime("-1 day"))} 至 {php echo date('Y-m-d')}</span> <i class="icon-caret-down"></i></button>
+						<span class="date-section"><a href="javascript:;" onclick="range(7);">7天</a><a href="javascript:;" onclick="range(14);">14天</a><a href="javascript:;" onclick="range(30);">30天</a></span>
+					</div>
+ 
+					</form>
+				</div>
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">详细数据</h4>
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:30px;">ID</th>
+									<th style="width:60px;">订单号</th>
+									<th style="width:50px;">姓名</th>
+									<th style="width:40px;">电话</th>
+									<th>订单详情</th>
+									<th style="width:50px;">总价</th>
+									<th style="width:60px;">状态</th>
+									<th style="width:60px;">打印</th>
+									<th style="width:150px;">下单时间</th>
+									<th style="width:120px; text-align:right;">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $item}
+								<tr>
+									<td>{$item['id']}</td>
+									<td>{$item['ordersn']}</td>
+									<td>{$item['guest_name']}</td>
+									<td>{$item['tel']}</td>
+									<td style="text-align:left;">{if $item['order_type']==2}<span class="label label-info">[店内]</span>{else}<span class="label label-info">[外卖]</span>{/if}{if !empty($item['guest_address'])}地址：{$item['guest_address']}{else}桌号：{$item['desk']}{/if}</td>
+									<td>{$item['totalprice']} 元</td>
+									<td>
+									{if $item['status'] == 0}<span class="label label-info">未生成订单</span>
+									{elseif $item['status'] == 1}<span class="label label-info">已下单</span>
+									{elseif $item['status'] == 2}<span class="label label-success">已确认</span>
+									{elseif $item['status'] == 3}<span class="label label-success">已完成</span>
+									{elseif $item['status'] == -1}<span class="label label-success">已关闭</span>{/if}
+									{if $item['ispay'] == 1}<span class="label label-success">已付款</span>
+									{else}<span class="label label-info">未付款</span>{/if}
+									</td>
+									<td>
+										{if $item['print_sta'] == -1}<span class="label label-success">未打印</span>
+									{else}<span class="label label-info">已打印</span>{/if}
+									</td>
+									<td>{php echo date('Y-m-d H:i:s', $item['createtime'])}</td>
+									<td style="text-align:right;"><a href="{php echo $this->createWebUrl('order', array('op' => 'detail', 'id' => $item['id']))}">查看</a>&nbsp;&nbsp;<a onclick="return confirm('删除订单无法恢复，确认吗？');return false;" href="{php echo $this->createWebUrl('order', array('op' => 'delete', 'id' => $item['id']))}">删除</a></td>
+								</tr>
+								{/loop}
+							</tbody>
+						 
+					</table>
+					{$pager}
+				</div>
+			</div>
+			</div>
+		</div>
+</div>
+{elseif $operation == 'detail'}
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data" onsubmit="return formcheck(this)">
+		<input type="hidden" name="id" value="{$item[id]}">
+		<h4>订单信息</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">订单号</label></th>
+				<td>
+					{$item['ordersn']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">价钱</label></th>
+				<td>
+					{$item['totalprice']} 元
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">配送方式</label></th>
+				<td>
+					<span class="label label-info">{php echo $express[$item['sendtype']]['express_name']}</span> {if $item['sendstatus']==1}<span class="label label-success">已配送</span>{else}<span class="label label-info">未配送</span>{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">付款方式</label></th>
+				<td>
+					{if $item['paytype'] == 1}余额支付
+					{elseif $item['paytype'] == 2}在线支付
+					{elseif $item['paytype'] == 3}货到付款{/if}
+					{if $item['ispay']==1}<span class="label label-success">已支付</span>{else}<span class="label label-error">未支付</span>{/if}
+					
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">订单状态</label></th>
+				<td>
+					{if $item['status'] == 0}<span class="label label-info">客户未处理</span>{/if}
+					{if $item['status'] == 1}<span class="label label-info">未确认</span>{/if}
+					{if $item['status'] == 2}<span class="label label-info">已确认</span>{/if}
+					{if $item['status'] == 3}<span class="label label-success">已完成</span>{/if}
+					{if $item['status'] == -1}<span class="label label-error">已关闭</span>{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">打印状态</label></th>
+				<td>
+					{if $item['print_sta'] == -1}<span class="label label-success">未打印</span>
+					{else}<span class="label label-info">已打印</span>{/if}
+				</td>
+			</tr>			
+			<tr>
+				<th><label for="">下单日期</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $item['createtime'])}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">就餐时间</label></th>
+				<td>
+					{$item['time_day']} {$item['time_hour']}:{$item['time_second']}
+				</td>
+			</tr>			
+			<tr>
+				<th>备注</th>
+				<td>
+					<textarea style="height:50px;" class="span7" name="remark" cols="70">{$item['remark']}</textarea>
+				</td>
+			</tr>
+		</table>
+		<h4>用户信息</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">姓名</label></th>
+				<td>
+					{$item['guest_name']}（{if $item['sex']==1}先生{else}女士{/if}）
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">手机</label></th>
+				<td>
+					{$item['tel']}
+				</td>
+			</tr>
+			{$if 
+			<tr>
+				<th><label for="">地址</label></th>
+				<td>
+					{$item['guest_address']}
+				</td>
+			</tr>
+		</table>
+		<h4>商品信息</h4>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:30px;">ID</th>
+					<th style="min-width:150px;">商品标题</th>
+ 					<th style="width:100px;">销售价/成本价</th>
+					<th style="width:100px;">属性</th>
+					<th style="width:100px;">数量</th>
+					<th style="width:100px;">备注</th>					
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			{loop $item['goods'] $row}
+			<tr>
+				<td>{$row['id']}</td>
+				<td>{if $category[$row['pcate']]['name']}<span class="text-error">[{$category[$row['pcate']]['name']}] </span>{/if}{if $children[$row['pcate']][$row['ccate']][1]}<span class="text-info">[{$children[$row['pcate']][$row['ccate']][1]}] </span>{/if}{$row['title']}</td>
+ 				<!--td>{$category[$row['pcate']]['name']} - {$children[$row['pcate']][$row['ccate']][1]}</td-->
+				<td style="background:#f2dede;">{$row['marketprice']}元 / {$row['productprice']}元</td>
+				<td>{if $row['status']}<span class="label label-success">上架</span>{else}<span class="label label-error">下架</span>{/if}&nbsp;</td>
+				<td>{$goodsid[$row['id']]['total']}</td>
+				<td>{$goodsid[$row['id']]['description']}</td>
+				<td style="text-align:right;">
+					<a href="{php echo $this->createWebUrl('goods', array('id' => $row['id'], 'op' => 'post'))}">编辑</a>&nbsp;&nbsp;<a href="{php echo $this->createWebUrl('goods', array('id' => $row['id'], 'op' => 'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;">删除</a>
+				</td>
+			</tr>
+			{/loop}
+		</table>
+		<table class="tb">
+			<tr>
+				<th></th>
+				<td>
+				
+					{if $item['status']==1}
+					<button type="submit" class="btn btn-primary span2" onclick="return confirm('确认此订单吗？'); return false;" name="confrim" onclick="" value="2">确认订单</button>
+					{elseif $item['status'] == 2}
+					<button type="submit" class="btn btn-primary span2" onclick="return confirm('确认完成此订单吗？'); return false;" name="finish" onclick="" value="3">完成订单</button>
+					{elseif $item['status'] == 3}
+ 					<button type="submit" class="btn btn-primary span2" name="cancel" value="正常" onclick="return confirm('确认取消完成此订单吗？'); return false;">取消完成</button>
+					{else}
+					<button class="btn  span2" name="cancel" value="正常">未生成订单</button>
+					{/if}
+					
+					{if $item['ispay']==1}
+						<button type="submit" class="btn span2" name="cancelpay" value="正常" onclick="return confirm('确认取消付款此订单吗？'); return false;">取消付款</button>
+					{else}
+						<button type="submit" class="btn btn-primary span2" name="confrimpay" value="正常" onclick="return confirm('确认此订单已付款吗？'); return false;">确认付款</button>
+					{/if}
+					{if $item['status'] != -1}
+					<button type="submit" class="btn span2" name="close" onclick="return confirm('确认关闭此订单吗？'); return false;" value="关闭">关闭订单</button>
+					{else}
+					<button type="submit" class="btn span2 btn-primary" name="cancelpay" onclick="return confirm('确认开启此订单吗？'); return false;" value="关闭">开启订单</button>
+					{/if}
+					 {if $item['sendstatus']==1} 
+						<button type="submit" class="btn span2" name="cancelsend" onclick="return confirm('确认取消配送订单吗？'); return false;" value="关闭">取消配送</button>
+					 {else}
+						<button type="submit" class="btn span2 btn-primary" name="send" onclick="return confirm('此订单已经确认配送？'); return false;" value="关闭">确认配送</button>
+					 {/if}
+					 
+					{if $item['print_sta']==-1}
+						<button type="submit" class="btn span2" name="cancelprint" value="正常" onclick="return confirm('确认取消GPRS打印机打印？'); return false;">取消打印</button>
+					{else}
+						<button type="submit" class="btn btn-primary span2" name="confrimprint" value="正常" onclick="return confirm('确认重新打印此单吗？'); return false;">重新打印</button>
+					{/if}					 
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{/if}
+{template 'common/footer'}

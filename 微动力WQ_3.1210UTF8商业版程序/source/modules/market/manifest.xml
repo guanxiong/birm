@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[微生活]]></name>
+		<identifie><![CDATA[market]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[微生活]]></ability>
+		<description><![CDATA[微生活]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>	
+		<menu>
+			<entry title="商户管理" do="classlist" state="" direct="false" />
+		</menu>
+		<home>
+			<entry title="微生活" do="classlist" state="" direct="false" />
+		</home>
+		<profile>
+			<entry title="微生活会员卡" do="cardlist" state="" direct="false" />
+		</profile>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_market_business` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `rid` int(11) DEFAULT NULL,
+  `classid` int(11) DEFAULT NULL,
+  `keyword` varchar(20) DEFAULT NULL,
+  `title` varchar(50) DEFAULT NULL,
+  `picurl` varchar(300) DEFAULT NULL,
+  `infos` varchar(500) DEFAULT NULL,
+  `outlink` varchar(300) DEFAULT NULL,
+  `shopname` varchar(50) DEFAULT NULL,
+  `description` varchar(600) DEFAULT NULL,
+  `logo` varchar(300) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `tel` varchar(20) DEFAULT NULL,
+  `lng` double DEFAULT NULL,
+  `lat` double DEFAULT NULL,
+  `card_name` varchar(30) DEFAULT NULL,
+  `color` varchar(10) DEFAULT NULL,
+  `background` varchar(200) DEFAULT NULL,
+  `bgcustom` varchar(200) DEFAULT NULL,
+  `card_logo` varchar(200) DEFAULT NULL,
+  `font_color` varchar(10) DEFAULT NULL,
+  `info` varchar(300) DEFAULT NULL,
+  `card_num` varchar(20) DEFAULT NULL,
+  `update_time` int(10) DEFAULT NULL,
+  `a_title` varchar(50) DEFAULT NULL,
+  `a_thumb` varchar(300) DEFAULT NULL,
+  `a_tips` varchar(300) DEFAULT NULL,
+  `a_label` varchar(200) DEFAULT NULL,
+  `a_content` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_market_class` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `classname` varchar(20) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `picurl` varchar(300) DEFAULT NULL,
+  `infos` varchar(250) DEFAULT NULL,
+  `update_time` int(10) DEFAULT NULL,
+  `shop_nums` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS  `ims_market_fans` (
+  `cid` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) DEFAULT NULL,
+  `weid` int(11) DEFAULT NULL,
+  `fid` int(11) DEFAULT NULL,
+  `userName` varchar(30) DEFAULT NULL,
+  `telephone` varchar(20) DEFAULT NULL,
+  `from_user` varchar(50) DEFAULT NULL,
+  `card_num` varchar(20) DEFAULT NULL,
+  `create_time` int(10) DEFAULT NULL,
+  PRIMARY KEY (`cid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS  `ims_market_flash` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `title` varchar(20) DEFAULT NULL,
+  `description` varchar(50) DEFAULT NULL,
+  `sort` tinyint(4) DEFAULT NULL,
+  `picurl` varchar(300) DEFAULT NULL,
+  `is_show` tinyint(1) DEFAULT NULL,
+  `type` varchar(10) DEFAULT NULL,
+  `param` varchar(100) DEFAULT NULL,
+  `create_time` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS  `ims_market_privilege` (
+  `pid` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `id` int(11) DEFAULT NULL,
+  `title` varchar(20) DEFAULT NULL,
+  `starttime` int(10) DEFAULT NULL,
+  `endtime` int(10) DEFAULT NULL,
+  `use_info` text,
+  `is_show` tinyint(1) DEFAULT NULL,
+  `update_time` int(10) DEFAULT NULL,
+  PRIMARY KEY (`pid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_market_privilege`;
+DROP TABLE IF EXISTS `ims_market_flash`;
+DROP TABLE IF EXISTS `ims_market_fans`;
+DROP TABLE IF EXISTS `ims_market_class`;
+DROP TABLE IF EXISTS `ims_market_business`;]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

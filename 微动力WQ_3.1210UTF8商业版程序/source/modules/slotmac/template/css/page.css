@@ -1,0 +1,462 @@
+html,body,div,table,tr,td,tbody,th,span,p,h1,h2,h3,h4,h5,ul,ol,li,button,img,input,a{
+margin: 0 0 0 0;
+padding: 0 0 0 0;
+border: none;
+text-decoration: none;
+list-style: none;
+cursor:default;
+font-size: 16px;
+text-shadow: 0 1px 1px rgba(0, 0, 0, .3); 
+font-family: 'Microsoft Yahei';
+outline: none;
+-webkit-tap-highlight-color:rgba(255,0,0,0);
+}
+.zbkj .zbkjbody{
+	width: 100%;
+	text-align: center;
+}
+.dztp,.xc,.dt{
+	position: absolute;
+	vertical-align: middle;
+}
+
+.c_lbli_bai,.c_list_white{
+color:#6b6464;
+background-color:#fff;
+background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f9faf5));
+border-bottom: 1px solid #c9c9c9;
+}
+
+.c_list_yellow {
+color:#9b7523;
+background-color:#fef0d0;
+background: -webkit-gradient(linear, left top, left bottom, from(#fef0d0), to(#feebc0));
+border-bottom: 1px solid #c8ab6b;
+}
+
+.c_list_blue{
+color:#fff;
+background-color:#7c99b6;
+background: -webkit-gradient(linear, left top, left bottom, from(#7c99b6), to(#134576));
+border-bottom: 1px solid #a7c8e6;
+}
+
+.c_list_lightblue{
+color:#2c6872;
+background-color:#dcfbfe;
+background: -webkit-gradient(linear, left top, left bottom, from(#dcfbfe), to(#b9ebf3));
+border-bottom: 1px solid #7ab8c2;
+}
+
+.c_list_black{
+color:#2c6872;
+background-color:#383737;
+background: -webkit-gradient(linear, left top, left bottom, from(#383737), to(#212120));
+border-bottom: 1px solid #787878;
+}
+
+.c_list_powder{
+color:#403824;
+background-color:#eeeae1;
+background: -webkit-gradient(linear, left top, left bottom, from(#eeeae1), to(#dbd8d1));
+border-bottom: 1px solid #b2a898;
+}
+.c_chun_black{
+	background-color: black;
+	color: #ffffff;
+}
+.c_chun_white{
+	background-color: white;
+	color: #000000;
+}
+.c_chun_blue{
+	background-color: blue;
+	color: #ffffff;
+}
+.c_chun_red{
+	background-color: red;
+	color: #ffffff;
+}
+.c_chun_green{
+	background-color: green;
+	color: #ffffff;
+}
+.c_chun_yellow{
+	background-color: yellow;
+	color: #000000;
+}
+.c_chun_gray{
+	background-color: gray;
+	color: #ffffff;
+}
+.c_chun_pink{
+	background-color: pink;
+	color: #000000;
+}
+
+/** 通用的渐变CSS **/
+.c_jianbian_hei{
+	background: -webkit-gradient(linear, left top, left bottom, from(#444),to(#000));
+	background: -moz-linear-gradient( top, #444, #000);
+	background: -ms-linear-gradient( top, #444, #000);
+	color: #ffffff;
+	background-color: #000;
+}
+.c_jianbian_hei:ACTIVE,.c_jianbian_hei:HOVER{
+	background: -webkit-gradient(linear, left top, left bottom, from(#000),to(#444));
+	background: -moz-linear-gradient( top, #000, #444);
+	background: -ms-linear-gradient( top, #000, #444);
+	background-color: #444;
+}
+
+
+.c_jianbian_bai{
+	background: -webkit-gradient(linear, left top, left bottom, from(#efg),to(#fff));
+	background: -moz-linear-gradient( top, #efg, #fff);
+	background: -ms-linear-gradient( top, #efg, #fff);
+	color: #000000;
+	background-color: #eff;
+}
+.c_jianbian_bai:ACTIVE,.c_jianbian_bai:HOVER{
+	background: -webkit-gradient(linear, left top, left bottom, from(#ccc),to(#fff));
+	background: -moz-linear-gradient( top, #ccc, #fff);
+	background: -ms-linear-gradient( top, #ccc, #fff);
+	background-color: #ddd;
+}
+
+.c_jianbian_lan{
+	background: -webkit-gradient(linear, left top, left bottom, from(#06F),to(#013fa1));
+	background: -moz-linear-gradient( top, #06F, #013fa1);
+	background: -ms-linear-gradient( top, #06F, #013fa1);
+	color: #FFF;
+	background-color: #06F;
+}
+.c_jianbian_lan:ACTIVE,.c_jianbian_lan:HOVER{
+	background: -webkit-gradient(linear, left top, left bottom, from(#013fa1),to(#06F));
+	background: -moz-linear-gradient( top, #013fa1, #06F);
+	background: -ms-linear-gradient( top, #013fa1, #06F);
+	background-color: #013fa1;
+}
+
+
+.tpdh{
+	overflow-x: auto;
+	overflow-y:hidden;
+	width: 100%;
+}
+.tpdh .lrul{
+	height: 100%;
+	white-space: nowrap;
+}
+.tpdh .lrul .lrli{
+	float: left;
+	height: 100%;
+	overflow:hidden;
+	display: block;
+	position: relative;
+}
+.cdztp{
+	display: inline-block;
+}
+.cdhwb{
+	display: inline-block;
+}
+.tpdhsubdiv{
+	position: absolute;
+	height: 38px;
+	width: 100%;
+	left: 0px;
+	bottom: 0px;
+	background:url("lockbak.png");
+	line-height:38px;
+	text-align: center;
+}
+
+.lb{
+	display:block;
+	width: 100%;
+}
+.lb .lbli{
+	position: relative;
+	text-align: center;
+	min-height: 20px;
+	height: 70px;
+	width: 100%;
+}
+.zwqy{
+	position: absolute;
+	display: block;
+}
+.zwqybh{
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.can {
+display:block;
+vertical-align:middle;
+outline: none;
+cursor: pointer;
+text-shadow: 0 1px 1px rgba(0, 0, 0, .3); 
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+-ms-border-radius: 8px;
+border-radius: 8px;
+-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+-ms-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+text-align:center;
+text-decoration: none;
+outline: none;
+}
+
+.dhwb{
+	font-size: 16px;
+	margin: 0 auto;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3); 
+	font-family: 'Microsoft Yahei';
+	position: absolute;
+	white-space: nowrap;
+	text-align: left;
+}
+.dhwbs{
+	font-size: 16px;
+	margin: 0 auto;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3); 
+	font-family: 'Microsoft Yahei';
+	position: absolute;
+	text-align: left;
+	margin: 0 auto;
+}
+
+.sslb{
+	border-radius:5px;
+	position: absolute;	
+	width: 90%;
+}
+.sslb li{
+	position: relative;
+	width: 100%;
+}
+.sslb .sslbhead{
+	border-top-left-radius:.5em;
+	border-top-right-radius:.5em;
+	text-align: center;
+}
+.sslb .sslbli{
+	position: relative;
+	text-align: center;
+	min-height: 20px;
+	height: 32px;	
+}
+.sslbheadtp{
+	position: absolute;
+	cursor: pointer;
+}
+
+.tbdhbh{
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.mainmask{
+position:fixed;
+bottom:150px;
+width: 100%;
+text-align: center;
+z-index: 999;
+display: none;
+}
+.mainmaskmain{	
+width: 90%;
+background: url("tusibak.png");
+-webkit-border-radius: 9px;
+-moz-border-radius: 9px;
+-ms-border-radius: 9px;
+border-radius: 9px;
+margin: 0 auto;
+}
+.mainmasktitle, .dhmainmasktitle{
+border-top-left-radius: 8px;
+border-top-right-radius: 8px;
+-webkit-border-top-left-radius: 8px;
+-webkit-border-top-right-radius: 8px;
+-ms-border-top-left-radius: 8px;
+-ms-border-top-right-radius: 8px;
+background-color:#eeeae1;
+background: -webkit-gradient(linear, left top, left bottom, from(#eeeae1), to(#dbd8d1));
+border-bottom: 1px solid #b2a898;
+font-size: 25px;
+font-weight: bold;
+text-align: center;
+position: relative;
+height: 36px;
+}
+.mainmaskclose{
+	position: absolute;
+	right: 10px;
+	top: 4px;
+	background: url("close.png");
+	width: 28px;
+	height: 28px;
+}
+.dhmainmaskclose{
+	position: absolute;
+	left: 10px;
+	top: 4px;
+	background: url("close.png");
+	width: 28px;
+	height: 28px;
+}
+.mainmaskcon{
+	text-align: left;
+	padding: 10px 28px;
+	color: #ffffff;
+}
+.mainmaskbottom{
+	width: 100%;
+	text-align: center;
+	height: 40px;
+}
+.mainmaskbottom button{
+width:120px;
+height:32px;
+line-height:32px;
+font-size:16px;
+text-align:center;
+color:#2c6872;
+background-color:#dcfbfe;
+background: -webkit-gradient(linear, left top, left bottom, from(#dcfbfe), to(#b9ebf3));
+-webkit-border-radius: 9px;
+-moz-border-radius: 9px;
+-ms-border-radius: 9px;
+border-radius: 9px;
+}
+
+.toast{
+		position: fixed;
+		width:100%;
+		bottom:120px;
+		height:100px;
+		z-index: 9999;
+		text-align: center;
+		display: none;
+		left:0px;
+		}
+		.toast span{
+		padding: 10px;
+		color: white;
+		background:url("tusibak.png");
+		-webkit-border-radius: 8px;
+		-moz-border-radius: 8px;
+		-ms-border-radius: 8px;
+		}
+		.toast .wload{
+			display:inline-block;
+			width:50px;
+			height:50px;
+			background:url("tusibak.png");
+			-webkit-border-radius: 8px;
+			-moz-border-radius: 8px;
+			-ms-border-radius: 8px;
+			position: relative;
+		}
+		.toast .wload .wloading{
+		position:absolute;	
+		width:40px;
+		height:40px;
+		top:5px;
+		left:5px;	
+		background:url(spinner.png) 0 0 no-repeat;
+		-webkit-transform:rotate(0deg) translateZ(0);
+		-webkit-transition-duration:0ms;
+		-webkit-animation-name:wloading;
+		-webkit-animation-duration:2s;
+		-webkit-animation-iteration-count:infinite;
+		-webkit-animation-timing-function:linear;
+		}
+		@-webkit-keyframes wloading {
+			from { -webkit-transform:rotate(0deg) translateZ(0); }
+			to { -webkit-transform:rotate(360deg) translateZ(0); }
+		}
+		
+		
+.copyright{
+	width: 100%;
+	margin-top: 30px;
+}
+.copyright .custom{
+	width: 100%;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+}
+.copyright .product{
+	width: 100%;
+	height: 28px;
+	text-align: center;
+	background:url("tusibak.png");
+	color: #ffffff;
+	line-height: 28px;
+}
+
+
+.miandhdiv{
+position:absolute;
+width: 100%;
+right: 0px;
+top: 0px;
+width: 250px;
+display: none;
+z-index: 100;
+}
+.dhmainli{
+	background: -webkit-gradient(linear, left top, left bottom, from(#444),to(#000));
+	background: -moz-linear-gradient( top, #444, #000);
+	background: -ms-linear-gradient( top, #444, #000);
+	color: #ffffff;
+	text-align: center;
+	line-height: 30px;
+	font-weight: bolder;
+}
+
+.dhsmainli{
+	background: -webkit-gradient(linear, left top, left bottom, from(#444),to(#000));
+	background: -moz-linear-gradient( top, #444, #000);
+	background: -ms-linear-gradient( top, #444, #000);
+	color: #ffffff;
+	text-align: left;
+	height: 30px;
+	line-height: 30px;
+	font-weight: normal;
+	color: white;
+}
+.dhsmainli a{
+	color: #ffffff;
+	display: block;
+	width: 240px;
+	height: 30px;
+	margin-left:10px;
+	background: url("marrow.png") 210px 6px no-repeat;
+}
+
+.ggltb{
+	width: 100%;
+	
+}
+.ggltd{
+	width: 26px;
+}
+.ggltd img{
+	width: 26px;
+	height: 26px;
+}
+.sinput{
+	border: 1px solid gray;
+	border-radius:4px;
+	font-size: 24px;
+	width: 150px
+}

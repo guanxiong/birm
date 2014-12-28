@@ -1,0 +1,42 @@
+{template 'header'}
+<style>
+.dropdown_select{ -webkit-appearance: button; -webkit-user-select:none; overflow:visible; text-overflow:ellipsis; white-space:nowrap; display:inline; position:relative; margin: 0px 1px 0px 1px; width: 100%; height:34px; outline: none; border:0;background-color: transparent;border:1px solid #e5e5e5; font-size:14px; color:#999; background:url(/source/modules/research/template/images/xiala1.png) no-repeat right; background-size:17px 15px; padding-left:5px; line-height:34px;}
+</style>
+{if $operation == 'display'}
+<div class="mobile-div img-rounded">
+	<div class="mobile-hd" style="border-bottom:0;">我的预约</div>
+	{loop $rows $item}
+	<a class="mobile-li" href="{php echo $this->createMobileUrl('myresearch', array('id' => $item['rerid'], 'op' => 'detail'))}">
+		<span class="pull-right muted">{php echo date('Y-m-d H:i:s', $item['createtime'])}</span>
+		{$research[$item['reid']]['title']}
+	</a>
+	{/loop}
+</div>
+{elseif $operation == 'detail'}
+<div class="mobile-div img-rounded">
+	<div class="mobile-hd">{$research['title']}</div>
+	<div class="mobile-content">{$research['content']}</div>
+</div>
+<div class="mobile-div img-rounded">
+	<div class="mobile-hd">我们的回复</div>
+	<div class="mobile-content">{$research['information']}</div>
+</div>
+<div class="mobile-div img-rounded">
+	<div class="mobile-hd">我的预约资料</div>
+	<div class="mobile-content">
+		<table class="form-table">
+			{loop $research['fields'] $item}
+			<tr>
+				<th><label>{$item['title']}</label></th>
+				{if $item['type'] == 'image'}
+				<td><a target="_blank" href="{$_W['attachurl']}{$item['data']}" class="btn">点击查看附件</a></td>
+				{else}
+				<td><span class="uneditable-input">{if !empty($item['data'])}{$item['data']}{else}无{/if}</span></td>
+				{/if}
+			</tr>
+			{/loop}
+		</table>
+	</div>
+</div>
+{/if}
+{template 'footer'}

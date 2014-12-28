@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="{RES}css/bootstrap_min.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/bootstrap_responsive_min.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/style.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/todc_bootstrap.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/themes.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/plugins/uploadify/uploadify_t.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/inside.css?2014-01-28-1" media="all" />
+<script type="text/javascript" src="{RES}src/jQuery.js?2014-01-28-1"></script>
+<script type="text/javascript" src="{RES}src/bootstrap_min.js?2014-01-28-1"></script>
+<script type="text/javascript" src="{RES}src/inside.js?2014-01-28-1"></script>
+<title>商户管理 微生活—by 微动力</title>
+    <!--[if lte IE 9]><script src="{RES}src/watermark.js"></script><![endif]-->
+	<!--[if IE 7]><link href="{RES}css/font_awesome_ie7.css" rel="stylesheet" /><![endif]-->
+</head>
+<body>
+	<div id="main">
+    <div class="container-fluid">
+
+        <div class="row-fluid">
+
+            <div class="box">
+                <div class="box-title">
+                    <div class="span10">
+                        <h3><i class="icon-edit"></i>添加商户</h3>
+                    </div>
+                    <div class="span2"><a class="btn" href="Javascript:window.history.go(-1)">返回</a></div>
+                </div>
+
+                <div class="box-content">
+					<ul class="nav nav-tabs">
+						<li><a href="{php echo create_url('site/module/businessEd1', array('name' => 'market','classid'=>$_GPC['classid'],'id'=>$_GPC['id']));}">基础设置</a></li>
+						<li><a href="{php echo create_url('site/module/businessEd2', array('name' => 'market','classid'=>$_GPC['classid'],'id'=>$_GPC['id']));}">商户信息</a></li>
+						<li><a href="{php echo create_url('site/module/businessEd3', array('name' => 'market','classid'=>$_GPC['classid'],'id'=>$_GPC['id']));}">会员设置</a></li>
+                        <li class="active"><a href="javascript:;">优惠设置</a></li>
+                        </ul>				
+                     
+                    <div class="tab-content dataTables_wrapper">
+
+                        <div class="row-fluid">
+                            <div class="span12 control-group ">
+                               <a class="btn" href="{php echo create_url('site/module/EdPrivilege',array('name' => 'market','classid'=>$_GPC['classid'],'id'=>$_GPC['id'],'pid'=>0));}"><i class="icon-plus"></i>添加特权</a> 
+                                     <div class="btn-group datatabletool">
+                                    <a class="btn" attr="BatchDel" title="删除"><i class="icon-trash"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                       <table id="listTable" class="table table-bordered   table-hover  dataTable">
+                                <thead>
+                                    <tr>
+                                        <th class="with-checkbox">
+                                            <input type="checkbox" class="check_all"></th>
+                                        <th>特权时间</th>
+                                        <th>特权标题</th>
+                                        <th>特权内容</th> 
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+								{loop $volist $row}
+                                    <tr>
+                                        <td class="with-checkbox">
+                                            <input type="checkbox" name="check" value="{$row['pid']}"></td>
+                                        <td>{php echo date('Y-m-d H:i:s',$row['starttime'])}<span class="time-sep">至</span>
+                                            {php echo date('Y-m-d H:i:s',$row['endtime'])}				
+                                        </td>
+                                        <td>{$row['title']}</td>
+                                        <td style="width:500px;">{php echo substr($row['use_info'],0,200);}</td>
+                                       
+                                        <td>
+                                            {if $row['is_show']==1||($row['endtime']>time() && $row['starttime']<time() ) }
+												<span class="label label-green">进行中</span>
+											{else}
+												<span class="label label-lightred">停止</span>
+											{/if}
+										</td>
+                                        <td>
+											<a class="btn" href="{php echo create_url('site/module/EdPrivilege',array('name' => 'market','classid'=>$_GPC['classid'],'id'=>$_GPC['id'],'pid'=>$row['pid']));}" title="编辑"><i class="icon-edit"></i></a>
+											<a href="javascript:G.ui.tips.confirm('确定删除？','{php echo create_url('site/module/delPrivilege',array('name' => 'market','classid'=>$_GPC['classid'],'id'=>$_GPC['id'],'pid'=>$row['pid']));}')" class="btn" title="	删除"><i class="icon-remove"></i></a>
+										</td>
+                                    </tr>
+								{/loop}
+								
+                                                                    </tbody>
+                            </table>
+                         </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<script>
+$(function(){
+    $("[attr='BatchDel']").click(function(){
+        var check = $("input:checked");
+        if(check.length<1){
+            alert('请选择删除项');
+            return false;
+        }
+        var id = new Array();
+        check.each(function(i){
+            id[i] = $(this).val();
+        });
+
+        $.post('/Market/DelPrivilegeBatch', {pid:id, aid:59814,cid:2899,tid:4807 },function(data){
+            if (data.errno ==0)
+            {
+                location.reload();
+            } else {
+                alert(data.error);
+            }
+
+
+        },'json');
+
+    });
+});
+</script>
+</body>
+</html>

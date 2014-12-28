@@ -1,0 +1,106 @@
+<link href="./themes/mobile/kdt/css/index.css" rel="stylesheet" type="text/css" />
+
+
+
+
+<div id="sharemcover" onclick="document.getElementById(&#39;sharemcover&#39;).style.display=&#39;&#39;;" style=" display:none"><img src="./themes/mobile/wtx17/images/MgnnofmleM.png"></div>
+<div class="top_bar" style="-webkit-transform:translate3d(0,0,0)">
+
+    <ul id="top_menu" class="top_menu">
+	
+		<li class="home1"><a href="{php echo create_url('mobile/channel', array('name' => 'index', 'weid' => $_W['weid']))}"><img src="./themes/mobile/quick/images/ico_home@2x.png"/>&nbsp </a></li>
+		
+		
+    	{if !empty($_W['quickmenu']['menus'])}
+		
+		<li>
+			<a onclick="javascript:displayit(0)"><img src="./themes/mobile/quick/images/Mode_textmenuicon_ios7@2x.png">{$_W['quickmenu']['menus'][0]['name']}</a>
+				{php $_W['quickmenu']['menus']=array_splice($_W['quickmenu']['menus'], 1);}
+				<ul id="menu_list0" class="menu_font" style="display: none;">
+				{loop $_W['quickmenu']['menus'] $nav}
+					<?php if ($nav['displayorder']>9) break;
+					?>
+					<li> <a href="{$nav['url']}">{$nav['name']}</a></li>
+					{php $_W['quickmenu']['menus']=array_splice($_W['quickmenu']['menus'], 1);}
+				{/loop}
+				</ul>
+        </li>
+		{/if}	
+    	{if !empty($_W['quickmenu']['menus'])}		
+    	<li> 
+ 			<a onclick="javascript:displayit(1)"><img src="./themes/mobile/quick/images/Mode_textmenuicon_ios7@2x.png">{$_W['quickmenu']['menus'][0]['name']}</a>
+				{php $_W['quickmenu']['menus']=array_splice($_W['quickmenu']['menus'], 1);}
+				<ul id="menu_list1" class="menu_font" style="display: none;">
+				{loop $_W['quickmenu']['menus'] $nav}
+					<?php 
+						if ($nav['displayorder']>19) break;
+					?>
+					<li> <a href="{$nav['url']}">{$nav['name']}</a></li>
+					{php $_W['quickmenu']['menus']=array_splice($_W['quickmenu']['menus'], 1);}
+				{/loop}
+				</ul>
+        </li>
+		{/if}
+		{if !empty($_W['quickmenu']['menus'])}
+    	<li> 
+			<a onclick="javascript:displayit(2)"><img src="./themes/mobile/quick/images/Mode_textmenuicon_ios7@2x.png">{$_W['quickmenu']['menus'][0]['name']}</a>
+				{php $_W['quickmenu']['menus']=array_splice($_W['quickmenu']['menus'], 1);}
+				<ul id="menu_list2" class="menu_font" style="display: none;">
+				{loop $_W['quickmenu']['menus'] $nav}
+					<?php if ($nav['displayorder']>29) break;
+					?>
+					<li> <a href="{$nav['url']}">{$nav['name']}</a></li>
+					{php $_W['quickmenu']['menus']=array_splice($_W['quickmenu']['menus'], 1);}
+				{/loop}
+				</ul>
+        </li>
+		{/if}
+    	{if !empty($_W['quickmenu']['menus'])}
+    	<li> 
+			<a onclick="javascript:displayit(3)"><img src="./themes/mobile/quick/images/Mode_textmenuicon_ios7@2x.png">{$_W['quickmenu']['menus'][0]['name']}</a>
+				{php $_W['quickmenu']['menus']=array_splice($_W['quickmenu']['menus'], 1);}
+				<ul id="menu_list3" class="menu_font" style="display: none;">
+				{loop $_W['quickmenu']['menus'] $nav}
+					<?php if ($nav['displayorder']>39) break;
+					?>
+					<li> <a href="{$nav['url']}">{$nav['name']}</a></li>
+					{php $_W['quickmenu']['menus']=array_splice($_W['quickmenu']['menus'], 1);}
+				{/loop}
+				</ul>
+        </li>
+		{/if}
+    </ul>
+
+</div>
+
+<div id="plug-wrap" onclick="closeall()" style="display: none;"></div>
+<script>
+function displayit(n){
+	var count = document.getElementById("top_menu").getElementsByTagName("ul").length;	
+	for(i=0;i<count;i++){
+		if(i==n){
+		 if(document.getElementById("top_menu").getElementsByTagName("ul").item(n).style.display=='none'){
+			 document.getElementById("top_menu").getElementsByTagName("ul").item(n).style.display='';
+			 document.getElementById("plug-wrap").style.display='';
+			}else{
+				 document.getElementById("top_menu").getElementsByTagName("ul").item(n).style.display='none';
+				  document.getElementById("plug-wrap").style.display='none';
+			}
+		}else{
+			document.getElementById("top_menu").getElementsByTagName("ul").item(i).style.display='none';
+		}
+	}
+}
+function closeall(){
+	var count = document.getElementById("top_menu").getElementsByTagName("ul").length;	
+	for(i=0;i<count;i++){
+		 document.getElementById("top_menu").getElementsByTagName("ul").item(i).style.display='none';
+	}
+	 document.getElementById("plug-wrap").style.display='none';
+}
+
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideToolbar');
+});
+</script> 

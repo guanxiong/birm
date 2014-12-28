@@ -1,0 +1,28 @@
+  <div class='items'>
+                {loop $replies $row1}
+                <div class='item' {if $user['id']==$row1['fansid']}onclick="reply('{$id}','{$row1['id']}','{$row1['nickname']}');"{/if}>
+                     <div class="thumb">   {if $row1['avatar']}
+                        <img src="{php echo img_url($row1['avatar'])}" class="logo" />
+                        {/if}</div>
+                     {if !empty($row1['tonickname'])}
+                    <span>{$row1['nickname']}</span> 回复 <span>{$row1['tonickname']}</span>
+                    {else}
+                    <span>{$row1['nickname']}</span>
+                    {/if}
+                    ：{$row1['content']}
+                </div>
+                <div class="funcs">
+                    {if $isadmin == 1}
+                    {if $row1['isshow'] == 0}
+                    <a href="javascript:;" id="pass_{$row1['id']}" onclick="post_ajax('{$row1['id']}','{$row1['rid']}',3)"><i class='icon-ok'></i> 通过审核</a>
+                    {/if}
+                    <a href="javascript:;" id="del_{$row1['id']}" onclick="post_ajax('{$row1['id']}','{$row1['rid']}',4)"><i class='icon-remove'></i> 删除</a>
+                    {/if}
+                </div>
+                
+                {/loop}
+                </div>
+  <div class="funcs" style="text-align:left;{if $row1['num']<=12}display:none{/if}">
+      <a href="{php echo $this->createMobileUrl('item',array('name'=>'sns','id'=>$id,'rid'=>$rid))}">全部</a> 
+      <span style="font-size:11px;color:#bbb">共 {$row1['num']} 条回复</span>
+</div>

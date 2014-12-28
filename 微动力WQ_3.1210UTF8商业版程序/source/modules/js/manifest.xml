@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[微健身]]></name>
+		<identifie><![CDATA[js]]></identifie>
+		<version><![CDATA[0.51]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[健身模块行业应用]]></ability>
+		<description><![CDATA[健身模块行业应用]]></description>
+		<author><![CDATA[微信通]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+<menu>
+			<entry title="俱乐部管理" do="test" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+	
+CREATE TABLE `ims_js_buildpro_album` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL COMMENT '相册名称',
+  `hid` int(11) DEFAULT NULL COMMENT '俱乐部id ims_lxy_buildpro_set table id',
+  `sort` tinyint(4) unsigned DEFAULT '0' COMMENT '排序',
+  `jianjie` text,
+  `pic` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=74 DEFAULT CHARSET=utf8 COMMENT='健身相册';
+
+CREATE TABLE `ims_js_buildpro_bill` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hid` int(11) DEFAULT NULL,
+  `weid` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `pic` varchar(255) DEFAULT NULL,
+  `pic1` varchar(255) DEFAULT NULL,
+  `pic2` varchar(255) DEFAULT NULL,
+  `pic3` varchar(255) DEFAULT NULL,
+  `pic4` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='俱乐部海报';
+
+
+CREATE TABLE `ims_js_buildpro_expert_comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hid` int(11) DEFAULT NULL,
+  `weid` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `expert_name` varchar(20) DEFAULT NULL,
+  `zhiwei` varchar(255) DEFAULT NULL COMMENT '顾客职位',
+  `sort` tinyint(4) unsigned DEFAULT NULL COMMENT '排序',
+  `jianjie` text,
+  `content` text COMMENT '点评内容',
+  `thumb` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='俱乐部-会员点评';
+
+
+CREATE TABLE `ims_js_buildpro_fell` (
+  `yid` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `hid` int(11) DEFAULT NULL COMMENT '俱乐部id',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `sort` tinyint(4) unsigned DEFAULT '0' COMMENT '排序',
+  `yinxiang_number` int(11) unsigned DEFAULT '0' COMMENT '印象数',
+  `isshow` tinyint(1) DEFAULT '1',
+  `createtime` int(11) DEFAULT NULL,
+  PRIMARY KEY (`yid`)
+) ENGINE=MyISAM AUTO_INCREMENT=91 DEFAULT CHARSET=utf8 COMMENT='顾客印象';
+
+CREATE TABLE `ims_js_buildpro_fell_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hid` int(11) DEFAULT NULL,
+  `weid` int(11) DEFAULT NULL,
+  `fromuser` varchar(255) DEFAULT NULL COMMENT '俱乐部id',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COMMENT='顾客印象';
+
+CREATE TABLE `ims_js_buildpro_full_view` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `hsid` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `pic_qian` varchar(1023) DEFAULT NULL,
+  `pic_hou` varchar(1023) DEFAULT NULL,
+  `pic_zuo` varchar(1023) DEFAULT NULL,
+  `pic_you` varchar(1023) DEFAULT NULL,
+  `pic_shang` varchar(1023) DEFAULT NULL,
+  `pic_xia` varchar(1023) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COMMENT='俱乐部全景';
+
+CREATE TABLE `ims_js_buildpro_head` (
+  `hid` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `pic` varchar(255) DEFAULT NULL,
+  `desc` varchar(255) DEFAULT NULL,
+  `xcname` varchar(255) DEFAULT NULL,
+  `headpic` varchar(255) DEFAULT NULL,
+  `apartpic` varchar(255) DEFAULT NULL,
+  `video` varchar(255) DEFAULT NULL,
+  `dist` varchar(20) DEFAULT NULL,
+  `city` varchar(20) DEFAULT NULL,
+  `province` varchar(20) DEFAULT NULL,
+  `jw_addr` varchar(255) DEFAULT NULL,
+  `lng` varchar(12) DEFAULT '116.403694',
+  `lat` varchar(12) DEFAULT '39.916042',
+  `jianjie` text,
+  `xiangmu` text,
+  `jiaotong` text,
+  `addr` varchar(255) DEFAULT NULL,
+  `yyurl` varchar(255) DEFAULT NULL,
+  `xwurl` varchar(255) DEFAULT NULL,
+  `hyurl` varchar(255) DEFAULT NULL,
+  `tel` varchar(50) DEFAULT NULL,
+  `lxname` varchar(50) DEFAULT NULL,
+  `hyname` varchar(50) DEFAULT NULL,
+  `yyname` varchar(50) DEFAULT NULL,
+  `xwname` varchar(50) DEFAULT NULL,
+  `yxname` varchar(50) DEFAULT NULL,
+  `hxname` varchar(50) DEFAULT NULL,
+  `jjname` varchar(50) DEFAULT NULL,
+  `createtime` int(11) DEFAULT NULL,
+  PRIMARY KEY (`hid`)
+) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COMMENT='俱乐部简介';
+
+CREATE TABLE `ims_js_buildpro_house` (
+  `hsid` int(11) NOT NULL AUTO_INCREMENT,
+  `hid` int(11) DEFAULT NULL,
+  `weid` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL COMMENT '俱乐部名称',
+  `sid` int(11) DEFAULT NULL COMMENT '项目 ims_lxy_buildpro_set id',
+  `louceng` smallint(1) DEFAULT NULL COMMENT '楼层',
+  `mianji` varchar(255) DEFAULT NULL COMMENT '建筑面积',
+  `fang` tinyint(4) DEFAULT NULL,
+  `ting` tinyint(4) DEFAULT NULL,
+  `sort` tinyint(4) unsigned DEFAULT NULL COMMENT '排序',
+  `jianjie` text,
+  `pic` text,
+  `picjson` text,
+  `createtime` int(11) DEFAULT NULL,
+  PRIMARY KEY (`hsid`)
+) ENGINE=MyISAM AUTO_INCREMENT=74 DEFAULT CHARSET=utf8 COMMENT='健身项目';
+
+CREATE TABLE `ims_js_buildpro_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0',
+  `hid` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_js_buildpro_sub` (
+  `sid` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `hid` int(11) DEFAULT NULL COMMENT '俱乐部id',
+  `title` varchar(255) DEFAULT NULL COMMENT '子项目',
+  `sort` tinyint(4) unsigned DEFAULT '0' COMMENT '排序',
+  `jianjie` text,
+  PRIMARY KEY (`sid`)
+) ENGINE=MyISAM AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COMMENT='子项目';
+	
+]]></install>
+	<uninstall><![CDATA[
+DROP TABLE IF EXISTS `ims_js_buildpro_album`;
+DROP TABLE IF EXISTS `ims_js_buildpro_bill`;
+DROP TABLE IF EXISTS `ims_js_buildpro_expert_comment`;
+DROP TABLE IF EXISTS `ims_js_buildpro_fell`;
+DROP TABLE IF EXISTS `ims_js_buildpro_fell_record`;
+DROP TABLE IF EXISTS `ims_js_buildpro_full_view`;
+DROP TABLE IF EXISTS `ims_js_buildpro_head`;
+DROP TABLE IF EXISTS `ims_js_buildpro_house`;
+DROP TABLE IF EXISTS `ims_js_buildpro_reply`;
+DROP TABLE IF EXISTS `ims_js_buildpro_sub`;
+
+
+]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

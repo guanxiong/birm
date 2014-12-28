@@ -1,0 +1,117 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加互动模型</h4>
+	<table>
+		<tbody>
+			<tr>
+				<th>查看内容</th>
+				<td><a href="{php echo create_url('index/module', array('do' => 'manage', 'name' => 'sns', 'id' => $reply['rid']))}" target="_blank">管理贴子</a></td>
+			</tr>
+			<tr>
+				<th>栏目图片</th>
+				<td>
+					<div id="" class="uneditable-input reply-edit-cover">
+						<div class="detail">
+							<span class="pull-right">大图片建议尺寸：700像素 * 300像素</span>
+							<input type="button" id="sns-picture" fieldname="picture{$namesuffix}" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+							<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'sns-picture-value')" style="{if empty($reply['picture'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+						</div>
+						{if !empty($reply['picture'])}
+						<input type="hidden" name="picture-old" value="{$reply['picture']}">
+						<div id="upload-file-view" class="upload-view">
+							<input type="hidden" id="sns-picture-value" value="{$reply[picture]}">
+							<img width="100" src="{$_W['attachurl']}{$reply['picture']}">&nbsp;&nbsp;
+						</div>
+						{else}
+						<div id="upload-file-view"></div>
+						{/if}
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>栏目简介</th>
+				<td>
+					<textarea style="height:150px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于微信对话回复图文显示的简介</div>
+				</td>
+			</tr>
+			<tr>
+				<th>栏目详细说明(规则)</th>
+				<td>
+					<textarea id="rule" style="height:150px;" name="rule" class="span7" cols="60">{$reply['rule']}</textarea>
+					<div class="help-block">栏目的相关说明和相应规则介绍。</div>
+				</td>
+			</tr>
+			<tr>
+				<th>进入发贴系统提示</th>
+				<td>
+					<textarea style="height:150px;" name="default_tips" class="span7" cols="60">{$reply['default_tips']}</textarea>
+					<div class="help-block">当用户进入发送（心情/贴子）时，返回给用户的提示信息。</div>
+				</td>
+			</tr>
+            <tr>
+				<th>发贴后提示</th>
+				<td>
+					<textarea style="height:150px;" name="send_tips" class="span7" cols="60">{$reply['send_tips']}</textarea>
+					<div class="help-block">当用户发送（心情/贴子）时，返回给用户的提示信息。</div>
+				</td>
+			</tr>
+			<tr>
+				<th>模型类型</th>
+				<td>
+				<select id="select01" name="type">
+                <option>请选择</option>
+                
+                <option value="blog">微心情</option>
+                <option value="bbs">微吧</option>
+              </select>
+					<div class="help-block">模块类型，目前只提供了微心情和微吧两种</div>
+				</td>
+			</tr>
+            <tr>
+				<th>设定管理员ID</th>
+				<td>
+					<input type="text" value="{$reply['bzuid']}" class="span7" name="bzuid">
+					<div class="help-block">请输入你的粉丝表中用户的ID值，并以[,]号隔开，如：[1,100,12,10]</div>
+				</td>
+			</tr>
+			<tr>
+				<th>发贴奖励积分</th>
+				<td>
+					<input type="text" value="{$reply['postcredit']}" class="span7" name="postcredit">
+					<div class="help-block">当用发贴(心情)时，给予用户的积分。为0时表示不给。</div>
+				</td>
+			</tr>
+			<tr>
+				<th>回贴奖励积分</th>
+				<td>
+					<input type="text" value="{$reply['replycredit']}" class="span7" name="replycredit">
+					<div class="help-block">当用户贴子或者心情被回复评论时，给予用户的积分。为0时表示不给。</div>
+				</td>
+			</tr>
+            <tr>
+				<th>精华奖励积分</th>
+				<td>
+					<input type="text" value="{$reply['jhcredit']}" class="span7" name="jhcredit">
+					<div class="help-block">当用户贴子或者心情被加精华时，给予用户的积分。为0时表示不给。</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+</div>
+
+<script type="text/javascript">
+kindeditor($('#rule'));
+kindeditorUploadBtn($('#sns-picture'));
+
+var snsHandler = {
+	'buildAddForm' : function(id, targetwrap) {
+		var obj = buildAddForm(id, targetwrap);
+		obj.html(obj.html().replace(/\(wrapitemid\)/gm, obj.attr('id')));
+	}
+};
+
+
+</script>

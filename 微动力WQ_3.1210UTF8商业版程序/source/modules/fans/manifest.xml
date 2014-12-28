@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[粉丝管理]]></name>
+		<identifie><![CDATA[fans]]></identifie>
+		<version><![CDATA[1.1]]></version>
+		<type><![CDATA[customer]]></type>
+		<ability><![CDATA[关注的粉丝管理]]></ability>
+		<description><![CDATA[]]></description>
+		<author><![CDATA[WeEngine Team]]></author>
+		<url><![CDATA[bbs.b2ctui.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+			<message type="image" />
+			<message type="voice" />
+			<message type="video" />
+			<message type="location" />
+			<message type="link" />
+			<message type="subscribe" />
+			<message type="unsubscribe" />
+		</subscribes>
+		<handles>
+		</handles>
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="粉丝列表" do="display" />
+			<entry title="粉丝分组" do="group" />
+			<entry title="地理位置分布" do="location" />
+			<entry title="粉丝管理选项" do="settings" />
+		</menu>
+		<profile>
+			<entry title="我的资料" do="profile" />
+		</profile>
+	</bindings>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

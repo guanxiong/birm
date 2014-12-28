@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{if $title}{$title}{else}{if !empty($_W['account']['name'])}{$_W['account']['name']}{/if}{/if}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- Mobile Devices Support @begin -->
+	<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+	<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+	<meta content="no-cache" http-equiv="pragma">
+	<meta content="0" http-equiv="expires">
+	<meta content="telephone=no, address=no" name="format-detection">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<!-- Mobile Devices Support @end -->
+	<meta name="keywords" content="微动力,微信,微信公众平台" />
+    <meta name="description" content="微信公众平台自助引擎，微动力，微动力是微信公众平台管理系统。" />
+	<link type="text/css" rel="stylesheet" href="themes/mobile/style25/style.css">
+    <link type="text/css" rel="stylesheet" href="./resource/style/font-awesome.min.css" />
+	<script type="text/javascript" src="themes/mobile/style25/js/jquery.min.js"></script>
+	<script type="text/javascript" src="themes/mobile/style25/js/jquery.flexslider.js"></script>
+    <script type="text/javascript">
+var $ = jQuery.noConflict();
+$(window).load(function() {
+	$('.icons_nav').flexslider({
+	animation: "slide",
+	directionNav: true, 
+	animationLoop: false,
+	controlNav: false, 
+	slideshow: false,
+	animationDuration: 300
+	});
+	$('.panels_slider').flexslider({
+	animation: "slide",
+	directionNav: false,
+	controlNav: true, 
+	animationLoop: false,
+	slideToStart: 1,
+	animationDuration: 300, 
+	slideshow: false
+	});
+});
+</script>
+<body class="home">
+<div id="container">
+
+    <div id="main_panels">
+        <div class="panels_slider">
+        <ul class="slides">
+        {data func="site_slide_search" limit="4" item="row" assign="slide"}
+            <li>
+				<img src="{$row['thumb']}" alt="{$row['title']}" border="0" style="width:100%;"/>
+            </li>
+            {/data}
+        </ul>
+        </div>
+    </div>
+
+    <div id="bottom_nav">
+        <div class="icons_nav">
+           <div class="paginated">
+              {template 'nv'}
+                </div>
+        </div>
+    </div>
+    
+</div>
+</body>
+</html>

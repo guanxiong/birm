@@ -1,0 +1,238 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta name="format-detection" content="telephone=no">
+    <meta content="telephone=no" name="format-detection">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>{if $title}{$title}{else}{if !empty($_W['account']['name'])}{$_W['account']['name']}{/if}{/if}</title>
+
+    <link type="text/css" rel="stylesheet" href="themes/mobile/style131/css/vweisiteV01.css"/>
+    <link type="text/css" rel="stylesheet" href="themes/mobile/style131/css/font-awesome.css"/>
+    <link href="themes/mobile/style131/css/list7.css" media="screen" rel="stylesheet" type="text/css" />
+
+    <script src="themes/mobile/style131/js/vweisiteV01.js" type="text/javascript"></script>
+    <meta content="authenticity_token" name="csrf-param" />
+	<meta content="Elw8BrYOqJMJLQgKLgaZPaUbFVSHD7HAK1Tx/E2vx1g=" name="csrf-token" />
+  </head>
+
+  <body>
+    {php $result = site_article_search($cid);}
+    <div class="html" style="background-image: url()">
+      <div class="stage" id="stage">
+        <section id="sec-index">
+          
+        <div class="body"> 
+
+    <div class="mod-slider slider-hor" id="index">
+    <ul class="slider-list">
+		{template 'slide'}
+      
+    </ul>
+  </div>
+
+  <div class="list">
+    <ul>
+		{loop $result['list'] $row}
+			<li>
+				<a href="{php echo $this->createMobileUrl('detail', array('name' => 'detail', 'id' => $row['id'], 'weid' => $_W['weid']))}">
+				  <div class="list-img">
+					<b><img alt="{$row['title']}" src="{$_W['attachurl']}{$row['thumb']}" /></b>
+				  </div>
+				  <div class="list-text">
+					<h1>{$row['title']}</h1>
+					<h2>{php echo date('Y-m-d H:i:s', $row['createtime'])}</h2>
+				  </div>
+				</a>      
+			</li>
+		{/loop}
+    
+    </ul>
+	{$result['pager']}
+  </div>
+
+          </div>
+        </section>
+
+      </div><!--.stage end-->
+    </div><!--.html end-->
+
+    <footer>
+      技术支持：{$_W['account']['name']}
+    </footer>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var reg = /^(http|https):\/\/[a-zA-Z0-9].+$/;
+      var image_url = '';
+      if(!reg.test(image_url)){
+          image_url = '';
+      }
+      var config = {
+        link: location.href.replace("wxuid=", "origin_wxuid=").replace("openid=", "origin_openid="),
+        img_url: image_url,
+        // img_width: '200',
+        // img_height: '200',
+        title: '' ? '' : document.title,
+        desc: '' ? '' : document.title
+      };
+
+      // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+      document.addEventListener('WeixinJSBridgeReady', function() {
+        var WJ = WeixinJSBridge;
+        // 发送给好友
+        WJ.on('menu:share:appmessage', function() {
+          WJ.invoke('sendAppMessage', config, function(res) {
+            // _report('sendAppMessage', res.err_msg);
+          });
+        });
+        // 发送到朋友圈
+        WJ.on('menu:share:timeline', function() {
+          WJ.invoke('shareTimeline', config, function(res) {
+            // _report('shareTimeline', res.err_msg);
+          });
+        });
+
+        // 发送到微博
+        WJ.on('menu:share:weibo', function() {
+          WJ.invoke('shareWeibo', config, function(res) {
+            // _report('shareWeibo', res.err_msg);
+          });
+        });
+      });
+
+    });
+  </script>
+
+
+<style type="text/css">
+    /*pop*/
+    .pop-zoom{display:none;width:100%;height:100%;color:#fff;position:fixed;left:0;top:0;background:rgba(0,0,0,0.5);z-index:10000;}
+    .pop-zoom-img{background:#000;text-align:center;overflow:hidden;}
+    .show-img{width:100%;height:100%;overflow:hidden;position:relative;}
+    .show-img img{max-width:100%;}
+    .zoom-close{position:fixed;right:5px;top:5px;display:block;z-index:99999;}
+    .zoom-close .fa{width:30px;height:30px;font-size:25px;line-height:30px;border-radius:50%;color:#fff;background:#999;}
+</style>
+<script src="themes/mobile/style131/js/iScroll-4.2.5.js"></script>
+<script type="text/javascript">
+    var flag = true; css_reg = /^[\w]*font-awesome\.min[\w]*/;
+    $.each($('link[type="text/css"]'), function(){
+        var arr = $(this).attr('href').split('/');
+        if(arr.length == 0){
+            return true;
+        }
+        if(css_reg.test(arr[arr.length - 1])){
+            flag = false;
+            return flag;
+        }
+    });
+    if(flag){
+        document.write('<link rel="stylesheet" href="/assets/font/font-awesome.min.css">')
+    }
+    var img_zoom_myscroll, img_zoom_scrollTop;
+
+    function loaded(){
+        img_zoom_myscroll = new iScroll("imgScroll",{
+            hScroll: true,
+            useTransition: true,
+            hScrollbar: false,
+            vScrollbar: false,
+            zoom: true
+        });
+        document.addEventListener("DOMContentLoaded",loaded,false);
+    }
+
+    $(function(){
+        $('body').append('<div class="pop-zoom pop-zoom-img"><div class="show-img" id="imgScroll"><div><img src=""></div></div><a href="javascript:;" class="zoom-close"><i class="fa fa-times"></i></a>')
+        $('img').click(function(){
+            if($(this).closest('a').length > 0 || $(this).closest('.mod-navLine').length > 0){
+
+            }else{
+                var $this = $(this),
+                        $src = $this.attr("src"),
+                        $img = $(".show-img img"),
+                        $pop = $(".pop-zoom-img");
+                img_zoom_scrollTop = $(document).scrollTop();
+                $(document).scrollTop(0);
+                $img.attr("src",$src);
+                $pop.show();
+                setTimeout(function(){
+                    loaded();
+                },300);
+                //console.log(scrollTop);
+            }
+        });
+        $(document).on("click",".zoom-close",function(){
+            $(document).scrollTop(img_zoom_scrollTop);
+            $(this).parents(".pop-zoom").hide();
+            img_zoom_myscroll.destroy();
+        })
+        var initTop = 0,
+                isScroll = true;
+        function fnAnimate(thisTop){
+            $("header:not('.untoppable')").animate({top:thisTop},"500",function(){isScroll=true});
+        }
+        $(window).on("scroll",function(){
+            var scrollTop = $(document).scrollTop();
+            if(isScroll){
+                if(scrollTop > initTop){
+                    fnAnimate("-44px");
+                }else{
+                    fnAnimate("0");
+                }
+            }
+            initTop = scrollTop;
+            isScroll = false;
+        });
+    });
+</script>
+
+    <a href="javascript:scroll(0,0)" class="btn-up btn-up-1"><i class="fa fa-arrow-up"></i></a>
+    <div class="loading fixed-top"></div>
+
+    <div class="mod-pop" id="pop-share" onClick="hidePop('#pop-share')"><span class="text-share"></span></div>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+
+        navPop1("#navPop-wrap","#navPop-btn"); // 快捷菜单    
+		$("#navPop-wrap").show();
+
+
+        showBtnUp(100);
+
+        $("a.dev-prev").click(function(){
+            location.href = "";
+        });
+
+        $("a.dev-next").click(function(){
+          history.go(1);
+        });
+
+        $("a.dev-index").click(function(){
+          //window.open("");
+          location.href = "";
+        });
+
+        $("a.dev-refresh").click(function(){
+          location.reload();
+        });
+
+        $("a.dev-tel").attr("href", "");
+
+        $("a.dev-member").click(function(){
+          $(this).attr("href", "")
+        });
+
+        $("a.dev-location").click(function(){
+          $(this).attr("href", "")
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+
+{template 'common/header'}
+<style>
+	.table td span{display:inline-block;margin-top:4px;}
+	.table td input{margin-bottom:0;}
+</style>
+{if $op == 'display'}
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-striped table-bordered table-hover">
+			<tr>
+				<th>楼盘</th>
+				<th>区域</th>
+				<th>地址</th>
+				<th style="width:180px;">意向人数</th>
+				<th style="width:85px; text-align:right;">操作</th>
+			</tr>
+			<tbody>
+				<tr><td></td><td></td><td></td><td></td><td></td></tr>
+				{loop $list $item}
+				<tr>
+					<td>{$item['title']}</td>
+					<td>{$item['dist']}</td>
+					<td>{$item['addr']}</td>
+					<td>{$item['count']}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('lookhouse', array('op' => 'detail', 'id' => $item['hid']))}" class="btn btn-mini"><i class="icon-search"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+			<!-- <tr>
+				<td colspan="5">
+					<input name="token" type="hidden" value="{$_W['token']}" />
+					<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+				</td>
+			</tr> -->
+		</table>
+		{$pager}
+	</div>
+</div>
+{elseif $op == 'detail'}
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-striped table-bordered table-hover">
+			<tr>
+				<th width="100">姓名</th>
+				<th width="100">电话</th>
+				<th>登记时间</th>
+			</tr>
+			<tbody>
+				<tr><td></td><td></td><td></td></tr>
+				{loop $list $item}
+				<tr>
+					<td>{$item['realname']}</td>
+					<td>{$item['mobile']}</td>
+					<td>{$item['addtime']}</td>
+				</tr>
+				{/loop}
+			</tbody>
+			<!-- <tr>
+				<td colspan="5">
+					<input name="token" type="hidden" value="{$_W['token']}" />
+					<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+				</td>
+			</tr> -->
+		</table>
+		{$pager}
+	</div>
+</div>
+{/if}
+{template 'common/footer'}

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	
+	<application setting="true">
+		
+		<name><![CDATA[微酒店]]></name>
+		
+		<identifie><![CDATA[hotel]]></identifie>
+		
+		<version><![CDATA[1.0]]></version>
+
+		<type><![CDATA[business]]></type>
+		
+		<ability><![CDATA[酒店、KTV等预定]]></ability>
+		
+		<description><![CDATA[酒店、KTV等在线预定]]></description>
+		
+		<author><![CDATA[艮随]]></author>
+		
+		<url><![CDATA[]]></url>
+	
+	</application>
+	
+	<platform>
+		
+		<subscribes>
+		
+		</subscribes>
+		
+	
+		<handles>
+		
+		    <message type="text" />
+		</handles>
+		<rule embed="true" />
+    </platform>	
+	<bindings>
+		<menu>
+		 
+			<entry title="订单管理" do="mngorder" />
+			<entry title="房型管理" do="shop" />
+		</menu>
+	</bindings>
+
+	<install><![CDATA[
+
+		CREATE TABLE IF NOT EXISTS `ims_hotel_reply` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `rid` int(11) NOT NULL,
+		  `title` text NOT NULL,
+		  `shop` text NOT NULL,
+		  `address` text NOT NULL,
+		  `phone` text NOT NULL,
+		  `mail` text,
+		  `ordermax` int(11) DEFAULT NULL,
+		  `numsmax` int(11) DEFAULT NULL,
+		  `daymax` int(11) DEFAULT NULL,
+		  `picture` text NOT NULL,
+		  `description` text NOT NULL,
+		  `content` text NOT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+		CREATE TABLE IF NOT EXISTS `ims_hotel_shop` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `weid` int(11) NOT NULL,
+		  `rid` int(11) NOT NULL,
+		  `style` text NOT NULL,
+		  `oprice` int(11) NOT NULL,
+		  `cprice` int(11) NOT NULL,
+		  `thumb` text NOT NULL,
+		  `device` text NOT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+		CREATE TABLE IF NOT EXISTS `ims_hotel_order` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `weid` int(11) NOT NULL,
+		  `rid` int(11) NOT NULL,
+		  `sid` int(11) NOT NULL,
+		  `openid` text NOT NULL,
+		  `shop` text NOT NULL,
+		  `name` text NOT NULL,
+		  `mobile` text NOT NULL,
+		  `btime` int(11) NOT NULL,
+		  `etime` int(11) NOT NULL,
+		  `style` text NOT NULL,
+		  `nums` int(11) NOT NULL,
+		  `oprice` int(11) NOT NULL,
+		  `cprice` int(11) NOT NULL,
+		  `info` text NOT NULL,
+		  `time` int(11) NOT NULL,
+		  `status` int(11) NOT NULL,
+		  `msg` text NOT NULL,
+		  `mngtime` int(11) NOT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+	  ]]></install>
+	  
+<uninstall><![CDATA[
+
+		DROP TABLE IF EXISTS `ims_hotel_reply`;
+		DROP TABLE IF EXISTS `ims_hotel_shop`;
+		DROP TABLE IF EXISTS `ims_hotel_order`;
+
+		]]></uninstall>
+
+<upgrade><![CDATA[]]></upgrade>
+
+</manifest>

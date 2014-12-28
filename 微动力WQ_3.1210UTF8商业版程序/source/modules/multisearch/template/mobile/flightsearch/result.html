@@ -1,0 +1,44 @@
+{template 'header'}
+<link type="text/css" rel="stylesheet" href="./source/modules/multisearch/template/mobile/flightsearch/common.css">
+<nav class="navbar navbar-default mynav" role="navigation">
+	<div class="mynav-brand mynav-right">
+		<a href="tel:4008562636"><i class="icon-phone"></i></a>
+	</div>
+	<div class="mynav-brand mynav-left">
+		<a href="#" onclick="history.go(-1);return false;"><i class="icon-chevron-left"></i></a>
+	</div>
+	<p class="mynav-title">查询结果</p>
+</nav>
+<div class="mobile-content">
+	<div class="table-tips">
+		<i class="icon-lightbulb"></i>
+		小提示：查询结果可左右滑动查看！
+	</div>
+	<div class="table-responsive">
+		<table class="table table-striped mytable">
+				{loop $list $item}
+				<tr>
+					<th style="color:#428bca; font-size:16px;">{$item['start']}到{$item['end']}</th>
+					<th>20GP 40GP 40HC</th>
+					<th></th>
+				</tr>
+				<tr>
+					<td class="detail-td-1">
+						<div>
+							<span class="pull-left">班期：{$item['data']['schedule']}</span>
+						</div>
+						<div>
+							<span class="pull-left">航程：{$item['data']['range']}</span>
+						</div>
+					</td>
+					<td class="detail-td-2">{$item['data']['a']} / {$item['data']['b']} / {$item['data']['c']}</td>
+					<td class="detail-td-3">
+						<div>{if $search['isresearch']}<a href="{php echo $this->createMobileUrl('research', array('id' => $item['id'], 'reid' => $id))}"><i class="icon-edit"></i> 预定</a>{/if}</div>
+						<div><a href="http://chat.looyu.com/chat/chat/p.do?c=51291&f=111920&g=74415"><i class="icon-user"></i> 客服</a></div>
+					</td>
+				</tr>
+				{/loop}
+		</table>
+	</div>
+</div>
+{template 'footer'}

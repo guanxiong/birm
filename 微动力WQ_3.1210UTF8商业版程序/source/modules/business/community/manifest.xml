@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="true">
+		<name><![CDATA[微小区]]></name>
+		<identifie><![CDATA[community]]></identifie>
+		<version><![CDATA[1.3]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[微小区]]></ability>
+		<description><![CDATA[微小区]]></description>
+		<author><![CDATA[WeEngine Team]]></author>
+		<url><![CDATA[http://www.we7.cc]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<menu call="getMenuTiles">
+			<entry title="小区管理" do="region" state="" direct="false" />
+			<entry title="服务类型管理" do="serviceCategory" state="" direct="false" />
+			<entry title="广告管理" do="advertisement" state="" direct="false" />
+			<entry title="快递公司管理" do="expressCompany" state="" direct="false" />
+		</menu>
+		<cover>
+			<entry title="个人中心入口设置" do="home" state="" direct="false" />
+			<entry title="公告入口设置" do="announcement" state="" direct="false" />
+			<entry title="报修入口设置" do="repair" state="" direct="false" />
+			<entry title="投诉入口设置" do="report" state="" direct="false" />
+			<entry title="电话入口设置" do="phone" state="" direct="false" />
+			<entry title="服务入口设置" do="service" state="" direct="false" />
+			<entry title="家政入口设置" do="homemaking" state="" direct="false" />
+			<entry title="房屋租赁入口设置" do="houseLease" state="" direct="false" />
+			<entry title="快递入口设置" do="express" state="" direct="false" />
+		</cover>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_community_admap` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `regionid` int(11) NOT NULL,
+  `adid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_community_advertisement` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `content` varchar(255) NOT NULL COMMENT '标题',
+  `url` varchar(255) NOT NULL COMMENT '外链或内链',
+  `createtime` int(10) unsigned NOT NULL COMMENT '创建时间',
+  `creator` varchar(50) NOT NULL,
+  `starttime` int(10) unsigned NOT NULL COMMENT '开始时间',
+  `endtime` int(10) unsigned NOT NULL COMMENT '截止时间',
+  `status` int(10) unsigned NOT NULL COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='广告' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_community_announcement` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+  `regionid` int(10) unsigned NOT NULL COMMENT '小区编号',
+  `title` varchar(255) NOT NULL COMMENT '标题',
+  `content` text NOT NULL COMMENT '内容',
+  `author` varchar(50) NOT NULL COMMENT '作者',
+  `createtime` int(10) unsigned NOT NULL,
+  `starttime` int(11) unsigned NOT NULL COMMENT '开始时间',
+  `endtime` int(11) unsigned NOT NULL COMMENT '结束时间',
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_community_express_company` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `code` varchar(50) NOT NULL,
+  `reg` varchar(255) NOT NULL,
+  `note` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`,`code`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='快递公司' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_community_express_fee` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `code` varchar(50) NOT NULL,
+  `province` varchar(50) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `district` varchar(50) NOT NULL,
+  `pricefirst` float NOT NULL COMMENT '首重金额',
+  `weightfirst` float NOT NULL COMMENT '首重',
+  `priceaddition` float NOT NULL COMMENT '续重金额',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='快递费用' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_community_express_order` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `regionid` int(11) NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `realname` varchar(50) NOT NULL,
+  `mobile` varchar(50) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `province` varchar(50) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `district` varchar(50) NOT NULL,
+  `type` int(11) NOT NULL COMMENT '发货类型',
+  `detail` varchar(255) NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  `weight_estimate` float NOT NULL,
+  `price_estimate` float NOT NULL,
+  `weight` float NOT NULL,
+  `price` float NOT NULL,
+  `express_code` varchar(50) NOT NULL,
+  `sn` varchar(50) NOT NULL,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_community_manager` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `uid` int(10) unsigned NOT NULL,
+  `regions` varchar(2000) NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_community_member` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(11) unsigned NOT NULL,
+  `regionid` int(10) unsigned NOT NULL COMMENT '小区编号',
+  `openid` varchar(50) NOT NULL,
+  `type` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '1为业主，2为租户',
+  `realname` varchar(50) NOT NULL COMMENT '真实姓名',
+  `mobile` varchar(15) NOT NULL COMMENT '手机号',
+  `regionname` varchar(50) NOT NULL COMMENT '小区名称',
+  `address` varchar(100) NOT NULL COMMENT '楼栋门牌',
+  `remark` varchar(1000) NOT NULL COMMENT '备注',
+  `status` tinyint(1) unsigned NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_openid` (`openid`),
+  KEY `idx_mobile` (`mobile`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_community_phone` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `regionid` int(10) unsigned NOT NULL COMMENT '小区编号',
+  `weid` int(11) unsigned NOT NULL COMMENT '公众号',
+  `title` varchar(50) NOT NULL COMMENT '标题',
+  `phone` varchar(50) NOT NULL COMMENT '号码',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='常用电话' AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_community_region` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+  `title` varchar(50) NOT NULL COMMENT '标题',
+  `linkman` varchar(50) NOT NULL COMMENT '联系人',
+  `linkway` varchar(50) NOT NULL COMMENT '联系电话',
+  `content` text NOT NULL COMMENT '内容',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_community_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `reportid` int(10) unsigned NOT NULL COMMENT '报告ID',
+  `isreply` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否是回复',
+  `content` varchar(5000) NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_community_report` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `openid` varchar(50) NOT NULL COMMENT '用户身份',
+  `weid` int(11) unsigned NOT NULL COMMENT '公众号ID',
+  `regionid` int(10) unsigned NOT NULL COMMENT '小区编号',
+  `type` tinyint(1) NOT NULL COMMENT '1为报修，2为投诉',
+  `category` varchar(50) NOT NULL DEFAULT '' COMMENT '类目',
+  `content` varchar(255) NOT NULL COMMENT '投诉内容',
+  `requirement` varchar(1000) NOT NULL,
+  `createtime` int(11) unsigned NOT NULL COMMENT '投诉日期',
+  `status` tinyint(1) unsigned NOT NULL COMMENT '状态,1已解决,0未解决,2为用户取消',
+  `newmsg` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否有新信息',
+  `rank` tinyint(3) unsigned NOT NULL COMMENT '评级 1满意，2一般，3不满意',
+  `comment` varchar(1000) NOT NULL,
+  `resolve` varchar(1000) NOT NULL COMMENT '处理结果',
+  `resolver` varchar(50) NOT NULL COMMENT '处理人',
+  `resolvetime` int(10) unsigned NOT NULL COMMENT '处理时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_weid_regionid` (`weid`,`regionid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_community_service` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `regionid` int(10) unsigned NOT NULL,
+  `servicecategory` int(10) unsigned NOT NULL COMMENT '生活服务大分类',
+  `servicesmallcategory` int(10) unsigned NOT NULL COMMENT '生活服务小分类',
+  `requirement` varchar(255) NOT NULL COMMENT '精准要求,如保洁需要填写 平米大小',
+  `remark` varchar(500) NOT NULL COMMENT '备注',
+  `contacttype` int(10) unsigned NOT NULL COMMENT '联系类型:1.随时联系;2.白天联系;3:晚上联系;4:自定义',
+  `contactdesc` varchar(255) NOT NULL COMMENT '联系描述',
+  `status` int(10) unsigned NOT NULL COMMENT '状态',
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_community_servicecategory` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属帐号',
+  `name` varchar(50) NOT NULL COMMENT '分类名称',
+  `parentid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级分类ID,0为第一级',
+  `displayorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `enabled` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否开启',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+INSERT INTO `ims_community_servicecategory` (`id`, `weid`, `name`, `parentid`, `displayorder`, `enabled`) VALUES
+(1, 1, '家政服务', 0, 0, 1),
+(2, 1, '房屋租赁', 0, 0, 1);
+
+CREATE TABLE IF NOT EXISTS `ims_community_verifycode` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `verifycode` varchar(6) NOT NULL,
+  `mobile` varchar(11) NOT NULL,
+  `total` tinyint(3) unsigned NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `openid` (`openid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+    ]]></install>
+	<uninstall><![CDATA[
+
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

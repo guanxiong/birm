@@ -1,0 +1,143 @@
+
+{php $header_off=1;}
+{template 'header'}
+
+    <div class="container">
+        <div class="house_pic">
+            <img src="{$_W['attachurl']}{$detail['thumb']}" data-src="{$detail['thumb']}" width="100%" alt="">
+
+            <div class="navbar-fixed-top">
+                <span class="icon-box icon-box-home"> 
+                    <a href="{php echo $this->createMobileUrl('house')}"><i class="glyphicon glyphicon-home"></i></a>
+                </span>
+            </div>
+          <!--   <span class="icon-box icon-box-picture f14"> 
+                <a href="{php echo $this->createMobileUrl('album')}"><i class="glyphicon glyphicon-picture"></i> 0</a>
+            </span> -->
+        </div>
+        <div class="main-mes">
+            <div class="tit clearfix">
+                <h1 class="pull-left">{$detail['title']}</h1>
+                <span class="pull-right fava label label-success" id="favorite" data-do="favorite">
+                <i class="glyphicon glyphicon-star-empty"></i> 收藏</span>
+            </div>
+            <div class="mes">
+                <p>价格：<span>
+                {if $detail['jiage']==0 }  面议{else}
+                
+                    {$detail['jiage']}
+                    {if ($detail['cate_id']==1||$detail['cate_id']==2||$detail['cate_id']==7)}元/月{else}万
+                    {/if}
+                {/if}</span></p>
+             <!--    <p>地区：{$city[0]['name']}>>{$city[1]['name']}             </p> -->
+                <p>小区：{$region['title']}</p>
+                <p>户型：{$detail['hrs_lan']}              {if $detail['danjia']}<span class="pull-right">单价：{$detail['danjia']}元/平米</span>{/if}</p>
+                <p>面积：{$detail['mianji']}平米            <span class="pull-right">朝向：{$detail['direction']}</span></p>
+                <p>装修：{$detail['house_zx']}            <span class="pull-right">装修风格：{$detail['picstyle']}</span></p>
+                <p>楼层：{$detail['housenow']}/{$detail['houseall']}            <span class="pull-right">年代：{$detail['yil']}</span></p>
+                <p>配套设施：{$detail['wupin']}</p>
+
+            </div>
+        </div>
+        <div class="mt15">
+            <span id="lookhouse" data-do="lookhouse" class="btn btn-danger btn-block">
+                <span class="glyphicon glyphicon-pencil"></span> 免费看房意向登记
+            </span>
+        </div>
+                <div class="panel panel-default mt15">
+            <div class="panel-heading">楼盘地址</div>
+            <div class="panel-body">
+                <a class="mb10 mappic">
+                <img src="" data-src="http://api.map.baidu.com/staticimage?center= {$region['lng']},{$region['lat']}&width=300&height=136&zoom=13&markers={$region['lng']},{$region['lat']}&markerStyles=m" class="mapimg" style="width:100%;max-heidht:200px;">
+                </a>
+              {$region['dizhi']}          </div>
+        </div>
+                <div id="panel_info"></div>
+       <!--  <div class="page-footer text-center mt15 hide" id="share">
+            <span class="btn btn-info w5" onclick="$('#mcover').show()"><i class="glyphicon glyphicon-share-alt"></i> 转发</span>
+            <span class="btn btn-info w5" onclick="$('#mcover').show()"><i class="glyphicon glyphicon-user"></i> 分享</span>
+        </div> -->
+    </div>
+    <div id="mcover" onclick="$(this).hide()">
+       <!--  <img src="{APP_PUBLIC}img/guide.png"> -->
+    </div>
+    <footer class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container">
+           <div class="foot-mobile text-center f16">
+                <a href="tel:{$detail['tel']}">
+                    <div><span class="glyphicon glyphicon-earphone"></span> 咨询电话 {$detail['tel']}</div>
+                <a>
+            </div>
+        </div>
+    </footer>
+    <!-- <script type="text/html" id="itemTpl"> -->
+        <div class="panel panel-default mt15">
+            <div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span> 相关信息</div>
+               <div class="panel-body house-info">      {$region['huanjing']}  </div>
+            <!-- {each hot as value index}
+            <tr><td>{value.title}</td><td>{value.type} <i class="glyphicon glyphicon-chevron-right pull-right"></i></td></tr>
+            {/each} -->
+           
+            
+        </div>
+        <div class="panel panel-default mt15">
+            <div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span> 交通配置</div>
+            <div class="panel-body house-info">     {$region['jiaotong']}  </div>
+        </div>
+        <div class="panel panel-default mt15">
+            <div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span> 周边配置</div>
+            <div class="panel-body house-info">{$region['zhoubian']}</div>
+        </div>
+
+
+   <!--  </script> -->
+    <script type="text/javascript">
+        require(['jquery','base','lazyload','template'], function($){
+
+            var tpl ='';
+            var data = {$jsondetail};
+            $('#panel_info').html(template('itemTpl', data)).find('img').lazyload();
+            $('#share, #favorite, #lookhouse').removeClass('hide');
+
+            $("#lookhouse, #favorite").on("click", function() {
+                alert('11');
+                var _this = $(this);
+                var obj_type = _this.attr('data-do');
+                var obj_itemid = M.urlQuery('hsid');
+          console.log("已登录"+obj_type);
+                    if(obj_type=='lookhouse'){
+                        $("#tool_bar_bg").fadeIn();
+                        $("#floatDiv_closeWrap").fadeIn();
+                        var iframe_url = '{php echo $this->createMobileUrl('lookhouse')}&itemid='+obj_itemid;
+                        M.doFrame(iframe_url);
+                    }
+                   else if(obj_type=='favorite'){
+                        //给表单传值
+                        var param={
+                            "itemid":M.urlQuery('hsid'),
+                            "module_do":M.urlQuery('do'),
+                            "module_name":M.urlQuery('name'),
+                            "token":'{$_W['token']}',
+                        };
+                        $.post(M.baseDomain + "/{php echo $this->createMobileUrl('favorite')}", param, function(data) {
+                            M.message(data.message);
+                            _this.find('i').removeClass("glyphicon-star-empty").addClass('glyphicon-star');
+                        }, 'json');
+                    }
+      
+     
+                return false;
+            });
+            var obj_type = cookie.get('ml_obj_type');
+            if(obj_type){
+                $("#"+obj_type).trigger("click");
+                console.log("销毁动作"+obj_type);
+                cookie.set('ml_obj_type','');
+            }
+            $(".house_pic img, .mappic img").lazyload();
+        });
+    </script>
+
+
+{php $footer_off=1;}
+{template 'footer'}

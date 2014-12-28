@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[漂流瓶]]></name>
+		<identifie><![CDATA[floater]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[祈愿祝福]]></ability>
+		<description><![CDATA[祈愿祝福漂流瓶]]></description>
+		<author><![CDATA[Godietion Koo]]></author>
+		<url><![CDATA[http://beidoulbs.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+			<message type="location" />
+		</subscribes>
+		<handles>
+			<message type="location" />
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<install><![CDATA[
+CREATE TABLE `ims_wish` (
+  `id` int(11) NOT NULL auto_increment,
+  `userid` varchar(50) character set utf8 NOT NULL,
+  `nickname` varchar(30) character set utf8 NOT NULL default '' COMMENT '昵称',
+  `wishtype` varchar(20) character set utf8 NOT NULL,
+  `native` varchar(20) character set utf8 NOT NULL default '' COMMENT '来自',
+  `qq` varchar(15) character set utf8 NOT NULL default '' COMMENT 'QQ',
+  `msg` varchar(300) character set utf8 NOT NULL default '' COMMENT '祈愿内容',
+  `time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT '发布时间',
+  `counter` int(11) unsigned zerofill NOT NULL COMMENT '计数',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_wish`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

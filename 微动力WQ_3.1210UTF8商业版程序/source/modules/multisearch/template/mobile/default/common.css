@@ -1,0 +1,29 @@
+body{background:#E9E9E9;}
+.mynav{border:0; background:#0762B6; color:#FFF; border-radius:0; position:relative;}
+.mynav .mynav-brand{display:inline-block; position:absolute;}
+.mynav .mynav-brand a{display:block; text-decoration:none; width:50px; height:50px; line-height:50px; font-size:18px; text-align:center; color:#FFF; background-color:#0056A6;}
+.mynav .mynav-left{left:0;}
+.mynav .mynav-right{right:0;}
+.mynav .mynav-left a{border-right:1px solid #2A82CC; box-shadow:inset -1px 0 0 #094780; float:left;}
+.mynav .mynav-right a{border-left:1px solid #2A82CC; box-shadow:inset 1px 0 0 #094780; float:right;}
+.mynav-title{width:100%; text-align:center; color:#FFF; font-size:18px; line-height:50px;}
+.form-group{margin-bottom:10px;}
+.title{font-size:16px; font-weight:normal; color:#778799;}
+/*选择城市*/
+#citylist_accordion{background:#E9E9E9; padding:10px; width:100%;}
+#citylist_accordion .panel{border:0;}
+#citylist_accordion .ui_accordion_header{margin-bottom:0; width:100%; padding:0 5%; height:40px; line-height:40px; color:#FFF; background:#428bca;}
+#citylist_accordion .citylist_cityitem{width:100%; font-size:16px; background:#F9F9F9;}
+#citylist_accordion .citylist_cityitem td{text-align:center; height:55px; line-height:55px; border-bottom:1px #E9E9E9 solid;}
+#citylist_accordion .citylist_cityitem td span{display:block;}
+#citylist_accordion .citylist_cityitem td span:hover{background:#FFF; border-radius:4px;}
+/*查询结果*/
+.table-tips{text-align:right; color:#778799;}
+.mytable thead{background:; color:;}
+.mytable tbody{background:; color:#778799;}
+.mytable tbody td{width:130px; overflow:hidden; word-break:break-all; word-wrap:break-word;}
+.detail-td-1 div{width:90px;}
+.detail-td-1 div span{display:inline-block;}
+.detail-td-2{vertical-align:middle !important; font-size:16px; color:#ff9600;}
+.detail-td-3{text-align:right;}
+.detail-td-3 i{display:inline-block; width:15px; text-align:left;}

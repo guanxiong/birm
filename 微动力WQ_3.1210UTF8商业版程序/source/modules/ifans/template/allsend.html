@@ -1,0 +1,179 @@
+{template 'common/header'}
+<script type="text/javascript">
+	$(function(){
+		$(':radio[name="sendmode"]').click(function(){
+			if(this.checked) {
+				if($(this).val() == '1') {
+					$('.mod1').show();
+					$('.mod2').hide();
+				}else{
+					$('.mod1').hide();
+					$('.mod2').show();
+				}
+			}
+		});
+		$(':radio[name="msgtype"]').click(function(){
+			if(this.checked) {
+				if($(this).val() == '1') {
+					$('.text').show();
+					$('.pics').hide();
+					$('.voice').hide();
+					$('.pic').hide();
+					$('.video').hide();
+					$('.music').hide();
+				}else if($(this).val() == '2') {
+					$('.text').hide();
+					$('.pics').show();
+					$('.voice').hide();
+					$('.pic').hide();
+					$('.video').hide();
+					$('.music').hide();
+				}else if($(this).val() == '3') {
+					$('.text').hide();
+					$('.pics').hide();
+					$('.voice').show();
+					$('.pic').hide();
+					$('.video').hide();
+					$('.music').hide();
+				}else if($(this).val() == '4') {
+					$('.text').hide();
+					$('.pics').hide();
+					$('.voice').hide();
+					$('.pic').show();
+					$('.video').hide();
+					$('.music').hide();
+				}else if($(this).val() == '5') {
+					$('.text').hide();
+					$('.pics').hide();
+					$('.voice').hide();
+					$('.pic').hide();
+					$('.video').show();
+					$('.music').hide();
+				}else if($(this).val() == '6') {
+					$('.text').hide();
+					$('.pics').hide();
+					$('.voice').hide();
+					$('.pic').hide();
+					$('.video').hide();
+					$('.music').show();
+				} else {
+					$('.text').hide();
+					$('.pics').hide();
+					$('.voice').hide();
+					$('.pic').hide();
+					$('.video').hide();
+					$('.music').hide();
+				}
+			}
+		});
+	});
+</script>
+<ul class="nav nav-tabs">
+	<!--li><a target="_blank" href="{php echo create_url('site/module/kfset', array('type' => '3', 'name' => 'kf', 'set' => 1))}">客服列表</a></li>
+	<li class="current"><a href="{php echo create_url('site/module/manage', array('name' => 'reg'))}">设置客服</a></li>
+    <li class="current"><a href="{php echo create_url('site/module/manage', array('type' => '3', 'name' => 'kf', 'id' => $id))}">所有记录</a></li-->					
+</ul>
+    <div class="main">
+        <h4 style="margin-left:8px">消息群发</h4>
+        	<form class="form-horizontal form"  action="" method="post">
+				<div class="notice" style="-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px;color:#556652;line-height:20px; padding:5px; margin:8px;background:#6fa8dc;border:1px #9ADF8F solid;">本功能仅高级接口发送，且只能发送给两天内给公众号推送过消息的用户！</div> 				
+                <table class="tb">
+                	<tr>
+						<th>发送模式：</th>
+						<td>
+							<input type="radio" name="sendmode" value="1" checked="checked" />&nbsp;即时模式&nbsp;
+							<input type="radio" name="sendmode" value="2" />&nbsp;计划任务模式
+						</td>
+					</tr>
+                    <tr class="mod1">
+						<th>单次发送的人数：</th>
+						<td>
+							<input type="text" class="span6"  name="pagesize" value="10" />
+							<div class="help-block">一次发送通知的用户数目，由于效率问题，建意此值保持默认</div>
+						</td>
+					</tr>
+					<tr class="mod2 hide">
+						<th>计划发送开始时间：</th>
+						<td>
+							{php echo tpl_form_field_date('starttime', date("Y-m-d H:i:s"), true)}
+							<div class="help-block">使用计划任务模式比较稳定,使用计划任务模式请先添加计划任务，执行地址：<br /><font color="red">{$_W['siteroot']}mobile.php?act=module&name=ifans&do=time_send&weid={$_W['weid']}</font></div>
+						</td>
+					</tr>
+                    <tr>
+						<th>选择群组：</th>
+						<td>
+							
+                <select id="select01" name="gid">
+                <option value="-1">不选择分组</option>
+                {loop $groups $row}
+                <option value="{$row['id']}">{$row['name']}({$row['count']}人)</option>
+                {/loop}
+                
+              </select>
+              
+							<div class="help-block">选择给那个群组内的人员发送</div>
+						</td>
+					</tr>
+					<tr>
+						<th>消息类型</th>
+						<td>
+							<input type="radio" name="msgtype" value="1" checked /> 文本 
+							<input type="radio" name="msgtype" value="2" /> 图文 
+							<input type="radio" name="msgtype" value="3" /> 语音
+							<input type="radio" name="msgtype" value="4" /> 图片
+						<!--<input type="radio" name="msgtype" value="5" /> 视频 
+							<input type="radio" name="msgtype" value="6" /> 音乐-->
+						</td>
+					</tr>
+					<tr class="text">
+						<th>群发文本消息：</th>
+						<td>
+							<textarea name="message" id="send_message" cols="40" class="span7" style="height:200px;"></textarea>
+							<div class="help-block">需要群发的内容，请输入文字文字 <a class="iconEmotion" href="javascript:;" inputId="send_message">表情</a></div>
+						</td>
+					</tr>
+					<tr class="pics hide">
+						<th>群发图文消息：</th>
+						<td>
+							<input type="text" name="pics" />
+							<div class="help-block">输入对应文章的id，用半角,隔开</div>
+						</td>
+					</tr>
+					<tr class="voice hide">
+						<th>群发语音消息：</th>
+						<td>
+							<input type="text" name="voice" />
+							<div class="help-block">输入对应语音消息id</div>
+						</td>
+					</tr>
+					<tr class="pic hide">
+						<th>群发图片消息：</th>
+						<td>
+							<input type="text" name="pic" />
+							<div class="help-block">输入图片id</div>
+						</td>
+					</tr>
+					<tr class="video hide">
+						<th>群发视频消息：</th>
+						<td>
+							<input type="text" name="video" />
+						</td>
+					</tr>
+					<tr class="music hide">
+						<th>群发音乐消息：</th>
+						<td>
+							<input type="text" name="music" />
+						</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>
+							<input name="submit" type="submit" value="提交" class="mt10 btn grid-2 alpha" />
+							<input type="hidden" name="token" value="{$_W['token']}" />
+						</td>
+					</tr>
+				</table>
+                </form>
+            
+    </div>
+{template 'common/footer'}

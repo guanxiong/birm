@@ -1,0 +1,31 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('site/module/groups',array('name'=>'ifans','state'=>''));}">分组列表</a></li>
+	<li><a href="">粉丝列表</a></li>
+	<li><a href="{php echo create_url('site/module/addgroup',array('name'=>'ifans','state'=>''));}">新建分组</a></li>
+	<li class="active"><a href="{php echo create_url('site/module/editgroup',array('name'=>'ifans','state'=>''));}">修改分组名称</a></li>
+</ul>
+<div class="main">
+	<div class="search">
+		<form action="" method="post">
+			<input type="hidden" name="id" value="{$row['id']}" />
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th>分组名</th>
+					<td>
+						<input class="span8" name="groupname" type="text" value="{$row['name']}">
+					</td>
+				</tr>
+				 <tr class="search-submit">
+					<td colspan="2">
+						<input type="submit" name="submit" value="确定修改" class="btn pull-right span2" />
+						<input type="hidden" name="token" value="{$_W['token']}" />
+					</td>
+				 </tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+</div>
+{template 'common/footer'}

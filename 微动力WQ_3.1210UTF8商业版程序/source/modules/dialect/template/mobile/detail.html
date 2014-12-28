@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <title>{$r[dialect]}</title>
+    <link href="{APP_PUBLIC}css/bootstrap.min.css?m=0711" rel="stylesheet">
+    <link rel="stylesheet" href="{APP_PUBLIC}css/style.css?m=0711" />
+    <style type="text/css">
+    body {
+        background: #000 url({if !empty($r[photo])}{php echo toimage($r[photo])}{else}{APP_PUBLIC}img/banner.jpg{/if}) top center no-repeat !important;
+        background-size:100% auto !important;
+    }
+    </style>
+</head>
+
+<div class="container">
+    <div class="text-center header">
+        <h1 class="bold">{$r[title]}</h1>
+        <p>已有{$r[people]}人参与测试</p>
+        <div class="avatar1 text-center">
+            <div class="img-circle">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </div>
+        </div>
+    </div>
+    <div id="bd" class="panel">
+        <div id="panel1" class="panel-body">
+            <dl>
+                <dd style="font-size:18px;">{$r[smalltext]}</dd>
+            </dl>
+            <div class="buttons">
+                <a href="#result" class="btn btn-lg btn-danger btn-block" onclick="return next(0);">开始测试</a>
+            </div>
+        </div>
+{loop $questions $q}
+    {php $answer=$q['answers'];}
+    {php $score=$q['score'];}
+        <div id="panel2" class="panel-body js_answer" style="display: none;">
+            <dl><dd>{$q['question']}</dd></dl>
+            <ul class="list-group js_group">
+                {loop $answer $k $tit}
+                <li class="list-group-item" data-score="{$score[$k]}" onclick="return toggle(this);"><i class="glyphicon glyphicon-unchecked"></i> {$tit}</li>
+                {/loop}
+            </ul>
+        </div>
+{/loop}
+{php $score = $scoretext[score]; }
+{php $j=1;}
+{loop $scoretext['scoretext'] $key $scoretext}
+        <div id="panel3" class="panel-body js_result" data-id="{$key}" style="display:none;">
+            <h1 class="bold text-danger">{if $j==count($score)}哇噻，满分！{else}没到{$score[$j]}分{/if}</h1>
+            <hr>
+            <dl>
+                <dt>详细分析:</dt>
+                <dd>
+                    <p>{$scoretext}</p>
+                </dd>
+            </dl>
+            <div class="buttons">
+                <a href="javascript:void(0)" class="btn btn-lg btn-success" style="width:100%" onclick="$('#mcover').show()">分享给朋友(圈)</a>
+            </div>
+        </div>
+{php $j++;}
+{/loop}
+    </div>
+    {if !empty($setting['thumb']) && !empty($setting['thumb_url'])}
+    <div class=""><a href="{$setting['thumb_url']}"><img src="{$setting['thumb']}" style="width:100%" /></a></div>
+    {/if}
+</div>
+<div class="footer text-center navbar-fixed-bottom">
+    <div class="container"><a href="{$r['share_url']}">&copy;{$_W['account']['name']}</a></div>
+</div>
+<div id="mcover" onclick="$(this).hide()">
+    <img src="./source/modules/site/template/image/guide.png">
+</div>
+<div class="loads" style="display:bolck"><i></i></div>
+<script src="{APP_PUBLIC}js/zepto.min.js"></script>
+<script src="{APP_PUBLIC}js/WeixinApi.min.js"></script>
+<script type="text/javascript">
+    var total = '{$r[titlenum]}';
+    var tScore = 0;
+    var scoreArr = new Array();
+{loop $score $key $v}
+        scoreArr[{$key}] = {$v};
+{/loop}
+    function next(t){
+        $(".panel-body").hide();
+        $(".js_answer").eq(t).show();
+    }
+
+    function result(t){
+        console.log("得分"+tScore);
+        $(".panel-body").hide();
+        for (var i = scoreArr.length - 1; i >= 0; i--) {
+            if ( parseInt(t) >= parseInt(scoreArr[i]) ) {
+                console.log("应该弹"+i);
+                $(".js_result").eq(i).show();
+                $.get("{php echo $this->createMobileUrl('detail')}", {id: "{$r[id]}"});
+                return false;
+            }
+            else{
+                continue;    
+            }
+        };
+    }
+
+    function toggle(t){
+        $(".list-group-item").removeClass('active')
+        var score = $(t).attr("data-score");
+        tScore  = parseInt(tScore) + parseInt(score);
+        $(t).find('i').removeClass('glyphicon-unchecked').addClass('glyphicon-ok');
+        var t = $(".js_answer").index($(t).parents(".js_answer")) + 1;
+        if(t == total){
+            result(tScore);
+        }
+        else{
+            setTimeout(function(){next(t);},300);
+        }
+    }
+    Zepto(function($){
+        $('.loads').hide();
+    })
+    WeixinApi.ready(function(Api) {
+        Api.showOptionMenu();
+        var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : '{if !empty($r['photo'])}{php echo toimage($r['photo'])}{else}{$_W['siteroot']}{APP_PUBLIC}img/banner.jpg{/if}',
+{if $setting['share_type']==1 && $r['share_url']}
+            "link" : '{$r['share_url']}',
+{else}
+            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('detail',array('id'=>$r[id]))}',
+{/if}
+            "desc" : '{$r['share_desc']}',
+            "title" : '{$r['share_title']}'
+        };
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享被用户自动取消
+            cancel : function(resp) {
+                alert("{$r['share_cancel']}");
+            },
+            // 分享失败了
+            fail : function(resp) {
+                alert("分享失败，可能是网络问题，一会儿再试试？");
+            },
+            // 分享成功
+            confirm : function(resp) {
+                $.get("{php echo $this->createMobileUrl('detail')}", {id: "{$r[id]}",op:'share'});
+                window.location.href='{$r['share_url']}';
+            },
+        };
+        Api.shareToFriend(wxData,wxCallbacks);
+        Api.shareToTimeline(wxData,wxCallbacks);
+        Api.shareToWeibo(wxData,wxCallbacks);
+    });
+</script>
+<div class="hide">{$_W['setting']['copyright']['statcode']}</div>
+</body>
+</html>

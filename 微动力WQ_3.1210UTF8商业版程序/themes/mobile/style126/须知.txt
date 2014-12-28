@@ -1,0 +1,49 @@
+完全使用该模板需要做几个工作
+1.source\controller\mobile\module.ctrl.php
+--------------------------------------------
+$_W['styles'] = mobile_styles();
+$_W['account']['quickmenu'] = iunserializer($_W['account']['quickmenu']);
+if (!empty($_W['account']['quickmenu']['enablemodule']) && in_array($modulename, $_W['account']['quickmenu']['enablemodule'])) {
+	$_W['quickmenu']['template'] = !empty($_W['account']['quickmenu']['template']) ? '../quick/' . $_W['account']['quickmenu']['template'] : '../quick/default';
+	$_W['quickmenu']['menus'] = mobile_nav(3);
+}
+//将微站导航存入全局变量
+$_W['nav']=mobile_nav(1);
+--------------------------------------------
+在上面代码位置加入“//”下面的代码$_W['nav']=mobile_nav(1);，目的是将导航放入全局变量中，供其他页面调用。
+
+2.source\modules\site\site.php
+--------------------------------------------
+	public function doMobileList() {
+		global $_GPC, $_W;
+		$cid = intval($_GPC['cid']);
+		$category = pdo_fetch("SELECT * FROM ".tablename('article_category')." WHERE id = '{$cid}' ");
+		if (empty($category)) {
+			message('分类不存在或是已经被删除！');
+		}
+		$title = $category['name'];
+		//独立选择分类模板
+        if (!empty($category['template'])) {
+            $_W['account']['template'] = $category['template'];
+        }
+////////*********************************///////二次开发，添加频道页
+        /*include $this->template('list');    //原有代码*/
+        $sonnum = pdo_fetch("SELECT COUNT(id) AS num FROM " . tablename('article_category') . " WHERE parentid = '{$cid}' ");
+        if (!empty($sonnum)) {
+            if($sonnum[num]>0){
+                include $this->template('category');
+            }else{
+                include $this->template('list');
+            }
+        }else{
+            include $this->template('list');
+        }
+	}
+-------------------------------------------------
+将此函数修改为以上的，目的是使用category模板，当存在CMS里有一级分类，二级分类时，会有封面模板
+
+3.必须在账号中添加微信名称，因为模板顶部的大字就是微信名称
+4.文章必须有正方形的缩略图，然后列表页就会显示
+5.文章详情页底部会有推荐文章列表，将相应文章设置为推荐，就可以显示到这个位置
+6.首页的封面图在“微站功能-》幻灯片设置”中添加，大小480*751PX，可以按照此比例调整，最多显示4张。
+7.导航下面的英文，需要编辑相应导航的“描述”字段，然后会调用

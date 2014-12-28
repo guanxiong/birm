@@ -1,0 +1,22 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>模块设置</h4>
+		<table class="tb">
+			<tr>
+				<th>提醒接收邮箱</th>
+				<td>
+					<input type="text" name="noticeemail" class="span5" value="{$settings['noticeemail']}" />
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

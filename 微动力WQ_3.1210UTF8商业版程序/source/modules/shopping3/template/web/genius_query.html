@@ -1,0 +1,11 @@
+<table class="table table-hover">
+	<tbody>
+		{loop $list $item}
+		<tr>
+			<td><a href="javascript:;" onclick='select_entry({php echo json_encode($item);})'>{$item['title']}</a></td>
+			<td style="width:80px;"><a href="javascript:;" onclick='select_entry({php echo json_encode($item);})'>添加</a></td>
+		</tr>
+		{/loop}
+	</tbody>
+</table>
+{$pager}

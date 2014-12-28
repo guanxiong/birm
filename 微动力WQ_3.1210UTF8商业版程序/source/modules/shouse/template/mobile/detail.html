@@ -1,0 +1,82 @@
+
+{php $header_off=1;}
+{template 'header'}
+    <div class="head">
+        <a href="javascript:history.go(-1);" class="bn pull-left"><i class="glyphicon glyphicon-chevron-left"></i></a>
+        <span class="title text-center"><!-- weibaza --></span>
+        <a href="{php echo $this->createMobileUrl('member')}" class="bn pull-right"><i class="glyphicon glyphicon-user"></i></a>
+    </div>
+    <div class="container mt15">
+        <div class="page-bizinfo">
+            <div class="header">
+                <h1 id="news-title">{$title}</h1>
+                <p class="news-info"><span id="post-date" class="news-meta no-extra">{php echo date("Y-m-d", $detail['createtime']);}</span>
+                    <a href="javascript:viewProfile();" id="post-user" class="news-meta">
+                        <span class="text-ellipsis"> </span><i class="icon_link_arrow"></i>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div id="page-content" class="page-content">
+            <div id="img-content">
+                <div class="text f16">
+		{$detail['content']}     </div>
+            </div>
+        </div>
+ <div class="page-footer text-center">
+            <span class="btn btn-info" onclick="$('#mcover').show()"><i class="glyphicon glyphicon-share-alt"></i> 转发此文</span>
+            <span class="btn btn-info" onclick="$('#mcover').show()"><i class="glyphicon glyphicon-user"></i> 分享朋友（圈）</span>
+        </div>
+        <div id="mcover" onclick="$(this).hide()">
+            <img src="http://wx.admin9.com/source/modules/site/template/image/guide.png">
+        </div>
+    </div>
+    <script type="text/javascript">
+        require(['jquery','base']);
+        //弹出框中图片的切换
+        (function(){
+            var imgsSrc = [];
+            function reviewImage(src) {
+                if (typeof window.WeixinJSBridge != 'undefined') {
+                    WeixinJSBridge.invoke('imagePreview', {
+                        'current' : src,
+                        'urls' : imgsSrc
+                    });
+                }
+            }
+            function onImgLoad() {
+                var imgs = document.getElementById("img-content");
+                imgs = imgs ? imgs.getElementsByTagName("img") : [];
+                for( var i=0,l=imgs.length; i<l; i++ ){//忽略第一张图 是提前加载的loading图而已
+                    var img = imgs.item(i);
+                    var src = img.getAttribute('data-src') || img.getAttribute('src');
+                    if (src.indexOf('http')<0){
+                        src='http://'+window.location.host+'/'+src;
+                    }
+                    if( src ){
+                        imgsSrc.push(src);
+                        (function(src){
+                            if (img.addEventListener){
+                                img.addEventListener('click', function(){
+                                    reviewImage(src);
+                                });
+                            }else if(img.attachEvent){
+                                img.attachEvent('click', function(){
+                                    reviewImage(src);
+                                });
+                            }
+                        })(src);
+                    }
+                }
+            }
+            if( window.addEventListener ){
+                window.addEventListener('load', onImgLoad, false);
+            }else if(window.attachEvent){
+                window.attachEvent('load', onImgLoad);
+                window.attachEvent('onload', onImgLoad);
+            }
+        })();
+    </script>
+
+{php $footer_off=1;}
+{template 'footer'}

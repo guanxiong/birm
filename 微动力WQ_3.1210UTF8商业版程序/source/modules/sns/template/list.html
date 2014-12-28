@@ -1,0 +1,491 @@
+{template 'mobile/header2'}
+<div class="navbar navbar-fixed-top">
+        	 <div class="navbar-inner">
+             	<div class="container">
+                 <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+           		 <span class="icon-bar"></span>
+           		 <span class="icon-bar"></span>
+            	 <span class="icon-bar"></span>
+          		</button>
+                <a class="brand" href="" weiba-link="{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'd' => intval($_GPC['id'])))}"><i class="icon-chevron-left"></i></a>
+                <a class="brand" href="#" title="{$title}" weiba-desc="{$sns['rule']}">{$title}</a>
+                <a class="brand" href="#post" weiba-icon="{if empty($user['avatar'])} ./resource/image/noavatar_middle.gif{else}{$_W['attachurl']}{$user['avatar']}{/if}"><i class="icon-edit"></i></a>
+                <div class="nav-collapse collapse">
+                	<ul class="nav">
+					
+                 	<li><a tabindex="-1" href="#"><i class="icon-home"></i>回首页</a></li>
+    				<li><a tabindex="-1" href="#"><i class="icon-user"></i>我的信息</a></li>
+                    <li><a tabindex="-1"  href="{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'rid' => intval($_GPC['id']),'login'=>'out'))}">(退出)</a></li>
+    				<li><a tabindex="-1" href="#"><i class="icon-picture"></i>我的相册</a></li>
+                    <li class="divider"></li>
+                    <li><a id="share" href="#" weiba-desc="{php echo htmlspecialchars($sns['rule'])}" weiba-icon="{if empty($user['avatar'])} ./resource/image/noavatar_middle.gif{else}{$_W['attachurl']}{$user['avatar']}{/if}" title="{$title}" weiba-link="{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'd' => intval($_GPC['id'])))}">以上内容敬待开放</a></li>
+                    {if $pmem['status']==1}
+                     <li><a tabindex="-1" href="{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzshow', 'rid' => intval($_GPC['id']),'admin'=>1))}"><i class="icon-list-alt"></i>吧主中心</a></li>
+                     {/if}
+  					</ul>
+           		  </div>
+              </div> 	
+          </div>
+</div>
+<div class="container-fluid">
+	<div  class="row-fluid">
+    	
+    	 <div class="span12">
+        			<blockquote >
+    				<small><strong>微吧 <cite title="Source Title">本吧规则</cite></strong></small>
+  					<p style="font-size:9px">{$sns['rule']}</p>
+					</blockquote>
+         </div>    
+        <div class="span12">
+                	 <div class="media">
+                         <a class="pull-left" href="#">
+                           <img class="img-circle pull-left" style="width:45px; height:45px;"  src="{if empty($user['avatar'])} ./resource/image/noavatar_middle.gif{else}{$_W['attachurl']}{$user['avatar']}{/if}" />
+                         </a>
+                         <div class="media-body">
+                              <h4 class="media-heading">
+                              <span class="icon-book"></span><small class="helper-font-small">主题:&nbsp;{$posttotal}</small>
+                              <span class="icon-comment"></span><small class="helper-font-small">贴子:&nbsp;{$replytotal}</small>
+                              </h4>
+                              <p style="font-size:9px">亲爱的{$user['nickname']}你的积分：{$user['credit']}您最后活跃时间：{php echo date('Y-m-d H:i:s', $user['createtime']);}<br />
+                              地点：{$user['city']}
+                              </p>
+                         </div>
+                	</div>
+                    
+         </div>
+     </div>
+    
+    
+    
+	<div class="row-fluid">
+         <div class="span12">
+              <!--贴子切换卡 -->
+              <ul class="nav nav-pills">
+                  <li {if $_GPC['jh']==1}><a href="{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}#recent-orders">{else}class="active"><a data-toggle="tab" href="#recent-orders">{/if}贴子列表</a></li>
+                  <li {if $_GPC['jh']==1}class="active"><a data-toggle="tab"  href="#recent-jh" >{else}><a  href="{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id']),'jh'=>1))}" >{/if}精华贴</a></li>
+                 <li><a data-toggle="tab" href="#recent-hot">十大热门</a></li><!--/tab menus-->
+              </ul>
+              <!-- 切换卡内内容 -->
+              <div class="tab-content">
+               <div class="tab-pane fade active in" id="recent-orders">
+                   		<div class="widget-box">
+							<div class="widget-title">
+                            <span class="icon"><i class="icon-file"></i></span><h5>贴子列表</h5><span title="total posts" class="label label-info tip-left">{$posttotal}</span>
+                            </div>
+							<div class="widget-content nopadding">
+								<ul class="recent-posts">
+					
+                           {loop $postlist $i $row}
+                            		<li {if $row['top']==1}class="info"{/if}>
+										<div class="user-thumb">
+											<a href="{php echo create_url('index/module', array('name' => 'sns', 'do' => 'view', 'gid' => intval($_GPC['id']),'id'=>$row['post_id']))}"><img width="40" height="40" alt="User" src="{if empty($member[$i]['avatar'])} ./resource/image/noavatar_middle.gif{else}{$_W['attachurl']}{$member[$i]['avatar']}{/if}" />
+                                            </a>
+										</div>
+                                        <div class="article-post">
+											<span class="user-info"><span class="icon-pencil"></span>
+                                            {if empty($member[$i]['nickname'])}匿名{else}{$member[$i]['nickname']}{/if} 
+                             		 		<span class="icon-time"></span>{if $row['last_reply_uid']==0} {php echo date('Y-m-d H:i:s', $row['post_time']);} {else} {$row['last_reply_uid']}在{php echo date('Y-m-d H:i:s', $row['last_reply_time']);}回复{/if}
+                                             	<span class="pull-right">
+                                    			{if $row['top']!=0}<span class="text-error"><i class="icon-circle-arrow-up"></i>&nbsp;</span>{/if}
+                                    			{if $row['digest']!=0}<span class="text-error"><i class="icon-star"></i>&nbsp;</span>{/if}
+                                    			{if $row['lock']!=0}<span class="text-error"><i class="icon-lock"></i>&nbsp;</span>{/if}
+                                    			<i class="icon-eye-open"></i>({$row['read_count']})
+                                    			<i class="icon-comment"></i>({$row['reply_count']})
+                                    			</span> 
+                                            </span>
+											<p onclick="javascript:window.location.href='{php echo create_url('index/module', array('name' => 'sns', 'do' => 'view', 'gid' => intval($_GPC['id']),'id'=>$row['post_id']))}'">
+												<a href="{php echo create_url('index/module', array('name' => 'sns', 'do' => 'view', 'gid' => intval($_GPC['id']),'id'=>$row['post_id']))}">{php echo htmlspecialchars($row['title'])}</a>
+                                                <br />
+                                        		<small>{php echo cutstr(emotion($row['content']), 50)}</small>
+                                                
+											</p>
+                                            {if $pmem['status']==1}
+                                        <div class="actions">
+                                                <button id="admintop" data-pid="{$row['post_id']}" class="btn btn-mini{if $row['top']==0} btn-primary" >置顶{else} btn-danger" >取顶{/if}</button>
+                                                 <button  id="adminjh" data-pid="{$row['post_id']}"  class="btn btn-mini{if $row['digest']==0} btn-primary" >加精{else} btn-danger" >取精{/if}</button>
+                                                  <button  id="adminlock" data-pid="{$row['post_id']}"  class="btn btn-mini{if $row['lock']==0} btn-primary" >锁定{else} btn-danger" >解锁{/if}</button>
+                                                 <button  id="admindel" data-pid="{$row['post_id']}"  class="btn btn-mini btn-danger " >删除</button>
+                                                 <button  id="adminblack" data-pid="{$row['post_id']}" data-user="{$member[$i]['id']}"  class="btn btn-mini btn-danger " >禁言</button>
+                                              </div>   
+                                                {/if}
+                                               	
+                            			</div>
+									</li>
+                            
+                               {/loop}
+                         </ul>
+					</div>
+				</div>
+                          {$pager}
+              </div>
+              <!--普通贴子列表END-->
+              <!--精华贴贴子列表-->
+              <div class="tab-pane fade" id="recent-jh">
+              		 
+              </div>
+              <!--精华贴END-->
+              <div class="tab-pane fade" id="recent-hot">
+               热贴:敬请期待此功能
+              </div>
+          </div>    
+         </div>
+                        
+    </div>                           
+
+	<div class="row-fluid" id="post">
+		<div class="span12">
+			<h3><i class="icon-edit"></i>发表贴子</h3>
+		
+		<input type="hidden" name="from_user" value="{$_SESSION['user']}" id="from_user"/>
+		<input type="hidden" name="id" value="{$_GPC['id']}" id="id"/>
+		<input type="text" id="title" name="title" placeholder="请输入标题" value="" class="span12" />
+		<p ><textarea style="height:150px;" name="content" id="content" class="span12 textarea" cols="60"></textarea></p>
+        <p class="help-block">需要发的内容 请不要少于20字。</p>
+        <div style="margin:20px;"><input type="submit" name="submit" value="发表" id="submit" class="btn btn-large"/></div>
+		<input type="hidden" name="token" value="{$_W['token']}" />
+    	
+  
+    	</div>
+	</div>
+
+<script type="text/javascript">
+kindeditor($('#content'), {
+		basePath : './resource/script/kindeditor/',
+		themeType : 'simple',
+		langType : 'zh_CN',
+		uploadJson : './index.php?act=attachment&do=upload',
+		resizeType : 1,
+		allowImageUpload : true,
+		afterChange : function() {
+			this.sync();
+		},
+		
+		items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat','|','insertorderedlist', 'insertunorderedlist', 
+				 'forecolor', 'hilitecolor', 'fontname', 'fontsize',  '|', 'link', 'unlink', 'emoticons', 
+				 'shcode', 'image',  'quote', '|', 'removeformat','baidumap','source', 'fullscreen'],
+
+	});
+
+//贴子列表相关控制
+$(function() {
+			$('.recent-posts').delegate('li #admintop', 'click', function(){
+				 //控制置顶开关
+				 var postid=$(this).attr('data-pid');
+				 if($(this).hasClass('btn-primary')) { //取消置顶
+					var top=1;
+					
+				} 
+				if($(this).hasClass('btn-danger')) { //置顶
+					var top=0;
+					
+				}
+				//操作置顶
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzadmin'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$_SESSION['user']}',
+			  	'top': top,
+				'admin':1,
+				'id':postid,
+				'rid':{$_GPC['id']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						 if($(this).hasClass('btn-primary')) { //取消置顶
+							$(this).removeClass('btn-primary').addClass('btn-danger').html('取顶');
+						} 
+						if($(this).hasClass('btn-danger')) { //置顶
+							$(this).removeClass('btn-danger').addClass('btn-primary').html('置顶');
+						}
+						message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			//加精华
+			$('.recent-posts').delegate('li #adminjh', 'click', function(){
+				 
+				 var postid=$(this).attr('data-pid');
+				 if($(this).hasClass('btn-primary')) {
+					var jh=1;					
+				} 
+				if($(this).hasClass('btn-danger')) {
+					var jh=0;
+					
+				}
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzadmin'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$_SESSION['user']}',
+			  	'digest': jh,
+				'admin':2,
+				'id':postid,
+				'rid':{$_GPC['id']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						 if($(this).hasClass('btn-primary')) { //取消置顶
+							$(this).removeClass('btn-primary').addClass('btn-danger').html('取精');
+						} 
+						if($(this).hasClass('btn-danger')) { //置顶
+							$(this).removeClass('btn-danger').addClass('btn-primary').html('加精');
+						}
+						message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			//删贴
+			$('.recent-posts').delegate('li #admindel', 'click', function(){
+				 
+				 var postid=$(this).attr('data-pid');
+				 var is_del=1;					
+				
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzadmin'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$_SESSION['user']}',
+			  	'is_del': is_del,
+				'admin':3,
+				'id':postid,
+				'rid':{$_GPC['id']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}', 'success');
+						$(this).parent().find('div').html('已经删除');
+					return;
+             
+            } else {
+               message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			//关小黑屋
+			
+			$('.recent-posts').delegate('li #adminblack', 'click', function(){
+				 
+				 var postid=$(this).attr('data-pid');
+				 var from_user=$(this).attr('data-user');
+				 var black=1;					
+				
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzadmin'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				  'from_user' : '{$_SESSION['user']}',
+				'blackid' : from_user,
+			  	'black': black,
+				'admin':4,
+				'id':postid,
+				'rid':{$_GPC['id']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			//锁贴
+			$('.recent-posts').delegate('li #adminlock', 'click', function(){
+				 
+				 var postid=$(this).attr('data-pid');
+				 if($(this).hasClass('btn-primary')) { //取消
+					var lock=1;					
+				} 
+				if($(this).hasClass('btn-danger')) { //锁定
+					var lock=0;					
+				}
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzadmin'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$_SESSION['user']}',
+			  	'lock': lock,
+				'admin':5,
+				'id':postid,
+				'rid':{$_GPC['id']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			
+		});
+
+
+jQuery(function($) {
+	function htmlencode(str) {
+ str = str.replace(/&/g, '&amp;');
+ str = str.replace(/</g, '&lt;');
+ str = str.replace(/>/g, '&gt;');
+ str = str.replace(/(?:t| |v|r)*n/g, '<br />');
+ str = str.replace(/  /g, '&nbsp; ');
+ str = str.replace(/t/g, '&nbsp; &nbsp; ');
+ str = str.replace(/x22/g, '&quot;');
+ str = str.replace(/x27/g, '&#39;');
+ return str;
+}
+function len(s) { 
+var l = 0; 
+var a = s.split(""); 
+for (var i=0;i<a.length;i++) { 
+if (a[i].charCodeAt(0)<299) { 
+l++; 
+} else { 
+l+=2; 
+} 
+} 
+return l; 
+}
+	$("#submit").click(function() {
+		var title=htmlencode($("#title").val());
+		var content= $("#content").val();
+		if (title == '') {
+        alert("请输入标题");
+        return;
+   		 }
+		 
+		 if(len(title)>30){
+			 alert("标题字数不能超过30个字符");
+        return; 
+			 }
+  		 if (content == '') {
+        alert("请输入内容");
+        return;
+    	}
+		
+			$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'post'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$_SESSION['user']}',
+			  	'id':{$_GPC['id']},
+				'title': title,
+				'content':content,
+			  },
+			  success: function(data){
+				if (data.message.status== 0) {
+					//alert(data.message.message);
+					message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}', 'success');
+					$(".recent-posts").prepend('<table><tr><td><div class="media"><a class="pull-left" href="#"><img class="img-circle" style="width:45px; height:45px;" src="{if empty($user['avatar'])} ./resource/image/noavatar_middle.gif{else}{$_W['attachurl']}{$user['avatar']}{/if}" /></a><div class="media-body"><h4 class="media-heading"><a href="#">'+title+'</a><small class="helper-font-small" style="margin-left:15px"><span class="icon-pencil"></span>{if empty($user['nickname'])}匿名{else}{$user['nickname']}{/if}<span class="icon-time"></span>{php echo date('Y-m-d H:i:s', $_W['timestamp']);}</small></h4><p>'+content+'</p><div class="btn-group  pull-right "><a href="#" class="btn btn-mini">查看(0)</a><a href="#" class="btn btn-mini">评论(0)</a></div></div></div></td></tr></table>');
+					$("#post").html('<textarea style="height:150px;" name="content" id="content" class="span12 textarea" cols="60" disabled></textarea><p class="help-block">请刷新后再发表 </p><div style="margin:20px;"><input type="submit" name="submit" value="发表" id="submit" class="btn btn-large" disabled/></div>');
+					return;	
+				}
+				else
+				{
+					message(data.message.message, "{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}", 'error');
+					 return;
+					}
+			}
+	});
+		
+		
+	});
+		
+});
+
+//分享功能测试
+ var $body = $('#share');
+
+//测试分享功能
+var appId = 'wx2ab90e75a21662b0';
+var imgUrl = $body.attr('weiba-icon');
+var Link = $body.attr('weiba-link');
+var Title = $body.attr('title');
+var Content = $body.attr('weiba-desc');
+
+window.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	// 发送给好友
+    WeixinJSBridge.on('menu:share:appmessage', function(argv){
+        WeixinJSBridge.invoke('sendAppMessage',{
+                              "appid":appId,
+                              "img_url":imgUrl,
+                              "img_width":"640",
+                              "img_height":"640",
+                              "link":Link,
+                              "desc":Content,
+                              "title":Title
+                              }, function(res) {
+                                _report('send_msg', res.err_msg);
+                              })
+    });
+
+    // 分享到朋友圈
+    WeixinJSBridge.on('menu:share:timeline', function(argv){
+        WeixinJSBridge.invoke('shareTimeline',{
+                              "img_url":imgUrl,
+                              "img_width":"640",
+                              "img_height":"640",
+                              "link":Link,
+                              "desc":Content,
+                              "title":Title
+                              }, function(res) {
+                                _report('timeline', res.err_msg);
+                              });
+    });
+
+    // 分享到微博
+    WeixinJSBridge.on('menu:share:weibo', function(argv){
+        WeixinJSBridge.invoke('shareWeibo',{
+                              "content":Content,
+                              "url":Link,
+                              }, function(res) {
+                                _report('weibo', res.err_msg);
+                              });
+    });
+
+}, false)
+});	
+</script>
+{template 'mobile/footer'}

@@ -1,0 +1,30 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo $this->createWebUrl('set')}">基本设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('smsset')}">短信设置</a></li>		
+</ul>
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+	<input type="hidden" name="parentid" value="{$set['id']}" />
+		<h4>微团购基本设置</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">团购站点名称</label></th>
+				<td>
+					<input type="text" name="site_name" class="span3" value="{$set['site_name']}" />
+				</td>
+			</tr>
+			 
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="id" value="{$set['id']}" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

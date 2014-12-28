@@ -1,0 +1,593 @@
+{template 'mobile/header2'}
+<div class="navbar navbar-fixed-top">
+        	 <div class="navbar-inner">
+             	<div class="container">
+                 <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+           		 <span class="icon-bar"></span>
+           		 <span class="icon-bar"></span>
+            	 <span class="icon-bar"></span>
+          		</button>
+                <a class="brand" href="{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['gid'])))}"><i class="icon-chevron-left"></i></a>
+                <a class="brand" href="">{php echo cutstr($post['title'], 8)}</a>
+                <a class="brand" href="#huifu"><i class="icon-edit"></i></a>
+                <div class="nav-collapse collapse">
+                	<ul class="nav">
+					
+                 	<li><a tabindex="-1" href="{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['gid'])))}"><i class="icon-home"></i>回首页</a></li>
+    				<li><a tabindex="-1" href="#"><i class="icon-user"></i>我的信息</a></li>
+    				<li><a tabindex="-1" href="#"><i class="icon-picture"></i>我的相册</a></li>
+                    <li class="divider"></li>
+                    <li><a id="share" href="#" weiba-desc="{php echo cutstr(htmlspecialchars($post['content']), 80)} " weiba-icon="{if empty($post['avatar'])} ./resource/image/noavatar_middle.gif{else}{$_W['attachurl']}{$post['avatar']}{/if}" title="{$post['title']}" weiba-link="{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'view', 'id' => intval($id),'rid' => intval($rid)))}">以上内容敬待开放</a></li>
+                    {if $pmem['status']==1}
+                     <li><a tabindex="-1" href="{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzshow', 'rid' => intval($_GPC['gid']),'admin'=>1))}"><i class="icon-list-alt"></i>吧主中心</a></li>
+                     {/if}
+  					</ul>
+           		  </div>
+              </div> 	
+          </div>
+</div>
+<div class="container-fluid">
+
+	
+	<div class="row-fluid">
+    <!-- 主题贴子开始 -->
+     	
+        <div class="widget-box">
+          <div class="widget-title dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon"><i class="icon-user"></i>
+            {if empty($post['nickname'])}匿名{else}{$post['nickname']} {/if}<span class="caret"></span></span> </a>
+          <h5 >{php echo htmlspecialchars($post['title'])} </h5>  
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><img class="pull-left"  style="width:45px; height:45px;"  src="{if empty($post['avatar'])} ./resource/image/noavatar_middle.gif{else}{$_W['attachurl']}{$post['avatar']}{/if}" ></a>
+          <span class="icon right"><i class="icon-cog"></i>{$post['nickname']}</span></li>
+         
+         <li role="presentation"> 性别：{$post['sex']}</li>
+          
+         <li role="presentation"> 积分：{$post['credit']}</span>
+          </li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">地址：{$post['city']}</a></li>
+          <li role="presentation">
+          {if $pmem['status']==1}
+                                        
+                                                <button id="admintop" data-pid="{$post['post_id']}" class="btn btn-mini{if $post['top']==0} btn-primary" >置顶{else} btn-danger" >取顶{/if}</button>
+                                                 <button  id="adminjh" data-pid="{$post['post_id']}"  class="btn btn-mini{if $post['digest']==0} btn-primary" >加精{else} btn-danger" >取精{/if}</button>
+                                                  <button  id="adminlock" data-pid="{$post['post_id']}"  class="btn btn-mini{if $post['lock']==0} btn-primary" >锁定{else} btn-danger" >解锁{/if}</button>
+                                                 <button  id="admindel" data-pid="{$post['post_id']}"  class="btn btn-mini btn-danger " >删除</button>
+                                                 <button  id="adminblack" data-pid="{$post['post_id']}" data-user="{$post['id']}"  class="btn btn-mini btn-danger " >禁言</button>
+                                                {/if}
+          
+          </li>
+          </ul>
+          </div>
+          <div class="widget-content" id="widget-content"> 
+          {$post['content']} 
+          </div>
+     </div>
+     
+</div>
+
+<div class="row-fluid" id="reply">
+    <!-- 评论贴子开始 -->
+    {loop $reply $i $row} 
+    
+    <div class="mepopover bottom in" >
+            <div class="arrow"></div>
+             <h3 class="mepopover-title dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon"><i class="icon-user"></i>{if empty($userinfo[$i]['nickname'])}匿名{else} {$userinfo[$i]['nickname']}{/if} <span class="caret"></span></span> </a> <span class="pull-right" id="storey{$row['storey']}" data-storey="{$row['storey']}">{$row['storey']}楼</span>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><img class="pull-left"  style="width:45px; height:45px;"  src="{if empty($userinfo[$i]['avatar'])} ./resource/image/noavatar_middle.gif{else}{$_W['attachurl']}{$userinfo[$i]['avatar']}{/if}" ></a>
+          <span class="icon right"><i class="icon-cog"></i>{$userinfo[$i]['nickname']}</span></li>
+         
+         <li role="presentation"> 性别：{$userinfo[$i]['sex']}</li>
+          
+         <li role="presentation"> 积分：{$userinfo[$i]['credit']}</span>
+          </li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">地址：{$userinfo[$i]['city']}</a></li>
+           {if $pmem['status']==1}
+                  &nbsp;&nbsp; <button  id="adminreply" data-rid="{$row['reply_id']}"  class="btn btn-mini btn-danger " >删除</button>
+                   <button  id="adminrblack" data-rid="{$row['reply_id']}" data-user="{$userinfo[$i]['id']}"  class="btn btn-mini btn-danger " >禁言</button>
+                                                {/if}
+          
+          </ul>
+            
+           </h3> 
+            
+            <div class="mepopover-content">
+              <p>{php echo htmlspecialchars($row['content'])}</p>
+              <!--快速楼内回复-->
+             <p id="blockreply{$row['reply_id']}">
+            {loop $reply2 $row2}
+              {if $row['reply_id']==$row2['to_reply_id']}
+              <blockquote class="bs-callout bs-callout-danger">
+  				<p>{php echo htmlspecialchars($row2['content'])}</p>
+  				<small><i class="icon-user"></i>&nbsp;{if empty($row2['nickname'])}匿名{else}{$row2['nickname']}{/if}&nbsp;<i class="icon-time"></i>&nbsp; <cite title="Source Title">{php echo date('Y-m-d H:i:s', $row['ctime']);}</cite></small>
+			 </blockquote>
+                {if $pmem['status']==1}
+                  &nbsp;&nbsp; <button  id="adminreply" data-rid="{$row2['reply_id']}"  class="btn btn-mini btn-danger " >删除</button>
+                   <button  id="adminrblack" data-rid="{$row2['reply_id']}" data-user="{$row2['id']}"  class="btn btn-mini btn-danger " >禁言</button>
+                                                {/if}
+              
+             {/if}
+            {/loop}
+            </p>
+            <p>
+             <a class="btn  btn-small" id="r{$row['reply_id']}" style="margin-left:25px; margin-top:8px;" data-uid="{$row2['id']}" onmouseover="javascript:fastreply({$row['reply_id']})"><i class="icon-comment"></i>&nbsp;我要说一句</a>
+            
+             </p>
+            </div>
+   </div> 
+   
+  
+   {/loop}
+   
+   {$pager}                   
+
+</div>                               
+
+
+<div class="row-fluid">
+	<div class="span12">
+			<h3><i class="icon-edit"></i>回复贴子</h3>
+		<dd id="huifu"> 
+		<input type="hidden" name="from_user" value="{$_SESSION['user']}" id="from_user"/>
+		<input type="hidden" name="id" value="{$_GPC['id']}" id="id"/>
+        <input type="hidden" name="rid" value="{$_GPC['rid']}" id="rid"/>
+		<textarea style="height:150px;" name="content" id="content" class="span12 textarea" cols="60">请输入内容</textarea>
+        <p class="help-block">需要发的内容，目前只支持文字</p>
+        <div style="margin:20px;"><input type="submit" name="submit" value="发表" id="submit" class="btn btn-large "/></div>
+		<input type="hidden" name="token" value="{$_W['token']}" />
+    
+  		</dd>
+    </div>
+</div>
+
+<script type="text/javascript">
+kindeditor($('#content'), {
+		basePath : './resource/script/kindeditor/',
+		themeType : 'simple',
+		langType : 'zh_CN',
+		uploadJson : './index.php?act=attachment&do=upload',
+		resizeType : 1,
+		allowImageUpload : true,
+		afterChange : function() {
+			this.sync();
+		},
+		designMode: true,
+		items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat','|','insertorderedlist', 'insertunorderedlist', 
+				 'forecolor', 'hilitecolor', 'fontname', 'fontsize',  '|', 'link', 'unlink', 'emoticons', 
+				 'shcode', 'image',  'quote', '|', 'removeformat','baidumap','source', 'fullscreen'],
+
+	});
+/*$('.textarea').wysihtml5({
+	"font-styles": true, //Font styling, e.g. h1, h2, etc. Default true
+	"emphasis": true, //Italics, bold, etc. Default true
+	"lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+	"html": false, //Button which allows you to edit the generated HTML. Default false
+	"link": false, //Button to insert a link. Default true
+	"image": true, //Button to insert an image. Default true,
+	"color": true //Button to change color of font  
+});*/
+
+
+
+//快速回复
+	function fastreply(id){
+	var uid=$('#r'+id).attr('data-uid');	
+	$("#r"+id).popover({
+						html:true,
+						placement:'bottom',
+						title:'对他说点什么吧:',
+						content:'<p id="replynew'+id+'"><textarea style="height:50px;" name="commend" id="command'+id+'" cols="30">请输入内容</textarea><input type="hidden" name="to_uid" value="'+uid+'" id="to_uid'+id+'"/><input type="hidden" name="to_reply_id'+id+'" value="'+id+'" id="to_reply_id'+id+'"/><button class="btn btn-small" id="fastreply" type="button" onclick="javascript:reply('+id+')">点此回复</button></p>',
+						container: 'body',
+					});
+	}
+
+function reply(id){
+	
+		var content= $("#command"+id).val();
+		var to_reply_id=$("#to_reply_id"+id).val();
+		var to_uid=$("#to_uid"+id).val();
+		 if (content == '') {
+        	alert("请输入内容");
+        	return;
+    		}
+		$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'reply'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'id' :{$id},
+				'rid' :{$rid},
+				'uid' :'{$_SESSION['user']}',
+				'postuid' :'{$postuid}',
+				'to_uid' :to_uid,
+				'to_reply_id':to_reply_id,
+				'storey' :0,
+				'content' :content,
+			  },
+			  success: function(data){
+				if (data.message.status== 0) {
+					message(data.message.message, "", 'success');
+					$("#blockreply"+id).append('<blockquote class="bs-callout bs-callout-danger"><p>'+content+'</p><small>{$fans['nickname']}<cite title="Source Title">'+data.message.ctime+'</cite></small></blockquote>');
+					$("#r"+id).popover('hide')
+					return;				
+				}
+				else
+				{
+					message(data.message.message, "{php echo create_url('index/module', array('name' => 'sns', 'do' => 'view', 'id' => intval($id),'rid' => intval($rid), 'from_user' => $fromuser))}", 'error');
+					
+					 return;
+					}
+			}
+	});
+	
+}
+	
+
+
+
+jQuery(function($) {
+	$("#submit").click(function() {
+		var content= $("#content").val();
+		var i={$storey};
+		var storey=i;
+		 if (content == '') {
+        	alert("请输入内容");
+        	return;
+    		}
+		$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'reply'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'id' :{$id},
+				'rid' :{$rid},
+				'uid' :'{$_SESSION['user']}',
+				'postuid' :{$postuid},
+				'to_uid' :'',
+				'to_reply_id':'',
+				'storey' :storey,
+				'content' :content,
+			  },
+			  success: function(data){
+				if (data.message.status== 0) {
+					message(data.message.message, "", 'success');
+					$("#reply").append('<div class="mepopover bottom in" ><div class="arrow"></div><h3 class="mepopover-title">{$fans['nickname']}<span class="pull-right" id="storey'+data.message.storey+'" data-storey="'+data.message.storey+'">'+data.message.storey+'楼</span></h3><div class="mepopover-content"><p>'+content+'</p></div></div>');
+					//$("#content").attr("disabled","disabled");
+					$("#huifu").html('<textarea style="height:150px;" name="content" id="content" class="span12 textarea" cols="60" disabled></textarea><p class="help-block">请刷新后再发表 </p><div style="margin:20px;"><input type="submit" name="submit" value="发表" id="submit" class="btn btn-large" disabled/></div>');
+					return;	
+								
+				}
+				else
+				{
+					message(data.message.message, "{php echo create_url('index/module', array('name' => 'sns', 'do' => 'view', 'id' => intval($id),'rid' => intval($rid)))}", 'error');
+					
+					 return;
+					}
+					
+			}
+	});
+		
+		
+	});
+	
+	
+		
+});
+
+//贴子列表相关控制
+$(function() {
+			$('.widget-title').delegate('li #admintop', 'click', function(){
+				 //控制置顶开关
+				 var postid=$(this).attr('data-pid');
+				 if($(this).hasClass('btn-primary')) { //取消置顶
+					var top=1;
+					
+				} 
+				if($(this).hasClass('btn-danger')) { //置顶
+					var top=0;
+					
+				}
+				//操作置顶
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzadmin'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$_SESSION['user']}',
+			  	'top': top,
+				'admin':1,
+				'id':postid,
+				'rid':{$_GPC['gid']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						 if($(this).hasClass('btn-primary')) { //取消置顶
+							$(this).removeClass('btn-primary').addClass('btn-danger').html('取顶');
+						} 
+						if($(this).hasClass('btn-danger')) { //置顶
+							$(this).removeClass('btn-danger').addClass('btn-primary').html('置顶');
+						}
+						message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['gid'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['gid'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			//加精华
+			$('.widget-title').delegate('li #adminjh', 'click', function(){
+				 
+				 var postid=$(this).attr('data-pid');
+				 if($(this).hasClass('btn-primary')) {
+					var jh=1;					
+				} 
+				if($(this).hasClass('btn-danger')) {
+					var jh=0;
+					
+				}
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzadmin'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$_SESSION['user']}',
+			  	'digest': jh,
+				'admin':2,
+				'id':postid,
+				'rid':{$_GPC['gid']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						 if($(this).hasClass('btn-primary')) { //取消置顶
+							$(this).removeClass('btn-primary').addClass('btn-danger').html('取精');
+						} 
+						if($(this).hasClass('btn-danger')) { //置顶
+							$(this).removeClass('btn-danger').addClass('btn-primary').html('加精');
+						}
+						message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['gid'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['gid'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			//删贴
+			$('.widget-title').delegate('li #admindel', 'click', function(){
+				 
+				 var postid=$(this).attr('data-pid');
+				 var is_del=1;					
+				
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzadmin'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$_SESSION['user']}',
+			  	'is_del': is_del,
+				'admin':3,
+				'id':postid,
+				'rid':{$_GPC['gid']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['gid'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['gid'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			//关小黑屋
+			
+			$('.widget-title').delegate('li #adminblack', 'click', function(){
+				 
+				 var postid=$(this).attr('data-pid');
+				 var from_user=$(this).attr('data-user');
+				 var black=1;					
+				
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzadmin'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				  'from_user' : '{$_SESSION['user']}',
+				'blackid' : from_user,
+			  	'black': black,
+				'admin':4,
+				'id':postid,
+				'rid':{$_GPC['gid']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['gid'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['gid'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			//锁贴
+			$('.widget-title').delegate('li #adminlock', 'click', function(){
+				 
+				 var postid=$(this).attr('data-pid');
+				 if($(this).hasClass('btn-primary')) { //取消
+					var lock=1;					
+				} 
+				if($(this).hasClass('btn-danger')) { //锁定
+					var lock=0;					
+				}
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzadmin'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$_SESSION['user']}',
+			  	'lock': lock,
+				'admin':5,
+				'id':postid,
+				'rid':{$_GPC['id']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'list', 'id' => intval($_GPC['id'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			
+		//删评论
+			$('#reply').delegate('#adminreply', 'click', function(){
+				 
+				 var postid=$(this).attr('data-rid');
+				 var is_del=1;					
+				
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzadmin'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$_SESSION['user']}',
+			  	'is_del': is_del,
+				'admin':6,
+				'id':postid,
+				'rid':{$_GPC['gid']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'view', 'id' => intval($_GPC['id']), 'gid' => intval($_GPC['gid'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'view', 'id' => intval($_GPC['id']), 'gid' => intval($_GPC['gid'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			//关评论用户小黑屋
+			
+			$('#reply').delegate('#adminrblack', 'click', function(){
+				 
+				 var postid=$(this).attr('data-rid');
+				 var from_user=$(this).attr('data-user');
+				 var black=1;					
+				
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('index/module', array('name' => 'sns', 'do' => 'bzadmin'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				  'from_user' : '{$_SESSION['user']}',
+				'blackid' : from_user,
+			  	'black': black,
+				'admin':4,
+				'id':postid,
+				'rid':{$_GPC['gid']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						 message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'view', 'id' => intval($_GPC['id']), 'gid' => intval($_GPC['gid'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo create_url('index/module', array('name' => 'sns', 'do' => 'view', 'id' => intval($_GPC['id']), 'gid' => intval($_GPC['gid'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			
+		});
+//分享功能测试
+ var $body = $('#share');
+
+//测试分享功能
+var appId = '';
+var imgUrl = $body.attr('weiba-icon');
+var Link = $body.attr('weiba-link');
+var Title = $body.attr('title');
+var Content = $body.attr('weiba-desc');
+
+window.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	// 发送给好友
+    WeixinJSBridge.on('menu:share:appmessage', function(argv){
+        WeixinJSBridge.invoke('sendAppMessage',{
+                              "appid":appId,
+                              "img_url":imgUrl,
+                              "img_width":"640",
+                              "img_height":"640",
+                              "link":Link,
+                              "desc":Content,
+                              "title":Title
+                              }, function(res) {
+                                _report('send_msg', res.err_msg);
+                              })
+    });
+
+    // 分享到朋友圈
+    WeixinJSBridge.on('menu:share:timeline', function(argv){
+        WeixinJSBridge.invoke('shareTimeline',{
+                              "img_url":imgUrl,
+                              "img_width":"640",
+                              "img_height":"640",
+                              "link":Link,
+                              "desc":Content,
+                              "title":Title
+                              }, function(res) {
+                                _report('timeline', res.err_msg);
+                              });
+    });
+
+    // 分享到微博
+    WeixinJSBridge.on('menu:share:weibo', function(argv){
+        WeixinJSBridge.invoke('shareWeibo',{
+                              "content":Content,
+                              "url":Link,
+                              }, function(res) {
+                                _report('weibo', res.err_msg);
+                              });
+    });
+
+}, false)
+});	
+</script>
+
+{template 'mobile/footer'}

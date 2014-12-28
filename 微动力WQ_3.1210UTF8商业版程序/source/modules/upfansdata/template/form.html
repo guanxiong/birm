@@ -1,0 +1,177 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">更新资料有礼活动设置</h4>
+	<table>
+		<tbody>
+				{if $reply['status']}
+					<a id="jinyong" href="{php echo create_url('site/module/status', array('name' => 'upfansdata','rid' => $reply['rid'], 'status' => 0))}" onclick="return ajaxopen(this.href)" class="btn btn-primary module-button-switch">禁用</a>
+				{else}
+					<a id="qiyong" href="{php echo create_url('site/module/status', array('name' => 'upfansdata','rid' => $reply['rid'], 'status' => 1))}" onclick="return ajaxopen(this.href);" class="btn btn-danger module-button-switch">启用</a>
+				{/if}
+			<tr>
+				<th>活动标题</th>
+				<td><input type="text" name="title" value="{$reply['title']}"> </td>
+			</tr>
+			<tr>
+				<th>增送积分</th>
+				<td><input type="text" name="credit" value="{$reply['credit']}"> </td>
+			</tr>
+			<tr>
+				<th>活动时间</th>
+				<th><button style="margin:0;" class="btn span5" id="date-range" type="button"><span class="date-title">从{php echo date('Y-m-d', $reply['start_time'])} 至 {php echo date('Y-m-d', $reply['end_time'])}</span> <i class="icon-caret-down"></i></button>
+				<input name="start_time" type="hidden" value="{php echo date('Y-m-d', $reply['start_time'])}"/>
+				<input name="end_time" type="hidden" value="{php echo date('Y-m-d', $reply['end_time'])}"/></th>
+			</tr>
+			<tr>
+				<th>更新资料后转入地址</th>
+				<td>
+				<input type="text" name="upfansdataurl" value="{$reply['upfansdataurl']}" class="span6"> 
+				<div class="help-block">你可以在微官网新建一个图文，或在公众号平台素材库里新建图文，把网址填在上面。</div>
+				</td>
+			</tr>
+			<tr>
+				<th>图文消息图片</th>
+				<td>
+					<div id="" class="uneditable-input reply-edit-cover">
+						<div class="detail">
+							<span class="pull-right">大图片建议尺寸：640像素 * 320像素</span>
+							<input type="button" id="upfansdata-picture" fieldname="picture{$namesuffix}" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+							<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, '{php echo create_url('site/module/deleteimage', array('id' => $reply['id'], 'name' => 'upfansdata'))}')" style="{if empty($reply['picture'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+						</div>
+						{if !empty($reply['picture'])}
+						<input type="hidden" name="picture-old" value="{$reply['picture']}">
+						<div id="upload-file-view" class="upload-view">
+							<input type="hidden" id="upfansdata-picture-value" value="{$reply[picture]}">
+							<img width="100" src="{$_W['attachurl']}{$reply['picture']}">&nbsp;&nbsp;
+						</div>
+						{else}
+						<div id="upload-file-view"></div>
+						{/if}
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>活动简介</th>
+				<td>
+					<textarea style="height:50px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于图文显示的简介</div>
+				</td>
+			</tr> 
+			<tr>
+				<th>活动详情</th>
+				<td>
+					<textarea style="height:200px; width:535px;" class="span7 richtext-clone" name="content" cols="70" id="reply-add-text">{$reply['content']}</textarea>					
+					<div class="help-block">分享图文的详细内容（注意在内容最后加上分享示意图提示）</div>
+				</td>
+			</tr> 				
+		</tbody>
+	</table>
+	<h4 class="alert-heading">更新资料有礼关联资料设置</h4>
+	<table>
+	<!---->
+			<tr>
+			<td>
+				<div class="alert alert-block alert-new">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th style="min-width:200px;">资料名称</th>
+								<th style="width:40px;">必填</th>
+								<th style="width:160px;">关联默认值</th>
+								<th style="width:120px;"></th>
+							</tr>
+						</thead>
+						<tbody id="re-items">
+							{loop $reply['fields'] $item}
+								<tr>
+									<td><input name="fields[title][]" type="text" class="span3" value="{$item['title']}"/></td>
+									<td><input type="checkbox" title="必填项"  {if $item['require']} checked="checked"{/if}/></td>
+									<td>
+										<select name="fields[bind][]" class="span2">
+											{loop $fields $k $v}
+											{if !empty($v)}
+											<option value="{$k}"{if $k == $item['bind']} selected="selected"{/if}>{$v}</option>
+											{/if}
+											{/loop}
+										</select>
+										<input type="hidden" name="fields[require][]" value="{if $item['require']}1{else}0{/if}"/>
+									</td>
+									<td>{if !$hasData}<a href="javascript:;" class="icon-move" title="拖动调整此条目显示顺序" style="margin-top:10px;"></a> &nbsp; <a href="javascript:;" onclick="deleteItem(this)" class="icon-remove-sign" style="margin-top:10px;" title="删除此条目"></a>{/if}</td>
+								</tr>
+							{/loop}
+						</tbody>
+					</table>
+				</div>
+				<div class="alert alert-block alert-new">
+					<a href="javascript:;" onclick="addItem();">添加填写项目 <i class="icon-plus-sign" title="添加填写项目"></i></a>
+				</div>
+				<span class="help-block">因需要保存用户姓名和手机号，请务必把真实姓名和手机号码做为必选项, 请仔细编辑，否则出现无法查看粉丝姓名和电话错误. 重要说明：请不要选择积分和余额。</span>
+			</td>
+		</tr>
+		<!---->	
+		</table>
+</div>
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script type="text/javascript" src="./resource/script/jquery-ui-1.10.3.min.js"></script>
+<script type="text/javascript">
+<!--
+	$(function(){
+		$('#re-items').sortable({handle: '.icon-move'});
+		$(':checkbox').each(function(){
+			$(this).click(function(){
+				if($(this).attr('checked') == 'checked') {
+					$(this).parent().parent().find(':hidden[name="fields[require][]"]').val('1');
+				} else {
+					$(this).parent().parent().find(':hidden[name="fields[require][]"]').val('0');
+				}
+			});
+		});
+	});
+	function addItem() {
+		var html = '' +
+				'<tr>' +
+					'<td><input name="fields[title][]" type="text" class="span3" /></td>' +
+					'<td><input type="checkbox" title="必填项" /></td>' +
+					'<td>' +
+						'<select name="fields[bind][]" class="span2">' +
+						{loop $fields $k $v}{if !empty($v)}'<option value="{$k}">{$v}</option>' + {/if}{/loop}
+						'</select>' +
+						'<input type="hidden" name="fields[require][]" />' +
+					'</td>' +
+					'<td><a href="javascript:;" class="icon-move" title="拖动调整此条目显示顺序" style="margin-top:10px;"></a> &nbsp; <a href="javascript:;" onclick="deleteItem(this)" class="icon-remove-sign" style="margin-top:10px;" title="删除此条目"></a></td>' +
+				'</tr>';
+		$('#re-items').append(html);
+	}
+	function deleteItem(o) {
+		$(o).parent().parent().remove();
+	}
+	$('#qiyong, #jinyong').click(function () {
+	setTimeout("history.go(0)",500);	
+	});	
+kindeditor($('.richtext-clone'));
+kindeditorUploadBtn($('#upfansdata-picture'));
+
+	$('#date-range').daterangepicker({
+        format: 'YYYY-MM-DD',
+        startDate: $(':hidden[name=start_time]').val(),
+        endDate: $(':hidden[name=end_time]').val(),
+        locale: {
+            applyLabel: '确定',
+            cancelLabel: '取消',
+            fromLabel: '从',
+            toLabel: '至',
+            weekLabel: '周',
+            customRangeLabel: '日期范围',
+            daysOfWeek: moment()._lang._weekdaysMin.slice(),
+            monthNames: moment()._lang._monthsShort.slice(),
+            firstDay: 0
+        }
+    }, function(start_time, end_time){
+        $('#date-range .date-title').html(start_time.format('YYYY-MM-DD') + ' 至 ' + end_time.format('YYYY-MM-DD'));
+        $(':hidden[name=start_time]').val(start_time.format('YYYY-MM-DD'));
+        $(':hidden[name=end_time]').val(end_time.format('YYYY-MM-DD'));
+    });
+//-->
+</script>

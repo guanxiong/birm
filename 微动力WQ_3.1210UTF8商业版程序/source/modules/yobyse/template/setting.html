@@ -1,0 +1,37 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>参数设置</h4>
+		<table class="tb">
+		<tr>
+				<th>关注搜索结果页面地址</th>
+				<td>
+				<input type="text" class="span6" placeholder="" name="g" value="{$settings['g']}">
+					<span class="help-block">用于点击分享和搜索跳转地址</span>
+				</td>
+			</tr>			
+					<tr>
+				<th>游戏管家添加地址</th>
+				<td>
+				<input type="text" class="span6" placeholder="" name="url" value="{$settings['url']}">
+					<span class="help-block">用于游戏管理管理游戏如果有#mp.weixin.qq.com#wechat_redirect请删除掉这些</span>
+				</td>
+			</tr>	
+								<tr>
+				<th>游戏管家主页</th>
+				<td>
+				<input type="text" class="span6" placeholder="" name="gameurl" value="{$settings['gameurl']}">
+					<span class="help-block">游戏管家的列表地址,用于游戏里面更多点击后跳转地址</span>
+				</td>
+			</tr>	
+			<tr>			
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

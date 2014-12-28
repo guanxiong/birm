@@ -1,0 +1,99 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if !$id} class="active" {/if}><a href="{php echo $this->createWebUrl('series',array('op'=>'post'));}">添加品牌车系</a></li>	
+	<li><a href="{php echo $this->createWebUrl('series', array('op'=>'list'))}">品牌车系管理</a></li>	
+	{if $id}<li class="active"><a href="{php echo $this->createWebUrl('series',array('op'=>'post'));}">编辑品牌车系</a></li> {/if}
+</ul>
+	<div class="main">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return validate(this);">
+			<h4>修改品牌车系设置</h4>
+			<table class="tb">
+				<tr>
+					<th><label for="">排序</label></th>
+					<td>
+						<input type="text" name="listorder" class="span6" value="{$theone['listorder']}" />
+					</td>
+				</tr>				
+				<tr>
+					<th><label for="">品牌</label></th>
+					<td>
+						<select class="span3" name="bid">
+							{loop $brand $row}
+								<option value="{$row['id']}"  {if $row['id'] == $theone['bid']} selected="selected"{/if}>{$row['title']}</option>
+							{/loop}
+						</select>
+						</td>
+				</tr>
+				<tr>
+					<th><label for="">车系名称</label></th>
+					<td>
+						<input type="text" name="title" class="span5" value="{$theone['title']}" />
+					</td>
+				</tr>	
+				<tr>
+					<th><label for="">车系简称</label></th>
+					<td>
+						<input type="text" name="subtitle" class="span5" value="{$theone['subtitle']}" />
+					</td>
+				</tr>							
+				<tr>
+					<th>图片</th>
+					<td>
+						{php echo tpl_form_field_image('thumb', $theone['thumb']);}
+						<span class="help-block" style="clear:both">建议图片大小不超过300K(640 px * 150px),以免影响展示效果</span>	
+					</td>
+					
+				</tr>				
+				<tr>
+					<th><label for="">车系亮点</label></th>
+					<td>
+						<textarea name="description" class="span6" cols="70" style="height:80px">{$theone['description']}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="">是否显示</label></th>
+					<td>
+						<label for="isshow1" class="radio inline"><input type="radio" name="status" value="1" id="isshow1" {if $theone['status'] == 1}  checked="true" {/if}> 是</label>&nbsp;&nbsp;&nbsp;
+						<label for="isshow0" class="radio inline"><input type="radio" name="status" value="0" id="isshow0"  {if $theone['status'] == 0}  checked="true" {/if}> 否</label>
+					</td>
+				</tr>				
+				<tr>
+					<th></th>
+					<td>
+						<input type="hidden"  name="id" value="{$theone['id']}" />
+						<input type="hidden" name="token" value="{$_W['token']}" />
+						<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					</td>
+				</tr>
+			</table>
+		</form>
+    </div>
+<script type="text/javascript">
+	function validate() {
+		if($.trim($('select[name="bid"]').val()) == '') {
+			message('必须选择所属品牌.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="title"]').val()) == '') {
+			message('必须填写车系名称.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="subtitle"]').val()) == '') {
+			message('必须填写车系简称.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="thumb"]').val()) == '') {
+			message('必须上传车系图片.', '', 'error');
+			return false;
+		}
+		if($.trim($('textarea[name="description"]').val()) == '') {			
+			message('必须填写车系亮点.', '', 'error');
+			return false;			
+		}
+		return true;
+	}
+	
+	
+</script>	
+{template 'common/footer'}
+

@@ -1,0 +1,25 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>聊天机器人管理选项</h4>
+		<table class="tb">
+			<tr>
+				<th>赛科机器人api接口</th>
+				<td>
+					<input type="text" name="skapi" value="{$settings['skapi']}" class="span6"/>
+					<a href="http://www.skjqr.com/" target="_blank"><div class="help-block">赛科机器人平台地址：http://www.skjqr.com/</div></a>
+					<br/>
+					注：api接口后面的“你在哪”不需要复制进来！
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span2" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

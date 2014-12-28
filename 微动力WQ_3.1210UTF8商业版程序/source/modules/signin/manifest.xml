@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="true">
+		<name><![CDATA[签到]]></name>
+		<identifie><![CDATA[signin]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[可用于签到、打卡、起床排名等活动中]]></ability>
+		<description><![CDATA[可自由设置签到时间、签到次数、奖励积分等]]></description>
+		<author><![CDATA[艮随]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="签到记录" do="display" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+
+		CREATE TABLE IF NOT EXISTS `ims_signin_reply` (
+		  `id` int(123) NOT NULL AUTO_INCREMENT,
+		  `rid` int(123) NOT NULL COMMENT '规则ID',
+		  `overtime` text NOT NULL COMMENT '超出时间段提示',
+		  `overnum` text NOT NULL COMMENT '超出次数提示',
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+
+		CREATE TABLE IF NOT EXISTS `ims_signin_record` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `weid` int(11) NOT NULL,
+		  `from_user` text NOT NULL,
+		  `name` text NOT NULL,
+		  `time` int(11) NOT NULL COMMENT '签到时间',
+		  `rank` int(11) NOT NULL COMMENT '排名',
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=58 ;
+
+
+
+		]]></install>
+	<uninstall><![CDATA[
+
+		DROP TABLE IF EXISTS `ims_signin_reply`;
+		DROP TABLE IF EXISTS `ims_signin_record`;
+
+		]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

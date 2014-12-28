@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[微信客服]]></name>
+		<identifie><![CDATA[lxywecs]]></identifie>
+		<version><![CDATA[0.11]]></version>
+		<type><![CDATA[customer]]></type>
+		<ability><![CDATA[微客服大路版]]></ability>
+		<description><![CDATA[实现微信高级客服接口以及客服管理功能]]></description>
+		<author><![CDATA[Bin,by大路货Modify]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+			<message type="image" />
+			<message type="voice" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="坐席管理" do="cslist" state="" direct="false" />
+			<entry title="设置客服" do="display" state="" direct="false" />
+			<entry title="手工添加客服" do="csadd" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE `ims_lxy_wecs` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `workid` varchar(200) DEFAULT NULL,
+  `weid` int(10) unsigned NOT NULL,
+  `start_time` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `end_time` varchar(50) DEFAULT NULL,
+  `openid` varchar(255) DEFAULT NULL,
+  `csid` text,
+  `busy` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>趣味测试</title>
+    <link rel="stylesheet" type="text/css" href="{APP_PUBLIC}template/mobile/survey/survey.css?v=1.2">
+    <style>
+        body{background-color: #000;color: #999;font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-size: 14px;}
+        a { color: rgba(255,255,255,0.6);text-decoration: none;}
+        /*h3 {margin:5px 0;}*/
+        .hot-list, .type-list {padding: 0 20px; line-height: 22px; margin-bottom: 10px}
+        .hot-list ul {list-style-type: disc;padding-left: 20px;}
+        .hot-list li {display: list-item;}
+        .type-list>div { padding: 10px 0 10px 15px; background: rgba(255,255,255,0.1); }
+        .type-list>div>a{display: inline-block; width: 32%; line-height: 26px;}
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="page-loading-mask"></div>
+        <div class="pages">
+            <div class="banner_ad">{$banner}</div>
+            <div class="hot-list">
+                <h3>{if $typeid}{$type[typename]}{else}热门测试{/if}</h3>
+                <ul>
+{loop $toplist $item}
+                    <li><a href="{php echo $this->createMobileUrl('detail',array('id'=>$item['id']));}">{$item['title']}</a></li>
+{/loop}
+                </ul>
+            </div>
+            <div class="type-list">
+                <h3>测试分类</h3>
+                <div>
+{loop $type $item}
+
+                    <a href="{php echo $this->createMobileUrl('index',array('id'=>$item['id']));}"{if $item['id']==$typeid} style="color:#fff;"{/if}>{$item['typename']}</a>
+{/loop}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{APP_PUBLIC}template/mobile/js/require.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+        (function() {
+            require(['{APP_PUBLIC}template/mobile/js/zepto.min.js'], function($) {
+                var _height = $('.hot-list').height();
+                $('.window').css('height',_height + 280);
+                $(".page-loading-mask").animate({ opacity: 0 }, 500, 'ease-out', function() {
+                    $(".page-loading-mask").remove();
+                });
+            });
+        }).call(this);
+    </script>
+</body>
+</html>

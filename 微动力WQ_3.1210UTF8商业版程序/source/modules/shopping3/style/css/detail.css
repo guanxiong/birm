@@ -1,0 +1,39 @@
+body,html{background:#fff;}
+
+#detail .pro_img{padding:5px; background:#fff1e0;}
+#detail .touchslider{position:relative;}
+#detail .touchslider .img{width:280px; height:200px; margin:0 auto;}
+#detail .touchslider .img .touchslider-prev, #detail .touchslider .img .touchslider-next{float:left; width:40px; margin-top:93px;}
+#detail .touchslider .img .touchslider-prev span{background:url(../images/bg.png) -13px -110px no-repeat; display:block; width:12px; height:14px; margin:0 auto;}
+#detail .touchslider .img .touchslider-next span{background:url(../images/bg.png) 0 -110px no-repeat; display:block; width:12px; height:14px; margin:0 auto;}
+#detail .touchslider .touchslider-viewport{background:#fff1e0; width:200px; height:100%; overflow:hidden; float:left;}
+#detail .touchslider .touchslider-viewport .list{width:10000px; height:100%;}
+#detail .touchslider .touchslider-viewport .touchslider-item{width:200px; height:100%; overflow:hidden; background:#fff; text-align:center;}
+#detail .touchslider .touchslider-viewport .touchslider-item img{width:100%;}
+#detail .touchslider .touchslider-nav{width:100%; position:absolute; top:182px; text-align:center;}
+#detail .touchslider .touchslider-nav .touchslider-nav-item{width:8px; height:8px; background:#666; margin:0 1px; display:inline-block; border-radius:6px;}
+#detail .touchslider .touchslider-nav .touchslider-nav-item-current{background:#cff0ff;}
+#detail .info{padding:10px; border-bottom:1px solid #ddd;}
+#detail .info li{height:24px; line-height:24px; overflow:hidden;}
+#detail .info li.price span{color:#C62E3A; font-weight:bold;}
+#detail .info li.price del{color:#888; margin-left:8px;}
+#detail .info li.qty{height:auto; padding:5px 0;}
+#detail .info li.qty select{height:24px; border:1px solid #ddd; border-radius:5px; background:#fff; width:50px;}
+#detail .info li.property{height:auto; padding-top:4px;}
+#detail .info li.property table{border-collapse:collapse; border-spacing:0;}
+#detail .info li.property td{vertical-align:top; padding:0;}
+#detail .info li.property span{border:1px solid #ddd; padding:0 10px; margin:2px 5px 4px 0; height:24px; line-height:24px; overflow:hidden; display:inline-block; background:#fff;}
+#detail .info li.property span.cur{border:1px solid red; background:#fff1e0;}
+#detail .info li.cart{height:38px; padding:5px 0; text-align:center;}
+#detail .info li.cart input{width:45%; height:36px; margin:0 5px; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; background-color:#FEAC00; font-size:16px; border:1px solid #F57F01; background-image:linear-gradient(bottom, #FE7002 0, #FEAC00 100%); background-image:-moz-linear-gradient(bottom, #FE7002 0, #FEAC00 100%); background-image:-webkit-linear-gradient(bottom, #FE7002 0, #FEAC00 100%); box-shadow:0 1px 0 #FEBE3A inset, 0 1px 2px rgba(0,0,0,0.5); border-radius:5px; color:#fff; text-shadow:0 1px rgba(0,0,0,0.2);}
+#detail .info li.cart input.buy{background-color:#F00019; border:1px solid #c10001; background-image:linear-gradient(bottom, #E20018 0, #DC3749 100%); background-image:-moz-linear-gradient(bottom, #E20018 0, #DC3749 100%);background-image:-webkit-linear-gradient(bottom, #E20018 0, #DC3749 100%); box-shadow:0 1px 0 #D95260 inset, 0 1px 2px rgba(0,0,0,0.5);}
+#detail .desc{padding:10px;}
+#detail .desc .txt{line-height:150%; color:#888; min-height:100px;}
+#detail .desc .detail{height:32px; line-height:32px;}
+#detail .desc .detail a{color:#ff0000; text-decoration:underline;}
+#detail #addtocart_tips{width:250px; height:125px; position:fixed; background:#f7f7f7; border:1px solid #ddd; border-radius:5px; box-shadow:0 1px 0 #fff inset, 0 1px 2px rgba(0,0,0,0.5); display:none; left:0; top:0;}
+#detail #addtocart_tips .close{position:absolute; left:227px; top:3px; width:20px; height:20px; line-height:20px; background:#ddd; text-align:center; color:#aaa;}
+#detail #addtocart_tips .txt{padding:20px 10px; line-height:200%;}
+#detail #addtocart_tips .txt strong{color:#ff6600; font-size:16px;}
+#detail #addtocart_tips .txt span{font-weight:bold; color:#ff0000;}
+#detail #addtocart_tips .txt a{color:#ff0000; text-decoration:underline;}

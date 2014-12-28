@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="./source/modules/idish/template/css/2/main.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="./source/modules/ihotel/template/css/dialog.css" media="all"/>
+    <script type="text/javascript" src="./source/modules/ihotel/template/js/jquery_min.js"></script>
+    <script type="text/javascript" src="./source/modules/ihotel/template/js/main.js"></script>
+    <script type="text/javascript" src="./source/modules/ihotel/template/js/dialog_min.js"></script>
+    <script type="text/javascript" src="./source/modules/ihotel/template/js/iscroll.js"></script>
+    <title>{$title}</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+          name="viewport">
+    <meta name="Keywords" content=""/>
+    <meta name="Description" content=""/>
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <!-- Mobile Devices Support @end -->
+    <style>
+        img {
+            max-width: 100% !important;
+        }
+    </style>
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+<div id="container" class="container hotel_order">
+    <header></header>
+    <div class="body">
+        <div style="height:1px;"></div>
+        <section>
+
+            <section class="book_info_room">
+                <ul>
+                    <li>
+                        <a href="javascript:;" class="tbox arrow"
+                           onclick="document.getElementById('pop_window_room_num_select').classList.add('on');">
+                            <div>
+                                <label class="pre">
+                                    <pre>订单类型</pre>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="pre" id="label_room_num">全部</label>
+                            </div>
+                        </a>
+                        <div class="pop_window">
+                            <div id="pop_window_room_num_select" class="pop_window_1">
+                                <header>
+                                    <h5>订单类型</h5>
+                                </header>
+                                <div>
+                                    <dl>
+                                        <dd>
+                                            <label>
+                                                <input type="radio" name="room_num" class="radio"
+                                                       onclick="changeRoomNum(this,event);" value="待付款" checked="checked">待付款
+                                            </label>
+                                        </dd>
+                                        <dd>
+                                            <label>
+                                                <input type="radio" name="room_num" class="radio"
+                                                       onclick="changeRoomNum(this,event);" value="待确认" checked="checked">待确认
+                                            </label>
+                                        </dd>
+                                        <dd>
+                                            <label>
+                                                <input type="radio" name="room_num" class="radio"
+                                                       onclick="changeRoomNum(this,event);" value="已确认" checked="checked">已确认
+                                            </label>
+                                        </dd>
+                                        <dd>
+                                            <label>
+                                                <input type="radio" name="room_num" class="radio"
+                                                       onclick="changeRoomNum(this,event);" value="已完成" checked="checked">已完成
+                                            </label>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="cover"
+                                 onclick="document.getElementById('pop_window_room_num_select').classList.remove('on');"></div>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+            <ul id="list_order" class="list_order">
+                <li>
+                    <a href="{php echo $this->createMobileUrl('orderdetail');}"
+                       class="arrow">
+                        <h5>订单:040123001091919</h5>
+                        <p>总额:<span>￥2244</span></p>
+                        <p>下单日期:2014-05-01 12:45</p>
+                        <span data-state="10">详情</span>
+                    </a>
+                    <section class="section_detail section_detail_order">
+                        <article style="margin-right:5px;">
+                            <table>
+                                <tr>
+                                    <td>三文鱼：</td>
+                                    <td>1份</td>
+                                </tr>
+                                <tr>
+                                    <td>寿司：</td>
+                                    <td>5份</td>
+                                </tr>
+                                <tr>
+                                    <td>可乐：</td>
+                                    <td>10罐</td>
+                                </tr>
+                            </table>
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <a href="{php echo $this->createMobileUrl('orderdetail');}"
+                       class="arrow">
+                        <h5>订单:040123001091919</h5>
+                        <p><span>￥2244</span> </p>
+                        <p>下单日期:2014-05-01 12:45</p>
+                        <span data-state="10">详情</span>
+                    </a>
+                    <section class="section_detail section_detail_order">
+                        <article style="margin-right:5px;">
+                            <table>
+                                <tr>
+                                    <td>三文鱼：</td>
+                                    <td>1份</td>
+                                </tr>
+                                <tr>
+                                    <td>寿司：</td>
+                                    <td>5份</td>
+                                </tr>
+                                <tr>
+                                    <td>可乐：</td>
+                                    <td>10罐</td>
+                                </tr>
+                            </table>
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <a href="{php echo $this->createMobileUrl('orderdetail');}"
+                       class="arrow">
+                        <h5>订单:040123001091919</h5>
+                        <p><span>￥2244</span> </p>
+                        <p>下单日期:2014-05-01 12:45</p>
+                        <span data-state="10">详情</span>
+                    </a>
+                    <section class="section_detail section_detail_order">
+                        <article style="margin-right:5px;">
+                            <table>
+                                <tr>
+                                    <td>三文鱼：</td>
+                                    <td>1份</td>
+                                </tr>
+                                <tr>
+                                    <td>寿司：</td>
+                                    <td>5份</td>
+                                </tr>
+                                <tr>
+                                    <td>可乐：</td>
+                                    <td>10罐</td>
+                                </tr>
+                            </table>
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <a href="{php echo $this->createMobileUrl('orderdetail');}"
+                       class="arrow">
+                        <h5>订单:040123001091919</h5>
+                        <p><span>￥2244</span> </p>
+                        <p>下单日期:2014-05-01 12:45</p>
+                        <span data-state="10">详情</span>
+                    </a>
+                    <section class="section_detail section_detail_order">
+                        <article style="margin-right:5px;">
+                            <table>
+                                <tr>
+                                    <td>三文鱼：</td>
+                                    <td>1份</td>
+                                </tr>
+                                <tr>
+                                    <td>寿司：</td>
+                                    <td>5份</td>
+                                </tr>
+                                <tr>
+                                    <td>可乐：</td>
+                                    <td>10罐</td>
+                                </tr>
+                            </table>
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <a href="{php echo $this->createMobileUrl('orderdetail');}"
+                       class="arrow">
+                        <h5>订单:040123001091919</h5>
+                        <p><span>￥2244</span> </p>
+                        <p>下单日期:2014-05-01 12:45</p>
+                        <span data-state="10">详情</span>
+                    </a>
+                    <section class="section_detail section_detail_order">
+                        <article style="margin-right:5px;">
+                            <table>
+                                <tr>
+                                    <td>三文鱼：</td>
+                                    <td>1份</td>
+                                </tr>
+                                <tr>
+                                    <td>寿司：</td>
+                                    <td>5份</td>
+                                </tr>
+                                <tr>
+                                    <td>可乐：</td>
+                                    <td>10罐</td>
+                                </tr>
+                            </table>
+                        </article>
+                    </section>
+                </li>
+            </ul>
+        </section>
+    </div>
+    <footer></footer>
+</div>
+<div mark="stat_code" style="width:0px; height:0px; display:none;">
+</div>
+<script>
+    $().ready(function () {
+        $("#js-total_price").html((parseInt($("#label_room_num").html()) * parseInt($("#num2").html())) * $("#js-price").val());
+    });
+    function changeRoomNum(thi, evt) {
+        document.getElementById("label_room_num").innerText = thi.value;
+        $("#js-order-num").val(thi.value);
+
+        var url = '';
+        //计算价格
+        //total_price = (parseInt(thi.value) * parseInt($("#num2").html())) * $("#js-price").val();
+        //$("#js-total_price").html(total_price);
+        document.getElementById('pop_window_room_num_select').classList.remove('on');
+    }
+</script>
+</body>
+</html>

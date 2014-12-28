@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[校花校草]]></name>
+		<identifie><![CDATA[meepo_sexy]]></identifie>
+		<version><![CDATA[0.3]]></version>
+		<type><![CDATA[wdlgame]]></type>
+		<ability><![CDATA[校花校草]]></ability>
+		<description><![CDATA[校花校草]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[http://bbs.b2ctui.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="基本设置" do="set" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_meepo_sexy_set` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `url` varchar(100) NOT NULL,
+  `num` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[
+
+CREATE TABLE IF NOT EXISTS `ims_meepo_sexy_set` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `url` varchar(100) NOT NULL,
+  `num` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+	]]></upgrade>
+</manifest>

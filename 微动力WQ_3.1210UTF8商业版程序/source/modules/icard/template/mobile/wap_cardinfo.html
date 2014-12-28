@@ -1,0 +1,63 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="./source/modules/icard/template/css/card.css?v={php echo $this->cur_version}" media="all">
+    <script type="text/javascript" src="./source/modules/icard/template/js/accordian_pack.js?2013-12-18-1"></script>
+    <title>会员卡说明</title>
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+</head>
+<body id="cardnews" ondragstart="return false;" onselectstart="return false;">
+    {php include $this->template('wap_header');}
+    <section class="body">
+		<!--------------列表-------------->
+		<div id="basic-accordian">
+			<div id="test-header" class="accordion_headings header_highlight">
+				<div class="tab cardinfo">
+					<span class="title">会员卡使用说明</span>
+				</div>
+				<div id="test-content" style="display: block; overflow: hidden; opacity: 1;">
+					<div class="accordion_child">
+                        {php echo htmlspecialchars_decode($score['card_info']);}
+					</div>
+				</div>
+			</div>
+			<div id="test1-header" class="accordion_headings">
+				<div class="tab integral_info">
+					<span class="title">会员积分说明</span>
+				</div>
+				<div id="test1-content" style="display: none; overflow: hidden;">
+					<div class="accordion_child">
+                        {php echo htmlspecialchars_decode($score['score_info']);}
+					</div>
+				</div>
+			</div>
+            <div id="test2-header" class="accordion_headings">
+                <div class="tab businesses_info">
+                    <span class="title">商家介绍</span>
+                </div>
+                <div id="test2-content" style="display: none; overflow: hidden;">
+                    <div class="accordion_child">
+                        {php echo htmlspecialchars_decode($business['content']);}
+                    </div>
+                </div>
+            </div>
+		</div>
+		<!--------------返回按钮-------------->
+		<div class="plugback">
+			<a href="javascript:history.back(-1)">
+				<div class="plugbg themeStyle">
+				<span class="plugback"></span>
+				</div>
+			</a>
+		</div>
+        {if !empty($card)}
+        {php include $this->template('footer');}
+        {/if}
+    <script>
+    window.onload = function(){
+	    new Accordian('basic-accordian',5,'header_highlight');
+    }
+    </script>
+    </section>
+</body>
+</html>

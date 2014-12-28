@@ -1,0 +1,125 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加客服</h4>
+	<div class="alert alert-block">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<h4>重要提示!</h4>
+						<ol>
+						<li>客服自动应答分类设置：添加规则前，请安装微CMS模块，并在其分类管理里面设置好应答的主分类，如：客服或者帮助。</li>
+						<li>自动应答子分类设置：然后子分类添加，且排序设置请填相应数字，因为系统提示用户选择回复是使用这些数字。</li>
+						<li>客服应答内容设置：应答内容请在相应子分类里面添加文章，自动应答会给出文章链接让用户进入查看。</li>
+                        <li>在此添加规则时必须选择对应的客服主分类</li>
+                        <li>备注：要使用自动应动则必须安装微CMS，且需要添加一个主分类，以及相应子分类，分类中需要添加相应说明文章。在此添加规则时必须选择对应的客服主分类</li>
+						</ol>
+	</div>
+	<table>
+		<tbody>
+			<tr>
+				<th>查看内容</th>
+				
+                <td ><span class="span3"><a href="{php echo create_url('site/module/manage', array('name' => 'kf', 'id' => $reply['rid']))}" target="_blank">客服消息记录</a></span>
+               <span class="span3"> <a href="{php echo create_url('site/module/chat', array('do' => '', 'name' => 'kf', 'id' => $reply['rid']))}" target="_blank">进入聊天</a></span></td>
+			</tr>
+			
+			<tr>
+				<th>栏目图片</th>
+				<td>
+					<div id="" class="uneditable-input reply-edit-cover">
+						<div class="detail">
+							<span class="pull-right">大图片建议尺寸：700像素 * 300像素</span>
+							<input type="button" id="kf-picture" fieldname="picture{$namesuffix}" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+							<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'kf-picture-value')" style="{if empty($reply['picture'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+						</div>
+						{if !empty($reply['picture'])}
+						<input type="hidden" name="picture-old" value="{$reply['picture']}">
+						<div id="upload-file-view" class="upload-view">
+							<input type="hidden" id="kf-picture-value" value="{$reply[picture]}">
+							<img width="100" src="{$_W['attachurl']}{$reply['picture']}">&nbsp;&nbsp;
+						</div>
+						{else}
+						<div id="upload-file-view"></div>
+						{/if}
+					</div>
+				</td>
+			</tr>
+            <tr>
+				<th>公众号类型</th>
+				<td>
+					<fieldset>
+     
+   					
+      				
+        			
+      				<label class="radio inline">
+        			<input type="radio" value="0" name="wechattype" {if !$reply['wechattype']} checked="checked"{/if}>
+       				 未认证权限号
+      				</label>
+      				<label class="radio inline">
+       				<input type="radio" value="1" name="wechattype" {if $reply['wechattype']} checked="checked"{/if}>
+       				已认证高级权限号
+      				</label>
+  					
+        			
+
+    				</fieldset>
+					<div class="help-block">此处一定要选择准确：认证了的高级权限号的，是通过客服接口发送，稳定安全，非认证无权限是通过模拟登录操作。</div>
+				</td>
+			</tr>
+            <tr>
+				<th>对应自动应答微CMS分类</th>
+				<td>
+					<select class="span3" style="margin-right:15px;" name="cate_1">
+     
+   					<option value="0">请选择客服应答分类</option>
+							{loop $category $row}
+							
+							<option value="{$row['id']}" {if $row['id'] == $_GPC['cate_1']} selected="selected"{/if}>{$row['name']}</option>
+							
+							{/loop}
+					</select>
+					<div class="help-block">此处一定要选择对应的分类，如果未建立分类，请选进入微CMS模块的分类管理里面建立相应客服分类。</div>
+				</td>
+			</tr>
+			<tr>
+				<th>简介</th>
+				<td>
+					<textarea style="height:150px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于微信对话回复图文显示的简介</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>进入客服系统提示</th>
+				<td>
+					<textarea style="height:150px;" name="default_tips" class="span7" cols="60">{$reply['default_tips']}</textarea>
+					<div class="help-block">当用户进时，返回给用户的提示信息。</div>
+				</td>
+			</tr>
+            <tr>
+				<th>退出提示</th>
+				<td>
+					<textarea style="height:150px;" name="send_tips" class="span7" cols="60">{$reply['send_tips']}</textarea>
+					<div class="help-block">当用户发退出人工服务，返回给用户的提示信息。</div>
+				</td>
+			</tr>
+			<tr>
+				<th>超时时间</th>
+				<td>
+					<div class="input-append">
+						<input type="text" value="{$reply['timeout']}" class="span6" name="timeout">
+						<span class="add-on">秒</span>
+					</div>
+					<div class="help-block">当用户在客服服务时，未执行退出操作，并达到此选项设置的时间时，用户自动被踢出话题。</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+</div>
+
+<script type="text/javascript">
+kindeditor($('#rule'));
+kindeditorUploadBtn($('#kf-picture'));
+
+</script>

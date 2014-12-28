@@ -1,0 +1,74 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="./source/modules/panorama/style/cymain.css" />
+<link rel="stylesheet" href="./source/modules/panorama/style/style.css" />
+<!-- <link rel="stylesheet" href="./source/modules/panorama/style/style_2_common.css" />
+-->
+<!-- <script src="./source/modules/panorama/js/jquery.artDialog.js?skin=default"></script>
+<script src="./source/modules/panorama/js/iframeTools.js"></script>
+-->
+<div class="content">
+<div class="cLineB">
+	<h4 class="left">360°全景</h4>
+
+	<div class="clr"></div>
+</div>
+
+<div class="tab">
+	<ul>
+		<li class="tabli current" id="tab0">
+			<a href="{php echo create_url('site/module/panoramaset',array('name'=>'panorama'))}">全景管理</a>
+		</li>
+	</ul>
+</div>
+
+<div class="msgWrap">
+	<form method="post" action="" id="info">
+		<div class="cLine">
+			<div class="pageNavigator left">
+				<a href="{php echo  $this->createWebUrl('set',array('op' =>'post'))}" title="" class="btnGrayS vm bigbtn">
+					<img src="./source/modules/panorama/img/add.png" class="vm">添加360°全景</a>
+			</div>
+			<div class="clr"></div>
+		</div>
+
+		<table style='border:1px solid black;text-align:center;' class="ListProduct" border="0" cellspacing="0" cellpadding="0" width="50%" >
+			<thead>
+				<tr>
+					<th width="10%">名称</th>
+					<th width="10%">关键词</th>
+					<th width="10%">外链代码</th>
+					<th width="20%" class="norightborder">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- <tr></tr>
+			-->
+			{loop $list $item}
+			<tr style='font-size:20px;color:black'>
+				<td>{$item['title']}</td>
+				<td>{$item['keyword']}</td>
+				<td>全景{$item['id']}</td>
+				<td>
+					<a href="{php echo create_url('site/module/set',array('name' =>
+						'panorama','id' => $item['id'],'op' =>'update'))}">
+				修改
+					</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a onclick="return confirm('此操作不可恢复，确认吗？'); return false;" href="{php echo create_url('site/module/delete',array('name'=>'panorama','id'=>$item['id']))}">删除</a>
+
+				</td>
+			</tr>
+			{/loop}
+		</tbody>
+	</table>
+	<input type="hidden" name="token" value="{$_W['token']}" />
+</form>
+</div>
+<div class="cLine">
+<div class="pageNavigator right">
+	<div class="pages"></div>
+</div>
+<div class="clr"></div>
+</div>
+</div>
+{template 'common/footer'}

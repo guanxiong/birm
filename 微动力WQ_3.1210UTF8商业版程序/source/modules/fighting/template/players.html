@@ -1,0 +1,63 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('index/module', array('do' => 'addquestion', 'name' => 'fighting'));}">添加题目</a></li>
+	<li><a href="{php echo create_url('index/module', array('do' => 'detail', 'name' => 'fighting'));}">管理题目</a></li>
+	<li><a href="{php echo create_url('index/module', array('do' => 'ShowPlay', 'name' => 'fighting'));}">活动列表</a></li>
+	<li class="active"><a href="">活动信息</a></li>
+</ul>
+<div class="main">
+	<div class="search">
+		<table class="table table-bordered tb">
+			<div class="sub-item" id="table-list">
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover2">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</th>
+									<th style="width:150px;">昵称<i></i></th>
+									<th class="width:150px;">活动<i></i></th>
+									<th style="width:200px;">最后答题时间<i></i></th>
+									<th style="width:100px;">最后得分<i></i></th>
+									<th style="width:110px;">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $row}
+								<tr>
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+									<td>
+										<div class="mainContent">
+											<div class="nickname" style="text-align:left;">{$row[nickname]}</div>
+										</div>
+									</td>
+									<td style="text-align:left;">{$row[rid]}</td>
+									<td style="text-align:left;">{php echo date('Y-m-d h:i:s', $row[lasttime]);}</td>
+									<td style="text-align:left;font-size:12px; color:#666;">
+										<div style="margin-bottom:10px;">{$row[lastcredit]}</div>
+									</td>
+									<td style="text-align: left;">
+										<a href="{php echo create_url('index/module', array('do' => 'EditPlayer', 'name' => 'fighting', 'id' => $row[id]))}">修改</a>
+										<a href="{php echo create_url('index/module', array('do' => 'delquestion', 'name' => 'fighting', 'id' => $row[id]))}">删除</a>
+									</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr>
+								<td style="width:40px;" class="row-first"><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+								<td colspan="4">
+									<input type="submit" name="delete" value="删除选中" class="btn btn-primary" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					</form>
+					{$pager}
+				</div>
+		</table>
+	</div>
+</div>
+{template 'common/footer'}

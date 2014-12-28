@@ -1,0 +1,157 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="./source/modules/icard/template/css/card.css" media="all">
+    <script type="text/javascript" src="./source/modules/icard/template/js/jQuery.js"></script>
+    <title>签到赚积分</title>
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body id="cardintegral" ondragstart="return false;" onselectstart="return false;">
+    {php include $this->template('wap_header');}
+    <section class="body">
+
+		<div class="qiandaobanner">
+			<a href="javascript:history.go(-1);">
+				<img src="./source/modules/icard/template/themes/2/sign.jpg">
+			</a>
+		</div>
+		<div class="cardexplain">
+            {if $issign==1}
+			<a class="receive">
+				<span class="red">今天你已经签到了</span>
+				<span style="display:none"></span>
+			</a>
+            {else}
+            <a class="receive" id="qiandao">
+                <span class="red">点击这里签到赚积分</span>
+                <span style="display:none"></span>
+            </a>
+            {/if}
+		    <div class="jifen-box" style="margin-top:13px;">
+				<ul class="zongjifen">
+					<li style="width:25%">
+						<div class="fengexian">
+							<p>总积分</p>
+							<span>{$total_score}</span>
+						</div>
+					</li>
+					<li style="width:25%">
+						<div class="fengexian">
+							<p>剩余积分</p>
+							<span>{$balance_score}</span>
+						</div>
+					</li>
+					<li style="width:25%">
+					    <div class="fengexian">
+						    <p>签到积分</p>
+							<span>{$sign_score}</span>
+						</div>
+					</li>
+					<li style="width:25%">
+						<a href="{php echo create_url('mobile/module', array('do' => 'wapshoppinglog', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid))}">
+							<p>消费积分</p>
+							<span>{$spend_score}</span>
+						</a>
+					</li>
+				</ul>
+				<div class="clr"></div>
+			</div>
+			<div class="jifen-box header_highlight">
+				<div class="tab month_sel">
+					<span class="title">查看每月签到及积分详情<p>点击这里选择其他月份</p></span>
+				</div>
+				<select onchange="dourl(this.value)" class="month" style="cursor: hand;">
+					<option value="1" selected="">1月</option>
+					<option value="2">2月</option>
+					<option value="3">3月</option>
+					<option value="4">4月</option>
+					<option value="5">5月</option>
+					<option value="6">6月</option>
+					<option value="7">7月</option>
+					<option value="8">8月</option>
+					<option value="9">9月</option>
+					<option value="10">10月</option>
+					<option value="11">11月</option>
+					<option value="12">12月</option>
+				</select>
+				<div class="accordion_child">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="integral_table">
+					<thead>
+						<tr>
+							<th>日期</th>
+							<th>签到情况</th>
+							<th>积分</th>
+						</tr>
+					</thead>
+					<tbody>
+                        {loop $signlist $sign}
+                        <tr>
+                            <td>{$sign['day']} {$sign['week']}</td>
+                            <td>{if $sign['state']==0}<span class="wqian">未签到</span>{else}<span class="yqian">已签到</span>{/if}
+                            </td>
+                            <td>
+                                {if $sign['state']==0}+0{else}<span class="heji">+{$sign['score']}</span>{/if}
+                            </td>
+                        </tr>
+                        {/loop}
+					</tbody>
+					<tfoot>
+						<tr>
+							<td></td>
+							<td class="right">本月合计：</td>
+							<td><span class="heji">+{$totalscore}</span></td>
+						</tr>
+					</tfoot>
+				</table>
+				</div>
+			</div>
+
+			<div class="window" id="windowcenter">
+				<div class="content">
+				 	<div id="txt"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="plugback">
+			<a href="javascript:history.back(-1)">
+				<div class="plugbg themeStyle">
+					<span class="plugback"></span>
+				</div>
+			</a>
+		</div>
+        {php include $this->template('footer');}
+
+	<script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $("#qiandao").click(function () {
+                var btn = $(this);
+                var submitData = {
+                };
+                $.post("{php echo create_url('mobile/module', array('do' => 'wapsetsign', 'name' => 'icard', 'weid' => $weid, 'from_user' => $page_from_user))}", submitData,
+                    function(data) {
+                        if (data.message.state == 0) {
+                            $(".red", $("#qiandao")).html(data.message.msg);
+                            setTimeout(function(){
+                                dourl("{$month}");
+                            },1000);
+                            return;
+                        }
+                    }
+                    ,
+                    "json");
+            });
+        });
+        function dourl(m){
+            location.href= "{php echo create_url('mobile/module', array('do' => 'wapsign', 'name' => 'icard', 'weid' => $weid, 'from_user' => $page_from_user))}"+'&m='+m;
+        }
+        function alert(title){
+            $("#windowcenter").slideToggle("slow");
+            $("#txt").html(title);
+            setTimeout('$("#windowcenter").slideUp(500)',2000);
+        }
+	</script>
+    </section>
+
+</body></html>

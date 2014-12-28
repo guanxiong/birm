@@ -1,0 +1,274 @@
+{template 'header'}
+<div class="head navbar-fixed-top">
+	<a href="javascript:history.go(-1);" class="bn pull-left"> <i class="glyphicon glyphicon-chevron-left"></i>
+	</a>
+	<span class="title text-center">发布信息</span>
+	<a href="{php echo $this->createMobileUrl('member')}" class="bn pull-right"> <i class="glyphicon glyphicon-user"></i>
+	</a>
+</div>
+
+<div class="container mt15">
+	<div class="mt30">
+		<form class="form-horizontal img-rounded" role="form" method="post"  onsubmit="return validate();" enctype="multipart/form-data">
+			<input type="hidden" name="id" value="{$item['id']}">
+
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">标题</label>
+				<div class="col-xs-9">
+					<input  class="form-control" name="title"  value="{$item['title']}" placeholder="*信息标题"></div>
+			</div>
+			<!-- <div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">类型</label>
+				<div class="col-xs-9">
+					<select name="cate_id" class="form-control">
+						{loop  $turlar   $tur}
+						<option value="{$tur['id']}">{$tur['title']}</option>
+						{/loop}
+					</select>
+				</div>
+			</div> -->
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">类型</label>
+				<div class="col-xs-9">
+					<select name="cate_id" class="form-control">
+						
+						<option value="1">出租房屋</option>
+						<option value="2">租赁服务</option>
+						<option value="3">出租商铺</option>
+						<option value="4">新房出售</option>
+						<option value="5">二手出售</option>
+						<option value="6">出售商铺</option>
+						<option value="7">求租房屋</option>
+
+
+						
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">选择小区</label>
+				<div class="col-xs-9">
+					<select name="gid" class="form-control">
+						<!-- {loop  $city   $vo}
+						{if $gullukchildren[$vo['id']]}
+						<optgroup label="{$vo['name']}">
+							{loop  $gullukchildren[$vo['id']]   $gul}
+							<option value="{$gul['id']}">{$gul['title']}</option>
+							{/loop}
+						</optgroup>
+						{/if}
+						{/loop} -->
+						<optgroup label="">
+							{loop  $region $gul}
+							<option value="{$gul['id']}">{$gul['title']}</option>
+							{/loop}
+						</optgroup>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">楼层</label>
+				<div class="col-xs-9">
+					<input type="text" name="housenow" class="form-control" value=""  placeholder="*所在楼层"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">总层</label>
+				<div class="col-xs-9">
+					<input type="text" name="houseall" class="form-control" value=""  placeholder="*总共楼层"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">年份</label>
+				<div class="col-xs-9">
+					<input type="text" name="yil" class="form-control" value=""  placeholder="*年份"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">户型</label>
+				<div class="col-xs-9">
+					<select name="hrs_lan" class="form-control">
+						<option value="">房屋户型</option>
+						<option value='小户型' >小户型</option>
+						<option value='一室户' >一室户</option>
+						<option value='两居室' >两居室</option>
+						<option value='三居室' >三居室</option>
+						<option value='四居室' >四居室</option>
+						<option value='复式' >复式</option>
+						<option value='跃层' >跃层</option>
+						<option value='LOFT' >LOFT</option>
+						<option value='错层' >错层</option>
+						<option value='不规则户型' >不规则户型</option>
+						<option value='公寓' >公寓</option>
+						<option value='写字楼' >写字楼</option>
+						<option value='商品房' >商品房</option>
+						<option value='商场' >商场</option>
+						<option value='商住' >商住</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">面积</label>
+				<div class="col-xs-9">
+					<input type="text" name="mianji" class="form-control" value=""  placeholder="*房屋面积 单位：㎡，请填写数字"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">价格</label>
+				<div class="col-xs-9">
+					<input type="text" name="jiage" class="form-control" value=""  placeholder="*价格 单位:元/每月(出租、求租),万元(出售)"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">朝向</label>
+				<div class="col-xs-9">
+					<select name="direction" class="form-control">
+						<option value="">房屋朝向</option>
+						<option value='东' >东</option>
+						<option value='南' >南</option>
+						<option value='西' >西</option>
+						<option value='北' >北</option>
+						<option value='南北' >南北</option>
+						<option value='东西' >东西</option>
+						<option value='东南' >东南</option>
+						<option value='西南' >西南</option>
+						<option value='东北' >东北</option>
+						<option value='西北' >西北</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">装修</label>
+				<div class="col-xs-9">
+					<select name="house_zx" class="form-control">
+						<option value="">装修级别</option>
+						<option value='豪华装修' >豪华装修</option>
+						<option value='精装修' >精装修</option>
+						<option value='中等装修' >中等装修</option>
+						<option value='简单装修' >简单装修</option>
+						<option value='毛坯' >毛坯</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">风格</label>
+				<div class="col-xs-9">
+					<select name="picstyle" class="form-control">
+						<option value="">装修风格</option>
+						<option value='现代简约风格' >现代简约风格</option>
+						<option value='田园风格' >田园风格</option>
+						<option value='欧/美式' >欧/美式</option>
+						<option value='中式风格' >中式风格</option>
+						<option value='地中海风格' >地中海风格</option>
+						<option value='混搭风格' >混搭风格</option>
+						<option value='北欧风格' >北欧风格</option>
+						<option value='希腊风格' >希腊风格</option>
+						<option value='日式风格' >日式风格</option>
+						<option value='韩式风格' >韩式风格</option>
+						<option value='简欧风格' >简欧风格</option>
+						<option value='乡村风格' >乡村风格</option>
+						<option value='新中式风格' >新中式风格</option>
+						<option value='东南亚风格' >东南亚风格</option>
+						<option value='港式' >港式</option>
+						<option value='英式' >英式</option>
+						<option value='法式' >法式</option>
+						<option value='乐活' >乐活</option>
+						<option value='SOHO' >SOHO</option>
+						<option value='智能家居' >智能家居</option>
+						<option value='波普风格' >波普风格</option>
+						<option value='英伦风格' >英伦风格</option>
+						<option value='哥特风格' >哥特风格</option>
+						<option value='泰式风格' >泰式风格</option>
+						<option value='洛可可风格' >洛可可风格</option>
+						<option value='巴洛克风格' >巴洛克风格</option>
+						<option value='西班牙风格' >西班牙风格</option>
+						<option value='后现代风格' >后现代风格</option>
+						<option value='新古典风格' >新古典风格</option>
+						<option value='ArtDeco风格' >ArtDeco风格</option>
+						<option value='托斯卡纳风格' >托斯卡纳风格</option>
+						<option value='雅致主义风格' >雅致主义风格</option>
+						<option value='波西米亚风格' >波西米亚风格</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">配套设施</label>
+				<div class="col-xs-9">
+					<label>
+						<input name="wupin[]" type="checkbox" id="wupin1" value="水电" />
+						水电
+						<input name="wupin[]" type="checkbox" id="wupin2" value="燃气" />
+						燃气
+						<input name="wupin[]" type="checkbox" id="wupin3" value="暖气" />
+						暖气
+						<input name="wupin[]" type="checkbox" id="wupin4" value="有线电视" />
+						有线电视
+						<input name="wupin[]" type="checkbox" id="wupin5" value="电话" />
+						电话
+						<input name="wupin[]" type="checkbox" id="wupin6" value="宽带" />
+						宽带
+						<input name="wupin[]" type="checkbox" id="wupin7" value="热水器" />
+						热水器
+						<input name="wupin[]" type="checkbox" id="wupin8" value="床" />
+						床
+						<input name="wupin[]" type="checkbox" id="wupin9" value="车库" />
+						车库
+						<input name="wupin[]" type="checkbox" id="wupin10" value="家具" />
+						家具
+						<input name="wupin[]" type="checkbox" id="wupin11" value="家电" />
+						家电
+						<input name="wupin[]" type="checkbox" id="wupin12" value="空调" />
+						空调
+					</label>
+
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">描述</label>
+				<div class="col-xs-9">
+					<textarea style="height:150px;" class="form-control" name="content" cols="70">{$item['content']}</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">联系人</label>
+				<div class="col-xs-9 inline">
+					<!-- <input  class="form-control" name="linkman"  value="{$item['author']} {if  empty($item['author'])}{php echo $this->udata['realname']}{/if}"  style="witdh:40px;"> -->
+					<input  class="form-control" name="linkman"  value="{$item['linkman']}"  style="witdh:40px;"> 
+					<label for="contacttype1" class="radio inline">
+						<input type="radio" name="jinsi" id="contacttype1" value="1" {if $item['jinsi']==1}checked='checked'{/if}/>
+						女士
+					</label>
+					<label for="contacttype2" class="radio inline">
+						<input type="radio" name="jinsi" id="contacttype2" value="2" {if $item['jinsi']==2}checked='checked'{/if}/>
+						男士
+					</label>
+
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">联系手机</label>
+				<div class="col-xs-9">
+					<input  class="form-control" name="tel"  value="{$item['tel']}{if  empty($item['tel'])}{php echo $this->udata['mobile']}{/if}" ></div>
+			</div>
+
+			<div class="form-group">
+				<label for="requirement" class="col-xs-3 control-label">添加图片</label>
+				<div class="col-xs-9">
+					<input type="file"  class="form-control" name="thumb"></div>
+			</div>
+			<div class="form-group">
+				<div class="col-xs-offset-3 col-xs-9">
+					<button type="submit" name="submit" value="yes" class="btn btn-primary" style="width:100%;">立即发布</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</div>
+			</div>
+		</form>
+
+	</div>
+</div>
+{php $footer_off=1;}
+{template 'footer'}

@@ -1,0 +1,60 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+  <li{if $_GPC['do'] == 'routerlist'} class="active"{/if}><a href="{php echo  $this->createWebUrl('routerlist');}">路由器管理</a>
+  </li>
+  <li{if $_GPC['do'] == 'routeradd'} class="active"{/if}><a href="{php echo $this->createWebUrl('routeradd');}">添加路由器</a>
+  </li>
+</ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="{$item['id']}">
+  <h4>路由器配置</h4>
+  <table class="tb">
+     <tr>
+		  <th width="90">路由名：</th>
+			<td width="354"><input type="text" id="rname" name="rname" value="{$item['rname']}"  class="span5" />
+			<span class="help-block">*填写名称用于识别指定路由器</span></td>
+	  </tr>
+      <tr>
+		  <th width="90">appId：</th>
+			<td><input type="text" id="appid" name="appid" value="{$item['appid']}"  class="span5" />
+			<span class="help-block">由RippleTek预先分配</span></td>
+	  </tr>
+      <tr>
+		  <th width="90">appKey：</th>
+			<td width="354"><input type="text" id="appkey" name="appkey" value="{$item['appkey']}"  class="span5" />
+		    <span class="help-block">由RippleTek预先分配，请妥善保管</span></td>
+	  </tr>
+      <tr>
+		  <th width="90">nodeId：</th>
+			<td width="354"><input type="text" id="nodeid" name="nodeid" value="{$item['nodeid']}"  class="span5" />
+		    <span class="help-block">微信公众号关联的认证节点名，通过RippleTek的后台创建</span></td>
+	  </tr>
+      <tr>
+		  <th width="90">接口地址：</th>
+			<td width="354"><input type="text" id="iurl" name="iurl" value="{$item['iurl']}"  class="span5" />
+			<span class="help-block">如：http://web.rippletek.com/api/portal/login</span></td>
+	  </tr>
+        <tr>
+					<th>是否启用：</th>
+					<td>
+                                                <label class="radio inline"><input type="radio" name="status" value="1" {if $item['status']=='1'||empty($item['status'])} checked="checked" {/if}> 是</label>&nbsp;&nbsp;&nbsp;
+                                                <label class="radio inline"><input type="radio" name="status" value="0" {if $item['status']=='0'} checked="checked" {/if} > 否</label>
+                                               
+                    </td>
+				</tr>
+        <tbody>
+		<tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+        </tbody>
+	</table>
+</form>
+
+ 
+
+{template 'common/footer'}

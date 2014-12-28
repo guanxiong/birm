@@ -1,0 +1,28 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('index/module', array('do' => 'FansList', 'name' => 'fansinfo'))}">粉丝列表</a></li>
+	<li class="active"><a href="">粉丝聊天</a></li>
+</ul>
+<div class="main">
+	<div class="search">
+		<h4 class="sub-title">与{$list['nickname']}({$list['from_user']})聊天</h4>
+		<form action="" method="post" onsubmit="">
+			<table class="table table-bordered tb">
+				<tbody>
+					<tr>
+						<td>
+							<textarea name="content" cols="50" rows="5" placeholder="请输入内容"></textarea>
+						</td>
+					</tr>
+					<tr class="search-submit">
+						<td colspan="2">
+							<input type="submit" name="submit" value="发送" class="btn btn-primary" />
+							<input type="hidden" name="token" value="{$_W['token']}" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</div>
+</div>
+{template 'common/footer'}

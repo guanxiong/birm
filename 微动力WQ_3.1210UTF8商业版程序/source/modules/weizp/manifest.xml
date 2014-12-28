@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[微作品]]></name>
+		<identifie><![CDATA[weizp]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[粉丝注册后提交作品]]></ability>
+		<description><![CDATA[粉丝注册后提交作品]]></description>
+		<author><![CDATA[Libi]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE `ims_weizp_album` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) DEFAULT NULL,
+  `weid` int(11) DEFAULT NULL,
+  `from_user` varchar(255) DEFAULT NULL,
+  `author_id` int(11) DEFAULT NULL,
+  `images` text,
+  `title` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `views` int(11) DEFAULT NULL,
+  `createtime` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_weizp_author` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) DEFAULT NULL,
+  `weid` int(11) DEFAULT NULL,
+  `from_user` varchar(255) DEFAULT NULL,
+  `author` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `qq` varchar(255) DEFAULT NULL,
+  `other` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_weizp_images` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `src` varchar(255) DEFAULT NULL,
+  `file` longtext,
+  PRIMARY KEY (`id`)
+) AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_weizp_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) DEFAULT NULL,
+  `cover` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `content` text,
+  PRIMARY KEY (`id`)
+) AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;	
+]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

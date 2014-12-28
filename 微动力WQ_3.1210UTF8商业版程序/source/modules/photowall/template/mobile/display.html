@@ -1,0 +1,137 @@
+{template 'header'}
+	<link rel="stylesheet" type="text/css" href="./source/modules/photowall/template/style/css/style.css" media="all">
+	<script type="text/javascript" src="./source/modules/photowall/template/style/js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="./source/modules/photowall/template/style/js/jquery.masonry.min.js"></script>
+
+	<script type="text/javascript">
+	$(function(){	
+		
+		
+	    //执行瀑布流
+	    var $icontainer = $('#icontainer');
+		$icontainer.imagesLoaded(function(){
+		  $icontainer.masonry({
+		    itemSelector : '.item',
+		    isAnimated: true
+		  });
+		});
+		var loading = $("#loading").data("on", false);
+		$(window).scroll(function(){
+			var nextrow=$("#nextrow").val();	//下次加载从nextrow条开始	
+			if(loading.data("on")) return;
+			if($(document).scrollTop() > 
+				$(document).height()-$(window).height()-$('.footer').height()){
+				//加载更多数据
+				loading.data("on", true).fadeIn();
+				$.get(
+					"{php echo create_url('mobile/module/getData', array('name' => 'photowall','weid' => $_W['weid'],'rid' => $_GPC['rid']));}", 
+					{"id" : $icontainer.find(".item:last").attr("id"),
+						"nextrow":nextrow
+					},
+					function(data){
+						if(data==1){
+							$("#loading").html('<span class="loadings">已全部加载完成</span>');
+						}else{
+							$("#nextrow").val(parseInt(nextrow)+4);	//每次加载4条
+							var html = "",item;
+							if($.isArray(data)){
+								for(i in data){
+									item = data[i];
+									html += '<div id="' + item.id + '" class="item">';
+									//html += '<div class="title"><a href="#" target="_blank">' + item.description + '</a></div>';
+									html += '<img src="{$_W['attachurl']}' + item.url + '" alt="' + item.description + '">';
+									html += '<div class="intro">描述：' + item.description + '</div>';
+									html += '<div class="opt-info"><span>作者：<em>' + item.from_user + '</em></span><br /><span>发表时间：<em>' + item.time + '</em></span></div>';
+									html += '<div class="vote">';
+									html += item.html1;
+									//html += item.html2;
+									html += '</div></div></div>';
+								}
+								var $newElems = $(html).css({ opacity: 0 }).appendTo($icontainer);;
+								$newElems.imagesLoaded(function(){
+									$newElems.animate({ opacity: 1 });
+									$icontainer.masonry( 'appended', $newElems, true ); 
+						        });
+						        loading.data("on", false);
+							}
+							loading.fadeOut();
+						}
+					}
+				,'json'
+				);
+			}
+		});
+	});
+	</script>
+</head>
+<body>
+<div class="head">
+	<a href="{php echo $this->createMobileUrl('list');}" class="bn pull-left" style="font-size: 14px;"><i class="icon-reply"> 列表</i></a>
+	<span class="title">{$reply['title']}照片墙</span>
+	<a href="{php echo $this->createMobileUrl('myphotos');}" class="bn pull-right" style="font-size: 14px;">我的照片</a>
+</div>
+	<input type="hidden" value="10" id="nextrow" />
+	<!-- 主体 -->
+	<div class="main cf">
+		<!-- 左边 -->
+		<div class="wrapper ">
+
+			<!-- 案例列表 -->
+			<div id="icontainer" class="icontainer">
+				<!-- 一个完整的案例 -->
+				{loop $data $li}
+				<div class="item" id="{$li['id']}">
+					<!-- 标题 -->
+					<!--div class="title">
+						<a href="#" target="_blank">{$li['description']}</a>
+					</div-->
+					<!-- /标题 -->
+					<!-- 图片 -->
+					<img src="{$_W['attachurl']}{$li['url']}" alt="">
+					<!-- /图片 -->
+					
+					<!-- 简介 -->
+					<div class="intro">描述：{$li['description']}</div>
+					<!-- /简介 -->
+
+					<!-- 浏览及评论数量 -->
+					<div class="opt-info">
+						<span>作者：<em>{php echo $this->getNickName($li['from_user']);}</em></span><br />
+						<span>发布时间：<em>{php echo date('Y-m-d H:i:s',$li['time']);}</em></span>
+						<!--span style="float: right;font-weight: bold"><a href="">点赞</a></span-->
+					</div>
+					<!-- /浏览及评论数量 -->
+					<div class="vote">
+					{if $this->getCommentNum($li['id'],'1',$_W['fans']['from_user']) == '0'}
+					<a href="{php echo $this->createMobileUrl('vote',array('pid'=>$li['id'],'weid'=>$_W['weid'],'tp' => '1','rid'=>$_GPC['rid']))}"><button type="button" class="btn btn-default btn-lg">点赞({php echo $this->getCommentNum($li['id'],'1')})</button></a>
+					{else}
+					<a href="{php echo $this->createMobileUrl('vote',array('pid'=>$li['id'],'weid'=>$_W['weid'],'tp' => '0','rid'=>$_GPC['rid']))}"><button type="button" class="btn btn-default btn-lg active">已点赞({php echo $this->getCommentNum($li['id'],'1')})</button></a>
+					{/if}
+					{if $this->getCommentNum($li['id'],'2',$_W['fans']['from_user']) == '0'}
+					<!--a href="{php echo $this->createMobileUrl('vote',array('pid'=>$li['id'],'weid'=>$_W['weid'],'tp' => '1','rid'=>$_GPC['rid']))}"><button type="button" class="btn btn-default btn-lg" style="float: right;">评论({php echo $this->getCommentNum($li['id'],'2')})</button></a-->
+					{else}
+						<!--button type="button" class="btn btn-default btn-lg active" style="float: right;">已评论</button-->
+					{/if}
+					</div>
+
+
+				</div>
+				{/loop}
+				<!-- /一个完整的案例 -->
+			</div>
+			<!-- /案例列表 -->
+		</div>
+		<!-- /左边 -->
+	</div>
+
+	<!-- /底部 -->
+	<div id="loading" class="loading-box" style="display:none;">
+		<span class="loading">加载中，请稍后...</span>
+	</div>
+	<!-- 底部 -->
+	<div class="footer">
+		<div style="color: #fff;text-align: center;">{$reply['copyright']}</div>
+	</div>
+</div>
+</body>
+</html>

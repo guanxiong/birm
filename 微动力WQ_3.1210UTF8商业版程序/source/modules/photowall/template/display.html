@@ -1,0 +1,88 @@
+{template 'common/header'}
+<style>
+.sub-search input,.sub-search select{margin-bottom:0;}
+</style>
+<script type="text/javascript">
+$(function(){
+	$('div.make-switch').on('switch-change', function (e, data) {
+		var dat = data.el.attr('data');
+		var ret = data.value;
+		$.post(location.href, {dat: dat, ret: ret}, function(resp){
+			if(resp == 'success') {
+				window.setTimeout(function(){location.href = location.href;}, 300);
+			}
+		});
+	});
+});
+</script>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="">图片列表</a></li>
+	<li>
+		<a href="{php echo $this->createWebUrl('list');}">照片墙管理</a>
+	</li>
+</ul>
+	<div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">图片列表</h4>
+					<div class="sub-content">
+					<form action="" method="post" onsubmit="">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</th>
+									<th style="width:100px;">粉丝ID</th>
+									<th style="width:100px;">图片链接</th>
+									<th style="width:100px;">图片描述</th>
+									<th style="width:40px;" >得票数</th>
+									<th style="width:150px;">审核状态</th>
+									<th style="width:150px;">时间</th>
+									<th style="width:150px;">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $row}
+								<tr>
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+									<td style="text-align:center;">{$row['from_user']}</td>
+									<td style="text-align:center;"><a href="{$_W['attachurl']}{$row['url']}">点击查看图片</a></td>
+									<td style="text-align:center;">{$row['description']}</td>
+									<td style="text-align:center;">{$row['votenum']}</td>
+									<td style="text-align:center;"><div class="make-switch switch-small" data-on-label="通过" data-off-label="未通过">
+										<input type="checkbox" value="20"{if $row['status'] == '1'} checked="checked"{/if} data="{php echo base64_encode(json_encode($row['id']));}" />
+										</div>
+									</td>
+									<td style="text-align:center;">{php echo date("Y-m-d H:i:s", $row['time'])}</td>
+									<td style="text-align:center;">
+										<!--a href="{php echo $this->createWebUrl('picedit',array('id'=>$row['id'],'rid'=>$_GPC['rid']))}">编辑</a-->
+										<a href="#" onclick="drop_confirm('您确定要删除吗,删除了不可恢复!', '{php echo $this->createWebUrl('picdelete',array('id'=>$row['id'],'rid'=>$_GPC['rid']))}');">删除</a>
+									</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr>
+								<td style="width:40px;" class="row-first"><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+								<td colspan="4">
+									<input type="submit" name="delete" value="删除选中" class="btn btn-primary" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+				{$pager}
+				</div>
+			</div>
+		</div>
+	</div>
+<script>
+function drop_confirm(msg, url){
+    if(confirm(msg)){
+        window.location = url;
+    }
+}
+</script>
+{template 'common/footer'}

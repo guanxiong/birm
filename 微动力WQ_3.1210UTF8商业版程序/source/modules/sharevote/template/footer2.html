@@ -1,0 +1,33 @@
+<div id="share-pop2">
+    <div style="width:100%;float:right;">
+        <div style="width:100%;">
+            <img src="./source/modules/sharevote/template/images/guide.png" style="float:right;width:100%:"/>
+        </div>
+    </div>
+</div>
+<div class="text" id="content">
+    <div id="mess_share">
+        <div id="share_1">
+            <button class="button2" onclick="document.getElementById('share-pop2').style.display='block';">
+                <img src="./source/modules/sharevote/template/images/icon_msg.png">&nbsp;发送给朋友
+            </button>
+        </div>
+        <div id="share_2">
+            <button class="button2" onclick="document.getElementById('share-pop2').style.display='block';">
+                <img src="./source/modules/sharevote/template/images/icon_timeline.png">&nbsp;分享到朋友圈
+            </button>
+        </div>
+        <div class="clr"></div>
+    </div>
+</div>
+<a data-ajax="false" data-role="button" href="{php echo create_url('index/module', array('do' => 'send_vote', 'name' => 'sharevote'))}">{$fData}</a>
+<script>
+    $('#share-pop2').hide();
+    $('#share-pop2').click(function (){
+        $('#share-pop2').hide();
+    });
+</script>
+</div>
+</div>
+</body>
+</html>

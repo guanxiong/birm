@@ -1,0 +1,54 @@
+{template 'common/header'}
+{template 'common'}
+<div class="main">
+    <ul class="nav nav-tabs">		
+        <li><a href="{php echo $this->createWebUrl('brand');}">品牌列表</a></li>
+        <li{if $op=='edit' && empty($id)} class="active"{/if}><a href="{php echo $this->createWebUrl('brand',array('op'=>'edit'));}">添加品牌</a></li>
+        {if $op=='edit' && !empty($id)}<li class="active"><a href="{php echo $this->createWebUrl('brand',array('op'=>'edit','id'=>$id));}">编辑品牌</a></li>{/if}
+    </ul>
+    <form action="" class="form-horizontal form" method="post" onsubmit="return formcheck()">
+        <input type="hidden" name="id" value="{$item['id']}">
+        <h4>品牌基本信息</h4>
+        <table class="tb">
+           <tr>
+                <th>排序：</th>
+                <td><input type="text" id="displayorder" name="displayorder"  class="span7" value="{$item['displayorder']}">
+                    <span class='help-block'>数字越大排名越高</span></td>
+            </tr>
+            <tr>
+                <th><span class="red">*</span>品牌名：</th>
+                <td><input type="text" name="title" id="title" value="{$item['title']}" class="span3"></td>
+            </tr>
+              <tr>
+                <th>状态：</th>
+                <td>    <label class="radio inline">
+                    <input type="radio" name="status" value="1" {if $item['status'] == 1}checked{/if}/>显示
+                    </label>
+                    <label class="radio inline">
+                    <input type="radio" name="status" value="0" {if $item['status'] == 0}checked{/if}/>隐藏
+                    </label>
+                    <span class='help-block'>手机前台是否显示</span>
+                    </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+    
+    <script type="text/javascript">
+        kindeditor($('.richtext-clone'));
+        function formcheck() {
+ 
+            if ($("#title").isEmpty()) {
+                Tip.select("title", "请填写品牌!", "right");
+                return false;
+            }
+            return true;
+        }
+    </script>
+

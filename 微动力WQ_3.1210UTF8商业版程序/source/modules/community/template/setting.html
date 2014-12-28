@@ -1,0 +1,59 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>物业公司信息</h4>
+		<table class="tb">
+			<tr>
+				<th>名称</th>
+				<td>
+					<input name="data[title]" type="text" value="{$settings['title']}" class="span5" placeholder="填写物业公司名称"/>
+				</td>
+			</tr>
+			<tr>
+				<th>办公电话</th>
+				<td>
+					<input name="data[phone]" type="text" value="{$settings['phone']}" class="span5" placeholder=""/>
+				</td>
+			</tr>
+			<tr>
+				<th>地址</th>
+				<td>
+					<textarea name="data[address]" rows="3" cols="70" class="span5">{$settings['address']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>说明</th>
+				<td>
+					<textarea name="data[remark]" rows="3" cols="70" class="span5">{$settings['remark']}</textarea>
+				</td>
+			</tr>
+		</table>
+		<h4>系统设置</h4>
+		<table class="tb">
+			<tr>
+				<th>是否开启人工审核</th>
+				<td>
+					<label for="radio_1" class="radio inline"><input type="radio" name="data[verify]" id="radio_1" value="1" {if $settings['verify'] == 1} checked{/if} /> 审核</label>
+					<label for="radio_0" class="radio inline"><input type="radio" name="data[verify]" id="radio_0" value="0" {if empty($settings['verify']) && $settings['verify'] == 0} checked{/if} /> 不审核</label>
+					<span class="help-block">开启人工审核后，用户绑定需要管理人员审核方可使用物业相关功能，默认不开启审核</span>
+				</td>
+			</tr>
+			<tr>
+				<th>是否开启短信验证</th>
+				<td>
+					<label for="radio_1" class="radio inline"><input type="radio" name="data[verifymobile]" id="radio_1" value="1" {if $settings['verifymobile'] == 1} checked{/if} /> 验证</label>
+					<label for="radio_0" class="radio inline"><input type="radio" name="data[verifymobile]" id="radio_0" value="0" {if empty($settings['verifymobile']) && $settings['verifymobile'] == 0} checked{/if} /> 不验证</label>
+					<span class="help-block">开启短信验证后，用户提交信息时自动验证其手机号的真实性（发送验证码）。</span>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

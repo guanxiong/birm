@@ -1,0 +1,27 @@
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, button, p, blockquote, th, td {margin:0; padding:0; border:0; font-family: 'Microsoft Yahei'}
+body {background-size: 100% 100%!important;}
+ul, li {list-style-type: none; list-style-image: none; list-style: none; overflow: hidden; margin: 0; padding: 0;}
+p {display: block; -webkit-margin-before: 1em; -webkit-margin-after: 1em; -webkit-margin-start: 0px; -webkit-margin-end: 0px; margin: 0;}
+img {border: none; vertical-align: middle;}
+.wrap {margin: auto; width: 100%; max-width: 640px; min-width: 300px; position: relative;}
+.shareListBox {padding: 10px 2%; margin-top: 0px; position: relative; min-height: 480px;}
+.shareListBox .pic {border-radius: 5px; background: #f2f2f2 url(../img/camera.jpg) no-repeat center; background: cover; min-height: 67px;}
+.shareListBox .pic img {width: 100%; border-radius: 5px;}
+.share-l li, .share-r li {background: #fff; border: #ded9d2 1px solid; position: relative; padding: 4px; margin-bottom: 16px; border-radius: 5px; box-shadow: 0 1px 3px rgba(33,33,33,0.15); width: 126px; overflow: visible; display: block; text-align: center;}
+.shareListBox .date {text-align: center;color: #c6c6c6;}
+.shareListBox .title, .shareListBox .para {color: #fff;}
+.shareListBox .title h3 {padding-top: 25px;}
+.shareListBox .para p {text-align: left; font-size: 15px;}
+.shareListBox h3 {font-weight: normal;}
+.share-l {float: left; width: 50%; overflow: visible;}
+.share-r {float: right; width: 50%; margin-top: 48px; overflow: visible;}
+.share-l li {float: left; clear: left;}
+.share-r li {float: right; clear: right;}
+.share-l li:after, .share-r li:after {position: absolute; top: 12px; background-size: 100%; content: ""; display: block; width: 8px; height: 14px; background-image: url(../img/triangle.jpg); z-index: 9;}
+.share-l li:after {right: -7px; -webkit-transform: rotate(-180deg);}
+.share-r li:after {left: -7px; -webkit-transform: rotate(0deg);}
+.share-l li .photo, .share-r li .photo {position: absolute; top: 9px; z-index: 9; content: ""; display: inline-block; background-image: url(../img/camera.jpg); -webkit-background-size: 100%; width: 23px; height: 23px;}
+.share-r li .photo {left: -30px;}
+.share-l li .photo {right: -30px;}
+.alertImg {width: 100%; height:100%; background-color: rgba(0,0,0,0.8); z-index: 10; position: fixed; top: 0; display: none; overflow-y:scroll; overflow-x:scroll;}
+.alertImg img {width: 100%; margin-top: 10px;}

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="true">
+		<name><![CDATA[二手房]]></name>
+		<identifie><![CDATA[shouse]]></identifie>
+		<version><![CDATA[0.5]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[二手房]]></ability>
+		<description><![CDATA[二手房]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+				<cover>
+					<entry title="首页入口设置" do="index"/>
+					<entry title="地产新闻入口设置" do="news"/>
+					<entry title="发布信息入口设置" do="houseadd"/>
+					<entry title="管理首页入口设置" do="admin"/>
+				</cover>
+				<home>
+					<entry title="房产首页" do="index"/>
+					<entry title="地产新闻" do="news"/>
+					<entry title="发布信息" do="houseadd"/>
+					<entry title="管理首页" do="admin"/>
+				</home>
+				<menu>
+					<entry title="信息分类管理" do="turlar" state="" direct="false"/>
+					<entry title="信息管理" do="house" state="" direct="false"/>
+					<entry title="公司管理" do="dukan" state="" direct="false"/>
+					<entry title="经纪人管理" do="adminlist" state="" direct="false"/>
+					<entry title="小区管理" do="gulluk" state="" direct="false"/>
+					<entry title="分类管理" do="category" state="" direct="false"/>
+					<entry title="新闻管理" do="article" state="" direct="false"/>
+					<entry title="幻灯片设置" do="slide" state="" direct="false"/>
+					<entry title="最新留言" do="lookhouse" direct="false"/>
+				</menu>
+	</bindings>
+	<install>
+		<![CDATA[
+			CREATE TABLE IF NOT EXISTS `ims_hewer_house` (
+			 `hsid` int(11) NOT NULL AUTO_INCREMENT,
+			 `gid` int(11) DEFAULT NULL,
+			 `weid` int(11) DEFAULT NULL,
+			 `cate_id` int(11) DEFAULT NULL,
+			 `title` varchar(255) DEFAULT NULL COMMENT '户型名称',
+			 `jiage` FLOAT( 11, 2 ) NOT NULL DEFAULT '0.00' COMMENT '楼盘均价',
+			 `hjiage` FLOAT( 11, 2 ) NOT NULL DEFAULT '0.00' COMMENT '楼盘均价',
+			 `housenow` smallint(2) DEFAULT NULL COMMENT '楼层',
+			 `houseall` smallint(2) DEFAULT NULL COMMENT '楼层',
+			 `hrs_lan` varchar(255) DEFAULT NULL COMMENT '户型',
+			 `mianji` varchar(255) DEFAULT NULL COMMENT '建筑面积',
+			 `direction` varchar(255) DEFAULT NULL COMMENT '朝向',
+			 `house_zx` varchar(255) DEFAULT NULL COMMENT '装修',
+			 `picstyle` varchar(255) DEFAULT NULL COMMENT '风格',
+			 `wupin` varchar(255) DEFAULT NULL COMMENT '配套设施',
+			 `linkman` varchar(255) DEFAULT NULL COMMENT '联系人',
+			 `yil` varchar(255) DEFAULT NULL COMMENT '建筑面积',
+			 `tel` varchar(255) DEFAULT NULL COMMENT '联系手机',
+			 `thumb` varchar(255) DEFAULT NULL COMMENT '添加图片',
+			 `jinsi` tinyint(4) unsigned DEFAULT NULL COMMENT '排序',
+			 `sort` tinyint(4) unsigned DEFAULT NULL COMMENT '排序',
+			 `uid` int(11) DEFAULT NULL,
+			 `content` text NOT NULL,
+			 `createtime` int(11) DEFAULT NULL,
+			 `openid` varchar(250) NOT NULL,
+			 `status` tinyint(1) NOT NULL DEFAULT '0',
+			 `isgood` tinyint(1) NOT NULL DEFAULT '0',
+			 PRIMARY KEY (`hsid`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='楼盘户型';
+			 
+			 CREATE TABLE IF NOT EXISTS `ims_hewer_house_isgood` (
+			 `id` int(11) NOT NULL AUTO_INCREMENT,
+			 `weid` int(11) DEFAULT NULL,
+			 `hsid` int(11) NOT NULL,
+			 `isgood` int(11) NOT NULL,
+			 `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+			 PRIMARY KEY (`id`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='房产，用户';
+			 
+			 
+			 CREATE TABLE IF NOT EXISTS `ims_hewer_hh` (
+			 `id` int(11) NOT NULL AUTO_INCREMENT,
+			 `weid` int(11) DEFAULT NULL,
+			 `gid` int(11) NOT NULL,
+			 `uid` int(11) NOT NULL,
+			 `status` tinyint(1) NOT NULL DEFAULT '0',
+			 `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+			 PRIMARY KEY (`id`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='房产，用户';
+			 
+			 CREATE TABLE IF NOT EXISTS `ims_hewer_hizmatqi` (
+			 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+			 `weid` int(11) unsigned NOT NULL,
+			 `openid` varchar(250) NOT NULL,
+			 `did` int(10) unsigned NOT NULL,
+			 `uid` int(10) unsigned NOT NULL,
+			 `type` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '1为业主，2为租户',
+			 `realname` varchar(50) NOT NULL COMMENT '真实姓名',
+			 `nickname` varchar(50) NOT NULL COMMENT '昵称',
+			 `mobile` varchar(15) NOT NULL COMMENT '手机号',
+			 `remark` varchar(1000) NOT NULL COMMENT '备注',
+			 `status` tinyint(1) unsigned NOT NULL ,
+			 `createtime` int(10) unsigned NOT NULL,
+			 PRIMARY KEY (`id`),
+			 KEY `uid` (`uid`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='注册用户';
+			 
+			 
+			 CREATE TABLE IF NOT EXISTS `ims_hewer` (
+			 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+			 `weid` int(10) unsigned NOT NULL,
+			 `iscommend` tinyint(1) NOT NULL DEFAULT '0',
+			 `ishot` tinyint(1) unsigned NOT NULL DEFAULT '0',
+			 `pcate` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '一级分类',
+			 `ccate` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '二级分类',
+			 `template` VARCHAR(300) NOT NULL DEFAULT '' COMMENT '内容模板',
+			 `title` varchar(100) NOT NULL DEFAULT '',
+			 `description` varchar(100) NOT NULL DEFAULT '',
+			 `content` text NOT NULL,
+			 `thumb` varchar(100) NOT NULL DEFAULT '' COMMENT '缩略图',
+			 `source` varchar(50) NOT NULL DEFAULT '' COMMENT '来源',
+			 `author` varchar(50) NOT NULL COMMENT '作者',
+			 `displayorder` int(10) unsigned NOT NULL DEFAULT '0',
+			 `linkurl` varchar(500) NOT NULL DEFAULT '',
+			 `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+			 `openid` varchar(250) NOT NULL,
+			 PRIMARY KEY (`id`),
+			 KEY `idx_iscommend` (`iscommend`),
+			 KEY `idx_ishot` (`ishot`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			 
+			 CREATE TABLE IF NOT EXISTS `ims_hewer_category` (
+			 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+			 `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属帐号',
+			 `nid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '关联导航id',
+			 `name` varchar(50) NOT NULL COMMENT '分类名称',
+			 `parentid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级分类ID,0为第一级',
+			 `displayorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+			 `enabled` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否开启',
+			 `icon` varchar(100) NOT NULL DEFAULT '' COMMENT '分类图标',
+			 `description` varchar(100) NOT NULL DEFAULT '' COMMENT '分类描述',
+			 `template` VARCHAR(300) NOT NULL DEFAULT '' COMMENT '分类模板',
+			 `templatefile` VARCHAR( 100 ) NOT NULL DEFAULT '',
+			 `linkurl` varchar(500) NOT NULL DEFAULT '',
+			 `ishomepage` TINYINT( 1 ) NOT NULL DEFAULT '0',
+			 PRIMARY KEY (`id`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			 
+			 CREATE TABLE IF NOT EXISTS `ims_hewer_inkas` (
+			 `id` int(11) NOT NULL AUTO_INCREMENT,
+			 `uid` int(11) NOT NULL,
+			 `articleid` int(11) NOT NULL,
+			 `status` tinyint(1) NOT NULL DEFAULT '0',
+			 `content` varchar(100) NOT NULL DEFAULT '',
+			 `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+			 PRIMARY KEY (`id`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			 
+			 CREATE TABLE IF NOT EXISTS `ims_hewer_slide` (
+			 `id` int(10) unsigned NOT NULL auto_increment,
+			 `weid` int(10) unsigned NOT NULL,
+			 `title` varchar(255) NOT NULL,
+			 `url` varchar(255) NOT NULL default '',
+			 `thumb` varchar(255) NOT NULL default '',
+			 `displayorder` tinyint(4) NOT NULL default '0',
+			 PRIMARY KEY (`id`),
+			 KEY `weid` (`weid`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			 
+			 CREATE TABLE IF NOT EXISTS `ims_hewer_gulluk` (
+			 `id` int(10) unsigned NOT NULL auto_increment,
+			 `weid` int(10) unsigned NOT NULL,
+			 `title` varchar(255) NOT NULL,
+			 `thumb` varchar(255) DEFAULT NULL COMMENT '添加图片',
+			 `classa` int(10) unsigned NOT NULL,
+			 `classb` int(10) unsigned NOT NULL,
+			 `classc` int(10) unsigned NOT NULL,
+			 `huanjing` varchar(500) NOT NULL,
+			 `zhoubian` varchar(500) NOT NULL,
+			 `jiaotong` varchar(500) NOT NULL,
+			 `dizhi` varchar(500) NOT NULL,
+			 `lng` varchar(10) NOT NULL DEFAULT '',
+			 `lat` varchar(10) NOT NULL DEFAULT '',
+			 `displayorder` tinyint(4) NOT NULL default '0',
+			 PRIMARY KEY (`id`),
+			 KEY `weid` (`weid`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			 
+			 CREATE TABLE IF NOT EXISTS `ims_hewer_dukanlar` (
+			 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+			 `weid` int(10) unsigned NOT NULL,
+			 `title` varchar(50) NOT NULL DEFAULT '',
+			 `classa` int(10) unsigned NOT NULL,
+			 `classb` int(10) unsigned NOT NULL,
+			 `classc` int(10) unsigned NOT NULL,
+			 `classd` int(10) unsigned NOT NULL,
+			 `thumb` varchar(100) NOT NULL DEFAULT '',
+			 `content` varchar(1000) NOT NULL DEFAULT '',
+			 `phone` varchar(15) NOT NULL DEFAULT '',
+			 `tel` varchar(100) NOT NULL DEFAULT '',
+			 `qq` varchar(15) NOT NULL DEFAULT '',
+			 `url` varchar(200) NOT NULL DEFAULT '',
+			 `province` varchar(50) NOT NULL DEFAULT '',
+			 `city` varchar(50) NOT NULL DEFAULT '',
+			 `dist` varchar(50) NOT NULL DEFAULT '',
+			 `address` varchar(500) NOT NULL DEFAULT '',
+			 `lng` varchar(10) NOT NULL DEFAULT '',
+			 `lat` varchar(10) NOT NULL DEFAULT '',
+			 `industry1` varchar(10) NOT NULL DEFAULT '',
+			 `industry2` varchar(10) NOT NULL DEFAULT '',
+			 `createtime` int(10) NOT NULL DEFAULT '0',
+			 `status` tinyint(1) NOT NULL COMMENT '状态',
+			 PRIMARY KEY (`id`),
+			 KEY `idx_lat_lng` (`lng`,`lat`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			 
+			 
+			 CREATE TABLE IF NOT EXISTS `ims_hewer_turlar` (
+			 `id` int(11) NOT NULL AUTO_INCREMENT,
+			 `title` varchar(250) NOT NULL DEFAULT '',
+			 `status` tinyint(1) NOT NULL DEFAULT '0',
+			 PRIMARY KEY (`id`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='信息分类';
+			 
+			 
+			 INSERT INTO `ims_hewer_turlar` (`id`,`status`, `title`) VALUES
+			 (1,0, '出租房屋'),
+			 (2,0, '租赁服务'),
+			 (3,0, '出租商铺'),
+			 (4,0, '新房出售'),
+			 (5,0, '二手出售'),
+			 (6,0, '出售商铺'),
+			 (7,0, '求租房屋');
+			 
+			 
+			 CREATE TABLE IF NOT EXISTS `ims_hewer_weid` (
+			 `id` int(11) NOT NULL AUTO_INCREMENT,
+			 `weid` int(11) DEFAULT NULL,
+			 `newname` varchar(250) NOT NULL DEFAULT '',
+			 `tid` int(11) NOT NULL,
+			 `isauto` tinyint(1) NOT NULL DEFAULT '1',
+			 `status` tinyint(1) NOT NULL DEFAULT '0',
+			 `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+			 PRIMARY KEY (`id`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='房产，用户';
+			 
+			 
+			 
+			 CREATE TABLE IF NOT EXISTS `ims_hewer_fava` (
+			 `favaid` bigint(20) NOT NULL AUTO_INCREMENT,
+			 `weid` int(10) unsigned NOT NULL COMMENT '微信ID',
+			 `id` int(11) NOT NULL DEFAULT '0',
+			 `favatime` int(10) NOT NULL DEFAULT '0',
+			 `openid` varchar(250) NOT NULL,
+			 PRIMARY KEY (`favaid`),
+			 KEY `openid` (`openid`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='收藏';
+			 
+			 
+			 CREATE TABLE IF NOT EXISTS `ims_hewer_lookhouse` (
+			 `lookid` bigint(20) NOT NULL AUTO_INCREMENT,
+			 `weid` int(10) unsigned NOT NULL COMMENT '微信ID',
+			 `id` int(11) NOT NULL DEFAULT '0' COMMENT '楼盘ID',
+			 `addtime` int(10) NOT NULL DEFAULT '0',
+			 `openid` varchar(250) NOT NULL,
+			 `truename` char(10) NOT NULL DEFAULT '' COMMENT '登记姓名',
+			 `mobile` char(11) NOT NULL DEFAULT '' COMMENT '登记手机',
+			 PRIMARY KEY (`lookid`),
+			 KEY `openid` (`openid`)
+			 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='看房意向';
+			]]>
+
+	</install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

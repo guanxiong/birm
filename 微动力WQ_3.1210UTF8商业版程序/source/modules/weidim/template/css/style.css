@@ -1,0 +1,80 @@
+.ui-content{padding:9px;}
+.weixin{
+	margin: 0px 0 10px 0;
+	border-radius: 4px;
+	background-color: #fff;
+	box-shadow: 0 0px 5px #666;
+	display: block;
+	padding: 10px;
+	font-size: 14px;
+	line-height: 20px;
+	list-style: none outside none;
+	overflow: hidden;
+}
+#weixin .ui-shadow{box-shadow: 0 1px 4px rgba(0, 0, 0, 0.0);}
+.weixin-content img{width:100%;margin:10px 0;}
+.ui-content h2{padding:8px 0;font-size: 16px;color:#00997a;margin:0;}
+.weixin-comment .name{display:block;margin-bottom:6px;}
+.weixin-comment .img{
+	margin-left: -70px;
+	width: 60px;
+	margin-right: 10px;
+	display: inline-block;
+	position: absolute;
+}
+.weixin-comment{background: url(../images/line-double-d.png) repeat-x top;background-size:1px;padding:10px 0;}
+.weixin-more{background: url(../images/line-double-d.png) repeat-x top;display:block;background-size:1px;margin:0 -10px -10px -10px;}
+.weixin-more a{margin-top:1px;
+	text-decoration: none;
+	color: #444 !important;
+	padding: 10px 0;
+	height: 20px;
+	display: block;
+	text-align: center;
+	background-image: -webkit-linear-gradient( #f9f9f9,#e6e6e6 );
+	background-image: -moz-linear-gradient( #f9f9f9,#e6e6e6 );
+	background-image: -ms-linear-gradient(#f9f9f9,#e6e6e6 );
+	background-image: -o-linear-gradient( #f9f9f9,#e6e6e6 );
+	background-image: linear-gradient(#f9f9f9,#e6e6e6 );
+}
+.weixin-more a:hover{
+background-image:-webkit-linear-gradient( #e6e6e6,#f9f9f9 );
+background-image:-moz-linear-gradient( #e6e6e6,#f9f9f9 );
+background-image:-ms-linear-gradient(#e6e6e6,#f9f9f9 );
+background-image:-o-linear-gradient( #e6e6e6,#f9f9f9 );
+background-image:linear-gradient(#e6e6e6,#f9f9f9 );}
+.line-right{border-right: 1px solid #ccc;}
+.weixin-more img{vertical-align:middle; margin-right:5px;width:18px;}
+.weixin-form{background: url(../images/line-double-d.png) repeat-x top;background-size:1px;margin:0 -10px;padding:8px;}
+.weixin-form textarea{height:70px;box-shadow: none;}
+.weixin-form textarea:focus,input.ui-input-text:focus{box-shadow: none;}
+input.ui-input-text, textarea.ui-input-text{border-radius: 5px; border:solid #ccc 1px;padding:2px;}
+.weixin-form .ui-button{vertical-align:1px;
+	border-radius: 5px;
+	border: solid #ccc 1px;
+	background-image: linear-gradient(#f9f9f9,#eee );
+	display: inline-block;
+	margin-left: 4.5%;
+	color: #444;
+	text-decoration: none;
+	width: 25%;
+	line-height: 38px;height: 38px;
+	text-align: center;
+}
+input.ui-input-text{width:70%;height:40px;display: inline-block;box-shadow: none;}
+#weixin .ui-btn, #weixin  .ui-btn-inner, #weixin  .ui-btn-active{border-radius: 5px;}
+.weixin .ui-btn-text{font-size: 12px;font-weight: lighter;}
+.ui-li-thumb, .ui-listview .ui-li-icon{background-position: center center;background-size:cover;display:block;width:50px;top:10px;left:10px;border-radius: 5px;}
+.ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li-has-thumb{padding-left:70px;padding-top:0px;}
+.ui-li-desc{word-break:break-all;white-space: normal;overflow: auto;}
+
+.green{color:#00997a;}
+.p14{font-size: 14px;}
+.p16{font-size: 16px;}
+.ui-checkbox .ui-btn-corner-all {border-radius: 0;margin:0px; border:0px;border-bottom:1px solid #e6e6e6;}
+.ui-checkbox .ui-btn-icon-left .ui-icon, .ui-radio .ui-btn-icon-left .ui-icon {left: 90%;}
+.ui-checkbox .ui-btn-icon-left .ui-btn-inner, .ui-radio .ui-btn-icon-left .ui-btn-inner {padding-left: 5px;padding-right: 30px;}
+.ui-checkbox .ui-btn-text img{width:50px; background-size:cover;border-radius: 3px; float:left;margin:6px;}
+.content-primary .img{ border-radius:5px;width: 100%;}
+.copyright{ text-align:center;}
+.copyright img{margin:auto;}

@@ -1,0 +1,38 @@
+{template 'common/header'}
+
+<div class="main">
+ 
+    <form action="" method="post" class="form-horizontal form">
+        <h4>名称</h4>
+        <table class="tb">
+            <tr>
+                <th>名称</th>
+                <td>
+                    <input type="text" name="name" class="span5" value="{$settings['name']}" />
+                </td>
+            </tr>
+            <tr>
+                <th>LOGO图片</th>
+                <td>
+                    {php echo tpl_form_field_image('logo', $settings['logo']);}
+                </td>
+            </tr>				
+            <tr>
+                <th></th>
+                <td>
+                    <input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+ 
+<script type="text/javascript">
+    kindeditor($(".description"));
+    </script>
+{template 'common/footer'}

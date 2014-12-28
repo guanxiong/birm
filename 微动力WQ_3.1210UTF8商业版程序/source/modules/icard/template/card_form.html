@@ -1,0 +1,141 @@
+{template 'common/header'}
+{php echo $this -> set_tabbar($action);}
+<div class="main">
+        <form action="" method="post" onsubmit="return check();" class="form-horizontal form" enctype="multipart/form-data">
+        <h4>{$title} - <a href="{php echo create_url('mobile/module', array('do' => 'SetRule', 'name' => 'icard'));}" style="font-size:0.8em">入口设置</a></h4>
+		<table class="tb">
+            <thead>
+            </thead>
+            <tbody>
+		        <tr>
+		        	<th><label for="">姓名</label></th>
+		        	<td>
+                        <input type="text" name="username" id="username" value="{$user['username']}" class="px span3" />
+		        	</td>
+                    <th><label for="">会员等级</label></th>
+                    <td>
+                        <input type="text" name="level" id="level" value="{$level['levelname']}" class="px span3" disabled="disabled"/>
+                    </td>
+		        </tr>
+                <tr>
+                    <th><label for="">编号</label></th>
+                    <td>
+                        会员号:{$reply['cardno']}<br/>微信号:{$reply['from_user']}
+                    </td>
+                    <th><label for="">电话</label></th>
+                    <td>
+                        <input type="text" name="tel" id="tel" value="{$user['tel']}" class="px span3" />
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="">剩余金额</label></th>
+                    <td>
+                        <input type="text" name="coin" id="coin" value="{$reply['coin']}" class="px span3" disabled="disabled"/>
+                    </td>
+                    <th><label for="">地址</label></th>
+                    <td>
+                        <input type="text" name="address" id="address" value="{$user['address']}" class="px span3" />
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="">剩余积分</label></th>
+                    <td>
+                        <input type="text" name="balance_score" id="balance_score" value="{$reply['balance_score']}" class="px span3" disabled="disabled"/>
+                    </td>
+                    <th><label for="">性别</label></th>
+                    <td>
+                        <select name="sex" class="dropdown-select" id="sex">
+                            <option class="dropdown-option">请选择你的性别</option>
+                            <option value="1">男</option>
+                            <option value="0">女</option>
+                        </select></td>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="">总积分</label></th>
+                    <td>
+                        <input type="text" name="balance_score" id="total_score" value="{$reply['total_score']}" class="px span3" disabled="disabled"/>
+                    </td>
+                    <th><label for="">年龄</label></th>
+                    <td>
+                        <input type="text" name="age" id="age" value="{$user['age']}" class="px span3" />
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="">签到积分</label></th>
+                    <td>
+                        <input type="text" name="sign_score" id="sign_score" value="{$reply['sign_score']}" class="px span3" disabled="disabled"/>
+                    </td>
+                    <th><label for="">生日</label></th>
+                    <td>
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-calendar"></i></span>
+                            <input class="input-medium form_datetime valid" value="{php echo date('Y-m-d H:i:s',$user['birthday'])}" readonly="" name="birthday" id="birthday" type="text" data-rule-required="true">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="">消费奖励积分</label></th>
+                    <td>
+                        <input type="text" name="spend_score" id="spend_score" value="{$reply['spend_score']}" class="px span3" disabled="disabled"/>
+                    </td>
+                    <th><label for="">创建时间</label></th>
+                    <td>
+                        {php echo date('Y-m-d H:i:s', $reply['dateline']);}
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="">总消费金额</label></th>
+                    <td>
+                        <input type="text" name="money" id="money" value="{$reply['money']}" class="px span3" disabled="disabled"/>
+                    </td>
+                    <th><label for=""></label></th>
+                    <td>
+                    </td>
+                </tr>
+		        <tr>
+		        	<th></th>
+		        	<td colspan="3">
+		        		<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+		        		<input type="hidden" name="token" value="{$_W['token']}" />
+		        	</td>
+		        </tr>
+            </tbody>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+    function check() {
+        if($.trim($('#username').val()) == '') {
+            message('没有输入姓名.', '', 'error');
+            return false;
+        }s
+        return true;
+    }
+</script>
+<link rel="stylesheet" type="text/css" href="./source/modules/icard/template/css/bootstrap-datetimepicker.min.css" media="all">
+<script type="text/javascript" src="./source/modules/icard/template/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="./source/modules/icard/template/js/bootstrap-datetimepicker.zh-CN.js"></script>
+
+
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#sex').val("{$user['sex']}");
+    });
+</script>
+<script type="text/javascript">
+    kindeditor($('.richtext-clone'));
+</script>
+{template 'common/footer'}

@@ -1,0 +1,17 @@
+{template 'header'}
+{php global $_GPC}
+<table 	background="./source/modules/floater/template/img/bg.jpg" class="form-table" width="100%" height="300" >
+	<tr>
+		<td valign="top">
+			<a href="{php echo create_url('mobile/module',array('do' => 'makeawish','weid'=>empty($_GPC['__weid'])?$_GPC['weid']:$_GPC['__weid'],'userid'=>$_GPC['userid'],'name' => 'floater'))}"><img
+			src="./source/modules/floater/template/img/wish.gif" alt="祈愿"	width="72" height="64" border=0>
+			</a>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p align=center><a href="{php echo create_url('mobile/module',array('do' => 'wish','weid'=>empty($_GPC['__weid'])?$_GPC['weid']:$_GPC['__weid'],'userid'=>$_GPC['userid'],'name' => 'floater'))}"><img src="./source/modules/floater/template/img/wishing.gif" width="95" height="90" border="0"></a></p>
+		</td>
+	</tr>
+</table>
+{template 'footer'}

@@ -1,0 +1,51 @@
+{template 'header'}
+
+<!-- content -->
+<section class="content">
+    <div class="panel-user panel">
+       
+       
+		<div class="nav-user nav">
+            <ul class="clearfix">
+                <li class="column half">
+                    <a>
+                        <span class="icon icon-question1"></span>
+
+                        <h5>{$profile['nickname']}</h5>
+                    </a>
+                </li>
+                <li class="column half">
+                    <a href="">
+                        <span class="icon icon-award"></span>
+                        <h5>积分:{$myscore}</h5>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--h1 style="height:36px;font-size:24px;font-weight:bold;color:#fff;line-height:36px;">我的冠军球队</h1>
+        <div>
+			<table class="table" width="100%">
+				<tr><th class="more">球队</th><th class="more">状态</th></tr>
+				{loop $mycp $item}
+				<tr><td>{$item['team']}</td><td></td></tr>
+				{/loop}
+			</table>
+		</div-->
+		
+			<h1 style="height:36px;font-size:24px;font-weight:bold;color:#fff;line-height:36px;">我的竞猜</h1>
+		 <div>
+			<table class="table" width="100%">
+				<tr><th class="more">球队</th><th class="more">比分</th><th class="more">得分</th></tr>
+				{loop $mybeat $item}
+				<tr><td>{$item['teama']}-{$item['teamb']}</td><td>{$item['score']}</td><td>{$item['scores']}</td></tr>
+				{/loop}
+			</table>
+		</div>
+		
+    </div>
+	
+
+	
+</section>
+
+{template 'footer'}

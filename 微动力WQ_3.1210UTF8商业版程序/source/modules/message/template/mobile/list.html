@@ -1,0 +1,207 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>留言板</title>
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link href="./source/modules/message/style/css/message.css" rel="stylesheet" type="text/css">
+</head>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<body id="message" >
+<div class="qiandaobanner"><a   href="javascript:history.go(-1);"><img src="./source/modules/message/style/top_banner.jpg" ></a> </div>
+<div class="cardexplain">
+	<div class="window" id="windowcenter">
+		<div id="title" class="wtitle">操作提示<span class="close" id="alertclose"></span></div>
+		<div class="content">
+			<div id="txt"></div>
+		</div>
+	</div>
+<script type="text/javascript"> 
+ $(document).ready(function () { 
+$("#showcard1").click(function () { 
+	var btn = $(this);
+	var wxname = $("#wxname1").val();
+	if (wxname  == '') {
+		alert("请输入昵称");
+		return
+	}
+	var info = $("#info1").val();
+	if (info == '') {
+		alert("请输入内容");
+		return
+	}
+	var submitData = {
+		nickname:wxname,
+		info: info,
+		action: "setly"
+	};
+	$.post('{php echo $this->createMobileUrl('ajax', array('id' => $id))}', submitData,
+	function(data) {
+		if (data.success == true) {
+			alert(data.msg);
+			setTimeout(function(){
+				window.location.reload();
+			},2500);
+			return
+		} else {
+			alert(data.msg);
+			return
+		}
+	},
+	"json")
+ }); 
+ 
+$("#showcard2").click(function () { 
+	var btn = $(this);
+	var wxname = $("#wxname2").val();
+	if (wxname  == '') {
+		alert("请输入昵称");
+		return
+	}
+	var info = $("#info2").val();
+	if (info == '') {
+		alert("请输入内容");
+		return
+	}
+	var submitData = {
+		nickname:wxname,
+		info: info,
+		action: "setly"
+	};
+	$.post('{php echo $this->createMobileUrl('ajax', array('id' => $id))}', submitData,
+	function(data) {
+		if (data.success == true) {
+			alert(data.msg);
+			setTimeout(function(){
+				window.location.reload();
+			},2500);
+			return
+		} else {
+			alert(data.msg);
+			return
+		}
+	},
+	"json")
+ });  
+ 
+$(".hhsubmit").click(function () { 
+	var objid = $(this).attr("date");
+	var info = $(".hly"+objid).val();
+	if (info == '') {
+		alert("请输入内容");
+		return
+	}
+	var submitData = {
+		nickname:'{$nickname}',
+        fid:objid,
+		info: info,
+		action: "setly"
+	};
+	$.post('{php echo $this->createMobileUrl('ajax', array('id' => $id))}', submitData,
+	function(data) {
+		if (data.success == true) {
+			alert(data.msg);
+			setTimeout(function(){
+				window.location.reload();
+			},2500);
+			return;
+		} else {
+			alert(data.msg);
+			return;
+		}
+	},
+	"json")
+ });  
+   
+   $(".hfinfo").click(function () { 
+	 var objid = $(this).attr("date");
+	  $(".hhly"+objid).slideToggle();
+ });  
+   $(".hhbt").click(function () { 
+	 var objid = $(this).attr("date");
+	  $(".hhly"+objid).slideToggle();
+ });  
+}); 
+$("#windowclosebutton").click(function () { 
+$("#windowcenter").slideUp(500);
+ 
+}); 
+$("#alertclose").click(function () { 
+$("#windowcenter").slideUp(500);
+ 
+}); 
+
+function alert(title){ 
+ 
+$("#windowcenter").slideToggle("slow"); 
+$("#txt").html(title);
+setTimeout('$("#windowcenter").slideUp(500)',4000);
+} 
+$(document).ready(function(){
+  $(".first1").click(function(){
+  $(".ly1").slideToggle();
+  });
+});
+$(document).ready(function(){
+  $(".first2").click(function(){
+  $(".ly2").slideToggle();
+  });
+});
+
+</script> 
+ 
+<div class="history">
+    <div class="history-date">
+      <ul>
+      	<a  ><h2 class="first first1" style="position: relative;">请点击留言</h2></a>
+		<li  class="green bounceInDown nob ly1" style="display:none" >
+			<dl>
+		     <dt><input name="wxname"  type="text" class="px" id="wxname1" value="{$nickname}" placeholder="请输入您的昵称"></dt>
+			 <dt><textarea name="info" class="pxtextarea" style=" height:60px;"  id="info1"  placeholder="请输入留言"></textarea></dt>
+			<dt><a id="showcard1"  class="submit" href="javascript:void(0)">提交留言</a></dt>
+          </dl>
+		</li>		
+
+       {loop $messagelist $row}
+         <li class="green bounceInDown">
+          <h3>{$row['nickname']}<span>{php echo date('Y-m-d H:i:s', $row['create_time']);}</span><div class="clr"></div></h3>
+          <dl>
+            <dt class="hfinfo" date="{$row['id']}" >{$row['info']}</dt>
+          </dl>
+            
+            <dl class="huifu">
+              <dt><span>　<a  class="hhbt czan"  date="{$row['id']}" href="javascript:void(0)">回复</a> 　<p  style="display:none;" class="hhly{$row['id']}" > <textarea name="info" class="pxtextarea hly{$row['id']}" ></textarea> 
+               <a class="hhsubmit submit" date="{$row['id']}" href="javascript:void(0)">确定</a> </p></span></dt>
+          </dl>
+		  {php foreach($row['reply'] as $reply)echo '<dl class="huifu"><dt><span>'.$reply['nickname'].'回复：'.$reply['info'].' </span></dt></dl>';} 
+        </li>
+	 {/loop}        
+        <li class="bounceInDown">
+			<!--页码开始-->
+			<div class="pagination">
+              <div class="left"><a href="{$prepage}">上一页</a></div>
+			<div class="allpage">
+              <div class="currentpage"> {$p} / {$totalpage}</div>
+				 
+			</div>
+              <div class="right " > <a href="{$nextpage}">下一页</a></div>
+			<div class="clr"></div>
+			</div>	
+			<!--页码结束-->
+        </li>
+		<li  class="green bounceInDown nob ly2" style="display:none" >
+			<dl>
+		     <dt><input name="wxname"  type="text" class="px" id="wxname2" value="{$nickname}" placeholder="请输入您的昵称"></dt>
+			 <dt><textarea name="info" class="pxtextarea" style=" height:60px;" id="info2"  placeholder="请输入留言"></textarea></dt>
+			<dt><a id="showcard2"  class="submit" href="javascript:void(0)">提交留言</a> </dt>
+          </dl>
+		</li>
+		<a><h2 class="first first2" style="position: relative;">请点击留言</h2></a>
+      </ul>
+    </div>    
+  </div>
+</div>
+</body>
+</html>

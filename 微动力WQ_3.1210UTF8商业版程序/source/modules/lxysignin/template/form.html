@@ -1,0 +1,40 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加签到信息</h4>
+	<table>
+		<tbody>
+		
+			<tr>
+				<th>超出签到时间提示</th>
+				<td><input type="text" value="{$reply['overtime']}" class="span7" name="overtime" id="overtime">
+					<div class="help-block">用户签到超出时间范围的提示，如果未设置则默认为每日早8点至晚10点。</div></td>
+			</tr>
+
+			<tr>
+				<th>超出签到次数提示</th>
+				<td><input type="text" value="{$reply['overnum']}" class="span7" name="overnum" id="overnum">
+					<div class="help-block">用户签到超出次数的提示，如果未设置则默认为每日1次。<a class="iconEmotion" href="javascript:;" inputid="enter-tips"><i class="icon-github-alt"></i> 表情</a></div></td>
+			</tr>
+            <tr>
+				<th>连续签到第一奖励</th>
+				<td><input type="text" placeholder="这里设置天数" value="{$reply['days']}" class="span7" name="days" id="days">
+				天
+					<div class="help-block">提示连续签到奖励的规则。<a class="iconEmotion" href="javascript:;" inputid="enter-tips"><i class="icon-github-alt"></i> 表情</a></div></td>
+			</tr>
+            
+            <tr>
+				<th>签到奖励规则提示</th>
+				<td><input type="text" placeholder="您只要连续10天签到第一，即可获得精美奖品" value="{$reply['awardrules']}" class="span7" name="awardrules" id="awardrules">
+					<div class="help-block">提示连续签到奖励的规则。<a class="iconEmotion" href="javascript:;" inputid="enter-tips"><i class="icon-github-alt"></i> 表情</a></div></td>
+			</tr>
+            
+            <tr>
+				<th>满足奖励提示</th>
+				<td><input type="text" placeholder="例:请联系张三领取iphone一台" value="{$reply['awardinfo']}" class="span7" name="awardinfo" id="awardinfo">
+					<div class="help-block">开启连续签到奖励，用户符合签到奖励时提示信息。<a class="iconEmotion" href="javascript:;" inputid="enter-tips"><i class="icon-github-alt"></i> 表情</a></div></td>
+			</tr>
+
+		</tbody>
+	</table>
+</div>

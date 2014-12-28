@@ -1,0 +1,194 @@
+{template 'common/header'}
+<style>
+.sub-search input,.sub-search select{margin-bottom:0;}
+</style>
+	<div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="brand">中奖名单</span>
+					</div>
+				</div>
+				<div class="sub-item">
+					<h4 class="sub-title">搜索</h4>
+					<form action="" method="get">
+					<input type="hidden" name="act" value="module" />
+					<input type="hidden" name="do" value="awardlist" />
+					<input type="hidden" name="name" value="ccc" />
+					<input type="hidden" name="id" value="{$id}" />
+					<table class="table sub-search">
+						<tr>
+							<th>登记情况</th>
+							<td>
+								<select name="isregister">
+									<option value="">全部</option>
+									<option value="1" {if $_GPC['isregister'] == 1} selected{/if}>已登记</option>
+									<option value="2" {if $_GPC['isregister'] == 2} selected{/if}>未登记</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>中奖情况</th>
+							<td>
+								<select name="isaward">
+									<option value="">全部</option>
+									<option value="1" {if $_GPC['isaward'] == 1} selected{/if}>奖品</option>
+									<option value="2" {if $_GPC['isaward'] == 2} selected{/if}>积分</option>
+								</select>
+								<select name="isstatus">
+									<option value="">全部</option>
+									<option value="1" {if $_GPC['isstatus'] == 1} selected{/if}>已领取</option>
+									<option value="2" {if $_GPC['isstatus'] == 2} selected{/if}>未领取</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>个人信息</th>
+							<td>
+								<select name="profile">
+									<option value="" selected="selected">请选择搜索用户资料</option>
+									<option {if $_GPC['profile'] == 'realname'}selected{/if} value="realname">姓名</option>
+									<option {if $_GPC['profile'] == 'mobile'}selected{/if} value="mobile">手机</option>
+									<option {if $_GPC['profile'] == 'qq'}selected{/if} value="qq">QQ</option>
+								</select>
+								<input type="text" name="profilevalue" value="{$_GPC['profilevalue']}"  class="" />
+							</td>
+						</tr>
+						<tr>
+							<th>中奖时间</th>
+							<td>
+								<input name="start" type="hidden" value="{php echo date('Y-m-d', $starttime)}" />
+								<input name="end" type="hidden" value="{php echo date('Y-m-d', $endtime)}" />
+								<button class="btn" id="date-range" class="date" type="button"><span class="date-title">{php echo date('Y-m-d', $starttime)} 至 {php echo date('Y-m-d', $endtime)}</span> <i class="icon-caret-down"></i></button>
+							</td>
+						</tr>
+						<tr>
+							<th>奖品信息</th>
+							<td>
+								<select name="award">
+									<option value="" selected="selected">请选择搜索奖品资料</option>
+									<option {if $_GPC['award'] == 'title'}selected{/if} value="title">名称</option>
+									<option {if $_GPC['award'] == 'description'}selected{/if} value="description">描述</option>
+								</select>
+								<input type="text" name="awardvalue" value="{$_GPC['awardvalue']}" class="" />
+							</td>
+						</tr>
+						<tr>
+							<th></th>
+							<td><input type="submit" name="" value="搜索" class="btn btn-primary" /></td>
+						</tr>
+					</table>
+					</form>
+				</div>
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">详细数据</h4>
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</td>
+									<th style="width:100px;" class="row-hover">姓名<i></i></th>
+									<th style="width:100px;">手机<i></i></th>
+									<th style="width:100px;">QQ<i></i></th>
+									<th style="width:150px;">奖品<i></i></th>
+									<th>描述<i></i></th>
+									<th style="width:150px;">获取时间<i></i></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $row}
+								<tr>
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+									<td class="row-hover">{$row['realname']}</td>
+									<td>{$row['mobile']}</td>
+									<td>{$row['qq']}</td>
+									<td>{$row['award']}</td>
+									<td>{$row['description']}</td>
+									<td style="font-size:12px; color:#666;">
+										{php echo date('Y-m-d h:i:s', $row[createtime]);}
+									</td>
+									<td>{if $row['status'] == 0}<a href="{php echo $this->createWebUrl('awardlist', array('id' => $id, 'wid' => $row['id'], 'status' => 2))}" class="text-error">标记领奖</a>{else}<a href="{php echo $this->createWebUrl('awardlist', array('id' => $id, 'wid' => $row['id'], 'status' => 0))}" class="text-success">取消领奖</a>{/if}</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr>
+								<td style="width:40px;" class="row-first"><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+								<td>
+									<input type="submit" name="delete" value="删除" class="btn btn-primary" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+				{$pager}
+				</div>
+			</div>
+		</div>
+	</div>
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script>
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+	$('#date-range').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=start]').val(),
+		endDate: $(':hidden[name=end]').val(),
+		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=start]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=end]').val(end.format('YYYY-MM-DD'));
+	});
+});
+</script>
+{template 'common/footer'}

@@ -1,0 +1,194 @@
+{template 'common/header'}
+{template 'common'}
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<link type="text/css" rel="stylesheet" href="./source/modules/hotel2/template/style/css/uploadify_t.css" />
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#date-range').daterangepicker({
+            format: 'YYYY-MM-DD',
+            startDate: $(':hidden[name=start]').val(),
+            endDate: $(':hidden[name=end]').val(),
+            locale: {
+                applyLabel: '确定',
+                cancelLabel: '取消',
+                fromLabel: '从',
+                toLabel: '至',
+                weekLabel: '周',
+                customRangeLabel: '日期范围',
+                daysOfWeek: moment()._lang._weekdaysMin.slice(),
+                monthNames: moment()._lang._monthsShort.slice(),
+                firstDay: 0
+            }
+        }, function(start, end){
+            $('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+            $(':hidden[name=start]').val(start.format('YYYY-MM-DD'));
+            $(':hidden[name=end]').val(end.format('YYYY-MM-DD'));
+        });
+    });
+    function range(days) {
+        var start = moment().add('days', 0 - days).format('YYYY-MM-DD');
+        var end = moment().format('YYYY-MM-DD');
+        $('#date-range .date-title').html(start + ' 至 ' + end);
+        $(':hidden[name=start]').val(start);
+        $(':hidden[name=end]').val(end);
+        $('form[method=get]')[0].submit();
+    }
+</script>
+
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li><a href="{php echo $this->createWebUrl('hotel');}">酒店管理</a></li>
+        <li><a href="{php echo $this->createWebUrl('hotel', array('op'=>'edit','id' => $hotelid));}">酒店编辑</a></li>
+        <li {if $_GPC['op'] == 'edit'}class="active"{/if}><a href="{php echo $this->createWebUrl('room', array('op'=>'edit','hotelid' => $hotelid));}">添加房型</a></li>
+        <li><a href="{php echo $this->createWebUrl('room', array('hotelid' => $rid));}">房型管理</a></li>
+        <li class="active"><a href="{php echo $this->createWebUrl('room_status', array('hotelid' => $hotelid));}">维护房态/房量</a></li>
+        <li><a href="{php echo $this->createWebUrl('room_price', array('hotelid' => $hotelid));}">维护房价</a></li>
+    </ul>
+
+
+    <div class="main">
+        <div class="stat">
+            <div class="stat-div">
+                <div class="navbar navbar-static-top">
+                    <div class="navbar-inner">
+                        <span class="brand">维护房态/房量</span>
+                        <div class="pull-left"></div>
+                    </div>
+                </div>
+                <div class="sub-item">
+                    <form action="" method="get">
+                        
+                        <div class="pull-left">
+                            <input name="act" type="hidden" value="{$_GPC['act']}" />
+                            <input name="do" type="hidden" value="{$_GPC['do']}" />
+                            <input name="name" type="hidden" value="{$_GPC['name']}" />
+                            <input name="start" type="hidden" value="{php echo date('Y-m-d', $startime)}" />
+                            <input name="end" type="hidden" value="{php echo date('Y-m-d', $endtime)}" />
+                            <button class="btn date" id="date-range" type="button"><span class="date-title">{php echo date('Y-m-d', $startime)} 至 {php echo date('Y-m-d', $endtime)}</span> <i class="icon-caret-down"></i></button>
+                            <!--<span class="date-section"><a href="javascript:;" onclick="range(7);">7天</a><a href="javascript:;" onclick="range(14);">14天</a><a href="javascript:;" onclick="range(30);">30天</a></span>-->
+                        </div>
+                        <div class="pull-left">
+                            <input class="btn btn-primary" id="search_button" type="button" value="搜索">
+                            <a href="{php echo $this->createWebUrl('room_status', array('ac'=>'updatelot','hotelid' => $hotelid));}" class="btn btn-primary">批量修改房量/房态</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="sub-item" id="table-list">
+                    <h4 class="sub-title">详细数据 (点击可以单独修改)</h4>
+                    <div class="sub-content" id="d_list">
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+<input type="hidden" id="hotelid" value="{$hotelid}" />
+<script type="text/javascript">
+$(function () {
+    var next_page = 0;
+    window.get_list  = function(start, end, page) {
+        $("#d_list").html("正在加载...");
+        $.post("{php echo $this->createWebUrl('room_status')}", {ac: 'getDate', hotelid:{$hotelid}, page: page, start: start, end: end}, function (data) {
+            data = eval("(" + data + ")");
+            if (data.result == 1) {
+                $("#d_list").html(data.code);
+                window.bindEvents();
+            }
+        });
+    }
+   //  上10天价格
+    window.prePage = function(){
+        var start = $(':hidden[name=start]').val();
+        var end = $(':hidden[name=end]').val();
+        window.get_list(start, end, parseInt($("#page").val())-1);
+    }
+    //后10天价格
+    window.nextPage = function(){
+        var start = $(':hidden[name=start]').val();
+        var end = $(':hidden[name=end]').val();
+        window.get_list(start, end, parseInt($("#page").val())+1);
+    }
+    //绑定修改价格事件
+    window.bindEvents = function(){
+        $(".status_checkbox").unbind("click");
+        $(".status_checkbox").click(function(){
+            window.submitPrice( $(this) );
+        })
+        
+        $(".price_input").unbind("keydown");
+        $(".price_span").click(function(){
+        $(".price_editspan").hide();
+    
+        $(".price_span").show();
+            var obj =$(this);
+            obj.hide();
+            obj.parent().find(".price_editspan").show();
+            var html = $.trim(obj.html())=='不限'?'':$.trim(obj.html());
+            obj.next().find(".price_input").unbind("keydown");
+            obj.next().find(".price_input").val(html).select().keydown(function(event){  
+                if(event.keyCode==13){  
+                    
+                    window.submitPrice( $(this) );
+                    event.stopPropagation();
+                }
+            }).blur(function(){
+                   $(this).parent().parent().find(".price_span").show();
+                   $(this).parent().hide();
+            });
+            Tip.show( obj.next().find(".price_input") , "回车键确定修改","top");
+        });
+    }
+    window.submitPrice = function(obj){
+        var hotelid = obj.attr("hotelid");
+        var roomid = obj.attr("roomid");
+        var date = obj.attr("date");
+        var pricetype  = obj.attr("pricetype");
+     
+        if(pricetype=='num'){
+            if(!obj.isEmpty() && !obj.isNumber() ){
+                Tip.select(obj,"请输入数字或留空!","top");
+                return;
+            }
+            var price = $.trim( obj.val() );
+            obj.parent().parent().find(".price_span").html( (price==''?"不限":price) ).show();
+            obj.parent().hide();
+             if(price=='') { price='-1';}
+             $.post("{php echo $this->createWebUrl('room_status')}", 
+               {ac: 'submitPrice', hotelid:hotelid,roomid:roomid,date:date,price: price,pricetype:pricetype}, function (data) {
+                data = eval("(" + data + ")");
+                if (data.result == 1) {
+                }
+            });
+        }
+        else{
+            
+            
+             $.post("{php echo $this->createWebUrl('room_status')}", 
+               {ac: 'submitPrice', hotelid:hotelid,roomid:roomid,date:date,status: (obj.get(0).checked?"1":"0"),pricetype:pricetype}, function (data) {
+                data = eval("(" + data + ")");
+                if (data.result == 1) {
+                }
+            });
+            
+        }
+        
+    }
+    $("#search_button").click(function () {
+        var start = $(':hidden[name=start]').val();
+        var end = $(':hidden[name=end]').val();
+        window.get_list(start, end, 1);
+    });
+
+    $("#search_button").click();
+
+   
+  
+});
+</script>
+
+    {template 'common/footer'}

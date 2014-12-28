@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[多客服转接]]></name>
+		<identifie><![CDATA[ppcrmtransfer]]></identifie>
+		<version><![CDATA[1.0.0]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[用来接入腾讯的多客服系统]]></ability>
+		<description><![CDATA[]]></description>
+		<author><![CDATA[WeEngine Team]]></author>
+		<url><![CDATA[http://bbs.b2ctui.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="image" />
+			<message type="voice" />
+			<message type="video" />
+			<message type="location" />
+			<message type="link" />
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

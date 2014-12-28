@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[万能查询]]></name>
+		<identifie><![CDATA[multisearch]]></identifie>
+		<version><![CDATA[1.8]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[万能查询数据]]></ability>
+		<description><![CDATA[万能查询数据]]></description>
+		<author><![CDATA[WeEngine Team]]></author>
+		<url><![CDATA[http://we7.cc]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu call="getMenuTiles">
+			<entry title="查询数据结构管理" do="struct" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_multisearch` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `description` varchar(1000) NOT NULL,
+  `isresearch` tinyint(1) NOT NULL DEFAULT '0',
+  `cover` varchar(255) NOT NULL DEFAULT '',
+  `template` varchar(100) NOT NULL DEFAULT '',
+  `status` varchar(1000) NOT NULL DEFAULT '',
+  `noticeemail` VARCHAR( 255 ) NOT NULL DEFAULT  '',
+  `mobile` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_multisearch_fields` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `reid` int(10) unsigned NOT NULL,
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `title` varchar(255) NOT NULL,
+  `variable` varchar(50) NOT NULL DEFAULT '',
+  `bind` varchar(20) NOT NULL,
+  `required` tinyint(1) NOT NULL DEFAULT '0',
+  `search` tinyint(1) NOT NULL DEFAULT '0',
+  `likesearch` tinyint(1) NOT NULL DEFAULT '0',
+  `description` varchar(255) NOT NULL DEFAULT '',
+  `options` varchar(2000) NOT NULL DEFAULT '',
+  `displayorder` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `idx_reid` (`reid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_multisearch_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `reid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_multisearch_research` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `reid` int(10) unsigned NOT NULL,
+  `rowid` int(10) unsigned NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `data` text NOT NULL,
+  `remark` varchar(1000) NOT NULL DEFAULT '',
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

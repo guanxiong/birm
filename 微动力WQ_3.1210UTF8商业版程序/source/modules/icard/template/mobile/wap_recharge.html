@@ -1,0 +1,177 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{$title}</title>
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" type="text/css" href="./source/modules/icard/template/css/card.css" media="all">
+<script src="./source/modules/icard/template/js/jQuery.js"></script>
+</head>
+<body id="cardpower" ondragstart="return false;" onselectstart="return false;" style="">
+    {php include $this->template('wap_header');}
+	<div class="qiandaobanner">
+        <a href="javascript:history.go(-1);">
+            <img src="./source/modules/icard/template/themes/1/bk.jpg">
+        </a>
+	</div>
+	<div id="basic-accordian">
+		<div id="test0-header" class="accordion_headings  header_highlight ">
+            <div class="tab businesses_info">
+	            <span class="title">会员充值</span>
+            </div>
+            <div id="test0-content" style="display: block; overflow: hidden; opacity: 1;">
+                <div class="accordion_child">
+                    <p class="explain_sn">
+                        {php echo $this->getQRImage('recharge_'.$weid, create_url('mobile/module', array('do' => 'waprechargeadmin', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid)));}
+                    </p>
+                    <p class="explain_sn">
+                        <span style="font-size:12px;line-height:16px;text-align:left;padding:5px 0 5px 16px;">商家输入密钥进行充值或扫描上面的二维码</span>
+                    </p>
+                    <div style="text-align:center;">
+                    </div>
+                    <input name="from_user" class="px" id="from_user" value="{$page_from_user}" type="hidden">
+                    <input name="weid" class="px" id="weid" value="{$weid}" type="hidden">
+                    <p class="cash">
+                        <input name="pwd" class="px" id="pwd" value="" type="password" placeholder="此处由商家输入登录密码" autocomplete="off">
+                    </p>
+                    <p style="margin: 10px 0 0 0" class="cash">
+                        <input name="pwdrecharge" class="px" id="pwdrecharge" value="" type="password" placeholder="此处由商家输入充值密码" autocomplete="off">
+                    </p>
+                    <p style="margin: 10px 0 0 0;">
+                        <select name="payment" id="payment" class="px">
+                            <option value="2">积分</option>
+                            <option value="1">金额</option>
+                            <option value="3">支付宝</option>
+                        </select>
+                    </p>
+                    <p style="margin: 10px 0 0 0;" class="cash">
+                        <select name="storeid" id="storeid" class="px">
+                            <option value="0">请选择门店</option>
+                            {loop $outlets $outlet}
+                            <option value="{$outlet['id']}">{$outlet['title']}</option>
+                            {/loop}
+                        </select>
+                    </p>
+                    <div id="queren" style="margin: 10px 0 0 0">
+                        <p>
+                            <input name="money" type="tel" class="px" id="money" value="" placeholder="请输入充值金额或积分">
+                        </p>
+                    </div>
+                    <p style="margin: 10px 0"><a id="showcard" class="submit" href="javascript:void(0)" onclick="power();">确定使用</a></p>
+                    <p style="margin: 10px 0"><a class="submit2" href="{php echo create_url('mobile/module', array('do' => 'wapindex', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid))}">返回会员卡</a></p>
+                </div>
+            </div>
+	    </div>
+    </div>
+<div class="window" id="windowcenter" style="height:180px;position: fixed;z-index: 900;">
+	<div id="title" class="wtitle">消息提醒<span class="close" id="alertclose"></span></div>
+	<div class="content">
+		<div id="txt" style="min-height:110px!important;margin-top: 15px;"></div>
+	</div>
+</div>
+<script>
+        var lock = false;
+        function power() {
+            var pwd = document.getElementById('pwd').value;
+            var pwdrecharge = document.getElementById('pwdrecharge').value;
+            var storeid = document.getElementById('storeid').value;
+            var money = document.getElementById('money').value;
+            var from_user = document.getElementById('from_user').value;
+            var weid = document.getElementById('weid').value;
+            var payment = document.getElementById('payment').value;
+
+            var submitData = {
+                pwd: pwd,
+                pwdrecharge: pwdrecharge,
+                storeid: storeid,
+                money: money,
+                payment: payment,
+                from_user: from_user,
+                weid: weid
+            };
+
+            if($.trim(money) == '') {
+                alert('没有输入充值金额或积分.');
+                return false;
+            }
+
+            if(payment == 3) {
+                if (lock) {return;}
+                lock = true;
+                $.post("{php echo create_url('mobile/module', array('do' => 'createorder', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid))}", submitData,
+                        function (data) {
+                            $('#money').val('');
+                            lock = false;
+                            if (data.message.state == 1) {
+                                window.location.href = "{php echo create_url('mobile/module', array('do' => 'pay', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid))}"+'&orderid=' + data.message.orderid;
+                            } else {
+                                alert(data.message.msg);
+                            }
+                        },
+                "json");
+                return false;//断点
+            }
+
+            if($.trim(pwd) == '') {
+                alert('没有输入登录密码.');
+                return false;
+            }
+            if($.trim(pwdrecharge) == '') {
+                alert('没有输入充值密码.');
+                return false;
+            }
+            if(storeid == '0') {
+                alert('请选择门店');
+                return false;
+            }
+            if (lock) {return;}
+            lock = true;
+            $.post("{php echo create_url('mobile/module', array('do' => 'recharge', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid))}", submitData,
+                    function (data) {
+                        $('#pwd').val('');
+                        $('#pwdrecharge').val('');
+                        $('#money').val('');
+                        lock = false;
+                        if(data.message.state == 1){
+                            alertToUrl(data.message.msg, "{php echo create_url('mobile/module', array('do' => 'wapindex', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid))}");
+                        } else {
+                            alert(data.message.msg);
+                        }
+                    },
+                    "json");
+        }
+        function alert(title){
+            $("#windowcenter").slideToggle("slow");
+            $("#txt").html(title);
+            setTimeout(function(){
+                $("#windowcenter").slideUp(500);
+            },4000);
+        }
+
+        function alertToUrl(title,url){
+            if(url == '')url = window.location.href;
+            $("#windowcenter").slideToggle("slow");
+            $("#txt").html(title);
+            setTimeout("window.location.href='"+url+"'",2000);
+        }
+
+        $(document).ready(function(){
+            $('#payment').change(function(){
+                var selectval = $(this).children('option:selected').val();
+                if(selectval==3){
+                    $('.cash').hide();
+                }else{
+                    $('.cash').show();
+                }
+            });
+        })
+    </script>
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<div style="height:50px"></div>
+{php include $this->template('footer');}
+</body></html>

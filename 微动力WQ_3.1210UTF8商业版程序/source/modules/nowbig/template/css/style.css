@@ -1,0 +1,144 @@
+@charset "utf-8";
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+body, button, input, select, textarea { font:12px/1.5 tahoma, arial, \5b8b\4f53; }
+h1, h2, h3, h4, h5, h6 { font-size:100%; }
+ul, ol { list-style:none; }
+a { text-decoration:none; }
+a:hover { text-decoration:underline; }
+fieldset, img { border:0; }
+button, input, select, textarea { font-size:100%; }
+table { border-collapse:collapse; border-spacing:0; }
+
+.fl { float:left; display: inline; }
+.fr { float:right; display: inline; }
+.clearfix:after { content:"."; display:block; clear:both; visibility:hidden; font-size:0; line-height:0; height:0; }
+.clearfix { *zoom:1; }
+.clear { clear:both; }
+
+.tid { display: block; width: 100%; height: 100%; overflow: hidden; text-indent: -999em; }
+.yahei { font-family:"Microsoft YaHei","Microsoft JhengHei",STHeiti,MingLiu; }
+
+
+body{ -webkit-transform-origin: top left; }
+.wrap { width: 640px; height: 960px; overflow: hidden; -webkit-transform-origin: top left; }
+
+.nav { height: 82px; background: url("http://www.mizone.cc/1L/images/bg_nav.jpg") no-repeat; }
+.nav.nav_now { background-position: 0 0; }
+.nav.nav_video { background-position: 0 -82px; }
+.nav.nav_explain { background-position: 0 -164px; }
+.nav a { float: left; display: block; height: 82px; overflow: hidden; }
+.nav .nav_1 { width: 182px; }
+.nav .nav_2 { width: 276px; }
+.nav .nav_3 { width: 182px; }
+
+
+.main { position: relative; width: 100%; height: 878px; }
+.main.now { background: url("http://www.mizone.cc/1L/images/bg_now.jpg?date=0325") no-repeat; }
+.main.video { background: url("http://www.mizone.cc/1L/images/bg_video.jpg?date=0325") no-repeat; }
+.main.explain { background: url("http://www.mizone.cc/1L/images/bg_explain.jpg?date=0325") no-repeat; }
+.main_img { height: 960px; background: url("http://www.mizone.cc/1L/images/bg_img.jpg") no-repeat; }
+.main_img a { position: absolute; left: 221px; top: 580px; width: 198px; height: 60px; }
+.main_img .img_box { position: absolute; left: 82px; top: 156px; width: 470px; height: 360px; text-align: center; }
+.main_img .img_box .box { width: 470px; height: 360px; display: table-cell; vertical-align: middle; }
+.main_img .img_box .box img { max-width: 100%; max-height: 100%; }
+
+.btnbox { position: absolute; left: 0; top: 720px;}
+.btnbox .btn_now { position: relative; left: 162px; width: 314px; height: 115px; background: url("http://www.mizone.cc/1L/images/btn_now.png") no-repeat; }
+.btnbox .btn_now .now_file { width: 314px; height: 115px; opacity: 0; }
+
+.btnbox .btn_save { display: none; position: relative; top: 60px; left: 206px; width: 220px; height: 84px; }
+.btnbox .btn_save a { display: block; width: 100%; height: 100%; background: url("http://www.mizone.cc/1L/images/btn_save.png") no-repeat; }
+.btnbox .btn_save input { display: block; width: 100%; height: 100%; border: 0 none; background: url("http://www.mizone.cc/1L/images/btn_save.png") no-repeat; }
+
+.btn_share { display: none; position: absolute; top: 10px; left: 203px; width: 221px; height: 84px; background: url("http://www.mizone.cc/1L/images/bg_share_list.png") no-repeat; }
+.btn_share a { position: absolute; display: block; width: 63px; height: 61px; overflow: hidden; text-indent: -999em; }
+.btn_share #sina { top: 8px; left: 17px; }
+.btn_share #weixin { top: 10px; left: 81px; }
+.btn_share #tengxun { top: 13px; left: 146px; }
+
+.btnbox .btn_replay { display: none; position: absolute; top: 10px; left: 203px; width: 221px; height: 84px; }
+.btnbox .btn_replay a { display: block; width: 100%; height: 100%;  background: url("http://www.mizone.cc/1L/images/btn_again.png") no-repeat; }
+
+
+.now_container { display: none; position: absolute; left: 0px; top: 295px; width: 640px; height: 400px; overflow: hidden; background: #fff }
+
+.canvas_box { position: absolute; left: 0; }
+
+
+.mask { position: absolute; top: 0; right: 0; width: 100%; height: 100%; z-index: 100;  width: 560px;  margin-left: 60px; }
+#obj { position: absolute; z-index: 2;  }
+#slideshow {  }
+.kuang { position: absolute; left: 0; top: -25px; width: 640px; height: 440px; background: url("http://www.mizone.cc/1L/images/bg_kuang.png") no-repeat; z-index: 3 }
+.preview { position: relative; width: 560px; margin-left: 60px;  -webkit-transform: rotate(4.3deg); -webkit-transform-origin: right top;  }
+
+.prompt_box { position: absolute; right: 0; top: 242px; z-index: 999999; }
+.prompt {-webkit-transform: rotate(0deg); -webkit-transform-origin: right top; }
+.prompt_share { -webkit-transform: rotate(0deg); -webkit-transform-origin: right top; display: none; width: 245px; height: 138px; background: url("http://www.mizone.cc/1L/images/pic_share.png") no-repeat; z-index: 999999; }
+.prompt_choose { -webkit-transform: rotate(0deg); -webkit-transform-origin: right top; display: none; width: 217px; height: 122px; background: url("http://www.mizone.cc/1L/images/pic_choose.png") no-repeat; z-index: 999999; }
+
+.success { display: none; position: absolute; top: 1px; left: 55px; width: 548px; height: 388px; background: url("http://www.mizone.cc/1L/images/bg_success.png?date=0324") no-repeat; }
+.success .code { position: absolute; top: 160px; left: 192px; width: 162px; height: 163px; background: url("http://www.mizone.cc/1L/images/pic_code.jpg") no-repeat; }
+
+.turn { position: absolute; top: 46px; right: 50px; z-index: 400; width: 78px; height: 40px; background: url("http://www.mizone.cc/1L/images/btn_cancel.png") no-repeat; }
+
+.tools { display: none; position: absolute; left: 43px; top: 678px; width: 460px; height: 116px; z-index: 9999; background: url("http://www.mizone.cc/1L/images/btn_tools.png?date=0328") no-repeat; }
+.tools input { position: absolute; display: block; width: 72px; height: 72px; overflow: hidden; border: 0; text-indent: -999em; cursor: pointer; }
+.tools #btn1 { top: 12px; left: 22px; background: none; }
+.tools #btn2 { top: 16px; left: 110px; background: none; }
+.tools #btn3 { top: 20px; left: 196px; background: none; }
+.tools #btn4 { position: absolute; top: 28px; left: 370px; width: 72px; height: 72px; }
+.tools #btn4 input { width: 72px; height: 72px; opacity: 0; }
+.tools #btn5 { top: 24px; left: 282px; background: none; }
+
+
+
+
+
+.video_tit { position: absolute; top: 242px; right: 4px; width: 158px; height: 60px; }
+.t_htp { background: url("http://www.mizone.cc/1L/images/bg_v_htp.png") no-repeat; }
+.t_dxp { background: url("http://www.mizone.cc/1L/images/bg_v_dxp.png") no-repeat; }
+
+
+.video_box { position: absolute; left: 21px; top: 326px; width: 600px; }
+.video_box img { position: absolute; top: 0; left: 0; z-index: 99; width: 100%; }
+.video_box video { display: none; }
+
+.video_list { position: absolute; left: 88px; top: 718px; width: 404px; height: 131px; padding-top: 14px; padding-left: 14px; background: url("http://www.mizone.cc/1L/images/bg_video_list.png") no-repeat; }
+.video_list a { float: left; display: block; width: 193px; height: 118px; margin-right: 5px; }
+
+
+
+
+.iscroll { position: absolute; left: 62px; top: 360px; width: 506px; height: 450px; overflow: hidden; font-size: 20px; color: #fff; }
+.iscroll .content { position: absolute; left: 0; top: 0; }
+.iscroll .content p { margin-bottom: 12px; }
+
+
+.bottle { position: absolute; right: 0; bottom: 0; width: 96px; height: 190px; background: url("http://www.mizone.cc/1L/images/bg_pz.png") no-repeat; }
+
+
+.pop_wx { display: none; position: absolute; left: 0; top: 0; z-index: 999999; width: 100%; height: 960px; background: rgba(0, 0, 0, 0.5); }
+.pop_wx .box { position: absolute; left: 26px; top: 76px; width: 558px; height: 572px; background: url("http://www.mizone.cc/1L/images/bg_wx_pop.png?date=0417") no-repeat; }
+.pop_wx .box .close { position: absolute; right: 0px; top: 161px; width: 54px; height: 54px; cursor: pointer; }
+.pop_wx .box p { position: relative; width: 250px; height: 43px; line-height: 43px; margin: 0 auto; top: 366px; text-align: center; background: #12d6e8; border-radius: 4px; font-size: 30px; font-family: "arial"; color: #fff; letter-spacing: 2px; }
+
+.pop_loading { display: none; position: absolute; left: 0; top: 0; z-index: 999999; width: 100%; height: 960px; background: rgba(0, 0, 0, 0.5); }
+.pop_loading .box { position: absolute; left: 113px; top: 324px; width: 400px; height: 281px; background: url("http://www.mizone.cc/1L/images/bg_loading_pop.png") no-repeat; }
+
+
+
+.pg_info { background: url("http://www.mizone.cc/1L/images/bg_info.jpg") no-repeat; }
+.pg_info input { position: absolute; left: 216px; width: 260px; height: 40px; line-height: 40px; box-sizing: border-box; border: 0 none; border-radius: 8px; background: #065b96; padding: 11px 15px; font-size: 18px; color: #fff; -webkit-transform: rotate(0.5deg); }
+.pg_info input.text1 { top: 486px; }
+.pg_info input.text2 { top: 536px; }
+.pg_info input.text3 { top: 586px; }
+.pg_info button { position: absolute; left: 190px; top: 738px; width: 255px; height: 90px; border: 0 none; background: url("http://www.mizone.cc/1L/images/btn_send.png") no-repeat; }
+
+
+
+
+
+
+
+

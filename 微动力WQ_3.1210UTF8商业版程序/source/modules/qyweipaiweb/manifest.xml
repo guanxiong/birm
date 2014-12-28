@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[微拍全屏版]]></name>
+		<identifie><![CDATA[qyweipaiweb]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[微信照片打印全屏展示板，有广告区、预览区、动态验证码！]]></ability>
+		<description><![CDATA[基于微动力的微信照片打印系统，可以用普通电脑链接打印机实现，也可以封装成成品进行营销。商家吸粉的利器之一，粉丝关注了之后，发送照片进行打印。]]></description>
+		<author><![CDATA[清逸]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="image" />
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="查看图片" do="awardlist" state="" direct="false" />
+			<entry title="加次日志" do="loglist" state="" direct="false" />
+		</rule>
+	</bindings>
+	<install><![CDATA[
+	CREATE TABLE IF NOT EXISTS `ims_qywpweb` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `weid` int(11) NOT NULL,
+  `picture1` varchar(100) NOT NULL COMMENT '模板1',
+  `picture2` varchar(100) NOT NULL COMMENT '模板2',
+  `maxnum` tinyint(3) unsigned NOT NULL COMMENT '参与次数',
+  `pwd` varchar(20) NOT NULL COMMENT '验证码',
+  `mpwd` varchar(20) NOT NULL COMMENT '管理码',
+  `msg` text NOT NULL,
+  `msg_succ` text NOT NULL,
+  `msg_fail` text NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0为停用，1为启用',
+  `lyok` tinyint(1) NOT NULL DEFAULT '1' COMMENT '留言0为停用，1为启用',
+  `ispwd` tinyint(1) NOT NULL DEFAULT '1' COMMENT '动态参与码0为停用，1为启用',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_qywpweb_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+  `fid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '粉丝id',
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'weid',
+  `msg` varchar(100) NOT NULL COMMENT '消息',
+  `pic` varchar(100) NOT NULL COMMENT '图片',
+  `pwd1` varchar(20) NOT NULL COMMENT '参与码',
+  `bianhao` varchar(20) NOT NULL COMMENT '照片编号',
+  `isok` tinyint(1) NOT NULL DEFAULT '0',
+  `create_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_qywpweb_count` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+  `fid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '粉丝id',
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'weid',
+  `count` int(10) NOT NULL DEFAULT '0',
+  `create_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_qywpweb_log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+  `mguser` varchar(50)  NOT NULL COMMENT '管理者',
+  `fid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '粉丝id',
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'weid',
+  `count` int(10) NOT NULL DEFAULT '0',
+  `create_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_qywpweb`;
+	DROP TABLE IF EXISTS `ims_qywpweb_reply`;
+	DROP TABLE IF EXISTS `ims_qywpweb_count`;
+	DROP TABLE IF EXISTS `ims_qywpweb_log`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

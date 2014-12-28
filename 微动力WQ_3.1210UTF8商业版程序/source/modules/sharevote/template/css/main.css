@@ -1,0 +1,111 @@
+.mainpage{
+    margin: 0;
+    padding: 0;
+    background: #000000;
+}
+.content{
+    padding-top:30px;
+    padding-bottom: 20px;
+    background: #ffffff;
+}
+
+.list-dv{
+    background: #ffffff;
+}
+.list-dv li{
+   margin-bottom: 10px;
+}
+#share-pop{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.7);
+}
+#share-pop2{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.7);
+}
+.bar-dv{
+    width: 100%;
+    padding:5px;
+}
+.progress {
+   width:100%;
+    height:10px;
+    background: #808080;
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+.progress-tb{
+    border-collapse:collapse;
+    width:100%;
+}
+.progress-tb tr td{
+    border:1px solid #000000;
+}
+.progress-text{
+    width:100%;
+    height:10px;
+}
+
+.progress-bar {
+    height:100%;
+    background:rgb(22,160,133) ;
+}
+a{
+    text-decoration: none;
+}
+/***分享按钮**/
+.text {
+    margin: 15px 0px;
+    font-size: 14px;
+    word-wrap: break-word;
+    color: rgb(114, 114, 114);
+}
+#mess_share {
+    margin: 15px 0px;
+    display: block;
+}
+#share_1 {
+    float: left;
+    width: 49%;
+    display: block;
+}
+.button2 {
+    font-size: 16px;
+    padding: 8px 0px;
+    border: 1px solid rgb(173, 173, 171);
+    color: rgb(0, 0, 0);
+    background-color: rgb(232, 232, 232);
+    background-image: linear-gradient(to top, rgb(219, 219, 219), rgb(244, 244, 244));
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.45), 0px 1px 1px rgb(239, 239, 239) inset;
+    text-shadow: 0.5px 0.5px 1px rgb(255, 255, 255);
+    text-align: center;
+    border-radius: 3px;
+    width: 100%;
+}
+#share_2 {
+    float: right;
+    width: 49%;
+    display: block;
+}
+.clr {
+    display: block;
+    clear: both;
+    height: 0px;
+    overflow: hidden;
+}
+#mess_share img {
+    width: 22px !important;
+    height: 22px !important;
+    vertical-align: top;
+    border: 0px none;
+}

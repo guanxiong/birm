@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>{$axisinf['title']}</title>
+<!-- Mobile Devices Support @begin -->
+<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<!-- Mobile Devices Support @end -->
+<meta name="keywords" content=""/>
+<link rel="stylesheet" href="./source/modules/timeaxis/template/css/axis.css">
+<!-- <script src="./resource/script/lazyload.js"></script> -->
+<style>
+{if $axisinf['bgimg'] == ''}
+body {background: url(./source/modules/timeaxis/template/img/shareListBoxBg.png) repeat-y center;}
+{else}
+body {background: url(./resource/attachment/{$axisinf['bgimg']}) repeat-y center;}
+{/if}
+{if $axisinf['bgcol'] == ''}
+.title, .para {background-color: #00b6ee};
+{else}
+.title, .para {background-color: {$axisinf['bgcol']}}
+{/if}
+</style>
+</head>
+<body onload="lazyLoad()">
+<div class="wrap" style="width: 320px;height:auto;">
+    <div class="shareListBox" style="overflow:auto;">
+        {php $sharelist = array('l','r');}
+        {loop $sharelist $sl}
+        {if $sl == 'l'}
+    	   <ul class="share-l" id="shareLeftId">
+        {else}
+            <ul class="share-r" id="shareRightId">
+        {/if}
+        {loop $axisinf['items'] $k $item}
+            {if $item['direct'] == $sl}
+                <li>
+                {if $item['type'] == 0}
+                    <div class="title"><h3>{$item['detail']}</h3><h6>{$item['title']}</h6></div><div class="photo"></div>
+                {else if $item['type'] == 1}
+                    <div class="para">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{$item['detail']}</p><h6>{$item['title']}</h6></div><div class="photo"></div>
+                {else}
+                    <div class="pic" id="{$k}"><img src="./source/modules/timeaxis/template/img/loading.png" data-src="./resource/attachment/{$item['detail']}"></div><span class="date">{$item['title']}</span><div class="photo"></div>
+                {/if}
+                </li>
+            {/if}
+        {/loop}
+        </ul>
+        {/loop}
+    </div>
+</div>
+<div class="alertImg" id='alertImg' onclick="hideAlert()"></div>
+<script src="./resource/script/jquery-1.10.2.min.js"></script>
+<script>
+function takeUp(a){
+    var target = document.getElementById('alertImg');
+    var img = document.createElement('img');
+    img.src = event.currentTarget.firstChild.getAttribute('src');
+    target.innerHTML = '';
+    target.appendChild(img);
+    target.style.display = 'block';
+}
+function hideAlert(){
+    event.currentTarget.style.display = 'none';
+}
+$('div.pic').on('click','img',function(){
+    var cursrc = $(this).attr('src');    
+    if (window.WeixinJSBridge) {
+        cursrc = "{$_W['attachurl']}"+cursrc.replace('./resource/attachment/','');
+        var params = {
+            'urls': Array(cursrc),
+            'current': cursrc
+        };
+        WeixinJSBridge.invoke("imagePreview", params, function(e) {});
+    } else {
+        var img = '<img src="'+cursrc+'">';
+        $('#alertImg').css('display','block');
+        $('#alertImg').html(img);
+    }
+});
+
+function lazyLoad(){
+    var fold = window.innerHeight + $(window).scrollTop();
+    $('div.shareListBox').find('div.pic img').each(function(){
+        if($(this).attr('data-src')){
+            if($(this).offset().top < fold){
+                $(this).attr('src',$(this).attr('data-src'));
+                $(this).removeAttr('data-src');
+            }
+        }
+    });  
+}
+window.onscroll = function(e){
+    lazyLoad();
+}
+
+</script>
+</body>
+</html>

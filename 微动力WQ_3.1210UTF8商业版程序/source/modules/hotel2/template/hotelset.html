@@ -1,0 +1,188 @@
+{template 'common/header'}
+{template 'common'}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="{php echo $this->createWebUrl('hotelset')}">基本设置</a></li>
+</ul>
+<div class="main">
+    <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit='return check()'>
+        <h4>基本设置</h4>
+        <table class="tb">
+            <tr>
+                <th><label for="">版本设置</label></th>
+                <td>
+                    <label class="radio inline">
+                        <input type="radio" value="0" name="version" class="version" {if $set['version']==0 || empty($set['version'])}checked{/if}/> 独立酒店版本
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" value="1" name="version" class="version" {if $set['version']==1}checked{/if}/> 多个酒店版本
+                    </label>
+                    <span class="help-block">请根据您酒店的实际情况选择，不要随意修改</span>
+                </td>
+            </tr>
+
+            <tr class="{if $set['version'] != 1}hide{/if}" id="de_city">
+                <th><label for="">默认城市：</label></th>
+                <td>
+                    <select name="location_p" id="location_p" class="location span2"></select>
+                    <select name="location_c" id="location_c" class="location span2"></select>
+                    <!--<select name="location_a" id="location_a" class="location span2"></select>-->
+                    <script type="text/javascript" src="./source/modules/hotel2/template/style/js/region_select.js"></script>
+                    <script type="text/javascript">
+                        var location_p = "{if !empty($set['location_p'])}{$set['location_p']}{else}{/if}";
+                        var location_c = "{if !empty($set['location_c'])}{$set['location_c']}{else}{/if}";
+                        new PCAS("location_p", "location_c", location_p, location_c);
+                    </script>
+                </td>
+            </tr>
+
+            <tr>
+                <th><label for="">用户设置</label></th>
+                <td>
+                    <label class="radio inline">
+                        <input type="radio" value="1" name="user" class="user" {if $set['user']==1 || empty($set['user'])}checked{/if}/> 微信粉丝
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" value="2" name="user" class="user" {if $set['user']==2}checked{/if}/> 独立用户
+                    </label>
+                    <span class="help-block">用户是微信粉丝还是独立的用户, 独立用户需要注册</span>
+                </td>
+            </tr>
+          <tr class="{if $set['user']!=2}hide{/if}" id='trbind'>
+                <th><label for="">绑定设置</label></th>
+                <td>
+                    <label class="radio inline">
+                        <input type="radio" value="1" name="bind" class="bind" {if $set['bind']==1 || empty($set['bind'])}checked{/if}/> 不绑定
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" value="2" name="bind" class="bind" {if $set['bind']==2}checked{/if}/> 绑定
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" value="3" name="bind" class="bind" {if $set['bind']==3}checked{/if}/> 针对用户设置
+                    </label>
+                    <span class="help-block">如果选择绑定，用户第一次登录后自动与微信号绑定，其他微信用户无法使用此绑定帐号登录</span>
+                </td>
+            </tr>
+            <tr class="{if $set['user']!=2}hide{/if}" id='trreg'>
+                <th><label for="">注册设置</label></th>
+                <td>
+                    <label class="radio inline">
+                        <input type="radio" value="1" name="reg" class='reg' {if $set['reg']==1 || empty($set['reg'])}checked{/if}/> 开启注册
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" value="2" name="reg" class='reg' {if $set['reg']==2}checked{/if}/> 禁止注册
+                    </label>
+                </td>
+            </tr>
+           <tr class="{if $set['reg']!=2}hide{/if}" id="trregcontent">
+                <th><label for="">注册说明</label></th>
+                <td>
+                    <textarea name="regcontent" class="span6" cols="70">{$set['regcontent']}</textarea>
+                    <span class="help-block">在禁止注册的时候对用户注册的说明</span>
+                </td>
+            </tr>
+             <tr>
+                <th><label for="">预定类型</label></th>
+                <td>
+                    <label class='radio inline'><input type="radio" name="ordertype" value="0" {if $set['ordertype'] == 0} checked="true" {/if}>电话预定</label>
+                    <label class='radio inline'><input type="radio" name="ordertype" value="1"  {if $set['ordertype'] == 1} checked="true" {/if}> 电话预定和网络预定</label>
+                </td>
+            </tr>
+
+            <tr>
+                <th><label for="">预定电话</label></th>
+                <td>
+                    <label class='radio inline'><input type="radio" name="is_unify" class="is_unify" value="0" {if $set['is_unify'] == 0} checked="true" {/if}>使用各酒店电话</label>
+                    <label class='radio inline'><input type="radio" name="is_unify" class="is_unify" value="1"  {if $set['is_unify'] == 1} checked="true" {/if}> 使用统一电话</label>
+                </td>
+            </tr>
+
+            <tr class="{if $set['is_unify'] == 0}hide{/if}" id='trtel'>
+                <th><label for="">统一电话号码</label></th>
+                <td>
+                    <input type="text" name="tel" id="tel" value="{$set['tel']}" class="span3"></td>
+                </td>
+            </tr>
+            
+            <tr>
+                <th><label for="">余额支付</label></th>
+                <td>
+                    <label class='radio inline'><input type="radio" name="paytype1" value="1"  {if $set['paytype1'] == 1} checked="true" {/if}> 开启</label>
+                    <label class='radio inline'><input type="radio" name="paytype1" value="0" {if $set['paytype1'] == 0} checked="true" {/if}>关闭</label>
+                </td>
+            </tr>	
+            <tr>
+                <th><label for="">在线支付</label></th>
+                <td>
+                    <label class='radio inline'><input type="radio" name="paytype2" value="0" {if $set['paytype2'] == 0} checked="true" {/if}>关闭</label>
+                    <label class='radio inline'><input type="radio" name="paytype2" value="21" {if $set['paytype2'] == 21} checked="true" {/if}> 微支付</label>
+                    <label class='radio inline'><input type="radio" name="paytype2" value="22" {if $set['paytype2'] == 22} checked="true" {/if}> 支付宝</label>
+                    <label class='radio inline'><input type="radio" name="paytype2" value="23" {if $set['paytype2'] == 23} checked="true" {/if}> 微支付+支付宝</label>
+
+
+                </td>
+            </tr>	
+            <tr>
+                <th><label for="">到店付款</label></th>
+                <td>
+                    <label class='radio inline'><input type="radio" name="paytype3" value="1"  {if $set['paytype3'] == 1} checked="true" {/if}> 开启</label>
+                    <label class='radio inline'><input type="radio" name="paytype3" value="0" {if $set['paytype3'] == 0} checked="true" {/if}>关闭</label>   
+                </td>
+            </tr>	
+            <tr>
+                <th></th>
+                <td>
+                    <input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+                    <input type="hidden" name="id" value="{$set['id']}" />
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script language='javascript'>
+    function check(){
+     
+    }
+    $(function(){
+       
+        $(".version").click(function(){
+            var obj = $(this);
+            if(obj.val()=='1'){
+                $("#de_city").show();
+            }
+            else{
+                $("#de_city").hide();
+            }
+        });
+
+        $(".user").click(function(){
+            var obj = $(this);
+            if(obj.val()=='2'){
+                $("#trreg").show();$("#trbind").show();
+            }
+            else{
+                $("#trreg").hide();$("#trbind").hide();
+            }
+        });
+
+        $(".reg").click(function(){
+            var obj = $(this);
+            if(obj.val()=='1'){
+                $("#trregcontent").hide();
+            }
+            else{
+                $("#trregcontent").show();
+            }
+        });
+          $(".is_unify").click(function(){
+            var obj = $(this);
+            if(obj.val()=='1'){
+                $("#trtel").show();;
+            }
+            else{
+                $("#trtel").hide();;
+            }
+        });
+    });
+ </script>
+{template 'common/footer'}

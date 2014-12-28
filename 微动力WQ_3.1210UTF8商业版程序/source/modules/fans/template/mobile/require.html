@@ -1,0 +1,354 @@
+{template 'header'}
+{template 'member'}
+<div class="profile">
+	<div class="tabbable">
+		<ul class="nav nav-tabs">
+			<li><a href="{php echo create_url('mobile/module/profile', array('name' => 'fans', 'weid' => $_W['weid']))}#qq.com#wechat_redirect">完整资料</a></li>
+			<li class="active"><a href="javascript:;">完善资料</a></li>
+		</ul>
+		<form action="" method="post" enctype="multipart/form-data" onsubmit="return validate();">
+		<input type="hidden" name="from_user" value="{$_W['fans']['from_user']}" />
+		<div class="tab-content" style="padding:0 10px; margin-top:10px;">
+			<div class="tab-pane active">
+				<div class="form-item">当前系统需要你完善以下资料才能继续操作</div>
+				<table class="form-table">
+					{if isset($profile['avatar'])}
+					<tr>
+						<th><label for="">头像</label></th>
+						<td>
+							<input type="hidden" value="" name="avatar" id="avatar">
+							<div class="file">
+								<input type="file" name="avatar" style="width:51%;">
+								<div class="input-prepend input-append">
+									<button class="btn" type="button" style="width:51%; text-align:center;"><i class="icon-upload-alt"></i> 上传头像</button>
+									<button class="btn btn-inverse" type="button" style="width:50%; text-align:center;" data-toggle="modal" data-target="#sysavatar"><i class="icon-github-alt"></i> 系统头像</button>
+								</div>
+							</div>
+						</td>
+					</tr>
+					{/if}
+					<tr>
+						<th><label for="">用户名</label></th>
+						<td><input type="text" name="" value="{$_W['fans']['from_user']}" readonly="readonly"></td>
+					</tr>
+					{if isset($profile['nickname'])}
+					<tr>
+						<th><label for="">昵称</label></th>
+						<td><input type="text" name="nickname" value="{$profile['nickname']}"></td>
+					</tr>
+					{/if}
+					{if isset($profile['realname'])}
+					<tr>
+						<th><label for="">真实姓名</label></th>
+						<td><input type="text" id="" name="realname" value="{$profile['realname']}"></td>
+					</tr>
+					{/if}
+					{if isset($profile['gender'])}
+					<tr>
+						<th><label for="">性别</label></th>
+						<td><select name="gender"><option value="0" {if $profile['gender'] == '0'} selected{/if}>保密</option><option value="1" {if $profile['gender'] == '1'} selected{/if}>男</option><option value="2" {if $profile['gender'] == '2'} selected{/if}>女</option></select></td>
+					</tr>
+					{/if}
+					{if isset($profile['birthyear'])}
+					<tr>
+						<th><label for="">生日</label></th>
+						<td>
+							<select name="birthyear" class="pull-left" style="width:30%; margin-right:5%;">
+								<option value="0">年</option>
+								<?php
+									for ($i = $form['birthday']['year'][0]; $i >= $form['birthday']['year'][1]; $i--) {
+								?>
+								<option value="{$i}" {if $profile['birthyear'] == $i} selected{/if}>{$i}</option>
+								<?php
+									}
+								?>
+							</select>
+							<select name="birthmonth" class="pull-left" style="width:30%; margin-right:5%;">
+								<option value="0">月</option>
+								<?php
+									for ($i = 1; $i <= 12; $i++) {
+								?>
+								<option value="{$i}" {if $profile['birthmonth'] == $i} selected{/if}>{$i}</option>
+								<?php
+									}
+								?>
+							</select>
+							<select name="birthday" class="pull-left" style="width:30%;">
+								<option value="">日</option>
+								<?php
+									for ($i = 1; $i <= 31; $i++) {
+								?>
+								<option value="{$i}" {if $profile['birthday'] == $i} selected{/if}>{$i}</option>
+								<?php
+									}
+								?>
+							</select>
+						</td>
+					</tr>
+					{/if}
+					{if isset($profile['resideprovince'])}
+					<tr>
+						<th><label for="">地区</label></th>
+						<td>
+							<select name="resideprovince" id="sel-provance" onChange="selectCity();" class="pull-left" style="width:30%; margin-right:5%;">
+								<option value="" selected="true">省/直辖市</option>
+							</select>
+							<select name="residecity" id="sel-city" onChange="selectcounty()" class="pull-left" style="width:30%; margin-right:5%;">
+								<option value="" selected="true">请选择</option>
+							</select>
+							<select name="residedist" id="sel-area" class="pull-left" style="width:30%;">
+								<option value="" selected="true">请选择</option>
+							</select>
+						</td>
+					</tr>
+					{/if}
+					{if isset($profile['address'])}
+					<tr>
+						<th><label for="">详细地址</label></th>
+						<td><input type="text" id="" name="address" value="{$profile['address']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['mobile'])}
+					<tr>
+						<th><label for="">手机</label></th>
+						<td><input type="text" id="" name="mobile" value="{$profile['mobile']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['qq'])}
+					<tr>
+						<th><label for="">QQ</label></th>
+						<td><input type="text" id="" name="qq" value="{$profile['qq']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['email'])}
+					<tr>
+						<th><label for="">Email</label></th>
+						<td><input type="text" id="" name="email" value="{$profile['email']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['telephone'])}
+					<tr>
+						<th><label for="">固定电话</label></th>
+						<td><input type="text" id="" name="telephone" value="{$profile['telephone']}"/ ></td>
+					</tr>
+					{/if}
+					{if isset($profile['msn'])}
+					<tr>
+						<th><label for="">MSN</label></th>
+						<td><input type="text" id="" name="msn" value="{$profile['msn']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['taobao'])}
+					<tr>
+						<th><label for="">阿里旺旺</label></th>
+						<td><input type="text" id="" name="taobao" value="{$profile['taobao']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['alipay'])}
+					<tr>
+						<th><label for="">支付宝帐号</label></th>
+						<td><input type="text" id="" name="alipay" value="{$profile['alipay']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['studentid'])}
+					<tr>
+						<th><label for="">学号</label></th>
+						<td><input type="text" id="" name="studentid" value="{$profile['studentid']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['grade'])}
+					<tr>
+						<th><label for="">班级</label></th>
+						<td><input type="text" id="" name="grade" value="{$profile['grade']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['graduateschool'])}
+					<tr>
+						<th><label for="">毕业学校</label></th>
+						<td><input type="text" id="" name="graduateschool" value="{$profile['graduateschool']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['education'])}
+					<tr>
+						<th><label for="">学历</label></th>
+						<td>
+							<select name="education">
+							{loop $form['education'] $item}
+							<option value="{$item}" {if $profile['education'] == $item} selected{/if}>{$item}</option>
+							{/loop}
+							</select>
+						</td>
+					</tr>
+					{/if}
+					{if isset($profile['company'])}
+					<tr>
+						<th><label for="">公司</label></th>
+						<td><input type="text" id="" name="company" value="{$profile['company']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['occupation'])}
+					<tr>
+						<th><label for="">职业</label></th>
+						<td><input type="text" id="" name="occupation" value="{$profile['occupation']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['position'])}
+					<tr>
+						<th><label for="">职位</label></th>
+						<td><input type="text" id="" name="position" value="{$profile['position']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['revenue'])}
+					<tr>
+						<th><label for="">年收入</label></th>
+						<td><input type="text" id="" name="revenue" value="{$profile['revenue']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['constellation'])}
+					<tr>
+						<th><label for="">星座</label></th>
+						<td>
+							<select name="constellation">
+							{loop $form['constellation'] $item}
+							<option value="{$item}" {if $profile['constellation'] == $item} selected{/if}>{$item}</option>
+							{/loop}
+							</select>
+						</td>
+					</tr>
+					{/if}
+					{if isset($profile['zodiac'])}
+					<tr>
+						<th><label for="">生肖</label></th>
+						<td>
+							<select name="zodiac">
+							{loop $form['zodiac'] $item}
+							<option value="{$item}" {if $profile['zodiac'] == $item} selected{/if}>{$item}</option>
+							{/loop}
+							</select>
+						</td>
+					</tr>
+					{/if}
+					{if isset($profile['nationality'])}
+					<tr>
+						<th><label for="">国籍</label></th>
+						<td><input type="text" id="" name="nationality" value="{$profile['nationality']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['height'])}
+					<tr>
+						<th><label for="">身高</label></th>
+						<td><input type="text" id="" name="height" value="{$profile['height']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['weight'])}
+					<tr>
+						<th><label for="">体重</label></th>
+						<td><input type="text" id="" name="weight" value="{$profile['weight']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['bloodtype'])}
+					<tr>
+						<th><label for="">血型</label></th>
+						<td>
+						<select name="bloodtype">
+							{loop $form['bloodtype'] $item}
+							<option value="{$item}" {if $profile['bloodtype'] == $item} selected{/if}>{$item}</option>
+							{/loop}
+						</select>
+						</td>
+					</tr>
+					{/if}
+					{if isset($profile['idcard'])}
+					<tr>
+						<th><label for="">身份证号</label></th>
+						<td><input type="text" id="" name="idcard" value="{$profile['idcard']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['zipcode'])}
+					<tr>
+						<th><label for="">邮编</label></th>
+						<td><input type="text" id="" name="zipcode" value="{$profile['zipcode']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['site'])}
+					<tr>
+						<th><label for="">个人主页</label></th>
+						<td><input type="text" id="" name="site" value="{$profile['site']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['affectivestatus'])}
+					<tr>
+						<th><label for="">情感状态</label></th>
+						<td><input type="text" id="" name="affectivestatus" value="{$profile['affectivestatus']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['lookingfor'])}
+					<tr>
+						<th><label for="">交友目的</label></th>
+						<td><input type="text" id="" name="lookingfor" value="{$profile['lookingfor']}" /></td>
+					</tr>
+					{/if}
+					{if isset($profile['bio'])}
+					<tr>
+						<th><label for="">自我介绍</label></th>
+						<td><textarea name="bio">{$profile['bio']}</textarea></td>
+					</tr>
+					{/if}
+					{if isset($profile['interest'])}
+					<tr>
+						<th><label for="">兴趣爱好</label></th>
+						<td><textarea name="interest">{$profile['interest']}</textarea></td>
+					</tr>
+					{/if}
+				</table>
+			</div>
+			<table class="form-table">
+				<tr>
+					<td colspan="2" align="center"><input type="hidden" name="token" value="{$_W['token']}" /><input type="submit" class="btn btn-large submit" value="提交" name="submit"></td>
+				</tr>
+			</table>
+		</div>
+	</form>
+	</div>
+</div>
+{if isset($profile['avatar'])}
+<div id="sysavatar" class="modal hide fade" tabindex="-1" style="margin-left:0; left:5%; width:90%;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<style>
+	#sysavatar span{overflow:hidden; display: inline-block; border:2px #E1E1E1 solid; margin-bottom:5px; cursor:pointer;}
+	#sysavatar span img{width:50px; height:50px;}
+	</style>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">选择系统头像</h3>
+	</div>
+	<div class="modal-body" style="padding-bottom:10px;">
+		{php $avatar_url = 'resource/image/avatar/';}
+		<span><img src="{$avatar_url}avatar_1.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_2.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_3.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_4.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_5.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_6.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_7.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_8.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_9.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_10.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_11.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_12.jpg" /></span>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">完成</button>
+	</div>
+</div>
+{/if}
+{if isset($profile['resideprovince'])}
+<script type="text/javascript">
+cascdeInit('{$profile['resideprovince']}','{$profile['residecity']}','{$profile['residedist']}'); //开启地区三级联动
+$("#sysavatar .modal-body").delegate("span", "click", function(){
+	$("#sysavatar .modal-body span").css("border", "2px #E1E1E1 solid");
+	$(this).css("border", "2px #ED2F2F solid");
+	$('#avatar').val($(this).find("img").attr("src"));
+});
+</script>
+{/if}
+{template 'footer'}

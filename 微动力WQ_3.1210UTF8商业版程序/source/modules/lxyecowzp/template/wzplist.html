@@ -1,0 +1,45 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+  <li {if $_GPC['do'] == 'wzpindex'} class="active"{/if}><a href="{php echo  $this->createWebUrl('wzpindex');}">企业招聘信息</a>
+  </li>
+<li {if $_GPC['do'] == 'wzplist'} class="active"{/if}><a href="{php echo  $this->createWebUrl('wzplist',array('hid'=>$hid));}">招聘职位设置</a></li>
+	</ul>
+	<div style="padding:15px;">
+		<p>
+        <a href="{php echo $this->createWeburl('wzpadd',array('hid'=>$hid))}"  class="btn"><i class="icon-plus-sign-alt" ></i>新增招聘职位</a>
+        </p>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+<tr>
+<th width="110">招聘岗位</th>
+<th width="60">人数</th>
+<th width="74">要求</th>
+<th width="74">招聘类型</th>
+<th width="60">显示顺序</th>
+<th width="200" class="norightborder">操作</th>
+</tr>
+</thead>
+<tbody>
+<tr></tr>
+{loop $list $item}
+
+{php $txt=strip_tags($item['info'])}
+{php $iinfo=cutstr($txt, 40)}
+<tr>
+<td width="140">{$item['title']}</td>
+<td width="60">{$item['number']}</td>
+<td width="224" class="row-hover"><a href="javascript:;" title="{$txt}">{$iinfo}{if istrlen($txt)>40}...{/if}</a></td>
+<td width="74">{$item['zptype']}</td>
+<td width="60">{$item['displayorder']}</td>
+<td class="norightborder"><a href="{php echo $this->createWebUrl('wzpadd', array('id' => $item['id'],'hid'=>$hid))}" class="btn btn-small" title="招聘管理"><i class="icon-edit"></i></a><a onclick="return confirm('确认删除该招聘信息？');return false;" href="{php echo $this->createWebUrl('delwzplist', array('id' => $item['id'],'hid'=>$hid))}" class="btn btn-small" title="删除"><i class="icon-remove"></i>删除</a></td>
+</tr>
+{/loop}
+				<td colspan="9">
+					<input name="token" type="hidden" value="{$_W['token']}" /></td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</div>
+{template 'common/footer'}

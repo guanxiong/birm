@@ -1,0 +1,133 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加签到信息</h4>
+    <table>
+		<tbody>
+			<tr>
+				<th>回复标题</th>
+				<td><input type="text" name="title" class="span7" value="{$reply['title']}"></td>
+			</tr>
+			<tr>
+				<th>图文消息图片</th>
+				<td>{php echo tpl_form_field_image('picture', $reply['picture']);}
+               
+					
+				</td>
+			</tr>
+			<tr>
+				<th>回复详情</th>
+				<td>
+					<textarea style="height:50px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于图文显示的简介</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table>
+		<tbody>
+		
+			<tr>
+				<th>超出签到时间提示</th>
+				<td><input type="text" value="{$reply['overtime']}" class="span7" name="overtime" id="overtime">
+					<div class="help-block">用户签到超出时间范围的提示，如果未设置则默认为每日早8点至晚10点。</div></td>
+			</tr>
+
+			<tr>
+				<th>超出签到次数提示</th>
+				<td><input type="text" value="{$reply['overnum']}" class="span7" name="overnum" id="overnum">
+					<div class="help-block">用户签到超出次数的提示，如果未设置则默认为每日1次。<a class="iconEmotion" href="javascript:;" inputid="enter-tips"><i class="icon-github-alt"></i></a></div></td>
+			</tr>
+            <tr>
+            <th colspan="2" style="text-align:center"><strong>超次签到提示广告</strong></th>
+            </tr>
+                       {php for($i=1;$i<6;$i++){}
+            <tr>
+				<th>广告位{$i}</th>
+				<td>
+                <input type="text" placeholder="广告文字" value="{php echo $reply["ggtext1$i"]}" class="span3" name="ggtext1{$i}" id="ggtext1{$i}" />			 
+                 <input type="text" placeholder="广告链接" value="{$reply["gglink1$i"]}" class="span3" name="gglink1{$i}" id="gglink1{$i}" />
+                 站外地址http://开头</td>
+          </tr>
+          {php };}
+            <tr>
+				<th>活动起始结束日期</th>
+				<td>
+                {php echo tpl_form_field_date('s_date', !empty($reply['s_date']) ? $reply['s_date'] : date('Y-m-d'))}至  {php echo tpl_form_field_date('e_date', !empty($reply['e_date']) ? $reply['e_date'] : date('Y-m-d',strtotime("+1 week")))}
+
+					<div class="help-block">用户签到起始结束日期。</div></td>
+			</tr>
+                        <tr>
+            <th colspan="2" style="text-align:center"><strong>超时签到提示广告</strong></th>
+            </tr>
+          {php for($i=1;$i<6;$i++){}
+            <tr>
+				<th>广告位{$i}</th>
+				<td>
+                <input type="text" placeholder="广告文字" value="{php echo $reply["ggtext2$i"]}" class="span3" name="ggtext2{$i}" id="ggtext2{$i}" />			 
+                 <input type="text" placeholder="广告链接" value="{$reply["gglink2$i"]}" class="span3" name="gglink2{$i}" id="gglink2{$i}" />
+                 站外地址http://开头 </td>
+          </tr>
+          {php };}
+            <tr>
+				<th>签到竞赛规则说明</th>
+				<td><textarea name="awardrules" class="span7" placeholder="请详细说明签到竞赛的规则" id="awardrules">{$reply['awardrules']}</textarea>
+			  <div class="help-block"></div></td>
+			</tr>
+            <tr>
+				<th>1、累计</th>
+				<td><input type="text" placeholder="这里设置天数,设置0表示无效" value="{$reply['sumfirst']}" class="span4" name="sumfirst" id="sumfirst">
+				天签到第一奖励
+			  <div class="help-block"></div></td>
+			</tr>
+            <tr>
+				<th>奖励提示</th>
+				<td><input type="text" placeholder="在此输入获累计签到第一奖励提示" value="{$reply['sumfirsttip']}" class="span7" name="sumfirsttip" id="sumfirsttip">
+				注{s1}代表获奖次数，例如：恭喜您已获电冰箱{s1}台
+				  <div class="help-block"></div></td>
+           </tr>
+
+            <tr>
+				<th>2、累计</th>
+			  <td><input type="text" placeholder="这里设置天数,设置0表示无效" value="{$reply['sumdays']}" class="span4" name="sumdays" id="sumdays">
+				次签到奖励			  </td>
+			</tr>
+            
+            
+            <tr>
+				<th>奖励提示</th>
+				<td><input type="text" placeholder="在此输入获累计签到奖励提示" value="{$reply['sumdaystip']}" class="span7" name="sumdaystip" id="sumdaystip">
+				注{s2}代表获奖次数，例如：
+恭喜您已获洗衣机{s2}台				  
+				  <div class="help-block"></div></td>
+            
+            </tr>
+
+            <tr>
+				<th>3、累计</th>
+			  <td><input type="text" placeholder="这里设置天数,设置0表示无效" value="{$reply['continuedays']}" class="span4" name="continuedays" id="continuedays">
+				天连续签到奖励			      </td>
+			</tr>
+            <tr>
+				<th>奖励提示</th>
+				<td><input type="text" placeholder="在此输入获累计连续签到奖励提示" value="{$reply['continuedaystip']}" class="span7" name="continuedaystip" id="continuedaystip">
+				注{s3}代表获奖次数，例如：恭喜您已获超市卡{s3}张
+				  <div class="help-block"></div></td>
+            
+            </tr>
+            <tr>
+            <th colspan="2" style="text-align:center"><strong>正常签到提示广告</strong></th>
+            </tr>
+             {php for($i=1;$i<6;$i++){}
+            <tr>
+				<th>广告位{$i}</th>
+				<td>
+                <input type="text" placeholder="广告文字" value="{php echo $reply["ggtext3$i"]}" class="span3" name="ggtext3{$i}" id="ggtext3{$i}" />			 
+                 <input type="text" placeholder="广告链接" value="{$reply["gglink3$i"]}" class="span3" name="gglink3{$i}" id="gglink3{$i}" />
+                 站外地址http://开头 </td>
+          </tr>
+          {php };}
+
+		</tbody>
+	</table>
+</div>

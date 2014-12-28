@@ -1,0 +1,55 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+     <li {if $_GPC['do'] == 'wzpindex'} class="active"{/if}><a href="{php echo  $this->createWebUrl('wzpindex');}">企业招聘信息</a>
+  </li>
+<li {if $_GPC['do'] == 'wzpset'} class="active"{/if}><a href="{php echo  $this->createWebUrl('wzpset');}">添加招聘企业</a></li>
+	</ul>
+<div class="search">
+		<form action="{php echo $this->createWeburl('wzpindex')}" method="post">
+		  <table class="table table-bordered tb">
+			<tbody>
+				<tr class="span6">
+					<th class="span2">企业名称</th>
+					<td class="span2">
+						<input class="span2" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+					</td>
+                    <td class="span2">
+                    <button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button>
+                    </td>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<p>
+        <a href="{php echo $this->createWeburl('wzpset', array())}"  class="btn"><i class="icon-plus-sign-alt" ></i>新增招聘企业</a>
+        </p>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+<tr>
+<th width="110">企业名称</th>
+<th width="130">地址</th>
+<th width="60">电话</th>
+<th width="300" class="norightborder">操作</th>
+</tr>
+</thead>
+<tbody>
+<tr></tr>
+{loop $list $item}
+<tr>
+<td width="140">{$item['title']}</td>
+<td width="130">{$item['address']}</td>
+<td width="60">{$item['tel']}</td>
+<td class="norightborder"><a href="{php echo $this->createWebUrl('wzpadmin', array('id' => $item['id']))}" class="btn btn-small">招聘管理</a> <a href="{php echo $this->createWebUrl('wzpset', array('id' => $item['id']))}" class="btn btn-small">企业设置</a> <a href="{php echo $this->createWebUrl('wzplist', array('hid' => $item['id']))}" class="btn btn-small">招聘设置</a> <a onclick="return confirm('确认删除该公司？');return false;" href="{php echo $this->createWebUrl('delwzpqy', array('id' => $item['id']))}" class="btn btn-small" title="删除"><i class="icon-remove"></i>删除</a></td>
+</tr>
+{/loop}
+				<td colspan="8">
+					<input name="token" type="hidden" value="{$_W['token']}" /></td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,33 @@
+{template 'common/header'}
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>默认参数</h4>
+		<table class="tb">
+			<tr>
+				<th>默认音乐封面图</th>
+				<td>
+					{php echo tpl_form_field_image('def_music_cover', $setting['def_music_cover']);}
+					<span class="red">像素必须为300px * 300px，否则影响美观</span>
+				</td>
+			</tr>
+		
+			<tr>
+				<th>默认专辑封面图</th>
+				<td>
+					{php echo tpl_form_field_image('def_tape_cover', $setting['def_tape_cover']);}
+					<span class="red">像素必须为480px * 300px, 否则影响美观</span>
+				</td>
+			</tr>
+			<tr>
+				<th>提交保存</th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" style="height:30px" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+{template 'common/footer'}

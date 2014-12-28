@@ -1,0 +1,32 @@
+body{ background:#9a1d1b;}
+.index{ width: 100%; max-width: 640px; margin: 100px 0 0 0; height:50px; padding: 8px 0; overflow:hidden; position: fixed; z-index: 20; bottom: 0; text-align: center;}
+.index ul,
+.index li{ list-style: none;}
+.index li{ width: 25%; float: left;}
+.index a{height: 34px; line-height: 34px; width:70px; overflow: hidden; display:inline-block; padding: 0 10px; text-align:center; color: #fffbc4; background: url(../images/index-bg.png) no-repeat center center; background-size:contain; overflow: hidden;display: inline-block;word-spacing:normal; word-break:normal; word-break:break-all; font-size: 12px;}
+
+.btn-up-1{display: none;}
+.navPop-1 .navPop-btn{ background: #999;}
+.navPop-1 .navPop-btn .fa{ background: #fff; color: #999;}
+.navPop-wrap>div a{
+    background: #999;
+    color: #fff;
+}
+.slider-ver .slider-text{ bottom: 50px;}
+.slider-page a{background:#fce0bc; width: 15px; height: 15px; border-radius: 1000px;}
+.slider-page a.active{ background:#900000;}
+.btn-up-1{bottom: 56px;}
+.navPop-1{bottom: 40px;}
+footer{height: 100px;}
+@media screen and (orientation:landscape) {
+    .index a{width:100px;}
+    }
+@media only screen and (max-width:1080px){
+    
+}
+@media only screen and (min-width:1224px){
+   
+}
+@media only screen and (max-width:320px){
+    
+}

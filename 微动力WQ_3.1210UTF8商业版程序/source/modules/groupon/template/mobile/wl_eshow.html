@@ -1,0 +1,90 @@
+{template wl_header} 
+
+<div>
+    <div id="container" class="container animate">
+        <header></header>
+        <div class="body">
+            <section>
+                <ul class="list_coupon">
+                    <li>
+                        <a href="javascript:;" class="tbox">
+                            <div>
+                                <figure>
+									{php $groupon['phout_url']=explode('|',$groupon['thumb_list']);}
+									{loop $groupon['phout_url'] $row2}
+										{php if (empty($row2)) continue;}
+										<img src="{$_W['attachurl']}{$row2}" />
+										{php break;}
+									{/loop}
+                                </figure>
+                            </div>
+                            <div>
+                                <h3 style="white-space:pre-line;max-height: 48px;">{$groupon['title']}</h3>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            <section class="section_coupon">
+                <div class="tbox">
+                    <div style="width:100%;">
+                        <label>SN码</label>
+						<h3>{$order['secretsn']}</h3>
+						<p>{php echo date('Y-m-d H:i:s',$order['createtime'])}创建订单 {if $order['ispay']==1}已付款{else}未付款{/if}</p>
+                        <p>{$order['tip2']} </p>
+                        </div>
+                    <div>
+                                                                            
+
+                    </div>
+                </div>
+            </section>
+            <section class="section_send">
+                <ul class="tbox">
+                    <li>
+                        <a href="javascript:;" class="icons icons_phone">发送到手机 </a>
+                    </li>
+                    <li>
+                        <span class="icons icons_wechat">&nbsp;</span>
+                        <label>微信发送“我的团购券” 直接获取 </label>
+                    </li>
+                </ul>
+            </section>
+           <section class="detail_section new_msg">
+                <h6>最新通知</h6>
+                <article>
+                    <p> {$groupon['notice']}</p>
+                </article>
+            </section>			
+			<section class="detail_section detail_info">
+                <h6>团购须知</h6>
+                <article>
+                    <p> {$groupon['tips']}</p>
+                </article>
+            </section>
+            <section class="detail_section detail_info">
+                <h6>团购详情</h6>
+                <article>
+                    <p>{$groupon['info']}</p>
+                </article>
+            </section>
+			{if $groupon['random_refund']==1}
+            <div style="padding:20px 0;border-top:1px solid #c8c8c8;">
+               <a href="javascript:;" class="button">申请退款</a>
+            </div>
+			{/if}
+        </div>
+        <footer>
+            <section class="header_nav">
+                <ul class="tbox">
+                    <li><a href="javascript:history.go(-1);" class="icons icons_back">&nbsp;</a></li>
+                                            <li><a href="javascript:;">未使用</a></li>
+                    
+                </ul>
+            </section>
+        </footer>
+    </div>
+</div>
+</body>
+
+</html>

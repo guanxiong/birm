@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[YIFI上网认证]]></name>
+		<identifie><![CDATA[yifiauth]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[其功能类似于一个接口，用于从YIFI路由平台获取上网验证码并返回给用户]]></ability>
+		<description><![CDATA[当用户安装了YIFI路由器并且在YIFI管理平台注册账号后，通过该模块即可获取上网验证码返回给用户，用户在路由器弹出的认证页内输入上网验证码即可通过验证，获得免费上网服务。]]></description>
+		<author><![CDATA[极脉信息科技]]></author>
+		<url><![CDATA[http://www.we7.cc]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

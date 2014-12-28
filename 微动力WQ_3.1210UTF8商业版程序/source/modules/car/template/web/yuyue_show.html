@@ -1,0 +1,166 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('site/module', array('do' => 'Yuyue','op'=>'post', 'name' => 'car','weid'=>$weid));}">添加预约</a></li>
+	<li><a href="{php echo create_url('site/module', array('do' => 'Yuyue','op'=>'list', 'name' => 'car','weid'=>$weid));}">预约管理</a></li>
+	<li  class="active"><a href="{php echo create_url('site/module', array('do' => 'Yuyue','op'=>'show','id' => $sid, 'name' => 'car','weid'=>$weid));}">预约订单</a></li>
+</ul>
+    <div class="main">
+		<div class="stat">
+				<form action="">
+				<input type="hidden" name="act" value="module" />
+				<input type="hidden" name="name" value="car" />
+				<input type="hidden" name="do" value="yuyue" />
+				<input type="hidden" name="op" value="show" />
+				<input type="hidden" name="id" value="{$sid}" />
+				<input type="hidden" name="so" value="1" />
+				<table class="table sub-search">
+				<table class="table sub-search">
+					<tbody>
+						<tr>
+							<th style="width:100px;">预约时间</th>
+							<td>
+								<span style="margin:0; width:100%;" class="uneditable-input" id="date-range"><span class="date-title">{php echo date('Y-m-d', $starttime)} 至 {php echo date('Y-m-d', $endtime)}</span> <i class="icon-caret-down"></i></span>
+								<input name="start" type="hidden" value="{php echo date('Y-m-d', $ystarttime)}" />
+								<input name="end" type="hidden" value="{php echo date('Y-m-d', $yendtime)}" />
+							</td>
+						</tr>
+						<tr>
+							<th style="width:100px;">提交时间</th>
+							<td>
+								<span style="margin:0; width:100%;" class="uneditable-input" id="date-range1"><span class="date-title">{php echo date('Y-m-d', $starttime)} 至 {php echo date('Y-m-d', $endtime)}</span> <i class="icon-caret-down"></i></span>
+								<input name="start1" type="hidden" value="{php echo date('Y-m-d', $starttime)}" />
+								<input name="end1" type="hidden" value="{php echo date('Y-m-d', $endtime)}" />
+							</td>
+						</tr>
+						<tr>
+							<th></th>
+							<td>
+								<input type="submit" name="" value="搜索" class="btn btn-primary">
+							</td>
+						</tr>
+					</tbody>
+					</table>
+		
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="pull-right" style="color:red; padding:10px 10px 0 0;">总数：<?php echo $total;?></span>
+						<span class="brand">名单</span>
+					</div>
+				</div>
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title" style="float:right;color:red;"><a href="">刷新</a></h4>
+					<h4 class="sub-title">预约名单</h4>
+
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th class="row-hover">用户</th>
+									<th class="row-hover">真实姓名</th>
+									<th class="row-hover">电话</th>
+									<th class="row-hover">试车日期</th>
+									<th class="row-hover">品牌-车系-车型</th>
+									<th class="row-hover">提交时间</th>
+									<th class="row-hover">备注</th>
+								    <th class="row-hover">状态</th>
+									<th class="row-hover">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $v}
+								<tr>
+									<td style="text-align: center;">
+										{$v['from_user']}
+									</td>
+									<td style="text-align: center;">
+										{$v['realname']}
+									</td>
+									<td style="text-align: center;">
+										{$v['mobile']}
+									</td>
+									<td style="text-align: center;">
+										{php echo date('Y-m-d',$v['dateline'])}
+									</td>
+									<td style="text-align: center;">
+										{$v['brand_cn']}-{$v['serie_cn']}-{$v['type_cn']}
+									</td>
+									<td style="text-align: center;">
+										{php echo date('Y-m-d',$v['createtime'])}
+									</td>
+
+									<td style="text-align: center;">
+										{$v['note']}
+									</td>
+									<td style="text-align: center;">
+									{if $v['status']==0}
+										<span class="label label-important">未处理</span>
+									{else}
+										<span class="label label-success">已处理</span>
+									{/if}
+									</td>
+									<td style="text-align: center;">
+										<a href="{php echo $this->createWebUrl('yuyue',array('op'=>'del','id' => $v['id'],'sid' => $v['sid']));}">删除</a>
+										<a href="{php echo $this->createWebUrl('yuyue',array('op'=>'showdetail','id' => $v['id']));}">详情</a>		
+									</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+					</div>
+					</form>
+					{$pager}
+				</div>
+			</div>
+		</div>
+    </div>
+
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script>
+$(function() {
+	$('#date-range').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=start]').val(),
+		endDate: $(':hidden[name=end]').val(),
+		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=start]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=end]').val(end.format('YYYY-MM-DD'));
+	});
+	$('#date-range1').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=start1]').val(),
+		endDate: $(':hidden[name=end1]').val(),
+		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range1 .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=start1]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=end1]').val(end.format('YYYY-MM-DD'));
+	});
+
+});
+</script>
+{template 'common/footer'}

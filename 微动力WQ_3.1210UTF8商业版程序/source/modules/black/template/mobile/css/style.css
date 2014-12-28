@@ -1,0 +1,260 @@
+﻿@-webkit-keyframes error {
+    0% {
+        background-color: #FFFFFF;
+    }
+    50% {
+        background-color: red;
+    }
+    100% {
+        background-color: #FFFFFF;
+    }
+}
+
+@-moz-keyframes error {
+    0% {
+        background-color: #FFFFFF;
+    }
+    50% {
+        background-color: red;
+    }
+    100% {
+        background-color: #FFFFFF;
+    }
+}
+
+@-o-keyframes error {
+    0% {
+        background-color: #FFFFFF;
+    }
+    50% {
+        background-color: red;
+    }
+    100% {
+        background-color: #FFFFFF;
+    }
+}
+
+@-ms-keyframes error {
+    0% {
+        background-color: #FFFFFF;
+    }
+    50% {
+        background-color: red;
+    }
+    100% {
+        background-color: #FFFFFF;
+    }
+}
+
+@keyframes error {
+    0% {
+        background-color: #FFFFFF;
+    }
+    50% {
+        background-color: red;
+    }
+    100% {
+        background-color: #FFFFFF;
+    }
+}
+
+
+a:link,a:visited{
+ text-decoration:none;  
+    color:white;
+}
+
+html, body, h1, canvas, div {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    -webkit-user-select: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.game-mode {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+.game-mode.hide {
+    top: -100%;
+}
+
+h1 {
+    margin-top: 100px;
+    font-size: 30px;
+    color: #000000;
+    text-align: center;
+}
+
+.button-wr {
+    position: absolute;
+    top: 55%;
+    left: 0;
+    width: 100%;
+}
+
+.game-button {
+    width: 200px;
+    height: 60px;
+    margin: 0 auto 20px;
+    line-height: 60px;
+    vertical-align: middle;
+    color: #c8c81e;
+    text-align: center;
+    border: 1px solid #c8c81e;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.game-button1 {
+    width: 200px;
+    height: 60px;
+    margin: 0 auto 20px;
+    line-height: 30px;
+    vertical-align: middle;
+    color: white;
+    text-align: center;
+    border: 1px solid #FFFFFF;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration:none;  
+}
+
+.game {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid #c8c81e;
+    border-width: 1px 0 1px 0;
+    overflow: hidden;
+}
+
+.game canvas {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.result {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    /*background-color: rgba(68, 111, 52, 1);*/
+    background-color: #303030;
+    color: #d4d4d4;
+    opacity: 0;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+}
+
+.result.show {
+    /*background-color: rgba(68, 111, 52, 1);*/
+    opacity: 1;
+    z-index: 10;
+}
+
+.result.success {
+    background-color: #c8c81e;
+}
+
+.result .game-button {
+    color: #d4d4d4;
+    border-color: #FFFFFF;
+}
+
+.best, .mode, .score {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    /*color: #FFFFFF;*/
+    text-align: center;
+    -webkit-transition: all .8s ease;
+    -moz-transition: all .8s ease;
+    -ms-transition: all .8s ease;
+    -o-transition: all .8s ease;
+    transition: all .8s ease;
+}
+
+.mode {
+    font-size: 60px;
+    opacity: 0;
+    top: 0;
+}
+
+.show .mode {
+    opacity: 1;
+    top: 15%;
+}
+
+.best {
+    top: 50%;
+    font-size: 20px;
+    opacity: 0;
+}
+
+.best.show {
+    opacity: 1;
+    top: 40%;
+}
+
+.best span {
+    vertical-align: middle;
+}
+
+.best:before {
+    content: "纺纺貌似记得您的最好成绩是：";
+    vertical-align: middle;
+}
+
+.score {
+    top: -50px;
+    z-index: 11;
+    width: 100%;
+    color: #c8c81e;
+    font-size: 40px;
+}
+
+.score.show {
+    top: 30%;
+}

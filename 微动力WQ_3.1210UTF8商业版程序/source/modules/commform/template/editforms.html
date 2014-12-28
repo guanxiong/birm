@@ -1,0 +1,160 @@
+{template 'common/header'}
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+
+ <link href="./source/modules/commform/template/style/bootstrap-combined.min.css" rel="stylesheet">
+ <link rel="stylesheet" type="text/css" media="screen"
+     href="./source/modules/commform/template/style/bootstrap-datetimepicker.min.css">
+     
+<body>
+{template 'menu'}
+{php global $_GPC,$_W}
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data" onsubmit="return formcheck(this)">
+		<table class="tb">
+			<tr>
+								<th><label for=""><div align="left"><h4><font color="red">{$_GPC['fn']}</font></h4></div>修改自定义表单</label></th>
+				<td>
+				<div class="alert alert-block alert-new wrap-item">
+				 <table id="form" class="tb reply-news-edit">
+					<tr> 
+			        <th>名称：</th> 
+			        <td>
+			        	<input type="text" id="formname" name="formname"  class="span7" placeholder="" value="{$row['name']}">
+			        </td> 
+			       </tr> 
+			       <tr> 
+			        <th><span class="red"></span>简介：</th> 
+			        <td><textarea name="intro" style="height:80px;" class="span7" cols="70" >{$row['intro']}</textarea></td> 
+			       </tr>
+			       <tr> 
+			        <th>截止日期：</th> 
+			        <td>
+			        	 <div id="datetimepicker" class="input-append date">
+					      <input type="text" id="enddate" name="endtime" onkeypress="return false;" value="{php echo date('Y-m-d G:i:s',$row['endtime'])}"></input>
+					      <span class="add-on">
+					        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+					      </span>
+					    </div>
+					    <script type="text/javascript"
+					     src="./source/modules/commform/template/style/jquery.min.js">
+					    </script> 
+					    <script type="text/javascript"
+					     src="./source/modules/commform/template/style/bootstrap-datetimepicker.min.js">
+					    </script>
+					    <script type="text/javascript">
+					      $('#datetimepicker').datetimepicker({
+					        format: 'yyyy-MM-dd hh:mm:ss',
+					        language: 'en',
+					        pickDate: true,
+					        pickTime: true,
+					        hourStep: 1,
+					        minuteStep: 15,
+					        secondStep: 30,
+					        inputMask: true
+					      });
+					    </script>
+			        </td> 
+			        </tr>			
+			        <tr> 
+			        <th>Logo地址：</th>
+			        <td>
+			        			<div style="display:block; margin-top:5px;" class="input-append">
+								<input type="text" value="{$row['logourl']}" name="logourl" id="upload-image-url-thumb" class="span3" autocomplete="off" >
+								<button class="btn" type="button" id="upload-image-thumb">选择图片</button>
+								</div>
+								<div id="upload-image-preview-thumb" style="margin-top:10px;"></div>
+					</td> 
+			       </tr>
+			        <tr> 
+			        <th>banner地址：</th>
+			        <td>
+			        			<div style="display:block; margin-top:5px;" class="input-append">
+								<input type="text" value="{$row['bannerurl']}" name="bannerurl" id="upload-image-url-thumb_banner" class="span3" autocomplete="off">
+								<button class="btn" type="button" id="upload-image-thumb_banner">选择图片</button>
+								</div>
+								<div id="upload-image-preview-thumb_banner" style="margin-top:10px;"></div>
+					</td>					 
+			       </tr>			       
+			       <tr> 
+			        <th nowrap><span class="red"></span>提交成功提示：</th>
+			        <td>
+			        <input type="text" id="successtip" name="successtip"  class="span5" placeholder="" value="{$row['successtip']}">默认：提交成功
+			        </td> 
+			       </tr>
+			       <tr> 
+			        <th nowrap><span class="red"></span>提交失败提示：</th><td>
+			         <input type="text" id="failtip" name="failtip"  class="span5" placeholder="" value="{$row['failtip']}"> 默认：提交失败</td> 
+			       </tr>
+			       <tr> 
+			        <th nowrap><span class="red"></span>图文详细页内容：</th> 
+			        <td><textarea style="height:150px; width:100%;" class="span7 richtext-clone" name="content" cols="70">{$row['content']}</textarea></td> 
+			       </tr>			       		
+					<tr>
+						<th></th>
+						<td>
+							<button type="submit" class="btn btn-primary" name="submit" value="保存">保存</button>
+							<input type="hidden" name="token" value="{$_W['token']}" />
+						</td>
+					</tr>
+				</table>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+var editor = KindEditor.editor({
+	allowFileManager : true,
+	uploadJson : "./index.php?act=attachment&do=upload",
+	fileManagerJson : "./index.php?act=attachment&do=manager",
+	afterUpload : function(url, data) {
+		$("#upload-image-url-thumb").val(data.filename);
+		$("#upload-image-preview-thumb").html('<img src="'+url+'" width="100" />');
+	}
+});
+$("#upload-image-thumb").click(function() {
+	editor.loadPlugin("image", function() {
+		editor.plugin.imageDialog({
+			imageUrl : $("#upload-image-url-thumb").val(),
+			clickFn : function(url) {
+				editor.hideDialog();
+				var filename = /images(.*)/.exec(url);
+				$("#upload-image-url-thumb").val(filename[0]);
+				$("#upload-image-preview-thumb").html('<img src="'+url+'" width="50" />');
+			}
+		});
+	});
+});
+
+var editor_banner = KindEditor.editor({
+	allowFileManager : true,
+	uploadJson : "./index.php?act=attachment&do=upload",
+	fileManagerJson : "./index.php?act=attachment&do=manager",
+	afterUpload : function(url, data) {
+		$("#upload-image-url-thumb_banner").val(data.filename);
+		$("#upload-image-preview-thumb_banner").html('<img src="'+url+'" width="100" />');
+	}
+});
+$("#upload-image-thumb_banner").click(function() {
+	editor_banner.loadPlugin("image", function() {
+		editor_banner.plugin.imageDialog({
+			imageUrl : $("#upload-image-url-thumb_banner").val(),
+			clickFn : function(url) {
+			editor_banner.hideDialog();
+				var filename = /images(.*)/.exec(url);
+				$("#upload-image-url-thumb_banner").val(filename[0]);
+				$("#upload-image-preview-thumb_banner").html('<img src="'+url+'" width="50" />');
+			}
+		});
+	});
+});	
+</script>
+
+<script type="text/javascript">
+<!--
+	kindeditor($('.richtext-clone'));
+//-->
+</script>
+		
+{template 'common/footer'}
+

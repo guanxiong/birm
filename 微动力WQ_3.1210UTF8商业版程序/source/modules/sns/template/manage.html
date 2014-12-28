@@ -1,0 +1,239 @@
+{template 'common/header'}
+<style>
+.avatar {float:left; text-align:left; vertical-align:top; width:45px; height:45px; border:#CCC 1px solid;}
+</style>
+    <div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="pull-right" style="color:red; padding:10px 10px 0 0;">当前主题数：{$total}</span>
+						<span class="brand">主题管理</span>
+						<div class="pull-left">
+							<ul class="nav">
+								<li {if $_GPC['isshow'] == 0 && $_GPC['reply']==0} class="active"{/if}><a href="{php echo create_url('site/module/manage', array('name' => 'sns', 'id' => $id, 'isshow' => 0))}">已发表主题</a></li>
+								<li {if $_GPC['isshow'] == 1 && $_GPC['reply']==0} class="active"{/if}><a href="{php echo create_url('site/module/manage', array('name' => 'sns', 'id' => $id, 'isshow' => 1))}">回收站主题</a></li>
+                                <li {if $_GPC['isshow'] == 0 && $_GPC['reply']==1} class="active"{/if}><a href="{php echo create_url('site/module/manage', array('name' => 'sns', 'id' => $id, 'reply'=>1,'isshow'=>0))}">评论管理</a></li>
+                                 <li {if $_GPC['isshow'] == 1 && $_GPC['reply']==1} class="active"{/if}><a href="{php echo create_url('site/module/manage', array('name' => 'sns', 'id' => $id, 'reply'=>1,'isshow'=>1))}">回站站评论管理</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">详细数据</h4>
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</th>
+									<th class="row-hover">文章详情<i></i></th>
+									<th style="width:100px;">时间<i></i></th>
+									<th style="width:110px;"></th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $i $row}
+								<tr>
+									<td class="row-first"><input type="checkbox" name="select[]" value="{if $reply}{$row['reply_id']}{else}{$row['post_id']}{/if}" /></td>
+									<td class="row-hover">
+										<img src="{if $user[$i]['avatar']}{if strexists($user[$i]['avatar'], 'source/modules')}{$_W['siteroot']}{else}{$_W['attachurl']}{/if}{$user[$i]['avatar']}{else}/resource/image/noavatar_middle.gif{/if}" class="avatar" />
+										<div class="mainContent">
+											<div class="nickname">{$user[$i]['nickname']}:《<font color="red">{$row[title]}</font>》</div>
+											{php echo cutstr(emotion(htmlspecialchars($row['content'])), 150)}
+										</div>
+									</td>
+									<td style="font-size:12px;  color:#666;">
+										<div style="margin-bottom:10px;">{if !$reply}{php echo date('Y-m-d H:i:s', $row['post_time']);}{else}{php echo date('Y-m-d H:i:s', $row['ctime']);}{/if}</div>
+										{if $row['last_reply_uid']}<div>{$row['last_reply_uid']}在{php echo date('Y-m-d H:i:s', $row['last_reply_time']);}回复</div>{/if}
+									</td>
+									<td>{if $_GPC['isshow'] == 0 && !$_GPC['reply']} 
+                                    <a id="admintop" data-pid="{$row['post_id']}" data-rid="{$row['rid']}"  class="btn btn-mini{if $row['top']==0} btn-primary" >置顶{else} btn-danger" >取顶{/if}</a>
+                                    <a  id="adminjh" data-pid="{$row['post_id']}" data-rid="{$row['rid']}"    class="btn btn-mini{if $row['digest']==0} btn-primary" >加精{else} btn-danger" >取精{/if}</a>
+                                    <a  id="adminlock" data-pid="{$row['post_id']}" data-rid="{$row['rid']}"    class="btn btn-mini{if $row['lock']==0} btn-primary" >锁定{else} btn-danger" >解锁{/if}</a>
+                                    {/if}
+                                                 
+                                    </td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr style="width:40px;" class="row-first">
+								<td><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+								<td>
+									{if $_GPC['isshow'] == 1} <input type="submit" name="verify" value="恢复" class="btn btn-primary" />
+									{else}<input type="submit" name="black" value="拉回收站" class="btn btn-primary" />{/if}
+                                    <input type="submit" name="delete" value="彻底删除" class="btn btn-danger" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					</form>
+					{$pager}
+				</div>
+			</div>
+		</div>
+    </div>
+
+<script>
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+	//数据处理
+	$('#table-list').delegate('#admintop', 'click', function(){
+				 //控制置顶开关
+				 var postid=$(this).attr('data-pid');
+				 var rid=$(this).attr('data-rid');
+				 if($(this).hasClass('btn-primary')) { //取消置顶
+					var top=1;
+					
+				} 
+				if($(this).hasClass('btn-danger')) { //置顶
+					var top=0;
+					
+				}
+				//操作置顶
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo $this->createMobileUrl('bzadmin',array('name'=>'sns'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$fromuser}',
+			  	'top': top,
+				'admin':1,
+				'id':postid,
+				'rid':rid,
+				
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						 
+						message(data.message.message, "", 'success');
+					return;
+              
+            } else {
+               message(data.message.message, "{php echo create_url('site/module/manage', array('name' => 'sns', 'id' => $id, 'page' => $_GPC['page']))}", 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			//加精华
+			$('#table-list').delegate('#adminjh', 'click', function(){
+				 
+				 var postid=$(this).attr('data-pid');
+				 var rid=$(this).attr('data-rid');
+				 if($(this).hasClass('btn-primary')) {
+					var jh=1;					
+				} 
+				if($(this).hasClass('btn-danger')) {
+					var jh=0;
+					
+				}
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo $this->createMobileUrl('bzadmin',array('name'=>'sns'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$fromuser}',
+			  	'digest': jh,
+				'admin':2,
+				'id':postid,
+				'rid':rid,
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						 
+						message(data.message.message, "", 'success');
+					return;
+              
+            } else {
+               message(data.message.message, "{php echo create_url('site/module/manage', array('name' => 'sns', 'id' => $id, 'page' => $_GPC['page']))}", 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			
+			
+			//锁贴
+			$('#table-list').delegate('#adminlock', 'click', function(){
+				 
+				 var postid=$(this).attr('data-pid');
+				 var rid=$(this).attr('data-rid');
+				 if($(this).hasClass('btn-primary')) { //取消
+					var lock=1;					
+				} 
+				if($(this).hasClass('btn-danger')) { //锁定
+					var lock=0;					
+				}
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo $this->createMobileUrl('bzadmin',array('name'=>'sns'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$fromuser}',
+			  	'lock': lock,
+				'admin':5,
+				'id':postid,
+				'rid':rid,
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						message(data.message.message, "", 'success');
+					return;
+              
+            } else {
+               message(data.message.message, "{php echo create_url('site/module/manage', array('name' => 'sns', 'id' => $id, 'page' => $_GPC['page']))}", 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+	
+	
+});
+</script>
+{template 'common/footer'}

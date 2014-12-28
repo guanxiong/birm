@@ -1,0 +1,77 @@
+{template 'common/header'}
+<style>
+.field label{float:left;margin:0 !important; width:140px;}
+</style>
+<div class="main">
+	<div class="stat">
+		<div class="stat-div">
+			<div class="navbar navbar-static-top">
+				<div class="navbar-inner">
+					<span class="brand">转发有礼排行榜</span>
+				</div>
+				<div class="sub-item">
+					<h4 class="sub-title">搜索</h4>
+				    <form action="{php echo create_url('site')}">
+					<input type="hidden" name="act" value="module" />
+					<input type="hidden" name="name" value="forward" />
+					<input type="hidden" name="do" value="awardlist" />
+					<input type="hidden" name="id" value="{$rid}" />
+                    <table class="sub-search" style="border-top:1px solid #DDDDDD; width:100%">
+                    	<tr style="margin-top:10px;">
+                        	<th width="100" height="40">手机号码搜索</th>
+                            <td width="410">
+                            <input name="mobile" type="text" value="" style=" width:400px; height:24px; margin:auto;"/>
+                            </td>
+                            <td width="840" align="left"><input type="submit" name="" value="搜索" class="btn btn-primary"></td>
+                        </tr>
+                    </table>
+					</form>
+				</div>
+			</div>
+			<div class="sub-item" id="table-list">
+				<h4 class="sub-title">详细数据</h4>
+				<form action="" method="post" onsubmit="">
+				<div class="sub-content">
+					<table class="table table-hover">
+						<thead class="navbar-inner">
+							<tr>
+
+								<th align="center" style="width:10% !important;">排名</th>
+								
+								<th style="width:20% !important;" align="center">姓名</th>
+								
+                                <th align="center" style="width:20%">手机号码</th>
+								<th align="center" style="width:20%">点击量</th>
+							</tr>
+						</thead>
+						<tbody style="border-left:1px solid #D4D4D4;border-right:1px solid #D4D4D4;">
+							{loop $list $row}
+							{php $i++;}
+							<tr>
+
+								<td align="center" style="text-align:center;"><a href="" title="{$row['realname']}">{$i}</a></td>
+								
+							  	<th align="right">{$row['realname']}<i></i></th>
+								
+                              	<td align="center" style="text-align:center;">{$row['mobile']}</td>
+							  	<td align="center" style="text-align:center;">{$row['tongji']}</td>
+							</tr>
+							{/loop}
+						</tbody>
+					</table>
+					<table class="table">
+						<tr>
+							<td class="row-first"></td>
+							<td>
+								<input type="hidden" name="token" value="{$_W['token']}" />
+							</td>
+						</tr>
+					</table>
+				</div>
+				</form>
+				{$pager}
+			</div>
+		</div>
+	</div>
+</div>
+{template 'common/footer'}

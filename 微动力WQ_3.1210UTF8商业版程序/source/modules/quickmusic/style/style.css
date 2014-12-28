@@ -1,0 +1,23 @@
+
+.canvas {width:95%;margin:5px auto;} 
+.card { 
+	background-color:#333333;
+	height:auto; overflow:hidden;margin-top:8px; padding:0px; 
+	border:1px solid #e1e2e4; border-radius:8px;-moz-border-radius:8px;-ms-border-radius:8px;-o-border-radius:8px;-webkit-border-radius:8px; 
+	background:#fff; color:#000;
+}
+.card .title { padding:10px 10px;height:auto; line-height:26px; text-align:left; font-size:18px; color:#000; font-weight:bold;}
+.card .logo { width:100%; height:auto; overflow:hidden; margin-bottom:8px;}
+.card .logo img{ width:100%; height:auto; display:block;}
+.card .info { padding:4px 8px; height:auto; overflow:hidden;}
+.card .func { padding:4px 8px 14px 8px; min-height:10px;}
+.card hr {border-width:1px;}
+.card .func p{ float:left;}
+.card .func:after { content: ">"; float:right;}
+.card .info { padding:4px 8px; height:auto; overflow:hidden;}
+.card .left {float: left; max-width:70%;}
+.card .right{float: right;padding-right:10px;}
+.button {width:100%; height:52px; overflow:hidden; margin-top:8px;}
+.button a{ display:block; margin:0px 8px; height:52px; text-align:center; line-height:52px; color:#fff; font-size:18px; border-radius:8px;-moz-border-radius:8px;-ms-border-radius:8px;-o-border-radius:8px;-webkit-border-radius:8px;background:#7acd03;}
+.check-list-item {cursor:pointer; padding:2px 6px;}
+.check-list-item input {margin-top:-2px; margin-bottom:1px; vertical-align:middle;}

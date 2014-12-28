@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.52">
+	<application setting="false">
+		<name><![CDATA[位置处理]]></name>
+		<identifie><![CDATA[dlwz]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[查询地理位置]]></ability>
+		<description><![CDATA[第三方]]></description>
+		<author><![CDATA[发]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="location" />
+		</subscribes>
+		<handles>
+			<message type="location" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

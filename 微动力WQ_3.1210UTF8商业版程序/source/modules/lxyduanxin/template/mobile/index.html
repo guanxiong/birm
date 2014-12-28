@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{$category['name']}</title>
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta charset="utf-8">
+<link href="./source/modules/lxyduanxin/template/css/news.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="./source/modules/lxyduanxin/template/css/plugmenu.css">
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+
+</head>
+<script>
+window.onload = function ()
+{
+var oWin = document.getElementById("win");
+var oLay = document.getElementById("overlay");	
+var oBtn = document.getElementById("popmenu");
+var oClose = document.getElementById("close");
+oBtn.onclick = function ()
+{
+oLay.style.display = "block";
+oWin.style.display = "block"	
+};
+oLay.onclick = function ()
+{
+oLay.style.display = "none";
+oWin.style.display = "none"	
+}
+};
+</script>
+<body id="listhome4">
+<div id="ui-header">
+		<div class="fixed"> <a class="ui-title" id="popmenu">{if !$key}热门关键词{else}{$key}{/if}</a> <a class="ui-btn-left_pre" href="{php echo create_url('mobile/module', array('do' => 'index', 'name' => 'lxyduanxin'))}"></a> <a class="ui-btn-right" href="{php echo create_url('mobile/module', array('do' => 'send', 'name' => 'lxyduanxin','weid'=>$_W['weid']))}">发短信</a> </div>
+</div>
+<div id="overlay"></div>
+
+<div id="win">
+		<ul class="dropdown">
+		{loop $listkey $v}
+			<li><a href="{php echo create_url('mobile/module', array('do' => 'index', 'name' => 'lxyduanxin','cid'=>$v['id'],'key'=>$v['key']))}"><span>{$v['key']}</span></a></li>
+		{/loop}				
+			<div class="clr"></div>
+		</ul>
+</div>
+
+<div class="Listpage">
+		<div class="top46"></div>
+		<div class="list">
+				<div  id="oldlist">
+						<ul>
+						<li>
+<form name="form" method="post" action="{php echo create_url('site/module', array('do' => 'index', 'name' => 'lxyduanxin'))}">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+<tr>
+<td>关键字 <input name="key"  type="text" class="px" id="key" value=""> <input name="" type="submit" value="搜索"/></td>
+</tr>
+</table>
+</form>
+</li>
+						{loop $list $v}
+							<li class="newsmore"> <a href="{php echo create_url('mobile/module', array('do' => 'send', 'name' => 'lxyduanxin','key'=>$v,'weid'=>$_W['weid']))}" title="{$v}">
+							<div class="olditem">
+								<div class="title">{$v}</div>
+							</div></a>
+							</li>
+						{/loop}	
+						</ul>
+				</div>
+		</div>
+		<div class="pagination">
+				<div class=" disabled "><a class="pre" href="{php echo create_url('mobile/module', array('do' => 'index', 'name' => 'lxyduanxin','weid'=>$_W['weid'],'key'=>$array['key'],'p'=>($p-1)))}">上一页</a></div>
+				<div class="allpage">
+						<div class="currentpage">{$p}/{$totalPage}</div>
+				</div>
+				<div class=" disabled  " ><a class="next" href="{php echo create_url('mobile/module', array('do' => 'index', 'name' => 'lxyduanxin','weid'=>$_W['weid'],'key'=>$array['key'],'p'=>($p+1)))}">下一页</a></div>
+		</div>
+</div>
+</body>
+</html>

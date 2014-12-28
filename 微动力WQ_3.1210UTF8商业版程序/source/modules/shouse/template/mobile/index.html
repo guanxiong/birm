@@ -1,0 +1,113 @@
+
+{template 'header'}
+<div class="head navbar-fixed-top">
+    <span class="title text-center">{$title}</span>
+    <a href="{php echo $this->createMobileUrl('member')}" class="bn pull-right"> <i class="glyphicon glyphicon-user"></i>
+    </a>
+</div>
+<div class="container mt15">
+    <div class="mt15">
+        <div id="banner_box" class="box_swipe">
+            <ul>
+                {loop $slide $row}
+                <li>
+                    <a href="{if $row['url'] == $_W['siimgteroot']}#{else}{$row['url']}{/if}">
+                        <img src="{$_W['attachurl']}{$row['thumb']}" data-src="{$row['thumb']}" />
+                        <span class="title">{$row['title']}</span>
+                    </a>
+                </li>
+                {/loop}
+            </ul>
+            <ol>
+                {php $slideNum = 1;}{loop $slide $row}
+                <li{if $slideNum == 1} class="on"{/if}></li>
+                {php $slideNum++;}{/loop}
+            </ol>
+        </div>
+        <div class="list house_list">
+            <h2 class="f16">推荐信息</h2>
+            {loop $hot $item}
+            <div class="media">
+           
+            <a class="pull-left" href="{php echo $this->createMobileUrl('hdetail',array('hsid' => $item['hsid']))}">
+                <img class="media-object" src="{$_W['attachurl']}{$item['thumb']}"  width="100" height="62" alt="{$item['title']}">
+            </a>
+            <div class="media-body">
+                <a href="{php echo $this->createMobileUrl('hdetail',array('hsid' => $item['hsid']))}">
+                    <h5 class="media-heading">{$item['title']}</h5>
+                    <p>{$item['region_name']}&nbsp;{$item['house_zx']}</p>
+                    <p>
+                        {$item['hrs_lan']} &nbsp;{$item['mianji']}平米
+                        <small class="pull-right" data-price="{$item['price_pre']}">
+            
+                            <span class="red">
+                                
+                                {if $item['jiage']==0 }  面议{else}
+                
+                                    {$item['jiage']}
+                                    {if ($item['cate_id']==1||$item['cate_id']==2||$item['cate_id']==7)}元/月{else}万
+                                    {/if}
+                                {/if}
+                            </span>
+                
+                        </small>
+                    </p>
+                </a>
+            </div>
+        </div>
+            {/loop}
+      
+</div>
+<div class="list house_list">
+   <h2 class="f16">购房资讯</h2>
+        {loop $list $item}
+        <div class="media">
+            <a class="pull-left" href="{php echo $this->createMobileUrl('detail',array('id' => $item['id']))}">
+                <img class="media-object" src="{$_W['attachurl']}{$item['thumb']}"  width="100" height="62" alt="{$item['title']}">
+            </a>
+            <div class="media-body">
+                <h5 class="media-heading"><a class="pull-left" href="{php echo $this->createMobileUrl('detail',array('id' => $item['id']))}">{$item['title']}</a></h5>
+                <p></p>
+            </div>
+        </div>
+       
+        {/loop}
+</div>
+<script type="text/javascript">
+        var page = 1;
+        // 列表数据返回处理 回填html
+        // var getNewsContentOnlyOutput = function(data) {
+        //     page += 1;
+        //     if (data.list) {
+        //         if (page < 10) {
+        //             $(".more").show();
+        //         } 
+        //         else {
+        //             $(".more").hide();
+        //         };
+        //         $('.news_list').append(template("listTpl", data)).find('img').lazyload();
+        //         $('.more').html('<a href="{php echo $this->createMobileUrl('news', array('page'=>2))}" class="gomore">点击查看更多</a>');
+
+        //     }
+        //     else{
+        //         $('.more').hide();
+        //     };
+        //     setTimeout(function() {
+        //         $(".loads").hide(); 
+        //     }, 500);
+        // };
+        // require(['jquery','base','swipe','lazyload','template'], function($){
+        //     new Swipe($('#banner_box')[0], {
+        //         speed:500,
+        //         auto:3000,
+        //         callback: function(){
+        //             var lis = $(this.element).next("ol").children();
+        //             lis.removeClass("on").eq(this.index).addClass("on");
+        //         }
+        //     });
+        //     M.getlist('{php echo $this->createMobileUrl('news', array('pcate'=>$_GPC['pcate']))}',page);
+        //     $(".list img, .box_swipe img").lazyload();
+        // });
+    </script>
+{php $footer_off=1;}{php $stat_off=1;}
+{template 'footer'}

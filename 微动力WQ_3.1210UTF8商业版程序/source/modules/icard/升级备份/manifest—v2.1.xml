@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[微信会员卡]]></name>
+		<identifie><![CDATA[icard]]></identifie>
+		<version><![CDATA[2.1]]></version>
+        <type><![CDATA[customer]]></type>
+		<ability><![CDATA[新一代电子移动会员卡]]></ability>
+		<description><![CDATA[新一代电子移动会员卡]]></description>
+		<author><![CDATA[迷失卍国度]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+    <bindings>
+        <cover>
+        </cover>
+        <menu>
+            <entry title="会员卡设置" do="style" />
+            <entry title="商家设置" do="business" />
+            <entry title="积分策略" do="score" />
+            <entry title="等级设置" do="level" />
+            <entry title="会员特权" do="privilege" />
+            <entry title="会员管理" do="card" />
+            <entry title="通知管理" do="announce" />
+            <entry title="礼品券管理" do="gift" />
+            <entry title="优惠券管理" do="coupon" />
+            <entry title="门店系统" do="outlet" />
+        </menu>
+        <profile>
+        </profile>
+    </bindings>
+	<install><![CDATA[
+DROP TABLE IF EXISTS `ims_icard_announce`;
+   CREATE TABLE `ims_icard_announce` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0' COMMENT '公众号id',
+  `giftid` int(10) NOT NULL DEFAULT '0',
+  `from_user` varchar(50) NOT NULL DEFAULT '',
+  `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '通知类型 0代表后台2优惠券3特权4礼品券',
+  `title` varchar(200) NOT NULL DEFAULT '' COMMENT '通知标题',
+  `content` varchar(400) NOT NULL DEFAULT '' COMMENT '通知内容',
+  `levelid` int(10) NOT NULL DEFAULT '0' COMMENT '所属人群',
+  `money` int(10) NOT NULL DEFAULT '0',
+  `displayorder` tinyint(4) NOT NULL DEFAULT '0',
+  `updatetime` int(10) NOT NULL DEFAULT '0',
+  `dateline` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_business`;
+CREATE TABLE `ims_icard_business` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0' COMMENT '公众号id',
+  `logo` varchar(200) NOT NULL DEFAULT '' COMMENT '商家logo',
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '商家名称',
+  `content` text NOT NULL,
+  `info` varchar(200) NOT NULL,
+  `tel` varchar(20) NOT NULL DEFAULT '' COMMENT '联系电话',
+  `location_p` varchar(100) NOT NULL COMMENT '所在地区_省',
+  `location_c` varchar(100) NOT NULL COMMENT '所在地区_市',
+  `location_a` varchar(100) NOT NULL COMMENT '所在地区_区',
+  `category_f` varchar(100) NOT NULL COMMENT '商家类别_大类',
+  `category_s` varchar(100) NOT NULL COMMENT '商家类别_小类',
+  `place` varchar(200) NOT NULL DEFAULT '',
+  `lng` decimal(18,10) NOT NULL DEFAULT '0.0000000000',
+  `lat` decimal(18,10) NOT NULL DEFAULT '0.0000000000',
+  `address` varchar(200) NOT NULL DEFAULT '',
+  `pwd` varchar(20) NOT NULL DEFAULT '',
+  `dateline` int(10) NOT NULL DEFAULT '0',
+  `updatetime` int(10) NOT NULL DEFAULT '0',
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_card_log`;
+CREATE TABLE `ims_icard_card_log` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0' COMMENT '公众号id',
+  `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1=金额，2=积分',
+  `score` int(10) NOT NULL DEFAULT '0' COMMENT '充值的积分或金额',
+  `outletid` int(10) NOT NULL DEFAULT '0' COMMENT '门店id',
+  `cardid` int(10) NOT NULL DEFAULT '0' COMMENT '会员卡id',
+  `dateline` int(10) NOT NULL DEFAULT '0' COMMENT '操作时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_card`;
+CREATE TABLE `ims_icard_card` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0' COMMENT '公众号id',
+  `cardpre` varchar(10) NOT NULL DEFAULT '',
+  `cardno` int(10) NOT NULL DEFAULT '0' COMMENT '会员卡号',
+  `from_user` varchar(50) CHARACTER SET latin1 NOT NULL DEFAULT '',
+  `coin` decimal(11,2) NOT NULL DEFAULT '0.00' COMMENT '余额',
+  `balance_score` int(10) NOT NULL DEFAULT '0' COMMENT '剩余积分',
+  `total_score` int(10) NOT NULL DEFAULT '0' COMMENT '总积分',
+  `spend_score` int(10) NOT NULL DEFAULT '0' COMMENT '消费积分',
+  `sign_score` int(10) NOT NULL DEFAULT '0' COMMENT '签到积分',
+  `money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '总消费金额',
+  `state` tinyint(1) NOT NULL DEFAULT '0',
+  `updatetime` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `dateline` int(10) NOT NULL DEFAULT '0' COMMENT '领卡时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_coupon`;
+CREATE TABLE `ims_icard_coupon` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0' COMMENT '公众号id',
+  `title` varchar(50) NOT NULL COMMENT '优惠券名称',
+  `count` int(10) NOT NULL DEFAULT '0' COMMENT '优惠券领取张数',
+  `levelid` tinyint(1) NOT NULL DEFAULT '0' COMMENT '所属人群',
+  `permoney` int(10) NOT NULL DEFAULT '0' COMMENT '单次消费金额',
+  `allmoney` int(10) NOT NULL DEFAULT '0' COMMENT '累计消费金额',
+  `content` text NOT NULL COMMENT '详细内容',
+  `starttime` int(10) NOT NULL DEFAULT '0' COMMENT '开始时间',
+  `endtime` int(10) NOT NULL DEFAULT '0' COMMENT '结束时间',
+  `displayorder` tinyint(4) NOT NULL DEFAULT '0',
+  `updatetime` int(10) NOT NULL DEFAULT '0',
+  `dateline` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_gift`;
+CREATE TABLE `ims_icard_gift` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0' COMMENT '公众号id',
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `count` tinyint(3) NOT NULL DEFAULT '0' COMMENT '允许数量',
+  `picture` varchar(200) NOT NULL DEFAULT '' COMMENT '图片',
+  `content` varchar(400) NOT NULL COMMENT '详细内容',
+  `needscore` int(10) NOT NULL DEFAULT '0' COMMENT '兑换需要积分',
+  `starttime` int(10) NOT NULL DEFAULT '0' COMMENT '开始时间',
+  `endtime` int(10) NOT NULL DEFAULT '0' COMMENT '结束时间',
+  `displayorder` tinyint(4) NOT NULL DEFAULT '0',
+  `updatetime` int(10) NOT NULL DEFAULT '0',
+  `dateline` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_level`;
+CREATE TABLE `ims_icard_level` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0',
+  `levelname` varchar(100) NOT NULL DEFAULT '' COMMENT '等级名称',
+  `min` int(10) NOT NULL DEFAULT '0' COMMENT '开始积分',
+  `max` int(10) NOT NULL DEFAULT '0' COMMENT '结束积分',
+  `dateline` int(10) NOT NULL DEFAULT '0' COMMENT '发布日期',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_money_log`;
+CREATE TABLE `ims_icard_money_log` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0' COMMENT '公众号id',
+  `from_user` varchar(50) NOT NULL COMMENT '微信id',
+  `payment` tinyint(1) NOT NULL DEFAULT '0' COMMENT '支付方式',
+  `outletid` int(10) NOT NULL DEFAULT '0' COMMENT '门店id',
+  `giftid` int(10) NOT NULL COMMENT '物品id',
+  `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '物品类型',
+  `money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '消费金额',
+  `score` int(10) NOT NULL DEFAULT '0' COMMENT '获得积分',
+  `dateline` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_outlet`;
+CREATE TABLE `ims_icard_outlet` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0' COMMENT '公众号id',
+  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '名称',
+  `content` text NOT NULL,
+  `tel` varchar(20) NOT NULL DEFAULT '' COMMENT '联系电话',
+  `location_p` varchar(100) NOT NULL DEFAULT '' COMMENT '省',
+  `location_c` varchar(100) NOT NULL DEFAULT '' COMMENT '市',
+  `location_a` varchar(100) NOT NULL DEFAULT '' COMMENT '区',
+  `place` varchar(200) NOT NULL DEFAULT '',
+  `lat` decimal(18,10) NOT NULL DEFAULT '0.0000000000' COMMENT '经度',
+  `lng` decimal(18,10) NOT NULL DEFAULT '0.0000000000' COMMENT '纬度',
+  `address` varchar(200) NOT NULL COMMENT '地址',
+  `is_show` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否在手机端显示',
+  `password` varchar(20) NOT NULL DEFAULT '' COMMENT '登录密码',
+  `recharging_password` varchar(20) NOT NULL DEFAULT '' COMMENT '充值密码',
+  `displayorder` tinyint(3) NOT NULL DEFAULT '0',
+  `updatetime` int(10) NOT NULL DEFAULT '0',
+  `dateline` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_privilege`;
+CREATE TABLE `ims_icard_privilege` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0' COMMENT '公众号id',
+  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '特权名称',
+  `count` tinyint(3) NOT NULL DEFAULT '0' COMMENT '允许购买数量',
+  `levelids` varchar(200) NOT NULL DEFAULT '' COMMENT '所属人群',
+  `content` text NOT NULL COMMENT '详细内容',
+  `starttime` int(10) NOT NULL DEFAULT '0' COMMENT '开始时间',
+  `endtime` int(10) NOT NULL DEFAULT '0' COMMENT '结束时间',
+  `displayorder` tinyint(3) NOT NULL DEFAULT '0',
+  `updatetime` int(10) NOT NULL DEFAULT '0',
+  `dateline` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_reply`;
+CREATE TABLE `ims_icard_reply` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0',
+  `rid` int(10) NOT NULL DEFAULT '0',
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `description` text NOT NULL,
+  `picture` varchar(200) NOT NULL DEFAULT '',
+  `dateline` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_score`;
+CREATE TABLE `ims_icard_score` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0',
+  `card_info` text NOT NULL COMMENT '会员卡使用说明',
+  `score_info` text NOT NULL COMMENT '积分规则说明',
+  `day_score` int(10) NOT NULL DEFAULT '0' COMMENT '每天签到奖励积分',
+  `dayx_score` int(10) NOT NULL DEFAULT '0' COMMENT '连续签到6天积分',
+  `payx_score` int(10) NOT NULL DEFAULT '0' COMMENT '消费一元积分',
+  `dateline` int(10) NOT NULL DEFAULT '0' COMMENT '发布日期',
+  `updatetime` int(10) NOT NULL DEFAULT '0' COMMENT '更新日期',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_sign`;
+CREATE TABLE `ims_icard_sign` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0',
+  `from_user` varchar(50) NOT NULL COMMENT '微信id',
+  `score` int(10) NOT NULL DEFAULT '0' COMMENT '获得积分',
+  `count` tinyint(1) NOT NULL DEFAULT '0' COMMENT '当前连续签到次数',
+  `dateline` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_sncode`;
+CREATE TABLE `ims_icard_sncode` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `pid` int(10) NOT NULL DEFAULT '0' COMMENT '产品id',
+  `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '2优惠券3特权4礼品券',
+  `weid` int(10) NOT NULL DEFAULT '0' COMMENT '公众号id',
+  `sncode` varchar(30) NOT NULL COMMENT 'sn码',
+  `title` varchar(40) NOT NULL ,
+  `from_user` varchar(50) NOT NULL COMMENT '微信id',
+  `state` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
+  `outletid` int(10) NOT NULL DEFAULT '0' COMMENT '门店id',
+  `money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '消费金额',
+  `winningtime` int(10) NOT NULL DEFAULT '0' COMMENT '生成时间',
+  `usetime` int(10) NOT NULL COMMENT '使用时间',
+  `dateline` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_style`;
+CREATE TABLE `ims_icard_style` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0' COMMENT '公众号id',
+  `cardpre` varchar(10) NOT NULL DEFAULT '',
+  `cardstart` int(10) NOT NULL DEFAULT '100001',
+  `cardname` varchar(100) NOT NULL DEFAULT '' COMMENT '会员卡名称',
+  `pwd` varchar(20) NOT NULL COMMENT '密码',
+  `cardnamecolor` varchar(20) NOT NULL DEFAULT '' COMMENT '会员卡名称颜色',
+  `cardnumcolor` varchar(20) NOT NULL DEFAULT '' COMMENT '会员号码颜色',
+  `bg` varchar(200) NOT NULL DEFAULT '' COMMENT '背景图片',
+  `diybg` varchar(200) NOT NULL DEFAULT '' COMMENT '自定义背景图片',
+  `logo` varchar(200) NOT NULL DEFAULT '' COMMENT 'LOGO',
+  `dateline` int(11) NOT NULL DEFAULT '0',
+  `updatetime` int(11) NOT NULL DEFAULT '0',
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_icard_user`;
+CREATE TABLE `ims_icard_user` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL,
+  `from_user` varchar(50) NOT NULL DEFAULT '' COMMENT '微信id',
+  `username` varchar(100) NOT NULL DEFAULT '' COMMENT '用户姓名',
+  `tel` varchar(20) NOT NULL DEFAULT '' COMMENT '联系电话',
+  `birthday` int(10) NOT NULL DEFAULT '0' COMMENT '生日',
+  `address` varchar(200) NOT NULL DEFAULT '' COMMENT '联系地址',
+  `sex` tinyint(1) NOT NULL DEFAULT '-1' COMMENT '性别',
+  `age` tinyint(3) NOT NULL DEFAULT '0' COMMENT '年龄',
+  `remark` varchar(400) NOT NULL DEFAULT '' COMMENT '备注',
+  `updatetime` int(10) NOT NULL DEFAULT '0',
+  `dateline` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+    ]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[
+        ALTER TABLE `ims_icard_card` ADD `cardpre` varchar(10) NOT NULL DEFAULT '';
+        ALTER TABLE `ims_icard_style` ADD `cardpre` varchar(10) NOT NULL DEFAULT '';
+        ALTER TABLE `ims_icard_style` ADD `cardstart` int(10) NOT NULL DEFAULT '0';
+            ]]></upgrade>
+</manifest>

@@ -1,0 +1,322 @@
+{template 'common/header'}
+{php echo $this -> set_tabbar($action, $storeid);}
+{if $operation == 'display'}
+<div class="main">
+
+    <input type="hidden" name="storeid" value="{$storeid}" />
+    <div style="padding: 15px;">
+    <a class="btn" href="javascript:location.reload()"><i class="icon-refresh"></i>刷新</a>
+    </div>
+    <form action="" method="post" class="form-horizontal form" onsubmit="return formcheck(this)">
+	<div>
+
+        <style>
+            .page-nav {
+                margin:0;
+                width:100%;
+                min-width:800px;
+            }
+
+            .page-nav-tabs {
+                background:#EEE;
+            }
+
+            .page-nav > li > a {
+                display: block;
+            }
+
+            .page-nav-tabs > li > a{
+                padding-right: 12px;
+                padding-left: 12px;
+                margin-right: 2px;
+                line-height: 14px;
+            }
+            .page-nav-tabs > li > a {
+                padding-top: 8px;
+                padding-bottom: 8px;
+                line-height: 20px;
+                border: 1px solid transparent;
+                -webkit-border-radius: 4px 4px 0 0;
+                -moz-border-radius: 4px 4px 0 0;
+                border-radius: 4px 4px 0 0;
+            }
+            .page-nav-tabs > li > a {
+                padding: 0;
+                margin: 0;
+                height: 40px;
+                line-height: 40px;
+                padding: 0 10px;
+                font-size: 14px;
+                color: #666;
+                -webkit-border-radius: 0;
+                -moz-border-radius: 0;
+                border-radius: 0;
+            }
+
+            .page-nav-tabs>li {
+                line-height: 40px;
+                float: left;
+                list-style: none;
+                display: block;
+                text-align: -webkit-match-parent;
+            }
+
+            .page-nav-tabs>li>a,.page-nav-tabs>li>a:focus {
+                border-radius: 0 !important;
+                background-color: #f9f9f9;
+                color: #999;
+                margin-right: -1px;
+                position: relative;
+                z-index: 11;
+                border-color: #c5d0dc;
+                text-decoration: none;
+            }
+
+            .page-nav-tabs>li>a:hover
+            {
+                background-color: #FFF;
+            }
+
+            .page-nav-tabs>li.active>a, .page-nav-tabs>li.active>a:hover, .page-nav-tabs>li.active>a:focus {
+                color: #576373;
+                border-color: #c5d0dc;
+                border-top: 2px solid #4c8fbd;
+                border-bottom-color: transparent;
+                background-color: #FFF;
+                z-index: 12;
+                margin-top: -1px;
+                box-shadow: 0 -2px 3px 0 rgba(0,0,0,0.15);
+            }
+        </style>
+
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:30px;">ID</th>
+					<th>订单号</th>
+					<th style="width:50px;">姓名</th>
+					<th style="width:80px;">电话</th>
+                    <th style="min-width:150px;">订单类型</th>
+					<th style="width:50px;">总价</th>
+					<th style="width:100px;">状态</th>
+					<th style="width:150px;">下单时间</th>
+					<th style="width:120px; text-align:right;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['id']}</td>
+					<td>{$item['ordersn']}</td>
+                    <td>{$item['username']}</td>
+                    <td>{$item['tel']}</td>
+                    <td>
+                        {if $item['dining_mode']==1}<span class="label" style="background:#4169e1;">到店</span>{/if}
+                        {if $item['dining_mode']==2}<span class="label" style="background:#e63a3a;">外卖</span><br/>地址:{$item['address']}{/if}
+                        {if $item['dining_mode']==3}<span class="label" style="background:#4169e1;">预订</span>{/if}
+                    </td>
+					<td>{$item['totalprice']} 元</td>
+					<td>
+                    {if $item['status'] == 0}<span class="label label-danger">未确认</span>{/if}
+                    {if $item['status'] == 1}<span class="label label-info">已确认</span>{/if}
+					{if $item['status'] == 2}<span class="label label-success">已付款</span>{/if}
+					{if $item['status'] == 3}<span class="label label-success">已完成</span>{/if}
+					{if $item['status'] == -1}<span class="label label-success">已关闭</span>{/if}
+                    {if $item['print_sta'] == -1}<span class="label label-success">未打印</span>
+                        {else}<span class="label label-info">已打印</span>{/if}
+                    </td>
+					<td>{php echo date('Y-m-d H:i:s', $item['dateline'])}</td>
+					<td style="text-align:right;"><a href="{php echo $this->createWebUrl('order', array('op' => 'detail', 'id' => $item['id'], 'storeid' => $storeid))}">查看订单</a></td>
+				</tr>
+				{/loop}
+			</tbody>
+			<!--<tr>-->
+				<!--<td></td>-->
+				<!--<td colspan="8">-->
+					<!--<input name="token" type="hidden" value="{$_W['token']}" />-->
+					<!--<input type="submit" class="btn btn-primary" name="submit" value="提交" />-->
+				<!--</td>-->
+			<!--</tr>-->
+		</table>
+		{$pager}
+	</div>
+    </form>
+</div>
+{elseif $operation == 'detail'}
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data" onsubmit="return formcheck(this)">
+		<input type="hidden" name="id" value="{$item[id]}">
+		<h4>订单信息</h4>
+		<table class="tb">
+            <tr>
+                <th><label for="">订单类型</label></th>
+                <td>
+                    {if $item['dining_mode']==1}<span class="label" style="background:#4169e1;">到店</span>{/if}
+                    {if $item['dining_mode']==2}<span class="label" style="background:#e63a3a;">外卖</span> 地址:{$item['address']}{/if}
+                    {if $item['dining_mode']==3}<span class="label" style="background:#4169e1;">预订</span>{/if}
+                </td>
+            </tr>
+			<tr>
+				<th><label for="">订单号</label></th>
+				<td>
+					{$item['ordersn']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">价钱</label></th>
+				<td>
+					{$item['totalprice']} 元
+				</td>
+			</tr>
+            {if $item['dining_mode']==1}
+            <tr>
+                <th><label for="">人数</label></th>
+                <td>
+                    {$item['counts']}
+                </td>
+            </tr>
+            <tr>
+                <th><label for="">桌号</label></th>
+                <td>
+                    {$item['tables']}
+                </td>
+            </tr>
+            <tr>
+                <th><label for="">位置类型</label></th>
+                <td>
+                    {if $item['seat_type']==1}包厢{/if}
+                    {if $item['seat_type']==2}大厅{/if}
+                </td>
+            </tr>
+            {/if}
+            {if $item['dining_mode']==3}
+            <tr>
+                <th><label for="">预订人数</label></th>
+                <td>
+                    {$item['counts']}
+                </td>
+            </tr>
+            <tr>
+                <th><label for="">位置类型</label></th>
+                <td>
+                    {if $item['seat_type']==1}包厢{/if}
+                    {if $item['seat_type']==2}大厅{/if}
+                </td>
+            </tr>
+            {/if}
+			<tr>
+				<th><label for="">付款方式</label></th>
+				<td>
+                    {if $item['paytype'] == 0}线下付款{/if}
+					{if $item['paytype'] == 1}余额支付{/if}
+					{if $item['paytype'] == 2}在线支付{/if}
+					{if $item['paytype'] == 3}货到付款{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">订单状态</label></th>
+				<td>
+					{if $item['status'] == 0}<span class="label label-info">未确认</span>{/if}
+					{if $item['status'] == 1}<span class="label label-info">已确认</span>{/if}
+					{if $item['status'] == 2}<span class="label label-info">已付款</span>{/if}
+					{if $item['status'] == 3}<span class="label label-success">已完成</span>{/if}
+					{if $item['status'] == -1}<span class="label label-error">已关闭</span>{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">下单日期</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $item['dateline'])}
+				</td>
+			</tr>
+			<tr>
+				<th>备注</th>
+				<td>
+					<textarea style="height:150px;" class="span7" name="remark" cols="70">{$item['remark']}</textarea>
+				</td>
+			</tr>
+		</table>
+		<h4>用户信息</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">姓名</label></th>
+				<td>
+					{$item['username']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">手机</label></th>
+				<td>
+					{$item['tel']}
+				</td>
+			</tr>
+            <tr>
+                <th><label for="">地址</label></th>
+                <td>
+                    {$item['address']}
+                </td>
+            </tr>
+		</table>
+		<h4>商品信息</h4>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:30px;">ID</th>
+					<th style="min-width:150px;">商品标题</th>
+                    <th style="max-width:30px;">图片</th>
+					<th style="width:100px;">特价</th>
+                    <th style="width:100px;">原价</th>
+                    <th style="width:60px;">单位</th>
+					<th style="width:100px;">数量</th>
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			{loop $item['goods'] $row}
+			<tr>
+				<td>{$row['id']}</td>
+                <td>{if !empty($category[$row['pcate']])}<span class="text-error">[{$category[$row['pcate']]['name']}] </span>{/if}{$row['title']}</td>
+                <td>
+                    <img src="{$_W['attachurl']}{$row['thumb']}" width="50" />
+                </td>
+				<td style="background:#f2dede;">
+                    {if $row['isspecial'] == 2}[特价]{$row['marketprice']}元{else if $row['isspecial'] == 3}[会员]{$row['marketprice']}元{/if}</td>
+                <td>{$row['productprice']}元</td>
+                <td>
+                    {$row['unitname']}
+                </td>
+				<td>{$goodsid[$row['id']]['total']}</td>
+				<td style="text-align:right;">
+					<a href="{php echo $this->createWebUrl('goods', array('id' => $row['id'], 'op' => 'post'))}">编辑</a>&nbsp;&nbsp;<a href="{php echo $this->createWebUrl('goods', array('id' => $row['id'], 'op' => 'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;">删除</a>
+				</td>
+			</tr>
+			{/loop}
+		</table>
+		<table class="tb">
+			<tr>
+				<th></th>
+				<td>
+				
+					{if $item['status']==0}
+					<button type="submit" class="btn btn-primary span2" onclick="return confirm('确认付款此订单吗？'); return false;" name="confrimpay" onclick="" value="完成">确认付款</button>
+					{/if}
+					{if $item['status'] == 1}
+					<button type="submit" class="btn btn-primary span2" onclick="return confirm('确认完成此订单吗？'); return false;" name="finish" onclick="" value="完成">完成订单</button>
+					{/if}
+					{if $item['status'] == 2}
+					<button type="submit" class="btn btn-primary span2" name="confirm" value="正常" onclick="return confirm('确认取消完成此订单吗？'); return false;">确认订单</button>
+					<button type="submit" class="btn btn-primary span2" name="cancel" value="正常" onclick="return confirm('确认取消完成此订单吗？'); return false;">取消完成</button>
+					<button type="submit" class="btn btn-primary span2" name="cancelpay" value="正常" onclick="return confirm('确认取消付款此订单吗？'); return false;">取消付款</button>
+					{/if}
+					{if $item['status'] != -1}
+					<button type="submit" class="btn span2" name="close" onclick="return confirm('确认关闭此订单吗？'); return false;" value="关闭">关闭订单</button>
+					{else}
+					<button type="submit" class="btn span2 btn-primary" name="cancelpay" onclick="return confirm('确认开启此订单吗？'); return false;" value="关闭">开启订单</button>
+					{/if}
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{/if}
+{template 'common/footer'}

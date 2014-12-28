@@ -1,0 +1,45 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li><a href="{php echo $this->createWebUrl('manage');}">测试管理</a></li>
+    <li><a href="{php echo $this->createWebUrl('manage',array('id'=>$id,'po'=>'add'));}">题库管理</a></li>
+    <li class="active"><a href="{php echo $this->createWebUrl('type');}">分类管理</a></li>
+</ul>
+<div class="main">
+    <form class="form-horizontal form" action="" method="post" onsubmit="return formcheck(this)">
+        <input name="weid" type="hidden" value="{$_W['weid']}">
+        <input type="hidden" name="id" value="{$_GPC['id']}" />
+        <input type="hidden" name="result[range_start][]">
+        <div style="padding:15px;">
+            <a href="{php echo $this->createWebUrl('type',array('op'=>'add'));}" class="btn btn-primary" style="margin-bottom: 15px;"><i class="icon-edit"></i> 添加分类</a>
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                    <tr>
+                        <th class="row-hover">分类名称</th>
+                        <th class="row-hover">分类描述</th>
+                        <th class="row-hover">访问</th>
+                        <th class="row-hover">题量</th>
+                        <th class="row-hover span1">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="status-items">
+{loop $list $item}
+                    <tr>
+                        <td>{$item['typename']}</td>
+                        <td>{$item['summary']}</td>
+                        <td>{$item['viewnum']}</td>
+                        <td>{$item['titlenum']}</td>
+                        <td>
+                            <a href="{php echo $this->createWebUrl('manage',array('op'=>'add','typeid'=>$item['id']));}" title="添加测试" class="btn btn-primary btn-small"><i class="icon-plus"></i></a>
+                            <a href="{php echo $this->createWebUrl('type',array('op'=>'add','id'=>$item['id']));}" title="编辑" class="btn btn-success btn-small"><i class="icon-edit"></i></a>
+                            <a href="{php echo $this->createWebUrl('type', array('op'=>'delete','id' => $item['id']))}" onclick="return confirm('确认删除此分类吗？');return false;" title="删除" class="btn btn-danger btn-small"><i class="icon-remove"></i></a></td>
+                    </tr>
+{/loop}
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+
+</script>
+{template 'common/footer'}

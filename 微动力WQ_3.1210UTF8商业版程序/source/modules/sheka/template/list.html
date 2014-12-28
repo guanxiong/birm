@@ -1,0 +1,371 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('list', array('op' => 'post','id' =>$item['id']))}">添加贺卡</a></li>
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('list', array('op' => 'display'))}">管理贺卡</a></li>
+
+</ul>
+{if $op == 'post'}
+<script type="text/javascript" src="./source/modules/sheka/js/zxx.color_exchange.js?ver=20100312"></script>
+<script type="text/javascript" src="./resource/script/jquery.jplayer.min.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="{$item['id']}" />
+	<input type="hidden" name="zid" value="{$zhufu['id']}" />
+		<h4> 信息编辑</h4>
+		{if $item['id']}
+		<h4> <a href="javascript:;" onclick="preview_quick({$item['id']});return false;" class="btn btn-default">预览</a></h4>
+		{/if}
+		<table class="tb">
+			<tr>
+				<th><label for="">贺卡名称</label></th>
+				<td>
+					<input type="text" name="title" class="span6" value="{$item['title']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">分类</label></th>
+				<td>
+    <select name="classid" id="classid" class="pull-left form-control" style="width:100px;"  >
+           	{loop $this->turlar $val}
+            <option value="{$val['id']}"  {if $val['id']==$item['classid']}selected="true"{/if}>{$val['name']}</option>
+       		{/loop}
+    </select>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">模板</label></th>
+				<td>
+    <select name="tempid" id="tempid" class="pull-left form-control" style="width:150px;"  onchange="turdi(this.id)">
+               <option value="1"  {if $item['tempid']==1}selected="true"{/if}>默认模板1</option>
+               <option value="2"  {if $item['tempid']==2}selected="true"{/if}>模板2</option>
+               <option value="3"  {if $item['tempid']==3}selected="true"{/if}>模板3</option>
+      </select>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">贺卡缩略图</label></th>
+				<td>
+					{php echo tpl_form_field_image('thumb', $item['thumb'])}
+					<span class="help-block"> </span>
+				</td>
+			</tr>
+			<tr >
+				<th><label for="">贺卡缩略图</label></th>
+				<td>
+					{php echo tpl_form_field_image('cardbg', $item['cardbg'])}
+					<span class="help-block"> </span>
+				</td>
+			</tr>
+		<tr>
+        <td >
+          <label for="music">音乐外链：</label>
+        </td>
+        <td>
+        <div class="input-append">
+		<input id="item-url" class="span6" type="text" name="music" value="{$item['music']}">
+		<input type="button" id="music-attach-btn" fieldname="music-attach{$namesuffix}" class="btn" value="<i class='icon-upload-alt'></i>" style="font-size:14px;width:55px;margin-left:-1px;">
+		</div>
+		<div class="help-block">上传比较缓慢请不要关闭页面 上传文件不宜过大 否则影响播放</div>
+			</td>
+		</tr>
+					<tr>
+				<th><label for="">模板css常用参数</label></th>
+				<td>
+				<div  id="canshu1" {if $item['tempid']==3||$item['tempid']==1||$item['tempid']==0}class="hide"{/if}>
+         	<a href="#"  onclick="sanlar(2);">模板2参数1</a>|
+         	<a href="#"  onclick="sanlar(3);">模板2参数2</a>
+         	<a href="#"  onclick="sanlar(4);">模板2参数2</a>
+         	<a href="#"  onclick="sanlar(5);">模板2参数2</a>
+				</div>
+					<div  id="canshu2" {if $item['tempid']==1||$item['tempid']==2||$item['tempid']==0}class="hide"{/if}>
+         	<a href="#"  onclick="sanlar(1);">模板3参数1</a>|
+
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">收件人名字</label></th>
+				<td>
+					<input type="text" name="cardto" class="span4" value="{$zhufu['cardto']}" />
+					<div id="turdi" {if $item['tempid']==3||$item['tempid']==1||$item['tempid']==0}class="hide"{/if}>
+					left：<input type="text" name="cardto_left"  id="cardto_left" class="span1" value="{$zhufu['cardto_left']}" />%
+					top：<input type="text" name="cardto_top"  id="cardto_top" class="span1" value="{$zhufu['cardto_top']}" />%</div>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">祝福</label></th>
+				<td>
+					<textarea name="cardbody" class="span6" cols="70">{$zhufu['cardbody']}</textarea><br>
+							<div id="turdi2" {if $item['tempid']==3||$item['tempid']==1||$item['tempid']==0}class="hide"{/if}>
+										width：<input type="text" name="cardbody_width"  id="cardbody_width" class="span1" value="{$zhufu['cardbody_width']}" />%
+										left：<input type="text" name="cardbody_left"  id="cardbody_left" class="span1" value="{$zhufu['cardbody_left']}" />%
+					top：<input type="text" name="cardbody_top"  id="cardbody_top" class="span1" value="{$zhufu['cardbody_top']}" />%
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">发件人名字</label></th>
+				<td>	<input type="text" name="cardfrom" class="span4" value="{$zhufu['cardfrom']}" />
+					<div id="turdi1" {if $item['tempid']==3||$item['tempid']==1||$item['tempid']==0}class="hide"{/if}>
+									left：<input type="text" id="cardfrom_left" name="cardfrom_left" class="span1" value="{$zhufu['cardfrom_left']}" />%
+					top：<input type="text" name="cardfrom_top" id="cardfrom_top" class="span1" value="{$zhufu['cardfrom_top']}" />%
+					</div>
+				</td>
+			</tr>
+						<tr id="panel" {if $item['tempid']==1||$item['tempid']==2||$item['tempid']==0}class="hide"{/if}>
+				<th><label for="">样式</label></th>
+				<td>
+									panel_top：<input type="text" name="panel_top" id="panel_top" class="span1" value="{$zhufu['panel_top']}" />%<br>
+									左边的距离：<input type="text" name="panel_left" id="panel_left"  class="span1" value="{$zhufu['panel_left']}" />%<br>
+									宽度：<input type="text" name="panel_width" id="panel_width"  class="span1" value="{$zhufu['panel_width']}" />%<br>
+									高度：<input type="text" name="panel_height" id="panel_height"  class="span1" value="{$zhufu['panel_height']}" />%<br>
+								   背景颜色apla值：<input type="text" name="panel_bg" id="panel_bg"  class="span2" value="{$zhufu['panel_bg']}" />
+							<input id="b1" type="button" value="转为RGB格式" />
+								   <input type="text" name="panel_bgs" id="panel_bgs"  class="span1" value="" />
+													<input class="colorpicker" target="panel_bgs"   /><br>
+									背景的透明度：<input type="text" name="panel_alpha" id="panel_alpha"  class="span1" value="{$zhufu['panel_alpha']}" />%<br>
+									字体颜色：<input type="text" name="panel_color" id="panel_color"  class="span1" value="{$zhufu['panel_color']}" />%
+													<input class="colorpicker" target="panel_color" value="{$zhufu['panel_color']}" /><br>
+
+									
+							
+					</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+
+
+
+
+window.onload = function(){
+	var obj = {
+		v1: document.getElementById("panel_bgs"),	
+		b1: document.getElementById("b1"),	
+		s1: document.getElementById("panel_bg")
+	};
+	obj.b1.onclick = function(){
+		var v = obj.v1.value;
+		var turdi = v.colorRgb();
+		$("#panel_bg").attr("value" , turdi);
+	};
+
+};
+</script>
+
+<script type="text/javascript">
+	function sanlar(id) {
+			if (id== 1) {
+$("#panel_top").attr("value" , '38');
+$("#panel_left").attr("value" , '20');
+$("#panel_width").attr("value" , '60');
+$("#panel_height").attr("value" , '18');
+$("#panel_color").attr("value" , '#000000');
+$("#panel_bg").attr("value" , '');
+
+}
+	if (id== 2) {
+	$("#cardto_left").attr("value" , '22');
+	$("#cardto_top").attr("value" , '12');
+	$("#cardbody_top").attr("value" , '40');
+	$("#cardbody_left").attr("value" , '10');
+	$("#cardbody_width").attr("value" , '76');
+	$("#cardfrom_top").attr("value" , '60');
+	$("#cardfrom_left").attr("value" , '10');
+}
+	if (id== 3) {
+	$("#cardto_left").attr("value" , '20');
+	$("#cardto_top").attr("value" , '28');
+	$("#cardbody_top").attr("value" , '60');
+	$("#cardbody_left").attr("value" , '15');
+	$("#cardbody_width").attr("value" , '15');
+	$("#cardfrom_top").attr("value" , '9');
+	$("#cardfrom_left").attr("value" , '58');
+}
+	if (id== 4) {
+	$("#cardto_left").attr("value" , '20');
+	$("#cardto_top").attr("value" , '45');
+	$("#cardbody_top").attr("value" , '');
+	$("#cardbody_left").attr("value" , '');
+	$("#cardbody_width").attr("value" , '60');
+	$("#cardfrom_top").attr("value" , '62');
+	$("#cardfrom_left").attr("value" , '10');
+}
+	if (id== 5) {
+	$("#cardto_left").attr("value" , '17');
+	$("#cardto_top").attr("value" , '23');
+	$("#cardbody_top").attr("value" , '60');
+	$("#cardbody_left").attr("value" , '15');
+	$("#cardbody_width").attr("value" , '66');
+	$("#cardfrom_top").attr("value" , '43');
+	$("#cardfrom_left").attr("value" , '9');
+}
+}
+	function turdi(id) {
+  var id = document.getElementById(id);
+			if (id.value== 1) {
+			$('#panel').hide();
+			$('#turdi').hide();
+			$('#turdi1').hide();
+			$('#turdi2').hide();
+		}
+
+			if (id.value == 2) {
+			$('#turdi').show();
+			$('#turdi1').show();
+			$('#turdi2').show();
+			$('#canshu1').show();
+			$('#canshu2').hide();
+			$('#panel').hide();
+		}
+				if (id.value == 3) {
+			$('#panel').show();
+			$('#canshu2').show();
+			$('#turdi').hide();
+			$('#turdi1').hide();
+			$('#turdi2').hide();
+			$('#canshu1').hide();
+		}
+
+	}
+var musicHandler = {
+		'kindeditorUploadBtn' : function(obj) {
+			if (typeof KindEditor == 'undefined') {
+				$.getScript('./resource/script/kindeditor/kindeditor-min.js', initUploader);
+			} else {
+				initUploader();
+			}
+			function initUploader() {
+				var uploadbutton = KindEditor.uploadbutton({
+					button : obj,
+					fieldName : 'attachFile',
+					url : '{php echo create_url('site/module/uploadmusic', array('name' => 'music'))}',
+					width : 100,
+					afterUpload : function(data) {
+						if (data.error === 0) {
+							$(uploadbutton.div.parent().parent().parent().parent().parent()[0]).find('#item-url').val(data.filename);
+						} else {
+							message('上传失败，错误信息：'+data.message, '', 'error');
+						}
+						$(uploadbutton.div).removeClass("up_loading");
+					},
+					afterError : function(str) {
+						message('上传失败，错误信息：'+str, '', 'error');
+					}
+				});
+				uploadbutton.fileBox.change(function(e) {
+					$(uploadbutton.div).addClass("up_loading");
+					uploadbutton.submit();
+				});
+			}
+		}
+	};
+	$(function(){
+		musicHandler.kindeditorUploadBtn($('#music-attach-btn'));
+	});
+</script>
+<script type="text/javascript" src="./resource/script/colorpicker/spectrum.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/colorpicker/spectrum.css" />
+<script type="text/javascript">
+<!--
+	$(function(){
+		colorpicker();
+	});
+//-->
+</script>
+{elseif $op == 'display'}
+<style>
+.template-style{display:block;}
+.template-style li{float:left; width:180px; margin:0 2px 10px 2px;}
+.template-style .template-style-pic .title{position:absolute; z-index:100; top:0; width:100%; height:25px; line-height:25px; filter:Alpha(opacity=70);background:#000;background:rgba(0, 0, 0, 0.7); color:#FFF; overflow:hidden;}
+.title .icon-remove{position:absolute; right:0; background:#000; border-left:1px #333 solid; height:25px;line-height:26px;width:20px;text-align:center;cursor:pointer; text-decoration:none;}
+.title .pull-left{margin-left:5px;}
+.template-style .template-style-pic img{width:174px; max-width:174px; height:270px;}
+.template-style .template-style-pic{border:3px #EEE solid;position:relative;overflow:hidden;}
+.template-style .template-style-pic .icon-ok{display:none;}
+.template-style .on.template-style-pic{border:3px #009CD6 solid;}
+.template-style .on.template-style-pic .icon-ok{display:inline-block;position: absolute;bottom:0;right:0;color:#FFF;background:#009CD6;padding:5px;font-size:14px;}
+.template-style .template-style-button{height:50px; line-height:25px;}
+.template{padding:15px;}
+.template li{margin-right:10px;}
+</style>
+
+<div class="main">
+	<div class="category">
+		<form action="" method="post" onsubmit="return formcheck(this)">
+		<div class="control-group">
+		           	{loop $this->turlar $val}
+ <a href="{php echo $this->createWebUrl('list', array('classid'=>$val['id'],'op'=>display));}"   class="btn btn-default">{$val['name']}</a>
+       		{/loop}
+			</div>
+		
+		<div class="alert alert-info">共{$total}种贺卡</div>
+
+										<ul class="unstyled template-style clearfix">
+		{loop $list $row}
+	
+				<li>
+			<div class="template-style-pic "> <!--设为默认风格时class中加on-->
+				<div class="title"><span class="pull-left">{$row['title']}</span></div>
+				<img src="{$_W['attachurl']}{$row['thumb']}" />
+				<span class="icon-ok"></span>
+			</div>
+			<div class="template-style-button">
+				<a href="javascript:;" onclick="preview_quick({$row['id']});return false;" class="btn btn-mini pull-right" style="margin-top:4px;">预览</a>
+				<a href="{php echo $this->createWebUrl('list', array('id'=>$row['id'],'op'=>post));}" class="btn btn-mini">编辑</a>
+
+			</div>
+		</li>
+
+								
+								
+			
+								{/loop}
+		
+			</ul>
+
+						
+		</form>
+		
+			<table class="table table-hover">
+		<tr>
+								<td>
+					{$pager}
+									</td>
+								</tr>
+										</tbody>
+						</table>
+	</div>
+</div>
+{/if}
+<script type="text/javascript">
+
+	function preview_quick(name) {
+				var modalobj = $('#modal-preview');
+		if(modalobj.length == 0) {
+			$(document.body).append('<div id="modal-preview" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true" style="position:absolute;top:5%;"></div>');
+			var modalobj = $('#modal-preview');
+		}
+		html = '<iframe width="100%" scrolling="yes" height="100%" frameborder="0" src="./mobile.php?act=module&id='+name+'&name=sheka&do=preview&weid={$_W['weid']}" id="preview" name="preview" style="width: 320px; overflow: visible; height: 480px;"></iframe>';
+		modalobj.html(html);
+		modalobj.css({'width' : 320, 'marginLeft' : 0 - 320 / 2});
+		modalobj.css({'height' : 480});
+		modalobj.on('hidden', function(){modalobj.remove();});
+		return modalobj.modal({'show' : true});
+		
+		
+	}
+
+</script>
+{template 'common/footer'}

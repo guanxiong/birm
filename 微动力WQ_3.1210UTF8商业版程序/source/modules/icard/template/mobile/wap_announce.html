@@ -1,0 +1,45 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="./source/modules/icard/template/css/card.css?v={php echo $this->cur_version}" media="all">
+    <script type="text/javascript" src="./source/modules/icard/template/js/jQuery.js"></script>
+    <script type="text/javascript" src="./source/modules/icard/template/js/accordian_pack.js"></script>
+    <title>会员通知</title>
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+</head>
+<body id="cardnews" ondragstart="return false;" onselectstart="return false;">
+    {php include $this->template('wap_header');}
+    <section class="body">
+		<div id="basic-accordian">
+            {php $index = 0;}
+            {loop $announces $announce}
+            <div id="test{$index}-header" class="accordion_headings {if $index==0}header_highlight{/if}">
+                <div class="tab  {if $index == 0}new{/if} ">
+                    <span class="title">{$announce['title']}<p>{php date('Y-m-d', $announce['dateline']);}</p></span>
+                </div>
+                <div id="test{$index}-content" style="display: none; overflow: hidden; {if $index==0}opacity: 0;{else}opacity: 1;{/if}">
+                    <div class="accordion_child">
+                        <p class="xiangqing"></p>
+                        {php echo htmlspecialchars_decode($announce['content']);}
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            {php $index++;}
+            {/loop}
+		</div>
+		<div class="plugback">
+			<a href="javascript:history.back(-1)">
+				<div class="plugbg themeStyle">
+					<span class="plugback"></span>
+				</div>
+			</a>
+		</div>
+        {php include $this->template('footer');}
+        <script>
+           window.onload = function(){
+                new Accordian('basic-accordian',5,'header_highlight');
+            }
+        </script>    </section>
+
+</body></html>

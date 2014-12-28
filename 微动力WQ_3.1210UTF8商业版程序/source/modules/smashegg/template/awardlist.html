@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/bootstrap_min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/bootstrap_responsive_min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/style.css" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/todc_bootstrap.css" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/themes.css" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/inside.css" media="all" />
+<script type="text/javascript" src="./source/modules/public/style/src/jQuery.js"></script>
+<script type="text/javascript" src="./source/modules/public/style/src/bootstrap_min.js"></script>
+<script type="text/javascript" src="./source/modules/public/style/src/inside.js"></script>
+<title>微动力（砸金蛋）——by 微动力</title>
+    <!--[if lte IE 9]><script src="./source/modules/public/style/src/watermark.js"></script><![endif]-->
+	<!--[if IE 7]><link href="./source/modules/public/style/css/font_awesome_ie7.css" rel="stylesheet" /><![endif]-->
+</head>
+<body>
+	    <div id="main">
+        <div class="container-fluid">
+
+            <div class="row-fluid">
+                <div class="span12">
+
+                    <div class="box">
+                        <div class="box-title">
+                            <div class="span7">
+                                <h3><i class="icon-table"></i>砸金蛋SN码发放管理</h3>
+                            </div>
+                            <div class="span5">
+                                <form action="" method="post" class="form-horizontal">
+                                    <input type="text" id="keyword-input" name="keywords" class="input-small-z" placeholder="请输入关键词" data-rule-required="true" />
+                                    <select name="type" class="input-medium">
+                                        <!--option value="number">手机号查询</option-->
+										<option value="sn_code">SN码查询</option>
+                                    </select>
+                                    <select name="statue" class="input-small">
+                                        <option value="">全部</option>
+                                        <option value="1">未发放</option>
+                                        <option value="2">已发放</option>
+                                        <option value="3">已消费</option>
+                                    </select>
+                                    <button class="btn">查询</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="box-content">
+                            <div class="row-fluid">
+                                <div class="span8 control-group">
+                                    <a class="btn" href="{php echo create_url('site/module', array('do' => 'download', 'name' => 'smashegg','rid'=>$rid))}"><i class="icon-download-alt"></i>导出SN码和兑奖信息</a>
+                                    <a class="btn" href="{php echo create_url('site/module', array('do' => 'awardlist', 'name' => 'smashegg','rid'=>$rid))}">全部</a>
+                                    <a class="btn" href="{php echo create_url('site/module', array('do' => 'awardlist', 'name' => 'smashegg','rid'=>$rid,'status'=>1))}">已中奖</a>
+                                    <a class="btn" href="{php echo create_url('site/module', array('do' => 'awardlist', 'name' => 'smashegg','rid'=>$rid,'status'=>2))}">已消费</a>
+                                </div>
+                            </div>
+
+                            <div class="alert">
+                                本次活动奖品总数：{$num1}个　 　抽中未兑换：{$num2}个　　抽中已兑换：{$num3}个
+                            </div>
+                            <p>
+                                领取规则先到先得！
+                            </p>
+                            <div class="row-fluid dataTables_wrapper">
+                                <form action="/plus/formajax.php" method="post" class="form-horizontal">
+                                    <table id="listTable" class="table table-bordered table-hover  dataTable">
+
+                                        <thead>
+                                            <tr>
+                                                <th>序号</th>
+                                                <th>SN码</th>
+                                                <th>奖品类别</th>
+                                                <th>状态</th>
+                                                <th width="120px">领取者手机号</th>
+                                                <th>领取者微信码</th>
+                                                <th>中奖时间</th>
+                                                <th>使用时间</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+
+                                        {loop $list $row}
+                                            <tr>
+                                                <td>{$row['id']}</td>
+                                                <td>{$row['award_sn']}</td>
+                                                <td>{$row['name']}</td>
+                                                <td>{if $row['status']==0}<span class="label">未领取</span>{elseif $row['status']==1}<span class="label label-satgreen">已中奖</span>{else}<span class="label label-red">已兑奖</span>{/if}</td>
+                                                <td><span class="label label-teal phone" data-fans="{$row['from_user']}"}>显示手机号</span></td>
+                                                <td>{$row['from_user']}</td>
+                                                <td>{php echo date('Y/m/d H:i',$row['createtime']);}</td>
+                                                <td>{php echo date('Y/m/d H:i',$row['consumetime']);}</td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <a href="#" data-toggle="dropdown" class="btn dropdown-toggle"><i class="icon-cog"></i>操作 <span class="caret"></span></a>
+                                                        <ul class="dropdown-menu dropdown-primary">
+                                                            <li>
+                                                                <a href="{php echo create_url('site/module', array('do' => 'setstatus', 'name' => 'smashegg','status'=>0,'id'=>$row['id'],'rid'=>$row['rid']))}">还未发放</a>
+                                                            </li> 
+                                                            <li>
+                                                                <a href="{php echo create_url('site/module', array('do' => 'setstatus', 'name' => 'smashegg','status'=>1,'id'=>$row['id'],'rid'=>$row['rid']))}">已经被抽中</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="{php echo create_url('site/module', array('do' => 'setstatus', 'name' => 'smashegg','status'=>2,'id'=>$row['id'],'rid'=>$row['rid']))}">已经兑奖</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+											{/loop}
+                                            </tbody>
+                                    </table>
+                                </form>
+                                <div class="dataTables_paginate paging_full_numbers"><span> {$pager} </span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>     
+<script>
+$(".phone").click(function() {
+	$(".phone").addClass('label-teal');
+	$(".phone").text('显示手机号');
+	obj=$(this);
+	obj.text('加载中...');
+	fans=obj.attr('data-fans');
+	$.post("{php echo create_url('site/module', array('do' => 'getphone','name' => 'smashegg','rid'=>$rid))}", { fans: fans},
+	function(data){
+		obj.removeClass('label-teal');
+		obj.text(data);
+	});
+	
+});
+</script>
+</body>
+</html>

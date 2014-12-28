@@ -1,0 +1,58 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+				   <li{if $_GPC['do'] == 'buildlists'} class="active"{/if}><a href="{php echo $this->createWeburl('buildlists');}">楼盘管理</a></li>
+                <li{if $_GPC['do'] == 'expertlist'} class="active"{/if}><a href="{php echo $this->createWeburl('expertlist',array('hid'=>$hid));}">点评管理</a>
+                <li{if $_GPC['do'] == 'expertadd'} class="active"{/if}><a href="{php echo $this->createWeburl('expertadd', array('id'=>$id,'hid'=>$hid));}">添加点评</a></li>
+
+        
+        </ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="hid" value="{$hid}">
+    <input type="hidden" name="id" value="{$id}">
+  <h4>专家点评设置</h4>
+	<table class="tb">
+		<tr>
+			<th width="68">标题：</th>
+			<td width="222"><input type="text" name="title" value="{$item['title']}" class="span5" />
+		    * 尽量简单，不要超过20字</td>
+		</tr>
+		<tr>
+			<th>显示顺序：</th>
+			<td><input type="text" name="sort" value="{$item['sort']}" class="span5" />
+		    * 数值越大越靠前</td>
+		</tr>
+		<tr>
+			<th>专家姓名：</th>
+			<td><input type="text" name="expert_name" value="{$item['expert_name']}" class="span5" /></td>
+		</tr>
+        		<tr>
+			<th>专家职位：</th>
+			<td><input type="text" name="zhiwei" value="{$item['zhiwei']}" class="span5" /></td>
+		</tr>
+        		<tr>
+			<th>专家照片：</th>
+			<td><div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;">{if $item['thumb']}<img src="{$_W['attachurl']}{$item['thumb']}" width="200" />{/if}</div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="thumb" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>建议尺寸：宽400像素，高400像素</div>
+				</div></td>
+		</tr>
+        		<tr>
+			<th>专家介绍：</th>
+			<td><textarea name="jianjie" cols="70" rows="5" class="span5">{$item['jianjie']}</textarea>最多可150字</td>
+		</tr>
+        <tr>
+			<th>点评内容：</th>
+			<td><textarea name="content" cols="70" rows="8" class="span5">{$item['content']}</textarea>最多可5k字</td>
+		</tr>
+        <tr>
+			<th>&nbsp;</th>
+			<td>
+            	 <button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+            	 <input type="hidden" name="token" value="{$_W['token']}" /></td>
+		</tr>
+	</table>
+</form>
+{template 'common/footer'}

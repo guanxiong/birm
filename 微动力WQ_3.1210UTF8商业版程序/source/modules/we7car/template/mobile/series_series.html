@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="./source/modules/we7car/style/css/reset.css?2013-11-25-1" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/we7car/style/css/common1.css?2013-11-25-1" media="all" />
+<script type="text/javascript" src="./source/modules/we7car/style/js/jquery152_min.js?2013-11-25-1"></script>
+<script type="text/javascript" src="./source/modules/we7car/style/js/jquery_easing.js?2013-11-25-1"></script>
+<script type="text/javascript" src="./source/modules/we7car/style/js/com_clanmo_gallery_min.js?2013-11-25-1"></script>
+<script type="text/javascript" src="./source/modules/we7car/style/js/swipe.js?2013-11-25-1"></script>
+<title>全部车型</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+        <!-- Mobile Devices Support @begin -->
+            <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+            <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+            <meta content="no-cache" http-equiv="pragma">
+            <meta content="0" http-equiv="expires">
+            <meta content="telephone=no, address=no" name="format-detection">
+            <meta content="width=device-width, initial-scale=1.0" name="viewport">
+            <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <!-- Mobile Devices Support @end -->
+        <style>
+            img{width:100%!important;}
+        </style>
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;">
+        <script type="text/javascript">/*<![CDATA[*/var isTablet = false;/*]]>*/</script>
+
+<body class="portrait">
+	<div class="header">
+		<div class="logo">
+			{if !empty($car_logo)}
+			<img src="{$_W['attachurl']}{$car_logo}" width="213" height="29" alt="" style="width:auto!important;max-width:213px;"/>
+			{/if}
+		</div>
+		<!-- <div style="clear: both;"></div>-->
+	</div>
+	<span class="gradient_h_wbw"></span>
+	<div class="top">
+		<div id="roundabout_container" class="relative">
+			<a id="scrollLeft__7f8fc196" class="scrollLeft__7f8fc196 btn_ra_prev"></a>
+			<a id="scrollRight__7f8fc196" class="scrollRight__7f8fc196 btn_ra_next"></a>
+			<div id='roundabout__7f8fc196' class="ofh">
+				<ul class="list_ul_top">
+					{loop $list $row}
+					<li data-start="start" >
+						<a href="{php echo  create_url('mobile/module', array('do' => 'Series','op'=>'type', 'name' => 'we7car', 'weid' => $weid,'sid'=>$row['id'],'from_user' => $from_user))}"><span>{$row['subtitle']}</span></a>
+					</li>
+					{/loop}
+					 
+				</ul>
+			</div>
+		</div>
+		<span class="gradient_h_wbw"></span>
+		<script type="text/javascript">
+		/* <![CDATA[ */
+		$(window).load(function() {
+			var roundabout = new Gallery({id: 'roundabout__7f8fc196',type: 'roundabout',leftClass: 'scrollLeft__7f8fc196',rightClass: 'scrollRight__7f8fc196',});});
+		/* ]]> */
+		</script>
+		
+			</div>
+<!-------------------- 车系列表 begin ----------------------->
+		<div class="main" style="padding-top: 10px;">
+			<ul class="list_ul_common">
+				{loop $list $row}
+				<li>
+					<a href="{php echo  create_url('mobile/module', array('do' => 'Series','op'=>'type', 'name' => 'we7car', 'weid' => $weid,'sid'=>$row['id'],'from_user' =>$from_user))}">
+						<div>
+							<p>{$row['title']}</p>
+						</div>
+					</a>
+				</li>
+				{/loop}
+
+							</ul>
+		</div>
+<!-------------------- 车型列表 begin ----------------------->
+
+<!-------------------- 车型详情 begin ----------------------->
+
+<!-------------------- end ----------------------->
+		<div class="footer">
+			<div class="copyright"><a href="#" style="color:#000;">&copy;{if empty($_W['account']['name'])}微动力团队{else}{$_W['account']['name']}{/if}</a></div>
+		</div>
+
+		<footer class="nav_footer">
+				<ul class="box">
+					<li><a href="javascript:history.go(-1);" >返回</a></li>
+					<li><a href="javascript:history.go(1);" >前进</a></li>
+					<li><a href="{php echo 	create_url('mobile/channel', array('name' => 'index', 'weid' => $_W['weid']))}">首页</a></li>
+					<li><a href="javascript:location.reload();" >刷新</a></li>
+				</ul>
+		</footer>
+	</body>        		<div mark="stat_code" style="width:0px; height:0px; display:none;">
+					</div>
+	</body>
+</html>

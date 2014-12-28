@@ -1,0 +1,72 @@
+{template 'header'}
+<style>
+body{background:#F9F9F9;}
+.mobile-li .btn.pull-right,.mobile-li .btn.pull-left{margin-top:6px;}
+.collapse .mobile-content{margin-top:0; padding:0 5px; color:#666; border-left:3px #EEE solid; background:#F9F9F9;}
+</style>
+<div class="mobile-div img-rounded">
+	<div class="mobile-hd" style="border-bottom:0;">优惠券列表</div>
+	{php $i = 0;}
+	{loop $list $item}
+	<span class="mobile-li" data-target="#content-{$item['id']}">
+		<i class="icon-hand-up pull-right"></i>
+		<span class="text-info pull-right">查看详情</span>
+		{$item['title']}
+	</span>
+	<div class="collapse {if $i == 0}in{/if}" id="content-{$item['id']}">
+		<div class="mobile-content">
+			<p>有效期：{php echo date('Y-m-d H:i:s', $item['starttime'])} - {php echo date('Y-m-d H:i:s', $item['endtime'])}</p>
+			<p>优惠券类型：{$type[$item[type]]}</p>
+			<p>每人可领量：{$item['pretotal']}张</p>
+			<p>优惠券总量：还有{$item['total']}张</p>
+			<p>{php echo htmlspecialchars_decode($item['content'])}</p>
+			<div style="margin:5px; overflow:hidden;">
+				<a href="{php echo $this->createMobileUrl('getcoupon', array('id' => $item['id']))}" class="btn btn-success pull-right">我要领取</a>
+			</div>
+		</div>
+	</div>
+	{php $i++;}
+	{/loop}
+</div>
+<div class="mobile-div img-rounded">
+	<div class="mobile-hd" style="border-bottom:0;">我的优惠券</div>
+	{loop $mylist $item}
+	<a href="{php echo $this->createMobileUrl('usecoupon', array('id' => $item['mycouponid']))}" class="mobile-li">
+		<i class="icon-hand-up pull-right"></i>
+		{if $item['status'] == 1}<span class="text-success pull-right">未使用</span>{elseif $item['status'] == 2}<span class="text-error pull-right">已使用</span>{/if}
+		<span class="muted">{$type[$item[type]]}</span>
+		{$item['title']}
+	</a>
+	{/loop}
+</div>
+<div class="mobile-div img-rounded">
+	<div class="mobile-hd" style="border-bottom:0;">近一个月过期优惠券</div>
+	{loop $pastlist $item}
+	<span class="mobile-li" data-toggle="collapse" data-target="#pastlist-{$item['id']}">
+		{$item['title']}
+	</span>
+	<div class="collapse" id="pastlist-{$item['id']}">
+		<div class="mobile-content">
+			<p>优惠券类型：{$type[$item[type]]}</p>
+			<p>每人可领量：{$item['pretotal']}张</p>
+			<p>优惠券总量：还有{$item['total']}张</p>
+			<p>{$item['content']}</p>
+		</div>
+	</div>
+	{/loop}
+</div>
+<script type="text/javascript">
+<!--
+	$(function(){
+		$('.mobile-li').each(function(){
+			$(this).click(function(){
+				$('.mobile-li').each(function(){
+					$($(this).attr('data-target')).attr('class', 'collapse');
+				});
+				$($(this).attr('data-target')).attr('class', 'collapse in');
+			});
+		});
+	});
+//-->
+</script>
+{template 'footer'}

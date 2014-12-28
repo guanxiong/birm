@@ -1,0 +1,339 @@
+/* Widgets body{background:url(../image/mobilebg.png) repeat;}*/
+
+.container-fluid {background:#fff;}
+.widget-box {
+	background: none repeat scroll 0 0 #F9F9F9;
+	border-left: 1px solid #CDCDCD;
+	border-top: 1px solid #CDCDCD;
+	border-right: 1px solid #CDCDCD;
+	clear: both;
+	margin-top: 16px;
+	margin-bottom: 16px;
+	position: relative;
+}
+.widget-box.widget-calendar, .widget-box.widget-chat {
+	overflow:hidden !important;
+}
+.accordion .widget-box {
+	margin-top: -2px;
+	margin-bottom: 0;
+	border-radius: 0;
+}
+.widget-box.widget-plain {
+	background: transparent;
+	border: none;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.widget-title, .modal-header, .table th, div.dataTables_wrapper .ui-widget-header {
+	 background:#efefef;
+	border-bottom: 1px solid #CDCDCD;
+	height: 36px;  
+}
+.widget-title .nav-tabs {
+	border-bottom: 0 none; 
+}
+.widget-title .nav-tabs li a {
+	border-bottom: medium none !important;
+	border-left: 1px solid #DDDDDD;
+		border-radius: 0 0 0 0;
+	border-right: 1px solid #DDDDDD;
+	border-top: medium none;
+	color: #999999;
+	margin: 0;
+	outline: medium none;
+	padding: 9px 10px 8px;
+	font-weight: bold; 
+	text-shadow: 0 1px 0 #FFFFFF;
+}
+.widget-title .nav-tabs li:first-child a {
+	border-left: medium none !important;
+}
+.widget-title .nav-tabs li a:hover {
+	background-color: transparent !important;
+	border-color: #D6D6D6;
+	border-width: 0 1px;
+	color: #2b2b2b;
+}
+.widget-title .nav-tabs li.active a {
+	background-color: #F9F9F9 !important;
+	color: #444444;
+}
+.widget-title span.icon {
+	padding: 9px 10px 7px 11px;
+	float: left; border-right:1px solid #dadada;
+}
+.widget-title h5 {
+	color: #666;
+	float: left;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px;
+	line-height: 12px;
+	margin: 0;
+}
+.widget-title .buttons {
+	float: right;
+	margin: 8px 10px 0 0;
+}
+.widget-title .label {
+	padding: 3px 5px 2px;
+	float: right;
+	margin: 9px 11px 0 0;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.3) inset, 0 1px 0 #ffffff;
+}
+.widget-calendar .widget-title .label {
+	margin-right: 190px;
+}
+.widget-content {
+	padding:15px;
+	border-bottom: 1px solid #cdcdcd;
+}
+.widget-box.widget-plain .widget-content {
+	padding: 12px 0 0;
+}
+.widget-box.collapsible .collapse.in .widget-content {
+	border-bottom: 1px solid #CDCDCD;
+}
+.recent-posts, .recent-comments, .recent-users {
+	margin: 0;
+	padding: 0;
+}
+.recent-posts li, .recent-comments li, .article-post li, .recent-users li {
+	border-bottom: 1px dotted #AEBDC8;
+	list-style: none outside none;
+	padding: 10px;
+}
+.recent-posts li.viewall, .recent-comments li.viewall, .recent-users li.viewall {
+	padding: 0;
+}
+.recent-posts li.viewall a, .recent-comments li.viewall a, .recent-users li.viewall a {
+	padding: 5px;
+	text-align: center;
+	display: block;
+	color: #888888;
+}
+.recent-posts li.viewall a:hover, .recent-comments li.viewall a:hover, .recent-users li.viewall a:hover {
+	background-color: #eeeeee;
+}
+.recent-posts li:last-child, .recent-comments li:last-child, .recent-users li:last-child {
+	border-bottom: none !important;
+}
+.user-thumb {
+	background: none repeat scroll 0 0 #FFFFFF;
+	float: left;
+	height: 40px;
+	margin-right: 10px;
+	margin-top: 5px;
+	padding: 2px;
+	width: 40px;
+}
+.user-info {
+	color: #666666;
+	font-size: 11px;
+}
+/*开始评论展示*/
+.mepopover {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  padding: 1px;
+  text-align: left;
+  white-space: normal;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+}
+
+.mepopover.bottom {
+  margin-top: 10px;
+}
+.mepopover-title {
+  padding: 8px 14px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 18px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ebebeb;
+  -webkit-border-radius: 5px 5px 0 0;
+     -moz-border-radius: 5px 5px 0 0;
+          border-radius: 5px 5px 0 0;
+}
+
+.mepopover-title:empty {
+  display: none;
+}
+
+.mepopover-content {
+  padding: 9px 14px;
+}
+
+.mepopover .arrow,
+.mepopover .arrow:after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.mepopover .arrow {
+  border-width: 11px;
+}
+
+.mepopover .arrow:after {
+  border-width: 10px;
+  content: "";
+}
+.mepopover.bottom .arrow {
+  top: -11px;
+  left: 50%;
+  margin-left: -11px;
+  border-bottom-color: #999;
+  border-bottom-color: rgba(0, 0, 0, 0.25);
+  border-top-width: 0;
+}
+
+.mepopover.bottom .arrow:after {
+  top: 1px;
+  margin-left: -10px;
+  border-bottom-color: #ffffff;
+  border-top-width: 0;
+}
+
+
+/*
+ * Callouts
+ *
+ * Not quite alerts, but custom and helpful notes for folks reading the docs.
+ * Requires a base and modifier class.
+ */
+
+/* Common styles for all types */
+.bs-callout {
+  margin: 20px 0;
+  padding: 15px 30px 15px 15px;
+  border-left: 5px solid #eee;
+}
+.bs-callout h4 {
+  margin-top: 0;
+}
+.bs-callout p:last-child {
+  margin-bottom: 0;
+}
+.bs-callout code,
+.bs-callout .highlight {
+  background-color: #fff;
+}
+
+/* Variations */
+.bs-callout-danger {
+  background-color: #fcf2f2;
+  border-color: #dFb5b4;
+}
+.bs-callout-warning {
+  background-color: #fefbed;
+  border-color: #f1e7bc;
+}
+.bs-callout-info {
+  background-color: #f0f7fd;
+  border-color: #d0e3f0;
+}
+
+/*
+ * Examples
+ *
+ * Isolated sections of example content for each component or feature. Usually
+ * followed by a code snippet.
+ */
+
+.bs-example {
+  position: relative;
+  padding: 45px 15px 15px;
+  margin: 0 -15px 15px;
+  background-color: #fafafa;
+  box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
+  border-color: #e5e5e5 #eee #eee;
+  border-style: solid;
+  border-width: 1px 0;
+}
+/* Echo out a label for the example */
+.bs-example:after {
+  content: "Example";
+  position: absolute;
+  top:  15px;
+  left: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #bbb;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Tweak display of the code snippets when following an example */
+.bs-example + .highlight {
+  margin: -15px -15px 15px;
+  border-radius: 0;
+  border-width: 0 0 1px;
+}
+
+/* Make the examples and snippets not full-width */
+@media screen and (min-width: 768px) {
+  .bs-example {
+    margin-left: 0;
+    margin-right: 0;
+    background-color: #fff;
+    border-width: 1px;
+    border-color: #ddd;
+    border-radius: 4px 4px 0 0;
+    box-shadow: none;
+  }
+  .bs-example + .highlight {
+    margin-top: -16px;
+    margin-left: 0;
+    margin-right: 0;
+    border-width: 1px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+}
+/*贴子列表*/
+.listpost {
+    width: 297px;
+    height: 250px;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    position: relative;
+    text-align: left;
+    margin-bottom: 5px;
+}
+.module-priority{vertical-align:middle; height:30px; line-height:30px;cursor:pointer;}
+span.module-priority{cursor:default;}
+.module-priority select{vertical-align:middle; width:inherit; margin:0;}
+.module-pic{width:100%;min-height:135px; max-height:250px;overflow:hidden;position:relative;}
+.module-pic .title{position:absolute;top:0;left:2px;bottom:150px;filter:Alpha(opacity=90);width:100%;font-family:arial,宋体b8b\4f53,sans-serif;}
+
+.module-pic img{display:block; min-height:135px; margin:0 auto;width:100%;}
+.module-button{padding:9px 0; height:30px; line-height:30px;}
+.module-button .popover{width:auto;left:auto;top:auto;bottom:0;right:0;margin:0;margin-bottom:55px;line-height:20px;}
+.module-button .popover-content {padding:5px 10px; overflow:hidden;}
+.module-button .popover .arrow{left:85%;}
+.module-button .popover select{width:100%;}
+.module-detail{position:absolute;bottom:0;filter:Alpha(opacity=70);background:#000;background:rgba(0, 0, 0, 0.7);width:100%;font-family:arial,宋体b8b\4f53,sans-serif;}
+.module-detail p{padding:0 9px; margin:0;}
+.module-detail h5{color:#FFF;font-weight:normal;padding:0 9px;}
+.module-detail h5 small,.module-detail p{color:#CCC;}
+p.module-brief{margin-bottom:10px;}
+p.module-description{display:none;padding:3px;}

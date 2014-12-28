@@ -1,0 +1,69 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo create_url('index/module', array('name' => 'ifans', 'do' => 'FansList'))}">粉丝列表</a></li>
+</ul>
+<div class="main">
+	<div class="stat">
+		<div class="stat-div">
+			<div class="navbar navbar-static-top">
+
+			</div>
+			<div class="sub-item" id="table-list">
+				<h4 class="sub-title">详细数据</h4>
+				<form action="" method="post" onsubmit="">
+				<div class="sub-content">
+					<table class="table table-hover">
+						<thead class="navbar-inner">
+							<tr>
+								<th class="row-first"><input type="checkbox" onclick="selectall(this, 'select');" /></th>
+								<th>昵称</th>
+								<th>真实姓名</th>
+								<th>性别</th>
+								<th>openid</th>
+								<th>关注时间</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody >
+							{loop $list $row}
+							<tr>
+								<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+								<td style="text-align:center;"><a href="{php echo create_url('site/module/profile', array('name' => 'fans','from_user' => $row['from_user']))}" title="{$row['nickname']}">{$row['nickname']}</a></td>
+								<td style="text-align:center;">
+									{$row['realname']}
+								</td>
+                                <td style="text-align:center;">{if $row['gender'] == '1'}男{else if $row['gender'] == '2'}女{else} 未知{/if}</td>
+								<td style="text-align:center;font-size:10px;">{$row['from_user']}</td>
+								<td style="font-size:12px;text-align:center;color:#666;">
+									{php echo date('Y-m-d H:i:s', $row['createtime']);}
+								</td>
+								<td style="text-align:center;">
+									<a href="{php echo create_url('site/module/profile', array('name' => 'fans','from_user' => $row['from_user']))}"  target="_blank">编辑</a>
+									<a href="{php echo create_url('site/module/send', array('name' => 'ifans', 'openid' => $row['from_user']))}">联系TA</a>
+								</td>
+							</tr>
+							{/loop}
+							<tr class="search-submit">
+								<td colspan="7">
+									<input type="submit" name="deleteselects" value="删除选中" style="color:red;" class="btn pull-right" onclick="{if(confirm('确定删除选中项吗?')){this.document.formname.submit();return true;}return false;}"/>
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="table">
+						<tr>
+							<td class="row-first"></td>
+							<td>
+								<input type="hidden" name="token" value="{$_W['token']}" />
+							</td>
+						</tr>
+					</table>
+				</div>
+				</form>
+				{$pager}
+			</div>
+		</div>
+	</div>
+</div>
+{template 'common/footer'}

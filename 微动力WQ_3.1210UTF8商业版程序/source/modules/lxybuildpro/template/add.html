@@ -1,0 +1,291 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+	<li{if $_GPC['do'] == 'manager'} class="active"{/if}><a href="{php echo $this->createWeburl('buildlists');}">楼盘管理</a></li>
+	<li{if $_GPC['do'] == 'add'} class="active"{/if}><a href="{php echo $this->createWeburl('add');}">添加楼盘</a>
+</ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="{$item['id']}">
+  <h4>楼盘简介</h4>
+	<table class="tb">
+     <tr>
+		  <th>图文消息标题</th>
+			<td><input type="text" id="title" name="title" value="{$item['title']}"  class="span5" /></td>
+		</tr>
+        <tr>
+			<th><p>图文消息封面</p></th>
+			<td width="600">
+				<div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 180px; height: 100px;"><img src="{if $item['pic']}{$_W['attachurl']}{$item['pic']}{else}{php echo $this->geturl(1);}{/if}" width="180" /><span class="fileupload-preview thumbnail" style="width: 180px; height: 100px;"><span class="help-inline"><span class="maroon"></span></span></span><span style="color:red;">
+					  <input name="pic_old" type="hidden" value="{$item['pic']}" />
+					</span></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择封面</span><span class="fileupload-exists">更改</span><input name="pic" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>						
+				 *封面默认大小720*400</div>
+				</div>
+				<span class="help-block"></span>
+			</td>
+		</tr>
+        <tr>
+			<th height="150">楼盘头部图片</th>
+			<td width="600">
+				<div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 206px; height: 100px;"><img src="{if $item['headpic']}{$_W['attachurl']}{$item['headpic']}{else}{php echo $this->geturl(2);}{/if}" width="206px" /><span class="fileupload-preview thumbnail" style="width: 206px; height: 100px;"><span class="help-inline"><span class="maroon"></span></span></span><span style="color:red;">
+					  <input name="headpic_old" type="hidden" value="{$item['headpic']}" />
+					</span></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="headpic" type="file" />
+						</span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>						
+				  *建议尺寸：宽720像素，高350像素</div>
+				</div>
+				<span class="help-block"></span>
+			</td>
+		</tr>
+        
+        <tr>
+			<th height="150">户型头部图片</th>
+			<td width="600">
+				<div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 206px; height: 100px;"><img src="{if $item['apartpic']}{$_W['attachurl']}{$item['apartpic']}{else}{php echo $this->geturl(3);}{/if}" width="206px" /><span class="fileupload-preview thumbnail" style="width: 206px; height: 100px;"><span class="help-inline"><span class="maroon"></span></span></span><span style="color:red;">
+					  <input name="apartpic_old" type="hidden" value="{$item['apartpic']}" />
+					</span></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="apartpic" type="file" />
+						</span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>						
+				  *建议尺寸：宽720像素，高350像素</div>
+				</div>
+				<span class="help-block"></span>
+			</td>
+		</tr>
+		
+		
+        <tr>
+		  <th>楼盘视频引用URL</th>
+			<td><input type="text" id="video" name="video" value="{$item['video']}"  class="span5" />请指定视频真实URL地址,如http://aa.com/videw/marry.mp4</td>
+		</tr>
+        
+        <tr>
+		  <th>楼盘简介</th>
+			<td><textarea style="height:100px;" class="span7 richtext-clone" name="jianjie" cols="70" id="jianjie">{$item['jianjie']}</textarea></td>
+		</tr>
+        <tr>
+			<th>项目简介</th>
+			<td><p>
+			  <textarea style="height:100px;" class="span7 richtext-clone" name="xiangmu" cols="70" id="xiangmu">{$item['xiangmu']}</textarea>
+			</p></td>
+		</tr>
+        <tr>
+		  <th>交通配套</th>
+			<td><textarea style="height:100px;" class="span7 richtext-clone" name="jiaotong" cols="70" id="jiaotong">{$item['jiaotong']}</textarea></td>
+		</tr>
+<tr>
+			<th>联系电话</th>
+			<td><input type="text" id="tel" name="tel" value="{$item['tel']}"  class="span3" />
+			*该电话用于楼盘首页联系方式导航按钮</td>
+		</tr>
+        <tr>
+		  <th>楼盘地址</th>
+			<td><input type="text" id="addr" name="addr" value="{$item['addr']}"  class="span5" />
+			  *该地址将用于所有地图展示处具体位置描述展现</td>
+		</tr>
+        <tr>
+			<th>地区</th>
+			<td>
+				<select name="resideprovince" id="sel-provance" onChange="selectCity();bmap.searchMapByPCD();" style="width:100px;">
+					<option value="" selected="true">省/直辖市</option>
+				</select>
+				<select name="residecity" id="sel-city" onChange="selectcounty();bmap.searchMapByPCD();" style="width:100px;">
+					<option value="" selected="true">请选择</option>
+				</select>
+				<select name="residedist" id="sel-area" onchange="bmap.searchMapByPCD();" style="width:100px;">
+					<option value="" selected="true">请选择</option>
+				</select>
+				<span class="help-block">先选择地区，可以快速的定位地图位置。</span>
+			</td>
+		</tr>
+                <tr>
+			<th>地图标识</th>
+			<td><div class="input-append"><input type="text" id="jw_addr" name="jw_addr" value="{$item['jw_addr']}"  class="span5" /><button type="button" class="btn" name="mapsubmit" value="搜索" onclick="bmap.searchMapByAddress($('#jw_addr').val())">搜索</button></div>
+		    注意：这个只是模糊定位，准确位置请地图上标注。</td>
+		</tr>
+		<tr>
+			<th><label for="">坐标：</label></th>
+			<td><input type="text" name="lng" id="lng" value="{$item['lng']}"  class="span3" /> - <input type="text" id="lat" name="lat" value="{$item['lat']}"  class="span3" /></td>
+		</tr>
+		
+	  <tr>
+			<th></th>
+			<td><div id="baidumap" style="width:600px; height:500px;"></div></td>
+		</tr>
+	</table>
+
+  <h4>首页底部导航名称设置</h4>
+    <table class="tb">
+    <tr>
+    <th >简介导航显示名称：</th>
+    		<td><input type="text" name="jjname" value="{$item['jjname']}" class="span2" />
+		    * 必填</td>
+             <td></td>
+           
+    </tr>
+    <tr>
+    <th class="span1">相册导航显示名称：</th>
+    		<td><input type="text" name="xcname" value="{$item['xcname']}" class="span2" />
+		    * 必填</td>
+             <td></td>
+    </tr>
+    <tr>
+    <th class="span1">户型导航显示名称：</th>
+    		<td><input type="text" name="hxname" value="{$item['hxname']}" class="span2" />
+		    * 必填</td>
+             <td></td>
+    </tr>
+    <tr>
+    <th class="span1">印象导航显示名称：</th>
+    		<td><input type="text" name="yxname" value="{$item['yxname']}" class="span2" />
+		    * 必填</td>
+             <td></td>
+    </tr>
+    <tr>
+    <th class="span1">新闻导航显示名称：</th>
+    		<td><input type="text" name="xwname" value="{$item['xwname']}" class="span2" />
+   		    <input type="text" name="xwurl" value="{$item['xwurl']}" class="span6"  placeholder="填写新闻链接,站外链接需包含http://"/></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <th class="span1">预约导航显示名称：</th>
+    		<td><input type="text" name="yyname" value="{$item['yyname']}" class="span2" />
+   		    <input type="text" name="yyurl" value="{$item['yyurl']}" class="span6"  placeholder="填写预约链接,站外链接需包含http://"/></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <th class="span1">会员导航显示名称：</th>
+    		<td><input type="text" name="hyname" value="{$item['hyname']}" class="span2" />
+   		    <input type="text" name="hyurl" value="{$item['hyurl']}" class="span6"  placeholder="为空使用默认链接，设置后将跳转到指定链接（注：外部链接需加http://）"/></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <th class="span1">联系导航显示名称：</th>
+    		<td><input type="text" name="lxname" value="{$item['lxname']}" class="span2" />
+		    * 必填</td>
+            <td></td>
+    </tr>
+    <tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+             <td></td>
+		</tr>
+    
+    </table>
+</form>
+
+            
+<script type="text/javascript" src="./resource/script/cascade.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>  
+<script type="text/javascript">
+kindeditor($('#word'));
+cascdeInit('{$item['province']}','{$item['city']}','{$item['dist']}'); //开启地区三级联动
+var bmap = {
+	'option' : {
+		'lock' : false,
+		'container' : 'baidumap',
+		'infoWindow' : {'width' : 250, 'height' : 100, 'title' : ''},
+		'point' : {'lng' : 116.403851, 'lat' : 39.915177}
+	},
+	'init' : function(option) {
+		var $this = this;
+		$this.option = $.extend({},$this.option,option);
+		
+		$this.option.defaultPoint = new BMap.Point($this.option.point.lng, $this.option.point.lat);
+		$this.bgeo = new BMap.Geocoder();
+		$this.bmap = new BMap.Map($this.option.container);
+		$this.bmap.centerAndZoom($this.option.defaultPoint, 15);
+		$this.bmap.enableScrollWheelZoom();
+		$this.bmap.enableDragging();
+		$this.bmap.enableContinuousZoom();
+		$this.bmap.addControl(new BMap.NavigationControl());
+		$this.bmap.addControl(new BMap.OverviewMapControl());
+		//添加标注
+		$this.marker = new BMap.Marker($this.option.defaultPoint);
+		$this.marker.setLabel(new BMap.Label('请您移动此标记，选择您的坐标！', {'offset':new BMap.Size(10,-20)}));
+		$this.marker.enableDragging();
+		$this.bmap.addOverlay($this.marker);
+		//$this.marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+		$this.showPointValue($this.marker.getPosition());
+		//拖动地图事件
+		$this.bmap.addEventListener("dragging", function() {
+			$this.setMarkerCenter();
+			$this.option.lock = false;
+		});
+		//缩入地图事件
+		$this.bmap.addEventListener("zoomend", function() {
+			$this.setMarkerCenter();
+			$this.option.lock = false;
+		});
+		//拖动标记事件
+		$this.marker.addEventListener("dragend", function (e) {
+			$this.showPointValue();
+			$this.showAddress();
+			$this.bmap.panTo(new BMap.Point(e.point.lng, e.point.lat));
+			$this.option.lock = false;
+			$this.marker.setAnimation(null);
+		});
+	},
+	'searchMapByAddress' : function(address) {
+		var $this = this;
+		 $this.bgeo.getPoint(address, function (point) {
+			if (point) {
+				$this.showPointValue();
+				$this.showAddress();
+				$this.bmap.panTo(point);
+				$this.setMarkerCenter();
+			}
+		});
+	},
+	'searchMapByPCD' : function(address) {
+		var $this = this;
+		$this.option.lock = true;
+		$this.searchMapByAddress($('#sel-provance').val()+$('#sel-city').val()+$('#sel-area').val());
+	},
+	'setMarkerCenter' : function() {
+		var $this = this;
+		var center = $this.bmap.getCenter();
+		$this.marker.setPosition(new BMap.Point(center.lng, center.lat));
+		$this.showPointValue();
+		$this.showAddress();
+	},
+	'showPointValue' : function() {
+		var $this = this;
+		var point = $this.marker.getPosition();
+		$('#lng').val(point.lng);
+		$('#lat').val(point.lat);
+	},
+	'showAddress' : function() {
+		var $this = this;
+		var point = $this.marker.getPosition();
+		$this.bgeo.getLocation(point, function (s) {
+			if (s) {
+				$('#jw_addr').val(s.address);
+				if (!$this.option.lock) {
+					cascdeInit(s.addressComponents.province,s.addressComponents.city,s.addressComponents.district);
+				}
+			}
+		});
+	}
+};
+$(function(){
+	var option = {};
+	{if !empty($item['lng']) && !empty($item['lat'])}
+	option = {'point' : {'lng' : '{$item['lng']}', 'lat' : '{$item['lat']}'}}
+	{/if}
+	bmap.init(option);
+});
+</script>
+
+{template 'common/footer'}

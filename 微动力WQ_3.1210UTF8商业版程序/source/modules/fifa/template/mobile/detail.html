@@ -1,0 +1,171 @@
+{template 'header'}
+<link type="text/css" rel="stylesheet" href="./source/modules/fifa/style/base.css" />
+<link type="text/css" rel="stylesheet" href="./source/modules/fifa/style/style.css?v=1" />
+<style>
+.bet-icon {
+	display:inline-block;
+	height:85px;
+	width:85px;
+	background:url(./source/modules/fifa/images/big-logo.png) no-repeat;
+	_background-image:url(./source/modules/fifa/images/big-logo.png)
+}
+
+.big-logo-1 {	background-position:0 0}
+.big-logo-2 {	background-position:-85px 0}
+.big-logo-3 {	background-position:-169px 0}
+.big-logo-4 {	background-position:-255px 1px}
+.big-logo-5 {	background-position:-340px 1px}
+.big-logo-6 {	background-position:-425px 0}
+.big-logo-7 {	background-position:-510px 1px}
+.big-logo-8 {	background-position:-595px 0}
+.big-logo-9 {	background-position:0 -85px}
+.big-logo-10 {	background-position:-85px -85px}
+.big-logo-11 {	background-position:-170px -85px}
+.big-logo-12 {	background-position:-255px -85px}
+.big-logo-13 {	background-position:-340px -85px}
+.big-logo-14 {	background-position:-424px -85px}
+.big-logo-15 {	background-position:-510px -85px}
+.big-logo-16 {background-position:-595px -85px}
+.big-logo-17 {	background-position:0 -170px}
+.big-logo-18 {	background-position:-85px -170px}
+.big-logo-19 {	background-position:-170px -170px}
+.big-logo-20 {	background-position:-255px -170px}
+.big-logo-21 { background-position:-340px -170px}
+.big-logo-22 {	background-position:-425px -170px}
+.big-logo-23 {	background-position:-510px -170px}
+.big-logo-24 {	background-position:-595px -170px}
+.big-logo-25 {	background-position:0 -255px}
+.big-logo-26 {	background-position:-85px -255px}
+.big-logo-27 {	background-position:-170px -255px}
+.big-logo-28 {	background-position:-255px -255px}
+.big-logo-29 {	background-position:-340px -255px}
+.big-logo-30 {	background-position:-425px -255px}
+.big-logo-31 {	background-position:-510px -255px}
+.big-logo-32 {	background-position:-595px -255px}
+.big-logo-default {	background-position:-469px -348px}
+.big-logo-vs{}
+
+.chart {
+        list-style: none;
+        font-family: '宋体';
+        font-size: 14px;
+        margin: 0;
+		width:100%
+      }
+      .chart li {
+        width:33.33%;
+        height:140px;
+        float:left;
+        background:#fff url(./source/modules/fifa/images/o_pillar.gif) center center repeat-y;
+      }
+      .chart li em,  .chart li span,.chart li strong {
+        display:block;
+        height:20px;
+        text-align:center;
+      }
+      .chart li em,  .chart li strong{
+		font-style:normal;
+        background: #fff;
+      }
+      .chart li span {
+        height:100px;
+        background:transparent url(./source/modules/fifa/images/o_mask.jpg)  no-repeat;
+      }
+
+</style>
+
+	<section class="stay">
+	<section class="order_content">
+            <section class="order_item">
+		<a href="{php echo $this->createMobileUrl('mybeat')}"><aside>我的积分：{$profile['credit1']}</aside></a>
+            </section>
+        </section>
+    	<!--content-->
+		<form action="" method="post"  onsubmit="return check(this)">
+        <section class="stay_content">
+			
+        	<!--box-->
+            <section class="stay_box">
+			
+			<aside class="stay_title">小组赛第一轮 A组</aside>
+                <article class="stay_main">
+                    <p class="stay_banner">
+					
+					</p>
+			        <!--item-->
+                    <section class="stay_item">
+                        <section class="stay_item_f fl">
+                            <section class="stay_lump" style="text-align:center;">
+                               <label for="big-logo-{$race_detail['groupa']}"> 
+							   <span class="bet-icon big-logo-{$race_detail['groupa']}"></span></label><br />
+							   <input type="radio" id="big-logo-{$race_detail['groupa']}" name="whowin" value="{$race_detail['groupa']}">{$race_detail['teama']}
+                               
+								
+                            </section>
+                        </section>
+                        <section class="stay_item_f fl">
+                            <section class="stay_lump" style="text-align:center;">
+                               <label for="flag_baxi"> <span class="bet-icon big-logo-default"></span></label><br />
+							   <input type="radio" id="flag_baxi" name="whowin" value="0">打平
+                               
+                            </section>
+                        </section>
+                        <section class="stay_item_f fl">
+                            <section class="stay_lump" style="text-align:center;">
+                              
+                              <label for="big-logo-{$race_detail['groupb']}">  <span class="bet-icon big-logo-{$race_detail['groupb']}"></span></label><br />
+							  <input type="radio" id="big-logo-{$race_detail['groupb']}" name="whowin"  value="{$race_detail['groupb']}">{$race_detail['teamb']}
+                            </section>
+                        </section>
+                    </section>
+		    <section class="stay_item">		   
+                        
+ 		    </section>
+                    <!--item end-->
+	                
+					<section style="height:80px;">
+					  
+
+    <ul class="chart">
+      <li><span style="background-position: center -{$teamas}px"></span><strong>{$teamas}%</strong><strong>{$teama}</strong></li>
+      <li><span style="background-position: center -{$team0s}px"></span><strong>{$team0s}%</strong><strong>{$team0}</strong></li>
+      <li><span style="background-position: center -{$teambs}px"></span><strong>{$teambs}%</strong><strong>{$teamb}</strong></li>
+      
+    </ul>	
+					</section>
+					<section class="fl">
+                            <section class="stay_lump">
+                                <span class="stay_lump_l">截止投注日期：</span>
+                                <p class="stay_lump_r"><span>{$race_detail['racedate']}</span></p>
+                            </section>
+                        </section>
+                   <section class="reserve_btn_box" style="margin-bottom:40px;">
+                      {if $isbeat}
+						<span class="btn  btn-large" style="width:100%;" >你已投注过</span>
+                    
+					  {else}
+						<button type="submit" class="btn btn-success btn-large" style="width:100%;" name="submit" value="提交">确定下注</button>
+                    
+						{/if}
+					</section>
+                    <!--btn end-->
+					<input type="hidden" name="token" value="{$_W['token']}" />
+                </article>
+				
+            </section>
+            <!--box end-->
+		</form >	
+        </section>
+        <!--content end-->
+    </section>
+	<script type="text/javascript">
+			function check(form) {
+				if (!form['whowin'].value) {
+					alert('请选择那个队赢或打平！');
+					return false;
+				}
+				
+				return true;
+			}
+		</script>
+{template 'footer'}

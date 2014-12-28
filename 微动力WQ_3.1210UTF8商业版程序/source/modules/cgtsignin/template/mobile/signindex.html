@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
+<meta name="format-detection" content="telephone=no"><title></title>
+<link href="{RES}/css/style_sign2.css" rel="stylesheet" type="text/css">
+<link href="{RES}/css/sprites.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{RES}/js/jquery.js"></script><script type="text/javascript" src="{RES}/js/jquery.swipebox.js"></script>
+<script type="text/javascript" src="{RES}/js/snap.js"></script><script type="text/javascript" src="{RES}/js/custom.js"></script>
+<script type="text/javascript" src="{RES}/js/framework.launcher.js"></script>
+</head><body><div id="preloader" style="display: none; "><div id="status" style="display: none; "><p class="center-text">数据正在玩命加载...</p></div></div><div class="wrap"><div class="content_box rit_bg" id="content" style=""><div class="rit_box">
+<div class="rit_main" style="background: url({$_W['attachurl']}{$row['thumb']}) center top no-repeat;background-size: 320px 158px;"><div class="rit_pos">
+<div class="rit_list"><a href="{php echo $this->createMobileUrl('signinfo',array('rid'=>$rid))}">查看签到</a></div>
+<script type="text/javascript">
+
+</script>
+</div></div></div><div class="min_box"><div class="rit_info_main"><div class="rit_info_box"><div class="rit_info_box_tit">签到信息</div><div class="rit_info_box_txt">                                
+您已成功签到<span>{$continuedays}</span>天
+                                <p>还有{$leftdays}天就可以领到奖品，继续保持啊！</p></div></div></div><div class="rit_info_main"><div class="rit_info_box">
+                                <div class="rit_info_box_tit">奖项说明</div>
+                                {php echo htmlspecialchars_decode($row['awardrules'])}
+       
+                             </div></div>
+<div class="rit_info_main"><div class="rit_info_box">
+<div class="rit_info_box_tit">签到说明</div>
+          {php echo htmlspecialchars_decode($row['awardinfo'])}
+
+</div></div></div></div></div><script type="text/javascript">           
+</script></body></html>

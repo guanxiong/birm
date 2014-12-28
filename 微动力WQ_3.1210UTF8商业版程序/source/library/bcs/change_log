@@ -1,0 +1,64 @@
+PHP-SDK ChangeLog
+
+version - 1.0.1.6
+1. 支持在各api中设置curlopt
+2. 更新sample代码，添加捕获异常的示例
+3. 更新sample代码，添加在代码传入 curlopt的示例
+
+version - 1.0.1.2 1.0.1.3 1.0.1.4 1.0.1.5
+1. 按bae环境需求，修改变量注入的相关代码
+
+version - 1.0.1.0
+1. 兼容bae环境的调整，api文件放在统一目录中，为避免文件名和class名重复
+类名更新：
+./libs/requestcore/requestcore.class.php
+	RequestCore -> BCS_RequestCore
+	ResponseCore -> BCS_ResponseCore
+	RequestCore_Exception -> BCS_RequestCore_Exception
+./utils/mimetypes.class.php
+	MimeTypes->BCS_MimeTypes
+	
+文件内容更新：
+./bcs.class.php
+	RequestCore -> BCS_RequestCore
+	ResponseCore -> BCS_ResponseCore
+	RequestCore_Exception -> BCS_RequestCore_Exception
+	
+	
+version - 1.0.0.10
+1. 发布版本
+
+version - 1.0.0.9
+1. 适配bae环境，bae注入的云存储host变量，以 $_SERVER ['HTTP_BAE_ENV_ADDR_BCS'] 方式提取 
+
+version - 1.0.0.8
+1. 去除不合适的传引用
+2. 增加适配bae环境的处理。BaiduBCS类可以从bae环境变量中读取ak,sk和host参数
+3. set_time_limit 加了错误抑制前缀，因bae环境把该函数封禁，避免打warning日志
+
+version - 1.0.0.7
+1. 去除create_object_by_content接口中默认携带 Content-Disposition的Header的代码
+
+version - 1.0.0.6&1.0.0.5
+1. 升级兼容bae环境的sdk，用户无需替换标准版sdk和bae环境版
+
+version - 1.0.0.4
+1. 去除 create_object 时候，默认携带 Content-Disposition 的代码
+
+version - 1.0.0.3
+1. 修改注释
+
+version - 1.0.0.2
+1. 增加两个函数来处理含有中文和特殊字符的array转json的操作
+对put_object_policy  put_bucket_policy create_object_superfile三处用到json_encode的代码进行了替换，替换为array_to_json($array)
+增加的函数为：
+private static function array_recursive(&$array, $function, $apply_to_keys_also = false)
+private static function array_to_json($array)
+
+version - 1.0.0.1
+1. 去除create_dir和delete_dir接口，这两个接口不开放给用户
+2. 调整所有BS名称为BCS
+3. 调整php sdk代码的字符集为 UTF-8
+
+version - 1.0.0.0
+1. 调整对外开放版本 first tag

@@ -1,0 +1,178 @@
+{template 'header'}
+ <div id="main">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="box">
+                        <div class="box-title">
+                            <div class="span10">
+                                <h3><i class="icon-edit"></i>查看订单</h3>
+                            </div>
+                            <div class="span2"><a class="btn" href="Javascript:window.history.go(-1)">返回</a></div>
+                        </div>
+
+                        <div class="box-content">
+                            <ul id="myTab" class="nav nav-tabs">
+                                <li class="active"><a href="#div1" data-toggle="tab">基本信息</a></li>
+                                <li class=""><a href="#div2" data-toggle="tab">商品信息</a></li>
+                                <li class=""><a href="#div3" data-toggle="tab" >支付信息</a></li>
+                                <li class=""><a href="#div4" data-toggle="tab">SN码信息</a></li> 
+                            </ul>
+                            <div class="tab-content form-horizontal form-validate">
+                                <div id="div1" class="tab-pane fade active in">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <div class="control-group">
+                                            <label for="name" class="control-label">订单状态:</label>
+                                            <div class="controls">{if $row['status']==-1}已取消
+													{elseif $row['status']==0}已下单
+													{elseif $row['status']==1}已付款
+													{elseif $row['status']==2}已完成
+													{/if}                                         </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label for="name" class="control-label">订单编号：</label>
+                                            <div class="controls">{$row['ordersn']}</div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">订单总金额：</label>
+                                            <div class="controls">
+                                                ￥{$row['totalprice']}元
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">会员手机号：</label>
+                                            <div class="controls">{$row['mobile']}                                           </div>
+                                        </div>
+                                    </div>
+                                    <div class="span6">
+                                        <div class="control-group">
+                                            <label for="name" class="control-label">下单时间：</label>
+                                            <div class="controls">{php echo date('Y-m-d H:i:s',$row['createtime'])}      </div>
+											
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">支付方式：</label>
+                                            <div class="controls">
+											{if $row['paytype']==1}
+												余额支付
+											{elseif $row['paytype']==2}
+												在线支付
+											{elseif $row['paytype']==3}
+												到店支付
+											{else}
+												未选择支付方式
+											{/if}
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">成交时间：</label>
+                                            <div class="controls">
+                                                {if $row['usedtime']>0}{php echo date('Y-m-d H:i:s',$row['usedtime'])}{/if}  </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <div id="div2" class="tab-pane fade">
+                                    <table id="listTable" class="table table-bordered table-hover dataTable">
+
+                                        <thead>
+                                            <tr>
+                                                <th>团购名称</th>
+                                                <th>单价</th>
+                                                <th>数量</th>
+                                            </tr>
+                                        </thead>
+                                                                                <tr>
+                                            <td>下订单</td>
+
+                                            <td class="controls red">
+                                                        ￥{$row['totalprice']}元
+                                                    </td>
+                                            <td>{$row['totalnum']}</td>
+                                        </tr>
+                                                                            </table>
+                                </div>
+                                <div id="div3" class="tab-pane fade">
+                                   
+                                        <div class="control-group">
+                                            <label class="control-label">订单总金额：</label>
+                                            <div class="controls red">
+                                                ￥{$row['totalprice']}元
+                                            </div>
+                                        </div>
+                                           <!--
+                                           <div class="control-group">
+                                                    <label class="control-label">会员特权：</label>
+                                                    <div class="controls">
+                                                       会员等级8折
+                                                    </div>
+                                                </div>
+                                              <div class="control-group">
+                                                    <label class="control-label">会员卡余额支付：</label>
+                                                    <div class="controls">
+                                                       会员等级8折
+                                                    </div>
+                                                </div>
+                                            -->
+                                         <div class="control-group">
+                                                    <label class="control-label">支付方式：</label>
+                                                    <div class="controls">
+                                                       {if $row['paytype']==1}
+															余额支付
+														{elseif $row['paytype']==2}
+															在线支付
+														{elseif $row['paytype']==3}
+															到店支付
+														{else}
+															未选择支付方式
+														{/if}
+                                                    </div>
+                                                </div>
+                                            <div class="control-group">
+                                                    <label class="control-label">支付金额：</label>
+                                                    <div class="controls red">
+                                                       {if $row['status']>0}￥{$row['totalprice']}元{else}未支付{/if}
+                                                    </div>
+                                                </div>
+											<div class="control-group">
+												<label class="control-label">支付时间：</label>
+												<div class="controls red">
+												   {if $row['paytime']>0}{php echo date('Y-m-d H:i:s',$row['paytime'])}{/if}
+												</div>
+											</div>												
+                                </div>
+                                <div id="div4" class="tab-pane fade">
+                                     <table  class="table table-bordered table-hover dataTable">
+    <thead>
+                                            <tr>
+                                                <th>SN码</th>
+                                                <th class="input-medium">状态</th>
+                                               
+                                            </tr>
+                                        </thead>
+                                                                                                                        <tr>
+                                            <td>{$row['secretsn']}</td> 
+                                            <td>{if $row['used']==1}
+												未使用
+												{/if} 
+												</td> 
+                                        </tr>
+                                                                                                                    </table>
+                                </div>
+                               
+                                <div class="form-actions">
+                                            <button type="button" class="btn" onclick="window.location='order.html'">返回</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

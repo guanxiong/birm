@@ -1,0 +1,59 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li{if $_GPC['do'] == 'classlist'} class="active"{/if}><a href="{php echo  $this->createWebUrl('classlist');}">产品分类</a></li>
+		<li{if $_GPC['do'] == 'classadd'} class="active"{/if}><a href="{php echo $this->createWebUrl('classadd');}">添加分类</a></li>
+	</ul>
+	<div class="search">
+		<form action="{php echo $this->createWeburl('classlist')}" method="get">
+		  <table class="table table-bordered tb">
+			<tbody>
+				<tr class="span6">
+					<th class="span2">分类标题</th>
+					<td class="span2">
+						<input class="span2" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+					</td>
+                    <td class="span2">
+                    <button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button>
+                    </td>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<p>
+        <a href="{php echo $this->createWeburl('classadd', array())}"  class="btn"><i class="icon-plus-sign-alt" ></i>新增分类</a>
+        </p>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th width="85"  >标题</th>
+					<th width="85" >图片</th>
+					<th width="85" >是否可用</th>
+					<th width="100">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['cname']}</td>
+					<td><img style="width: 130px;" src="{php echo $_W['attachurl'].$item['thumb']}"></td>
+					<td><span class="label">{if $item['isshow']}显示{else}隐藏{/if}</span></td>
+					<td>
+                
+                    <a href="{php echo $this->createWebUrl('classadd', array('id' => $item['id']))}" class="btn btn-small" title="编辑"><i class="icon-edit"></i></a>
+						<a onclick="return confirm('确认删除该分类？');return false;" href="{php echo $this->createWebUrl('deleteclass', array('id' => $item['id']))}" class="btn btn-small" title="删除"><i class="icon-remove"></i></a></td>
+				</tr>
+				{/loop}
+
+				<td colspan="7">
+					<input name="token" type="hidden" value="{$_W['token']}" />
+					<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+				</td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</div>
+{template 'common/footer'}

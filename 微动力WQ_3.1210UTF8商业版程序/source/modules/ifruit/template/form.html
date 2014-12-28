@@ -1,0 +1,131 @@
+<link href="./source/modules/ifruit/template/css/bootstrap-switch.css?v={TIMESTAMP}" rel="stylesheet"  type="text/css"/>
+
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">水果达人</h4>
+	<table>
+		<tbody>
+            {if !empty($reply)}
+            <tr>
+                <th>详细设置</th>
+                <td>
+                    <a class="btn" href="{php echo create_url('site/module', array('do' => 'detail', 'name' => 'ifruit', 'rid' => $reply['rid']))}"><i class="icon-cog"></i> 活动详细设置</a>
+                    <a class="btn" href="{php echo create_url('site/module', array('do' => 'snlist', 'name' => 'ifruit', 'rid' => $reply['rid']))}"><i class="icon-cog"></i> SN码管理</a>
+                    <a class="btn" href="{php echo create_url('site/module', array('do' => 'award', 'name' => 'ifruit', 'rid' => $reply['rid']))}"><i class="icon-trophy"></i> 奖品设置</a>
+                </td>
+            </tr>
+            {/if}
+            <tr>
+                <th>活动名称</th>
+                <td>
+                    <input type="text" value="{if !empty($reply['title'])}{$reply['title']}{else}水果达人活动开始了{/if}" class="span7" name="title">
+                    <div class="help-block">请不要多于50字!</div>
+                </td>
+            </tr>
+            <tr>
+                <th>活动简介</th>
+                <td>
+                    <textarea style="height:60px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+                    <div class="help-block">用于图文显示的简介</div>
+                </td>
+            </tr>
+			<tr>
+				<th>活动图片</th>
+				<td>
+					<div id="" class="uneditable-input reply-edit-cover">
+						<div class="detail">
+							<span class="pull-right">大图片建议尺寸：700像素 * 300像素</span>
+							<input type="button" id="picture" fieldname="picture" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+							<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'picture_value')" style="{if empty($reply['picture'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+						</div>
+						{if !empty($reply['picture'])}
+						<input type="hidden" name="picture_old" value="{$reply['picture']}">
+						<div id="upload-file-view" class="upload-view">
+							<input type="hidden" id="picture_value" value="{$reply[picture]}">
+							<img width="100" src="{$_W['attachurl']}{$reply['picture']}">
+						</div>
+						{else}
+						<div id="upload-file-view"></div>
+						{/if}
+					</div>
+                    <div class="help-block">用于图文显示的图片,不上传显示默认图片.</div>
+				</td>
+			</tr>
+            <tr>
+                <th>活动时间</th>
+                <td>
+                    <link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css?v={TIMESTAMP}" />
+                    <script type="text/javascript" src="./resource/script/daterangepicker.js?v={TIMESTAMP}"></script>
+                    <input name="starttime" type="hidden" value="{php echo date('Y-m-d H:i', $starttime)}" />
+                    <input name="endtime" type="hidden" value="{php echo date('Y-m-d H:i', $endtime)}" />
+                    <button class="btn" id="date-range" class="date" type="button"><span class="date-title">{php echo date('Y-m-d H:i:s', $starttime)} 至 {php echo date('Y-m-d  H:i:s', $endtime)}</span> <i class="icon-caret-down"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <th>活动结束主题</th>
+                <td>
+                    <input type="text" value="{if !empty($reply['title_end'])}{$reply['title_end']}{else}水果达人活动活动已经结束了{/if}" class="span7" name="title_end">
+                    <div class="help-block">请不要多于50字!</div>
+                </td>
+            </tr>
+            <tr>
+                <th>活动结束说明</th>
+                <td>
+                    <textarea style="height:60px;" name="description_end" class="span7" cols="60">{if !empty($reply['description_end'])}{$reply['description_end']}{else}亲，活动已经结束，请继续关注我们的后续活动哦。{/if}</textarea>
+                    <div class="help-block">用于图文显示的简介</div>
+                </td>
+            </tr>
+            <tr>
+                <th>活动结束图片</th>
+                <td>
+                    <div id="" class="uneditable-input reply-edit-cover">
+                        <div class="detail">
+                            <span class="pull-right">大图片建议尺寸：700像素 * 300像素</span>
+                            <input type="button" id="picture_end" fieldname="picture_end" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+                            <button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'picture_end_value')" style="{if empty($reply['picture'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+                        </div>
+                        {if !empty($reply['picture_end'])}
+                        <input type="hidden" name="picture_end_old" value="{$reply['picture_end']}">
+                        <div id="upload-file-view" class="upload-view">
+                            <input type="hidden" id="picture_end_value" value="{$reply[picture_end]}">
+                            <img width="100" src="{$_W['attachurl']}{$reply['picture_end']}">
+                        </div>
+                        {else}
+                        <div id="upload-file-view"></div>
+                        {/if}
+                    </div>
+                    <div class="help-block">用于图文显示的图片,不上传显示默认图片.</div>
+                </td>
+            </tr>
+		</tbody>
+	</table>
+</div>
+<script type="text/javascript">
+kindeditor($('#rule'));
+kindeditorUploadBtn($('#picture'));
+kindeditorUploadBtn($('#picture_end'));
+
+$('#date-range').daterangepicker({
+    format: 'YYYY-MM-DD H:m',
+    startDate: $(':hidden[name=starttime]').val(),
+    endDate: $(':hidden[name=endtime]').val(),
+    startTime:$(':hidden[name=starttime]').val(),
+    endTime:$(':hidden[name=endtime]').val(),
+    locale: {
+        applyLabel: '确定',
+        cancelLabel: '取消',
+        fromLabel: '从',
+        toLabel: '至',
+        weekLabel: '周',
+        customRangeLabel: '日期范围',
+        daysOfWeek: moment()._lang._weekdaysMin.slice(),
+        monthNames: moment()._lang._monthsShort.slice(),
+        firstDay: 0
+    }
+}, function(start, end){
+    $('#date-range .date-title').html(start.format('YYYY-MM-DD H:m') + ' 至 ' + end.format('YYYY-MM-DD H:m'));
+    $(':hidden[name=starttime]').val(start.format('YYYY-MM-DD H:m'));
+    $(':hidden[name=endtime]').val(end.format('YYYY-MM-DD H:m'));
+});
+</script>

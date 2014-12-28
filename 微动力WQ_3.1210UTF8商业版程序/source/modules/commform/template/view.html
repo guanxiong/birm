@@ -1,0 +1,39 @@
+{php global $_W,$_GPC;}
+{template 'common/header'}
+<link href="./source/modules/commform/template/style/style.css" rel="stylesheet" type="text/css">
+<body>
+<div id="wp" >
+ <!--中间内容-->  
+	<div class="msgWrap"  widht="80%">
+		<form method="post" action="{php echo create_url('site/module', array('do' => 'showformfields', 'name' => 'commform','fid'=>$_GET['fid'],'fn'=>$fn))}" id="info">
+			<div align="center"><h4>{$fn}</h4></div>	
+			<table class="ListProduct" border="0" cellspacing="0" cellpadding="0" >
+				<thead>
+				<tr>
+				<th width="8%">序号</th>
+				{loop $colums $key=>$val}
+					<th width="{php echo 80/(count($colums))}%">{$val}</th>
+				{/loop}
+				<th width="12%">日期</th>
+				</tr>
+				</thead>
+				<tbody>
+				{loop $list $row}					
+					<tr>	
+					<td align="center">{$row['id']}</td>	
+					{loop $colums $key=>$val}			
+						<td align="center">{$row[$key]}</td>
+					{/loop}
+					<td align="center">{$row['time']}</td>					
+					</tr>
+				{/loop}
+				</tbody>
+			</table>
+		</form>
+	</div>
+	<div class="cLine">
+	<div class="pageNavigator right">
+		<div class="pages">{$pager}</div>
+	</div>
+{template 'common/footer'}
+

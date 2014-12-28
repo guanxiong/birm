@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="./source/modules/we7car/style/css/reset.css" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/we7car/style/css/common1.css" media="all" />
+<script type="text/javascript" src="./source/modules/we7car/style/js/jquery152_min.js"></script>
+<script type="text/javascript" src="./source/modules/we7car/style/js/jquery_easing.js"></script>
+<script type="text/javascript" src="./source/modules/we7car/style/js/com_clanmo_gallery_min.js"></script>
+<title>车主关怀</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+        <!-- Mobile Devices Support @begin -->
+            <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+            <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+            <meta content="no-cache" http-equiv="pragma">
+            <meta content="0" http-equiv="expires">
+            <meta content="telephone=no, address=no" name="format-detection">
+            <meta content="width=device-width, initial-scale=1.0" name="viewport">
+            <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <!-- Mobile Devices Support @end -->
+        <style>
+            img{width:100%!important;}
+        </style>
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;">
+        <style>
+.masklayer{display:none;}
+.on {z-index: 1999;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0,0,0,0.3);text-align: right;display:block;}
+</style>
+<body class="portrait">
+	<div class="top">
+		<div class="stage_container relative">
+			<div class="ofh relative">
+					<ul class="">
+						<li>
+							<img alt="" src="{$head_pic}" style="width:100%;max-height:480px;"/>
+						</li>
+					</ul>
+					<ol style="position:absolute;line-height:25px;bottom:0;z-index:10;width:100%;background:rgba(0,0,0,0.2);padding:5px 10px;color:#fff;">
+						<p>车牌号：{$guan['car_no']}</p>
+						<p>车系车型：{$guan['car_model']}{$guan['car_series']}</p>
+					</ol>
+			</div>
+		</div>
+	</div>
+		<div class="main" style="padding-top: 10px;">
+			<ul class="car_detail">
+				{if empty($guan) }
+				<div style="margin:5px;border: 1px solid #ccc;line-height:35px;text-indent:10px;border-radius:5px;background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#eee));-webkit-box-shadow: 0 1px 1px #fff;">
+					<a href="{php echo create_url('mobile/module', array('do' => 'Guanhuai','op'=>'caredit', 'name' => 'we7car', 'weid' => $weid,'from_user'=>$from_user))}" style="color:#666;display:block;text-align:center;">添加您的爱车信息</a>
+				</div>
+				<div class="careInfo">
+					<p>添加爱车信息，享受车主关怀</p>
+					<p>关怀1：爱车保养信息和下次保养提醒</p>
+					<p>关怀2：爱车保险信息和下次保险提醒</p>
+					<p>关怀3：爱车年检信息和下次年检提醒</p>
+				</div>
+				{else}
+				<div style="margin:5px;border: 1px solid #ccc;line-height:35px;text-indent:10px;border-radius:5px;background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#eee));-webkit-box-shadow: 0 1px 1px #fff;">
+					<a href="{php echo create_url('mobile/module', array('do' => 'Guanhuai','op'=>'caredit', 'name' => 'we7car', 'weid' => $weid,'from_user'=>$from_user))}" style="color:#666;display:block;text-align:center;">修改您的爱车信息</a>
+				</div>
+				<div>
+					<ul class="list3">
+						<li>
+							<div>
+								<p>下次保养</p>
+								<p><img src="./source/modules/we7car/style/img/repare.png" /></p>
+								<p>{$guan['time1']}</p>
+							</div>
+						</li>
+						<li>
+							<div>
+								<p>下次保险</p>
+								<p><img src="./source/modules/we7car/style/img/care.png" /></p>
+								<p>{$guan['time2']}</p>
+							</div>
+						</li>
+						<li>
+							<div>
+								<p>下次年检</p>
+								<p><img src="./source/modules/we7car/style/img/check.png" /></p>
+								<p>{$guan['time3']}</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+				{/if}
+				<li class="box group_btn">
+					<div><a href="{php echo  create_url('mobile/module', array('do' => 'Yuyue','yytype'=>2, 'name' => 'we7car', 'weid' => $weid,'from_user' =>$from_user))}" class="gray">预约保养</a></div>
+					<div><a href="{php echo  create_url('mobile/module', array('do' => 'Kefu', 'name' => 'we7car', 'weid' => $weid,'from_user' =>$from_user))}" class="gray">联系销售</a></div>
+				</li>
+			</ul>
+		</div>
+		<footer style="text-align:center;line-height:20px;">&copy;{if empty($_W['account']['name'])}微动力团队{else}{$_W['account']['name']}{/if}</footer>
+		<footer class="nav_footer">
+				<ul class="box">
+					<li><a href="javascript:history.go(-1);" >返回</a></li>
+					<li><a href="javascript:history.go(1);" >前进</a></li>
+					<li><a href="{php echo 	create_url('mobile/channel', array('name' => 'index', 'weid' => $_W['weid']))}">首页</a></li>
+					<li><a href="javascript:location.reload();" >刷新</a></li>
+				</ul>
+		</footer>
+	</body>
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	// window.shareData = {  
+	//     "imgUrl": "#", 
+	//     "timeLineLink": "#",
+	//     "sendFriendLink": "#",
+	//     "weiboLink": "#",
+	//     "tTitle": "车主关怀",
+	//     "tContent": "养护持久活力，永续盎然生机。",
+	//     "fTitle": "车主关怀",
+	//     "fContent": "养护持久活力，永续盎然生机。",
+	//     "wContent": "养护持久活力，永续盎然生机。" 
+	// };
+	// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+	WeixinJSBridge.invoke('sendAppMessage', { 
+		"img_url": window.shareData.imgUrl,
+		"img_width": "640",
+		"img_height": "640",
+		"link": window.shareData.sendFriendLink,
+		"desc": window.shareData.fContent,
+		"title": window.shareData.fTitle
+	}, function (res) {
+		_report('send_msg', res.err_msg);
+	})
+	});
+
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function (argv) {
+	WeixinJSBridge.invoke('shareTimeline', {
+		"img_url": window.shareData.imgUrl,
+		"img_width": "640",
+		"img_height": "640",
+		"link": window.shareData.timeLineLink,
+		"desc": window.shareData.tContent,
+		"title": window.shareData.tTitle
+	}, function (res) {
+		_report('timeline', res.err_msg);
+		});
+	});
+
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function (argv) {
+		WeixinJSBridge.invoke('shareWeibo', {
+			"content": window.shareData.wContent,
+			"url": window.shareData.weiboLink,
+		}, function (res) {
+			_report('weibo', res.err_msg);
+		});
+		});
+	}, false)
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('hideToolbar');
+});	
+</script>
+<div mark="stat_code" style="width:0px; height:0px; display:none;"></div>
+</body>
+</html>

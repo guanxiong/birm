@@ -1,0 +1,208 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="./source/modules/icard/template/css/card.css" media="all">
+    <link rel="stylesheet" type="text/css" href="./source/modules/icard/template/css/datepicker.css" media="all">
+    <script type="text/javascript" src="./source/modules/icard/template/js/zepto.js"></script>
+    <script type="text/javascript" src="./source/modules/icard/template/js/jQuery.js"></script>
+    <script type="text/javascript" src="./source/modules/icard/template/js/bootstrap_datepicker_card.js"></script>
+    <title>个人资料</title>
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body id="carduser" ondragstart="return false;" onselectstart="return false;">
+    <section class="body">
+    <div class="qiandaobanner">
+        <img src="./source/modules/icard/template/themes/1/user.jpg">
+    </div> 
+    <div class="cardexplain">
+        <ul class="round">
+        <form action="javascript:;" method="post">
+            <li class="title mb"><span class="none">会员资料</span></li>
+            <li class="nob">
+                <input type="hidden" name="formhash" id="formhash" value="bc1ddbf9">
+                <input type="hidden" name="key" id="key" value="53998">
+                <input type="hidden" name="id" id="id" value="5011">
+                <input type="hidden" name="wechatid" id="wechatid" value="ojTGBjqFVmNHYOYIECobiqzTksRQ">
+                <input type="hidden" name="pid" id="pid" value="32597">
+                <input type="hidden" name="bid" id="bid" value="60865">
+            </li>
+            <li class="nob">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                    <tbody><tr>
+                        <th>真实姓名</th>
+                        <td>
+                            <input name="username"  type="text" class="px" id="username" value="{$user[username]}" placeholder="请输入您的姓名"></td>
+                    </tr>
+                </tbody></table>
+            </li>
+            <li class="nob">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                    <tbody><tr>
+                        <th>联系电话</th>
+                        <td>
+                            <input name="tel"  type="tel" class="px" value="{$user['tel']}" id="tel" placeholder="请输入您的电话"></td>
+                    </tr>
+                </tbody></table>
+            </li>
+
+            <li class="nob">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                    <tbody><tr>
+                        <th>性别</th>
+                        <td>
+                            <select name="sex" class="dropdown-select" id="sex">
+                                <option class="dropdown-option">请选择你的性别</option>
+                                <option value="1">男</option>
+                                <option value="0">女</option>
+                            </select></td>
+                    </tr>
+                </tbody></table>
+            </li>
+            <li class="nob">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                    <tbody><tr>
+                        <th>年龄</th>
+                        <td>
+                            <input name="age" type="tel" min="1" max="120" class="px" id="age" value="{$user['age']}" placeholder="请输入您的年龄"></td>
+                    </tr>
+                </tbody></table>
+            </li>
+            <li class="nob">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                    <tbody><tr>
+                        <th>生日</th>
+                        <td>
+                            <input name="birthday" value="{if !empty($user['birthday'])}{php echo date('Y-m-d',$user['birthday']);}{else}{php echo date('Y-m-d');}{/if}" class="px" id="birthday" type="text" placeholder="请选择您的生日">
+                        </td>
+                    </tr>
+                </tbody></table>
+            </li>
+            <li class="nob">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                    <tbody><tr>
+                        <th valign="top" class="thtop">地址</th>
+                        <td>
+                            <textarea name="address" type="text" class="pxtextarea" style="height: 57px; overflow-y: visible" id="address"  placeholder="请输入您的地址">{$user['address']}</textarea></td>
+                    </tr>
+                </tbody></table>
+            </li>
+            <li class="nob">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                    <tbody><tr>
+                        <th valign="top" class="thtop">备注</th>
+                        <td>
+                            <textarea name="remark" class="pxtextarea" style="height: 99px; overflow-y: visible" id="remark" placeholder="请输入备注信息">{$user['remark']}</textarea>
+                        </td>
+                    </tr>
+                </tbody></table>
+            </li>
+           </form>
+        </ul>
+        <div class="footReturn">
+            <a id="showcard" class="submit" href="javascript:void(0)">保 存</a>
+            <div class="window" id="windowcenter">
+                <div id="title" class="wtitle">保存成功<span class="close" id="alertclose"></span></div>
+                <div class="content">
+                    <div id="txt"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sex').val("{$user['sex']}");
+            var now = new Date();
+            var nowArr = [now.getFullYear(), now.getMonth()+1, now.getDate()];
+            $("#birthday").each(function(k,v){
+                var ndate = $(v).datepicker({
+                    format:"yyyy-mm-dd",
+                    onRender: function(date) {
+                        var t1 = new Date(date.valueOf());
+                        var t2 = new Date(now.valueOf());
+                        t1 = t1.getFullYear()+"/"+(t1.getMonth()+1)+"/"+t1.getDate();
+                        t2 = t2.getFullYear()+"/"+(t2.getMonth()+1)+"/"+t2.getDate();
+                        return ( t1!=t2 && (date.valueOf() > now.valueOf()) ) ? 'disabled' : '';
+                    }
+                }).on("changeDate", function(date){
+                        if('days' == date.viewMode){
+                            ndate.datepicker('hide');
+                        }
+                    });
+            });
+
+            $("#showcard").click(function () {
+
+                var submitData = {
+                    key: $("#key").val(),
+                    id: $("#id").val(),
+                    wechatid: $("#wechatid").val(),
+                    bid: $("#bid").val(),
+                    pid: $("#pid").val(),
+                    username: $("#username").val(),
+                    sex: $("#sex").val(),
+                    tel: $("#tel").val(),
+                    formhash: $("#formhash").val(),
+                    address: $("#address").val(),
+                    remark: $("#remark").val(),
+                    age: $("#age").val(),
+                    birthday: $("#birthday").val(),
+                    txt1: $("#txt1").val(),
+                    txt2: $("#txt2").val(),
+                    txt3: $("#txt3").val(),
+                    txt4: $("#txt4").val(),
+                    txt5: $("#txt5").val(),
+                    value1: $("#value1").val(),
+                    value2: $("#value2").val(),
+                    value3: $("#value3").val(),
+                    value4: $("#value4").val(),
+                    value5: $("#value5").val(),
+                    select1: $("#select1").val(),
+                    select2: $("#select2").val(),
+                    select3: $("#select3").val(),
+                    select4: $("#select4").val(),
+                    select5: $("#select5").val(),
+                    svalue1: $("#svalue1").val(),
+                    svalue2: $("#svalue2").val(),
+                    svalue3: $("#svalue3").val(),
+                    svalue4: $("#svalue4").val(),
+                    svalue5: $("#svalue5").val(),
+                    action: "setTel"
+                };
+                $.post("{php echo create_url('mobile/module', array('do' => 'updateuserinfo', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid))}", submitData,
+                    function (data) {
+                        if (data.message.state == 1) {
+                            alertToUrl(data.message.msg, "{php echo create_url('mobile/module', array('do' => 'wapindex', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid))}");
+                        } else {
+                            alert(data.message.msg);
+                        }
+                    },
+                    "json")
+            });
+        });
+
+        $("#windowclosebutton").click(function () {
+            $("#windowcenter").slideUp(500);
+
+        });
+        $("#alertclose").click(function () {
+            $("#windowcenter").slideUp(500);
+
+        });
+
+        function alert(title) {
+            $("#windowcenter").slideToggle("slow");
+            $("#txt").html(title);
+            setTimeout('$("#windowcenter").slideUp(500)', 4000);
+        }
+
+        function alertToUrl(title,url){
+            if(url == '')url = window.location.href;
+            $("#windowcenter").slideToggle("slow");
+            $("#txt").html(title);
+            setTimeout("window.location.href='"+url+"'",1000);
+        }
+    </script>
+	</section>
+<div class="datepicker dropdown-menu"><div class="datepicker-days" style="display: block;"><table class=" table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">December 2013</th><th class="next">›</th></tr><tr><th class="dow">Su</th><th class="dow">Mo</th><th class="dow">Tu</th><th class="dow">We</th><th class="dow">Th</th><th class="dow">Fr</th><th class="dow">Sa</th></tr></thead><tbody><tr><td class="day  old">24</td><td class="day  old">25</td><td class="day  old">26</td><td class="day  old">27</td><td class="day  old">28</td><td class="day  old">29</td><td class="day  old">30</td></tr><tr><td class="day ">1</td><td class="day ">2</td><td class="day ">3</td><td class="day ">4</td><td class="day ">5</td><td class="day ">6</td><td class="day ">7</td></tr><tr><td class="day ">8</td><td class="day ">9</td><td class="day ">10</td><td class="day ">11</td><td class="day ">12</td><td class="day ">13</td><td class="day ">14</td></tr><tr><td class="day ">15</td><td class="day ">16</td><td class="day ">17</td><td class="day ">18</td><td class="day ">19</td><td class="day  active">20</td><td class="day ">21</td></tr><tr><td class="day ">22</td><td class="day ">23</td><td class="day disabled">24</td><td class="day disabled">25</td><td class="day disabled">26</td><td class="day disabled">27</td><td class="day disabled">28</td></tr><tr><td class="day disabled">29</td><td class="day disabled">30</td><td class="day disabled">31</td><td class="day disabled new">1</td><td class="day disabled new">2</td><td class="day disabled new">3</td><td class="day disabled new">4</td></tr></tbody></table></div><div class="datepicker-months" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">2013</th><th class="next">›</th></tr></thead><tbody><tr><td colspan="7"><span class="month">Jan</span><span class="month">Feb</span><span class="month">Mar</span><span class="month">Apr</span><span class="month">May</span><span class="month">Jun</span><span class="month">Jul</span><span class="month">Aug</span><span class="month">Sep</span><span class="month">Oct</span><span class="month">Nov</span><span class="month active">Dec</span></td></tr></tbody></table></div><div class="datepicker-years" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev">‹</th><th colspan="5" class="switch">2010-2019</th><th class="next">›</th></tr></thead><tbody><tr><td colspan="7"><span class="year old">2009</span><span class="year">2010</span><span class="year">2011</span><span class="year">2012</span><span class="year active">2013</span><span class="year">2014</span><span class="year">2015</span><span class="year">2016</span><span class="year">2017</span><span class="year">2018</span><span class="year">2019</span><span class="year old">2020</span></td></tr></tbody></table></div></div></body></html>

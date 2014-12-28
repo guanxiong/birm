@@ -1,0 +1,53 @@
+{template wl_header} 
+<div>
+    <div id="container" class="container animate">
+        <header>
+            <div class="nav_coupon">
+                <ul class="box">
+                    <li><a href="{php echo $this->createMobileUrl('wleticket',array('type'=>'unused'));}" {if $_GPC['type']=='unused'||empty($_GPC['type'])}class="on"{/if}>未使用</a></li>
+                    <li><a href="{php echo $this->createMobileUrl('wleticket',array('type'=>'used'));}" {if $_GPC['type']=='used'}class="on"{/if}>已使用</a></li>
+                    <li><a href="{php echo $this->createMobileUrl('wleticket',array('type'=>'expired'));}" {if $_GPC['type']=='expired'}class="on"{/if}>已过期</a></li>
+                </ul>
+            </div>
+        </header>
+		 <div class="body">
+				<ul class="list_coupon">
+				{loop $list $row}
+				<li>
+					<a href="{php echo $this->createMobileUrl('wleshow', array('tid' => $row['tid'],'id'=>$row['id']));}" class="tbox">
+						<div>
+							<span>
+								<div>
+									<label>
+										<!-- 剩余<br/>
+										<y>35</y>天 -->                                            
+										{$row['tip1']}
+									</label>
+								</div>
+							</span>
+						</div>
+						<div>
+							<h3>{$row['title']}</h3>
+							<p class="sn">SN码：{$row['secretsn']}</p>
+							<p>{$row['tip2']}</p>
+						</div>
+					</a>
+				</li>
+				{/loop}
+				</ul>
+		</div>
+       
+ {template wl_footer} 
+    </div>
+</div>
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideOptionMenu');
+});
+</script>
+
+</body>
+
+</html>
+
+

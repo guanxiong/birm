@@ -1,0 +1,36 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>基本设置</h4>
+		<table class="tb">
+			<tr class=" adv-setting">
+				<th><label for="">状态</label></th>
+				<td>
+					<label for="isshow_1" class="radio inline">
+					<input type="radio" name="isshow" id="isshow_1" value="1" {if $set['isshow'] == 1} checked="checked"{/if} /> 启用</label>
+					<label for="isshow_0" class="radio inline">
+					<input type="radio" name="isshow" id="isshow_0" value="0" {if $set['isshow'] == 0} checked="checked"{/if} /> 禁用</label>
+					<span class="help-block"></span>
+				</td>
+			</tr>
+			<tr>
+				<th>尾巴类型</th>
+				<td>
+					<label for="itype_1" class="radio inline">
+					<input type="radio" name="itype" id="itype_1" value="1" {if $set['itype'] == 1} checked="checked"{/if} /> 顺序跟随</label>
+					<label for="itype_2" class="radio inline">
+					<input type="radio" name="itype" id="itype_2" value="1" {if $set['itype'] == 2} checked="checked"{/if} /> 随机跟随</label>
+				</td>
+			</tr>
+			
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

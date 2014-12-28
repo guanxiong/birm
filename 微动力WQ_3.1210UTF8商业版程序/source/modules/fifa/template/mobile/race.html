@@ -1,0 +1,47 @@
+{template 'header'}
+<style>
+.match-title{font-size:18px;line-height:26px;padding:10px 0;}
+</style>
+<!-- content -->
+<section class="content">
+<div class="tab">
+       
+<div class="tab-content active">
+
+<div class="match">
+    <div class="match-heading">
+        <div class="match-title">2014 FIFA</div>
+       
+	</div>
+<div class="match-body">
+    <ul class="match-list">
+
+			
+	{loop $race_list $item}	
+        <li class="panel" onclick="goUrl('{php echo $this->createMobileUrl('detail', array('id' => $item['id']))}');">
+                <div class="clearfix">
+                    <div class="column half">{$item['racedate']} {$item['weeks']}</div>
+                    <div class="column half">第{$item['id']}场</div>
+                </div>
+                <div class="vs vs-2">
+                    <ul class="clearfix">
+						<li><img src="./source/modules/fifa/template/images/{$item['groupa']}.png" width="40" alt="">{$item['teama']}</li>
+                        <li>{$item['teamb']}<img src="./source/modules/fifa/template/images/{$item['groupb']}.png"  width="40" alt=""></li>
+                        <span>{$item['score']}</span>
+                    </ul>
+
+                </div>
+                <div class="">地点：{$item['places']}</div>
+               
+        </li>
+	{/loop}
+	
+
+    </ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+{template 'footer'}

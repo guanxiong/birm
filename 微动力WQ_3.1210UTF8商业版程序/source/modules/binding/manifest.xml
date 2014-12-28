@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[账号绑定]]></name>
+		<identifie><![CDATA[binding]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[手机号码绑定]]></ability>
+		<description><![CDATA[厅]]></description>
+		<author><![CDATA[冯齐跃]]></author>
+		<url><![CDATA[http://t.qq.com/fengqiyue]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[
+DELETE FROM ims_rule_keyword WHERE module='binding';
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

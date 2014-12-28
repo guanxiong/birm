@@ -1,0 +1,8 @@
+themes/web/default/site/style.html
+
+第77行后插入
+
+					<div style="display:block; margin-top:5px;">
+						<input class="span3" type="text" name="style[indexlogo]" id="indexlogo" value="{$styles['indexlogo']['content']}" placeholder="">
+						<input type="button" fieldname="indexlogo" class="btn upload-btn" value="<i class='icon-upload-alt'></i> 上传" style="font-size:14px;width:80px;">
+					</div>

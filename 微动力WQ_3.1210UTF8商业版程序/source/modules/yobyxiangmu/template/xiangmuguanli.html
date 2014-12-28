@@ -1,0 +1,130 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('xiangmuguanli', array('op' => 'post'));}">添加项目</a></li>
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('xiangmuguanli', array('op' => 'display'));}">项目列表</a></li>
+</ul>
+<style>
+.table td span{display:inline-block;margin-top:4px;}
+.table td input{margin-bottom:0;}
+</style>
+{if $op == 'display'}
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover table-striped">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:60px">编号</th>
+					<th style="width:50px;">项目名称</th>
+					<th style="width:50px;">QQ</th>
+					<th style="width:50px;">英文名</th>
+					<th style="width:50px;">交接时间</th>
+					<th style="width:50px;">价格</th>
+					<th style="width:50px;">合作人</th>
+					<th style="width:100px;text-align:right;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+					{loop $list $item}
+				<tr>
+<td>{$item['id']}</td>
+<td><a target='_blank' href='mobile.php?act=module&id={$item['id']}&weid={$_W['weid']}&name=yobyxiangmu&do=mxiangmu'>{$item['appname']}</a></td>
+<td><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={$item['qq']}&site=qq&menu=yes"><img src="./source/modules/yobyxiangmu/images/qq.gif" border="0" ></a></td>
+<td>{$item['appen']}</td>
+<td>{php echo date('Y-m-d',$item['vtime'])}</td>
+<td>{$item['rmb']}</td>
+<td>{$item['kid']}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('xiangmuguanli', array('op' => 'post', 'id' => $item['id']))}" title="编辑" class="btn btn-mini"><i class="icon-edit"></i></a>
+						<a onclick="return confirm('此操作不可恢复，确认吗？'); return false;" href="{php echo $this->createWebUrl('xiangmuguanli', array('op' => 'del', 'id' => $item['id']))}" title="删除" class="btn btn-mini"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				
+				{/loop}
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+</div>
+{elseif $op == 'post'}
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item[id]}">
+		<h4>项目资料列表</h4>
+		<table class="tb">
+			<tr>
+				<th><label for=""><span style='color:red'>*</span>项目名称</label></th>
+				<td>
+					<input type="text" class="span4" placeholder="" name="appname" value="{$item['appname']}">
+					<span class="help-block">项目名称</span>
+				</td>
+			</tr>	
+						<tr>
+				<th><label for=""><span style='color:red'>*</span>QQ</label></th>
+				<td>
+					<input type="text" class="span4" placeholder="" name="qq" value="{$item['qq']}">
+					<span class="help-block">联系qq</span>
+				</td>
+			</tr>	
+			<tr>
+				<th><label for="">英文名</label></th>
+				<td>
+					<input type="text" class="span4" placeholder="" name="appen" value="{$item['appen']}">
+					<span class="help-block">英文名称</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">交接时间</label></th>
+				<td>
+				{php echo tpl_form_field_date('vtime', $activity['vtime'], 0)}
+					<span class="help-block">交接时间</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">价格</label></th>
+				<td>
+					<input type="text" class="span4" placeholder="" name="rmb" value="{$item['rmb']}">
+					<span class="help-block">RMB</span>
+				</td>
+			</tr>
+						<tr>
+				<th><label for=""><span style='color:red'>*</span>选择客户</label></th>
+				<td>
+					<input type="text" class="span4" placeholder="" name="kid" value="{$item['kid']}">
+					<span class="help-block">暂时不做此功能</span>
+				</td>
+			</tr>
+						<tr>
+				<th><label for="">需求</label></th>
+				<td>
+					<textarea style="height:400px; width:80%;" class="span7 richtext-clone" name="txt" cols="70" id="reply-add-text">{$item['appxuqiu']}</textarea>
+					<span class="help-block">客户需求</span>
+				</td>
+			</tr>
+
+			<tr>
+				<th>最终项目总结</th>
+				<td>
+					<textarea style="height:400px; width:80%;" class="span7 richtext-clone" name="txt" cols="70" id="reply-add-text">{$item['txt']}</textarea>
+				</td>
+			</tr>
+		</table>
+
+		<table class="tb">
+			<tr>
+				<th></th>
+				<td>
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">保存</button>
+				
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	kindeditor($('.richtext-clone'));
+//-->
+</script>
+{/if}
+{template 'common/footer'}

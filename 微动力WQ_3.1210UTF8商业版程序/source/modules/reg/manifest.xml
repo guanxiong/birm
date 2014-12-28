@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[会员注册]]></name>
+		<identifie><![CDATA[reg]]></identifie>
+		<version><![CDATA[1.24]]></version>
+		<type><![CDATA[customer]]></type>
+		<ability><![CDATA[会员注册模块]]></ability>
+		<description><![CDATA[基于ＦＡＮＳ表的会员管理系统，增加会员坐标，会员一些相关信息，以及会员积分功能。]]></description>
+		<author><![CDATA[]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+			<message type="subscribe" />
+			<message type="unsubscribe" />
+			<message type="click" />
+		</subscribes>
+		<handles>
+			<message type="image" />
+			<message type="location" />
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="会员组管理" do="group" state="" direct="false" />
+			<entry title="管理会员" do="manage" state="" direct="false" />
+		</rule>
+		<menu>
+			<entry title="会员组管理" do="group" state="" direct="false" />
+			<entry title="管理会员" do="manage" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_reg_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `enter_tips` varchar(300) NOT NULL DEFAULT '' COMMENT '进入提示',
+  `quit_tips` varchar(300) NOT NULL DEFAULT '' COMMENT '退出提示',
+  `send_tips` varchar(300) NOT NULL DEFAULT '' COMMENT '发表提示',
+  `quit_command` varchar(10) NOT NULL DEFAULT '' COMMENT '退出指令',
+  `timeout` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '超时时间',
+  `isshow` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否需要审核',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `ims_wxuser` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `from_user` varchar(50) NOT NULL DEFAULT '0' COMMENT '用户的唯一身份ID',
+  `fakeid` varchar(18) NOT NULL DEFAULT '' COMMENT 'FakeId',
+  `nickname` varchar(20) NOT NULL DEFAULT '' COMMENT '昵称',
+  `avatar` varchar(100) NOT NULL DEFAULT '' COMMENT '头像',
+  `username` varchar(15) NOT NULL DEFAULT '' COMMENT '微信号',
+  `signature` varchar(255) NOT NULL DEFAULT '' COMMENT '签名',
+  `sex` varchar(5) NOT NULL,
+  `groupid` int(2) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `ctime` varchar(30) NOT NULL,
+  `weid` int(8) NOT NULL,
+  `rid` int(8) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `ims_fans_group` (
+  `id` int(3) NOT NULL AUTO_INCREMENT COMMENT '群组id',
+  `groupname` varchar(100) NOT NULL COMMENT '群组名',
+  `credit` int(11) NOT NULL DEFAULT '0' COMMENT '等级积分',
+  `info` varchar(250) NOT NULL COMMENT '说明介绍',
+  `weid` tinyint(5) NOT NULL DEFAULT '0' COMMENT '公众号ID',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `ims_fans` ADD   `wxusr` varchar(100) NOT NULL COMMENT '微信号',
+	ADD  `age` int(4) NOT NULL DEFAULT '18' COMMENT '年龄',
+	ADD  `x` varchar(200) NOT NULL COMMENT '坐标X',
+  ADD  `y` varchar(200) NOT NULL COMMENT '坐标Y',
+  ADD  `city` varchar(255) NOT NULL COMMENT '地址',
+  ADD  `isblacklist` int(2) NOT NULL COMMENT '黑名单',
+  ADD  `isshow` int(2) NOT NULL COMMENT '审核与否',
+  ADD  `isjoin` int(1) NOT NULL DEFAULT '0'  COMMENT '在线状态',
+  ADD  `rid` int(8) NOT NULL COMMENT '规则ID';
+	]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_wxuser`;
+	DROP TABLE IF EXISTS `ims_fans_group`;
+	DROP TABLE IF EXISTS `ims_reg_reply`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

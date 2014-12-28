@@ -1,0 +1,119 @@
+{template 'common/header'}
+<style>
+.sub-search input,.sub-search select{margin-bottom:0;}
+</style>
+    <div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="brand">全民抢礼品图表统计</span>						
+					</div>
+				</div>
+				<div class="sub-item">访问数 有效参与人数 新增粉丝  分享数</div>
+	            <div class="sub-item" id="table-list">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:150px;" class="row-first">活动名称</th>					
+									<th style="width:80px;" class="row-first row-hover">参与人数</th>
+									<th style="width:80px;" class="row-first">分享总数</th>
+									<th class="row-first">奖品详情</th>
+									<th style="width:150px;">活动时间<i></i></th>
+								</tr>
+							</thead>
+							<tbody id="main">
+								{loop $list_praise $row}
+								<tr>
+									<td class="row-first"><a href="{php echo create_url('site/module/prizedata', array('name' => 'stonefish_grabgifts','id' => $row['rid']))}">{$row['title']}</a></td>
+									<td class="row-first row-hover">{$row['user_znum']}</td>
+									<td class="row-first">{$row['share_znum']}</td>									
+									<td class="row-first">{$row['praiseinfo']}</td>
+									<td>{php echo date('Y-m-d H:i:s', $row['start_time']);}</br>{php echo date('Y-m-d H:i:s', $row['end_time']);}</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>						
+					</div>
+				   {$pager}
+				</div>
+			</div>
+		</div>
+    </div>
+	<div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="brand">全民抢礼品帮助</span>						
+					</div>
+				</div>
+				<div class="sub-item">
+					全民抢礼品帮助信息
+				</div>	
+				<div class="sub-item" id="table-list">{$str}</div>
+			</div>
+		</div>
+    </div>
+	{if $_W['isfounder']}
+    <div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="brand">给开发者建议或留言</span>						
+					</div>
+				</div>
+				<div class="sub-item">
+					【本部分仅创始人可见，不必担心客户或其他管理员能看到】有何建议或BUG请直接提交  联系开发者QQ:<a href="tencent://message/?uin=2740380951&Site=qq&Menu=yes">2740380951</a> 工作日时间请直接Q我!
+				</div>
+	
+				<div class="sub-item" id="table-list">
+					<!-- 多说评论框 start -->
+						<div class="ds-thread" data-thread-key="stonefish_grabgifts" data-title="全民抢礼品" data-url="http://bbs.b2ctui.com/thread-3779-1-1.html"></div>
+					<!-- 多说评论框 end -->
+				</div>
+			</div>
+		</div>
+    </div>
+	{/if}
+<script>
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+});
+</script>
+{template 'common/footer'}

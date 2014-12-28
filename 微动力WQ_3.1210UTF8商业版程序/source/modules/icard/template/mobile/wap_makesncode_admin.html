@@ -1,0 +1,130 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{$title}</title>
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" type="text/css" href="./source/modules/icard/template/css/card.css" media="all">
+<script src="./source/modules/icard/template/js/jQuery.js"></script>
+</head>
+<body id="cardpower" ondragstart="return false;" onselectstart="return false;" style="">
+    {php include $this->template('wap_header');}
+	<div class="qiandaobanner"><a href="javascript:history.go(-1);"><img src="./source/modules/icard/template/themes/1/vippower.jpg"></a>
+	</div>
+	<div id="basic-accordian">
+		<div id="test0-header" class="accordion_headings  header_highlight ">
+			<div class="tab {if $type==2}coupon{elseif $type==3}vip{elseif $type==4}gift{/if}">
+				<span>{$gift['title']}<p>有效期至{php echo date('Y-m-d',$gift['endtime'])}</p></span>
+			</div>
+			<div id="test0-content" style="display: block; overflow: hidden; opacity: 1;">
+				<div class="accordion_child">
+                    <p class="num" id="sn0">{$sncode}</p>
+                    <p class="explain_sn">
+                        <span style="font-size:12px;line-height:16px;text-align:left;padding:5px 0 5px 16px;">使用时请提供以上SN码或由商家输入门店密钥</span>
+                    </p>
+                    <div style="text-align:center;">
+                    </div>
+                    <!--<p class="num">此特权最多使用3次</p>-->
+                    <!--商品id-->
+                    <input name="pid" class="px" id="pid" value="{$id}" type="hidden">
+                    <input name="from_user" class="px" id="from_user" value="{$page_from_user}" type="hidden">
+                    <input name="type" class="px" id="type" value="{$type}" type="hidden">
+                    <input name="snid" class="px" id="snid" value="{$snid}" type="hidden">
+                    <input name="weid" class="px" id="weid" value="{$weid}" type="hidden">
+                    <div id="queren" {if $type == 4}style="display:none;"{/if}>
+                    <p>
+                        <input name="money" type="tel" class="px" id="money" value="" placeholder="请输入实际消费金额">
+                    </p>
+                </div>
+                <p style="margin: 10px 0 0 0;{if $type == 4}display:none;{/if}">
+                    <select name="payment" id="payment" class="px">
+                        <option value="0">现金消费</option>
+                        <option value="1">会员卡余额消费</option>
+                    </select>
+                </p>
+                <p style="margin: 10px 0 0 0;">
+                    <select name="storeid" id="storeid" class="px">
+                        <option value="0">请选择门店</option>
+                        {loop $outlets $outlet}
+                        <option value="{$outlet['id']}">{$outlet['title']}</option>
+                        {/loop}
+                    </select>
+                </p>
+                <p style="margin: 10px 0 0 0">
+                    <input name="pwd" class="px" id="pwd" value="" type="password" placeholder="此处由商家输入商家确认消费密码">
+                </p>
+                <p style="margin: 10px 0"><a id="showcard" class="submit" href="javascript:void(0)" onclick="power();">确定使用</a></p>
+					</div>
+					<b>详情说明</b>
+					<ul>
+                        <li>
+                            <span style="line-height: 1.5;">有效期至{php echo date('Y-m-d',$gift['endtime'])}</span>
+                        </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+<div class="window" id="windowcenter" style="height:180px;">
+	<div id="title" class="wtitle">消息提醒<span class="close" id="alertclose"></span></div>
+	<div class="content">
+		<div id="txt" style="min-height:110px!important;margin-top: 15px;"></div>
+	</div>
+</div>
+<script>
+        function power() {
+            var pwd = document.getElementById('pwd').value;
+            var storeid = document.getElementById('storeid').value;
+            var money = document.getElementById('money').value;
+            var payment = document.getElementById('payment').value;
+            var type = document.getElementById('type').value;
+            var snid = document.getElementById('snid').value;
+            var from_user = document.getElementById('from_user').value;
+            var pid = document.getElementById('pid').value;
+            var weid = document.getElementById('weid').value;
+            var submitData = {
+                pwd: pwd,
+                storeid: storeid,
+                money: money,
+                payment: payment,
+                type: type,
+                snid: snid,
+                from_user: from_user,
+                pid: pid,
+                weid: weid
+            };
+
+            $.post("{php echo create_url('mobile/module', array('do' => 'usesncode', 'from_user' => $page_from_user, 'name' => 'icard', 'weid' => $weid))}", submitData,
+                    function (data) {
+                        if(data.message.state == 1){
+                            alert(data.message.msg);
+                        }else{
+                            alert(data.message.msg);
+                        }
+                    },
+                    "json");
+        }
+        function alert(title){
+            $("#windowcenter").slideToggle("slow");
+            $("#txt").html(title);
+            setTimeout(function(){
+                $("#windowcenter").slideUp(500);
+            },4000);
+        }
+        function alertToUrl(title,url){
+            if(url == '')url = window.location.href;
+            $("#windowcenter").slideToggle("slow");
+            $("#txt").html(title);
+            setTimeout("window.location.href='"+url+"'",2000);
+        }
+
+    </script>
+		
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<div style="height:50px"></div>
+
+</body></html>

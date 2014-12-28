@@ -1,0 +1,245 @@
+{template 'header'}
+	<link type="text/css" rel="stylesheet" href="./source/modules/quickexam/style/base.css" />
+	<link type="text/css" rel="stylesheet" href="./source/modules/quickexam/style/style.css" />
+	<script type="text/javascript" src="./source/modules/quickexam/script/script.js"></script>
+	<script type="text/javascript" src="./source/modules/quickexam/script/URI.js"></script>
+	<style>
+		#mcover{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0, 0, 0, 0.7);display:none;z-index:20000;}
+		#mcover img{position:fixed;right: 18px;top:5px;width:260px;height:180px;z-index:20001;}
+		#mcover > span{position:fixed;left:0;top:300px;width:100%;height:100%;z-index:20002;}
+		.explain {display:none;padding:5px 10px;}
+	</style>
+
+	<section class="stay">
+    	<!--content-->
+		<form action="" method="post">
+		<input type="hidden" name="op" value="post" />
+		<section class="stay_content">
+			{loop $list $item}
+        	<!--box-->
+            <section class="stay_box">
+			<aside class="stay_title">{$item['title']}</aside>
+                <article class="stay_main">
+					{loop $item['options'] $option}
+			        <!--item-->
+                    <section class="stay_item">
+                        <section class="stay_item_l fl">
+                            <section class="stay_lump">
+							<span class="stay_lump_l"><input type="checkbox" name="choice" value="{$item['choice_id']}_{$option['seq']}" /></span>
+                                <p class="stay_lump_r"><span> {$option['body']}</span></p>
+                            </section>
+                        </section>
+					</section>
+					{/loop}
+					<div class="explain">{php echo htmlspecialchars_decode($item['explain'])}</div>
+					<input type="hidden" name="answer" value="{$item['choice_id']}_{$item['answer']}" />
+                </article>
+            </section>
+            <!--box end-->
+			{/loop}
+			<!--btn-->
+			<section class="stay_btn_layer">
+			<span class="stay_btn_x fl"><a id="submit" href="#"><span>提交答案</span></a></span>
+			</section>
+			<!--btn end-->
+		</section>
+		</form>
+        <!--content end-->
+	</section>
+	<div id="results"></div>
+	<script type="text/javascript">
+/**
+* *********  操作实例  **************
+*	var map = new HashMap();
+*	map.put("key1","Value1");
+*	map.put("key2","Value2");
+*	map.put("key3","Value3");
+*	map.put("key4","Value4");
+*	map.put("key5","Value5");
+*	alert("size："+map.size()+" key1："+map.get("key1"));
+*	map.remove("key1");
+*	map.put("key3","newValue");
+*	var values = map.values();
+*	for(var i in values){
+*		document.write(i+"："+values[i]+"   ");
+*	}
+*	document.write("<br>");
+*	var keySet = map.keySet();
+*	for(var i in keySet){
+*		document.write(i+"："+keySet[i]+"  ");
+*	}
+*	alert(map.isEmpty());
+*/
+
+function HashMap(){
+	//定义长度
+	var length = 0;
+	//创建一个对象
+	var obj = new Object();
+
+	/**
+	* 判断Map是否为空
+	*/
+	this.isEmpty = function(){
+		return length == 0;
+	};
+
+	/**
+	* 判断对象中是否包含给定Key
+	*/
+	this.containsKey=function(key){
+		return (key in obj);
+	};
+
+	/**
+	* 判断对象中是否包含给定的Value
+	*/
+	this.containsValue=function(value){
+		for(var key in obj){
+			if(obj[key] == value){
+				return true;
+			}
+		}
+		return false;
+	};
+
+	/**
+	*向map中添加数据
+	*/
+	this.put=function(key,value){
+		if(!this.containsKey(key)){
+			length++;
+		}
+		obj[key] = value;
+	};
+
+	/**
+	* 根据给定的Key获得Value
+	*/
+	this.get=function(key){
+		return this.containsKey(key)?obj[key]:null;
+	};
+
+	/**
+	* 根据给定的Key删除一个值
+	*/
+	this.remove=function(key){
+		if(this.containsKey(key)&&(delete obj[key])){
+			length--;
+		}
+	};
+
+	/**
+	* 获得Map中的所有Value
+	*/
+	this.values=function(){
+		var _values= new Array();
+		for(var key in obj){
+			_values.push(obj[key]);
+		}
+		return _values;
+	};
+
+	/**
+	* 获得Map中的所有Key
+	*/
+	this.keySet=function(){
+		var _keys = new Array();
+		for(var key in obj){
+			_keys.push(key);
+		}
+		return _keys;
+	};
+
+	/**
+	 * each遍历
+	 */
+	this.each=function(func){
+		for(var key in obj){
+			if (false == func(key, obj[key])) {
+				return false;
+			}
+		}
+		return true;
+	}
+	/**
+	* 获得Map的长度
+	*/
+	this.size = function(){
+		return length;
+	};
+
+	/**
+	* 清空Map
+	*/
+	this.clear = function(){
+		length = 0;
+		obj = new Object();
+	};
+}
+$('#submit').click(function() {
+		var answer = new HashMap();
+		var choice = new HashMap();
+		var feedback = new HashMap(); //计分
+		$.each($("input[name=choice]:checked"), function(id, obj) {
+			var kv = obj.value.split("_", 2); // kv = ['choice_id', 'A/B/C/D']
+			if (choice.containsKey(kv[0])) {
+				choice.put(kv[0], choice.get(kv[0]) + "," + kv[1]);
+			} else {
+				choice.put(kv[0], kv[1]);
+			}
+			console.log("choice:" + kv[0] + "=>" + choice.get(kv[0]));
+			});
+		$.each($("input[name=answer]"), function(id, obj) {
+			var kv = obj.value.split("_", 2); // kv = ['choice_id', 'ref_answer']
+			if (answer.containsKey(kv[0])) {
+				answer.put(kv[0], answer.get(kv[0]) += "," + kv[1]);
+			} else {
+				answer.put(kv[0], kv[1]);
+			}		
+			console.log("answer:" + kv[0] + "=>" + answer.get(kv[0]));
+			});
+
+		// 计算分数
+		var correct = 0;
+		var total = answer.size();
+		answer.each(function(key, value) {
+			if (choice.get(key)) {
+				if (choice.get(key) == value) {
+					feedback.put(key, 1);
+					correct++;
+					console.log(key + "="+choice.get(key) + " correct");
+				} else {
+					feedback.put(key, 0);
+					console.log(key + "="+choice.get(key) + " wrong. ref answer is " + value);
+				}
+			} else {
+				feedback.put(key, 0);
+				console.log(key + " not chosen. ref answer is " + value);
+			}
+		});
+		console.log("total question: " + total + " correct: " + correct);
+		$("#exam_result").text("得分：" + Math.round(correct * 100 / total));
+		$("#mcover").show();
+		$("#check_explain").click(function() {
+				$("#mcover").hide();
+				$(".explain").show();
+				});
+		//$("form").submit();
+});
+</script>
+	<div id="mcover" onclick="$(this).hide()">	
+		<img src="./source/modules/site/template/image/guide.png">
+		<span>
+			<section class="stay_btn_layer">
+			<span class="stay_btn_x fl">
+				<a id="check_explain" href="#">
+					<span id="exam_result"></span>
+					<span>  查看解析</span>
+				</a>
+			</span>
+			</section>
+		</span>
+	</div>
+
+{template 'footer'}

@@ -1,0 +1,28 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+ 	<li class="active"><a href="{php echo create_url('site/module', array('do' => 'Guanhuai', 'op' => 'set','name' => 'car','weid'=>$_W['weid']))}">车主关怀</a></li>	
+ 	<li><a href="{php echo create_url('site/module', array('do' => 'Guanhuai', 'op' => 'car','name' => 'car','weid'=>$_W['weid']))}">车主信息</a></li>	
+</ul>
+	<div class="main">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+			<h4>微汽车--车主关怀</h4>
+			<table class="tb">
+				<tr>
+					<th>图文横幅图片(banner)</th>
+					<td>
+						{php echo tpl_form_field_image('guanhuai_thumb', $row['guanhuai_thumb']);}
+						<span class="help-block">建议图片大小不超过300K</span>																		
+					</td>
+				</tr>								
+				<tr>
+					<th></th>
+					<td>
+						<input type="hidden"  name="op" value="save" />
+						<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					</td>
+				</tr>
+			</table>
+		</form>
+    </div>
+{template 'common/footer'}
+

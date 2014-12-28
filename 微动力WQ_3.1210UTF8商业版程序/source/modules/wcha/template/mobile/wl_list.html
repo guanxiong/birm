@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+<meta content="telephone=no" name="format-detection" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>今日订单-{$set['shop_name']}</title>
+<link href='/source/modules/shopping3/style/css/global.css' rel='stylesheet' type='text/css' />
+<link href='/source/modules/shopping3/style/css/style.css?t=20140127' rel='stylesheet' type='text/css' />
+<script type='text/javascript' src='/source/modules/shopping3/style/js/jquery-1.7.2.min.js'></script>
+<script type='text/javascript' src='/source/modules/shopping3/style/js/global.js?t=20140127'></script>
+ </head>
+<body><link href='./source/modules/shopping3/style/css/member.css?t=20140127' rel='stylesheet' type='text/css' />
+<div id="shop_page_contents">
+<div id="cover_layer"></div>
+  	<ul id="member_nav">
+		<li {if $_GPC['status']==0}class="cur"{/if}><a href="{php echo $this->createMobileUrl('wllist',array('d'=>'list','status'=>0,'rid'=>$_GPC['rid']));}">待下单</a></li>
+		<li {if $_GPC['status']==1}class="cur"{/if}><a href="{php echo $this->createMobileUrl('wllist',array('d'=>'list','status'=>1,'rid'=>$_GPC['rid']));}">待确认</a></li>
+		<li {if $_GPC['status']==2}class="cur"{/if}><a href="{php echo $this->createMobileUrl('wllist',array('d'=>'list','status'=>2,'rid'=>$_GPC['rid']));}">已确认</a></li>
+		<li {if $_GPC['status']==3}class="cur"{/if}><a href="{php echo $this->createMobileUrl('wllist',array('d'=>'list','status'=>3,'rid'=>$_GPC['rid']));}">已完成</a></li>		
+	</ul>
+	{if $_GPC['d']=='list'||empty($_GPC['d'])}
+	<div id="order_list">
+		{loop $list $row}
+		<div class="item">
+			<h1>
+				订单号：<a href="{php echo $this->createMobileUrl('show',array('d'=>'detail','orderid'=>$row['id'],'rid'=>$_GPC['rid'],'secretid'=>$row['secretid']));}">{$row['ordersn']}</a>
+				（<strong class="fc_red">￥{$row['totalprice']}</strong>）
+			</h1>
+			<ul>
+				<li>数量: <strong class="fc_red">{$row['totalnum']}</strong></li>
+				<li>总价: <strong class="fc_red">{$row['totalprice']}</strong></li>
+				<li>方式: {if $order['paytype']==1}余额支付{elseif $order['paytype']==2}在线支付{elseif $order['paytype']==3}现金支付{else}未知方式{/if}{if $order['ispay']==1}<strong class="fc_red">【已付款】</strong>{else}【未支付】{/if}</li>				
+				<li>姓名: {$row['guest_name']}</li>
+				<li>手机：{$row['tel']}</li>
+				{if !empty($row['guest_address'])}<li>地址：{$row['guest_address']}</li>{/if}
+			</ul>
+		</div>
+		{/loop}
+		{if count($list)>4}
+		 <a class="more"  href="javascript:;" readonly>加载更多</a>
+		{/if}
+	</div>
+	<script type="text/javascript">
+	
+	</script>
+	{/if}
+	 
+	
+</div>
+ 

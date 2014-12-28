@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="true">
+		<name><![CDATA[NOW大了]]></name>
+		<identifie><![CDATA[nowbig]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[照片整蛊]]></ability>
+		<description><![CDATA[一个可以整蛊朋友照片的模块]]></description>
+		<author><![CDATA[yuexiage]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+			<message type="image" />
+			<message type="voice" />
+			<message type="video" />
+			<message type="location" />
+			<message type="link" />
+			<message type="subscribe" />
+			<message type="unsubscribe" />
+			<message type="click" />
+		</subscribes>
+		<handles>
+			<message type="image" />
+			<message type="voice" />
+			<message type="video" />
+			<message type="location" />
+			<message type="link" />
+			<message type="subscribe" />
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="功能封面" do="cover" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="管理中心" do="menu" state="" direct="false" />
+		</menu>
+		<home>
+			<entry title="微站首页导航" do="home" state="" direct="false" />
+		</home>
+		<profile>
+			<entry title="微站个人中心导航" do="profile" state="" direct="false" />
+		</profile>
+		<shortcut>
+			<entry title="微站快捷功能导航" do="shortcut" state="" direct="false" />
+		</shortcut>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_nowbig_user` (
+  `id` int(10) DEFAULT NULL,
+  `img` varchar(50) DEFAULT NULL,
+  `from_user` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_nowbig_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `parentid` int(10) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(50) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `thumb` varchar(60) NOT NULL,
+  `isshow` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;]]></install>
+	<uninstall><![CDATA[drop table ims_nowbig_user;]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

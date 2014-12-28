@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.52">
+	<application setting="false">
+		<name><![CDATA[预约与调查]]></name>
+		<identifie><![CDATA[research]]></identifie>
+		<version><![CDATA[1.52]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[可以快速生成调查表单或则预约记录]]></ability>
+		<description><![CDATA[]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[http://bbs.b2ctui.com]]></url>
+	</application>
+	<platform>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="预约活动列表" do="display" />
+			<entry title="新建预约活动" do="post" />
+		</menu>
+		<profile>
+			<entry title="我的预约" do="myresearch" />
+		</profile>
+		<home call="gethometiles"></home>
+	</bindings>
+
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_research` (
+  `reid` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `description` varchar(1000) NOT NULL,
+  `content` text NOT NULL,
+  `information` varchar(500) NOT NULL DEFAULT '',
+  `thumb` varchar(200) NOT NULL DEFAULT '',
+  `inhome` tinyint(4) NOT NULL DEFAULT '0',
+  `createtime` int(10) NOT NULL DEFAULT '0',
+  `starttime` int(10) NOT NULL DEFAULT '0',
+  `endtime` int(10) unsigned NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `pretotal` int(10) unsigned NOT NULL DEFAULT '1',
+  `noticeemail` varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`reid`),
+  KEY `weid` (`weid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `ims_research_data` (
+  `redid` bigint(20) NOT NULL AUTO_INCREMENT,
+  `reid` int(11) NOT NULL,
+  `rerid` int(11) NOT NULL,
+  `refid` int(11) NOT NULL,
+  `data` varchar(800) NOT NULL,
+  PRIMARY KEY (`redid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `ims_research_fields` (
+  `refid` int(11) NOT NULL AUTO_INCREMENT,
+  `reid` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(200) NOT NULL DEFAULT '',
+  `type` varchar(20) NOT NULL DEFAULT '',
+  `essential` tinyint(4) NOT NULL DEFAULT '0',
+  `bind` varchar(30) NOT NULL DEFAULT '',
+  `value` varchar(300) NOT NULL DEFAULT '',
+  `description` varchar(500) NOT NULL DEFAULT '',
+  PRIMARY KEY (`refid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `ims_research_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `reid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `ims_research_rows` (
+  `rerid` int(11) NOT NULL AUTO_INCREMENT,
+  `reid` int(11) NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `createtime` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`rerid`),
+  KEY `reid` (`reid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+    ]]></install>
+	<uninstall><![CDATA[
+DROP TABLE IF EXISTS `ims_research`;
+DROP TABLE IF EXISTS `ims_research_data`;
+DROP TABLE IF EXISTS `ims_research_fields`;
+DROP TABLE IF EXISTS `ims_research_reply`;
+DROP TABLE IF EXISTS `ims_research_rows`;
+    ]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

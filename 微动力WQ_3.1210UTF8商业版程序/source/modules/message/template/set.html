@@ -1,0 +1,30 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+ 		<h4>留言墙基本设置</h4>
+		<table class="tb">
+				<tr>
+					<th>是否开启</th>
+					<td>
+						<input type="radio" name="status" value="0"  {if $message['status'] == 0} checked="true" {/if}> 开启&nbsp;&nbsp;
+						<input type="radio" name="status" value="1" {if $message['status'] == 1} checked="true" {/if}> 关闭&nbsp;&nbsp;                  
+					</td>
+				</tr>    
+				<tr>
+					<th>是否审核</th>
+					<td>
+						<input type="radio" name="isshow" value="0"  {if $message['isshow'] == 0} checked="true" {/if}> 是&nbsp;&nbsp;
+						<input type="radio" name="isshow" value="1" {if $message['isshow'] == 1} checked="true" {/if}>否&nbsp;&nbsp;                  
+					</td>
+				</tr>      
+				<tr>
+					<th></th>
+					<td>
+						<input type="hidden" name="action" value="save">
+						<input type="hidden" name="id" value="{$message['id']}">
+						<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					</td>
+				</tr>
+		</table>
+	</form>
+</div> 

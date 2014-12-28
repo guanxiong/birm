@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+<title>{if $title}{$title}{else}{if !empty($_W['account']['name'])}{$_W['account']['name']}{/if}{/if}</title>
+<script type="text/javascript" src="themes/mobile/style122/js/jquery.min.js"></script>
+<script type="text/javascript" src="themes/mobile/style122/js/script.js"></script>
+<link rel="stylesheet" href="themes/mobile/style122/css/wtx05.css" type="text/css" />
+<link rel="stylesheet" href="themes/mobile/style122/css/base.css" type="text/css" />
+</head>
+<body>
+  <div class="wrap bc" style="height:auto;">
+    <div class="title tc pr top">
+	  <span class="back-btn"></span><span style="color: white; font-size: 14pt;">{$_W['account']['name']}</span>
+	  <div class="nav-btn">
+	    <ul class="pa">
+			{loop $navs $i $nav} 
+				<li><a href="{$nav['url']}">{$nav['name']}</a></li>
+			{/loop}
+	    </ul>
+	  </div>
+	</div>
+	<div class="logo oh tc mt10">
+	   <img src="themes/mobile/style122/images/logo.png" />
+	</div>
+	<ul class="nav title mt10">
+	{loop $navs $key $nav} 
+			{if $key == 0}
+			<li><a href="{$nav['url']}">{$nav['name']}</a></li>
+			{elseif $key == 1}
+			<li><a href="{$nav['url']}">{$nav['name']}</a></li>
+			{elseif $key == 2}
+			<li><a href="{$nav['url']}">{$nav['name']}</a></li>
+			{elseif $key == 3}
+			<li><a href="{$nav['url']}">{$nav['name']}</a></li>
+			{elseif $key == 4}
+			<li><a href="{$nav['url']}">{$nav['name']}</a></li>
+			{/if}
+	{/loop} 
+	</ul>
+	{php include_once IA_ROOT . '/source/modules/site/model.php'}
+	{php $slide = site_article_search('', 'f');}
+	<div class="banner oh mt10 pr" style="float:left;">
+	  <ul class="pr">
+		{loop $slide['list'] $v}
+			<li><img src="{$_W['attachurl']}{$v['thumb']}"/></li>
+		{/loop} 
+	  </ul>
+	  <div class="focus pa">
+	    <span class="pa" style="position: relative; padding-left: 580px; margin-bottom: 0px;"></span>
+	  </div>
+	</div>
+	
+	<div class="links mt10 oh cb">
+	  <ul class="tc">
+	    <li>补水保养</li>
+		<li>身体洗护</li>
+		<li>彩妆香水</li>
+		<li>补水保养</li>
+		<li>身体洗护</li>
+		<li>彩妆香水</li>
+	  </ul>
+	</div>
+	<div class="footer mt10 tc">
+	  <p class="support">技术支持：{$_W['account']['name']}</p>
+	  <p class="copyright">Copyright &copy; 2014.Company name All rights reserved.</p>
+	</div>
+  </div> 
+  
+ </div>
+</body>
+</html>

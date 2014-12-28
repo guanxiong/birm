@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="true">
+		<name><![CDATA[一战到底]]></name>
+		<identifie><![CDATA[fighting]]></identifie>
+		<version><![CDATA[1.4]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[一战到底是一档形式新颖，趣味十足，在挑战中挖掘个性，又充满悬念的全新益智攻擂游戏。]]></ability>
+		<description><![CDATA[一战到底是一档形式新颖，趣味十足，在挑战中挖掘个性，又充满悬念的全新益智攻擂游戏。]]></description>
+		<author><![CDATA[珊瑚海]]></author>
+		<url><![CDATA[http://bbs.we7.cc/forum.php?mod=forumdisplay&amp;fid=36]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="一战到底" do="ShowPlay" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_fighting` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `rid` int(10) unsigned NOT NULL,
+  `from_user` varchar(30) NOT NULL,
+  `nickname` varchar(100) NOT NULL,
+  `lasttime` int(10) unsigned NOT NULL,
+  `lastcredit` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `ims_fighting_setting` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `parentid` int(10) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(20) NOT NULL COMMENT '活动标题',
+  `description` longtext NOT NULL COMMENT '活动介绍',
+  `qnum` int(10) unsigned NOT NULL DEFAULT '10' COMMENT '题目个数',
+  `tgkf` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '跳过扣分',
+  `tiao` tinyint(1) unsigned NOT NULL COMMENT '1允许跳过0不允许',
+  `status_fighting` tinyint(1) unsigned NOT NULL COMMENT '0正常1暂停2结束',
+  `answertime` int(10) unsigned NOT NULL COMMENT '答题时间',
+  `start` int(10) unsigned NOT NULL DEFAULT '1383235200' COMMENT '开始时间',
+  `end` int(10) unsigned NOT NULL DEFAULT '1383235200' COMMENT '结束时间',
+  `reply1` varchar(500) NOT NULL COMMENT '未绑定回复语',
+  `reply2` varchar(500) NOT NULL COMMENT '活动未开始时回复语',
+  `reply3` varchar(500) NOT NULL COMMENT '活动已结束时回复语',
+  `reply4` varchar(500) NOT NULL COMMENT '开始答题提示语',
+  `reply5` varchar(500) NOT NULL COMMENT '暂停回复',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

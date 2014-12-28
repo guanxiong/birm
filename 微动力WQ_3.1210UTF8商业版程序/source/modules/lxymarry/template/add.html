@@ -1,0 +1,243 @@
+{template 'common/header'}
+<style>
+.photo_list{padding:15px 0;}
+.photo_list .alert{width:auto; margin-top:10px; overflow:hidden;}
+.photo_list .photo_preview{width:130px;}
+.photo_list .photo_preview img{width:130px; margin-bottom:5px;}
+.photo_list .photo_preview label{padding:0;}
+.photo_list .photo_preview input[type="radio"]{margin-left:0; margin-right:10px;}
+.photo_list table{margin-left:40px;}
+.photo_list table th,.photo_list table td{padding-bottom:5px;}
+.photo_list table th{width:60px; font-size:14px;}
+.photo_list table input,.photo_list table select{margin-bottom:0;}
+</style>
+<div class="main">
+<ul class="nav nav-tabs">
+	<li{if $_GPC['do'] == 'manager'} class="active"{/if}><a href="{php echo create_url('site/module/manager', array('name' => 'lxymarry'));}">喜帖管理</a></li>
+	<li{if $_GPC['do'] == 'add'} class="active"{/if}><a href="{php echo create_url('site/module/add', array('name' => 'lxymarry'));}">添加喜帖</a>
+</ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="{$item['id']}">
+	<h4>喜帖基本信息</h4>
+	<table class="tb">
+		<tr>
+			<th>喜帖标题</th>
+			<td><input type="text" id="title" name="title" value="{$item['title']}"  class="span5" /></td>
+		</tr>
+		<tr>
+			<th>喜帖封面</th>
+			<td>
+				{php echo tpl_form_field_image('art_pic', $item['art_pic'], $this->geturl(1));}
+				<span class="help-block">封面默认大小720*400</span>
+			</td>
+		</tr>
+		<tr>
+			<th height="150"><label for="">开场动画</label></th>
+			<td>
+				{php echo tpl_form_field_image('donghua_pic', $item['donghua_pic'], $this->geturl(2));}
+				<span class="help-block">上传400*400左右的新郎新娘合影图,用于喜帖打开时的动画中,图片大小不超过300K</span>
+			</td>
+		</tr>
+		<tr>
+			<th height="70">缩略图</th>
+			<td>
+				{php echo tpl_form_field_image('suolue_pic', $item['suolue_pic'], $this->geturl(2));}
+				<span class="help-block">默认40x40,显示在喜帖主页</span>
+			</td>
+		</tr>		
+		<tr>
+			<th>新郎名字</th>
+			<td><input type="text" id="xl_name" name="xl_name" value="{$item['xl_name']}"  class="span3" /></td>
+		</tr>
+		<tr>
+			<th>新娘名字</th>
+			<td><input type="text" id="xn_name" name="xn_name" value="{$item['xn_name']}"  class="span3" /></td>
+		</tr>
+		 <tr>
+		  <th></th>
+		  <td>
+			<label class="radio inline"><input type="radio" name="is_front"  value="1" checked="checked" />新郎在前</label>
+		   <label class="radio inline"><input type="radio" name="is_front"  value="2" />
+		   新娘在前</label></div></td>
+		</tr>
+
+		<tr>
+			<th>联系电话</th>
+			<td><input type="text" id="phone" name="tel" value="{$item['tel']}"  class="span3" /></td>
+		</tr>
+		<tr>
+			<th>婚宴日期</th>
+			<td>
+			{php echo tpl_form_field_date('hy_time', !empty($item['hy_time']) ? $item['hy_time'] : date('Y-m-d H:i'), 1)}
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<th>喜帖视频引用URL</th>
+			<td>
+				<input type="text" id="video" name="video" value="{$item['video']}"  class="span5" />
+				<div class="help-block">请指定视频真实URL地址,如http://aa.com/videw/marry.mp4</div>
+			</td>
+		</tr>
+		<tr>
+		  <th>喜帖音乐引用URL</th>
+			<td><input type="text" id="music" name="music" value="{$item['music']}"  class="span5" /><div class="help-block">请指定音乐真实URL地址，为空默认YouGotMe.mp3</div></td>
+		</tr>
+		<tr>
+			<th>设置转发标题</th>
+			<td>
+				<input type="text" name="sendtitle" value="{$item['sendtitle']}"  class="span5" />
+				<div class="help-block">转发给朋友时显示的标题</div>
+			</td>
+		</tr>
+		<tr>
+			<th>设置转发描述</th>
+			<td>
+				<textarea class="span7" name="senddescription" cols="70">{$item['senddescription']}</textarea>
+				<div class="help-block">转发给朋友时显示的描述</div>
+			</td>
+		</tr>
+		<tr>
+		<th>婚纱图片</th>
+		<td><!---批量上传-->
+	<div class="photo_list">
+	<input name="token" type="hidden" value="{$_W['token']}" />
+	<span id="selectimage" class="btn btn-primary"><i class="icon-plus"></i> 上传照片</span><span style="color:red;">
+	<input name="hspiclist" type="hidden" value="{$item['hs_pic']}" />
+	*建议尺寸：宽720像素，高350像素</span>
+	<div id="file_upload-queue" class="uploadify-queue"></div>
+	<ul class="ipost-list ui-sortable" id="fileList">
+
+	{loop $hslists $v}
+	<li class="imgbox" style="list-type:none">
+<a class="item_close" href="javascript:;" onclick="deletepic(this);" title="删除">
+</a>
+<span class="item_box">
+	<img src="{$_W['attachurl']}{$v['attachment']}" style="max-height:100%;">
+</span>
+<input type="hidden" value="{$v['attachment']}" name="attachment[{$v['id']}]">
+<span class="item_input">
+	<textarea class="bewrite" cols="3" name="description[]" rows="4" style="resize: none" placeholder="图片描述..." onfocus="$(this).parent().addClass(&#39;on&#39;);" onblur="$(this).parent().removeClass(&#39;on&#39;);"> {$v['description']}   </textarea>
+	<i class="shadow hc">
+	</i>
+</span>
+</li>
+	{/loop}
+	</ul>
+
+</td>
+
+<!--批量上传结束-->
+		
+		</tr>
+		
+		<tr>
+		  <th>密码</th>
+			<td><input type="text" id="pwd" name="pwd" value="{$item['pwd']}"  class="span3" /></td>
+		</tr>
+		<tr>
+			<th>想说的话</th>
+			<td><p>
+			  <textarea style="height:100px;" class="span7 richtext-clone" name="word" cols="70" id="word">{$item['word']}</textarea>
+			</p>
+			<div class="help-block">这里内容会显示在微信图文回复的描述项里</div></td>
+		</tr>
+		
+
+		<tr>
+		  <th>婚宴地址</th>
+			<td><input type="text" id="hy_addr" name="hy_addr" value="{$item['hy_addr']}"  class="span5" /></td>
+		</tr>
+		<tr>
+			<th>地区</th>
+			<td>
+				<select name="resideprovince" id="sel-provance" onChange="selectCity();bmap.searchMapByPCD();" style="width:100px;">
+					<option value="" selected="true">省/直辖市</option>
+				</select>
+				<select name="residecity" id="sel-city" onChange="selectcounty();bmap.searchMapByPCD();" style="width:100px;">
+					<option value="" selected="true">请选择</option>
+				</select>
+				<select name="residedist" id="sel-area" onchange="bmap.searchMapByPCD();" style="width:100px;">
+					<option value="" selected="true">请选择</option>
+				</select>
+				<span class="help-block">先选择地区，可以快速的定位地图位置。</span>
+			</td>
+		</tr>
+		<tr>
+			<th>地图标识</th>
+			<td><div class="input-append"><input type="text" id="jw_addr" name="jw_addr" value="{$item['jw_addr']}"  class="span5" /><button type="button" class="btn" name="mapsubmit" value="搜索" onclick="bmap.searchMapByAddress($('#jw_addr').val())">搜索</button></div>
+			注意：这个只是模糊定位，准确位置请地图上标注。</td>
+		</tr>
+		<tr>
+			<th><label for="">坐标：</label></th>
+			<td>{php echo tpl_form_field_coordinate('baidumap', $item)}</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+	</table>
+</form>
+
+<link type="text/css" rel="stylesheet" href="./source/modules/lxymarry/template/css/uploadify_t.css" />
+<script type="text/javascript" src="./resource/script/cascade.js"></script>
+<script type="text/javascript">
+
+$(function(){
+	var i = 0;
+	$('#selectimage').click(function() {
+		var editor = KindEditor.editor({
+			allowFileManager : false,
+			imageSizeLimit : '30MB',
+			uploadJson : './index.php?act=attachment&do=upload'
+		});
+		editor.loadPlugin('multiimage', function() {
+			editor.plugin.multiImageDialog({
+				clickFn : function(list) {
+					if (list && list.length > 0) {
+						for (i in list) {
+							if (list[i]) {
+								html =	'<li class="imgbox" style="list-type:none">'+
+								'<a class="item_close" href="javascript:;" onclick="deletepic(this);" title="删除"></a>'+
+								'<span class="item_box"> <img src="'+list[i]['url']+'" style="max-height:100%;"></span>'+
+								'<input type="hidden" name="attachment-new[]" value="'+list[i]['filename']+'" />'+
+								'<span class="item_input"><textarea name="description-new[]" class="bewrite" cols="3" rows="4" style="resize: none" placeholder="图片描述..." '+
+								'onfocus="$(this).parent().addClass(&#39;on&#39;);" onblur="$(this).parent().removeClass(&#39;on&#39;);"></textarea><i class="shadow hc"></i></span>'+
+								'</li>';
+								$('#fileList').append(html);
+								i++;
+							}
+						}
+						editor.hideDialog();
+					} else {
+						alert('请先选择要上传的图片！');
+					}
+				}
+			});
+		});
+	});
+});
+function deletepic(obj){
+	if (confirm("确认要删除？")) {
+		var $thisob=$(obj);
+		var $liobj=$thisob.parent();
+		var picurl=$liobj.children('input').val();
+		$.post('{php echo $this->createMobileUrl('ajaxdelete',array())}',{ pic:picurl},function(m){
+			if(m=='1') {
+				$liobj.remove();
+			} else {
+				alert("删除失败");
+			}
+		},"html");	
+	}
+}
+
+kindeditor($('#word'));
+cascdeInit('{$item['province']}','{$item['city']}','{$item['dist']}'); //开启地区三级联动
+</script>
+
+{template 'common/footer'}

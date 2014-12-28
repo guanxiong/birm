@@ -1,0 +1,93 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li><a href="{php echo $this->createWebUrl('manage');}">测试管理</a></li>
+        <li class="active"><a href="{php echo $this->createWebUrl('post');}">{if $item['id']}编辑{else}添加{/if}测试</a></li>
+        {if $_W['isfounder']==1}
+            <li><a href="{php echo $this->createWebUrl('type');}">分类管理</a></li>
+        {/if}
+    </ul>
+    <form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{$_GPC['id']}">
+        <h4>基本信息</h4>
+        <table class="tb">
+                <tr>
+                    <th><span class="red">*</span>标题</th>
+                    <td>
+                        <input type="text" id="title" placeholder="" name="title" value="{$item['title']}">
+                        <a href="javascript:;" class="btn btn-primary" id="spider">提取</a>
+                        <span class="help-block">请填写链接，如：http://t.wshok.com/t/multi/t/824.html</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>测试类别</th>
+                    <td>
+                        <select class="span3" name="typeid" id="typeid">
+                            <option value="0">请选择二级栏目</option>
+                            {loop $types $t}
+                            <option value="{$t['id']}"{if $t['id']==$item['typeid']} selected{/if}>{$t[typename]}</option>
+                            {/loop}
+                        </select>
+                    </td>
+                </tr>
+{if $_W['isfounder']==1}
+                <tr>
+                    <th>系统题库</th>
+                    <td>
+                        <label class="checkbox">
+                            <input type="checkbox" name="isweid" value="1" {if $item['weid']==0}checked{/if}> 加入系统题库，给平台用户使用。
+                        </label>
+                    </td>
+                </tr>
+{/if}
+                <tr>
+                    <th>测试简介</th>
+                    <td>
+                        <textarea id="smalltext" name="smalltext" class="span7" cols="60">{$item['smalltext']}</textarea>
+                        <div class="help-block">用于起始界面的一段文字描述</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>封面图片</th>
+                    <td>
+                        {php echo tpl_form_field_image('cover',$item['cover']);}
+                        <span class="help-block">图片尺寸建议：640*960。</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>顶部广告</th>
+                    <td>
+                        {php echo tpl_form_field_image('banner',$item['banner']);}
+                        <span class="help-block">图片尺寸建议：640*300。</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>引导关注素材</th>
+                    <td>
+                        <input type="text" id="follow_url" name="follow_url" value="{$item['follow_url']}" class="span7" />
+                        <div class="help-block">建议做一条引导关注的图文素材，为空则跳回测试起始界面。例：<a href="http://mp.weixin.qq.com/s?__biz=MjM5ODU0NzQ0Mg==&mid=200074867&idx=1&sn=5a529a8cf2369731f535d5f3885d140e#rd" target="_black">点击查看</a></div>
+                    </td>
+                </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <button type="submit" class="btn btn-primary span3" name="submit" value="提交">下一步</button>
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+<script type="text/javascript">
+    $('#spider').click(function(){
+        var url = $(this).parent().find('#title').val();
+        var ajaxurl = '{php echo $this->createWebUrl('spider')}&url='+url;
+        ajaxopen(ajaxurl)
+    });
+    // $("#dialect").blur(function(){
+    //     $('#share_title').val('');
+    // });
+    // $("#title").blur(function(){
+    //     $('#share_desc').val($(this).val());
+    // });
+</script>
+{template 'common/footer'}

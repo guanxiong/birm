@@ -1,0 +1,180 @@
+{template 'common/header'}
+{php echo $this -> set_tabbar($action, $rid);}
+<style>
+.sub-search input,.sub-search select{margin-bottom:0;}
+.red{color:#f00;}
+</style>
+    <div class="main">
+        <div class="tb-list" style="display: block;padding: 10px 15px 0px 15px;">
+            <div class="alert alert-info" style="margin-bottom: 0px;">
+                <p><span class="bold">
+                本次活动共有SN码 <span class="red">{$sn_total}</span> 张,已消费 <span class="red">{$sn_win_total}</span> 张,已兑换 <span class="red">{$sn_use_total}</span> 张.
+                </span></p>
+            </div>
+        </div>
+    <form action="" method="post" class="form-horizontal form" onsubmit="return formcheck(this)">
+    <h4>水果达人SN码管理</h4>
+    <input type="hidden" name="act" value="module" /><input type="hidden" name="do" value="snlist" /><input type="hidden" name="name" value="{$modulename}" /><input type="hidden" name="rid" value="{$rid}" />
+    <select name="profile">
+        <option value="" selected="selected">请选择搜索用户资料</option>
+        <option {if $_GPC['profile'] == 'sn'}selected{/if} value="sn">SN码</option>
+        <option {if $_GPC['profile'] == 'mobile'}selected{/if} value="mobile">手机</option>
+    </select>
+    <input type="text" name="profilevalue" value="{$_GPC['profilevalue']}"  class="span2" />
+    <input type="submit" name="" value="搜索" class="btn btn-primary" />
+    <a class="btn use" data-codeid="show_sn" href="javascript:void(0)" title="增加奖品SN码">增加SN码</a>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th style="width:100px;">sn码</th>
+            <th>奖品</th>
+            <th style="width:80px;">状态</th>
+            <th style="width:100px;">领取者手机</th>
+            <th style="width:100px;">微信号</th>
+            <th style="width:100px;">中奖时间</th>
+            <th style="width:100px;">使用时间</th>
+            <th style="width:150px;">操作</th>
+        </tr>
+        </thead>
+        <tbody id="level-list">
+        {loop $list $row}
+        <tr>
+            <td class="row-hover">{$row['sn']}</td>
+            <td>{$award_arr[$row['awardid']]}</td>
+            <td>{if $row['status']==0}
+                <span class="label" style="background:#f00;">未抽中</span>
+                {elseif $row['status']==1}
+                <span class="label">已消费</span>
+                {elseif $row['status']==2}
+                <span class="label" style="background:#56af45;">已兑换</span>
+                {/if}
+            </td>
+            <td>{$row['mobile']}</td>
+            <td>{$row['from_user']}</td>
+            <td>
+                {if !empty($row[winningtime])}
+                {php echo date('Y-m-d <br> H:i:s', $row[winningtime]);}
+                {/if}
+            </td>
+            <td>
+                {if !empty($row[usetime])}
+                {php echo date('Y-m-d <br> H:i:s', $row[usetime]);}
+                {/if}
+            </td>
+            <td>
+                <a href="{php echo create_url('site/module', array('do' => 'updatesn', 'name' => $modulename, rid => $rid, 'id' => $row['id'], 'status' => 1))}" onclick="return confirm('确认操作吗？');return false;">已消费</a>
+                <a href="{php echo create_url('site/module', array('do' => 'updatesn', 'name' => $modulename, rid => $rid, 'id' => $row['id'], 'status' => 2))}" onclick="return confirm('确认操作吗？');return false;">已兑换</a>
+            </td>
+        </tr>
+        {/loop}
+        </tbody>
+    </table>
+    </form>
+    {$pager}
+    </div>
+<div id="myModal" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="Form1" action="" method="post" class="form-horizontal">
+                <input type="hidden" name="id" id="id" value="0">
+                <input type="hidden" name="state" id="state" value="0">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"><i class="icon-check"></i>增加SN码数量</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="control-group">
+                        <input type="hidden" name="act" value="module" />
+                        <input type="hidden" name="do" value="addsn" />
+                        <input type="hidden" name="name" value="{$modulename}" />
+                        <input type="hidden" name="rid" value="{$rid}" />
+                        <label class="control-label" for="price">SN码类型</label>
+                        <div class="controls">
+                            <select name="awardid">
+                                {$page_sel_sn}
+                            </select>
+                            <input type="text" name="sncount" value="1"  class="span1" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <input type="submit" name="" value="增加" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("form").delegate(".use", "click", function () {
+            $("#myModal").modal("show");
+        });
+    });
+</script>
+<script>
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+    $('#date-range').daterangepicker({
+        format: 'YYYY-MM-DD H:m',
+        startDate: $(':hidden[name=starttime]').val(),
+        endDate: $(':hidden[name=endtime]').val(),
+        startTime:$(':hidden[name=starttime]').val(),
+        endTime:$(':hidden[name=endtime]').val(),
+        locale: {
+            applyLabel: '确定',
+            cancelLabel: '取消',
+            fromLabel: '从',
+            toLabel: '至',
+            weekLabel: '周',
+            customRangeLabel: '日期范围',
+            daysOfWeek: moment()._lang._weekdaysMin.slice(),
+            monthNames: moment()._lang._monthsShort.slice(),
+            firstDay: 0
+        }
+    }, function(start, end){
+        $('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+        $(':hidden[name=starttime]').val(start.format('YYYY-MM-DD'));
+        $(':hidden[name=endtime]').val(end.format('YYYY-MM-DD'));
+    });
+});
+</script>
+{template 'common/footer'}

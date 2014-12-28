@@ -1,0 +1,31 @@
+{if empty($item)}
+	{php $namesuffix = '-new[]';}
+	{php $itemid = '(itemid)';}
+{else}
+	{php $namesuffix = '['.$item['id'].']'}
+	{php $itemid = 'basic-item-' . $item['id'];}
+{/if}
+<div id="show" class="span6 alert alert-info {if empty($item)}hide{/if}">
+	<div class="content" id="content">{$item['content']}</div>
+	<span class="pull-right">
+		{if !empty($item)}<a href="{php echo create_url('site/module/delete', array('name' => 'basic', 'id' => $item[id]))}" onclick="return doDeleteItem('{$itemid}', this.href)" style="margin-right:5px;">删除</a>{else}<a onclick="doDeleteItem('{$itemid}')" href="javascript:;" style="margin-right:5px;">删除</a>{/if}
+		<a style="margin-right:5px;" onclick="doEditItem('{$itemid}')" id="{$row[id]}" href="javascript:;">编辑</a>
+	</span>
+</div>
+<div id="form" class="alert alert-block alert-new {if !empty($item)}hide{/if}">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加回复内容</h4>
+	<table>
+		<tr>
+			<th>内容</th>
+			<td>
+				<textarea style="height:200px;" class="span7 basic-content-new" cols="70" id="basic-content-{$itemid}" name="basic-content{$namesuffix}" autocomplete="off">{$item['content']}</textarea>
+				<span class="help-block">用户进行微信交谈时，对话内容完全等于上述关键字才会执行这条规则。<a class="iconEmotion" href="javascript:;" inputid="basic-content-{$itemid}"><i class="icon-github-alt"></i> 表情</a></span>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td><button type="button" onclick="basicHandler.doAdd('{$itemid}')" class="btn btn-primary span2">添加</button></td>
+		</tr>
+	</table>
+</div>

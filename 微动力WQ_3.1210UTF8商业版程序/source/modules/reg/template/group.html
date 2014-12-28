@@ -1,0 +1,131 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('rule/post', array('id' => $id))}">返回规则模块</a></li>
+					<li><a target="_blank" href="{php echo create_url('site/module/group', array('name' => 'reg', 'id' => $id))}">群组管理</a></li>
+					<li class="current"><a href="{php echo create_url('site/module/manage', array('name' => 'reg', 'id' => $id))}">管理用户</a></li>
+					<li><a href="{php echo create_url('site/module/blacklist', array('name' => 'reg', 'id' => $id))}">黑名单</a></li>
+</ul>
+
+<div class="main">
+	<div class="stat">
+		<div class="stat-div">
+			<div class="navbar navbar-static-top">
+				<div class="navbar-inner">
+					<span class="brand">添加群组</span>
+				</div>
+			</div>
+           
+           <form action="{php echo create_url('site/module/group', array('name' => 'reg', 'id' => $id))}" method="post" class="form-horizontal form" onsubmit="return formcheck(this)">          
+           
+				<table class="tb" style="margin-top:10px; margin-left:10px;">
+				
+				<tr>
+					<th style="width:90px;"><label for="name">群组名</label></th>
+					<td>
+						
+                       <input type="text"  name="groupname" value="群组名" class="span6"  />
+						<span class="help-block">群组名</span>
+                        
+					</td>
+				</tr>
+                <tr>
+					<th style="width:90px;"><label for="credit">积分：</label></th>
+					<td>
+						<input type="text"  name="credit" value="10" class="span6" />
+                       
+						<span class="help-block">达到该群组需要的积分</span>
+                        
+					</td>
+				</tr>
+                
+				<tr>
+					<th><label for="info">备注：</label></th>
+					<td>
+						<input type="text"  name="info" value="备注说明" class="span6" />
+						<span class="help-block">请填写群组介绍说明</span>
+					</td>
+				</tr>
+				
+				<tr>
+					<td colspan="2">
+						<input type="submit" class="btn btn-primary " name="submit"  value="提交" /><input type="hidden" name="token" value="{$_W['token']}" />
+					</td>
+				</tr>
+			</table>
+            
+			</form>
+            
+		</div>
+    	<div class="sub-item" id="table-list">
+					<h4 class="sub-title">群组列表</h4>  
+                   
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</th>
+                                    <th style="width:110px;">群组名</th>
+									<th class="row-hover">备注<i></i></th>
+									<th style="width:100px;">积分<i></i></th>
+									<th style="width:110px;">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+                          
+								{loop $list $row}
+								<tr>
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+                                    <td style="font-size:12px;  color:#666;">
+										{$row['groupname']}
+									</td>
+									<td class="row-hover">
+										
+											{$row['info']}
+										
+									</td>
+									<td style="font-size:12px;  color:#666;">
+										
+										{$row['credit']}
+									</td>
+									<td><a href="{php echo create_url('site/module/editgroup', array('name' => 'reg', 'id' => $id, 'gid' => $row['id']))}">编辑群组</a>
+                                  
+                                    
+                                    </td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr style="width:40px;" class="row-first">
+								<td><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+								<td>
+									<input type="submit" name="del" value="删除" class="btn btn-primary" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					</form>
+					{$pager}  
+                      
+        </div>
+</div>
+<script type="text/javascript">
+	function formcheck(form) {
+		if (!form['groupname'].value) {
+			alert('请填写群组名！');
+			form['groupname'].focus();
+			return false;
+		}
+		
+		if (!form['credit'].value ) {
+			alert('请输入积分上限');
+			form['credit'].focus();
+			return false;
+		}
+		
+	}
+	</script>
+{template 'common/footer'}

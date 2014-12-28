@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>酒店预订，酒店查询，宾馆住宿预订,网上订酒店</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-title" content="酒店预订"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="{php echo $this->_css_url}css.css" rel="stylesheet"/>
+    <script language='javascript' src='./source/modules/sns/style/jquery.js'></script>
+
+    <style type="text/css">
+        p.placeholders {
+            height: 23px;
+        }
+
+        .empty-box {
+            text-align: center;
+        }
+
+        html .emptybody {
+            background: #fff;
+        }
+
+        .empty-box .empty-message {
+            padding: 80px 20px 0px;
+        }
+
+        #listtop .orderby {
+            height: 45px;
+            line-height: 45px;
+            width: 100%;
+            font-weight: normal;
+            font-size: 14px;
+            color: #666666;
+            text-shadow: none;
+            text-align: center;
+            border-right: 1px solid #dddddd;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        #listtop .hover {
+            background: #DDDDDD;
+        }
+
+        #listtop .ui-btn-corner-all {
+            border-radius: 0px;
+        }
+
+        #listtop .ui-shadow {
+            box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+        }
+
+        .hotellist {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #e8ebef;
+            position: relative;
+            -webkit-tap-highlight-color: #f2f2f2;
+        }
+
+        .hotellist:active {
+            background: #f2f2f2;
+        }
+
+        .hotellist .ui-grid-c .ui-block-a {
+            width: 25%;
+            text-align: center;
+        }
+
+        .hotellist .ui-grid-c .ui-block-b {
+            width: 45%;
+        }
+
+        .hotellist .ui-grid-c .ui-block-c {
+            width: 22%;
+        }
+
+        .hotellist .ui-grid-c .ui-block-d {
+            width: 8%;
+            padding-top: 15px;
+        }
+
+        .star {
+            font-size: 12px;
+            color: #ff7800;
+        }
+
+        .pointColor {
+            color: Red;
+        }
+
+        /*新增感兴趣酒店*/
+        .top_tips {
+            line-height: 22px;
+            background: #ffeea0;
+            color: #34301d;
+            font-size: 12px;
+            border-bottom: #fff 1px solid;
+            box-shadow: 0 1px 0 #ffc067;
+            padding: 0px;
+            margin-bottom: 1px;
+            word-break: break-all;
+        }
+
+        .hd_tit {
+            font: 600 1.28em/2 'Tahoma';
+            position: absolute;
+            width: 100%;
+            line-height: 40px;
+            text-align: center;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        .cui-load-fail {
+            margin: 0px auto 30px;
+        }
+
+        .cui-load-error {
+            color: #878787;
+        }
+
+        .i, .icon_phone:before {
+            background: url(http://res.m.ctrip.com/html5/content/images/comm_bg.png?t=20131018) no-repeat;
+            background-size: 242px 260px;
+        }
+
+        .cui-wifi {
+            background-position: 0 -110.5px;
+        }
+
+        .icon_phone {
+            width: 42px;
+            height: 100%;
+            top: 0;
+            position: relative;
+            z-index: 9;
+            float: right;
+        }
+
+        .cui-btns-tel .icon_phone:before {
+            width: 11px;
+            height: 20px;
+            top: 16px;
+            right: 12px;
+            background-position: -172.5px 0;
+            top: 0;
+            left: -52px;
+            right: auto;
+            content: "";
+            position: absolute;
+        }
+
+        .interest_hotel {
+            border-top: #ddd 1px solid;
+            border-bottom: #ddd 1px solid;
+            padding: 5px 10px;
+        }
+
+        /*新增感兴趣酒店*/
+        /*cui 网络异常*/
+        .cui-load-fail {
+            width: 60%;
+            margin: 78px auto;
+        }
+
+        .cui-text-center {
+            text-align: center;
+        }
+
+        .cui-load-error {
+            width: 100%;
+            margin: auto;
+            word-break: break-all;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .cui-wifi {
+            width: 68px;
+            height: 69px;
+            position: relative;
+            margin: 0 auto 5px;
+            background-position: 0 -110.5px;
+        }
+
+        .cui-exclam:before {
+            width: 10px;
+            height: 31px;
+            top: 12px;
+            left: 50%;
+            margin-left: -5px;
+            background: #626262;
+            border-radius: 5px;
+        }
+
+        .cui-exclam:before, .cui-exclam:after {
+            position: absolute;
+            content: "";
+        }
+
+        .cui-exclam:after {
+            width: 10px;
+            height: 10px;
+            bottom: 11px;
+            left: 50%;
+            margin-left: -5px;
+            background: #626262;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+        }
+
+        .cui-exclam:before, .cui-exclam:after {
+            position: absolute;
+            content: "";
+        }
+
+        .cui-load-error {
+            text-align: center;
+        }
+
+        .cui-glines {
+            border-bottom: #dfdfdf 1px solid;
+            margin: 40px auto 26px;
+        }
+
+        .cui-grayc {
+            color: #878787;
+        }
+
+        .cui-btns-tel {
+            min-width: 100px;
+            display: inline-block;
+            margin: 10px auto;
+            background: #a9a9a9;
+            padding: 10px 0 10px 15px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body id="ctripPage">
+<section id="ydwxcsH"></section>
+<header>
+    <h1>
+        <string id="top-title">我的订单</string>
+        <em id="hotel-total"></em></h1>
+    <div class="lefthead" onClick="location.href='javascript:history.go(-1);'">
+        <div class="header_return"></div>
+    </div>
+    <div class="righthead">
+        <a href="{php echo $this->createMobileUrl('index')}" class="header_home"></a>
+        <!--<a href="tel:" class="header_tel __hreftel__"></a>-->
+    </div>
+</header>
+<menu style="background: #fff;position:relative;">
+
+    <div id="listContent" class="hot_list" style="padding:0px;">
+        <div id="d_list">
+            <ul class="hot_list_tab" onClick="location.href='detail.html'" hotelid="374783" data-full="0">
+                <li class="hot_img">
+                    <!--<img width="67px" height="50px" src="">-->
+                </li>
+                <li class="hot_hotel">
+
+                    <p class="name">预约酒店：北京唐拉雅秀酒店</p>
+
+                    <p class="data size12">预约房间：标间</p>
+
+                    <p class="data size12">预约时间：标间</p>
+
+                    <!--<p class="placeholders">123</p>-->
+                </li>
+                <!--<li class="hot_price">-->
+                    <!--<dfn>¥</dfn><strong>586</strong><span class="txt_gray">起</span>-->
+                    <!--<p class="hot_ico">-->
+                        <!--<em>促</em>-->
+                        <!--<em>礼</em>-->
+                        <!--<i class="mobile">手机专享</i>-->
+                    <!--</p>-->
+                <!--</li>-->
+            </ul>
+        </div>
+    </div>
+</menu>
+<input type="hidden" id="page_id" value="212093"/>
+<section id="ydwxcsF"></section>
+<div id="footer"></div>
+</body>
+</html>

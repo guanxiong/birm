@@ -1,0 +1,88 @@
+{template 'common/header'}
+<script type="text/javascript">
+$(function(){
+	$('div.make-switch').on('switch-change', function (e, data) {
+		var dat = data.el.attr('data');
+		var ret = data.value;
+		$.post(location.href, {dat: dat, ret: ret}, function(resp){
+			if(resp == 'success') {
+				window.setTimeout(function(){location.href = location.href;}, 300);
+			}
+		});
+	});
+});
+</script>
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="{php echo $this->createWebUrl('media');}">素材管理</a></li>
+		<li><a href="{php echo $this->createWebUrl('mediapost');}">添加素材</a></li>
+	</ul>
+	<div class="search">
+		<form action="index.php" method="get">
+		<input type="hidden" name="act" value="module" />
+		<input type="hidden" name="do" value="display" />
+		<input type="hidden" name="name" value="business" />
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th>关键字</th>
+					<td>
+						<input class="span6" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+					</td>
+				</tr>
+				<tr>
+					<th>素材分类</th>
+					<td>
+						<select name="industry_1" id="industry_1" value="{$_GPC['industry_1']}"></select>
+					</td>
+				</tr>
+				 <tr class="search-submit">
+					<td colspan="2"><button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button></td>
+				 </tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:100px;">名称</th>
+					<th style="width:50px;">类型</th>
+					<th style="width:100px;">链接</th>
+					<th style="">简介</th>
+					<th style="">media_id</th>
+					<th>创建时间</th>
+					<th>状态</th>
+					<th style="min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['title']}</td>
+					<td>{$item['mediatype']}</td>
+					<td><a href="{$_W['attachurl']}{$item['mediaurl']}">点击查看</a></td>
+					<td>{$item['content']}</td>
+					<td><input type="text" value="{$item['media_id']}"></td>
+					<td>{php echo date('Y-m-d H:i:s',$item['createtime'])}</td>
+					<td style="text-align:center;">
+						<div class="make-switch switch-small" data-on-label="正常" data-off-label="已过期">
+							<input type="checkbox" value="20"{if $item['status'] == '1'} checked="checked"{/if} data="{php echo base64_encode(json_encode($item['id']));}" />
+						</div>
+					</td>
+					<td><span><a href="{php echo $this->createWebUrl('post', array('id' => $item['id']))}">编辑</a>&nbsp;<a onclick="return confirm('此操作不可恢复，确认吗？'); return false;" href="{php echo $this->createWebUrl('delete', array('id' => $item['id']))}">删除</a></span></td>
+				</tr>
+				{/loop}
+			</tbody>
+			<tr>
+				<td colspan="5">
+					<input name="token" type="hidden" value="{$_W['token']}" />
+					<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+				</td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</div>
+{template 'common/footer'}

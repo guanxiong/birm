@@ -1,0 +1,216 @@
+{template 'header'}
+
+<script type="text/javascript" src="./resource/script/PCASClass.js"></script>
+
+{if $op == 'display'}
+{if empty($list)}
+<div class="list img-rounded">没有任何投诉记录</div>
+{/if}
+{loop $list $item}
+<div class="list img-rounded">
+	<div class="hd">
+		<span class="title">
+		{if intval($item['status'])==1}
+			<p class="text-danger">预约</p>
+		{elseif intval($item['status'])==2}
+			<p class="text-success">已揽件</p>
+		{elseif intval($item['status'])==3}
+			<p class="text-success">已签收</p>
+		{else}
+			<p class="text-info">已取消</p>
+		{/if}
+		</span>
+		<span class="date">{php echo date('Y-m-d H:i:s', $item['createtime']);}</span>
+	</div>
+	<div class="content">
+		<p><span class="label label-warning">包裹类型: </span> {php echo $this->getExpressType($item['type']);} - {$item['detail']}</p>
+		<p><span class="label label-warning">目 的 地 : </span> {$item['province']} - {$item['city']} - {$item['district']}</p>
+		<div class="author">
+		{if $item['status'] == '1'}
+			<a href="{php echo $this->createMobileUrl('express', array('id'=>$item['id'],'op'=>'cancel'));}" onclick="return confirm('是否确认取消该预约？')"><i class="icon-trash"></i> 取消</a>
+		{/if}
+		{if $item['status'] == '2'}
+			<a href="javascript:void();" onclick=""><i class="icon-remove"></i> 查寻</a>
+		{/if}
+		{if $item['status'] == '3'}
+			<a href="{php echo $this->createMobileUrl('express', array('id'=>$item['id'],'op'=>'delete'));}" onclick="return confirm('是否确认删除该快递？')"><i class="icon-remove"></i> 删除</a>
+		{/if}
+		</div>
+	</div>
+</div>
+{/loop}
+<div class="list img-rounded" style="padding-top: 0; padding-bottom: 0;">
+{$pager}
+</div>
+{/if}
+
+{if $op == 'post'}
+<form class="form-horizontal img-rounded" role="form" method="post" action="mobile.php" onsubmit="return checkform();">
+	<div class="form-group">
+		<label for="realname" class="col-xs-3 control-label">寄件人姓名</label>
+		<div class="col-xs-9">
+			<input type="type" name="realname" id="realname" class="form-control" value="{$item['realname']}" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="mobile" class="col-xs-3 control-label">寄件人手机</label>
+		<div class="col-xs-9">
+			<input type="type" name="mobile" id="mobile" class="form-control" value="{$item['mobile']}" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for=""type"" class="col-xs-3 control-label">包裹类型</label>
+		<div class="col-xs-9">
+			<select name="type" id="type" class="form-control">
+				{loop $types $key $type}
+					{if $key!=0}
+					<option value="{$key}"{if $key==$item['type']} selected{/if}>{$type}</option>
+					{/if}
+				{/loop}
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="detail" class="col-xs-3 control-label">包裹内容</label>
+		<div class="col-xs-9">
+			<input type="type" name="detail" id="detail" class="form-control" value="{$item['detail']}" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="province" class="col-xs-3 control-label">目的地</label>
+		<div class="col-xs-9">
+			<select id="province" name="province" class="form-control"></select><br>
+			<select id="city" name="city" class="form-control"></select><br>
+			<select id=district name="district" class="form-control"></select>
+		</div>
+	</div>
+	<script>
+		new PCAS("province","city","district","{$item['province']}","{$item['city']}","{$item['district']}")
+	</script>
+	<div class="form-group">
+		<label for="weight_estimate" class="col-xs-3 control-label">预估重量</label>
+		<div class="col-xs-9">
+			<input type="type" name="weight_estimate" id="weight_estimate" class="form-control" value="{$item['weight_estimate']}" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="express_code" class="col-xs-3 control-label">快递公司</label>
+		<div class="col-xs-9">
+			<select name="express_code" id="express_code" class="form-control">
+				<option value="">选择快递公司</option>
+				{loop $coms $code $com}
+				<option value="{$code}"{if $code==$item['express_code']} selected{/if} note="{$com['note']}">{$com['name']}</option>
+				{/loop}
+			</select>
+			<span id="note" style="display: block; clear: both; color: gray; padding: 3px 3px 3px 0;">{if !empty($item['express_code'])}快递注意事项:{$coms[$item['express_code']]['note']}{/if}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="price_estimate" class="col-xs-3 control-label">预估金额</label>
+		<div class="col-xs-9">
+			<input type="type" name="price_estimate" id="price_estimate" class="form-control" value="{$item['price_estimate']}" readonly="readonly"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-xs-offset-3 col-xs-9">
+			<button type="submit" name="submit" value="yes" class="btn btn-primary" style="width:100%;">提交</button>
+			<input type="hidden" name="id" value="{$item['id']}" />
+			<input type="hidden" name="act" value="module" />
+			<input type="hidden" name="do" value="express" />
+			<input type="hidden" name="name" value="community" />
+			<input type="hidden" name="weid" value="{$_W['weid']}" />
+			<input type="hidden" name="regionid" value="{$item['regionid']}" />
+			<input type="hidden" name="op" value="post" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+	
+	function checkform(){
+		iptname = $('#realname');
+		if(!iptname.val() || iptname.val().length == 0)){
+			iptname.get(0).focus();
+			return false;
+		}
+		iptmobile = $('#mobile');
+		if(!iptmobile.val() || iptmobile.val().length == 0){
+			iptmobile.get(0).focus();
+			return false;
+		}
+		iptdetail = $('#detail');
+		if(!iptdetail.val() || iptdetail.val().length == 0){
+			iptdetail.get(0).focus();
+			return false;
+		}
+		iptprovince = $('#province');
+		if(iptprovince.get(0).selectedIndex == 0){
+			iptprovince.get(0).focus();
+			return false;
+		}
+		iptweight = $('#weight_estimate');
+		if(!iptweight.val() || iptweight.val().length == 0 || isNaN(iptweight.val())){
+			iptweight.val('');
+			iptweight.focus();
+			return false;
+		}
+		return true;
+	}
+	$('#province').change(function(){
+		if($(this).get(0).selectedIndex == 0){
+			$('#express_code').val('');
+		}
+	});
+	
+	notes = {
+		{loop $coms $com}
+		'{$com['code']}':'{$com['note']}',
+		{/loop}
+	};
+	
+	$('#express_code').change(function(){
+		var obj = $('#express_code');
+		$('#note').text('');
+		if(obj[0].selectedIndex != 0){
+			if(checkform()){
+				get_express_fee();
+			}else{
+				obj[0].selectedIndex = 0;
+			}
+		}
+	});
+	
+	function get_express_fee() {
+		iptweight = $('#weight_estimate');
+		weight = parseFloat(iptweight.val());
+		var params = {};
+		params.weight = weight;
+		params.province = $('#province').val();
+		params.city = $('#province').val();
+		params.district = $('#district').val();
+		params.code = $('#express_code').val();
+		$.post('{php echo $this->createMobileUrl('expressFee')}', params, function(data) {
+			var jObj;
+			try {	
+				var jObj = $.parseJSON(data);
+			} catch(e) {
+				
+			}
+			if(jObj){
+				if(jObj.errmsg){
+					alert(jObj.errmsg);
+					$('#express_code').val('');
+					$('#price_estimate').val('');
+				}else{
+					$('#price_estimate').val(jObj.price);
+					$('#note').text('【快递注意事项】: '+notes[$('#express_code').val()]);
+				}
+			}
+		});
+	}
+	</script>
+</form>
+
+{/if}
+
+{template 'footer'}

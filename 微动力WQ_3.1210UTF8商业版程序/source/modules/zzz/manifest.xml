@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[做粽子]]></name>
+		<identifie><![CDATA[zzz]]></identifie>
+		<version><![CDATA[2.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[瑞午节活动]]></ability>
+		<description><![CDATA[每天系统默认给予10次（可以后台自定义），想要赶快做出XX，那就邀请好友来助威，让你的好友送你体力赚X吧]]></description>
+		<author><![CDATA[皓蓝]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="排名" do="awardlist" state="" />
+		</rule>
+		
+	</bindings>
+	<install><![CDATA[
+
+DROP TABLE IF EXISTS `ims_zzz_reply`;
+CREATE TABLE `ims_zzz_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `picture` varchar(100) NOT NULL COMMENT '活动图片',
+  `description` text NOT NULL COMMENT '活动描述',
+  `rule` text NOT NULL COMMENT '活动描述',
+  `periodlottery` smallint(10) unsigned NOT NULL DEFAULT '1' COMMENT '0为无周期',
+  `maxlottery` tinyint(3) unsigned NOT NULL COMMENT '最大抽奖数',
+  `guzhuurl` varchar(255) NOT NULL DEFAULT '',
+  `prace_times` int(10) NOT NULL DEFAULT '100',
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `bgurl` varchar(255) NOT NULL DEFAULT '',
+  `bigunit` varchar(50) NOT NULL DEFAULT '',
+  `smallunit` varchar(50) NOT NULL DEFAULT '',
+  `start_time` int(10) NOT NULL DEFAULT '0',
+  `end_time` int(10) NOT NULL DEFAULT '1600000000',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_zzz_user`;
+CREATE TABLE `ims_zzz_user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) NOT NULL DEFAULT '0',
+  `from_user` varchar(50) NOT NULL COMMENT '用户唯一身份ID',
+  `count` int(10) NOT NULL DEFAULT '0',
+  `points` int(10) NOT NULL DEFAULT '0',
+  `friendcount` int(10) NOT NULL DEFAULT '0',
+  `createtime` int(10) unsigned NOT NULL COMMENT '日期',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_zzz_winner`;
+CREATE TABLE `ims_zzz_winner` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0',
+  `point` int(10) unsigned NOT NULL DEFAULT '0',
+  `from_user` varchar(50) NOT NULL COMMENT '用户唯一身份ID',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0未领奖，1不需要领奖，2已领奖',
+  `createtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '获奖日期',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+	]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_zzz_reply`;
+	DROP TABLE IF EXISTS `ims_zzz_winner`;
+	DROP TABLE IF EXISTS `ims_zzz_user`;
+	]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="true">
+		<name><![CDATA[打卡]]></name>
+		<identifie><![CDATA[lxysignin]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[可用于签到、打卡、起床排名等活动中]]></ability>
+		<description><![CDATA[可自由设置签到时间、签到次数、奖励积分等]]></description>
+		<author><![CDATA[艮随]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="打卡记录" do="display" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE `ims_lxy_signin_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `time` int(11) NOT NULL COMMENT '签到时间',
+  `rank` int(11) NOT NULL COMMENT '排名',
+  `continuedays` int(11) NOT NULL DEFAULT '0',
+  `continuefirst` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for ims_lxy_signin_reply
+-- ----------------------------
+DROP TABLE IF EXISTS `ims_lxy_signin_reply`;
+CREATE TABLE `ims_lxy_signin_reply` (
+  `id` int(123) NOT NULL AUTO_INCREMENT,
+  `rid` int(123) NOT NULL COMMENT '规则ID',
+  `overtime` text NOT NULL COMMENT '超出时间段提示',
+  `overnum` varchar(255) DEFAULT NULL,
+  `awardrules` varchar(255) DEFAULT NULL,
+  `awardinfo` varchar(255) DEFAULT NULL,
+  `days` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+
+		]]></install>
+	<uninstall><![CDATA[
+
+		DROP TABLE IF EXISTS `ims_lxy_signin_reply`;
+		DROP TABLE IF EXISTS `ims_lxy_signin_record`;
+
+		]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

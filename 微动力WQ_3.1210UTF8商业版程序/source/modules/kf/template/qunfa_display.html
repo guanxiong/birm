@@ -1,0 +1,55 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	
+					<li><a target="_blank" href="{php echo create_url('site/module/kfset', array('type' => '3', 'name' => 'kf', 'set' => 1))}">客服列表</a></li>
+					<li class="current"><a href="{php echo create_url('site/module/manage', array('name' => 'reg'))}">设置客服</a></li>
+                    <li class="current"><a href="{php echo create_url('site/module/manage', array('type' => '3', 'name' => 'kf', 'id' => $id))}">所有记录</a></li>
+					
+</ul>
+    <div class="main">
+        <h4 style="margin-left:8px">消息群发</h4>
+        
+                <form class="form-horizontal form"  action="{php echo create_url('site/module/qunsend',array('name'=>'kf'))}" method="post">
+				<div class="notice" style="-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px;color:#556652;line-height:20px; padding:5px; margin:8px;background:#D5FFCE;border:1px #9ADF8F solid;">本功能仅高级接口发送，且只能发送给两天内给公众号推送过消息的用户！</div> 				
+                <table class="tb">
+                    <tr>
+						<th>单次发送的人数：</th>
+						<td>
+							<input type="text" class="span6"  name="pagesize" value="10" />
+							<div class="help-block">一次发送通知的用户数目，由于效率问题，建意此值保持默认</div>
+						</td>
+					</tr>
+                    <tr>
+						<th>选择群组：</th>
+						<td>
+							
+                <select id="select01" name="gid">
+                <option value="-1">不选择分组</option>
+                {loop $glist $row}
+                <option value="{$row['id']}">{$row['groupname']}({$row['cnt']}人)</option>
+                {/loop}
+                
+              </select>
+              
+							<div class="help-block">选择给那个群组内的人员发送</div>
+						</td>
+					</tr>
+					<tr>
+						<th>群发消息：</th>
+						<td>
+							<textarea name="message" id="send_message" cols="55" class="span7" style="height:200px;"></textarea>
+							<div class="help-block">需要群发的内容，目前只支持文字 <a class="iconEmotion" href="javascript:;" inputId="send_message">表情</a></div>
+						</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>
+							<input name="submit" type="submit" value="提交" class="mt10 btn grid-2 alpha" />
+							<input type="hidden" name="token" value="{$_W['token']}" />
+						</td>
+					</tr>
+				</table>
+                </form>
+            
+    </div>
+{template 'common/footer'}

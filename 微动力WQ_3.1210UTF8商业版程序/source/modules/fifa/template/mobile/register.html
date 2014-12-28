@@ -1,0 +1,61 @@
+{template 'header'}
+
+<script>
+var GAMEGUESSURL="";
+</script>
+    <!-- content -->
+    <section class="content">
+
+<form action="" method="post"  enctype="multipart/form-data">
+ <div class="tab">
+            
+            <div class="tab-content active">
+               
+
+                   <div class="tz-box-head">资料完善</div>
+
+                </div>
+				
+				
+				<section class="data_box">
+				<label class="data_box_l">您的昵称</label>
+				<span class="data_box_r"><input type="text" name="nickname" value="{$profile['nickname']}" placeholder="请输入您的昵称" class="txt" /></span>
+				</section>
+                <section class="data_box">
+                    	<label class="data_box_l">联系电话</label>
+						<span class="data_box_r"><input name="mobile" type="text" value="{$profile['mobile']}" placeholder="请输入您的手机" class="txt" /></span>
+				</section>
+                
+              <input type="hidden" name="token" value="{$_W['token']}" />
+                    <!--btn-->
+                    <section class="reserve_btn_box">
+                        <input type="submit" value="提交登记" class="reserve_btn" name="submit"/>
+                    </section>
+                    <!--btn end-->
+					
+               
+               
+            </div>
+        </div>
+</form>
+    </section>
+<script type="text/javascript">
+			function check(form) {
+				if (!form['nickname'].value) {
+					alert('请输入您的昵称');
+					return false;
+				}
+				if (!form['mobile'].value) {
+					alert('请输入您的手机号码！');
+					return false;
+				}
+				if (!/^1[0-9]{10}/.test(form['mobile'].value)) {
+					alert('请输入正确的手机号码！');
+					return false;
+				}
+				
+				return true;
+			}
+		</script>	
+    <!-- footer -->
+{template 'footer'}

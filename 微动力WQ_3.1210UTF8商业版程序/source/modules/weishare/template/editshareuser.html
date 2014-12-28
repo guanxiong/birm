@@ -1,0 +1,53 @@
+{template 'common/header'}
+
+
+
+<div class="main">
+
+<h4>修改领卡用户信息</h4>
+	<form action="" method="post" class="form-horizontal form"
+		enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}" />
+		<input type="hidden" name="sid" value="{$item['sid']}" />
+		<table class="tb">
+
+
+			<tr>
+			
+				<th><label for="">openid</label></th>
+				<td><input type="text" name="tel" class="span5"
+					value="{$item['from_user']}" disabled="disabled" /></td>
+			</tr>
+			
+			<tr>
+			
+				<th><label for="">电话</label></th>
+				<td><input type="text" name="tel" class="span5"
+					value="{$item['tel']}" disabled="disabled"/></td>
+			</tr>
+			
+			
+			<tr>
+				<th><label for="">助力次数</label></th>
+				<td><input type="text" name="helpcount" class="span5"
+					value="{$item['helpcount']}" /></td>
+			</tr>
+			
+			<tr>
+				<th><label for="">金额</label></th>
+				<td><input type="text" name="income" class="span5"
+					value="{$item['income']}" /></td>
+			</tr>
+			
+			<tr>
+				<th></th>
+				<td><input name="submit" type="submit" value="提交"
+					class="btn btn-primary span3"> <input type="hidden"
+					name="token" value="{$_W['token']}" /></td>
+			</tr>
+			
+		
+		</table>
+	</form>
+</div>
+ {template 'common/footer'}

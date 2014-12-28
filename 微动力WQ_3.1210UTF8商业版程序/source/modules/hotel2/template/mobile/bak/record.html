@@ -1,0 +1,132 @@
+<html>
+  <head>
+    <meta name="generator" content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>在线预订管理</title>
+    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="./source/modules/hotel/template/style/css/hotels.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body id="hotelslist" class="mode_webapp">
+    <div class="qiandaobanner">
+
+      <img src="{php echo img_url($reply['thumborder'])}" />
+
+    </div>
+	
+    <div class="cardexplain">
+      <!--超过预订时间3天后自动删掉预订记录，免得占服务器资源！-->
+	  
+	  {loop $orders $item}
+      <ul class="round">
+        <li class="title">
+          
+            <span>{php echo date("m月d日 H点i分",$item['time']); }订单详情
+            {if $item['status']==0}<em class="no">未处理</em>{elseif $item['status']==1}
+			<em class="ok">成功</em>{else}
+			<em class="error">失败</em>{/if}
+			</span>
+          
+        </li>
+		
+        <li>
+		  <a href="{php if ($item['status']==0) echo $this->createMobileUrl('orderdetail', array('id' => $item['id'],'rid' => $item['rid'])); else echo $this->createMobileUrl('orderinfo', array('id' => $item['id'],'rid' => $item['rid'])); } ">
+          <div class="text">
+            <p>
+              <span>预约酒店：{$item['shop']}</span>
+            </p>
+            <p>
+              <span>预约房型：{$item['style']}</span>
+            </p>
+            <p>
+              <span>预订数量：{$item['nums']} 间</span>
+            </p>
+            <p>
+              <span>到店日期：{php echo date("Y年m月d日",$item['btime']); }</span>
+            </p>
+              <p>
+              <span>离店日期：{php echo date("Y年m月d日",$item['etime']); }</span>
+            </p>
+          </div>
+		  </a>
+        </li>
+      </ul>
+	  
+	  {/loop}
+	  
+	  
+	  
+	  
+	  
+	  
+    </div>
+    <span>
+
+<script src="./source/modules/hotel/template/style/js/plugback.js" type="text/javascript" type="text/javascript"></script>
+
+<div class="footermenu">
+
+    <ul>
+	
+		<li>
+		
+				<a href="javascript:history.go(-1);">
+				
+				<img src="./source/modules/hotel/template/style/img/i_back.png">
+				
+				<p>返回</p>
+				
+				</a>
+				
+		</li>
+		
+		<li>
+		
+				<a href="{php echo $this->createMobileUrl('index', array('rid' => $rid));}">
+				
+				<img src="./source/modules/hotel/template/style/img/i_home.png">
+				
+				<p>首页</p>
+			   
+				</a>
+				
+		</li>
+		
+		<li>
+				
+				<a href="{php echo $this->createMobileUrl('about', array('rid' => $rid));}">
+				
+				<img src="./source/modules/hotel/template/style/img/i_about.png">
+				
+				<p>关于</p>
+				
+				</a>
+				
+		</li>
+
+		<li>
+				
+				<a  class="active" href="{php echo $this->createMobileUrl('record', array('rid' => $rid));}">
+				
+				{if $ordernum!= 0 }<span class="num" >{$ordernum}</span>{/if}
+				
+				<img src="./source/modules/hotel/template/style/img/i_order.png">
+				
+				<p>订单</p>
+				
+				</a>
+				
+		</li>
+	
+    </ul>
+	
+</div>
+    <script type="text/javascript">
+document.addEventListener("WeixinJSBridgeReady", function onBridgeReady() {
+WeixinJSBridge.call("hideToolbar");
+});
+</script>
+  </body>
+</html>

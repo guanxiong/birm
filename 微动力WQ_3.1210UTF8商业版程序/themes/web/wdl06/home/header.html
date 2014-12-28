@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{if empty($_W['setting']['copyright']['sitename'])}微动力微信系统—深圳最好的微信公众服务平台-微信管家-微盟-微赢{else}{$_W['setting']['copyright']['sitename']}{/if}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{if empty($_W['setting']['copyright']['keywords'])}深圳最好的微信公众服务平台,微盟、微信营销、微信代运营、微信定制开发、微信托管、微网站、微商城、微营销{else}{$_W['setting']['copyright']['keywords']}{/if}">
+<meta name="Keywords" content="{if empty($_W['setting']['copyright']['description'])}微动力，深圳最大的微信公众智能服务平台，微动力八大微体系：微菜单、微官网、微会员、微活动、微商城、微推送、微服务、微统计，企业微营销必备。{else}{$_W['setting']['copyright']['description']}{/if}">
+<link type="text/css" rel="stylesheet" href="./resource/style/bootstrap.css" />
+<link type="text/css" rel="stylesheet" href="./resource/style/font-awesome.css" />
+<link type="text/css" rel="stylesheet" href="./resource/style/common.css?v={TIMESTAMP}" />
+<script type="text/javascript" src="./resource/script/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="./resource/script/bootstrap.js"></script>
+<script type="text/javascript" src="./resource/script/common.js?v={TIMESTAMP}"></script>
+<script type="text/javascript" src="./resource/script/emotions.js"></script>
+<script type="text/javascript">
+cookie.prefix = '{$_W['config']['cookie']['pre']}';
+</script>
+<!--[if IE 7]>
+<link rel="stylesheet" href="./resource/style/font-awesome-ie7.min.css">
+<![endif]-->
+<!--[if lte IE 6]>
+<link rel="stylesheet" type="text/css" href="./resource/style/bootstrap-ie6.min.css">
+<link rel="stylesheet" type="text/css" href="./resource/style/ie.css">
+<![endif]-->
+</head>
+<body {if $action == 'frame'}style="height:100%; overflow:hidden;" scroll="no"{/if}>

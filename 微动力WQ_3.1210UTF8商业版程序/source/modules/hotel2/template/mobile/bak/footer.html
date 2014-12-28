@@ -1,0 +1,59 @@
+<script src="./source/modules/hotel/template/style/js/plugback.js" type="text/javascript" type="text/javascript"></script>
+
+<div class="footermenu">
+
+    <ul>
+	
+		<li>
+		
+				<a href="javascript:history.go(-1);">
+				
+				<img src="./source/modules/hotel/template/style/img/i_back.png">
+				
+				<p>返回</p>
+				
+				</a>
+				
+		</li>
+		
+		<li>
+		
+				<a class="active" href="{php echo $this->createMobileUrl('index', array('rid' => $rid));}">
+				
+				<img src="./source/modules/hotel/template/style/img/i_home.png">
+				
+				<p>首页</p>
+			   
+				</a>
+				
+		</li>
+		
+		<li>
+				
+				<a href="{php echo $this->createMobileUrl('about', array('rid' => $rid));}">
+				
+				<img src="./source/modules/hotel/template/style/img/i_about.png">
+				
+				<p>关于</p>
+				
+				</a>
+				
+		</li>
+
+		<li>
+				
+				<a href="{php echo $this->createMobileUrl('record', array('rid' => $rid));}">
+				
+				{if $ordernum!= 0 }<span class="num" >{$ordernum}</span>{/if}
+				
+				<img src="./source/modules/hotel/template/style/img/i_order.png">
+				
+				<p>订单</p>
+				
+				</a>
+				
+		</li>
+	
+    </ul>
+	
+</div>

@@ -1,0 +1,68 @@
+{template 'common/header'}
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="{php echo create_url('index/module/display', array('name' => 'mechat'));}">绑定美洽客服</a></li>
+	</ul>
+	<div class="main">
+	<form class="form-horizontal form" action="" method="post" onsubmit="return formcheck(this)">
+		<h4>绑定美洽客服</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">美洽管理帐户</label></th>
+				<td>
+					<input type="text" id="mechat-user" class="span4" placeholder="" name="mechat-user" value="{$mechat['name']}" />
+					<span class="help-block">登录美洽管理后台的企业帐户.</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">美洽管理密码</label></th>
+				<td>
+					<input type="password" id="mechat-pass" class="span4" placeholder="" name="mechat-pass" value="{$mechat['pass']}" />
+					<span class="help-block">登录美洽管理后台的企业帐户密码.</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">美洽AppId</label></th>
+				<td>
+					<input type="text" id="mechat-appid" class="span4" placeholder="" name="mechat-appid" value="{$mechat['appid']}" />
+					<span class="help-block">美洽开发者AppId.</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">美洽AppSecret</label></th>
+				<td>
+					<input type="text" id="mechat-appsecret" class="span4" placeholder="" name="mechat-appsecret" value="{$mechat['appsecret']}" />
+					<span class="help-block">美洽开发者AppSecret.</span>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<button type="submit" class="btn btn-primary span3" name="submit" value="绑定">绑定</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+	</div>
+<script type="text/javascript">
+function formcheck(form) {
+	if (form['mechat-user'].value == '') {
+		message('抱歉，美洽管理帐户为必填项，请返回修改！', '', 'error');
+		return false;
+	}
+	if (form['mechat-pass'].value == '') {
+		message('抱歉，美洽管理密码为必填项，请返回修改！', '', 'error');
+		return false;
+	}
+	if (form['mechat-appid'].value == '') {
+		message('抱歉，微信公众号AppId称为必填项，请返回修改！', '', 'error');
+		return false;
+	}
+	if (form['mechat-appsecret'].value == '') {
+		message('抱歉，微信公众号AppSecret为必填项，请返回修改！', '', 'error');
+		return false;
+	}
+	return true;
+}
+</script>
+{template 'common/footer'}

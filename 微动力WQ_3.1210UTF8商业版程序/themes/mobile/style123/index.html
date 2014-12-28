@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{if $title}{$title}{else}{if !empty($_W['account']['name'])}{$_W['account']['name']}{/if}{/if}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=480" />
+        <link rel="stylesheet" href="themes/mobile/style123/css/reset.css" />
+        <link rel="stylesheet" href="themes/mobile/style123/css/mainCssRed.css" />
+
+        <script type="text/javascript" src="themes/mobile/style123/js/jquery.min.js"></script>
+        <script type="text/javascript" src="themes/mobile/style123/js/flexslider.js"></script>
+        <script type="text/javascript" src="themes/mobile/style123/js/MainJS.js"></script>
+        <!--        Hides URL bar on iPhone-->
+        <script type="application/x-javascript">
+            if (navigator.userAgent.indexOf('iPhone') != -1) {
+            addEventListener("load", function() {
+            setTimeout(hideURLbar, 0);
+            }, false); 
+            }
+
+            function hideURLbar() {
+            window.scrollTo(0, 1);
+            }
+        </script>
+    </head>
+    <body>
+        <div id="indexWrapper">
+            <!--            Index BG SLider, Put here your images-->
+			{php include_once IA_ROOT . '/source/modules/site/model.php'}
+			{php $slide = site_article_search('', 'f');}
+            <div id="IndexBGSlider" class="flexslider-bgslider"> 
+                <ul class="slides">
+					{loop $slide['list'] $v}
+						<li><img src="{$_W['attachurl']}{$v['thumb']}" border="0" /></li>
+					{/loop}
+                </ul>
+            </div>
+            <!--            headlineSection-->
+            <div id="BigHeadline">
+                <h1><img src="{$_W['styles']['indexlogo']}"></h1>
+            </div> 
+            <!--            Main Nav Section-->
+            <div id="MainNavHome">
+                <div class="flexslider-nav"> 
+                    <ul class="slides">
+                        <li>
+							{loop $navs $key $nav} 
+									{if $key == 0}
+									<a href="{$nav['url']}">
+									<p>{$nav['name']}</p><p class="NavItemInfo">{$nav['css']['icon']['icon']}</p>
+									</a>
+									{elseif $key == 1}
+									<a href="{$nav['url']}">
+									<p>{$nav['name']}</p><p class="NavItemInfo">{$nav['css']['icon']['icon']}</p>
+									</a>
+									{elseif $key == 2}
+									<a href="{$nav['url']}">
+									<p>{$nav['name']}</p><p class="NavItemInfo">{$nav['css']['icon']['icon']}</p>
+									</a>
+									{elseif $key == 3}
+									<a href="{$nav['url']}">
+									<p>{$nav['name']}</p><p class="NavItemInfo">{$nav['css']['icon']['icon']}</p>
+									</a>
+									{elseif $key == 4}
+									<a href="{$nav['url']}">
+									<p>{$nav['name']}</p><p class="NavItemInfo">{$nav['css']['icon']['icon']}</p>
+									</a>
+									{/if}
+							{/loop} 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--            footer section-->
+<div id="footer" class="IndexFooter">
+    <span>
+        <a href="{$_W['styles']['weibo']}" target="_blank"><img src="themes/mobile/style123/images/socialIcons/zixun.png" /></a>
+        <a href="tel:{$_W['styles']['tel']}"><img src="themes/mobile/style123/images/socialIcons/tel.png" /></a>
+        <a href="{$_W['styles']['links']}"><img src="themes/mobile/style123/images/socialIcons/down.png" /></a>
+    </span>
+</div> 
+</div>
+</body>
+</html>

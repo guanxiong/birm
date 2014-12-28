@@ -1,0 +1,107 @@
+{template 'common/header'}
+<style>
+.prizeset input{ margin-bottom: 10px; width: 366px;}
+</style>
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<div class="main">
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('site/module', array('do' => 'slotmanage', 'name' => 'slotmac'));}">活动列表</a></li>
+	<li class="active"><a href="{php echo create_url('site/module', array('do' => 'slotedit', 'name' => 'slotmac'));}">管理活动</a></li>
+</ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name='weid' value="{$_W['weid']}">
+	<input type="hidden" name="id" value="{$slotinf['id']}">
+  	<h4>老虎机活动管理</h4>
+	<table class="tb">
+		<tr>
+			<th>活动名称</th>
+			<td><input type="text" name="slotname" value="{$slotinf['name']}" class="span6"></td>
+		</tr>
+        <tr>
+			<th>活动简介</th>
+			<td><textarea style="height:100px;" class="span6 richtext-clone" name="summary" cols="70" id="buildingintro">{$slotinf['summary']}</textarea></td>
+		</tr>
+		<tr>
+			<th>活动时间</th>
+			<td>
+				<button style="margin:0;" class="btn span5" id="date-range" type="button"><span class="date-title" id="date-title"></span> <i class="icon-caret-down"></i></button>
+				<input name="starttime" type="hidden">
+				<input name="endtime" type="hidden">
+			</td>
+		</tr>
+		<tr>
+			<td><h5>奖项设置</h5></td>
+		</tr>
+		<tr class="prizeset">
+			<th>一等奖</th>
+			<td>名称：&nbsp;<input type="text" name="prize1_name" value="{$slotinf['prize1_name']}"><br/>数量：&nbsp;<input type="text" name="prize1_num" value="{$slotinf['prize1_num']}"><br/>概率：&nbsp;<input type="text" name="prize1_prob" value="{$slotinf['prize1_prob']}"></td>
+		</tr>
+		<tr class="prizeset">
+			<th>二等奖</th>
+			<td>名称：&nbsp;<input type="text" name="prize2_name" value="{$slotinf['prize2_name']}"><br/>数量：&nbsp;<input type="text" name="prize2_num" value="{$slotinf['prize2_num']}"><br/>概率：&nbsp;<input type="text" name="prize2_prob" value="{$slotinf['prize2_prob']}"></td>
+		</tr>
+		<tr class="prizeset">
+			<th>三等奖</th>
+			<td>名称：&nbsp;<input type="text" name="prize3_name" value="{$slotinf['prize3_name']}"><br/>数量：&nbsp;<input type="text" name="prize3_num" value="{$slotinf['prize3_num']}"><br/>概率：&nbsp;<input type="text" name="prize3_prob" value="{$slotinf['prize3_prob']}"></td>
+		</tr>
+		<tr>
+			<td><h5>规则设置</h5></td>
+		</tr>
+		<tr>
+			<th>是否显示奖品数量</th>
+			<td>
+				<input type="radio" name="pnum_stat" value="1" {if 1 == $slotinf['pnum_stat']}checked{/if}>是
+				<input type="radio" name="pnum_stat" value="0" {if 0 == $slotinf['pnum_stat']}checked{/if}>否
+			</td>
+		</tr>
+		<tr>
+			<th>每天发放奖品总量</th>
+			<td><input type="text" name="per_maxprisum" value="{$slotinf['per_maxprisum']}" class="span6"></td>
+		</tr>
+		<tr>
+			<th>每人最多抽奖次数</th>
+			<td><input type="text" name="per_sum" value="{$slotinf['per_sum']}" class="span6"></td>
+		</tr>
+		<tr>
+			<th>每人每天抽奖次数</th>
+			<td><input type="text" name="perday_sum" value="{$slotinf['perday_sum']}" class="span6"></td>
+		</tr>
+		<tr>
+			<td><input type="submit" value="保存" class="btn btn-primary pull-right span2"></td>
+		</tr>
+		<input type="hidden" name="token" value="{$_W['token']}" />
+	</table>
+</form>
+</div>
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script>
+var sttime = "{if !empty($slotinf)}{php echo date('Y-m-d', $slotinf['starttime'])}{else}{php echo date('Y-m-d')}{/if}";
+var edtime = "{if !empty($slotinf)}{php echo date('Y-m-d', $slotinf['endtime'])}{else}{php echo date('Y-m-d')}{/if}";
+$(':hidden[name=starttime]').val(sttime);
+$(':hidden[name=endtime]').val(edtime);
+$('#date-title').html(sttime+' 至 '+edtime);
+$(function() {
+	//详细数据相关操作
+	$('#date-range').daterangepicker({
+        format: 'YYYY-MM-DD',
+        startDate: sttime,
+        endDate: edtime,
+        locale: {
+            applyLabel: '确定',
+            cancelLabel: '取消',
+            fromLabel: '从',
+            toLabel: '至',
+            weekLabel: '周',
+            customRangeLabel: '日期范围',
+            daysOfWeek: moment()._lang._weekdaysMin.slice(),
+            monthNames: moment()._lang._monthsShort.slice(),
+            firstDay: 0
+        }
+    }, function(start, end){
+        $('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+        $(':hidden[name=starttime]').val(start.format('YYYY-MM-DD'));
+        $(':hidden[name=endtime]').val(end.format('YYYY-MM-DD'));
+    });
+});
+</script>
+{template 'common/footer'}

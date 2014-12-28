@@ -1,0 +1,100 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('content', array('op' => 'post', 'reid' => $reid));}">添加记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('content', array('op' => 'display', 'reid' => $reid));}">管理记录</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('research', array('reid' => $reid));}">管理预约</a></li>
+	<li ><a href="{php echo $this->createWebUrl('struct', array('op' => 'display'));}">返回</a></li>
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data" onsubmit="return formcheck(this)">
+		<input type="hidden" name="id" value="{$id}" />
+		<h4>查看详情</h4>
+		<table class="tb">
+			{loop $search['research'] $row}
+			<tr>
+				<th><label for="">{$row['title']}</label></th>
+				<td>
+					{if isset($this->types[$row['bind']])}
+					{php echo $this->formatForm($row, $research['data'][$row['bind']])}
+					{else}
+					{php echo tpl_fans_form($row['bind'], $research['fans'][$row['bind']])}
+					{/if}
+				</td>
+			</tr>
+			{/loop}
+			<tr>
+				<th><label for="">备注</label></th>
+				<td>
+					<textarea rows="3" name="remark" class="span5">{$research['remark']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td colspan="7">
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{elseif $operation == 'display'}
+<div class="main">
+	<div style="padding:15px;">
+		<form method="post">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:30px;"></th>
+					{loop $search['fields'] $field}
+					{if $field['search']}
+					<th>{$field['title']}</th>
+					{/if}
+					{/loop}
+					<th style="width:80px;">状态</th>
+					<th style="width:260px;">用户</th>
+					<th>备注</th>
+					<th style="width:200px;">创建时间</th>
+					<th style="min-width:160px; text-align:right;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td><input type="checkbox" class="checkbox inline" name="select[]" value="{$item['id']}" /></td>
+					{loop $search['fields'] $field}
+					{if $field['search']}
+					<td>{$rows[$item['rowid']][$field['variable']]}</td>
+					{/if}
+					{/loop}
+					<td>{if empty($item['status'])}<span class="label label-error">未标记</span>{else}<span class="label label-success">{$search['status'][$item['status']]}</span>{/if}</td>
+					<td><a href="{php echo create_url('site/module/profile', array('name' => 'fans', 'from_user' => $item['openid'], 'weid' => $_W['weid']))}" target="_blank" title="查看用户">{$item['openid']}</a></td>
+					<td>{$item['remark']}</td>
+					<td>{php echo date('Y-m-d H:i:s', $item['createtime'])}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('research', array('op' => 'post', 'reid' => $reid, 'id' => $item['id']))}">详情</a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+		<table>
+			<tr>
+				<td>
+					<select name="status" style="margin-right:10px; margin-bottom:0;">
+					{loop $search['status'] $index $status}
+					<option value="{$index}">{$status}</option>
+					{/loop}
+					</select>
+					<button type="submit" class="btn btn-primary" name="submit" value="提交">提交</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	{$pager}
+</div>
+{/if}
+{template 'common/footer'}

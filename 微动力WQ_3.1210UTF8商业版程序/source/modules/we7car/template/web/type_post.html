@@ -1,0 +1,179 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="/source/modules/we7car/style/css/uploadify_t.css?2014-01-28-1" media="all" />
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+
+<ul class="nav nav-tabs">
+ 	{php include $this->template('menucar');}
+</ul>
+	<div class="main">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+			<h4>修改品牌车系设置</h4>
+			<table class="tb">
+				<tr>
+					<th><label for="">排序</label></th>
+					<td>
+						<input type="text" name="listorder" class="span6" value="{$theone['listorder']}" />
+					</td>
+				</tr>	
+				<tr>
+					<th><label for="">车型名称</label></th>
+					<td>
+						<input type="text" name="title" id="title" class="span5" value="{$theone['title']}" />
+					</td>
+				</tr>					
+				<tr>
+					<th><label for="">品牌/车系</label></th>
+					<td>
+						<select class="span3" name="bid" onchange="fetchseries(this.options[this.selectedIndex].value)">
+							<option value="0">选择品牌</option>
+							{loop $brand $row}
+								<option value="{$row['id']}"  {if $row['id'] == $theone['bid']} selected="selected"{/if}>{$row['title']}</option>
+							{/loop}
+						</select>
+						<select class="span3" name="sid" id="sid">
+							<option value="0">选择车系</option>						
+							{loop $series $row}
+								<option value="{$row['id']}"  {if $row['id'] == $theone['sid']} selected="selected"{/if}>{$row['title']}</option>
+							{/loop}						
+						</select>						
+					</td>
+				</tr>
+				<tr>
+					<th><label for="">年款</label></th>
+					<td>
+						<input type="number" name="pyear" class="span3" value="{$theone['pyear']}" />
+					</td>
+				</tr>					
+				<tr>
+					<th><label for="">指导价</label></th>
+					<td>
+						<input type="text" name="price1" class="span3" value="{$theone['price1']}" />万元
+					</td>
+				</tr>	
+				<tr>
+					<th><label for="">经销商报价</label></th>
+					<td>
+						<input type="text" name="price2" class="span3" value="{$theone['price2']}" />万元
+					</td>
+				</tr>					
+				
+				<tr>
+					<th><label for="">排量</label></th>
+					<td>
+						<input type="text" name="output" class="span5" value="{$theone['output']}" />
+					</td>
+				</tr>	
+				<tr>
+					<th><label for="">档位个数</label></th>
+					<td>
+						<input type="text" name="gearnum" class="span5" value="{$theone['gearnum']}" />
+					</td>
+				</tr>	
+				<tr>
+					<th><label for="">变速箱</label></th>
+					<td>
+						<input type="text" name="gear_box" class="span5" value="{$theone['gear_box']}" />
+					</td>
+				</tr>					
+				<tr>
+					<th><label for="">展示图片</label></th>
+					<td>
+						<div id="upimg_main">
+							<div id="file_upload" class="uploadify">
+								<span class="btn btn-file"><span class="fileupload-new" id="file_upload-button">选择图片</span></span><span class="maroon">*</span>
+							</div>		
+							<ul class="ipost-list ui-sortable" id="fileList">
+								{loop $theone['thumb_url'] $row}
+									<li class="imgbox"><a class="thumb_close" href="javascript:void(0)" title="删除"></a>  
+										<input type="hidden" value="{$row}" name="thumb_url[]">
+										<span class="item_box"><img src="{$_W['attachurl']}{$row}"></span>
+									</li>
+								{/loop}
+							</ul>
+							<div id="file_upload_queue" class="uploadifyQueue"></div>
+						</div>
+						<span class="help-block" style="clear:both">建议图片大小不超过300K,发布者自己控制尽量不要超过5张，以免影响展示效果</span>																		
+					</td>
+				</tr>		
+				<tr>
+					<th><label for="">是否显示</label></th>
+					<td>
+						<label for="isshow1" class="radio inline"><input type="radio" name="status" value="1" id="isshow1" {if $theone['status'] == 1}  checked="true" {/if}> 是</label>&nbsp;&nbsp;&nbsp;
+						<label for="isshow0" class="radio inline"><input type="radio" name="status" value="0" id="isshow0"  {if $theone['status'] == 0}  checked="true" {/if}> 否</label>
+					</td>
+				</tr>		
+				<tr>
+					<th></th>
+					<td>
+						<input type="hidden"  name="id" value="{$theone['id']}" />
+						<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					</td>
+				</tr>
+			</table>
+		</form>
+    </div>
+					
+				
+<script type="text/javascript">
+KindEditor.ready(function(K) {
+	var editor = KindEditor.editor({
+		allowFileManager : true,
+		uploadJson : "./index.php?act=attachment&do=upload",
+		fileManagerJson : "./index.php?act=attachment&do=manager",
+ 
+	});
+	$("#file_upload-button").click(function() {
+		editor.loadPlugin("multiimage", function() {
+			editor.plugin.multiImageDialog({
+				imageUrl : $("#upload-image-url-logo").val(),
+				clickFn : function(urlList) {
+						var div =$('#fileList');
+						//div.html('');
+						K.each(urlList, function(i, data) {
+							//var filename = /images(.*)/.exec(url);
+							html='<li class="imgbox"><a class="thumb_close" href="javascript:void(0)" title="删除"></a><input type="hidden" value="'+data.filename+'" name="thumb_url[]"><span class="item_box"><img src="'+data.url+'"></span></li>';
+							div.append(html);
+						});
+						editor.hideDialog();
+					}
+		});
+		});
+	});
+});	
+$(".btn-primary").click(function() {
+	title=$("#title").val();
+	if(title==''){
+		message('请选择车型名称');
+		return false;
+	}
+	
+	bid=$("#bid").val();
+	sid=$("#sid").val();
+	if(bid==0 || sid==0){
+		message('请选择车型或者车系');
+		return false;
+	}
+
+});
+$("a.thumb_close").live("click ", function (n) {
+   $(this).parent().remove();
+});
+	function fetchseries(bid){
+		$.get("{php echo create_url('site/module', array('do' => 'getseries', 'name' => 'we7car'))}&bid="+bid,
+		function(data){
+			if(data.status==1){
+				html='<option value="0">请选择车系</option>';
+				list=data.list;
+				for(var i=0;i<list.length;i++){
+					//alert();
+					html+= '<option value="'+list[i].id+'">'+list[i].title+'</option>';
+				}
+				$("#sid").html(html);
+			}		
+		}, "json");
+	}	
+</script>	
+{template 'common/footer'}
+

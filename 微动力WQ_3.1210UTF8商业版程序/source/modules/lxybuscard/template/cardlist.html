@@ -1,0 +1,63 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li{if $_GPC['do'] == 'cardlist'} class="active"{/if}><a href="{php echo  $this->createWebUrl('cardlist');}">名片管理</a></li>
+		<li{if $_GPC['do'] == 'cardadd'} class="active"{/if}><a href="{php echo $this->createWebUrl('cardadd');}">添加名片</a></li>
+	</ul>
+	<div class="search">
+		<form action="{php echo $this->createWeburl('cardlist')}" method="post">
+		  <table class="table table-bordered tb">
+			<tbody>
+				<tr class="span6">
+					<th class="span2">姓名</th>
+					<td class="span2">
+						<input class="span2" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+					</td>
+                    <td class="span2">
+                    <button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button>
+                    </td>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<p>
+        <a href="{php echo $this->createWeburl('cardadd', array())}"  class="btn"><i class="icon-plus-sign-alt" ></i>新增名片</a>
+        </p>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th width="85"  >姓名</th>
+					<th width="85" >职务</th>
+					<th width="85" >手机</th>
+					<th width="85">电话</th>
+					<th width="85">QQ</th>
+					<th width="100">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['username']}</td>
+					<td>{$item['degree']}</td>
+					<td>{$item['mobile']}</td>
+					<td>{$item['tel']}</td>
+					<td>{$item['qq']}</td>
+					<td>
+                      
+                    <a href="{php echo $this->createMobileurl('viewcard', array('id' => $item['id']))}" class="btn btn-small" title="预览" target="_blank"><i class="icon-search"></i></a>
+                      <a href="{php echo $this->createWebUrl('tplsetindex', array('id' => $item['id']))}" class="btn btn-small" title="模板设置"><i class="icon-user"></i></a>
+                    <a href="{php echo $this->createWebUrl('cardadd', array('id' => $item['id']))}" class="btn btn-small" title="编辑"><i class="icon-edit"></i></a>
+						<a onclick="return confirm('确认删除该名片？');return false;" href="{php echo $this->createWebUrl('deletecard', array('id' => $item['id']))}" class="btn btn-small" title="删除"><i class="icon-remove"></i></a></td>
+				</tr>
+				{/loop}
+
+				<td colspan="7">
+					<input name="token" type="hidden" value="{$_W['token']}" /></td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</div>
+{template 'common/footer'}

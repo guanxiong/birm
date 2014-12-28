@@ -1,0 +1,139 @@
+{template 'common/header'}
+<style type="text/css">
+table li{padding:5px 0;}
+small a{color:#999;}
+</style>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('display')}">调研活动列表</a></li>
+	<li><a href="{php echo $this->createWebUrl('post')}">新建调研活动</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('detail', array('id' => $row['sid']))}">调研记录详情</a></li>
+</ul>
+<div class="main">
+	<div class="form form-horizontal">
+		<h4>调研活动信息</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">调研标题</label></th>
+				<td>
+					{$activity['title']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">调研活动说明</label></th>
+				<td>
+					{$activity['description']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">提交提示信息</label></th>
+				<td>
+					{$activity['information']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">图片介绍</label></th>
+				<td>
+					<img src="{$_W['attachurl']}{$activity['thumb']}" style="height:150px;" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">创建时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $activity['createtime']);}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">开始时间~结束时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $activity['starttime']);}~{php echo date('Y-m-d H:i:s', $activity['endtime']);}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">状态</label></th>
+				<td>
+					<label>
+					{if $activity['status'] == '1'}
+						<i class="icon-check"> &nbsp; 当前调研活动生效中</i>
+					{else}
+						<i class="icon-check-empty"> &nbsp; 当前调研活动已失效</i>
+					{/if}
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">是否开启提交建议</label></th>
+				<td>
+					<label>
+					{if $activity['suggest_status'] == '1'}
+						<i class="icon-check"> &nbsp; 已开启提交建议</i>
+					{else}
+						<i class="icon-check-empty"> &nbsp; 未开启提交意见</i>
+					{/if}
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">微站首页展示</label></th>
+				<td>
+					<label>
+					{if $activity['inhome'] == '1'}
+						<i class="icon-check"> &nbsp; 当前调研活动将展示在微站首页上</i>
+					{else}
+						<i class="icon-check-empty"> &nbsp; 当前调研活动不显示在微站首页</i>
+					{/if}
+					</label>
+				</td>
+			</tr>
+		</table>
+		<h4>用户提交的信息</h4>
+		<table class="tb">
+			<tr>
+				<th style="width:200px"><label for="">用户</label></th>
+				<td>
+					<a href="{php echo create_url('site/module/profile', array('name' => 'fans', 'from_user' => $row['openid']));}">{$row['openid']}</a>
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">真实姓名</label></th>
+				<td>
+					{if $row['realname']!=""} {$row['realname']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">手机号</label></th>
+				<td>
+					{if $row['mobile']!=""} {$row['mobile']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">用户提交时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $row['createtime']);}
+				</td>
+			</tr>
+			{loop $ds $fid $ftitle}
+			<tr>
+				<th><label for="">{$ftitle['fid']}</label></th>
+				<td>
+					{if $ftitle['type'] == 'image'}<a target="_blank" href="{$_W['attachurl']}{$row['fields'][$fid]}">点击查看{$ftitle['fid']}</a>{else}{$row['fields'][$fid]}{/if}
+				</td>
+			</tr>
+			{/loop}
+			{if $activity['suggest_status']=="1"}
+				<tr>
+					<th><label for="">意见和建议</label></th>
+					<td>
+						{if $row['suggest']!=""}{$row['suggest']}{else}未填写{/if}
+					</td>
+				</tr>
+			{/if}
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+{template 'common/footer'}

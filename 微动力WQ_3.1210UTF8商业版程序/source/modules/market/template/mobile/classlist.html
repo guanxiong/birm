@@ -1,0 +1,164 @@
+﻿
+<!DOCTYPE html>
+<html>
+    <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+          <!-- Mobile Devices Support @begin -->
+            <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+            <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+            <meta content="no-cache" http-equiv="pragma">
+            <meta content="0" http-equiv="expires">
+            <meta content="telephone=no, address=no" name="format-detection">
+            <meta content="width=device-width, initial-scale=1.0" name="viewport">
+            <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <!-- Mobile Devices Support @end -->       
+<link rel="stylesheet" type="text/css" href="/source/modules/market/images/web/common.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="/source/modules/market/images/web/reset.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="/source/modules/market/images/mobile/cate12_2.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="/source/modules/market/images/mobile/iscroll.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="/source/modules/market/images/mobile/circle/plugmenu.css?2014-01-28-1" media="all" />
+<script type="text/javascript" src="/source/modules/market/images/web/js/template/maivl.js?2014-01-28-1"></script>
+<script type="text/javascript" src="/source/modules/market/images/web/js/jQuery.js?2014-01-28-1"></script>
+<script type="text/javascript" src="/source/modules/market/images/mobile/js/jquery_min.js?2014-01-28-1"></script>
+<script type="text/javascript" src="/source/modules/market/images/mobile/js/idangerous_swiper.js?2014-01-28-1"></script>
+<script type="text/javascript" src="/source/modules/market/images/mobile/js/iscroll.js?2014-01-28-1"></script>
+<script type="text/javascript" src="/source/modules/market/images/web/js/swipe.js?2014-01-28-1"></script>
+<script type="text/javascript" src="/source/modules/market/images/web/js/zepto.js?2014-01-28-1"></script>
+<title>微生活-by 微动力</title>
+      
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+
+<link rel="stylesheet" type="text/css" href="./resource/style/font-awesome.min.css" media="all" />
+<style>
+	.body{ max-width:640px; margin:auto; }
+	.themeStyle{background:#2BBA14!important; background-color:#2BBA14 !important; }
+</style>
+<script type="text/javascript">
+	var myScroll;
+	function loaded() {
+		myScroll = new iScroll('wrapper', {
+			snap: true,
+			momentum: false,
+			hScrollbar: false,
+			onScrollEnd: function() {
+				document.querySelector('#indicator > li.active').className = '';
+				document.querySelector('#indicator > li:nth-child(' + (this.currPageX + 1) + ')').className = 'active';
+			}
+		});
+	}
+	document.addEventListener('DOMContentLoaded', loaded, false);
+</script>
+
+<body id="cate12">
+<div class="body">
+<!--
+幻灯片管理
+-->
+<div style="-webkit-transform:translate3d(0,0,0);">
+	<div id="banner_box" class="box_swipe">
+		<ul>
+			{loop $flashlist $row}
+			<li>
+				<a onclick="return false;">
+				<img src="{$row['picurl']}" alt="微生活" style="width:100%;" />
+				</a>
+			</li>
+			{/loop}
+		</ul>
+		<ol>
+			{loop $flashlist $key $row}
+				{if $key==0}
+				<li class="on"></li>
+				{else}
+				<li></li>
+				{/if}
+			{/loop}
+		</ol>
+	</div>
+</div>
+<script>
+$(function(){
+	new Swipe(document.getElementById('banner_box'), {
+		speed:500,
+		auto:3000,
+		callback: function(){
+			var lis = $(this.element).next("ol").children();
+			lis.removeClass("on").eq(this.index).addClass("on");
+		}
+	});
+});
+</script>
+<!--
+用户分类管理
+-->
+<div id="insert1"></div>
+{loop $classlist $key $row}
+	<div class="Category">
+		<div class="cname">
+			{$row['classname']}
+		</div>
+		<div class="clist clist{$key} swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide swiper-slide-visible swiper-slide-active">
+					<ul>
+						{loop $row['shoplist'] $shop}
+						<li>
+							<a href="{php echo ($this->createMobileUrl('fans', array('id' => $shop['id'])));}">
+								<div>
+								<img src="{if empty($shop['logo'])}{$shop['picurl']}{else}{$shop['logo']}{/if}" />
+								</div>
+								<span>{$shop['title']}</span>
+							</a>
+						</li> 
+						{/loop}
+					</ul>
+				</div>
+			</div>
+			<div class="cpager">
+				<span class="swiper-pagination-switch swiper-visible-switch swiper-active-switch"></span>
+				<span class="swiper-pagination-switch"></span>
+			</div>
+			<script>
+				$(function() {
+					new Swiper('.clist{$key}', {
+						pagination: '.clist{$key} .cpager'
+					});
+				});
+			</script>
+		</div>
+	</div>
+{/loop}
+			  
+</div>
+
+<script>
+	var count = document.getElementById("thelist").getElementsByTagName("img").length;
+	for (i = 0; i < count; i++) {
+		document.getElementById("thelist").getElementsByTagName("img").item(i).style.cssText = " width:" + document.body.clientWidth + "px";
+	}
+	document.getElementById("scroller").style.cssText = " width:" + document.body.clientWidth * count + "px";
+
+	setInterval(function() {
+			myScroll.scrollToPage('next', 0, 400, count);
+		},
+		3500);
+
+	window.onresize = function() {
+		for (i = 0; i < count; i++) {
+			document.getElementById("thelist").getElementsByTagName("img").item(i).style.cssText = " width:" + document.body.clientWidth + "px";
+
+		}
+		document.getElementById("scroller").style.cssText = " width:" + document.body.clientWidth * count + "px";
+	}
+</script>
+<footer style="overflow:visible;">
+<div class="weimob-copyright" style="padding-bottom:50px;">
+	<a>©{$row['shopname']} by 微动力</a>
+</div>
+</footer>
+			 
+	</body>
+ 	 </html>

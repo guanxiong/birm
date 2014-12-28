@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.52,0.51">
+	<application setting="false">
+		<name><![CDATA[足球竞猜]]></name>
+		<identifie><![CDATA[fifa]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[2014FIFA足球竞猜]]></ability>
+		<description><![CDATA[2014FIFA足球竞猜QQ:2725191439]]></description>
+		<author><![CDATA[皓蓝QQ:2725191439]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+        <cover>
+			<entry title="竞猜入口设置" do="index" />
+		</cover>
+		<menu>
+			<entry title="竞猜设置" do="manageset" />
+			<entry title="比赛管理" do="managevs" />
+			<entry title="用户管理" do="manageuser" />
+		</menu>
+		<home call="getItemTiles"></home>
+		<profile>
+			<entry title="我的竞猜" do="my" />
+		</profile>
+	</bindings>
+	<install><![CDATA[
+DROP TABLE IF EXISTS `ims_fifa_beat`;
+CREATE TABLE `ims_fifa_beat` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL DEFAULT '0',
+  `raceid` int(10) NOT NULL DEFAULT '0',
+  `whowin` varchar(20) NOT NULL,
+  `createtime` int(10) NOT NULL DEFAULT '0',
+  `from_user` varchar(50) NOT NULL,
+  `score` int(10) NOT NULL DEFAULT '0',
+  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1淘汰28,34,4champ',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_fifa_race`;
+CREATE TABLE `ims_fifa_race` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `racedate` varchar(100) NOT NULL DEFAULT '',
+  `teama` varchar(100) NOT NULL DEFAULT '',
+  `teamb` varchar(100) NOT NULL DEFAULT '',
+  `places` varchar(100) NOT NULL DEFAULT '',
+  `whowin` varchar(50) NOT NULL DEFAULT '',
+  `score` varchar(50) NOT NULL DEFAULT '0',
+  `racetime` int(10) NOT NULL,
+  `groupb` int(10) NOT NULL DEFAULT '0',
+  `groupa` int(10) NOT NULL DEFAULT '0',
+  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1淘汰28,34,4champ',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
+
+INSERT INTO `ims_fifa_race` VALUES ('1', '2014/6/13 4:00', '巴西', '克罗地亚', '圣保罗', '', '', '1402603200', '2', '1', '1');
+INSERT INTO `ims_fifa_race` VALUES ('2', '2014/6/14 0:00', '墨西哥', '喀麦隆', '纳塔尔', '', '', '1402675200', '4', '3', '1');
+INSERT INTO `ims_fifa_race` VALUES ('3', '2014/6/14 3:00', '西班牙', '荷兰', '萨尔瓦多', '', '', '1402686000', '6', '5', '1');
+INSERT INTO `ims_fifa_race` VALUES ('4', '2014/6/14 6:00', '智利', '澳大利亚', '库亚巴', '', '', '1402696800', '8', '7', '1');
+INSERT INTO `ims_fifa_race` VALUES ('5', '2014/6/15 0:00', '哥伦比亚', '希腊', '贝洛奥里藏特', '', '', '1402761600', '10', '9', '1');
+INSERT INTO `ims_fifa_race` VALUES ('6', '2014/6/15 9:00', '科特迪瓦', '日本', '累西腓', '', '', '1402794000', '12', '11', '1');
+INSERT INTO `ims_fifa_race` VALUES ('7', '2014/6/15 3:00', '乌拉圭', '哥斯达黎加', '福塔莱萨', '', '', '1402772400', '14', '13', '1');
+INSERT INTO `ims_fifa_race` VALUES ('8', '2014/6/15 6:00', '英格兰', '意大利', '马瑙斯', '', '', '1402783200', '16', '15', '1');
+INSERT INTO `ims_fifa_race` VALUES ('9', '2014/6/16 0:00', '瑞士', '厄瓜多尔', '巴西利亚', '', '', '1402848000', '18', '17', '1');
+INSERT INTO `ims_fifa_race` VALUES ('10', '2014/6/16 3:00', '法国', '洪都拉斯', '阿雷格里港', '', '', '1402858800', '20', '19', '1');
+INSERT INTO `ims_fifa_race` VALUES ('11', '2014/6/16 6:00', '阿根廷', '波黑', '里约热内卢', '', '', '1402869600', '22', '21', '1');
+INSERT INTO `ims_fifa_race` VALUES ('12', '2014/6/17 3:00', '伊朗', '尼日利亚', '库里奇巴', '', '', '1402945200', '24', '14', '1');
+INSERT INTO `ims_fifa_race` VALUES ('13', '2014/6/17 0:00', '德国', '葡萄牙', '萨尔瓦多', '', '', '1402934400', '26', '25', '1');
+INSERT INTO `ims_fifa_race` VALUES ('14', '2014/6/17 6:00', '加纳', '美国', '纳塔尔', '', '', '1402956000', '28', '27', '1');
+INSERT INTO `ims_fifa_race` VALUES ('15', '2014/6/18 0:00', '比利时', '阿尔及利亚', '贝洛奥里藏特', '', '', '1403020800', '30', '29', '1');
+INSERT INTO `ims_fifa_race` VALUES ('16', '2014/6/18 6:00', '俄罗斯', '韩国', '库亚巴', '', '', '1403042400', '32', '31', '1');
+INSERT INTO `ims_fifa_race` VALUES ('17', '2014/6/18 3:00', '巴西', '墨西哥', '福塔莱萨', '', '', '1403031600', '3', '1', '1');
+INSERT INTO `ims_fifa_race` VALUES ('18', '2014/6/19 6:00', '喀麦隆', '克罗地亚', '马瑙斯', '', '', '1403128800', '2', '4', '1');
+INSERT INTO `ims_fifa_race` VALUES ('19', '2014/6/19 3:00', '西班牙', '智利', '里约热内卢', '', '', '1403118000', '7', '5', '1');
+INSERT INTO `ims_fifa_race` VALUES ('20', '2014/6/19 0:00', '澳大利亚', '荷兰', '阿雷格里港', '', '', '1403107200', '6', '8', '1');
+INSERT INTO `ims_fifa_race` VALUES ('21', '2014/6/20 0:00', '哥伦比亚', '科特迪瓦', '巴西利亚', '', '', '1403193600', '11', '9', '1');
+INSERT INTO `ims_fifa_race` VALUES ('22', '2014/6/20 6:00', '日本', '希腊', '纳塔尔', '', '', '1403215200', '10', '12', '1');
+INSERT INTO `ims_fifa_race` VALUES ('23', '2014/6/20 3:00', '乌拉圭', '英格兰', '圣保罗', '', '', '1403204400', '15', '13', '1');
+INSERT INTO `ims_fifa_race` VALUES ('24', '2014/6/21 0:00', '意大利', '哥斯达黎加', '累西腓', '', '', '1403280000', '14', '16', '1');
+INSERT INTO `ims_fifa_race` VALUES ('25', '2014/6/21 3:00', '瑞士', '法国', '萨尔瓦多', '', '', '1403290800', '19', '17', '1');
+INSERT INTO `ims_fifa_race` VALUES ('26', '2014/6/21 6:00', '洪都拉斯', '厄瓜多尔', '库里奇巴', '', '', '1403301600', '18', '20', '1');
+INSERT INTO `ims_fifa_race` VALUES ('27', '2014/6/22 0:00', '阿根廷', '伊朗', '贝洛奥里藏特', '', '', '1403366400', '23', '21', '1');
+INSERT INTO `ims_fifa_race` VALUES ('28', '2014/6/22 6:00', '尼日利亚', '波黑', '库亚巴', '', '', '1403388000', '22', '24', '1');
+INSERT INTO `ims_fifa_race` VALUES ('29', '2014/6/22 3:00', '德国', '加纳', '福塔莱萨', '', '', '1403377200', '27', '25', '1');
+INSERT INTO `ims_fifa_race` VALUES ('30', '2014/6/23 6:00', '美国', '葡萄牙', '马瑙斯', '', '', '1403474400', '26', '28', '1');
+INSERT INTO `ims_fifa_race` VALUES ('31', '2014/6/23 0:00', '比利时', '俄罗斯', '里约热内卢', '', '', '1403452800', '31', '29', '1');
+INSERT INTO `ims_fifa_race` VALUES ('32', '2014/6/23 3:00', '韩国', '阿尔及利亚', '阿雷格里港', '', '', '1403463600', '30', '32', '1');
+INSERT INTO `ims_fifa_race` VALUES ('33', '2014/6/24 4:00', '喀麦隆', '巴西', '巴西利亚', '', '', '1403553600', '1', '4', '1');
+INSERT INTO `ims_fifa_race` VALUES ('34', '2014/6/24 4:00', '克罗地亚', '墨西哥', '累西腓', '', '', '1403553600', '3', '2', '1');
+INSERT INTO `ims_fifa_race` VALUES ('35', '2014/6/24 0:00', '澳大利亚', '西班牙', '库里奇巴', '', '', '1403539200', '5', '8', '1');
+INSERT INTO `ims_fifa_race` VALUES ('36', '2014/6/24 0:00', '荷兰', '智利', '圣保罗', '', '', '1403539200', '7', '6', '1');
+INSERT INTO `ims_fifa_race` VALUES ('37', '2014/6/25 4:00', '日本', '哥伦比亚', '库亚巴', '', '', '1403640000', '9', '12', '1');
+INSERT INTO `ims_fifa_race` VALUES ('38', '2014/6/25 4:00', '希腊', '科特迪瓦', '福塔莱萨', '', '', '1403640000', '11', '10', '1');
+INSERT INTO `ims_fifa_race` VALUES ('39', '2014/6/25 0:00', '意大利', '乌拉圭', '纳塔尔', '', '', '1403625600', '13', '16', '1');
+INSERT INTO `ims_fifa_race` VALUES ('40', '2014/6/25 0:00', '哥斯达黎加', '英格兰', '贝洛奥里藏特', '', '', '1403625600', '15', '14', '1');
+INSERT INTO `ims_fifa_race` VALUES ('41', '2014/6/26 4:00', '洪都拉斯', '瑞士', '马瑙斯', '', '', '1403726400', '17', '20', '1');
+INSERT INTO `ims_fifa_race` VALUES ('42', '2014/6/26 4:00', '厄瓜多尔', '法国', '里约热内卢', '', '', '1403726400', '19', '18', '1');
+INSERT INTO `ims_fifa_race` VALUES ('43', '2014/6/26 0:00', '尼日利亚', '阿根廷', '阿雷格里港', '', '', '1403712000', '21', '24', '1');
+INSERT INTO `ims_fifa_race` VALUES ('44', '2014/6/26 0:00', '波黑', '伊朗', '萨尔瓦多', '', '', '1403712000', '23', '22', '1');
+INSERT INTO `ims_fifa_race` VALUES ('45', '2014/6/27 0:00', '美国', '德国', '累西腓', '', '', '1403798400', '25', '28', '1');
+INSERT INTO `ims_fifa_race` VALUES ('46', '2014/6/27 0:00', '葡萄牙', '加纳', '巴西利亚', '', '', '1403798400', '27', '26', '1');
+INSERT INTO `ims_fifa_race` VALUES ('47', '2014/6/27 4:00', '韩国', '比利时', '圣保罗', '', '', '1403812800', '29', '32', '1');
+INSERT INTO `ims_fifa_race` VALUES ('48', '2014/6/27 4:00', '阿尔及利亚', '俄罗斯', '库里奇巴', '', '', '1403812800', '31', '30', '1');
+INSERT INTO `ims_fifa_race` VALUES ('49', '2014/6/29 0:00', '1A', '2B', '贝洛奥里藏特', '', '', '1403971200', '0', '0', '2');
+INSERT INTO `ims_fifa_race` VALUES ('50', '2014/6/29 4:00', '1C', '2D', '里约热内卢', '', '', '1403985600', '0', '0', '2');
+INSERT INTO `ims_fifa_race` VALUES ('51', '2014/6/30 0:00', '1B', '2A', '福塔莱萨', '', '', '1404057600', '0', '0', '2');
+INSERT INTO `ims_fifa_race` VALUES ('52', '2014/6/30 4:00', '1D', '2C', '累西腓', '', '', '1404072000', '0', '0', '2');
+INSERT INTO `ims_fifa_race` VALUES ('53', '2014/7/1 0:00', '1E', '2F', '巴西利亚', '', '', '1404144000', '0', '0', '2');
+INSERT INTO `ims_fifa_race` VALUES ('54', '2014/7/1 4:00', '1G', '2H', '阿雷格里港', '', '', '1404158400', '0', '0', '2');
+INSERT INTO `ims_fifa_race` VALUES ('55', '2014/7/2 0:00', '1F', '2E', '圣保罗', '', '', '1404230400', '0', '0', '2');
+INSERT INTO `ims_fifa_race` VALUES ('56', '2014/7/2 4:00', '1H', '2G', '萨尔瓦多', '', '', '1404244800', '0', '0', '2');
+INSERT INTO `ims_fifa_race` VALUES ('57', '2014/7/5 0:00', 'W53', 'W54', '里约热内卢', '', '', '1404489600', '0', '0', '3');
+INSERT INTO `ims_fifa_race` VALUES ('58', '2014/7/5 4:00', 'W49', 'W50', '福塔莱萨', '', '', '1404504000', '0', '0', '3');
+INSERT INTO `ims_fifa_race` VALUES ('59', '2014/7/6 0:00', 'W55', 'W56', '巴西利亚', '', '', '1404576000', '0', '0', '3');
+INSERT INTO `ims_fifa_race` VALUES ('60', '2014/7/6 4:00', 'W51', 'W52', '萨尔瓦多', '', '', '1404590400', '0', '0', '3');
+INSERT INTO `ims_fifa_race` VALUES ('61', '2014/7/9 4:00', 'W57', 'W58', '贝洛奥里藏特', '', '', '1404849600', '0', '0', '4');
+INSERT INTO `ims_fifa_race` VALUES ('62', '2014/7/10 4:00', 'W57', 'W60', '圣保罗', '', '', '1404936000', '0', '0', '4');
+INSERT INTO `ims_fifa_race` VALUES ('63', '2014/7/13 4:00', 'L61', 'L62', '巴西利亚', '', '', '1405195200', '0', '0', '4');
+INSERT INTO `ims_fifa_race` VALUES ('64', '2014/7/14 4:00', 'W61', 'W62', '里约热内卢', '', '', '1405281600', '0', '0', '4');
+
+DROP TABLE IF EXISTS `ims_fifa_setting`;
+CREATE TABLE `ims_fifa_setting` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `description` text NOT NULL COMMENT '活动描述',
+  `rule` text NOT NULL COMMENT '规则',
+  `digger` varchar(255) NOT NULL DEFAULT '',
+  `huodong` varchar(255) NOT NULL DEFAULT '',
+  `score` int(10) unsigned NOT NULL DEFAULT '0',
+  `score8` int(10) unsigned NOT NULL DEFAULT '0',
+  `score4` int(10) NOT NULL DEFAULT '0',
+  `champion` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `ims_fifa_team`;
+CREATE TABLE `ims_fifa_team` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `team` varchar(100) NOT NULL DEFAULT '',
+  `teama` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ims_fifa_team
+-- ----------------------------
+INSERT INTO `ims_fifa_team` VALUES ('1', '巴西', 'A1');
+INSERT INTO `ims_fifa_team` VALUES ('2', '克罗地亚', 'A2');
+INSERT INTO `ims_fifa_team` VALUES ('3', '墨西哥', 'A3');
+INSERT INTO `ims_fifa_team` VALUES ('4', '喀麦隆', 'A4');
+INSERT INTO `ims_fifa_team` VALUES ('5', '西班牙', 'B1');
+INSERT INTO `ims_fifa_team` VALUES ('6', '荷兰', 'B2');
+INSERT INTO `ims_fifa_team` VALUES ('7', '智利', 'B3');
+INSERT INTO `ims_fifa_team` VALUES ('8', '澳大利亚', 'B4');
+INSERT INTO `ims_fifa_team` VALUES ('9', '哥伦比亚', 'C1');
+INSERT INTO `ims_fifa_team` VALUES ('10', '希腊', 'C2');
+INSERT INTO `ims_fifa_team` VALUES ('11', '科特迪瓦', 'C3');
+INSERT INTO `ims_fifa_team` VALUES ('12', '日本', 'C4');
+INSERT INTO `ims_fifa_team` VALUES ('13', '乌拉圭', 'D1');
+INSERT INTO `ims_fifa_team` VALUES ('14', '哥斯达黎加', 'D2');
+INSERT INTO `ims_fifa_team` VALUES ('15', '英格兰', 'D3');
+INSERT INTO `ims_fifa_team` VALUES ('16', '意大利', 'D4');
+INSERT INTO `ims_fifa_team` VALUES ('17', '瑞士', 'E1');
+INSERT INTO `ims_fifa_team` VALUES ('18', '厄瓜多尔', 'E2');
+INSERT INTO `ims_fifa_team` VALUES ('19', '法国', 'E3');
+INSERT INTO `ims_fifa_team` VALUES ('20', '洪都拉斯', 'E4');
+INSERT INTO `ims_fifa_team` VALUES ('21', '阿根廷', 'F1');
+INSERT INTO `ims_fifa_team` VALUES ('22', '波黑', 'F2');
+INSERT INTO `ims_fifa_team` VALUES ('23', '伊朗', 'F3');
+INSERT INTO `ims_fifa_team` VALUES ('24', '尼日利亚', 'F4');
+INSERT INTO `ims_fifa_team` VALUES ('25', '德国', 'G1');
+INSERT INTO `ims_fifa_team` VALUES ('26', '葡萄牙', 'G2');
+INSERT INTO `ims_fifa_team` VALUES ('27', '加纳', 'G3');
+INSERT INTO `ims_fifa_team` VALUES ('28', '美国', 'G4');
+INSERT INTO `ims_fifa_team` VALUES ('29', '比利时', 'H1');
+INSERT INTO `ims_fifa_team` VALUES ('30', '阿尔及利亚', 'H2');
+INSERT INTO `ims_fifa_team` VALUES ('31', '俄罗斯', 'H3');
+INSERT INTO `ims_fifa_team` VALUES ('32', '韩国', 'H4');
+
+	]]></install>
+	<uninstall><![CDATA[
+		
+		
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

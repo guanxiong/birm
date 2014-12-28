@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[分享达人]]></name>
+		<identifie><![CDATA[share]]></identifie>
+		<version><![CDATA[1.1]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[分享达人是您的微信公众号运营的利器，是您涨粉和宣传最好的工具。]]></ability>		<description><![CDATA[你的粉丝将你要传播的图文分享到朋友圈或者好友，即可获得点击量，每个人均被鼓励去大量分享，而获得高点击量；公众号根据不同的点击量给予不同的礼品或者优惠奖励；赶紧启动分享达人，让粉丝疯狂分享你的图文吧！]]></description>
+		<author><![CDATA[微鼎]]></author>
+		<url><![CDATA[http://www.weidim.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="分享达人管理" do="sharelist" state="" />			
+		</rule>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE `ims_share_data` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`rid` int(10) unsigned NOT NULL COMMENT '规则id',
+`from_user` varchar(50) not null default '' COMMENT '用户openid',
+`shareip` varchar(15) NOT NULL DEFAULT '' COMMENT '分享达人IP',
+`sharetime` int unsigned NOT NULL COMMENT '分享时间',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;	
+
+CREATE TABLE `ims_share_list` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`rid` int(10) unsigned NOT NULL COMMENT '规则id',
+`from_user` varchar(50) not null default '' COMMENT '用户openid',
+`name` varchar(50) not null default '' COMMENT '姓名',
+`tel` varchar(50) not null default '' COMMENT '电话',
+`sharenum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分享量',
+`sharetime` int unsigned NOT NULL COMMENT '最后分享时间',
+`status` tinyint unsigned NOT NULL default 1 comment '是否禁止',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;	
+
+CREATE TABLE `ims_share_reply` (
+`id` int( 10 ) unsigned NOT NULL AUTO_INCREMENT ,
+`rid` int( 10 ) unsigned NOT NULL default 0 comment '规则id',
+`parentid` int(10) unsigned NOT NULL DEFAULT '0',
+`title` varchar( 50 ) NOT NULL comment '规则标题',
+`checkkeyword` varchar( 50 ) NOT NULL comment '查询关键词',
+`picture` varchar( 100 ) NOT NULL comment '图片',
+`start_time` int unsigned NOT NULL comment '开始时间',
+`end_time` int unsigned NOT NULL comment '结束时间',
+`description` varchar( 255 ) NOT NULL comment '描述',
+`content` text NOT NULL comment '内容',
+`status` tinyint unsigned NOT NULL default 1 comment '开关状态',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;
+
+	]]></install>
+	<uninstall><![CDATA[
+drop table `ims_share_data`;
+drop table `ims_share_list`;
+drop table `ims_share_reply`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

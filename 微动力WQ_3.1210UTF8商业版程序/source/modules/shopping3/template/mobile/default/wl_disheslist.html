@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link rel="stylesheet" type="text/css" href="{RES}css/wei_canyin.css?2014-03-07-1" media="all" />
+ <script type="text/javascript" src="{RES}js/jQuery.js?2014-03-07-1"></script>
+<script type="text/javascript" src="{RES}js/wei_webapp_v2_common.js"></script>
+<title>{$set['shop_name']}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="format-detection" content="telephone=no" />
+</head>
+<body id="page_intelOrder" class="intelPage">
+    	    <div class="center">
+    	<header>
+    		<span class="pCount">共{$_GPC['combo_nums']}人用餐<a href="{php echo  $this->createMobileUrl('wlgenius')}">重选人数</a></span>
+            <label>
+                <i>共计：</i>
+                <b class="duiqi" id="priceCount">0元</b>
+            </label>
+    	</header>
+    	<section id="dishList">
+
+        </section>
+		{template wl_footer} 
+       
+    	<footer class="footFix" style="margin-bottom: 64px;">
+    		<a id="addToMenu" class="btn_add" href="javascript:addToMenu();">加入菜单</a>
+    		<a class="btn_change" href="javascript:;" onclick="switchList();">换一桌</a>
+    	</footer>
+    </div>
+    <script type="text/javascript">
+        window.selected = {
+            total:0,
+            dishes:{}
+        };
+        window.addEventListener("DOMContentLoaded", function(){
+            getRecommendList();
+        }, false);
+
+        function getRecommendList(){
+             var params = {
+                author:"eric",
+                desc:"getAllList"
+            }
+            MLoading.show('加载中');
+             _doAjax('{php echo  $this->createMobileUrl('wlgenius',array('subcp'=>'bynum','combo_nums'=>$_GPC['combo_nums']))}', 'POST', params, function(res) {
+                MLoading.hide();
+                window.res = {
+                    data:res,
+                    randIndex:-1
+                }
+                switchList();
+            });
+        }
+
+  
+
+        function switchList(){
+            window.res.randIndex ++;
+            window.res.randIndex = window.res.randIndex%window.res.data.length;
+			
+            var TPL = '<article><h2>{title}</h2>\
+                                <dl dunitname="例" dsubcount="0"  dname="" dtaste=""   dprice="0" dishot="0" dpicture="{thumb}" dspecialprice="{marketprice}" >\
+                                    <dt><h3>{title}</h3></dt>\
+                                    <dd>\
+                                        <a href="javascript:void(0)" class="dataIn" onclick="showImgDetail(this);">\
+                                            <img src="{thumb}" alt="" title="">\
+                                        </a>\
+                                    </dd>\
+                                    <dd><em>{marketprice}元/例</em> </dd>\
+                                     <dd class="dpFen">×{total}</dd>\
+                                </dl>\
+                            </article>';
+            var dishList = document.getElementById("dishList");
+            var price = 0;
+            dishList.innerHTML = iTemplate.makeList(TPL, window.res.data[window.res.randIndex].goods, function(k,v){
+			
+                price += parseFloat(v.marketprice);
+                /*return{
+					price: v.discount_price||price
+				}*/
+            });
+            document.getElementById("priceCount").innerHTML = (price).toFixed(2) + "元";
+        }
+
+
+
+        var isMenuFilled = '1';
+      //  var view_const_dish_SPECIAL_PRICE_YES = '2';
+        var view_const_dish_HOT_YES = '2';
+        isMenuFilled = (isMenuFilled == '1');
+
+       //show img detail
+        function showImgDetail(thi){
+            var parentDl = thi.parentNode.parentNode;
+            var childImg = thi.childNodes[0]
+            if(childImg.nodeType == 3){
+                childImg = thi.childNodes[1];
+            }
+
+            popPic(childImg.src,
+                    parentDl.getAttribute('dname'),
+                    parentDl.getAttribute('dprice') + '元/' + parentDl.getAttribute('dunitName'),
+                    parentDl.getAttribute('dIsSpecial'),
+                    parentDl.getAttribute('dSpecialPrice') + '元/' + parentDl.getAttribute('dunitName'),
+                    parentDl.getAttribute('dsubCount'),
+                    parentDl.getAttribute('dtaste'),
+                    parentDl.getAttribute('ddescribe'),
+                    parentDl.getAttribute('dishot')
+                    );
+        }
+
+        //后台可自行扩展参数
+        //调用自定义弹层
+        function popPic(imgUrl,title,price, isSpecial, specialPrice, people,teast,assess,isHot){
+            var _title = title,
+                _price = price,
+                _people = null;//people,
+                _teast = teast,
+                _assess = assess;
+
+            var hotHtml = '';
+            if (isHot == view_const_dish_HOT_YES) {
+                hotHtml = '<b></b>';
+            }
+                _tmpHtml = "<div class='content'>"+hotHtml+"<img src='"+imgUrl+"' alt='' title=''><h2>"+_title;
+
+                 if (isSpecial != '') {
+                     _tmpHtml += "<i>"+specialPrice+"</i><del>"+_price+"</del>";
+                 } else {
+                     _tmpHtml += "<i>"+_price+"</i>";
+                 }
+
+                if (_people) {
+                    _tmpHtml += "<span>"+_people+"人点过</span>";
+                }
+                _tmpHtml += "</h2>";
+
+                if (_teast) {
+                    _tmpHtml += "<h3>口味："+_teast+"</h3>";
+                }
+
+                if (_assess) {
+                    _tmpHtml += "<p>"+_assess+"</p>";
+                }
+
+                _tmpHtml += '</div>';
+            MDialog.popupCustom(_tmpHtml,true,true);
+        }
+
+
+     
+
+        function addToMenu(){
+            var params = '[';
+            for(var i=0,ci;ci = window.res.data[window.res.randIndex].goods[i]; i++){
+                 params+='{"dishes_id": '+ci.id+', "nums": '+ci.total+', "price":'+ci.marketprice+'},';
+            }
+            params = params.replace(/,$/gi, "");
+            params += ']';
+            MLoading.show('加载中');
+			$.ajax({
+                'url':'{php echo  $this->createMobileUrl('wladdorder',array('subcp'=>'genius','combo_nums'=>$_GPC['combo_nums']))}',
+                'data':{'order':params},
+                'type':'POST',
+                'async':'false',
+                'success':function(db){
+                    location.href='{php echo  $this->createMobileUrl('wlcart')}';
+                }
+            });
+        }
+
+    </script>
+    <script>
+    $(document).ready(function(){
+        $('#my_menu').click(function(){
+            addToMenu();
+
+	});
+        
+    });
+</script>
+    <script>
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            WeixinJSBridge.call('hideToolbar');
+        });
+    </script>
+</body> 
+</html>

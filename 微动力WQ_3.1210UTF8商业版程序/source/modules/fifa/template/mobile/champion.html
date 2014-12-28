@@ -1,0 +1,68 @@
+{template 'header'}
+<style>
+.match-title{font-size:18px;line-height:26px;padding:10px 0;}
+.vs li {
+width: 50%;
+float: left;
+font-size: 14px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+.vs li:nth-child(2) {
+text-align: right;
+width: 50%;
+}
+</style>
+
+<section class="content">
+<div class="tab">
+       
+<div class="tab-content active">
+
+<div class="match">
+    <div class="match-heading">
+        <div class="match-title">2014 FIFA</div>
+       
+	</div>
+<div class="match-body">
+  
+	<ul class="match-list">
+
+			
+	{loop $list $item}	
+        <li class="panel" >
+               
+                <div class="vs vs-2">
+				{if $item['whowin']}
+				 <ul class="clearfix" >
+						<li><img src="./source/modules/fifa/template/images/{$item['id']}.png" width="40" >{$item['team']}</li>
+                        <li> 已选</li>
+                       
+                    </ul>
+				
+				{else}
+				<a href="{php echo $this->createMobileUrl('cppost',array('id'=>$item['id'] ))}" onclick="return confirm('确认选择为四强？');return false;">
+                    <ul class="clearfix" >
+						<li><img src="./source/modules/fifa/template/images/{$item['id']}.png" width="40" >{$item['team']}</li>
+                        <li> </li>
+                       
+                    </ul>
+				</a>
+				
+				{/if}
+                </div>
+               
+                
+        </li>
+	{/loop}
+	
+
+    </ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+{template 'footer'}

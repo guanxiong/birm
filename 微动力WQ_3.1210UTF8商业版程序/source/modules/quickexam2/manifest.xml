@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[极速考试]]></name>
+		<identifie><![CDATA[quickexam2]]></identifie>
+		<version><![CDATA[2.2]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[极速考试]]></ability>
+		<description><![CDATA[极速考试]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[bbs.b2ctui.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+        <cover>
+			<entry title="试卷中心" do="Cover" />
+		</cover>
+		<profile>
+			<entry title="我的答题本" do="MyPaper" />
+		</profile>
+		<menu>
+			<entry title="题库管理" do="Choice" />
+			<entry title="试卷管理" do="Paper" />
+			<entry title="答题记录" do="MarkManagement" />
+			<entry title="帮助" do="Help" />
+		</menu>
+		<home call="getCategoryTiles"></home>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE IF NOT EXISTS `ims_quickexam2_choice` (
+  `choice_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(1024) NOT NULL,
+  `body` varchar(65530) NOT NULL,
+  `answer` varchar(1024) NOT NULL,
+  `explain` varchar(65530),
+  `mark` int(10) unsigned NOT NULL COMMENT '分值',
+  PRIMARY KEY (`choice_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8  AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `ims_quickexam2_paper` (
+  `paper_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `max_user_cnt` int(10) unsigned NOT NULL COMMENT '本卷最多印刷多少份',
+  `max_participate_cnt` int(10) unsigned NOT NULL COMMENT '最多可重考次数',
+  `title` varchar(1024) NOT NULL,
+  `logo` varchar(512) NOT NULL,
+  `explain` varchar(65530),
+  `choice_ids` varchar(1024)  NOT NULL,
+  `choice_ids_seq` varchar(1024)  NOT NULL,
+  `weid` int(10) unsigned NOT NULL,
+  `redirect_url` varchar(1024) NOT NULL COMMENT '答题完成后的下一步动作',
+  `redirect_msg` varchar(1024) NOT NULL COMMENT '跳转到下一步之前显示的提示文字',
+  `redirect_cond` int(10) unsigned NOT NULL COMMENT '超过多少分才跳转到下一步',
+  `credit_award` int(10) unsigned NOT NULL COMMENT '超过及格线后奖励的积分',
+  `credit_consume` int(10) unsigned NOT NULL COMMENT '查看本卷需要消耗的积分',
+  `credit_threshold` int(10) unsigned NOT NULL COMMENT '查看本卷需要的积分权限',
+  PRIMARY KEY (`paper_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8  AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `ims_quickexam2_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `paper_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8   AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `ims_quickexam2_score_record` (
+  `record_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `from_user` varchar(50) NOT NULL,
+  `paper_id` int(10) unsigned NOT NULL,
+  `paper_title` varchar(1024) NOT NULL,
+  `choice_ids` varchar(1024)  NOT NULL,
+  `user_choices` varchar(1024)  NOT NULL,
+  `usermark` int(10) unsigned NOT NULL,
+  `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+  `weid` int(10) unsigned NOT NULL,
+  `comment` text COMMENT '教师点评',
+  PRIMARY KEY (`record_id`),
+  KEY `idx_choice_from_user` (`from_user`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8  AUTO_INCREMENT=1;
+
+	]]></install>
+	<uninstall><![CDATA[
+		
+		
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

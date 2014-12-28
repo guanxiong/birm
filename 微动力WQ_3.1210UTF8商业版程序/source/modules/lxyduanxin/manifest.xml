@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[微短信]]></name>
+		<identifie><![CDATA[lxyduanxin]]></identifie>
+		<version><![CDATA[1.1]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[微短信在线获取热门祝福词汇以及热门祝福短信并发送给飞信好友!]]></ability>
+		<description><![CDATA[微短信在线获取热门祝福词汇以及热门祝福短信并发送给飞信好友!同时集成在线飞信发短信功能]]></description>
+		<author><![CDATA[星豚微信]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="查看发送记录" do="sendlist" state="" direct="false" />
+		</rule>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_lxy_duanxin_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`rid` int( 10 ) unsigned NOT NULL default 0 comment '规则id',
+  `title` varchar(50) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `thumb` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+	CREATE TABLE IF NOT EXISTS `ims_lxy_duanxin_send` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `phone` varchar(20) NOT NULL,
+  `to` varchar(20) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `addtime` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

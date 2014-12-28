@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="true">
+		<name><![CDATA[趣味测试]]></name>
+		<identifie><![CDATA[fengtesting]]></identifie>
+		<version><![CDATA[1.2.6]]></version>
+		<type><![CDATA[wdlgame]]></type>
+		<ability><![CDATA[一款测试类模块，可增加各类型的测试内容……]]></ability>
+		<description><![CDATA[一款测试类模块，可增加例如：爱情测试、性格测试、本地方言考试等等类型的测试内容。]]></description>
+		<author><![CDATA[冯齐跃]]></author>
+		<url><![CDATA[http://www.b2ctui.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="趣味测试入口" do="index" state="" direct="false" />
+		</cover>
+		<home>
+			<entry title="趣味测试" do="index" state="" direct="false" />
+		</home>
+		<shortcut>
+			<entry title="趣味测试" do="index" state="" direct="false" />
+		</shortcut>
+		<menu>
+			<entry title="我的测试" do="mytest" state="" direct="false" />
+			<entry title="系统题库" do="manage" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE `ims_feng_testing` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `typeid` smallint(5) NOT NULL DEFAULT '0',
+  `weid` int(10) NOT NULL DEFAULT '0',
+  `title` varchar(120) DEFAULT '',
+  `cover` varchar(200) DEFAULT NULL,
+  `banner` varchar(150) NOT NULL DEFAULT '',
+  `smalltext` varchar(255) DEFAULT '',
+  `subject` mediumtext NOT NULL,
+  `result` text NOT NULL,
+  `people` int(10) NOT NULL DEFAULT '0',
+  `titlenum` smallint(5) NOT NULL DEFAULT '0',
+  `viewnum` int(10) NOT NULL DEFAULT '0',
+  `sharenum` int(10) NOT NULL DEFAULT '0',
+  `follow_url` varchar(200) NOT NULL DEFAULT '',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `title` (`title`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE `ims_feng_testingtype` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属帐号',
+  `typename` varchar(20) NOT NULL DEFAULT '' COMMENT '分类名称',
+  `myorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `style` varchar(500) NOT NULL,
+  `summary` varchar(100) NOT NULL DEFAULT '' COMMENT '分类描述',
+  `viewnum` int(10) NOT NULL DEFAULT '0',
+  `titlenum` smallint(5) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+
+INSERT INTO `ims_feng_testingtype` (`id`, `weid`, `typename`, `myorder`, `style`, `summary`) VALUES
+(1, 0, '爱情测试', 0, '', ''),
+(2, 0, '性格测试', 0, '', ''),
+(3, 0, '趣味测试', 0, '', ''),
+(4, 0, '事业测试', 0, '', ''),
+(5, 0, '财富测试', 0, '', ''),
+(6, 0, '智商测试', 0, '', ''),
+(7, 0, '社交测试', 0, '', ''),
+(8, 0, '星座测试', 0, '', ''),
+(9, 0, '血型测试', 0, '', ''),
+(10, 0, '健康测试', 0, '', ''),
+(11, 0, '家乡话', 0, '', '');
+	]]></install>
+	<uninstall><![CDATA[
+    drop table if exists ims_feng_testing;
+	drop table if exists ims_feng_testingtype;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

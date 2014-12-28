@@ -1,0 +1,63 @@
+{template 'common/header'}
+<link type="text/css" rel="stylesheet" href="source/modules/kf/template/portfolio.css" />
+<ul class="nav nav-tabs">
+	
+					<li><a target="_blank" href="{php echo create_url('site/module/kfset', array('type' => '3', 'name' => 'kf', 'set' => 1))}">客服列表</a></li>
+					<li class="current"><a href="{php echo create_url('site/module/manage', array('name' => 'reg'))}">设置客服</a></li>
+                    <li class="current"><a href="{php echo create_url('site/module/manage', array('type' => '3', 'name' => 'kf', 'id' => $id))}">所有记录</a></li>
+					
+</ul>
+<div class="main" style="margin-left:8px">
+        <h4 style="margin-left:8px">至今48小时内活跃用户列表</h4>
+        
+       
+        	 
+             	
+                	<ul class="mix-filter">
+                    
+                    	<li class="filter" data-filter="all">所有</li>
+                        {if $glist}
+                    	{loop $glist $row}
+                	 	<li class="filter" data-filter="{$row['id']}">{$row['groupname']}</li>
+                		{/loop}
+                        {else}
+                        <li class="filter" data-filter="0">未分组</li>
+                        {/if}
+                    </ul>
+                    <!--用户列表开始-->
+                    
+                    <div class="row mix-grid">
+                    {loop $wxlist $key $rowwx}
+                              <div class="span3 mix {if $rowwx['groupid']}{$rowwx['groupid']}{else}0{/if}">
+                                 <div class="mix-inner">
+                                    <img class="img-responsive" src="{$rowwx['avatar']}" alt="{$rowwx['nickname']}">
+                                    <div class="mix-details">
+                                       <h4>{$rowwx['nickname']}(今日消息数：{$rowwx['total']})</h4>
+                                       <a class="mix-link" title="资料/编辑"  href="{php echo create_url('site/module/profile', array('name'=>'fans','from_user' => $rowwx['from_user']))}" ><i class="icon-info"></i></a>
+                                       <a class="mix-preview fancybox-button" href="{$_W['siteroot']}{php echo create_url('site/module/jdchat', array('name' => 'kf', 'type' => '3','fakeid' => $rowwx['id'],'id'=>$rid))}" title="与他聊天" data-rel="fancybox-button"><i class="icon-comments"></i></a>
+                                    </div>
+                                 </div>
+                              </div>
+                      {/loop}
+                              
+                      </div>
+                      <!--用户列表结束-->        
+                    
+               
+            
+        
+             
+									
+            	
+            	
+</div>
+ <script src="source/modules/kf/template/portfolio.js"></script> 
+ <script src="source/modules/kf/template/jquery.mixitup.min.js"></script> 
+	<script>
+      jQuery(document).ready(function() {    
+         	
+         Portfolio.init();
+      });
+   </script>
+
+{template 'common/footer'}

@@ -1,0 +1,40 @@
+﻿<html>
+<head>
+<title>{if $title}{$title}{else}{if !empty($_W['account']['name'])}{$_W['account']['name']}{/if}{/if}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link href="./source/modules/lxyecowzp/template/css/hotels.css" rel="stylesheet" type="text/css">
+</head>
+<body id="" >
+<div class="qiandaobanner"> <img src="{php echo  !empty($item['thumb'])?$_W['attachurl'].$item['thumb']:" ./source/modules/lxyecowzp/template/images/default.jpg"}"  />
+  </if>
+</div>
+<div class="cardexplain">
+  <ul class="round">
+    <li class="title"><span class="none">公司名称</span></li>
+    <li>
+      <div class="text"> {$item['title']} </div>
+    </li>
+  </ul>
+  <ul class="round">
+    <li class="title"><span class="none">公司简介</span></li>
+    <li>
+      <div class="text"> {$item['content']} </div>
+    </li>
+  </ul>
+  <ul class="round">
+    <li class="title"><span class="none">联系方式</span></li>
+    <li class="addr"><a href="http://api.map.baidu.com/marker?location={$item['lat']},{$item['lng']}&title={$item['jw_addr']}&content={$item['jw_addr']}&output=html&src=|" class="tbox"><span>{$item['address']}</span></a></li>
+    <li class="tel"><a href="tel:{$item['tel']}"> <span>固定电话{$item['tel']}</span></a></li>
+    <if condition="$Wzp['tel'] neq false">
+      <li class="tel"><a href="tel:{$item['mobile']}"><span>移动电话{$item['mobile']} </span></li>
+    </if>
+    <li class="detail"><a href="{php echo $this->createMobileUrl('showlist', array('id' => $item['id'],'hid' => $item['id']))}"><span>查看招聘信息</span></a></li>
+  </ul>
+</div>
+
+</body>
+</html>

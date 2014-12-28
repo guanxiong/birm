@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[实用工具]]></name>
+		<identifie><![CDATA[chaxun]]></identifie>
+		<version><![CDATA[1.5]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[信息查询]]></ability>
+		<description><![CDATA[信息查询]]></description>
+		<author><![CDATA[微信通]]></author>
+		<url><![CDATA[wx.qfinfo.cn]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+		    <entry title="工具管理" do="Display" state="" direct="false" />	
+		</menu>
+	</bindings>
+	<install>
+<![CDATA[
+ CREATE TABLE IF NOT EXISTS `ims_chax` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL ,
+  `title` varchar(20) NOT NULL,
+  `fileicon` varchar(50) NOT NULL,
+  `url` varchar(50)  NOT NULL,
+  `displayorder` int(10) NOT NULL,
+   `status` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+		]]></install>
+	<uninstall><![CDATA[
+		drop table ims_chax;
+		]]></uninstall>
+	<upgrade><![CDATA[
+alter table ims_chax;
+		]]></upgrade>
+</manifest>

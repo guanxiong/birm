@@ -1,0 +1,279 @@
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>翻牌抽奖</title>
+<link rel="stylesheet" type="text/css" href="./source/modules/iflop/css/flop.css?v=20140828" media="all" >
+<script type="text/javascript" src="./source/modules/iflop/js/jquery-1.9.1.js?v=20140828"></script>
+<script type="text/javascript" src="./source/modules/iflop/js/jquery-ui.custom.js"></script>
+<script type="text/javascript" src="./source/modules/iflop/js/jquery.flip.js?v=20140828"></script>
+<script type="text/javascript" src="./source/modules/iflop/js/alert.js?v=20140828"></script>
+<style type="text/css">
+.demo {
+	width: 100%;
+	margin: 30px 0 40px;
+	text-align: center;
+}
+.demo p {
+	height: auto;
+	text-align: left;
+}
+#prize {
+	margin: 10px auto;
+	padding-left: 5px;
+}
+#prize li {
+	float: left;
+	width: 32%;
+	height: 120px;
+	line-height: 120px;
+	margin: 1px;
+	font-size: 48px;
+	text-align: center;
+	color: #fff;
+	cursor: pointer
+}
+#footer {
+	display: block;
+	text-align: center;
+	font-size: 13px;
+	padding: 4px 0 4px;
+	background: #fff;
+	border-top: 1px solid #ddd;
+	color: #999;
+	margin: 0px;
+	margin-top: 20px;
+	font-family: Arial, 'Microsoft YaHei';
+}
+#viewother,#repeat {
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 16px;
+	display: none
+}
+#mask { position: fixed; top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);display: none;z-index: 20000;}
+#mask img{position: fixed;right: 18px;top: 5px;width: 260px!important;height: 180px!important;z-index: 20001;}
+</style>
+<script type="text/javascript"> 
+$(function(){
+	$("#prize li").each(function(){
+		var p = $(this);
+		var c = $(this).attr('class');
+		p.css("background-color",c);
+		p.click(function(){
+			$("#prize li").unbind('click');
+			 $.ajax({
+				url:"{php echo create_url('mobile/module', array('do' => 'lottery', 'name' => 'iflop', 'id' => $id,'weid' => $_W['weid']))}&r="+new Date().getTime(),
+				dataType:'json',
+                beforeSend: function () {
+                },
+				success:function(data){
+                	if(data.success==1) {
+                		alert(data.msg);
+                		prize = data.yes;
+                      	p.flip({
+      						direction:'rl',
+      						content:prize,
+      						color:c,
+      						onEnd: function(){
+      							p.css({"font-size":"22px","line-height":"100px"});
+      							p.attr("id","r");
+      							$("#viewother").show();
+      							$('#mask').show();
+      							var isRegister = data.isRegister;
+      							if(isRegister==1){
+      								$('#result').hide();
+      							}else{
+      								$('#result').show();
+          						}
+      							$("#prize li").unbind('click').css("cursor","default").removeAttr("title");
+      						}
+      					});
+      					$("#data").data("nolist",data.no);    
+                     }else{
+							alert(data.msg);
+							p.css({"font-size":"22px","line-height":"100px"});
+							p.attr("id","r");
+							$("#viewother").show();
+							$('#mask').hide();
+							$("#prize li").unbind('click').css("cursor","default").removeAttr("title");
+							$("#data").data("nolist",data.no);    
+                     } 
+				}
+			});
+		});
+	});
+
+	
+	$("#viewother").click(function(){
+		var mydata = $("#data").data("nolist"); //获取数据
+		var mydata2 = eval(mydata);
+		$("#prize li").not($('#r')[0]).each(function(index){
+			var pr = $(this);
+			pr.flip({
+				direction:'bt',
+				color:'lightgrey',
+				content:mydata2[index],
+				onEnd:function(){
+					pr.css({"font-size":"22px","line-height":"100px","color":"#333"});
+					$("#viewother").hide();
+					$("#repeat").show();
+				}
+			});
+		});
+		$("#data").removeData("nolist");
+	});
+
+	$("#repeat").click(function(){
+		window.location.reload();
+	});
+});
+</script>
+</head>
+
+<body>
+<div id="main">
+	<h2 class="top_title">翻牌抽奖</h2>
+	<div id="mask">
+	    <img src="./source/modules/iflop/images/guide2.png">
+   </div>
+	<div class="content">
+		<div class="boxcontent boxyellow" id="result" {if !(!empty($awardone)&&empty($fans['tel']))}style="display: none"{/if}>
+			<div class="box">
+				<div class="title-orange"><span>恭喜你中奖了</span></div>
+				<div class="Detail">
+					<p> 
+						<span class="red" id="prizetype">
+						{if $isCan==1}
+							{if empty($awardone['name'])}感谢参与{else}{$awardone['name']} -{$awardone['description']}{/if}
+						{/if}
+						</span>
+						</p>
+						<div id="txt">请提交您的手机号码</div>
+						<input name="tel" class="px" id="tel" value="{$_W['fans']['mobile']}" type="text" placeholder="用户请输入您的{$reply['tel_rename']}"></p>
+						<input type="hidden" name="weid" value="{$weid}"> 
+						<input type="hidden" name="rid" value="{$rid}">
+						<p>
+						<input class="pxbtn" name="提 交" id="save-btn" type="button" value="用户提交">
+					</p>
+				</div>
+			</div>
+		</div>
+		 
+	</div>
+		
+		
+		
+	<div class="demo" id="demo">
+		<p style="padding-left: 20px;">
+		  {$awardstr}
+		</p>
+		<p style="padding-left: 20px;" class="red" >
+		  {$detail}
+		</p>
+		
+        <ul id="prize">
+            <li class="red" title="点击抽奖">1</li>
+            <li class="green" title="点击抽奖">2</li>
+            <li class="blue" title="点击抽奖">3</li>
+            <li class="purple" title="点击抽奖">4</li>
+            <li class="olive" title="点击抽奖">5</li>
+            <li class="pink" title="点击抽奖">6</li>
+        </ul>
+        
+        <div style="clear:both; margin-top:20px">
+        	<a href="javascript:void(0)" id="viewother" style="display: none;">【翻开其他】</a>
+         	<a href="javascript:void(0);" id="repeat">【再来一次】</a>
+        </div>
+		<div id="data"></div>
+	</div>
+	 
+    <div id="footer">
+          <span>©2014 </span>&nbsp;<br/>
+          <span>联系QQ:</span>
+    </div>
+      
+   <div id="mask" onclick="document.getElementById('mask').style.display='';" style="">
+	    <img src="./source/modules/iflop/images/guide2.png">
+   </div>
+</div>
+</body>
+<script type="text/javascript">
+
+$("#save-btn").bind("click",function () {
+    var btn = $(this);
+    var tel = $("#tel").val();
+    if (tel == '') {
+    	alert("手机号不对或为空!");
+		return
+    }
+    
+	reg=/^0{0,1}(13[0-9]|145|15[7-9]|153|156|18[0-9])[0-9]{8}$/i;
+	if(!reg.test( tel)){   
+		alert("请输入11位有效号码!");
+		return
+	}
+
+    var submitData = {
+            tel: tel
+    };
+    $.post('{php echo $this->createMobileUrl('settel', array('id' => $id))}', submitData, function(data) {
+	if (data.success == true) {
+		alert(data.msg);
+		$("#result").slideUp(500);
+		return
+	} else {} },"json")
+});
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	window.shareData = {
+		"imgUrl": "{$_W['siteroot']}source/modules/iflop/preview.jpg",
+		"timeLineLink": "{$_W['siteroot']}{php echo $this->createMobileUrl('sharelottery', array('id' => $id,'uid' => $fans['id']))}",
+		"sendFriendLink": "{$_W['siteroot']}{php echo $this->createMobileUrl('sharelottery', array('id' => $id,'uid' => $fans['id']))}",
+		"weiboLink": "{$_W['siteroot']}{php echo $this->createMobileUrl('sharelottery', array('id' => $id,'uid' => $fans['id']))}",
+		"tTitle": "{$sharetitle}",
+		"tContent": "{$sharedesc}",
+		"fTitle": "{$sharetitle}",
+		"fContent": "{$sharedesc}",
+		"wContent": "{$sharedesc}"
+	};
+
+	// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+		WeixinJSBridge.invoke('sendAppMessage', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.sendFriendLink,
+			"desc": window.shareData.fContent,
+			"title": window.shareData.fTitle
+		}, function (res) {
+			_report('send_msg', res.err_msg);
+		})
+	});
+
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function (argv) {
+		WeixinJSBridge.invoke('shareTimeline', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.timeLineLink,
+			"desc": window.shareData.tContent,
+			"title": window.shareData.tTitle
+		}, function (res) {
+			_report('timeline', res.err_msg);
+		});
+	});
+
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function (argv) {
+		WeixinJSBridge.invoke('shareWeibo', { "content": window.shareData.wContent, "url": window.shareData.weiboLink
+		}, function (res) {
+			_report('weibo', res.err_msg);
+		});
+	});
+}, false);
+</script>
+</html>

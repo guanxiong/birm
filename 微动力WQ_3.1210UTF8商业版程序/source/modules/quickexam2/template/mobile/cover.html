@@ -1,0 +1,34 @@
+{template 'header'}
+<link type="text/css" rel="stylesheet" href="./source/modules/{$modulename}/style/base.css" />
+<link type="text/css" rel="stylesheet" href="./source/modules/{$modulename}/style/style.css?v=201" />
+<script type="text/javascript" src="./source/modules/{$modulename}/script/script.js"></script>
+<title>试题集</title>
+<section class="canvas">
+		<section class="card">
+            <section class="title">
+			<aside>我的积分：{$profile['credit1']}</aside>
+			</section>
+        </section>
+
+
+		{loop $paper_list $paper}
+		<a href='{php echo $this->createMobileUrl("paper", array("paper_id"=>$paper["paper_id"]))}'>
+		<section class="card">
+			<section class="title">
+			<p>{$paper['title']}</p>
+			</section>
+			<section class="logo">
+			<p><img src='{php echo $paper['logo']}' /></p>
+			</section>
+			<section class="info">
+				<p>{$paper['explain']}</p>
+			</section>	
+			<hr>
+			<section class="func">
+				<p>开始做题</p>
+			</section>	
+		</section>
+		</a>
+		{/loop}
+</section>
+{template 'footer'}

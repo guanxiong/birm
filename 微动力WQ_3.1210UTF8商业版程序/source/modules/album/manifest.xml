@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="true">
+		<name><![CDATA[微相册]]></name>
+		<identifie><![CDATA[album]]></identifie>
+		<version><![CDATA[1.7]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[展示一系列图片来介绍你的公众号]]></ability>
+		<description><![CDATA[]]></description>
+		<author><![CDATA[WeEngine Team]]></author>
+		<url><![CDATA[http://www.we7.cc]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="相册列表入口设置" do="list" />
+        </cover>
+		<menu>
+			<entry title="相册列表" do="list" direct="false" />
+		</menu>
+		<home call="getAlbumTiles">
+			<entry title="相册首页" do="list" />
+		</home>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_album` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL DEFAULT '',
+  `thumb` varchar(100) NOT NULL DEFAULT '',
+  `content` varchar(1000) NOT NULL DEFAULT '',
+  `displayorder` int(10) unsigned NOT NULL DEFAULT '0',
+  `isview` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_album_photo` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `albumid` int(10) unsigned NOT NULL,
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `description` varchar(1000) NOT NULL DEFAULT '',
+  `attachment` varchar(100) NOT NULL DEFAULT '',
+  `ispreview` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `displayorder` int(10) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(10) unsigned NOT NULL,
+  KEY `idx_albumid` (`albumid`),
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_album_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `albumid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

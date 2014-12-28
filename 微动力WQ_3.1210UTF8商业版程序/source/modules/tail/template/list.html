@@ -1,0 +1,142 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('list', array('op' => 'post'))}">添加小尾巴</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('list', array('op' => 'display'))}">管理小尾巴</a></li>
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}" />
+		<h4>小尾巴信息</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">排序</label></th>
+				<td>
+					<input type="text" name="displayorder" class="span1" value="{$item['displayorder']}" />
+				</td>
+			</tr>
+			<tr>
+				<th>小尾巴类型</th>
+				<td>
+					<label for="itype_1" class="radio inline">
+					<input type="radio" name="module" id="itype_1" value="basic" {if $item['module'] == 'basic'} checked="checked"{/if}/>文字</label>
+					<label for="itype_2" class="radio inline">
+					<input type="radio" name="module" id="itype_2" value="news" {if $item['module'] == 'news'} checked="checked"{/if}/> 图文</label>
+					<span class="help-block">文字只是跟随文字类型，图文只跟随图文类型</span>
+				</td>
+			</tr>			
+			<tbody id="basic" style="display:none">
+				<tr>
+					<th>内容</th>
+					<td>
+						<textarea style="height:200px;" class="span7 basic-content-new" cols="70" id="content" name="basic-content" autocomplete="off">{$item['content']}</textarea>
+						<span class="help-block">用户进行微信交谈时，对话内容完全等于上述关键字才会执行这条规则。<a class="iconEmotion" href="javascript:;" inputid="basic-content-{$itemid}"><i class="icon-github-alt"></i> 表情</a></span>
+					</td>
+				</tr>
+			</tbody>
+			<tbody id="news" style="display:none">
+				<tr>
+					<th>标题</th>
+					<td>
+						<input type="text" id="title" class="span7" placeholder="" name="title" value="{$item['title']}">
+					</td>
+				</tr>
+				<tr>
+					<th>封面</th>
+					<td>
+						{php echo tpl_form_field_image('thumb', $item['thumb']);}
+					</td>
+				</tr>
+				<tr>
+					<th>描述</th>
+					<td>
+						<textarea style="height:80px;" class="span7" cols="70" id="description" name="description">{$item['description']}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<th>来源</th>
+					<td>
+						<input type="text" class="span7" id="url" name="url" value="{$item['url']}">
+						<span class="help-block">此项为空则表示使用默认链接，设置来源后打开该条图文将跳转到指定链接（注：外部链接需加http://）</span>
+					</div>
+					</td>
+				</tr>	
+			</tbody>
+			<tr>
+				<th></th>
+				<td>
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){  
+		module=$(':radio[name="module"]:checked').val();
+		if(module=='basic'){
+			$("#basic").show();
+			$("#news").hide();
+		}else if(module =='news'){
+			$("#basic").hide();
+			$("#news").show();
+		}
+		$(':radio[name="module"]').click(function(){
+			module=$(this).val();
+			if(module=='basic'){
+				$("#basic").show();
+				$("#news").hide();
+			}else if(module =='news'){
+				$("#basic").hide();
+				$("#news").show();
+			}
+		});
+	});
+</script>
+{elseif $operation == 'display'}
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:30px;">ID</th>
+					<th style="width:100px;">类型</th>
+					<th style="min-width:150px;">内容/标题</th>
+					<th style="width:60px;">调用次数</th>
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['id']}</td>
+					<td>{if $item['module']=='basic'}<span class="text-error">文字回复</span>
+					{else}<span class="text-info">图文回复</span>
+					{/if}</td>
+					<td>{if $item['module']=='basic'}{$item['content']}{else}{$item['title']}{/if}</td>
+					<td>{$item['times']}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('list', array('id' => $item['id'], 'op' => 'post'))}">编辑</a>&nbsp;&nbsp;<a href="{php echo $this->createWebUrl('list', array('id' => $item['id'], 'op' => 'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;">删除</a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+			<tr>
+				<td></td>
+				<td colspan="6">
+					<input name="token" type="hidden" value="{$_W['token']}" />
+					<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+				</td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</div>
+<script type="text/javascript">
+<!--
+	var category = {php echo json_encode($children)};
+//-->
+</script>
+{/if}
+{template 'common/footer'}

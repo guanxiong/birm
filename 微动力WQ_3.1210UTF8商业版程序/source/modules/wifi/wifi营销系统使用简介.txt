@@ -1,0 +1,26 @@
+目前支持的型号：
+TP-LINK:
+TL-WDR7500
+TL-WDR4900 V2
+WDR4310
+WR941N V5.1
+WR941N V6.0
+WR941N V7.1
+TL-WR880N V1
+TL-WR881N V1
+
+MERCURY:
+MW4530R
+MW450R v1
+FAST FW450R-V1.1
+
+NETGEAR:
+WNR2000-V3
+
+各版本下载链接: http://pan.baidu.com/s/1o6z5MsU 密码: c7vt
+
+路由器刷机过程中可能会出现故障，本人概不负责，请谨慎操作。
+
+安装成功后再http://cloud.rippletek.com/user/login.html注册账号并绑定设备，获得appId、appKey、nodeId并填入后台
+
+设置相关关键字即可。

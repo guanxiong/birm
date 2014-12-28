@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="true">
+		<name><![CDATA[小黄鸡自动陪聊]]></name>
+		<identifie><![CDATA[simsimi]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[最具智能化的自动陪聊系统]]></ability>
+		<description><![CDATA[一款趣味游戏，游戏中的机器人是一个能够和你聊天解闷的可爱机器人，为您的生活提供服务、甚至你还可以逗弄她，并且能实现自然语言的交互。]]></description>
+		<author><![CDATA[珊瑚海]]></author>
+		<url><![CDATA[#]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="voice" />
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

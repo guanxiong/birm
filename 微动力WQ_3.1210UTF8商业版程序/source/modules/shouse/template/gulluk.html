@@ -1,0 +1,158 @@
+
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}>
+		<a href="{php echo $this->createWebUrl('gulluk', array('op' => 'post'))}">添加小区</a>
+	</li>
+	<li {if $operation == 'display'}class="active"{/if}>
+		<a href="{php echo $this->createWebUrl('gulluk', array('op' => 'display'))}">管理小区</a>
+	</li>
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+		<!-- <input type="hidden" name="parentid" value="{$item['id']}" /> -->
+		<input type="hidden" name="id" value="{$item['id']}" />
+		<h4>小区信息编辑</h4>
+		<table class="tb">
+			<tr>
+				<th>
+					<label for="">小区名称</label>
+				</th>
+				<td>
+					<input type="text" name="title" class="span6" value="{$item['title']}" />
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">小区缩略图</label>
+				</th>
+				<td>
+					{php echo tpl_form_field_image('thumb', $item['thumb'])}
+					<span class="help-block">用户不上传图片的时候，用小区缩略图</span>
+				</td>
+			</tr>
+			<tr>
+				<th>默认运营城市</th>
+				<td>
+					<select name="classa" id="classa" class="pull-left form-control"  style="width:100px;" disabled="disabled">
+						<option >省/直辖市</option>
+						{loop $children[1] $val}
+						<option value="{$val['0']}"   {if $val['0']==$settings['classa']}selected="true"{/if} >{$val['1']}</option>
+						{/loop}
+					</select>
+					<select name="classb" id="classb" class="pull-left form-control" style="width:100px;" disabled="disabled">
+						{loop $children[2] $val}
+						<option value="{$val['0']}"  {if $val['0']==$settings['classb']}selected="true"{/if}>{$val['1']}</option>
+						{/loop}
+					</select>
+					<select name="classc" id="classc" class="pull-left form-control" style="width:100px;"  {if $settings['classc']!=0}disabled="disabled"{/if}>
+						<option value="0"  {if $val['0']==0}selected="true"{/if}>全部地区</option>
+						{loop $children[3] $val}
+						<option value="{$val['0']}"  {if $item['classc']==$val['0']}selected="true"{/if}>{$val['1']}</option>
+						{/loop}
+					</select>
+
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">地址</label>
+				</th>
+				<td>
+					<input type="text" name="dizhi" class="span6" value="{$item['dizhi']}" />
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">小区环境</label>
+				</th>
+				<td>
+					<textarea name="huanjing" class="span6" cols="70">{$item['huanjing']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">周边设施</label>
+				</th>
+				<td>
+					<textarea name="zhoubian" class="span6" cols="70">{$item['zhoubian']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">交通状况</label>
+				</th>
+				<td>
+					<textarea name="jiaotong" class="span6" cols="70">{$item['jiaotong']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="">坐标：</label>
+				</th>
+				<td>{php echo tpl_form_field_coordinate('baidumap', $item)}</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript" src="./resource/script/colorpicker/spectrum.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/colorpicker/spectrum.css" />
+<script type="text/javascript">
+<!--
+	$(function(){
+		colorpicker();
+	});
+//-->
+</script>
+{elseif $operation == 'display'}
+<div class="main">
+	<div class="category">
+		<form action="" method="post" onsubmit="return formcheck(this)">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th style="width:10px;"></th>
+						<th>小区名字</th>
+						<th>负责人</th>
+						<th style="width:80px;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{loop $category $row}
+					<tr>
+						<td>{$row['id']}</td>
+						<td>
+							<div class="type-parent">{$row['title']}&nbsp;&nbsp;</div>
+						</td>
+						<td>
+							<div class="type-parent">
+								{loop $hchildren[$row['id']] $vo}
+									{$hizmatqi[$vo['uid']]['realname']},
+								{/loop}
+							</div>
+						</td>
+						<td>
+							<a href="{php echo $this->createWebUrl('gulluk', array('op' => 'post', 'id' => $row['id']))}">编辑
+							</a>
+							&nbsp;&nbsp;
+							<a href="{php echo $this->
+								createWebUrl('gulluk', array('op' => 'delete', 'id' => $row['id']))}" onclick="return confirm('确认删除吗？');return false;">删除
+							</a>
+						</td>
+					</tr>
+					{/loop}
+				</tbody>
+			</table>
+		</form>
+	</div>
+</div>
+{/if}
+{template 'common/footer'}

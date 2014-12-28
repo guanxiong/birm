@@ -1,0 +1,236 @@
+{template 'common/header'}
+
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<link type="text/css" rel="stylesheet" href="./source/modules/lxybuildpro/template/css/style.css" />
+<link type="text/css" rel="stylesheet" href="./source/modules/lxybuildpro/template/css/uploadify_t.css" />
+
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript " src="./source/modules/lxybuildpro/template/js/jquery.json-2.4.min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript">
+
+	$(function(){
+		var i = 0;
+		$('#selectimage').click(function() {
+			var editor = KindEditor.editor({
+				allowFileManager : false,
+				imageSizeLimit : '30MB',
+				uploadJson : './index.php?act=attachment&do=upload'
+			});
+			editor.loadPlugin('multiimage', function() {
+				editor.plugin.multiImageDialog({
+					clickFn : function(list) {
+						if (list && list.length > 0) {
+							for (i in list) {
+								if (list[i]) {
+									html ='<li class="imgbox" style="list-type:none">'+
+	'<a class="item_close" href="javascript:;" onclick="deletepic(this);" title="删除"></a>'+
+	'<span class="item_box"> <img src="'+list[i]['url']+'" style="max-height:100%;"></span>'+
+	'<span class="item_input"><textarea name="description-new[]" class="bewrite" cols="3" rows="4" style="resize: none" placeholder="图片描述..." '+
+'onfocus="$(this).parent().addClass(&#39;on&#39;);" onblur="$(this).parent().removeClass(&#39;on&#39;);"></textarea><i class="shadow hc"></i></span>'+
+'</li>';
+											
+											
+									$('#fileList').append(html);
+									i++;
+								}
+							}
+							editor.hideDialog();
+						} else {
+							alert('请先选择要上传的图片！');
+						}
+					}
+				});
+			});
+		});
+	});
+
+</script>
+<style>
+.photo_list{padding:15px 0;}
+.photo_list .alert{width:auto; margin-top:10px; overflow:hidden;}
+.photo_list .photo_preview{width:130px;}
+.photo_list .photo_preview img{width:130px; margin-bottom:5px;}
+.photo_list .photo_preview label{padding:0;}
+.photo_list .photo_preview input[type="radio"]{margin-left:0; margin-right:10px;}
+.photo_list table{margin-left:40px;}
+.photo_list table th,.photo_list table td{padding-bottom:5px;}
+.photo_list table th{width:60px; font-size:14px;}
+.photo_list table input,.photo_list table select{margin-bottom:0;}
+</style>
+
+<div class="main">
+<ul class="nav nav-tabs">
+	<li{if $_GPC['do'] == 'buildlists'} class="active"{/if}><a href="{php echo $this->createWeburl('buildlists');}">楼盘管理</a></li>
+	<li{if $_GPC['do'] == 'houselist'} class="active"{/if}><a href="{php echo $this->createWeburl('houselist', array('hid'=>$hid));}">户型管理</a></li>
+	<li{if $_GPC['do'] == 'houseadd'} class="active"{/if}><a href="{php echo $this->createWeburl('houseadd', array('hsid'=>$hsid,'hid'=>$hid));}">添加户型</a></li>
+</ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data" name="hxform" id="hxform"> 
+	<input type="hidden" name="id" value="{$item['id']}">
+    <input type="hidden" name="hid" value="{$hid}">
+  <h4>户型基本信息 </h4>
+	<table class="tb">
+		<tr>
+			<th width="68">户型名称</th>
+			<td width="222"><input type="text" name="title" value="{$item['title']}" class="span5" />
+		    * 尽量简单，不要超过20字</td>
+		</tr>
+		<tr>
+			<th>选择子楼盘</th>
+			<td><select name="sid" id="sid" class="input-large">
+            {loop $buildsublist $sl}
+            <option value="{$sl['sid']}" {if $sl['sid']==$item['sid']}selected="selected"{/if}>{$sl['title']}</option>
+            {/loop}
+	        </select></td>
+		</tr>
+		<tr>
+			<th>楼层</th>
+			<td><input type="text" name="louceng" value="{$item['louceng']}" class="span5" />
+		    * 如：3-10</td>
+		</tr>
+        <tr>
+			<th><label for="">建筑面积</label></th>
+		  <td><input type="text" id="mianji" name="mianji" value="{$item['mianji']}"  class="span2" />
+		    * 如：约103平方米</td>
+		</tr>
+        <tr>
+			<th><label for="">房屋户型</label></th>
+			<td><select name="fang" id="fang" class="input-mini">
+			  <option value="1">1</option>
+			  <option value="2">2</option>
+			  <option value="3">3</option>
+			  <option value="4">4</option>
+			  <option value="5">5</option>
+		    </select>
+			  房
+			  <select name="ting" id="ting" class="input-mini">
+              <option value="1">1</option>
+			  <option value="2">2</option>
+			  <option value="3">3</option>
+			  <option value="4">4</option>
+			  <option value="5">5</option>
+	        </select>
+		    厅</td>
+		</tr>
+        <tr>
+			<th><label for="">显示顺序</label></th>
+		  <td><input type="text" id="sort" name="sort" value="{$item['sort']}"  class="span2" />
+		    * 数值越大越靠前</td>
+		</tr>
+		<tr>
+			<th><label for="">户型介绍</label></th>
+			<td><textarea style="height:100px;" class="span7 richtext-clone" name="jianjie" cols="70" id="jianjie">{$item['jianjie']}</textarea></td>
+		</tr>
+        <tr>
+			<th>户型图片</th>
+			<td>
+            <!---批量上传-->
+	<div class="photo_list">
+	<input name="token" type="hidden" value="{$_W['token']}" />
+	<span id="selectimage" class="btn btn-primary"><i class="icon-plus"></i> 上传照片</span><span style="color:red;">
+	<input id="hxpiclist"  name="hxpiclist" type="hidden"  value="{$jsonpic}" />
+	*建议尺寸：宽720像素，高350像素</span>
+    <div id="file_upload-queue" class="uploadify-queue"></div>
+    <ul class="ipost-list ui-sortable" id="fileList">
+	
+    </ul>
+
+            </td>
+		</tr>
+        <tr>
+			<th>&nbsp;</th>
+			<td>
+            	 <button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" /></td>
+		</tr>
+	</table>
+</form>
+
+<script type="text/template" id="picdemo">
+<li class="imgbox" style="list-type:none">
+<a class="item_close" href="javascript:void(0)" onclick="$(this).parent().remove();" title="删除">
+</a>
+<span class="item_box">
+    <img src="" style="max-height:100%;">
+</span>
+<span class="item_input">
+    <textarea class="bewrite" cols="3" rows="4" style="resize: none" placeholder="图片描述..." onfocus="$(this).parent().addClass('on');" onblur="$(this).parent().removeClass('on');">
+    </textarea>
+    <i class="shadow hc">
+    </i>
+</span>
+</li>
+</script>
+
+<script>	
+
+		
+		//上传图片
+		function addoneing(m,n){
+			pm='{php echo $_W['attachurl']}'+m;
+			n = n.split(',');
+			n = n[0];
+			$('#fileList').append($('#picdemo').html());
+			var li = $('#fileList').children('li:last');
+			li.find('img').attr('src',pm);
+			li.find('textarea').val(n);
+		}
+		$(function(){		
+			$('#hxform').submit(function(){
+				var pics = [];
+				$('#fileList').find('li').each(function(){
+					var msg = {};
+					var img = $(this).find('img');
+					msg.src = img.attr('src');
+					msg.txt = $.trim($(this).find('textarea').val());
+					var w = img.width();
+					var h = img.height();
+					w = parseInt(450*w/h);
+					msg.w = w;
+					msg.h = 450;
+					pics[pics.length] = msg;
+				});
+				$('#hxpiclist').val($.toJSON(pics));
+				//alert($('#hxpiclist').val());
+			});
+			var val = $('#hxpiclist').val();
+			if($.trim(val)==''){
+				val = '[]';
+			}
+			var data = $.evalJSON(val);
+			for(var i=0;i<data.length;i++){
+				var msg = data[i];
+				addoneing(msg.src,msg.txt);
+			}
+		});
+	</script>
+<script type="text/javascript">
+
+
+<script type="text/javascript">
+ 
+  function deletepic(obj){  
+  
+     if (confirm("确认要删除？")) {
+	          var $thisob=$(obj);
+			  var $liobj=$thisob.parent();
+			  var picurl=$liobj.children('input').val();
+
+	      	$.post('{php echo $this->createMobileUrl('ajaxdelhspic',array())}',{ pic:picurl},function(m){
+						if(m=='1')
+						{
+							$liobj.remove();
+							}
+						else
+						{
+							alert("删除失败");
+							}
+	        	},"html");	
+				
+	        }
+  }
+
+
+ 
+</script>
+{template 'common/footer'}

@@ -1,0 +1,68 @@
+{template 'header'}
+{php $_GPC}
+<style>
+	.commformbanner{background:url('./resource/attachment/{$form['bannerurl']}');background-size:cover;height:150px;width:100%;position:relative;}
+</style>
+<div class="commformbanner">
+	<div class="banner_footer">
+		<font color="#30a8ef">【{$_GPC['fn']}】</font>	
+	</div>
+</div>
+<form action="{php echo create_url('mobile/module', array('do' => 'showform','weid'=>empty($_GPC['__weid'])?$_GPC['weid']:$_GPC['__weid'],'name' => 'commform',fid=>$row['id'],fn=>$row['name']))}" method="post" onsubmit="return formcheck(this);"> 
+<div class="mobile-submit">	
+	<table class="form-table">
+		{loop $list $row}
+		<tr>
+			<th><label for="">{if $row['require']=='1'}<font color="red">*</font>{/if}{$row['displayname']}{if $row['require']=='1'}<font color="red">(必填)</font>{/if}</label></th>
+			<td>
+			{if $row['inputtype']=='text'}
+				<input type="{$row['inputtype']}" id="{$row['fieldname']}" name="{$row['fieldname']}" value="" />
+			{elseif $row['inputtype']=='textarea'}
+				<textarea id="{$row['fieldname']}" name="{$row['fieldname']}"></textarea>
+			{elseif $row['inputtype']=='select'}
+				<select  id="{$row['fieldname']}" name="{$row['fieldname']}" >
+				{php $option=$options[$row['fieldname']]}
+				{loop $option $opt}
+					<option value="{$opt}">
+						{$opt}
+					</option>
+				{/loop}
+				</select>
+			{/if}
+			</td>
+		</tr>
+		{/loop}
+		<tr>
+			<td colspan="2">
+				<input type="hidden" name="id" value="{$item['id']}"> 
+				<!-- 任何情况都可以保存表单 -->
+				<button type="submit" class="btn btn-success btn-large"	style="width: 100%;" name="submit" value="保存">保存</button>
+				<!-- 如果要使用生成表单功能，就使用下面的这句 -->
+				<!--
+				<button type="submit" class="btn btn-success btn-large"	style="width: 100%;" name="submit" value="保存" {if $form['status']==0 }disabled{/if}>保存</button>
+				-->
+				<input type="hidden" name="token" value="{$_W['token']}" />
+				<input type="hidden" name="fid" value="{$_GPC['fid']}" />	
+				<input type="hidden" name="userid" value="{$_GPC['userid']}" />	
+				<input type="hidden" name="fn" value="{$_GPC['fn']}" />	
+			</td>
+		</tr>			
+	</table>
+</div>
+</form>
+<script type="text/javascript">
+<!--
+function formcheck(form) {
+	{loop $list $row}
+		{if $row['require']==1} 
+			if (form['{$row['fieldname']}'].value == '') {
+				alert("{$row['displayname']}为必填项，请返回修改！");
+				return false;
+			}
+		{/if}										
+	{/loop}	
+	return true;
+}
+//-->
+</script>
+{template 'footer'}

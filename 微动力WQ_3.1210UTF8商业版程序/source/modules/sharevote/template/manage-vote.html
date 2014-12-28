@@ -1,0 +1,49 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="{php echo create_url('index/module', array('do' => 'managevote', 'name' => 'sharevote'))}">投票列表</a></li>
+    <li><a href="{php echo create_url('index/module', array('do' => 'managereport', 'name' => 'sharevote'))}">举报列表</a></li>
+</ul>
+<div class="main">
+    <div class="sub-item" id="table-list">
+        <div class="sub-content">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                <tr>
+                    <th style="width:80px;text-align: center;">标题<i></i></th>
+                    <th style="width:80px;text-align: center;">补充说明<i></i></th>
+                    <th style="width:80px;text-align: center;">投票模式<i></i></th>
+                    <th style="width:80px;text-align: center;">投票选项-票数<i></i></th>
+                    <th style="width:80px;text-align: center;">投票结果显示<i></i></th>
+                    <th style="width:80px;text-align: center;">组织人<i></i></th>
+                    <th style="width:80px;text-align: center;">时间<i></i></th>
+                    <th style="width:80px;text-align: center;">阅读次数<i></i></th>
+                    <th style="width:80px;text-align: center;">分享次数<i></i></th>
+                    <th style="width:80px;text-align: center;">操作<i></i></th>
+                </tr>
+                </thead>
+                <tbody>
+                {php for($i=0;$i<count($list);$i++){ }
+                <tr>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">{$list[$i]['title']}<i></i></th>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">{$list[$i]['voteadd']}<i></i></th>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">{if $list[$i]['switch'] == 'on'}多选{else}单选{/if}<i></i></th>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">
+                        {php for($m = 0;$m < count($voteArr[$i]);$m++){ }
+                            {$voteArr[$i][$m]['vname']}-{$voteArr[$i][$m]['vvalue']}</br>
+                        {php } }
+                        <i></i></th>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">{$list[$i]['result']}<i></i></th>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">{$list[$i]['username']}<i></i></th>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">{php echo date('Y-m-d H:i',$list[$i]['time'])}<i></i></th>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">{$list[$i]['read_times']}<i></i></th>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">{$list[$i]['share_times']}<i></i></th>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">
+                        <a onclick="return confirm('确认删除该投票？');return false;" href="{php echo create_url('index/module', array('do' => 'managevote', 'name' => 'sharevote','deleteid'=>$list[$i]['id']))}">删除</a></th><i></i></th>
+               </tr>
+                {php } }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{template 'common/footer'}

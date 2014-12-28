@@ -1,0 +1,223 @@
+{template 'header'}
+ <style>
+.pl95 {
+    padding-left: 95px;
+}
+
+.zjj {
+    letter-spacing: 3px;
+}
+
+.w600 {
+    width: 600px;
+}
+.p5{
+     padding:5px;
+}
+</style>
+    <div id="main">
+        <div class="container-fluid">
+
+            <div class="row-fluid">
+                <div class="span12">
+
+                    <div class="box">
+                        <div class="box-title">
+                            <div class="span10">
+                                <h3><i class="icon-table"></i>消费验证 </h3>
+                            </div>
+
+                        </div>
+
+                        <div class="box-content">
+
+                            <div class="row-fluid">
+                                <div class="form-horizontal">
+                                    <div class="control-group">
+                                        <span class="help-inline">
+                                            <h3>团购项目：</h3>
+                                        </span>
+                                        <select id="goods" name="goods" class="input-medium">
+											{loop $goodslist   $row}
+											<option value="{$row['id']}">{$row['title']}</option>
+											{/loop}
+											
+										</select> 
+                                    </div>
+                                    <div class="control-group">
+                                        <span class="help-inline">
+                                            <h3>SN码：</h3>
+                                        </span>
+                                        <input type="text" id="sn" name="sn" title="提示：回车键也可以验证" placeholder="请输入团购券SN码进行验证消费" class="input-xlarge clear_text zjj" />
+                                        <span class="help-inline error test_tips"></span> 
+                                    </div>
+                                    <div class="control-group pl95 testing">
+                                        <button type="button" id="test_btn" class="btn">立即验证</button>
+                                    </div>
+                                    <div class="control-group pl95 use hide">
+                                        <button type="button" id="use_btn" class="btn">立即使用</button>
+                                        <button type="button" id="next_use_btn" class="btn">下次使用</button>
+                                    </div>
+                                    <div class="control-group pl95 sn_detail hide">
+                                        <table class="table noborder w600">
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-fluid dataTables_wrapper">
+                                <h5>本店团购券SN码消费记录    <!--button type="button" class="btn"  data-toggle="modal" data-target="#exp_time"><i class="icon-cloud-download"></i>导出</button--></h5>
+                                <table id="listTable" class="table table-bordered table-hover  dataTable">
+                                    <thead>
+                                        <tr>
+
+                                            <th>SN码</th>
+                                            <th>会员手机号</th>
+                                            <th>使用时间</th>
+                                            <th>团购名称</th>
+                                            <th>团购价格</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+										{loop $list $row}
+											<tr>
+												<td>{$row['ordersn']}</td>
+												<td>{$row['mobile']}</td>
+												<td>{php echo date('Y-m-d H:i:s',$row['usedtime']);}</td>
+												<td>{$row['title']}</td>
+												<td>{$row['totalprice']}</td>
+											</tr>
+										{/loop}
+										</tbody>
+
+                                </table>
+                          {$pager}</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+       <div id="exp_time" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">选择到处时间</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                        <input type="text" name="time" id="time" class="daterangepick input-xlarge" value="2014/01/06 16:48-2014/01/06 16:48"   readonly /> 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("div.dropdown-menu").css("z-index", "9999");
+            var $exp_time = $("#exp_time"), $submit = $("button[type='submit']", $exp_time), $time = $("#time");
+            $submit.on("click", function () {
+                window.location = "exp.html?t={0}&n={1}".format($time.val(), Math.random());
+            })
+
+            var $sn = $("#sn"), $test_btn = $("#test_btn"), $testing = $("div.testing"), $use = $("div.use"),
+                $sn_detail = $("div.sn_detail"), $d_table = $("table", $sn_detail), $next_use_btn = $("#next_use_btn"),
+                $use_btn = $("#use_btn"), $listTable = $("#listTable"), detail=null;
+            $sn.focus();
+            $sn.on("keydown", function (e) { if (e.keyCode == 13) { $test_btn.click(); } });
+            var tips = $("span.test_tips");
+            $sn.bind('input propertychange', function () {
+                if ($(this).val().length == 0) {
+                    tips.text(G.string.Empty);
+                } 
+            });
+            $next_use_btn.on("click", function () { hide_d(); });
+            function hide_d() {
+                $testing.show();
+                $use.hide();
+                $d_table.html(G.string.Empty);
+                $sn_detail.hide();
+            }
+            var _tmp = ' <tbody><tr><td>会员手机号：{0}</td>  <td>团购单价：￥{1}</td>'
+               + ' <td>订单编号：{2}</td>  <td  colspan="2">团购名称：{3}</td>  </tr> </tbody>';
+            $use_btn.on("click", function () {
+                var $v = $sn.val(), $this = $(this);
+                $this.attr("disabled", "disabled");
+                $.ajax("{php echo $this->createWebUrl('verification',array('subcp'=>'used'))}", {
+                    type: "post", dataType: "json",
+                    data: { "weid": "{$_W['weid']}", "sn": $v, "step":2, "goods": $('#goods').val()}
+                }).done(function (d) {
+                    if (d.errno == 0) {
+                        tips.removeClass("error").addClass("p5  alert-success");
+                        tips.addClass("hide");
+                        tips.text("使用成功");
+                        tips.fadeIn(1500, function () {
+                            tips.text(G.string.Empty)
+                            tips.removeClass("p5  alert-success hide").addClass("error");
+                            tips.removeAttr("style");
+                        })
+                        hide_d();
+						var myDate = new Date();
+                        $listTable.prepend(('<tr><td>{2}</td><td>{0}</td><td> '+myDate.toLocaleString()+'</td><td>{3}</td><td>{1}</td></tr>').format(detail.b, detail.c, detail.d, detail.e));
+                     
+                    } else {
+                        G.ui.tips.err(d.error);
+                    }
+                    $this.removeAttr("disabled");
+                   
+                }).fail(function () { G.ui.tips.err("网络异常"); });
+
+            })
+            $test_btn.on("click", function () {
+                var $v = $sn.val(), $this = $(this);
+                if ($v.length == 0) {
+                    tips.text("请输入sn码");
+                    return;
+                }
+                $this.attr("disabled", "disabled");
+                $.ajax("{php echo $this->createWebUrl('verification',array('subcp'=>'check'))}", {
+                    type: "post", dataType: "json",
+                    data: { "weid": "{$_W['weid']}", "sn": $v, "step":1, "goods": $('#goods').val()}
+                }).done(function (d) {
+                    $d_table.html(G.string.Empty);
+                    $this.removeAttr("disabled")
+                    var flag = false;
+                    if (d.testing == 1 && d.use == 0) {
+                        flag = true;
+                        tips.text(G.string.Empty);
+                        $testing.hide();
+                        $use.show();
+                        detail = d.sn_detail;
+                        $d_table.append(_tmp.format(detail.b, detail.c, detail.d, detail.e));
+                        $sn_detail.fadeIn("slow");
+
+                    }
+                    else if(d.testing == -2) {
+                        tips.text('团购券不存在');
+                    }
+                    else if (d.testing != 1) {
+                        tips.text("验证失败")
+                    }
+                    else if (d.use != 0) {
+                        tips.text("sn码 已使用")
+                    } else {
+                        tips.text("验证失败")
+                    }
+                    if (!flag) { hide_d(); }
+                }).fail(function () { G.ui.tips.err("网络异常"); $this.removeAttr("disabled") });
+
+            })
+        })
+    </script>
+
+</body>
+</html>

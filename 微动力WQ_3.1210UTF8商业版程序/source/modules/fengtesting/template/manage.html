@@ -1,0 +1,83 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{php echo $this->createWebUrl('manage');}">测试管理</a></li>
+        <li><a href="{php echo $this->createWebUrl('manage',array('op'=>'add'));}">添加测试</a></li>
+        {if $_W['isfounder']==1}
+            <li><a href="{php echo $this->createWebUrl('type');}">分类管理</a></li>
+        {/if}
+    </ul>
+    <div class="search">
+        <form action="site.php" method="get">
+            <input type="hidden" name="act" value="module" />
+            <input type="hidden" name="name" value="feng_testing" />
+            <input type="hidden" name="do" value="manage" />
+            <table class="table table-bordered tb">
+                <tbody>
+                    <tr>
+                        <th>关键字</th>
+                        <td>
+                            <input class="span6" name="keywords" id="" type="text" value="{$_GPC['keywords']}">
+                        </td>
+                    </tr>
+                    <tr>
+                    <tr class="search-submit">
+                        <td colspan="2"><button class="btn btn-primary pull-left span2" style='margin-left:95px;'><i class="icon-search icon-large"></i> 搜索</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div style="padding:15px;">
+        <div class="alert">
+        {if $setting['config']['istesting']==1}已经开启系统题库，可以到<a href="member.php?act=module&do=setting&mid={$setting['mid']}">参数设置</a>关闭.{else}还未开启系统题，可以到<a href="member.php?act=module&do=setting&mid={$setting['mid']}">参数设置</a>开启.{/if}
+        {if $_W['isfounder']==1 && $mytest!=1}(系统题库，仅管理员可/增加/编辑/删除){/if}
+        </div>
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+                <tr>
+                    <th class="row-hover">标题</th>
+                    <th class="row-hover">题量</th>
+                    <th class="row-hover">参与测试人次</th>
+                    <th class="row-hover">分享次数</th>
+                    <th class="row-hover">总浏览数</th>
+                    <!-- <th class="row-hover">状态</th> -->
+                    {if $_W['isfounder']==1}
+                    <th class="row-hover">题库/评分管理</th>
+                    <th class="row-hover">操作</th>{/if}
+                </tr>
+            </thead>
+            <tbody>
+                {loop $list $row}
+                <tr> 
+                    <td>{$row['title']}</td>
+                    <td>{$row['titlenum']}</td>
+                    <td>{$row['people']}</td>
+                    <td>{$row['sharenum']}</td>
+                    <td>{$row['viewnum']}</td>
+                    <!-- <td>{if $row['status']==1}<span class="label label-success">开启</span>{else}<span class="label label-important">关闭</span>{/if}</td> -->
+                    {if $_W['isfounder']==1}
+                    <td>
+                        <a href="{php echo $this->createWebUrl('subject', array('id' => $row['id']))}" class="btn btn-mini btn-info">题库管理</a>
+                        <a href="{php echo $this->createWebUrl('result', array('id' => $row['id']))}" class="btn btn-mini btn-success">评分规则</a>
+                    </td>
+                    <td class="span2">
+                        <a class="btn btn-mini btn-primary" href="{php echo $this->createWebUrl('manage',array('op'=>'add','id'=>$row['id']));}"><i class="icon-edit"></i></a>
+                        <a class="btn btn-mini btn-danger" href="#" onclick="drop_confirm('您确定要删除吗?', '{php echo $this->createWebUrl('manage',array('op'=>'delete','id'=>$row['id']));}');" title="删除"><i class="icon-remove"></i></a>
+                    </td>
+                    {/if}
+                </tr>
+                {/loop}
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+</div>
+<script type="text/javascript">
+    function drop_confirm(msg, url){
+        if(confirm(msg)){
+            window.location = url;
+        }
+    }
+</script>
+{template 'common/footer'}

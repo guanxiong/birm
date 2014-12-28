@@ -1,0 +1,76 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li{if $_GPC['do'] == 'test'} class="active"{/if}><a href="{php echo  $this->createWebUrl('test', array());}">俱乐部管理</a></li>
+		<li{if $_GPC['do'] == 'add'} class="active"{/if}><a href="{php echo $this->createWebUrl('add', array());}">添加俱乐部</a></li>
+	</ul>
+	<div class="search">
+		<form action="{php echo $this->createWeburl('buildlists')}" method="post">
+		  <table class="table table-bordered tb">
+			<tbody>
+				<tr class="span6">
+					<th class="span2">俱乐部名称：</th>
+					<td class="span2">
+						<input class="span2" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+					</td>
+                    <td class="span2">
+                    <button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button>
+                    </td>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th  >俱乐部名称</th>
+                    <th >首页海报</th>
+					<th >项目</th>
+					
+                    
+					<th>子项目</th>
+					<th>健身相册</th>
+					<th>会员印象</th>
+                    <th>顾客点评</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td><p>{$item['title']}</p>
+		            <p></td>
+                    <td> <a href="{php echo $this->createMobileurl('buildindex',array('hid'=>$item['hid']));}" class="btn btn-small" title="首页预览" target="_blank"><i class="icon-search"></i></a>
+                  <a href="{php echo $this->createWebUrl('billadd', array('hid' => $item['hid'],'id'=>$item['id']))}" class="btn btn-small" title="海报维护"><i class="icon-cog"></i></a></td>
+					<td>
+				    <a href="{php echo $this->createWebUrl('buildsub', array('hid' => $item['hid']))}" class="btn btn-small" title="子项目维护"><i class="icon-cog"></i></a></td>
+                    
+				  
+					<td>
+                    <a href="{php echo $this->createMobileurl('huxing',array('hid'=>$item['hid']));}" class="btn btn-small" title="预览" target="_blank"><i class="icon-search"></i></a>
+                  <a href="{php echo $this->createWebUrl('houselist', array('hid' => $item['hid']))}" class="btn btn-small" title="维护"><i class="icon-cog"></i></a></td>
+					<td>
+                    <a href="{php echo $this->createMobileurl('viewbdalbum',array('hid'=>$item['hid']));}" class="btn btn-small" title="健身相册预览" target="_blank"><i class="icon-search"></i></a>
+                  <a href="{php echo $this->createWebUrl('albumlist', array('hid' => $item['hid']))}" class="btn btn-small" title="相册维护"><i class="icon-cog"></i></a></td>
+					<td>
+                    <a href="{php echo $this->createMobileurl('review',array('hid'=>$item['hid']));}" class="btn btn-small" title="印象预览" target="_blank"><i class="icon-search"></i></a>
+                    		<a href="{php echo $this->createWebUrl('felllist', array('hid' => $item['hid']))}" class="btn btn-small" title="印象维护"><i class="icon-cog"></i></a></td>
+                    <td>
+                   <a href="{php echo $this->createMobileurl('review',array('hid'=>$item['hid']));}" class="btn btn-small" title="点评预览" target="_blank"><i class="icon-search"></i></a>
+                  <a href="{php echo $this->createWebUrl('expertlist', array('hid' => $item['hid']))}" class="btn btn-small" title="点评维护"><i class="icon-cog"></i></a></td>
+					<td><a href="{php echo $this->createWebUrl('add', array('hid' => $item['hid']))}" class="btn btn-small" title="编辑"><i class="icon-edit"></i></a>
+						<a onclick="return confirm('删除俱乐部不会删除该俱乐部附属信息，是否确认删除？');return false;" href="{php echo $this->createWebUrl('delbuild', array('hid' => $item['hid']))}" class="btn btn-small" title="删除"><i class="icon-remove"></i></a></td>
+				</tr>
+				{/loop}
+
+				<td colspan="7">
+					<input name="token" type="hidden" value="{$_W['token']}" /></td>
+                <td></td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</div>
+{template 'common/footer'}

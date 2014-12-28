@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[二维码推广]]></name>
+		<identifie><![CDATA[qrcode]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[二维码推广]]></ability>
+		<description><![CDATA[二维码推广]]></description>
+		<author><![CDATA[珊瑚海 &amp; WeEngine Team]]></author>
+		<url><![CDATA[#]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="scan" />
+			<message type="subscribe" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+			<message type="subscribe" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="生成二维码" do="post" state="" direct="false" />
+			<entry title="管理二维码" do="list" state="" direct="false" />
+			<entry title="扫描统计" do="display" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_qrcode` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0',
+  `qrcid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '二维码场景ID',
+  `name` varchar(50) NOT NULL DEFAULT '' COMMENT '场景名称',
+  `keyword` varchar(100) NOT NULL COMMENT '关联关键字',
+  `model` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '模式，1临时，2为永久',
+  `ticket` varchar(250) NOT NULL DEFAULT '' COMMENT '标识',
+  `expire` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '过期时间',
+  `subnum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '关注扫描次数',
+  `createtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '生成时间',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0为未启用，1为启用',
+  PRIMARY KEY (`id`),
+  KEY `idx_qrcid` (`qrcid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_qrcode_stat` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0',
+  `qid` int(10) unsigned NOT NULL,
+  `openid` varchar(50) NOT NULL DEFAULT '' COMMENT '用户的唯一身份ID',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否发生在订阅时',
+  `qrcid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '二维码场景ID',
+  `name` varchar(50) NOT NULL DEFAULT '' COMMENT '场景名称',
+  `createtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '生成时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+		]]></install>
+	<uninstall><![CDATA[
+DROP TABLE `ims_qrcode`, `ims_qrcode_stat`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

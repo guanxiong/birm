@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.52">
+	<application setting="false">
+		<name><![CDATA[摇骰子]]></name>
+		<identifie><![CDATA[bbb]]></identifie>
+		<version><![CDATA[2.0.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[趣味性赚点数功能]]></ability>
+		<description><![CDATA[腻了大转盘刮刮卡么?来一起摇骰子吧!可周期性举行比赛,按点数排名,增加用户黏度]]></description>
+		<author><![CDATA[皓蓝 & WeEngine Team ]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="中奖名单" do="awardlist" state="" />
+		</rule>
+		
+	</bindings>
+	<install><![CDATA[
+
+DROP TABLE IF EXISTS `ims_bbb_reply`;
+CREATE TABLE `ims_bbb_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `picture` varchar(100) NOT NULL COMMENT '活动图片',
+  `description` varchar(500) NOT NULL COMMENT '活动描述',
+  `rule` text NOT NULL COMMENT '活动描述',
+  `periodlottery` smallint(10) unsigned NOT NULL DEFAULT '1' COMMENT '0为无周期',
+  `maxlottery` tinyint(3) unsigned NOT NULL COMMENT '最大抽奖数',
+  `headpic` varchar(100) NOT NULL COMMENT '默认提示信息',
+  `headurl` varchar(255) NOT NULL DEFAULT '',
+  `panzi` varchar(100) NOT NULL DEFAULT '',
+  `guzhuurl` varchar(255) NOT NULL DEFAULT '',
+  `prace_times` int(10) NOT NULL DEFAULT '100',
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `start_time` int(10) NOT NULL DEFAULT '0',
+  `end_time` int(10) NOT NULL DEFAULT '1600000000',
+  PRIMARY KEY (`id`)
+ 
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_bbb_user`;
+CREATE TABLE `ims_bbb_user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) NOT NULL DEFAULT '0',
+  `from_user` varchar(50) NOT NULL COMMENT '用户唯一身份ID',
+  `count` int(10) NOT NULL DEFAULT '0',
+  `points` int(10) NOT NULL DEFAULT '0',
+  `friendcount` int(10) NOT NULL DEFAULT '0',
+  `createtime` int(10) unsigned NOT NULL COMMENT '日期',
+  PRIMARY KEY (`id`)
+ 
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_bbb_winner`;
+CREATE TABLE `ims_bbb_winner` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `point` int(10) unsigned NOT NULL COMMENT '点数',
+  `from_user` varchar(50) NOT NULL COMMENT '用户唯一身份ID',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0未领奖，1不需要领奖，2已领奖',
+  `createtime` int(10) unsigned NOT NULL COMMENT '获奖日期',
+  PRIMARY KEY (`id`)
+
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+	
+
+	]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_bbb_reply`;
+	DROP TABLE IF EXISTS `ims_bbb_winner`;
+	DROP TABLE IF EXISTS `ims_bbb_user`;
+	]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

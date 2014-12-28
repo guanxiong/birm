@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[微动力微拍]]></name>
+		<identifie><![CDATA[we7_photomaker]]></identifie>
+		<version><![CDATA[1.2]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[微拍]]></ability>
+		<description><![CDATA[微拍]]></description>
+		<author><![CDATA[微动力团队]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="设备管理" do="device" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_we7_photomaker` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `rid` int(10) unsigned NOT NULL,
+  `sn` varchar(32) NOT NULL,
+  `token` varchar(6) NOT NULL,
+  `maxuse` tinyint(3) unsigned NOT NULL,
+  `maxtotal` int(10) NOT NULL,
+  `adtype` tinyint(1) NOT NULL,
+  `admsg` varchar(255) NOT NULL DEFAULT '',
+  `adurlh` varchar(255) NOT NULL,
+  `adurlv` varchar(255) NOT NULL,
+  `leavemsg` varchar(255) NOT NULL DEFAULT '',
+  `fontfamily` varchar(20) NOT NULL DEFAULT '',
+  `fontcolor` varchar(7) NOT NULL,
+  `qrcode` varchar(255) NOT NULL,
+  `mainpic` varchar(255) NOT NULL,
+  `adpics` text NOT NULL,
+  `width` varchar(10) NOT NULL,
+  `height` varchar(10) NOT NULL,
+  `size` tinyint(3) unsigned NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL COMMENT '0为正常状态，1为确定打印，2为打印成功，3为打印失败，4为取消打印',
+  `enablemsg` tinyint(1) unsigned NOT NULL,
+  `enableauthcode` tinyint(1) NOT NULL DEFAULT '1',
+  `content` text NOT NULL,
+  `tipsentry` varchar(500) NOT NULL,
+  `tipssuccess` varchar(500) NOT NULL,
+  `tipserror` varchar(500) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_rid` (`rid`),
+  KEY `idx_sn` (`sn`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_we7_photomaker_log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `rid` int(10) unsigned NOT NULL,
+  `authcode` varchar(8) NOT NULL,
+  `leavemsg` varchar(500) NOT NULL DEFAULT '',
+  `photo` varchar(500) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_weid_openid_rid` (`weid`,`openid`,`rid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[
+DROP TABLE `ims_we7_photomaker`;
+DROP TABLE `ims_we7_photomaker_log`;
+	]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

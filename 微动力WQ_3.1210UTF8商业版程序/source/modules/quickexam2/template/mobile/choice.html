@@ -1,0 +1,115 @@
+{template 'header'}
+	<link type="text/css" rel="stylesheet" href="./source/modules/quickexam2/style/base.css" />
+	<link type="text/css" rel="stylesheet" href="./source/modules/quickexam2/style/style.css?v=206" />
+	<script type="text/javascript" src="./source/modules/quickexam2/script/script.js?v=200"></script>
+	<!--content-->
+	{if $preview && empty($record) }
+			<section class="button">
+				<a onclick="javascript:window.history.back();"><span>返回</span></a>
+			</section>
+	{/if}
+		<section class="canvas">
+  {if 0}
+    <section class="card">
+				<section class="title">
+				{if empty($fans) }
+        <!--姓名:____&nbsp;&nbsp;&nbsp;&nbsp;<br>昵称:_____&nbsp;&nbsp;&nbsp;&nbsp;<br>电话:_____-->
+				{else}
+				考生姓名:<u>{$fans['realname']}</u> &nbsp;&nbsp;&nbsp;&nbsp;<br><br>电话:<u>{$fans['mobile']}</u>
+				{/if}
+			</section>
+		</section>
+  {/if}
+			<section class="card hightlight" style="background-color:#FF9933">
+			{if $preview}
+				{if $record }
+				<section class="title">本卷得分：{$record['usermark']}分</section>
+				{/if}
+
+				{if (strlen($record['comment']) > 0)}
+				<section class="title"><span class="red">名师点评</span>：<br>{php echo htmlspecialchars_decode($record['comment'])}</section>
+				{/if}
+			{/if}
+			</section>
+			<section class="card">
+				<section class="title">
+					{php echo htmlspecialchars_decode($paper['title'])}
+				</section>
+				<section class="info">
+					{php echo htmlspecialchars_decode($paper['explain'])}
+				</section>
+			</section>
+		
+		<form action="{php echo $this->createMobileUrl('ScoreSubmit', array('paper_id'=>$paper['paper_id'], 'paper_title'=>$paper['title']));}" method="post">
+		<input type="hidden" name="op" value="post" />
+			{loop $list $item}
+			<section class="card">
+				<section class="title">
+				<p>{php echo htmlspecialchars_decode($item['title'])}</p>
+				</section>
+				<article class="info">
+					{if $preview}
+						{php $disabled="disabled"}
+					{else}
+						{php $disabled=""}
+					{/if}
+					{if (strlen($item['answer']) == 1) }
+							{php $input_type = "radio" }
+						{else}
+							{php $input_type = "checkbox" }
+						{/if}
+					{loop $item['options'] $option}
+					<section class="check-list-item">
+						{if $preview and !empty($record) and in_array($option['seq'], $item['user_choices']) === true }
+						<input class="ck" {$disabled} type="{$input_type}" name="choice[{$item['choice_id']}][]" value="{$option['seq']}" checked/>
+						{else}
+						<input class="ck" {$disabled} type="{$input_type}" name="choice[{$item['choice_id']}][]" value="{$option['seq']}" />
+						{/if}
+						<span{if $preview && (strpos($item['answer'], $option['seq']) !== false) } style="color:green"{/if}>{php echo htmlspecialchars_decode($option['body'])}</span>
+					</section>
+					{/loop}
+					{if $preview and 0 < strlen(htmlspecialchars_decode($item['explain']))}
+					<div class="info">
+						<span class="label label-warning">名师点评</span>
+						{php echo htmlspecialchars_decode($item['explain'])}
+					</div>
+					{/if}
+                </article>
+            </section>
+			{/loop}
+			{if $preview}
+			<section class="button">
+				<a onclick="javascript:window.history.back();"><span>返回</span></a>
+			</section>
+			{else}
+			<section class="button">
+				<a id="submit" href="#"><span>提交试卷</span></a>
+			</section>
+			{/if}
+		</form>
+		</section>
+        <!--content end-->
+
+	<script type="text/javascript">
+		{if !$preview} 
+		$('.check-list-item').click(function(e) {
+			if (!($(e.target).is('input')))
+			{
+					var checkbox = this.getElementsByTagName("input")[0];	
+					$(checkbox).prop("checked", function(i, oldVal) { return !oldVal; });
+				
+				}
+		});
+		{/if}
+		$('#submit').click(function() {
+			var is_complete = true;
+			if (is_complete) {
+				$("form").submit();
+			} else {
+				alert("还有题目没有回答哟");
+				return false;
+			}
+		});
+	</script>
+
+{template 'footer'}

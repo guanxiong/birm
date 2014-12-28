@@ -1,0 +1,20 @@
+<table class="tb">
+		<tr>
+			<th><label for="">选择要绑定的表单</label></th>
+			<td>
+			<div class="alert alert-block alert-new wrap-item">
+			 <table id="form" class="tb reply-news-edit">
+				<tr> 
+		        <th>表单列表：</th> 
+		        <td>
+		        	<select id="formid" name="formid" >
+		        		<option value="">请选择...</option>
+		        		{loop $list $row}
+		        			<option value='{$row['id']}' {if $selected['id']==$row['id']}selected{/if}>{$row['name']}</option>
+		        		{/loop}
+		        	</select>
+		        </td> 
+		       </tr> 			       
+			</table>
+		</div>
+</table>

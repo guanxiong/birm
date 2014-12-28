@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[自选股]]></name>
+		<identifie><![CDATA[stock]]></identifie>
+		<version><![CDATA[1.1]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[股票自选股]]></ability>
+		<description><![CDATA[股票自选股]]></description>
+		<author><![CDATA[Godietion Koo]]></author>
+		<url><![CDATA[http://beidoulbs.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[
+DROP TABLE IF EXISTS `ims_optionalstock`;
+CREATE TABLE `ims_optionalstock` (
+  `id` int(11) NOT NULL auto_increment COMMENT '流水ID',
+  `weid` varchar(30) NOT NULL default '' COMMENT '公众号ID',
+  `userid` varchar(30) NOT NULL default '' COMMENT '微信ID',
+  `stkcode` varchar(6) NOT NULL default '' COMMENT '股票代码',
+  `stkname` varchar(12) NOT NULL default '' COMMENT '股票名称',
+  `stkprice` decimal(10,4) NOT NULL default '0.0000' COMMENT '关注时价格',
+  `lastprice` decimal(10,4) NOT NULL default '0.0000' COMMENT '关注日前收盘',
+  `addtime` timestamp NOT NULL default CURRENT_TIMESTAMP COMMENT '关注时间',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;	
+	]]></install>
+	<uninstall><![CDATA[
+DROP TABLE IF EXISTS `ims_optionalstock`;	
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

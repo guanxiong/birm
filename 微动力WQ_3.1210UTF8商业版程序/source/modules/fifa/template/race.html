@@ -1,0 +1,44 @@
+{template 'common/header'}
+
+
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:50px;">场次</th>
+					<th style="min-width:200px;">球队</th>
+					<th style="width:60px;">比分</th>
+					<th style="width:100px;">时间</th>
+					
+					<th style="text-align:right; width:100px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['id']}</td>
+					<td>{$item['teama']} VS {$item['teamb']}</td>
+					<td>{$item['score']}</td>
+					<td>{php echo date('y-m-d H:i',$item['racetime'])}</td>
+					
+					<td style="text-align:right;">
+						
+						<a href="{php echo create_url('site/module/raceup', array('name' => 'fifa', 'id' => $item['id']))}" onclick="return confirm('确认更新？');return false;" title="更新数据" class="btn btn-small">
+							<i class="icon-cloud-download"></i></a>
+						
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+			<!--tr>
+				<td colspan="8">
+					<input name="token" type="hidden" value="{$_W['token']}" />
+					<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+				</td>
+			</tr-->
+		</table>
+	</div>
+</div>
+
+{template 'common/footer'}

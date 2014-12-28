@@ -1,0 +1,677 @@
+<html class="ui-mobile">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1">
+    <title>幸运机</title>
+    <link href="./source/modules/ifruit/template/css/jquery.mobile-1.3.1.css" rel="stylesheet" type="text/css">
+    <link href="./source/modules/ifruit/template/css/tigerslot.css" rel="stylesheet" type="text/css">
+    <script src="./source/modules/ifruit/template/js/jquery-1.10.0.js"></script>
+    <script src="./source/modules/ifruit/template/js/jquery.mobile-1.3.1.js"></script>
+    <script src="./source/modules/ifruit/template/js/alert.js"></script>
+    <style type="text/css">
+        #convert {
+            display:block;
+            color:#FFF;
+            font-size:16px;
+            text-align:center;
+            width: 150px;
+            height:40px;
+            margin: 5px auto;
+            line-height:40px;
+            text-decoration: none;
+            text-shadow:0 -1px 1px rgba(0, 0, 0, .5);
+            border-radius:10px;
+            background-color:#ffa201;
+            background-image:-webkit-gradient(linear, left top, left bottom, from(#ff8c00), to(#ffa201));
+            background-image:-webkit-linear-gradient(top, #ff8c00, #ffa201);
+            background-image:linear-gradient(to bottom, #ff8c00, #ffa201)
+        }
+    </style>
+    <script type="text/javascript">
+    (function () {
+        var lastTime = 0;
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+        for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame']
+                    || window[vendors[x] + 'CancelRequestAnimationFrame'];
+        }
+
+        if (!window.requestAnimationFrame)
+            window.requestAnimationFrame = function (callback, element) {
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                var id = window.setTimeout(function () { callback(currTime + timeToCall); },
+                        timeToCall);
+                lastTime = currTime + timeToCall;
+                return id;
+            };
+
+        if (!window.cancelAnimationFrame)
+            window.cancelAnimationFrame = function (id) {
+                clearTimeout(id);
+            };
+    }());
+
+    (function () {
+        window.GameTimer = function (fn, timeout) {
+            this.__fn = fn;
+            this.__timeout = timeout;
+            this.__running = false;
+            this.__lastTime = Date.now();
+            this.__stopcallback = null;
+        };
+
+        window.GameTimer.prototype.__runer = function () {
+            if (Date.now() - this.__lastTime >= this.__timeout) {
+                this.__lastTime = Date.now();
+                this.__fn.call(this);
+            }
+            if (this.__running) {
+                window.requestAnimationFrame(this.__runer.bind(this));
+            }
+            else {
+                if (typeof this.__stopcallback === 'function') {
+                    window.setTimeout(this.__stopcallback,100);
+                }
+            }
+        };
+
+        window.GameTimer.prototype.start = function () {
+            this.__running = true;
+            this.__runer();
+        };
+        window.GameTimer.prototype.stop = function (callback) {
+            this.__running = false;
+            this.__stopcallback = callback;
+        };
+
+    })();
+
+    $(function () {
+        var url_rndprize = "{php echo create_url('mobile/module', array('do' => 'lottery', 'name' => 'ifruit', 'weid' => $weid, 'rid'=>$rid, 'from_user' => $page_from_user, 'card' => $card_flag))}";//'抽奖的php地址';
+        var url_getprize = '兑奖的php地址';
+        var itemPositions = [
+            0, //苹果
+            100,//芒果
+            200,//布林
+            300,//香蕉
+            400,//草莓
+            500,//梨
+            600,//桔子
+            700,//青苹果
+            800//樱桃
+        ];
+
+        //游戏开始
+        var gameStart = function () {
+            lightFlicker.stop();
+            lightRandom.stop();
+            lightCycle.start();
+
+            //游戏开始，指定用户的结果，从左到右，水果编码，从0开始。
+            //随机给个用于测试
+            //boxCycle.start(Math.round(Math.random() * 8), Math.round(Math.random() * 8), Math.round(Math.random() * 8));//debug
+            //先后台抽奖，生成获奖纪录，然后调用老虎机
+            var marketing_id = $('.tigerslot').attr('data-marketing-id');
+            var token = $('.tigerslot').attr('data-token');
+            $.ajax({
+                url: url_rndprize,
+                dataType: "json",
+                success: function(data) {
+                    /*中奖结果
+                    中奖 = 1
+                    a.返回 商品等级，商品名称，商品对应的sn码
+                    没中奖 = -1
+                    a.抽奖数量已到.
+                    b.显示会员特权抽奖，是否用积分抽奖.
+                    c.显示系统设置的未中奖提示.
+                    d.活动已经结束
+                    */
+                    $("#result").slideUp(500);
+                    if (data.message.success == "1") {
+                        boxCycle.start(data.message);
+                    } else if(data.message.success == -2){
+                        $('.machine .gamebutton').removeClass('disabled');
+                        alert(data.message.msg);
+                        "{if $detail['is_card_score']==1}"
+                        $("#convert").slideDown(500);
+                        "{/if}"
+                    } else {
+                        $('.machine .gamebutton').removeClass('disabled');
+                        alert(data.message.msg);
+                    }
+                },
+                error: function() {
+                    alert('网络有问题.');
+                },
+                timeout: 1000
+            });
+            //boxCycle.start(5,1,5);
+        };
+
+        //游戏结束
+        var gameOver = function (resultData) {
+            lightFlicker.start();
+            lightRandom.stop();
+            lightCycle.stop();
+            //alert('你获得的水果编码从左到右：' + left + ',' + middle + ',' + right);
+            //alert(resultData.right+resultData.middle+resultData.left);
+            if(resultData.type == 'bad'){
+                $('.machine .gamebutton').removeClass('disabled');
+                alert(resultData.msg);
+            } else if(resultData.type == 'repeat_lottery'){
+                $('.machine .gamebutton').removeClass('disabled');
+                $("#sncode").text(resultData.sn);
+                $("#prize").text(resultData.levelname+':'+resultData.award);
+                $("#result").slideDown(500);
+                $(".result_repeat").css("display","");
+                $(".result_first").css("display","none");
+            } else{
+                //$('.machine .gamebutton').addClass('disabled');
+                $('.machine .gamebutton').removeClass('disabled');
+                $("#sncode").text(resultData.sn);
+                $("#prize").text(resultData.levelname+':'+resultData.award);
+                $("#result").slideDown(500);
+            }
+
+            var rest_chance = parseInt($('#rest_chance').text()) - 1;
+            rest_chance = rest_chance < 0 ? 0 : rest_chance;
+            $('#rest_chance').text(rest_chance);
+
+            var score = parseInt($('#score').text()) - "{$detail['card_score']}";
+            score = score < 0 ? 0 : score;
+            $('#score').text(score);
+        };
+
+        //准备兑奖
+        var getprize = function (listid, prizeid, code) {
+            var tel=prompt('获奖纪录id:' + listid + ' ,奖品ID:' + prizeid + ' ,兑奖编码：' + code +'\n请输入手机号码兑奖：');
+            if ($.trim(tel)) {
+                /*
+                 $.post(url_getprize, {
+                 listid: listid, prizeid: prizeid, code: code
+                 }, function (result) {
+                 //操作成功,
+                 //setPrizeList(listid);
+                 });
+                */
+                setPrizeList(listid);//这句是为了演示，应该删除，放到操作成功的回调里
+            } else {
+                return false;
+            }
+        };
+
+        //兑奖成功后更改兑奖纪录,用于提交兑奖后，更改获奖纪录的显示
+        var setPrizeList = function (listid) {
+            console.log($prizelist);
+            var p = $prizelist.find('li[prizelist_id="' + listid + '"]');
+            p.addClass('hasGetPrize');
+        };
+
+        var $machine = $('.machine');
+        var $slotBox = $('.tigerslot .box');
+        var light_html = '';
+        for (var i = 0; i < 21; i++) {
+            light_html += '<div class="light l'+ i +'"></div>';
+        }
+        var $lights = $(light_html).appendTo($machine);
+        var $result = $('#result').on('click', '.close-btn', function(){
+            $result.slideUp();
+
+            var submitData = {
+                marketing_id: $('.tigerslot').attr('data-marketing-id'),
+                sn: $.trim($("#sncode").text())
+            };
+            $.post('/marketing_fruit/cancel',
+                submitData,
+                function(data) {
+                    if (data.error == 1) {
+                        alert(data.msg);
+                        return;
+                    }
+                    if (data.success == 1) {
+                        //window.location.reload();
+
+                        $('#result #prize').empty();
+                        $('#result #sncode').empty();
+                        $('.machine .gamebutton').removeClass('disabled');
+                        return;
+                    } else {
+
+                    }
+                }
+            );
+        });
+        var $request_reward = $('#request-reward').on('click', '.close-btn', function(){
+            $request_reward.slideUp();
+        })
+
+        var $gameButton = $('.machine .gamebutton').tap(function () {
+            var $this = $(this);
+            if (!$this.hasClass('disabled')) {
+                $this.addClass('disabled');
+                $this.toggleClass(function (index, classname) {
+                    if (classname.indexOf('stop') > -1) {
+                        boxCycle.stop(function (resultData) {
+                            gameOver(resultData);
+                            //$this.removeClass('disabled');
+                        });
+                    } else {
+                        gameStart();
+                        window.setTimeout(function () {
+                            $this.removeClass('disabled');
+                        },1500);
+                    }
+                    return 'stop';
+                });
+            }
+        });
+
+        var $prizelist = $('.part.prizelist').on('tap', '.getprize', function () {
+            var $this = $(this), $parent = $this.parent();
+            var code = $parent.find('.code').html();
+            $('#sn').val(code);
+            $("#request-reward").slideToggle(500);
+            return false;
+        });
+
+        //提交手机号码
+        $('.part').on('tap', '#btn_mobile', function () {
+            var tel = $("#tel").val();
+            var telreg = '/^1[3|4|5|8][0-9]\d{4,8}$/';
+            if (tel == '') {
+                alert("请输入手机号");
+                return;
+            }
+            if (!istel(tel)){
+                alert("手机号格式不正确");
+                return;
+            }
+            //alert("手机号格式不正确");
+            var url_mobile = "{php echo create_url('mobile/module', array('do' => 'updatemobile', 'name' => 'ifruit', 'weid' => $weid, 'rid'=>$rid, 'from_user' => $page_from_user))}";//'更新手机';
+            var submitData = {
+                sn: $("#sncode").text(),
+                tel: tel
+            };
+            $.post(url_mobile, submitData,
+                function(data) {
+                    if (data.message.success == 1) {
+                        $(".result_mobile").css("display","none");
+                        alert('恭喜您，提交成功!');
+                        return;
+                    } else {
+                        alert(data.message.msg);
+                    }
+                },"json")
+            return false;
+        });
+
+        //提交手机号码
+        $('.part').on('tap', '#btn_pwd', function () {
+            var pwd = $("#pwd").val();
+
+            if (pwd == '') {
+                alert("请输入确认密码");
+                return;
+            }
+            var url_pwd = "{php echo create_url('mobile/module', array('do' => 'updatepwd', 'name' => 'ifruit', 'weid' => $weid, 'rid'=>$rid, 'from_user' => $page_from_user))}";//'密码确认';
+            var submitData = {
+                sn: $("#sncode").text(),
+                pwd: pwd
+            };
+            $.post(url_pwd, submitData,
+                function(data) {
+                    if (data.message.success == 1) {
+                        alert(data.message.msg);
+                        setTimeout(function(){
+                            var url = "{php echo create_url('mobile/module', array('do' => 'wapindex', 'name' => 'ifruit', 'weid' => $weid, 'rid'=>$rid, 'from_user' => $page_from_user))}";
+                            window.location.href = url;
+                        },2000);
+                        return;
+                    } else if(data.message.success == -1){
+                        alert(data.message.msg);
+                    } else {
+                        alert('操作失败.');
+                    }
+                },"json")
+            return false;
+        });
+
+        var lightCycle = new function () {
+            var currIndex = 0, maxIndex = $lights.length - 1;
+            $('.l0').addClass('on');
+            var tmr = new GameTimer(function () {
+                $lights.each(function(){
+                    var $this = $(this);
+                    if($this.hasClass('on')){
+                        currIndex++;
+                        if (currIndex > maxIndex) {
+                            currIndex = 0;
+                        }
+                        $this.removeClass('on');
+                        $('.l' + currIndex).addClass('on');
+                        return false;
+                    }
+                });
+            }, 100);
+            this.start = function () {
+                tmr.start();
+            };
+            this.stop = function () {
+                tmr.stop();
+            };
+        };
+        var lightRandom = new function () {
+            var tmr = new GameTimer(function () {
+                $lights.each(function () {
+                    var r = Math.random() * 1000;
+                    if (r < 400) {
+                        $(this).addClass('on');
+                    } else {
+                        $(this).removeClass('on');
+                    }
+                });
+            }, 100);
+            this.start = function () {
+                tmr.start();
+            };
+            this.stop = function () {
+                tmr.stop();
+            };
+        };
+
+        var lightFlicker = new function () {
+            $lights.each(function (index) {
+                if ((index >> 1) == index / 2) {
+                    $(this).addClass('on');
+                } else {
+                    $(this).removeClass('on');
+                }
+            });
+            var tmr = new GameTimer(function () {
+                $lights.toggleClass('on');
+            }, 100);
+            this.start = function () {
+                tmr.start();
+            };
+            this.stop = function () {
+                tmr.stop();
+            };
+        };
+
+        var boxCycle = new function () {
+
+            var speed_left = 0, speed_middle = 0, speed_right = 0, maxSpeed = 25;
+            var running = false, toStop = false, toStopCount = 0;
+            var boxPos_left = 0, boxPos_middle = 0, boxPos_right = 0;
+            var toLeftIndex = 0, toMiddleIndex = 0, toRightIndex = 0;
+            var resultData;
+
+            var $box = $('.tigerslot .box'), $box_left = $('.tigerslot .strip.left .box'), $box_middle = $('.tigerslot .strip.middle .box'), $box_right = $('.tigerslot .strip.right .box');
+            var fn_stop_callback = null;
+            var tmr = new GameTimer(function () {
+                if (toStop) {
+                    toStopCount--;
+                    speed_left = 0;
+                    boxPos_left = -itemPositions[toLeftIndex];
+                    if (toStopCount < 25) {
+                        speed_middle = 0;
+                        boxPos_middle = -itemPositions[toMiddleIndex];
+                    }
+                    if (toStopCount < 0) {
+                        speed_right = 0;
+                        boxPos_right = -itemPositions[toRightIndex];
+                    }
+                } else {
+                    speed_left += 1;
+                    speed_middle += 1;
+                    speed_right += 1;
+                    if (speed_left > maxSpeed) {
+                        speed_left = maxSpeed;
+                    }
+                    if (speed_middle > maxSpeed) {
+                        speed_middle = maxSpeed;
+                    }
+                    if (speed_right > maxSpeed) {
+                        speed_right = maxSpeed;
+                    }
+                }
+
+                boxPos_left += speed_left;
+                boxPos_middle += speed_middle;
+                boxPos_right += speed_right;
+
+                $box_left.css('background-position', '0 ' + boxPos_left + 'px')
+                $box_middle.css('background-position', '0 ' + boxPos_middle + 'px')
+                $box_right.css('background-position', '0 ' + boxPos_right + 'px')
+
+                if (speed_left == 0 && speed_middle == 0 && speed_right == 0) {
+                    tmr.stop(fn_stop_callback.bind(this, resultData));
+                }
+            }, 33);
+
+            this.start = function (data) {
+                toLeftIndex = data.left; toMiddleIndex = data.middle; toRightIndex = data.right;
+                //toLeftIndex = 8; toMiddleIndex = 7; toRightIndex = 1;//debug抽奖
+                running = true; toStop = false;
+                resultData = data;
+                tmr.start();
+            };
+
+            this.stop = function (fn) {
+                fn_stop_callback = fn;
+                toStop = true;
+                toStopCount = 50;
+            };
+
+            this.reset = function () {
+                $box_left.css('background-position', '0 ' + itemPositions[0] + 'px');
+                $box_middle.css('background-position', '0 ' + itemPositions[0] + 'px');
+                $box_right.css('background-position', '0 ' + itemPositions[0] + 'px');
+            };
+            this.reset();
+        };
+
+        //顶部滚动中奖信息
+        AutoScrollHeader = (function(obj){
+            $(obj).find("ul:first").animate({
+                marginTop:"-15px"
+            },500,function(){
+                $(this).css({marginTop:"0px"}).find("li:first").appendTo(this);
+            });
+        });
+        if($('.scroll-reward-info li').length >1){
+            setInterval('AutoScroll(".scroll-reward-info")',4000);
+        }
+
+        //手机号码格式判断
+        function istel(value) {
+            //var regxEny = /^1[3|4|5|8][0-9]\d{4,8}$/;
+            var regxEny = /^[0-9]*$/;
+            return regxEny.test(value);
+        }
+
+        //初始给点欢乐
+        lightFlicker.start();
+        window.setTimeout(function () {
+            lightFlicker.stop();
+        }, 2000)
+
+    });
+    </script>
+</head>
+<body class="ui-mobile-viewport ui-overlay-c" style="">
+<link href="./source/modules/ifruit/template/css/main.css?v={TIMESTAMP}" rel="stylesheet" type="text/css">
+<div class="window" id="windowcenter">
+	<div id="title" class="title">消息提醒<span class="close" id="alertclose"></span></div>
+	<div class="content">
+	 <div id="txt"></div>
+	 <input type="button" value="确定" id="windowclosebutton" name="确定" class="txtbtn">	
+	</div>
+</div>
+<div data-role="page" class="page ui-page ui-body-c ui-page-header-fixed ui-page-footer-fixed ui-page-active" data-title="水果达人" data-url="/marketing_fruit/view/521b5c974246d081/null" tabindex="0" style="padding-top: 37px; padding-bottom: 31px; min-height: 80px;">
+        {php include $this->template('header_scroll_info');}
+        <div class="tigerslot ui-content" data-role="content" data-marketing-id="521b5c974246d081" data-token="null" role="main">
+            <div class="machine">
+                <div class="strip left">
+                    <div class="box" style="background-position: 0px 0px;"></div>
+                    <div class="cover"></div>
+                </div>
+                <div class="strip middle">
+                    <div class="box" style="background-position: 0px 0px;"></div>
+                    <div class="cover"></div>
+                </div>
+                <div class="strip right">
+                    <div class="box" style="background-position: 0px 0px;"></div>
+                    <div class="cover"></div>
+                </div>
+                <div class="gamebutton"></div>
+                <div class="light l0"></div><div class="light l1 on"></div><div class="light l2"></div><div class="light l3 on"></div><div class="light l4"></div><div class="light l5 on"></div><div class="light l6"></div><div class="light l7 on"></div><div class="light l8"></div><div class="light l9 on"></div><div class="light l10"></div><div class="light l11 on"></div><div class="light l12"></div><div class="light l13 on"></div><div class="light l14"></div><div class="light l15 on"></div><div class="light l16"></div><div class="light l17 on"></div><div class="light l18"></div><div class="light l19 on"></div><div class="light l20"></div></div>
+            <a href="javascript:jumptourl('{php echo create_url('mobile/module', array('do' => 'wapindex', 'name' => 'ifruit', 'weid' => $weid, 'rid'=>$rid, 'from_user' => $page_from_user, 'card' => '1'))}');" id="convert" target="_self" style="display: none;">使用会员积分抽奖</a>
+            <!-- 中奖提示输入手机号码框 -->
+            <div id="result" class="part" style="{if $sn_status==0}display:none;{else}{if $is_repeat_lottery==1 && $sn_status==2}display:none;{/if}{/if}">
+            	    <a class="close-btn ui-btn ui-btn-up-c ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-icon-notext" style="position:absolute;top:0;right:0;" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="c" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" title="取消"><span class="ui-btn-inner"><span class="ui-btn-text">取消</span><span class="ui-icon ui-icon-delete ui-icon-shadow">&nbsp;</span></span></a>
+                <div class="title">恭喜您中奖了!</div>
+                <div class="content">
+					<p>您中了：<span id="prize">{$award['levelname']}{$award['title']}</span></p>
+					<p>中奖码：<span id="sncode">{$sn['sn']}</span></p>
+                    <p class="red">
+                        {if $sn_status == 1}
+                            {$detail['ticket_information']}
+                        {else if $sn_status == 2}
+                            {if !empty($sn['usetime'])}您已经兑换成功，本SN码自动作废!{/if}
+                        {/if}
+                    </p>
+                    {if empty($sn['mobile'])}
+					<p class="red result_first result_mobile" id="red">请仔细填写手机号，提交后无法修改! </p>
+					<p class="result_first result_mobile">
+                        <input id="tel" name="tel" type="text" placeholder="请输入您的手机号" class="ui-input-text ui-body-c" value="{$page_mobile}"/>
+					</p>
+					<p class="result_first result_mobile">
+                        <input id="btn_mobile" type="button" value="提交" class="ui-btn-hidden" data-disabled="false" />
+					</p>
+                    {/if}
+                    {if !empty($detail['pwd']) && $sn_status != 2}
+                    <p class="result_first">
+                        <input id="pwd" name="pwd" type="text" placeholder="请输入商家确认密码" class="ui-input-text ui-body-c" />
+                    </p>
+                    <p class="result_first">
+                        <input id="btn_pwd" type="button" value="提交" class="ui-btn-hidden" data-disabled="false" />
+                    </p>
+                    {/if}
+                    <p style="display: none;" class="result_repeat red result_mobile">请仔细填写手机号，提交后无法修改! </p>
+                    <p style="display: none;" class="result_repeat result_mobile">
+                        <input id="tel" name="tel" type="text" placeholder="请输入您的手机号" class="ui-input-text ui-body-c" value="{$page_mobile}"/>
+                    </p>
+                    <p style="display: none;" class="result_repeat result_mobile">
+                        <input id="btn_mobile" type="button" value="提交" class="ui-btn-hidden" data-disabled="false" />
+                    </p>
+                    {if !empty($detail['pwd'])}
+                    <p style="display: none;" class="result_repeat">
+                        <input id="pwd" name="pwd" type="text" placeholder="请输入商家确认密码" class="ui-input-text ui-body-c" />
+                    </p>
+                    <p style="display: none;"  class="result_repeat">
+                        <input id="btn_pwd" type="button" value="提交" class="ui-btn-hidden" data-disabled="false" />
+                    </p>
+                    {/if}
+                </div>
+            </div>
+            {if $card_flag==1}
+            <div class="part">
+                <div class="title">会员卡信息:</div>
+                <div class="content">
+                    {if empty($card)}
+                        <p style="color:f00;">您还没绑定会员卡，请先绑定.</p>
+                    {else}
+                        <p>您的卡号：<span>{$card['cardpre']}{$card['cardno']}</span></p>
+                        <p>剩余积分：<span id="score" style="color:f00;">{$card['balance_score']}</span></p>
+                        <p>每次抽奖所需积分：<span style="color:f00;">{$detail['card_score']}</span></p>
+                    {/if}
+                </div>
+            </div>
+            {/if}
+            <div class="part">
+                <div class="title">奖项设置:</div>
+                <div class="content">              
+                    <ul>
+                        {$page_award}
+                    </ul>
+                </div>
+            </div>
+            <div class="part">
+                <div class="title">活动说明:</div>
+                <div class="content">
+                {if $card_flag==0}
+				    <p> 每个用户有{$detail['lottery_times']}次抽奖机会, 您还有 <span id="rest_chance">{$have_lottery_times}</span> 次参与机会 </p>
+                {/if}
+				<p>
+                    {$detail['rule']}
+                </p>
+                </div>
+            </div>
+			<div class="part prizelist">
+                <div class="title">我的中奖纪录:</div>
+                <div class="content">
+                    <ol>
+                        {loop $my_awards $ward}
+                        <li>
+                            <div>奖品:<span class="prize">{$ward['levelname']}{$ward['title']}</span></div>
+                            <div>中奖代码:
+                                <span class="code">{$ward['sn']}</span>
+                            </div>
+                            <div>中奖时间:{php echo date('Y-m-d', $ward['winningtime']);}</div>
+                            <div>状态:{if $ward['status']==1}
+                                <a href="javascript:jumptourl('{php echo create_url('mobile/module', array('do' => 'wapindex', 'name' => 'ifruit', 'weid' => $weid, 'rid'=>$rid, 'from_user' => $page_from_user, 'snid' => $ward['snid'], 'card' => $card_flag))}');" style="color:red;text-decoration: none;">未兑换</a>
+                                {else}<font color="green">已兑换</font>{/if}</div>
+                        </li>
+                        {/loop}
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!--<div data-role="footer" data-position="fixed">-->
+        <!--黑色的底部公共在这个位置添加-->
+        {php include $this->template('wap_footer');}
+<style type="text/css">
+.scrollDiv {
+    height: 25px;
+    line-height: 25px;
+    margin-top: 10px;
+    overflow: hidden;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.scrollDiv li {
+    height: 25px;
+}
+.scrollDiv ul, .scrollDiv li {
+    list-style-type: none;
+}
+.footer_logo{
+    float: right; 
+    width: 35%; 
+    text-align: right;
+    margin: 5px 5px auto auto;
+}
+</style>
+<script type="text/javascript">
+$(function() {
+	AutoScroll = (function(obj){
+		$(obj).find("ul:first").animate({
+			marginTop:"-25px"
+		},500,function(){
+			$(this).css({marginTop:"0px"}).find("li:first").appendTo(this);
+		});
+	});
+	if($('.scrollDiv li').length >1){
+        setInterval('AutoScroll(".scrollDiv")',4000);
+	}
+});
+function jumptourl(url){
+    //alert(url);
+    window.location.href = url;
+}
+</script>
+</div>
+<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon ui-icon-loading"></span><h1>loading</h1></div></body></html>

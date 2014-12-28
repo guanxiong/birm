@@ -1,0 +1,88 @@
+{template 'common/header'}
+<div class="main">
+	<div style="padding:15px;"><form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+	<table>
+		<tbody>
+			<tr>
+				<th></th>
+				<th>竞猜设置</th>
+			</tr>
+			
+			<tr>
+				<th>猜中积分</th>
+				<td><input type="text" value="{$reply['score']}" class="span1" name="score" placeholder="填数字">
+					猜中每场比赛的积分
+				</td>
+			</tr>
+			<!--tr>
+				<th>猜4强</th>
+				<td><input type="text" value="{$reply['champion']}" class="span1" name="champion" placeholder="填数字">
+					每个人可以猜4个队,全猜中了有大奖哦
+					
+				</td>
+			</tr-->
+			<tr>
+				<th>1/8积分</th>
+				<td><input type="text" value="{$reply['score8']}" class="span1" name="score8" placeholder="填数字">
+					1/8决赛的积分
+					
+				</td>
+			</tr>
+			<tr>
+				<th>1/4积分</th>
+				<td><input type="text" value="{$reply['score4']}" class="span1" name="score4" placeholder="填数字">
+					1/4决赛的积分
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<th>活动简介</th>
+				<td>
+					<textarea id="description" style="height:150px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于图文显示的简介</div>
+				</td>
+			</tr>
+			<tr>
+				<th>竞猜规则</th>
+				<td>
+					<textarea id="rule" style="height:150px;" name="rule" class="span7" cols="60">{$reply['rule']}</textarea>
+					<div class="help-block">活动的相关说明和活动奖品介绍。</div>
+				</td>
+			</tr>
+			<tr>
+				<th>赞助商介绍</th>
+				<td><input type="text" value="{$reply['digger']}" class="span7" name="digger">
+					<div class="help-block">填推送图文链接</div>
+				</td>
+			</tr>
+			<tr>
+				<th>球迷活动</th>
+				<td>
+					<input type="text" value="{$reply['huodong']}" class="span7" name="huodong">
+					<div class="help-block">填推送图文链接</div>
+				</td>
+			</tr>
+			<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	</form>
+</div>
+</div>
+<script type="text/javascript">
+kindeditor($('#rule'));
+kindeditor($('#description'));
+
+var fifaHandler = {
+	
+};
+
+
+</script>
+{template 'common/footer'}

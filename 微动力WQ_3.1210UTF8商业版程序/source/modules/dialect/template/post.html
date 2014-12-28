@@ -1,0 +1,87 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li><a href="{php echo $this->createWebUrl('manage');}">地方话管理</a></li>
+        <li class="active"><a href="{php echo $this->createWebUrl('post');}">添加地方话</a></li>
+    </ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="{$_GPC['id']}">
+	<h4>基本信息</h4>
+	<table class="tb">
+            <tr>
+                <th><span class="red">*</span>方言名称</th>
+                <td>
+                    <input type="text" id="dialect" class="span7" placeholder="" name="dialect" value="{$subject['dialect']}">
+                    <span class="help-block">哪个地方的语言？</span>
+                </td>
+            </tr>
+            <tr>
+                <th><span class="red">*</span>考试标题</th>
+                <td>
+                    <input type="text" id="title" class="span7" placeholder="" name="title" value="{$subject['title']}">
+                    <span class="help-block">例：西昌话专业六级考试</span>
+                </td>
+            </tr>
+            <tr>
+                <th>情景图片</th>
+                <td>
+                    {php echo tpl_form_field_image('photo',$subject['photo']);}
+                    <span class="help-block">背景图片 640*640，渐变黑色为佳。</span>
+                </td>
+            </tr>
+            <tr>
+                <th>考试规则</th>
+                <td>
+                    <textarea id="smalltext" name="smalltext" class="span7" cols="60">{$subject['smalltext']}</textarea>
+                    <div class="help-block">用于起始界面的一段文字描述</div>
+                </td>
+            </tr>
+            <tr>
+                <th>分享时的标题</th>
+                <td>
+                    <input type="text" id="share_title" name="share_title" value="{$subject['share_title']}" class="span5" />
+                    <div class="help-block"></div>
+                </td>
+            </tr>
+            <tr>
+                <th>分享时的摘要</th>
+                <td>
+                    <input type="text" id="share_desc" name="share_desc" value="{$subject['share_desc']}" class="span7" />
+                    <div class="help-block"></div>
+                </td>
+            </tr>
+            <tr>
+                <th>用户取消分享时</th>
+                <td>
+                    <input type="text" id="share_cancel" name="share_cancel" value="{$subject['share_cancel']}" class="span7" />
+                    <div class="help-block">用户取消分享时的提示语。</div>
+                </td>
+            </tr>
+            <tr>
+                <th>分享链接</th>
+                <td>
+                    <input type="text" id="share_url" name="share_url" value="{$subject['share_url']}" class="span7" />
+                    <div class="help-block">可以是一个引导关注的图文素材，例：<a href="http://mp.weixin.qq.com/s?__biz=MjM5ODU0NzQ0Mg==&mid=200074867&idx=1&sn=5a529a8cf2369731f535d5f3885d140e#rd" target="_black">点击查看</a></div>
+                </td>
+            </tr>
+		<tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">下一步</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+	</table>
+</form>
+<script type="text/javascript">
+    $("#dialect").blur(function(){
+        $('#share_title').val($(this).val());
+    });
+    $("#title").blur(function(){
+        $('#share_desc').val($(this).val());
+    });
+    $("#dialect").blur(function(){
+        $('#share_title').val($(this).val());
+    });
+</script>
+{template 'common/footer'}

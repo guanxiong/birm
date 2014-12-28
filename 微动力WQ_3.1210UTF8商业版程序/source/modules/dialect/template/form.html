@@ -1,0 +1,58 @@
+<div id="form" class="alert alert-block alert-new ">
+	<h4 class="alert-heading">选择要展示的内容</h4>
+	<table>
+		<tr>
+			<th>操作</th>
+			<td style="width:400px;">
+				<div class="reply-news-edit-button">
+					<button class="btn" style="width:100%;" type="button" onclick="$('#modal-module-menus').modal();">选择要展示的内容</button>
+				</div>
+			</td>
+		</tr>
+		<tr >
+			<th>地方话信息</th>
+			<td>
+				<div id="entry-preview" class="alert alert-info reply-news-list reply-news-list-first{if !$activity} hide{/if}" style="width:400px;">
+					<div class="reply-news-list-cover"><img src="{$activity['photo']}" alt=""></div>
+					<div class="reply-news-list-detail" style="width:388px;">
+						<div class="title">{$activity['title']}</div>
+						<div class="content">{$activity['smalltext']}</div>
+					</div>
+				</div>
+				<input type="hidden" name="activity" value="{$activity['id']}"/>
+			</td>
+		</tr>
+	</table>
+</div>
+<div id="modal-module-menus" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true" style=" width:600px;">
+	<div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3>选择要展示的项目</h3></div>
+	<div class="modal-body">
+		<table class="tb">
+			<tr>
+				<th><label for="">搜索关键字</label></th>
+				<td>
+					<div class="input-append" style="display:block;">
+						<input type="text" class="span3" name="keyword" value="" id="search-kwd" /><button type="button" class="btn" onclick="search_entries();">搜索</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div id="module-menus"></div>
+	</div>
+	<div class="modal-footer"><a href="#" class="btn" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+</div>
+<script type="text/javascript">
+	function search_entries() {
+		var kwd = $.trim($('#search-kwd').val());
+		$.post('{php echo $this->createWebUrl('query');}', {keyword: kwd}, function(dat){
+			$('#module-menus').html(dat);
+		});
+	}
+	function select_entry(o) {
+		$('#entry-preview img').attr('src', '{$_W['attachurl']}' + o.thumb);
+		$('#entry-preview .title').html(o.title);
+		$('#entry-preview .content').html(o.description);
+		$('#entry-preview').show();
+		$(':hidden[name="activity"]').val(o.mid);
+	}
+</script>

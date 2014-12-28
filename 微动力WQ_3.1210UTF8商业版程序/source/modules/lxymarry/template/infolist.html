@@ -1,0 +1,57 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+    			<li{if $_GPC['do'] == 'manager'} class="active"{/if}><a href="{php echo create_url('site/module/manager', array('name' => 'lxymarry'));}">喜帖管理</a>
+				<li{if $_GPC['do'] == 'infolist'} class="active"{/if}><a href="{php echo create_url('site/module/infolist', array('name' => 'lxymarry','sid'=>$sid));}">赴宴名单</a>
+                <li{if $_GPC['do'] == 'infobless'} class="active"{/if}><a href="{php echo create_url('site/module/infobless', array('name' => 'lxymarry','sid'=>$sid));}">收到祝福</a></li>
+
+        
+  </ul>
+	<div class="search">
+		<form action="site.php" method="get">
+		<input type="hidden" name="act" value="module" />
+		<input type="hidden" name="do" value="infolist" />
+		<input type="hidden" name="name" value="lxymarry" />
+		<input type="hidden" name="sid" value="{$sid}" />
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th width="150">姓名</th>
+					<td width="203">
+						<input class="span6" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+					</td>
+				</tr>
+				<tr class="search-submit">
+				   <td colspan="2"><button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button></td>
+				 </tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th width="200" style="width:200px;">姓名</th>
+					<th width="200" style="width:200px;"><span style="width:100px;">电话</span></th>
+					<th width="101" style="width:100px;">赴宴人数</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['name']}</td>
+					<td>{php echo $item['tel']}</td>
+					<td>{$item['rs']}</td>
+				</tr>
+				{/loop}
+			</tbody>
+			<tr>
+				<td colspan="6">
+					<input name="token" type="hidden" value="{$_W['token']}" /></td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</div>

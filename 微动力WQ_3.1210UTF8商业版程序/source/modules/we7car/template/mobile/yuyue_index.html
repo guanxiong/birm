@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="./source/modules/we7car/style/css/onlinebooking.css" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/we7car/style/css/datepicker.css" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/we7car/style/css/ui-1-1.css" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/we7car/style/css/common.css" media="all" />
+<script type="text/javascript" src="./source/modules/we7car/style/js/jQuery.js"></script>
+<script type="text/javascript" src="./source/modules/we7car/style/js/category.js"></script>
+<script type="text/javascript" src="./source/modules/we7car/style/js/jquery-ui.js"></script>
+<title>{$reply['title']}</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+        <!-- Mobile Devices Support @begin -->
+            <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+            <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+            <meta content="no-cache" http-equiv="pragma">
+            <meta content="0" http-equiv="expires">
+            <meta content="telephone=no, address=no" name="format-detection">
+            <meta content="width=device-width, initial-scale=1.0" name="viewport">
+            <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <!-- Mobile Devices Support @end -->
+        <style>
+            img{width:100%!important;}
+        </style>
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;" id="onlinebooking">
+		<div class="qiandaobanner"><img src="{$_W['attachurl']}{$reply['topbanner']}"></div>
+	<div class="cardexplain">
+	<!--普通用户登录时显示-->
+	<ul class="round">
+		<li>
+			<a href="{php echo create_url('mobile/module', array('do' => 'Yuyue','op' => 'mybook', 'name' => 'we7car', 'weid'=>$weid,'id' => $_GPC['id'],'from_user'=>$from_user))}"  ><span>我的{$reply['typename1']}<em class="ok">{$yuyuenum}</em></span></a>
+		</li>
+	</ul>
+	<!--后台可控制是否显示-->
+	<ul class="round">
+		<li>
+		<h2>{$reply['typename2']}</h2>
+		<div class="text">{$reply['description']}</div>
+		</li>
+	</ul>
+	<!--后台可控制是否显示-->
+	<ul class="round">
+		<li class="addr"><a href="http://api.map.baidu.com/marker?location={$reply['location_x']},{$reply['location_y']}&title={php echo urlencode('所在位置');}&content={php echo urlencode($reply['description']);}&output=html"><span>地址： {$reply['address']}</span></a></li>
+		<li class="tel"><a href="tel:{$reply['mobile']}"><span>{$reply['typename3']}：{$reply['mobile']}</span></a></li>
+	</ul>
+
+	<ul class="round roundyellow">
+		<li class="userinfo"><a><span>请正确填写预约表单资料</span></a></li>
+	</ul>
+
+	<!--粉丝填写过的信息的，直接就显示名字电话，粉丝没有填写过信息的话，这里就直接留空让粉丝填写-->
+	<ul class="round">
+		<form action="javascript:;" method="post">
+		<li class="title mb"><span class="none">请认真填写表单</span></li>
+		{if $reply['name_show'] == 1}
+		<li class="nob">
+			<table class="kuang" border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<th>联系人</th>
+					<td><input name="truename" class="px" id="truename" value="{$fans['nickname']}" placeholder="请输入您的真实姓名" type="text"></td>
+				</tr>
+			</table>
+		</li>
+		{/if}
+		{if $reply['tel_show'] == 1}
+		<li class="nob">
+			<table class="kuang" border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<th>联系电话</th>
+					<td><input name="tel" class="px" id="tel" value="{$fans['mobile']}" placeholder="请输入您的电话" type="tel"></td>
+				</tr>
+			</table>
+		</li>
+		{/if}
+		{if $reply['date_show'] == 1}
+		<li class="nob">
+			<table class="kuang" border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<th>预约日期</th>
+				<td>
+					<input type="text" class="px" name="dateline" id="dateline" readonly="readonly" value="" />
+				</td>
+				</tr>
+			</table>
+		</li>
+		{/if}
+		{if $reply['time_show'] == 1}
+		<li class="nob">
+			<table class="kuang" border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<th>预约时间</th>
+				<td>
+					<select name="timepart" id="timepart" class="dropdown-select">
+									<option value="0:00-1:00" selected>0:00-1:00</option>
+									<option value="1:00-2:00">1:00-2:00</option>
+									<option value="2:00-3:00">2:00-3:00</option>
+									<option value="3:00-4:00">3:00-4:00</option>
+									<option value="4:00-5:00">4:00-5:00</option>
+									<option value="5:00-6:00">5:00-6:00</option>
+									<option value="6:00-7:00">6:00-7:00</option>
+									<option value="7:00-8:00">7:00-8:00</option>
+									<option value="8:00-9:00">8:00-9:00</option>
+									<option value="9:00-10:00">9:00-10:00</option>
+									<option value="10:00-11:00">10:00-11:00</option>
+									<option value="11:00-12:00">11:00-12:00</option>
+									<option value="12:00-13:00">12:00-13:00</option>
+									<option value="13:00-14:00">13:00-14:00</option>
+									<option value="14:00-15:00">14:00-15:00</option>
+									<option value="15:00-16:00">15:00-16:00</option>
+									<option value="16:00-17:00">16:00-17:00</option>
+									<option value="17:00-18:00">17:00-18:00</option>
+									<option value="18:00-19:00">18:00-19:00</option>
+									<option value="19:00-20:00">19:00-20:00</option>
+									<option value="20:00-21:00">20:00-21:00</option>
+									<option value="21:00-22:00">21:00-22:00</option>
+									<option value="22:00-23:00">22:00-23:00</option>
+									<option value="23:00-24:00">23:00-24:00</option>
+					</select>
+				</td>
+				</tr>
+			</table>
+		</li>
+		{/if}
+		<li class="nob">
+			<table class="kuang" border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<th>车系</th>
+					<td><select name="field1" id="field1" class="download dropdown-select"  data-rule-required="true"></select></td>
+				</tr>
+			</table>
+		</li>
+		<li class="nob">
+			<table class="kuang" border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<th>车型</th>
+					<td><select name="field2" id="field2" class="download dropdown-select" data-rule-required="true"></select></td>
+				</tr>
+			</table>
+		</li>
+
+
+		{loop $trtxt $k $v}
+		<li class="nob">
+			<table class="kuang" border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<th>{$v['txt']}</th>
+					<td><input name="txt" class="single px"  placeholder="{$v['value']}" value="" type="text"></td>
+				</tr>
+			</table>
+		</li>
+		{/loop}
+
+		{loop $strtxt $k $v}
+		<li class="nob">
+			<table class="kuang" border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<th>{$v['select']}</th>
+				<td>
+					{php $tempArr=explode('|',$v['svalue']);}
+					<select name="" class="download dropdown-select">
+					{loop $tempArr $row}
+						<option value="{$row}">{$row}</option>
+					 {/loop}
+					</select>
+				</td>
+				</tr>
+			</table>
+		</li>
+		{/loop}
+
+		{if !empty($reply['datename'])}
+		<li class="nob">
+			<table class="kuang" border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<th class="thtop" valign="top">备注</th>
+					<td>
+						<textarea name="info" class="pxtextarea" style=" height:99px;overflow-y:visible" id="info" placeholder="请输入备注信息">{$fans['remark']}</textarea>
+
+					</td>
+				</tr>
+			</table>
+		</li>
+		{/if}
+		<input type="hidden" name="uid" id="uid" value="{$_GPC['from_user']}" />
+		<input type="hidden" name="rid" id="rid" value="{$_GPC['id']}" />
+		</form>
+	</ul>
+	<div class="footReturn">
+		<input id="showcard" class="submit" value="提交订单" type="button" >
+		<div class="window" id="windowcenter">
+			<div id="title" class="wtitle">操作提示<span class="close" id="alertclose"></span></div>
+			<div class="content">
+				<div id="txt"></div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+		new CS("field1", "field2", "", "", '{$cartype}');
+
+		$( "#dateline" ).datepicker({
+			minDate: new Date(),
+			dateFormat: "yy-mm-dd",
+			monthNames:  ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+			dayNamesMin  : ['日', '一', '二', '三', '四', '五', '六']
+		}).val((
+				function(d){
+					return [d.getFullYear(), d.getMonth()+1, d.getDate()].join("-");
+				}
+			)(new Date()));
+	$("#showcard").click(function () {
+		var ret_single = ret_download = tel_num = '';
+
+		if($("#field1").val()==0){
+			alert('请选车车系');
+			return false;
+		}
+		if($("#field2").val()==0){
+			alert('请选车车型');
+			return false;
+		}
+		$(".single").each(function(i){
+			var s_name = $(this).parent().siblings().text();
+			var s_value = $(this).val();
+			if('' != s_value) ret_single += '$'+s_name+'#'+s_value;
+		});
+
+		$(".download").each(function(i){
+			var s_name = $(this).parent().siblings().text();
+			var s_value = $(this).val();
+			if('' != s_value) ret_download += '$'+s_name+'#'+s_value;
+		});
+
+		tel_num = $("#tel").val();
+		if('undefined' !== typeof(tel_num)){
+			if(tel_num ==''){alert('电话不能为空');return;}
+			if(tel_num.length < 11){alert('请输入正确的电话');return;}
+		}
+
+		if($("#truename").val()==''){alert('名字不能为空');return;}
+//		if($("#dateline").val()==''){alert('请选择时间');return;}
+		var submitData = {
+			from_user: $("#uid").val(),
+			rid: $("#rid").val(),
+			contact: $("#truename").val(),
+			dateline: $("#dateline").val(),
+			timepart: $("#timepart").val(),
+			remark: $("#info").val(),
+			contacttel: $("#tel").val(),
+			fieldsigle:ret_single,
+			fielddownload:ret_download
+		};
+		if('fromUsername' == submitData.wechatid) submitData.wechatid = '';
+		// console.log(submitData);
+		$.post('{php echo create_url('mobile/module', array('do' => 'Yuyue','op'=>'ajax','name' => 'we7car','weid'=>$weid))}', submitData,
+			function(data) {
+				if (data.status==1) {
+					alert(data.msg);
+					var count = $(".ok").text();
+					count = 1+ parseInt(count);
+					$(".ok").text(count);
+				/*	setTimeout(function(){
+						jumpurl(data.url);
+					},1500);*/
+					return;
+				} else {
+					alert(data.msg);
+				}
+			},
+		"json")
+
+	});
+});
+
+
+$("#dateline").change(function () {
+	var submitData = {
+	wxname: "o5JGbjuFTr6lumWIyyW3yfP-G5m0",
+	dateline: $("#dateline").val(),
+	formhash: $("#formhash").val(),
+	action: "getcount"
+	};
+});
+
+
+
+$("#windowclosebutton").click(function () {
+$("#windowcenter").slideUp(500);
+
+});
+$("#alertclose").click(function () {
+$("#windowcenter").slideUp(500);
+
+});
+function jumpurl(url){
+	window.location.href = url;
+}
+function alert(title){
+
+$("#windowcenter").slideToggle("slow");
+$("#txt").html(title);
+//$("#windowcenter").hide("slow");
+setTimeout('$("#windowcenter").slideUp(500)',4000);
+}
+
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	window.shareData = {
+		"imgUrl": "{$_W['attachurl']}{$reply['thumb']}",
+		"timeLineLink": "{$reply['shareurl']}",
+		"sendFriendLink": "{$reply['shareurl']}",
+		"weiboLink": "{$reply['shareurl']}",
+		"tTitle": "{$reply['title']}",
+		"fTitle": "{$reply['title']}"
+	};
+	// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+		WeixinJSBridge.invoke('sendAppMessage', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.sendFriendLink,
+			"desc": window.shareData.fContent,
+			"title": window.shareData.fTitle
+		}, function (res) {
+			_report('send_msg', res.err_msg);
+		})
+	});
+
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function (argv) {
+		WeixinJSBridge.invoke('shareTimeline', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.timeLineLink,
+			"desc": window.shareData.tContent,
+			"title": window.shareData.tTitle
+		}, function (res) {
+			_report('timeline', res.err_msg);
+		});
+	});
+
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function (argv) {
+		WeixinJSBridge.invoke('shareWeibo', {
+			"content": window.shareData.wContent,
+			"url": window.shareData.weiboLink,
+		}, function (res) {
+			_report('weibo', res.err_msg);
+		});
+	});
+}, false)
+
+</script>
+<footer style="text-align:center; color:#ffd800;margin-right:20px;margin-top:0px;">
+<a>{$reply['copyright']}</a>
+</footer>
+</body>
+<div mark="stat_code" style="width:0px; height:0px; display:none;"></div>
+	</body>
+</html>

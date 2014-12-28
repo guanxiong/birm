@@ -1,0 +1,93 @@
+@charset "utf-8";
+
+body{margin:0;padding:0;background: #f6f6f6;}
+ul,li,dl,dt,dd{ margin:0px; padding:0px; list-style: none;}
+a{text-decoration:none;}
+a:link{}
+a:visited{}
+a:hover{text-decoration:underline;}
+a:active{}
+img{border:0;padding:0; margin:0;}
+p{padding:0; margin:0;}
+
+.red{
+    color: #be0000;
+}
+
+#header{
+    width: 100%; height: 65px; overflow: hidden; border-top: 5px solid #67ad03; background: #f3f3f3;
+     box-shadow: 0 2px 3px #ccc;
+}
+.main{
+    width: 960px; overflow: hidden; margin: 0 auto;
+}
+#logo{
+    width: 350px; height: 40px; overflow: hidden; float: left; _display: inline; margin-top: 12px;
+}
+
+
+#regmain{
+    width: 958px; overflow: hidden; background: #f3f3f3; border:1px solid #c6c6c6; margin: 0px auto; margin-top: 50px; background: #fbfbfb; border-radius:2px; box-shadow: 0px 2px 2px #ddd;
+}
+.regtitle{
+    width: auto; height: 60px; overflow: hidden; background: #efefef;
+    border-bottom: 1px solid #c6c6c6;
+}
+.nei{
+    width: 900px; overflow: hidden; margin: 0 auto;
+}
+.regtitle .nei .title{
+    width: auto; height: 30px; overflow: hidden; float: left;
+    font: bold 22px/30px "微软雅黑"; color: #333; margin-top: 18px;
+}
+.regtitle .nei .bak{
+    width: auto; height: 20px; overflow: hidden; float: right;
+    font: 12px/20px "微软雅黑"; color: #333; margin-top: 22px;
+}
+.regtitle .nei .bak a{
+    font: 12px/20px "微软雅黑"; color: #888;
+}
+.regtitle .nei .bak a:hover{
+    color: #333; text-decoration: none;
+}
+.regtext{
+    width: 900px;  min-height: 300px; overflow: hidden; margin: 20px auto;
+    font: 14px/24px "微软雅黑"; color: #333;
+}
+.regtext .inputbox{
+    width: 250px; height: 32px; overflow: hidden; border:1px solid #dbdbdb; background: #fff; border-radius:4px; margin-left: 10px;
+}
+.regtext tr td{
+    height: 50px;
+}
+.regtext .info{
+    margin: 0 4px; color: #be0000;
+}
+.regtext .inputbox input{
+    width: 230px; height: 28px; overflow: hidden; padding: 0px 10px; margin-top: 2px; margin: 0px; border: none; background: none;
+    font: 12px/28px "微软雅黑"; color: #333; color: #666;
+}
+
+.regend{
+    width: auto; height: 60px; overflow: hidden; background: #efefef;
+    border-top: 1px solid #c6c6c6;
+}
+.backbutton{
+    width: 100px; height: 30px; overflow: hidden; padding: 0px; margin: 0px; border: 1px solid #bbb; display: block; background: #e6e6e6; margin-top: 14px; margin-left: 200px;
+    font: bold 14px/28px "微软雅黑"; color: #666; text-align: center; box-shadow: 1px 2px 2px #e6e6e6;
+}
+.backbutton:hover{
+    color: #333; text-decoration: none; box-shadow: 1px 2px 2px #cecece;
+}
+
+
+
+#footer{
+    width: 100%; height: 50px; overflow: hidden; background: #666; margin-top: 20px; padding-top: 20px;
+}
+.footline{
+    width: auto; height: 24px; overflow: hidden; text-align: center; font: 14px/24px "微软雅黑"; color: #fff; 
+}
+.footline span,.footline a{
+    font: 14px/24px "微软雅黑"; color: #fff; margin: 0 14px;
+}

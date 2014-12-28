@@ -1,0 +1,34 @@
+百度云存储 PHP SDK 
+
+功能：
+	1. PHP SDK 是对百度云存储的HTTP API的封装，方便开发者使用；
+	2. 每个HTTP API封装成一个函数，方便开发者组装业务逻辑；
+	3. 封装百度云存储签名算法，降低开发难度；
+	4. 提供批量上传脚本，支持批量目录上传。
+
+使用要求：
+	cURL扩展：本SDK使用cURL以发送HTTP请求，请在PHP中安装cURL的支持，安装方式请百度搜索。
+
+使用手册：
+	http://dev.baidu.com/wiki/bcs/index.php?title=phpsdk
+
+代码组成：
+	bcs.class.php PHP SDK的实现类文件
+	conf.inc.php  配置文件
+	tool/		 工具目录，目前提供批量目录上传的工具
+	sample/	   代码示例，提供bcs.class.php的各个接口的使用方式。
+
+使用说明：
+	1. 引用PHP SDK 类文件
+		require_once  'bcs.class.php';
+	2. 初始化
+	   1). 方式一，配置文件
+	   conf.inc.php 配置云存储的 ak sk，ak&sk概念请访问http://dev.baidu.com/wiki/bcs/index.php?title=sign
+	   BCS_AK 配置ak
+	   BCS_AK 配置sk
+	   $baidu_bcs = new BaiduBCS();
+	   2). 方式二，通过BaiduBCS构造函数传入
+	   $baidu_bcs = new BaiduBCS($ak, $sk);
+
+联系方式：
+	bcs-api@baidu.com

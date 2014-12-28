@@ -1,0 +1,46 @@
+{template 'header'}
+{if $op == 'display'}
+<style type="text/css">
+.pagination ul li {float:left; display:block-inline;}
+.pagination{margin:3px 0 ;}
+</style>
+<table class="table">
+	<thead>
+		<tr>
+			<th>公告标题</th>
+			<th style="width:95px; text-align:right;">发布时间</th>
+		</tr>
+	</thead>
+	<tbody>
+	{if empty($list)}
+	<tr>
+		<td colspan="2">没有任何公告</td>
+	</tr>
+	{/if}
+	{loop $list $item}
+	<tr>
+		<td><a href="{php echo $this->createMobileUrl('announcement',array('id'=>$item['id'],'op'=>'detail'));}"><div class="width-auto">{php echo cutstr($item['title'], 15, true);}</div></a></td>
+		<td style="color:#888;">{php echo date('Y-m-d', $item[createtime]);}</td>
+	</tr>
+	{/loop}
+	</tbody>
+</table>
+	{if !empty($list)}
+	<div class="list img-rounded" style="padding-top: 0; padding-bottom: 0;">
+	{$pager}
+	</div>
+	{/if}
+{/if}
+{if $op == 'detail'}
+<div class="list img-rounded">
+	<div class="hd">
+		<span class="title">{php echo cutstr($item['title'], 20, true);}</span>
+		<span class="date">{php echo date('Y-m-d', $item[createtime]);}</span>
+	</div>
+	<div class="content">
+		{$item['content']}
+		<div class="author">{$item['author']}</div>
+	</div>
+</div>
+{/if}
+{template 'footer'}

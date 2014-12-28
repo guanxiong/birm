@@ -1,0 +1,36 @@
+<style type="text/css">
+@charset "utf-8";
+/*reset tag's default style*/
+a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,dialog,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,hr,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,meter,nav,object,ol,output,p,pre,progress,q,rp,rt,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video,xmp{border:0;margin:0;padding:0;font-size:100%}
+html,body{height:100%}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+b,strong{font-weight:bold}
+img{color:transparent;font-size:0;vertical-align:middle;-ms-interpolation-mode:bicubic}
+ol,ul{list-style:none}
+li{display:list-item}
+table{border-collapse:collapse;border-spacing:0}
+th,td,caption{font-weight:normal;vertical-align:top;text-align:left}
+q{quotes:none}
+q:before,q:after{content:'';content:none}
+sub,sup,small{font-size:75%}
+sub,sup{line-height:0;position:relative;vertical-align:baseline}
+sub{bottom:-0.25em}
+sup{top:-0.5em}
+svg{overflow:hidden}
+.form{margin:20px;}
+.form{margin:20px;padding:10px 20px;background-color:#eee;}
+.form .desc{padding:5px 0;border-top:solid 1px #fff;margin:10px auto auto auto;}
+.form .desc a{display:block;margin:auto 20px auto auto;cursor:default;}
+.form .desc a:hover{display:block;color:#000;}
+
+/*define text's default style*/
+body{font:13px/1.5 "Microsoft Yahei","微软雅黑",Tahoma,Arial,Helvetica,STHeiti;width:100%;background:#e0e1e2;color:#686868;overflow-y:scroll;}
+</style>
+<div class="column1 grid-10 alpha omega" style="font-size:14px;">
+	<div class="form">
+		<h6>{$result[title]}</h6>
+		<div class="desc">
+			{$result[content]}
+		</div>
+	</div>
+</div>

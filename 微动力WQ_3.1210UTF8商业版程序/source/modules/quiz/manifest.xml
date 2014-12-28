@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[随堂测验]]></name>
+		<identifie><![CDATA[quiz]]></identifie>
+		<version><![CDATA[0.1]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[随堂测验，实时反馈。]]></ability>
+		<description><![CDATA[随堂测验，实时反馈，支持单选、判断。]]></description>
+		<author><![CDATA[daduing]]></author>
+		<url><![CDATA[http://www.we7.cc]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_quiz` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `rid` int(11) NOT NULL,
+  `qid` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_quiz_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `fid` int(11) NOT NULL,
+  `last_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `chk_answer` varchar(10) NOT NULL COMMENT '所选的答案',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_quiz_question` (
+  `id` mediumint(7) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '题型',
+  `question` text NOT NULL COMMENT '题干',
+  `config` text NOT NULL COMMENT '备选答案',
+  `answer` text NOT NULL COMMENT '答案',
+  `remark` text NOT NULL COMMENT '答案解析',
+  PRIMARY KEY (`id`),
+  KEY `type` (`type`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+INSERT INTO `ims_quiz_question` (`id`, `type`, `question`, `config`, `answer`, `remark`) VALUES
+(1, 1, '数据库的特点包括( )。', '数据的结构化\r\n数据共享\r\n数据的独立性和可控冗余度\r\n以上都是    ', 'D', ''),
+(2, 1, '数据管理技术的发展经历了三个阶段，以下不属于这三个阶段的是( )。', '人工管理阶段\r\n数据库系统阶段\r\n文件系统阶段\r\n机器管理阶段', 'D', ''),
+(3, 1, '数据库应用系统是指( )支持下运行的计算机应用系统。', '数据库管理系统\r\n文件系统\r\n应用程序\r\n操作系统', 'A', '');]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

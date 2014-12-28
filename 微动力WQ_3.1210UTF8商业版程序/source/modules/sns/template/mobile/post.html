@@ -1,0 +1,165 @@
+{template 'header'}
+<title>${sns['title']}</title>
+<script language='javascript' src='./source/modules/sns/style/jquery.js'></script>
+ 
+<script language='javascript' src='./source/modules/sns/style/jquery.form.js'></script>
+<script language='javascript' src='./source/modules/sns/style/jquery.gcjs.js'></script>
+<script language='javascript' src='./source/modules/sns/style/sns.js'></script>
+
+<link href="./source/modules/sns/style/sns.css" rel="stylesheet" />
+<link href="./source/modules/sns/style/uploadify_t.css" rel="stylesheet" />
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<style>
+    body { background:#efefef;overflow:hidden;}
+</style>
+<form action='mobile.php' method='post' id='reply_form' enctype="multipart/form-data" style="padding:10px;">
+        <input type='hidden' name='act' value='module' />
+        <input type='hidden' name='name' value='sns' />
+        <input type='hidden' name='do' value='post' />
+        <input type='hidden' name='id' value='{$rid}' />
+        <input type='hidden' name='weid' value='{$_W['weid']}' />
+        <textarea id='reply_content' name='reply_content' style='width:100%;height:100px;resize:none' placeholder='说两句吧'></textarea>
+        <div style='margin-top:10px;height:35px;top:110px;'>
+        <div style='float:left;margin-left: 5px;;'>
+         <a id='picture' href='javascript:;'  style="color:#779ddc"><i class='icon-picture'></i> 图片</a>
+        <a id='icon' href='javascript:;' inputId='reply_content' style="color:#666"><i class='icon-github-alt'></i> 表情</a>
+        </div>
+        <div style='float:right;'>
+        <span id='reply_last' style='margin-right:5px;'></span>
+        
+        <input type='button' class='btn' id='reply_cancel' class='btn' value='取消' />
+        <input type='button' class='btn btn-success' id='reply_submit' style='color:#fff;margin-left:5px;' value='发帖' />
+        </div>
+        </div>
+        <div id="emotions" class="emotions" style='visibility: hidden' ></div>
+
+        <div id='pictures' class='pictures'>
+
+             <ul class="ipost-list ui-sortable" id="fileList">
+
+	          <li class="imgbox_add fileupload fileupload-new" data-provides="fileupload">
+              <a class="item_close" href="javascript:;" onclick="deletepic(this);" title="删除" style="display:none"></a>
+                 <div class="fileupload-preview thumbnail"></div>
+                 <span class="btn-file" style="margin-top:-70px;margin-left:8px;display:block;width:60px;height:60px;overflow: hidden"><span class="fileupload-new"  style="text-align: center;color:#aaa"><i class='icon-plus'></i></span>
+                 <input name="thumb[]"  type="file" onchange="addAfter($(this))" /></span>
+              </li>
+	</ul>     
+        </div>
+        </form>
+<script language='javascript'>
+    function addAfter(obj){
+        var html = '<li class="imgbox_add fileupload fileupload-new" data-provides="fileupload">';
+            html+='<a class="item_close" href="javascript:;" onclick="deletepic(this);" title="删除" style="display:none"></a>';
+            html+='<div class="fileupload-preview thumbnail"></div>';
+            html+=' <span class="btn-file" style="margin-top:-70px;margin-left:8px;display:block;width:60px;height:60px;overflow: hidden"><span class="fileupload-new"  style="text-align: center;color:#aaa"><i class="icon-plus"></i></span>';
+            html+='<input name="thumb[]"  type="file" onchange="addAfter($(this))" /></span>';
+            html+=' </li>';
+        obj.parent().parent().find('.item_close').show();
+        obj.parent().parent().parent().append( html );
+    }
+  function deletepic(obj){
+      $(obj).parent().remove();
+  }
+$(function() {
+	
+        emotions('reply_content');
+        
+        new Swipe($('#emotions')[0], {
+		speed:500,
+		auto:0,
+		callback: function(){
+			var lis = $(this.element).next("ol").children();
+			lis.removeClass("on").eq(this.index).addClass("on");
+		}
+       });
+       $("#emotions").hide();
+       
+                $("#icon").click(function(e){
+                    $("#icon").css("color","#779ddc");
+                    $("#picture").css("color","#666");
+                   $("#emotions").show();
+                   $("#pictures").hide();
+	});
+        $("#picture").click(function(e){
+            $("#picture").css("color","#779ddc");
+                    $("#icon").css("color","#666");
+                    $("#emotions").hide();
+       $("#pictures").show();
+	});
+        
+        $("#reply_form").ajaxForm();
+        $("#reply_content").limitLength(500,"reply_last");
+        $("#reply_cancel").click(function(){
+             history.go(-1);
+        });
+
+        $("#reply_submit").click(function(){
+
+             if($("#reply_content").isEmpty()){
+                alert("请输入内容!");
+                $("#reply_content").focus();
+                return;
+             }
+
+            tip("正在提交, 请稍后...",false);
+
+
+            $("#reply_form").ajaxSubmit({
+                   success:function(data){
+                   //alert(data);return false;
+                   data  =eval("(" + data +")");
+                   if(data.result==1){
+
+                       tip_close();
+                       tip(data.msg);   $("#reply_div_content").css("visibility","hidden");
+                       setTimeout(function(){
+                           var url  = "{php echo $this->createMobileUrl('index',array('name'=>'sns','id'=>$rid))}";
+                           location.href = url;
+
+                       },500);
+
+                   }
+                   else{
+                       tip(data.msg,false);
+                   }
+               }
+
+           });
+        });
+
+});
+
+    var lastid = "";
+    function reply(id,nickname){
+      
+        //$("#reply_div_content").show();
+        //$("#reply_div").show();
+        $("#reply_div_content").css("visibility","visible");
+        $("#reply_div").css("visibility","visible");
+        $("#emotions").css("visibility","visible");
+        $("#reply_postid").val(id);
+        $("#reply_content").attr("placeholder","回复: " + nickname);
+        if(lastid!=id){
+            $('#reply_content').val("");
+            $('#reply_last').html("140");
+        }
+        lastid = id;
+    }
+    function reply_close(){
+        $("#reply_div_content").css("visibility","hidden");
+        $("#reply_div").css("visibility","hidden");
+        $("#emotions").css("visibility","hidden");
+        $("#reply_div_content").css("height","135px");eopen =false;
+    }
+</script>
+   <div class="footermenu">
+        <div class="back"><a href="javascript:history.back()" style="display:block;text-decoration: none"><i class="icon-chevron-left"></i></a></div>
+         
+</div>
+    <script type="text/javascript">
+document.addEventListener("WeixinJSBridgeReady", function onBridgeReady() {
+WeixinJSBridge.call("hideToolbar");
+});
+</script>

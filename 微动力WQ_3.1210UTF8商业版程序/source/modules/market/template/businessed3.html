@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="{RES}css/bootstrap_min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/bootstrap_responsive_min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/style.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/todc_bootstrap.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/themes.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/inside.css" media="all" />
+<script type="text/javascript" src="{RES}src/jQuery.js"></script>
+<script type="text/javascript" src="{RES}src/bootstrap_min.js"></script>
+<script type="text/javascript" src="{RES}src/plugins/validation/jquery_validate_min.js"></script>
+<script type="text/javascript" src="{RES}src/jquery_ui_custom.js"></script>
+<script type="text/javascript" src="{RES}src/plugins/validation/jquery_validate_methods.js"></script>
+<script type="text/javascript" src="{RES}src/plugins/form/jquery_form_min.js"></script>
+<script type="text/javascript" src="{RES}src/plugins/jscolor/jscolor.js"></script>
+<script type="text/javascript" src="{RES}src/inside.js"></script>
+<script type="text/javascript" src="{RES}src/map.js"></script>
+<title>商户管理 微生活—by 微动力</title>
+    <!--[if lte IE 9]><script src="{RES}src/watermark.js"></script><![endif]-->
+	<!--[if IE 7]><link href="{RES}css/font_awesome_ie7.css" rel="stylesheet" /><![endif]-->
+</head>
+<body>
+<link type="text/css" rel="stylesheet" href="resource/script/kindeditor/themes/default/default.css" />
+<script type="text/javascript" src="resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="resource/script/kindeditor/lang/zh_CN.js"></script>
+    <style type="text/css">
+        .img-preview {
+            border: 1px solid #b8b8b8;
+            box-shadow: 0 2px 2px rgba(0,0,0,.1);
+            -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.1);
+            -moz-box-shadow: 0 2px 2px rgba(0,0,0,.1);
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            width: 350px;
+            float: left;
+        }
+
+            .img-preview .i-img {
+                padding: 10px;
+                max-height: 217px;
+            }
+
+            .img-preview .img-wrapper {
+                width: 330px;
+                height: 217px;
+                position: relative;
+            }
+
+            .img-preview .mc-name {
+                position: absolute;
+                top: 20px;
+                right: 10px;
+                text-shadow: 0 1px rgba(255, 255, 255, 0.2);
+                color: #000;
+            }
+
+            .img-preview .mc-number {
+                text-align: right;
+                color: #000;
+                text-shadow: 0 1px rgba(255, 255, 255, 0.2);
+                margin-top: -50px;
+                margin-right: 10px;
+                font-weight: bold;
+                font-size: 20px;
+            }
+
+                .img-preview .mc-number em {
+                    display: block;
+                    line-height: 13px;
+                    font-size: 10px;
+                    font-weight: normal;
+                    font-style: normal;
+                }
+
+            .img-preview ul {
+                width: 300px;
+            }
+
+            .img-preview .mc {
+                position: absolute;
+                max-width: 200px;
+                max-height: 150px;
+            }
+
+            .img-preview li a {
+                color: gray;
+            }
+
+                .img-preview li a:hover {
+                    background-color: #fff;
+                }
+
+        .listview {
+            -webkit-background-clip: padding;
+            background-clip: padding-box;
+            margin: 1em 0;
+            list-style: none;
+            padding: 0;
+            -moz-box-shadow: 0 1px 3px rgba(0,0,0,.2);
+            webkit-box-shadow: 0 1px 3px rgba(0,0,0,.2);
+            box-shadow: 0 1px 3px rgba(0,0,0,.2);
+            -webkit-border-radius: .6em;
+            border-radius: .6em;
+        }
+
+        .date {
+            width: 120px;
+        }
+
+        .modal .lt, .modal .c {
+            width: 300px;
+            height: 60px;
+        }
+
+        .modal form {
+            margin-left: -100px;
+        }
+
+        .modal h3 {
+            padding-left: 0;
+        }
+
+        .img-preview .nav-tabs {
+            margin-left: 25px;
+        }
+
+            .img-preview .nav-tabs li {
+                position: relative;
+            }
+
+            .img-preview .nav-tabs img {
+                position: absolute;
+                right: 10px;
+                bottom: 9px;
+                width: 18px;
+            }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $("#cname").change(function () {
+                $("div.mc-name").text($(this).val())
+            });
+            $("#cname_color").change(function () {
+                $("div.mc-name").css("color", $(this).val())
+            });
+            $("#numbercolor").change(function () {
+                $("div.mc-number").css("color", $(this).val())
+            });
+            $("#select_bg").change(function () {
+
+                var v = $(this).val();
+                if (v.length > 0) {
+                    $("img.i-img").attr("src", v)
+                    $("#card_bg").val(v);
+                }
+
+            });
+            $("div.mc-number").css("color", "");
+            $("div.mc-name").css("color", $('#cname_color').val());
+            $("#select_bg").val("");
+
+        });
+    </script>
+
+    <div id="main">
+        <div class="container-fluid">
+
+            <div class="row-fluid">
+
+                <div class="box">
+                    <div class="box-title">
+                        <div class="span10">
+                            <h3><i class="icon-edit"></i>添加商户</h3>
+                        </div>
+                        <div class="span2"><a class="btn" href="Javascript:window.history.go(-1)">返回</a></div>
+                    </div>
+
+                    <div class="box-content">
+                        <ul class="nav nav-tabs">
+						<li><a href="{php echo create_url('site/module/businessEd1', array('name' => 'market','classid'=>$row['classid'],'id'=>$row['id']));}">基础设置</a></li>
+						<li><a href="{php echo create_url('site/module/businessEd2', array('name' => 'market','classid'=>$row['classid'],'id'=>$row['id']));}">商户信息</a></li>
+                        <li  class="active"><a href="javascript:;">会员设置</a></li>
+                        <li><a href="{php echo create_url('site/module/businessEd4', array('name' => 'market','classid'=>$row['classid'],'id'=>$row['id']));}">优惠设置</a></li>
+                        </ul>
+                        <div class="tab-content">
+
+                           <form action="" method="post" class="form-horizontal form-validate" novalidate="novalidate">
+						   <input type="hidden" name="action" value="save" />
+								<input type="hidden" name="id" value="{$row['id']}" />
+                                <div class="img-preview">
+                                        <div class="img-wrapper">
+											<img class="i-img" src="{$row['background']}">
+                                            <img class="mc" style="left: 20px; top: 20px;" src="{$row['card_logo']}">
+                                            <div class="mc-name" {if !empty($row['color'])}style="color:{$row['color']}"{/if}>{if empty($row['card_name'])}公司名称{else}{$row['card_name']}{/if}</div>
+                                            <div class="mc-number" {if !empty($row['font_color'])}style="color:{$row['font_color']}"{/if}>
+                                            <em>会员卡号</em>88888
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="span5">
+                                        <div class="control-group">
+                                            <label class="control-label">会员卡名称</label>
+                                            <div class="controls inline">
+                                                <input type="text" name="card_name" value="{$row['card_name']}" id="cname" class="input-medium">
+                                            </div>
+
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">会员卡名称颜色</label>
+                                            <div class="controls inline">
+                                                <input type="text" name="color" id="cname_color" value="{$row['color']}" class="input-mini color">
+                                            </div>
+
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">会员卡的背景</label>
+                                            <div class="controls">
+                                                <select name="background" id="select_bg" class="input-large" style="width: 227px">
+                                                    <option selected="" value="{$row['background']}">请选择会员卡背景图</option>
+                                                    <option value="{RES}card/images/card_bg01.png">01 </option>
+                                                    <option value="{RES}card/images/card_bg02.png">02</option>
+                                                    <option value="{RES}card/images/card_bg03.png">03</option>
+                                                    <option value="{RES}card/images/card_bg04.png">04</option>
+                                                    <option value="{RES}card/images/card_bg05.png">05</option>
+                                                    <option value="{RES}card/images/card_bg06.png">06</option>
+                                                    <option value="{RES}card/images/card_bg07.png">07</option>
+                                                    <option value="{RES}card/images/card_bg08.png">08</option>
+                                                    <option value="{RES}card/images/card_bg09.png">09</option>
+                                                    <option value="{RES}card/images/card_bg10.png">10</option>
+                                                    <option value="{RES}card/images/card_bg11.png">11</option>
+                                                    <option value="{RES}card/images/card_bg12.png">12</option>
+                                                    <option value="{RES}card/images/card_bg13.png">13</option>
+                                                    <option value="{RES}card/images/card_bg14.png">14</option>
+                                                    <option value="{RES}card/images/card_bg15.png">15</option>
+                                                    <option value="{RES}card/images/card_bg16.png">16</option>
+                                                    <option value="{RES}card/images/card_bg17.png">17</option>
+                                                    <option value="{RES}card/images/card_bg18.png">18</option>
+                                                    <option value="{RES}card/images/card_bg19.png">19</option>
+                                                    <option value="{RES}card/images/card_bg20.png">20</option>
+                                                    <option value="{RES}card/images/card_bg21.png">21</option>
+                                                    <option value="{RES}card/images/card_bg22.png">22</option>
+                                                    <option value="{RES}card/images/card_bg23.png">23</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="control-group">
+                                            <label for="textfield" class="control-label">
+                                                自己设计背景
+                                            </label>
+                                            <div class="controls">
+                                                <div class="input-append">
+                                                    <input type="text" name="bgcustom" readonly id="card_bg" value="{$row['bgcustom']}"  class="input-large">
+                                                    <button type="button" class="btn insertimage" rel="i-img">选择背景</button>
+                                                </div>
+                                                <span class="help-block">建议尺寸：534像素 * 318像素</span>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label for="textfield" class="control-label">
+                                                	会员卡的图标
+                                            </label>
+                                            <div class="controls">
+                                             	<div class="input-append">
+													{if !empty($row['card_logo'])}<img class="thumb_img" src="{$row['card_logo']}" style="max-height: 100px;">{/if}
+			                                        <input class="input-xlarge {if !empty($row['card_logo'])}hide{/if}" type="text" id="card_logo" value="{$row['card_logo']}" readonly="" name="card_logo" />
+			                                        <span class="help-inline">
+			                                            <button class="btn select_img" type="button">选择logo</button>
+			                                        </span>
+			                                        <span class="help-inline">建议尺寸：宽300像素，高300像素</span>
+			                                    </div>
+                                                <!--
+                                                  	{if !empty($row['card_logo'])}<img class="thumb_img" src="{$row['card_logo']}" style="max-height: 100px;">{/if}
+                                        			<input class="input-xlarge {if !empty($row['card_logo'])}hide{/if}" type="text" id="card_logo" value="{$row['card_logo']}" readonly="" name="card_logo" />
+                                                    <button type="button" class="btn select_img" rel="mc">选择LOGO</button>
+                                                </div>
+                                                <span class="help-block">建议尺寸：152像素 * 70像素 透明图片</span>
+                                            -->
+                                           </div>
+                                            
+                                            <script type="text/javascript">
+											KindEditor.ready(function (K) {
+											    var editor = K.editor({
+											        themeType: "simple",
+											        allowFileManager: true,
+													uploadJson : "./index.php?act=attachment&do=upload",
+													fileManagerJson:"./index.php?act=attachment&do=manager",	
+											    }); 
+											    $('button.select_img').live("click",function (e) {
+											        editor.loadPlugin('image', function () {
+											            editor.plugin.imageDialog({
+											                imageUrl: $(e.target).parent().prevAll("input[type=text]").val(),
+											                clickFn: function (url, title, width, height, border, align) {
+											                    var $input = $(e.target).parent().prevAll("input[type=text]")
+											                    $input.val(url)
+											                    $input.hide();
+											                    var t_img = $(e.target).parent().prevAll(".thumb_img:first");
+											                    if (t_img.length == 0) {
+											                        var tmp = '<img class="thumb_img" src="{0}" style="max-height: 100px;">';
+											                        $input.before(tmp.format(url))
+											                    } else {
+											                        t_img.attr("src", url);
+											                    }
+											
+											                    editor.hideDialog();
+											                }
+											            });
+											        });
+											    });
+											});	
+											</script>
+                                        </div>
+                                        <div class="control-group">
+                                            <label for="textfield" class="control-label">
+                                                卡号文字颜色
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" name="font_color" value="{$row['font_color']}" id="numbercolor"   class="input-mini color">
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label for="textfield" class="control-label">
+                                                会员卡说明
+                                            </label>
+                                            <div class="controls">
+                                                <textarea name="info" rows="5" id="Textarea2" class="input-xxlarge" data-rule-maxlength="150">{$row['info']}</textarea>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="control-group">
+                                            
+                                            <div class="controls">
+                                                <button type="submit" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+                                                <button type="button" class="btn" onclick="Javascript:window.history.go(-1)">取消</button>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+                                </form>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

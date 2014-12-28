@@ -1,0 +1,118 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('content', array('op' => 'post', 'reid' => $reid));}">添加记录</a></li>
+	<li {if $operation == 'batch'}class="active"{/if}><a href="{php echo $this->createWebUrl('content', array('op' => 'batch', 'reid' => $reid));}">批量添加</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('content', array('op' => 'display', 'reid' => $reid));}">管理记录</a></li>
+	{if $search['isresearch']}<li {if $do == 'research'}class="active"{/if}><a href="{php echo $this->createWebUrl('research', array('reid' => $reid));}">管理预约</a></li>{/if}
+	<li ><a href="{php echo $this->createWebUrl('struct', array('op' => 'display'));}">返回</a></li>
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data" onsubmit="return formcheck(this)">
+		<input type="hidden" name="id" value="{$id}" />
+		<h4>添加数据</h4>
+		<table class="tb">
+			{loop $search['fields'] $row}
+			<tr>
+				<th><label for="">{$row['title']}{if $row['required']} <span title="必填项" class="text-error">*</span>{/if}</label></th>
+				<td>
+					{php echo $this->formatForm($row, $row['search'] || $row['variable'] == 'title' ? $data[$row['variable']] : $data['data'][$row['variable']])}
+					{if $row['description']}<span class="help-block">{$row['description']}</span>{/if}
+				</td>
+			</tr>
+			{/loop}
+			<tr>
+				<th></th>
+				<td colspan="7">
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	function formcheck(form) {
+		{loop $search['fields'] $item}
+		{if $item['required']}
+			if (!form['field[{$item['id']}]'].value) {
+				message('请输入{$item['title']}项!');
+				return false;
+			}
+		{/if}
+		{/loop}
+		return true;
+	}
+//-->
+</script>
+{elseif $operation == 'display'}
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					{loop $search['fields'] $field}
+					{if $field['search']}
+					<th>{$field['title']}</th>
+					{/if}
+					{/loop}
+					<th style="width:200px;">创建时间</th>
+					<th style="min-width:160px; text-align:right;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					{loop $search['fields'] $field}
+					{if $field['search']}
+					<td>{$item[$field['variable']]}</td>
+					{/if}
+					{/loop}
+					<td>{php echo date('Y-m-d H:i:s', $item['createtime'])}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('content', array('op' => 'post', 'id' => $item['id'], 'reid' => $item['reid']))}" class="btn btn-small" title="编辑"><i class="icon-edit"></i></a>
+						<a onclick="return confirm('删除操作不可恢复，确认吗？');return false;" href="{php echo $this->createWebUrl('content', array('op' => 'delete', 'id' => $item['id'], 'reid' => $item['reid']))}" class="btn btn-small" title="删除"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+	{$pager}
+</div>
+{elseif $operation == 'batch'}
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$id}" />
+		<h4>添加数据</h4>
+		<table class="tb">
+			<tr>
+				<th></th>
+				<td>
+					<a href="{php echo $this->createWebUrl('content', array('op' => 'downexcel', 'reid' => $reid))}">下载批量添加excel文件</a>
+				</td>
+			</tr>
+			<tr>
+				<th>批量导入</th>
+				<td>
+					<div class="fileupload fileupload-new" data-provides="fileupload">
+						<div>
+							<span class="btn btn-file"><span class="fileupload-new">选择导入的文件</span><span class="fileupload-exists">更改</span><input name="file" type="file" /></span>
+						</div>
+					</div>
+					<div class="help-block">批量导入数据前请先下载“批量添加excel文件”添充数据后，上传即可。</div>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td colspan="7">
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{/if}
+{template 'common/footer'}

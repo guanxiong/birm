@@ -1,0 +1,95 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li><a href="{php echo $this->createWebUrl('manage');}">地方话管理</a></li>
+        <li{if $_GPC['op'] == ''} class="active"{/if}><a href="{php echo $this->createWebUrl('scoretext',array('id'=>$_GPC['id']));}">评分规则</a></li>
+    </ul>
+    <div class="alert alert-error" style="margin:15px 30px;">
+        评分规则由最低分依次往上对应一条内容，具体请查看 <a href="#" onclick="scoretxtCase();">查看示例</a>
+    </div>
+    <form class="form-horizontal form" action="" method="post" onsubmit="return formcheck(this)">
+        <input name="weid" type="hidden" value="{$_W['weid']}">
+        <input type="hidden" name="id" value="{$_GPC['id']}" />
+        <div style="padding:15px;">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                    <tr>
+                        <th class="row-hover span3">评分</th>
+                        <th class="row-hover span7">内容</th>
+                        <th class="row-hover span2">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="case" style="display:none;">
+                    <tr class="error">
+                        <td><textarea class="span5">甲：小妹儿，瓷马不？乙：不瓷，不瓷。问：甲的职业是？</textarea></td>
+                        <td class="row-hover span2">操作</td>
+                        <td>这是一条示例 <a href="javascript:;" onclick="$(this).parent().parent().parent().hide();" class="btn btn-small" title="删除此条目"><i class="icon-remove"></i></a></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody id="db-items">
+                    {loop $list['score'] $key $row}
+                    <tr> 
+                        <td>大于等于 <input type="text" class="input-small" name="add[score][]" value="{$row}" /> 分</td></td>
+                        <td><textarea class="span7" name="add[scoretext][]" rows="3">{$list['scoretext'][$key]}"</textarea></td>
+                        <td >
+                            <a href="javascript:;" onclick="$(this).parent().parent().remove();" class="btn btn-small" title="删除此条目"><i class="icon-remove"></i></a>
+                        </td>
+                    </tr>
+                    {/loop}
+                </tbody>
+                <tbody id="status-items"></tbody>
+                <tr>
+                    <td colspan="3">
+                        <a href="javascript:;" onclick="addStatusItem()" class="btn btn-link"><i class="icon-plus-sign-alt"></i> 添加新问题</a>
+                    </td>
+                </tr>
+            </table>
+            <table class="tb">
+                <tr>
+                    <td colspan="3">
+                        <button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    var _TextArray = new Array();
+        _TextArray[0] = '0::::::哇哦！能考出如此惊天地、泣鬼神的分数，可见本人是多么的不一般。“24K的黄金西昌话纯白痴”这个称号非你莫属了。';
+        _TextArray[1] = '10::::::恭喜您荣获“2014年最烂西昌话奖”！没事儿来西昌打打酱油，逛逛湿地公园，拉个妹子或者帅哥聊聊天提升一下西昌话水平吧！';
+        _TextArray[2] = '50::::::您已获得西昌话金种子称号！什么时候您能用西昌话骂街呢？哦， 成都人非常友善，好安逸~ 慢生活的节奏，会让你的心灵极大的放松！去趟青城山吧，葱葱郁郁中，悠闲漫步中，西昌话的精髓会慢慢浸透你全身！转发朋友圈，今年必大发！';
+        _TextArray[3] = '60::::::您已获得牵手西昌妹子/帅哥的特权！请抓紧时间，见机行事！在这个点上的朋友，可以去西昌选个茶馆，搓个麻将，优哉游哉中，小赢一把！再吃五次成都火锅，你的西昌话战斗力，绝对会火辣无比，战斗力十足！转发朋友圈，今年必大发！';
+        _TextArray[4] = '80::::::您已获得西昌话先锋组组长资格！西昌话，你居家旅行，升官发财，发家致富，打情骂俏之必备利器！学好西昌话，走起夜路都不怕！建议你去趟武侯祠，历史遗迹中，寻找点西昌的点点细节，你的西昌话水平会稳步进入满分状态！转发朋友圈，今年必大发！';
+        _TextArray[5] = '80::::::这个分数线上的朋友，你是西昌人民的骄傲！如此流利的西昌话，看出了您对西昌和西昌人民的深厚情感，美丽的小春城——西昌 离不开您！';
+        _TextArray[6] = '90::::::动词哒词！王、吐、水、佛！抗母昂北鼻！你是我滴小呀小苹果~，这么纯正的西昌话赶紧来挨倒西昌的小伙伴们一此嗨此来偶！';
+
+    function scoretxtCase(){
+        $('#db-items>tr').remove();
+        // if($('#db-items>tr').length==0){
+            for (var i = 0; i < _TextArray.length; i++) {
+                var text = _TextArray[i];
+                var att = text.split('::::::');
+                addStatusItem(att[0],att[1]);
+            };
+        // }
+    }
+    
+    function drop_confirm(msg, url){
+        if(confirm(msg)){
+            window.location = url;
+        }
+    }
+    function addStatusItem(score,txt) {
+        var html = '' +
+                '<tr>' +
+                    '<td>大于等于 <input type="text" class="input-small" name="add[score][]" value="'+score+'" /> 分</td>' +
+                    '<td><textarea class="span7" name="add[scoretext][]" rows="3">'+txt+'</textarea></td>' +
+                    '<td><a href="javascript:;" onclick="$(this).parent().parent().remove();" class="btn btn-small" title="删除此条目"><i class="icon-remove"></i></a></td>' +
+                '</tr>';
+        $('#status-items').append(html);
+    }
+</script>
+{template 'common/footer'}

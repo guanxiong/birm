@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[微场景高级版]]></name>
+		<identifie><![CDATA[izclightbox]]></identifie>
+		<version><![CDATA[0.3]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[商业信息华丽展示]]></ability>
+		<description><![CDATA[商业信息华丽展示]]></description>
+		<author><![CDATA[微动力科技]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+           <entry title="场景菜单" do="manager"/>
+           <entry title="帮助文档" do="helper"/>
+  		</menu>	
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_izclightbox_items` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `boxid` int(10) unsigned NOT NULL,
+  `attachment` varchar(300) NOT NULL DEFAULT '',
+  `index` int(10) unsigned NOT NULL DEFAULT '0',
+  `video` varchar(300) NOT NULL DEFAULT '',
+  `video_thumb` varchar(300)  NOT NULL DEFAULT '',
+  `lng` double unsigned NOT NULL DEFAULT '0',
+  `lat` double unsigned NOT NULL DEFAULT '0',
+  `address` varchar(300) NOT NULL DEFAULT '',
+  `tel` varchar(50) NOT NULL DEFAULT '',
+  `wechat` varchar(300) NOT NULL DEFAULT '',
+  `map_thumb` varchar(300) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_izclightbox_list` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL DEFAULT '',
+  `cover` varchar(300) NOT NULL,
+  `cover_title` varchar(50) NOT NULL,
+  `thumb` varchar(300) NOT NULL,
+  `music` varchar(300) NOT NULL,
+  `share_title` varchar(200) NOT NULL DEFAULT '',
+  `share_thumb` varchar(300) NOT NULL DEFAULT '',
+  `share_cover` varchar(300) NOT NULL DEFAULT '',
+  `share_url` varchar(300) NOT NULL DEFAULT '',
+  `share_txt` varchar(500) NOT NULL DEFAULT '',
+  `share_button` varchar(300) NOT NULL,
+  `share_tips` varchar(300) NOT NULL,
+  `reply_title` varchar(50) NOT NULL,
+  `reply_thumb` varchar(300) NOT NULL,
+  `reply_description` varchar(1000) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_izclightbox_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0',
+  `list_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_rid` (`rid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_izclightbox_reply`;
+    DROP TABLE IF EXISTS `ims_izclightbox_list`;
+	DROP TABLE IF EXISTS `ims_izclightbox_items`;
+    ]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

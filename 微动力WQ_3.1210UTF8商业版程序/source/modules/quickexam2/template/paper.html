@@ -1,0 +1,205 @@
+{template 'common/header'}
+<link type="text/css" rel="stylesheet" href="./source/modules/quickexam2/style/base.css" />
+
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post' && empty($paper)}class="active"{/if}><a href="{php echo $this->createWebUrl('Paper', array('op' => 'post'));}">新建试卷</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('Paper', array('op' => 'display'));}">管理试卷</a></li>
+	{if !empty($paper)}<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('Paper', array('op' => 'post', 'paper_id' => $paper['paper_id']));}">修改试卷</a></li>{/if}
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" onsubmit="return check(this)" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="paper_id" value="{$paper['paper_id']}" />
+		<h4>新建试卷</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">试卷名称</label></th>
+				<td>
+					<input type="text" name="title" class="span5" value="{$paper['title']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">发出试卷最大份数</label></th>
+				<td>
+					<input type="text" name="max_user_cnt" class="span5" value="{$paper['max_user_cnt']}" />
+					<span class="help-block">当回收到的有效试卷份数达到该上限时，不再接受提交新的试卷</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">每个用户最多可重复回答次数</label></th>
+				<td>
+					<input type="text" name="max_participate_cnt" class="span5" value="{$paper['max_participate_cnt']}" placeholder="1" />
+					<span class="help-block">本试卷每个用户最多可参与次数。一般均为1</span>
+				</td>
+			</tr>
+
+			<tr>
+				<th><label for="">试卷封面</label></th>
+				<td>
+					{php echo tpl_form_field_image('logo', $paper['logo']);}
+					<span class="help-block"></span>
+				</td>
+			</tr>
+
+			<tr>
+				<th>试卷说明</th>
+				<td>
+					<textarea style="height:100px; width:100%;" class="span7 richtext-clone" name="explain" cols="70">{$paper['explain']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">分数线</label></th>
+				<td>
+					<input type="text" name="redirect_cond" class="span5" value="{$paper['redirect_cond']}" placeholder="85" />
+					<span class="help-block">100分制，需达到该分数后用户方有资格获得积分或抽奖。0表示所有用户均有资格获得积分或抽奖</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">及格奖励积分</label></th>
+				<td>
+					<input type="text" name="credit_award" class="span5" value="{$paper['credit_award']}" placeholder="80" />
+					<span class="help-block">完成本试卷后用户将获得积分奖励，0表示不奖励积分</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">及格时的奖励提示</label></th>
+				<td>
+					<textarea style="height:100px; width:100%;" class="span7 richtext-clone" name="redirect_msg" cols="70" placeholder="恭喜答题通过，获得80个积分奖励" >{$paper['redirect_msg']}</textarea>
+					<!--input type="text" name="redirect_msg" class="span5" value="{$paper['redirect_msg']}" placeholder="恭喜答题通过，获得80个积分奖励" /-->
+					<span class="help-block">获奖后给用户的提示</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">下一步动作</label></th>
+				<td>
+					<input type="text" name="redirect_url" class="span5" value="{$paper['redirect_url']}" placeholder="80" />
+					<span class="help-block">完成本卷考试后的下一步动作</span>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>选题</th>
+				<td>
+<div class="main">
+	<div style="padding:15px 0px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="max-width:3px">操作</th>
+					<th style="max-width:3px;">顺序</th>
+					<th style="max-width:3px;">题号</th>
+					<th style="min-width:600px">题干</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $choice_list $item}
+				<tr>
+					<td>
+						{if in_array($item['choice_id'], $choice_ids) }
+						<input type="checkbox" name="choice_id[{$item['choice_id']}]" checked />
+						{else}
+						<input type="checkbox" name="choice_id[{$item['choice_id']}]" />
+						{/if}
+					</td>
+					<td>
+						{if empty( $choice_ids_seq[$item['choice_id']] )}
+						<input type="text" style="width:40px" name="choice_ids_seq[{$item['choice_id']}]" value="0" />
+						{else}
+						<input type="text" style="width:40px" name="choice_ids_seq[{$item['choice_id']}]" value="{$choice_ids_seq[$item['choice_id']]}" />
+						{/if}
+					</td>
+					<td>{$item['choice_id']}</td>
+					<td>{$item['title']}</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+				</td>
+			</tr>
+			
+{if count($choice_list) <= 0}
+			<tr>
+			<th></th>
+			<td>
+				<p class="red">
+				<span class="label label-warning">提示</span>
+				尚未录入任何题目。录入题目请使用“ 题库管理”
+				。不过，您可先保存本试卷，稍后再增加新题。
+				</p>
+			</td>
+			</tr>
+{/if}
+			<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="保存" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	kindeditor($('.richtext-clone'));
+//-->
+</script>
+ 
+<script type="text/javascript">
+	function check(form) {
+
+		if (!form['title'].value) {
+			alert('请输入试卷名称！');
+			return false;
+		}
+
+		if (!form['max_user_cnt'].value) {
+			alert('请输入试卷份数！');
+			return false;
+		}
+
+		if (!form['max_participate_cnt'].value) {
+			alert('请输入每个用户最多能回答本卷多少次，建议值为1！');
+			return false;
+		}
+
+		return true;
+	}
+</script>
+ 
+{elseif $operation == 'display'}
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="max-width:10px;">卷号</th>
+					<th style="min-width:200px">卷题</th>
+					<!--th style="min-width:20">完成度</th-->
+					<th style="text-align:right; min-width:60px;">导出/预览/编辑/删除</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $paper_list $item}
+				<tr>
+					<td>{$item['paper_id']}</td>
+					<td><a href="{php echo $this->CreateMobileUrl('paper', array('paper_id' => $item['paper_id'], 'op' => 'display', 'preview'=> 1))}" title="预览试卷">{$item['title']}</a></td>
+					<!--td>{$item['done']} / {$item['max_user_cnt']}</td-->
+					<td style="text-align:right;">
+						<a href="{php echo $this->CreateWebUrl('PaperExport', array('paper_id' => $item['paper_id'], 'op' => 'export', 'preview'=> 1))}" title="导出" class="btn btn-small" target="_blank"><i class="icon-cloud-download"></i></a>
+						<a href="{php echo $this->CreateMobileUrl('paper', array('paper_id' => $item['paper_id'], 'op' => 'display', 'preview'=> 1))}" title="预览" class="btn btn-small"><i class="icon-eye-open"></i></a>
+						<a href="{php echo $this->CreateWebUrl('Paper', array('paper_id' => $item['paper_id'], 'op' => 'post'))}" title="编辑" class="btn btn-small"><i class="icon-edit"></i></a>
+						<a href="{php echo $this->CreateWebUrl('Paper', array('paper_id' => $item['paper_id'], 'op' => 'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除" class="btn btn-small"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+{/if}
+{template 'common/footer'}

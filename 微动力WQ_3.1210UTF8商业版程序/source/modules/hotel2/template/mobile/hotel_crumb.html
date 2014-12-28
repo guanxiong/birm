@@ -1,0 +1,27 @@
+{loop $list $row}
+<ul class="hot_list_tab" onClick="location.href='{php echo $this->createMobileUrl('detail', array('hid' => $row['id']))}'" hotelid="374783" data-full="0">
+    <li class="hot_img">
+        <img width="67px" height="50px" src="{php echo img_url($row['thumb'])}">
+    </li>
+
+    <li class="hot_hotel">
+        <p class="name">{$row['title']}</p>
+        <!--<p class="data size12"><strong class="size16">4.5</strong>分</p>-->
+        <br>
+        <p>
+            {php echo $this->_hotel_level_config[$row['level']]}
+        </p>
+        <p class="placeholders"></p>
+    </li>
+
+    <li class="hot_price">
+        <dfn>¥</dfn><strong>{$row['m_price']}</strong><span class="txt_gray">起</span>
+
+        <!--<p class="hot_ico">-->
+        <!--<em>促</em>-->
+        <!--<em>礼</em>-->
+        <!--<i class="mobile">手机专享</i>-->
+        <!--</p>-->
+    </li>
+</ul>
+{/loop}

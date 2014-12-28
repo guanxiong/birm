@@ -1,0 +1,51 @@
+{template 'common/header'}
+<style>
+.prizestat td{ text-align: left; }
+</style>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('site/module', array('do' => 'slotmanage', 'name' => 'slotmac'));}">活动列表</a></li>
+	<li><a href="{php echo create_url('site/module', array('do' => 'slotedit', 'name' => 'slotmac'));}">管理活动</a></li>
+</ul>
+<div class="main">
+	<form action="" method="post" onsubmit="">
+		<div class="sub-content">
+			<table class="table table-hover2">
+				<thead class="navbar-inner">
+					<tr>
+						<th style="width:40px;" class="row-first">选择</th>
+						<th style="width:100px;">用户昵称</th>
+						<th style="width:100px;">用户手机</th>
+						<th style="width:50px;">领取状态</th>
+						<th style="width:100px;">所中奖项</th>
+						<th style="width:150px;">中奖时间</th>
+						<th style="width:110px;">操作</th>
+					</tr>
+				</thead>
+				<tbody class="prizelist">
+					{loop $reclist $row}
+					<tr>
+						<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+						<td>{$row['un']}</td>
+						<td>{$row['tel']}</td>
+						<td style="font-size:12px; color:#666;">
+							{if $row['iscom'] == '1'}已领取{else if $row['stat'] == '0'}未领取{else} 未知{/if}
+						</td>
+						<td>{if $row['jx'] == 1}一等奖{else if $row['jx'] == 2}二等奖{else}三等奖{/if}</td>
+						<td>{$row['jtime']}</td>
+						<td>
+							{if $row['iscom'] == 0}
+							<a href="{php echo create_url('site/module', array('do' => 'slotprizechk', 'name' => 'slotmac', 'id' => $row['id']))}">
+							领取</a>
+							{else}已领取
+							{/if}
+						</td>
+					</tr>
+					{/loop}
+				</tbody>
+			</table>
+		</div>
+	</form>
+	{$pager}
+</div>
+
+{template 'common/footer'}

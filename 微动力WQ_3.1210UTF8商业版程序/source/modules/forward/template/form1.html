@@ -1,0 +1,85 @@
+﻿<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加转发有礼活动</h4>
+	<table>
+		<tbody>
+			<tr>
+				<th>活动名称</th>
+				<td><input type="text" value="{$reply['title']}" class="span7" name="title"></td>
+			</tr>
+			<tr>
+				<th>活动图片</th>
+				<td>
+                <div id="" class="uneditable-input reply-edit-cover" style="height:300px;">
+						<div class="detail">
+							<span class="pull-right">大图片建议尺寸：700像素 * 300像素</span>
+							<input type="button" id="bigpan-picture" fieldname="picture" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+							<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'bigpan-picture-value','upload-file-view')" style="{if empty($reply['picture'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+						</div>
+						{if !empty($reply)}
+						<input type="hidden" name="picture-old" value="{$reply['picture']}">
+						<div id="upload-file-view" class="upload-view">
+							<img width="100" src="{$_W['attachurl']}{$reply['picture']}">&nbsp;&nbsp;						</div>
+						{else}
+						<div id="upload-file-view"></div>
+						{/if}					</div>				</td>
+			</tr>
+                    <tr>
+						<th>活动结束时间</th>
+						<td>
+							<input type="text" class="mh_date span5" readonly="true" name="end" value="{if $reply['end']} {php echo date('Y-m-d', $reply['end'])}{else}{php echo date('Y-m-d', $nowtime)}{/if}" />
+							<div class="help-block">请选活动结束时间</div>						</td>
+					</tr>
+            <tr>
+				<th>活动简介</th>
+				<td>
+					<textarea style="height:150px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于图文显示的简介</div>				</td>
+			</tr>
+			<tr>
+				<th>活动规则</th>
+				<td>
+					<textarea id="rule" style="height:150px;" name="rule" class="span7" cols="60">{$reply['rule']}</textarea>
+					<div class="help-block">活动的相关说明和活动奖品介绍。</div>				</td>
+			</tr>
+			<tr>
+				<th>专题页URL</th>
+				<td><input type="text" value="{$reply['url']}" class="span7" name="url">
+				<div class="help-block">链接请加http://。</div>	
+				</td>
+			</tr>
+				</tbody>
+			</table>
+</div>
+<link type="text/css" rel="stylesheet" href="./source/modules/forward/template/css/manhuaDate.1.0.css" />
+
+<script type="text/javascript" src="./source/modules/forward/template/js/manhuaDate.1.0.js"></script>
+<script type="text/javascript">
+kindeditor($('#rule'));
+kindeditorUploadBtn($('#bigpan-picture'));
+$(function (){
+	$("input.mh_date").manhuaDate({					       
+		Event : "click",//可选				       
+		Left : 0,//弹出时间停靠的左边位置
+		Top : -16,//弹出时间停靠的顶部边位置
+		fuhao : "-",//日期连接符默认为-
+		isTime : false,//是否开启时间值默认为false
+		beginY : 2014,//年份的开始默认为1949
+		endY :2017//年份的结束默认为2049
+	});
+	
+});
+function doDeleteItemImage(obj, id,upload_file_view) {
+	var filename = $(obj).parent().parent().find('#' + id).val();
+	ajaxopen('./index.php?act=attachment&do=delete&filename=' + filename, function(){
+		$(obj).parent().parent().find('#'+upload_file_view).html('');
+	});
+	return false;
+}
+</script>     
+            
+            
+            
+            
+			

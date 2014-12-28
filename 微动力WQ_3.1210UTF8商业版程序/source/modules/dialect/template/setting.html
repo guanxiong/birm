@@ -1,0 +1,44 @@
+{template 'common/header'}
+<div class="main">
+    <form action="" method="post" class="form-horizontal form">
+        <h4>地方话相关设置</h4>
+        <table class="tb">
+            <tr>
+                <th>底部广告图片</th>
+                <td>
+                    {php echo tpl_form_field_image('thumb', $settings['thumb'])}
+                    <span class="help-block"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>广告链接</th>
+                <td>
+                    <input type="text" id="thumb_url-name" class="span5" placeholder="" name="thumb_url" value="{$settings['thumb_url']}">
+                </td>
+            </tr>
+            <tr>
+                <th>开发者凭据</th>
+                <td>
+                    <input type="text" class="input-medium" placeholder="Appid" name="account[key]" value="{$settings[account][key]}">
+                    <input type="text" class="input-xlarge" placeholder="AppSecret" name="account[secret]" value="{$settings[account][secret]}">
+                    <span class="help-block">如果不想使用{$_W[setting][copyright][sitename]}的授权，请填写自己的开发者凭据。</span>
+                </td>
+            </tr>
+            <tr>
+                <th>分享链接</th>
+                <td>
+                    <label class="radio inline"><input type="radio" name="share_type" value="0" {if $settings['share_type']==0}checked="checked"{/if}> 分享测试链接</label>
+                    <label class="radio inline"><input type="radio" name="share_type" value="1" {if $settings['share_type']==1}checked="checked"{/if}> 分享指定链接</label>
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{template 'common/footer'}

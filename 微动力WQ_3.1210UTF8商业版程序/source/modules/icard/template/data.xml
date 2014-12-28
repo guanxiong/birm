@@ -1,0 +1,14 @@
+<chart yAxisName='销售个数' caption='2012年年度销售情况统计分析' useRoundEdges='1' bgColor='FFFFFF,FFFFFF' showBorder='0'>  
+    <set label='一月' value='25000'  />   
+    <set label='二月' value='35000' />   
+    <set label='三月' value='42300' />   
+    <set label='四月' value='35300' />   
+    <set label='五月' value='31300' />  
+    <set label='六月' value='25000'  />   
+    <set label='七月' value='35000' />   
+    <set label='八月' value='42300' />   
+    <set label='九月' value='35300' />   
+    <set label='10月' value='31300' />  
+    <set label='11月' value='25000'  />   
+    <set label='12月' value='35000' />   
+</chart>  

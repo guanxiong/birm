@@ -1,0 +1,44 @@
+{template 'header'}
+<link type="text/css" rel="stylesheet" href="./source/modules/{$modulename}/style/base.css" />
+<link type="text/css" rel="stylesheet" href="./source/modules/{$modulename}/style/style.css?v=200" />
+<script type="text/javascript" src="./source/modules/{$modulename}/script/script.js"></script>
+<title>我的答题本</title>
+<section class="canvas">
+		<section class="card">
+            <section class="title">
+			<aside>我的答题本</aside>
+			</section>
+        </section>
+
+
+		{loop $mypaper_list $mypaper}
+		{php $paper = $paper_list[$mypaper['paper_id']] }
+		<a href='{php echo $this->createMobileUrl("paper", array("paper_id"=>$paper["paper_id"], "from_user"=> $_W['fans']['from_user'], "preview" => true, "record_id" => $mypaper['record_id']))}'>
+		<section class="card">
+			<section class="title">
+			<p>{$paper['title']}</p>
+			</section>
+			<section class="logo">
+			<p><img src='{php echo $paper['logo']}' /></p>
+			</section>
+			<section class="info">
+				<p>答题时间: {php echo date('Y-m-d H:i', $mypaper['createtime'])}</p>
+				<p>本卷得分: {$mypaper['usermark']}分</p>
+			</section>
+			<!--section class="info">
+				<p>{$paper['explain']}</p>
+			</section-->	
+			{if strlen($mypaper['comment']) > 0}
+			<section class="info">
+				<p>名师点评: {$mypaper['comment']}</p>
+			</section>	
+			{/if}
+			<hr>
+			<section class="func">
+				<p style="font-weight:bold">查看点评解析</p>
+			</section>
+		</section>
+		</a>
+		{/loop}
+</section>
+{template 'footer'}

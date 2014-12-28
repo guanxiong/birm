@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>团购首页</title>
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link href="/source/modules/groupon/style/css/main.css" rel="stylesheet" />
+    <link href="/source/modules/groupon/style/css/dialog.css" rel="stylesheet" />
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+});
+</script>
+
+    <script src="/source/modules/groupon/style/js/jquery.min.js"></script>
+    <script src="/source/modules/groupon/style/js/swipe.js"></script>
+    <script src="/source/modules/groupon/style/js/dialog_min.js"></script>
+    <script src="/source/modules/groupon/style/js/global.js"></script>
+</head>
+<body onselectstart="return true;" ondragstart="return false;" class="gbuy_order gbuy_check">
+
+<div>
+
+    <div id="container" class="container animate">
+        <header></header>
+        <div class="body">
+            <ul class="ul_order">
+                <header>
+                    <h3>{$groupon['title']}</h3>
+                </header>
+                <section>
+                    <li class="tbox">
+                        <div>
+                            <label>数量：</label>
+                        </div>
+
+                        <div>
+                            <label>{$num}</label>
+                        </div>
+                    </li>
+
+                    <li class="tbox" style="border:0;">
+                        <div>
+                            <label><span>总价：</span></label>
+                        </div>
+                        <div>
+                            <label><span>￥{php echo $groupon['price']*$num}</span></label>
+                        </div>
+                    </li>
+                </section>
+                <section>
+					
+                    <li class="tbox">
+                        <div>
+                            <label><small>选择支付方式</small></label>
+                        </div>
+                    </li>
+					{if $payset['payset1']==1}
+                    <ol class="payType tbox" data-value="1">
+                        <div>
+                            <label>余额付款</label>
+                        </div>
+                    </ol>
+					{/if}
+					{if $payset['payset2']==1}
+                    <ol class="payType tbox checked " data-value="2">
+                        <div>
+                            <label>在线支付</label>
+                        </div>
+                    </ol>
+					{/if}
+					{if $payset['payset3']==1}
+                    <ol class="payType tbox " data-value="3">
+                        <div>
+                            <label>货到付款</label>
+                        </div>
+                    </ol>
+					{/if}					
+                </section>
+            </ul>
+        </div>
+        <footer>
+            <section class="header_nav">
+                <ul class="tbox">
+                    <li><a href="javascript:history.go(-1);" class="icons icons_back">&nbsp;</a></li>
+                    <li><a href="javascript:getPayUrl();" class="btn">确认订单</a></li>
+                </ul>
+            </section>
+        </footer>
+    </div>
+</div>
+<script>
+function getPayUrl() {
+	if($(".checked").length==0){
+		wlalert('请先选择支付方式');
+	}else{
+		$.ajax({
+				url: "{php echo $this->createMobileUrl('wldopay', array('tid' => $_GET['tid'],'num'=>$num));}&paytype="+$(".checked").attr('data-value'),
+				type:"get",
+				dataType:"JSON",
+				success: function(res){
+					if(res.errno==0){
+						location.href= res.url;
+					}else{
+						console.log(res.error);
+					}
+					//
+				}
+			});
+	}
+}
+$(".payType").click(function() {
+	$(".payType").removeClass('checked');
+	$(this).addClass('checked');
+});
+function wlalert(msg){
+  var d = new iDialog();
+	d.open({
+		classList: "waiting",
+		title:"提示",
+		close:"<span class='close'>×</span>",
+		content:'<p class="article">'+msg+'</p>',
+		btns:[
+			{id:"", name:"确认", onclick:"fn.call();", fn: function(self){
+				self.die();
+			}}
+		]
+	});
+}
+</script>
+</body>
+</html>

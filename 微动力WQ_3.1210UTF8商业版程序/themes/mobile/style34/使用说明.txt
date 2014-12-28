@@ -1,0 +1,12 @@
+themes/web/default/site/style.html
+
+第59行后插入
+
+
+			<tr>
+				<th>商家联系电话</th>
+				<td>
+					<input name="style[indextel]" type="text" class="span4"  value="{$styles['indextel']['content']}">
+					<span class="help-block">商家联系电话 用户一键拨号</span>
+				</td>
+			</tr>

@@ -1,0 +1,76 @@
+{template 'common/header'}
+
+{template 'common'}
+
+<div class="main">
+    <div class="stat" style='padding:0'>
+        <div class="stat-div">
+            <div class="navbar navbar-static-top">
+                <div class="navbar-inner">
+                    <span class="brand">粉丝列表</span>
+                   
+                </div>
+            </div>
+            </div>
+    </div>
+              <form action="" method="post" onsubmit="">
+                    <div style='padding:5px;'>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>用户<i></i></th>
+                                    
+                                    <th>帖子数<i></i></th>
+                                    <th>精华数<i></i></th>
+                                    <th>回复数<i></i></th>
+                                    
+                                    <th>最后回帖时间<i></i></th>
+                                    <th>操作</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {loop $list $row}
+                                <tr>
+                                    <td  style="padding-left:0">    
+                                      
+        
+                                        <a href="{php echo create_url('site/module/profile',array('name'=>'fans','from_user'=>$row['from_user']));}">  
+                                            <img src="{php echo img_url($row['avatar'])}" width="20" height="20" style="padding:1px;border:1px solid #ccc;" />
+                                            {$row['nickname']}</a>   {if $row['isadmin']==1}
+                                         <span class="label label-red">版主</span>
+	{/if}
+                                    </td>
+                                    <td style=''>{$row['postcount']}</td>
+                                    <td>{$row['jhpostcount']}</td>
+                                    <td>{$row['replycount']}</td>
+                                    <td>
+                                        {php echo date('Y-m-d H:i:s', $row['last_posttime']);}
+                                    </td>
+                                    <td>
+                                                    {if $row['isadmin']==0}
+	<a class="btn" title="设置版主" href="{php echo create_url('site/module', array('do' => 'setadmin', 'name' => 'sns','id'=>$row['id'],'rid'=>$rid,'admin'=>1))}"><i class="icon-user"></i></a>                                       
+	{elseif $row['isadmin']==1}
+	<a class="btn" title="取消版主" href="{php echo create_url('site/module', array('do' => 'setadmin', 'name' => 'sns','id'=>$row['id'],'rid'=>$rid,'admin'=>0))}"><i class="icon-user" style='color:red'></i></a>                                       														
+	{/if}
+                                    </td>
+                                </tr>
+                                {/loop}
+                            </tbody>
+                        </table>
+                        <table class="table">
+                            <tr>
+                                <td style="width:40px;" class="row-first"></td>
+                                <td colspan="4">
+                                    <input type="hidden" name="token" value="{$_W['token']}" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>  {$pager}
+        
+    </div>
+</div>
+
+
+{template 'common/footer'}

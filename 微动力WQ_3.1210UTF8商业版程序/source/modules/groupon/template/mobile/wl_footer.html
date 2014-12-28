@@ -1,0 +1,38 @@
+<footer>
+    <section class="nav_footer">
+        <ul class="box">
+            <li>
+                <a href="{php echo $this->createMobileUrl('wlindex');}" {if empty($_GPC['do'])||$_GPC['do']=='wlindex'||$_GPC['do']=='wldetail'}class="on"{/if}>
+                    <span class="nav_tg">&nbsp;</span>
+                    <label>团 购</label>
+                </a>
+            </li>
+            <li>
+                <a href="{php echo $this->createMobileUrl('wleticket');}" {if $_GPC['do']=='wleticket'}class="on"{/if}>
+                    <span class="nav_tgq">&nbsp;</span>
+                    <label>团购券</label>
+                </a>
+            </li>
+            <li>
+                <a href="{php echo $this->createMobileUrl('wlorder',array('status'=>1));}" {if $_GPC['do']=='wlorder'}class="on"{/if}>
+                    <span class="nav_dd">&nbsp;</span>
+                    <label>订 单</label>
+                </a>
+            </li>
+            <!--
+            <li>
+                <a href="javascript:;" class="">
+                    <span class="nav_shc">&nbsp;</span>
+                    <label>收 藏</label>
+                </a>
+            </li>
+            -->
+<!--            <li>-->
+<!--                <a href="/tg/goods/index/pid/--><!--/bid/--><!--/wechatid/--><!--/" class="--><!--">-->
+<!--                    <span class="nav_shzh">&nbsp;</span>-->
+<!--                    <label>设 置</label>-->
+<!--                </a>-->
+<!--            </li>-->
+        </ul>
+    </section>
+</footer>

@@ -1,0 +1,77 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+	<li class="active"><a href="#">帮助</a></li>
+</ul>
+<div class="main">
+	<div style="padding:15px;">
+		<h3 class="title">操作步骤</h3>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="max-width:10px;">步骤</th>
+					<th style="min-width:200px">说明</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>第一步：新建问题</td>
+					<td>在"题库管理"中录入试卷题目。<a href="{php echo $this->createWebUrl('choice')}">前往&gt;&gt;</a></td>
+				</tr>
+				<tr>
+					<td>第二步：组建试卷</td>
+					<td>在"试卷管理"菜单下建立试卷，选择第一步中录入的题目。 <a href="{php echo $this->createWebUrl('Paper')}">前往&gt;&gt;</a><td>
+				</tr>
+				<tr>
+					<td>第三步：发布试卷</td>
+					<td>在"关键字触发列表"菜单下建立关键字，每个关键字可对应一份试卷。 <a href="{php echo create_url('rule/display', array('module'=>'quickexam2'))}">前往&gt;&gt;</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3 class="title">FAQ</h3>
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<td>问：支持多选吗？</td>
+				</tr>
+				<tr>
+					<td>答：支持。如果是多选题，可在题干中注明以提示用户。</td>
+				</tr>
+				<tr class="success">
+					<td>问：用户获得的积分可用于<a href="http://bbs.we7.cc/thread-2335-1-1.html" target="_blank" title="前往下载积分兑换模块">"积分兑换"</a>模块兑换奖品吗？</td>
+				</tr>
+				<tr>
+					<td>答：可以</td>
+				</tr>			
+				<tr>
+					<td>问："新建题目"中，没有标准答案的题目，如何设置答案？</td>
+				</tr>
+				<tr>
+					<td>答：对于没有标准答案的问题，将答案总是设置为A即可。</td>
+				</tr>
+				<tr>
+					<td>问："新建试卷"中，没有标准答案的试卷如何设置及格分？</td>
+				</tr>
+				<tr>
+					<td>答：可以将及格分设置成0，凡是回答了问题的用户均可获得奖励积分。</td>
+				</tr>
+				<tr>
+					<td>问：能增加一级导航，让用户看到所有试卷吗？</td>
+				</tr>
+				<tr>
+					<td>答：支持。请在"试卷中心"增加一条规则即可。</td>
+				</tr>
+				{if $_W['isfounder']}
+				<tr>
+					<td>问：我还有其他问题，怎么办?</td>
+				</tr>
+				<tr>
+					<td>答：问题咨询请<a href="http://bbs.we7.cc/thread-2521-1-1.html" target="_blank">在论坛跟帖提问</a>；模块定制，请使用论坛上公布的QQ联系作者【微动力】</td>
+				</tr>
+				{/if}
+			</tbody>
+		</table>
+	</div>
+</div>
+{template 'common/footer'}

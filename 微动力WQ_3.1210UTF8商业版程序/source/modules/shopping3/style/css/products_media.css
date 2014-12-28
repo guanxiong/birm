@@ -1,0 +1,12 @@
+@media all and (min-width:360px){
+	#products .list-1 .item ul .img{height:163px;}/*360×0.98÷2×0.94-2=167.344*/
+}
+@media all and (min-width:420px){
+	#products .list-1 .item ul .img{height:191px;}
+}
+@media all and (min-width:480px){
+	#products .list-1 .item ul .img{height:219px;}
+}
+@media all and (min-width:640px){
+	#products .list-1 .item ul .img{height:294px;}
+}

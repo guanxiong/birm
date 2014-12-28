@@ -1,0 +1,47 @@
+{if empty($footer_off)}
+    <div id="footer">
+        <p>{if $_W['account']['siteinfo']['footer']}{php echo htmlspecialchars_decode($_W['account']['siteinfo']['footer'])}{else}&copy;{$_W['account']['name']}{/if}</p>
+    </div>
+{/if}
+{if empty($stat_off)}
+    <div class="hide">{$_W['setting']['copyright']['statcode']}</div>
+{/if}
+<?php
+    $_share = array();
+    $_share['title'] = (empty($title)) ? $_W['account']['name'] : $title;
+    $_share['link'] = 'http://'.$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '&wxref=mp.weixin.qq.com';
+    $_share['img'] = $_share_img?$_share_img.'?imageView/1/w/200/h/200/q/95':$_W['siteroot'] . 'source/modules/' . $_GPC['name'] . '/icon.png';
+    $_share['content'] = preg_replace('/\s/i', '', str_replace('  ', '', cutstr(str_replace('&nbsp;', '', ihtmlspecialchars(strip_tags($_share_content))), 60)));
+?>
+{if empty($share_off)}
+    <script type="text/javascript">
+        var wxData = {
+            "appId": "",
+            "imgUrl" : '{$_share['img']}',
+            "link" : '{$_share['link']}',
+            "desc" : '{$_share['content']}',
+            "title" : "{$_share['title']}"
+        };
+        require(['WeixinApi'], function(){
+            WeixinApi.ready(function(Api) {
+                Api.shareToFriend(wxData);
+                Api.shareToTimeline(wxData);
+                Api.shareToWeibo(wxData);
+            });
+        });
+    </script>
+{/if}
+    <script type="text/javascript">
+        document.onclick = function (e){
+            e = window.event || e;
+            var srcElement = e.srcElement || e.target;
+            if (srcElement.tagName == 'A' || srcElement.tagName == 'H5') {
+                document.getElementById('loading').style.display = "block";
+            }
+        }
+        window.onload=function(){
+            document.getElementById('loading').style.display = "none";
+        }
+    </script>
+</body>
+</html>

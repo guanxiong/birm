@@ -1,0 +1,47 @@
+{template 'header'}
+	<link type="text/css" rel="stylesheet" href="./source/modules/quickexam2/style/base.css" />
+	<link type="text/css" rel="stylesheet" href="./source/modules/quickexam2/style/style.css?v=200" />
+	<script type="text/javascript" src="./source/modules/quickexam2/script/script.js?v=200"></script>
+	<script type="text/javascript" src="./source/modules/quickexam2/script/URI.js"></script>
+	<style>
+		body{background-color:rgb(240,240,240);}
+		.card .tips {margin:30px 15px;}
+		.card .tips * {text-align:center;margin:0 auto;}
+        .card {
+			position:absolute;  
+			top:50%;            
+			left:50%; 
+			margin:-100px 0 0 -150px;     
+			width:300px;                             
+			height:200px;                           
+			z-index:99;                           
+		}
+		.card .button {
+			position: absolute;
+			bottom: 5%;
+		}
+	</style>
+	<!--content-->
+	<div id="mcover">	
+		<div class="card">
+			<section class="tips">
+			<p>{$msg}</p>
+			<p>{php echo htmlspecialchars_decode($paper['redirect_msg'])}</p>
+			</section>
+			<section class="button">
+			{if !empty($paper['redirect_url']) }
+			<a href="{php echo $paper['redirect_url']}">
+			<span>下一步</span>
+			</a>
+			{else}
+			<a href="{php echo $this->createMobileUrl('MyPaper');}"> 
+			<span>去答题本看解析</span>
+			</a>
+			<span>去答题本看解析</span>
+			{/if}
+			</section>
+		</div>
+	</div>
+
+{php $footer_off=true;}
+{template 'footer'}

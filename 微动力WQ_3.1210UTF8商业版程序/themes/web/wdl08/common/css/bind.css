@@ -1,0 +1,569 @@
+
+html, body {
+    height: 100%;
+}
+body {
+    background: url("../images/body_bg.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #676867;
+    font-family: ΢���ź�,����,Arial,sans-serif;
+    overflow: hidden;
+}
+body, h1, h2, h3, h4, h5, h6, ul, li, a {
+    margin: 0;
+    padding: 0;
+}
+select{
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif
+	font-size: 100%;
+	font-weight: normal;
+    vertical-align: middle;
+    margin: 0;
+	padding: 4px 6px;
+	width: 220px;
+	height: 30px;
+    line-height: 30px;
+    display: inline-block;
+	color: #555555;
+	cursor: pointer;
+    outline: medium none;
+    resize: none;
+    border: 1px solid #c7c7c7;
+}
+#account_form input.area{
+    width: 216px;
+}
+.ui-shadow {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+    border-top-left-radius: 15px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+    border-top-right-radius: 15px;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+    border-bottom-left-radius: 15px;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+    border-bottom-right-radius: 15px;
+}
+.preload {
+    position: absolute;
+}
+input, textarea {
+    color: #808080;
+}
+textarea {
+    overflow: auto;
+}
+#wrapper {
+    height: 540px;
+    position: absolute;
+    width: 980px;
+}
+#wrapper .toolbar {
+    bottom: -15px;
+    color: #FFFFFF;
+    font-family: ΢���ź�;
+    font-size: 30px;
+    font-weight: bold;
+    height: 50px;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+}
+#wrapper .toolbar {
+    text-align: right;
+}
+#wrapper .toolbar a {
+    background: url("../images/btnStyle.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 40px;
+    width: 90px;
+}
+#wrapper .toolbar .prev-step {
+    background-position: 0 -60px;
+}
+#wrapper .toolbar .next-step {
+    background-position: 90px -60px;
+}
+#wrapper .huaer {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+}
+#wrapper .done {
+    padding-top: 150px;
+    text-align: center;
+}
+#wrapper .done a {
+    background-color: #FFFFFF;
+    display: inline-block;
+    height: 52px;
+    left: 414px;
+    opacity: 0;
+    position: absolute;
+    top: 237px;
+    width: 136px;
+}
+.main {
+    border: 1px solid #BEBEBE;
+    height: 498px;
+    position: absolute;
+    width: 100%;
+}
+.main .header {
+    background: url("../images/box_header_bg.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    border-bottom: 1px solid #CCCCCC;
+    color: #5AA700;
+    font-weight: bold;
+    height: 89px;
+    line-height: 76px;
+    padding-left: 30px;
+}
+.main .header h1 {
+    background: url("../images/bind_header.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 100%;
+}
+.main .header .indicator {
+    background: url("../images/step_indicator.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 50px;
+    left: 100px;
+    position: relative;
+    top: -20px;
+    width: 718px;
+    z-index: 10;
+}
+.main .header .indicator_step2 {
+    background-position: 0 -82px;
+}
+.main .header .indicator_step3 {
+    background-position: 0 -164px;
+}
+.main .content {
+    background: url("../images/box_content_bg.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    height: 408px;
+}
+.right {
+    display: inline-block;
+}
+.left {
+    border-right: 1px solid #D9D9D9;
+    float: left;
+    height: 408px;
+    line-height: 28px;
+    text-indent: 2em;
+    width: 337px;
+}
+.left .login-desc {
+    color: #666666;
+    margin: 0 auto;
+    padding-top: 80px;
+    width: 250px;
+}
+.left .login-desc .mind-info {
+    color: #008000;
+    font-weight: bold;
+}
+.left .process .top {
+    color: #333333;
+    height: 110px;
+    margin-top: 20px;
+}
+.left .process .handler {
+    background: url("../images/handler.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    height: 100%;
+    width: 0;
+}
+.left .process .do {
+    color: #676767;
+    font-size: 14px;
+    padding-right: 30px;
+    text-align: right;
+}
+.left .process ul {
+    list-style: none outside none;
+}
+.left .process .progress {
+    background-color: #F5F9FA;
+    border: 1px solid #C3CDCF;
+    height: 30px;
+    margin: 0 auto;
+    width: 270px;
+}
+.left .process li {
+    border-top: 1px solid #D9D9D9;
+    height: 66px;
+}
+.left .process li span {
+    display: inline-block;
+}
+.left .process li .check-box {
+    background: url("../images/action.png") no-repeat scroll 0 -215px rgba(0, 0, 0, 0);
+    height: 18px;
+    width: 18px;
+}
+.left .process li .icon {
+    height: 40px;
+    margin-left: 10px;
+    position: relative;
+    top: 10px;
+    width: 40px;
+}
+.left .process li .info {
+    text-indent: 0;
+}
+.left .rebind {
+    text-align: center;
+}
+.left .rebind img {
+    margin-top: 100px;
+}
+.left .rebind .rebind-btn {
+    background: url("../images/action.png") no-repeat scroll 0 -58px rgba(0, 0, 0, 0);
+    bottom: 60px;
+    cursor: pointer;
+    display: block;
+    height: 46px;
+    left: 30px;
+    position: absolute;
+    text-indent: -9999px;
+    width: 274px;
+}
+.right {
+    height: 100%;
+    width: 640px;
+}
+.right .slider {
+    height: 100%;
+}
+.right .bind-validate {
+    color: #333333;
+}
+.right .bind-validate span {
+    color: #FF0000;
+}
+.right .bind-validate div {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 120px auto 0;
+    width: 420px;
+}
+.right .bind-validate .count-back {
+    bottom: 70px;
+    position: absolute;
+    right: 320px;
+}
+.right .bind-validate .counter {
+    color: #FF0000;
+    font-size: 16px;
+    font-weight: bold;
+}
+.right .done-btn {
+    background: url("../images/action.png") no-repeat scroll 0 -120px rgba(0, 0, 0, 0);
+    bottom: 60px;
+    cursor: pointer;
+    display: block;
+    height: 44px;
+    position: absolute;
+    right: 30px;
+    text-indent: -9999px;
+    width: 274px;
+}
+.right .done-disabled {
+    background-position: -294px -120px;
+}
+.step1 {
+    background: url("../images/action.png") no-repeat scroll 0 -242px rgba(0, 0, 0, 0);
+}
+.step2 {
+    background: url("../images/action.png") no-repeat scroll 0 -305px rgba(0, 0, 0, 0);
+}
+.step3 {
+    background: url("../images/action.png") no-repeat scroll 0 -370px rgba(0, 0, 0, 0);
+}
+.step4 {
+    background: url("../images/action.png") no-repeat scroll 0 -440px rgba(0, 0, 0, 0);
+}
+.left .process .percent {
+    color: #FF0000;
+}
+.left .process li .finish {
+}
+.error {
+    border: 2px solid #FF0000;
+}
+#login_form {
+    color: #333333;
+    margin-left: 100px;
+}
+#login_form #upgrade_btn{
+    background: url("../images/action.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 0 none;
+    cursor: pointer;
+    height: 44px;
+    width: 210px;
+}
+#login_form #upgrade_btn.disabled {
+    background-position: -222px 0;
+}
+#login_form .account-tip {
+    color: #808080;
+    font-size: 14px;
+}
+#login_form .text-col {
+    padding-right: 20px;
+    text-align: right;
+}
+#login_form td {
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+#login_form input {
+    border: 1px solid #C7C7C7;
+    height: 32px;
+    line-height: 32px;
+    padding-top: 4px;
+    width: 311px;
+}
+#login_form .error-text {
+    color: #FF0000;
+}
+#login_form .error {
+    border: 2px solid #FF0000;
+}
+#login_form #imgcode {
+    position: relative;
+    top: -15px;
+    width: 90px;
+}
+#login_form #submit_wait {
+    margin-top: 13px;
+    vertical-align: top;
+}
+.direct-text {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    left: 20px;
+    position: absolute;
+    top: 20px;
+}
+.tip1 {
+    height: 200px;
+    left: 220px;
+    position: absolute;
+    top: 100px;
+    width: 540px;
+}
+.tip1 #pre_1, .tip1 #pre_2 {
+    height: 180px;
+    position: absolute;
+    top: 0;
+    width: 520px;
+}
+.tip1 #pre_2, .tip2 #text_3, .tip2 #text_4, #text_5 {
+    opacity: 0;
+}
+.tip1 .progress {
+    background: url("../images/tip_progress_bg1.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    height: 5px;
+    margin-top: 180px;
+    width: 520px;
+}
+.tip1 .progress .loader {
+    background: url("../images/tip_progress_loader1.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    height: 100%;
+    position: absolute;
+    width: 0;
+}
+.tip1 .progress .circle {
+    background: url("../images/tip_process_circle1.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 12px;
+    margin-top: -3px;
+    position: absolute;
+    width: 12px;
+}
+.tip1 .progress .p {
+    color: #E1E1E1;
+    margin-top: 8px;
+    position: absolute;
+}
+.tip2 {
+    color: #FFFFFF;
+    font-family: "微软雅黑",Arial,"宋体";
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 100px;
+}
+.tip2 #pre_3, .tip2 #pre_4 {
+    left: 120px;
+    opacity: 0;
+    position: absolute;
+}
+.tip2 #text_3 {
+    left: 240px;
+    position: absolute;
+    top: 400px;
+    width: 520px;
+}
+.tip2 #text_4 {
+    left: 240px;
+    position: absolute;
+    top: 380px;
+    width: 560px;
+}
+#text_5 {
+    color: #FFFFFF;
+    font-family: ΢���ź�;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    text-align: center;
+}
+.audiojs {
+    left: -1000px;
+    position: absolute;
+    top: -1000px;
+}
+.error-text {
+    color: #FF0000;
+}
+#account_form, #bind_form {
+}
+#account_form .desc, #bind_form .desc {
+    font-weight: bold;
+}
+#account_form {
+    padding-top: 60px;
+}
+#bind_form {
+    padding-left: 450px;
+    padding-top: 30px;
+}
+#bind_form .desc {
+    text-align: right;
+}
+#account_form input, #bind_form input, #extra_form input {
+    border: 1px solid #C7C7C7;
+    height: 26px;
+    line-height: 32px;
+    padding-top: 4px;
+    width: 320px;
+}
+#account_form #wx_user_name {
+    height: 30px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    width: 300px;
+}
+#bind_form td {
+    height: 40px;
+}
+#account_form td {
+    height: 80px;
+}
+#account_form .error {
+    border: 2px solid #FF0000;
+}
+#extra_form {
+    padding-top: 50px;
+}
+#extra_form #wx_botname {
+    width: 400px;
+}
+#account_form table, #extra_form table {
+    margin: 0 auto;
+    width: 900px;
+}
+#extra_form td {
+    height: 70px;
+}
+#account_form .t-row td, #extra_form .t-row td {
+    border-bottom: 1px solid #808080;
+    font-weight: bold;
+    height: 40px;
+    padding-bottom: 20px;
+}
+#extra_form .t-row .desc {
+    padding-left: 420px;
+    text-align: left;
+}
+#account_form td.desc, #extra_form td.desc {
+    padding-right: 10px;
+    text-align: right;
+    width: 300px;
+}
+#account_form .t {
+    color: #808080;
+}
+#account_form td.desc {
+    width: 318px;
+}
+.helper_link {
+    margin-top: 20px;
+}
+.helper_link a {
+    color: #00B0F0;
+    font-weight: bold;
+    text-decoration: none;
+}
+.helper_link .wx_plat {
+    float: right;
+    margin-right: 30px;
+}
+.helper_link .wx_gd, .helper_link .wx_opendevp {
+    margin-left: 30px;
+}
+.first-step, .second-step, .third-step {
+    position: relative;
+}
+.first-step h2, .second-step h2, .third-step h2 {
+    color: #00B0F0;
+    left: 70px;
+    position: absolute;
+    top: 40px;
+}
+.first-step h2 {
+    left: 370px;
+    top: 80px;
+}
+.third-step h2 {
+    top: 55px;
+}
+.first-step .separator, .second-step .separator {
+    background-color: #C3C4C3;
+    height: 2px;
+    margin: 5px auto 10px;
+    width: 920px;
+}
+.oper-tip {
+    height: 240px;
+    overflow-y: hidden;
+    padding-left: 30px;
+}
+.oper-tip .item {
+    float: left;
+    margin-right: 10px;
+    width: 300px;
+}
+.oper-tip .item p {
+    font-size: 14px;
+}
+.oper-tip .item .step_1_2 {
+    position: relative;
+    top: 6px;
+}
+.oper-tip .item .step_2_1_t {
+    position: relative;
+    top: 10px;
+}
+.oper-tip .item img {
+    max-width: 300px;
+}
+#wx_welcome {
+    height: 60px;
+    vertical-align: middle;
+    width: 396px;
+}

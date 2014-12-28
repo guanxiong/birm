@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$reply['title']}</title>
+<link rel="stylesheet" type="text/css" href="./source/modules/stonefish_grabgifts/template/css/style.css">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<meta name="Description" content="{$reply['description']}" />
+<!-- Mobile Devices Support @begin -->
+<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<!-- Mobile Devices Support @end -->
+<style>
+body{background-color:{$reply['bgcolor']};}
+.product li{ width: 96%; float: left; padding:0 2%;}
+</style>
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+ <div class="center">
+ 	{if !empty($usergift)}
+	<div class="top"><span>{$usergift['nickname']}</span> {if $lingjiang}已抢到 {$lingjiangnum} 个礼品资格{else}出错了!联系管理员{/if}</div>
+	{else}
+	<div class="top"><span>出错了!联系管理员</span></div>
+	{/if}
+	
+	{loop $listgift $row3}
+	{if $row3['zg']}
+ 	<div class="product">
+ 		<ul> 			
+			<li>
+ 				<dl>
+ 					<dt>{if $row3['lingjiang']}<span><img src="./source/modules/stonefish_grabgifts/template/images/yl.png"/></span>{else}{if $row3['total']-$row3['total_winning']>=1}<span><img src="./source/modules/stonefish_grabgifts/template/images/yz.png" /></span>{else}<span><img src="./source/modules/stonefish_grabgifts/template/images/yw.png" /></span>{/if}{/if}<img src="{$_W['attachurl']}{$row3['awardpic']}"/></dt>
+ 					<dd>{$row3['title']}</dd>
+ 					<dd>全部<span>{$row3['total']}</span>份  剩余<span>{php echo $row3['total']-$row3['total_winning']}</span>份</dd>
+ 				</dl>
+ 			</li>			 			
+ 		</ul>
+		{if $row3['lingjiang']!=1}
+		<div style=" padding:5px;">{if $row3['total']-$row3['total_winning']>=1}{if $is_user}{if $row3['awardpass']!=''}<a href="{php echo $_W['siteroot'].$this->createMobileUrl('awardgetpass', array('rid' => $rid,'from_user' => $page_from_user,'giftid' => $row3['id']))}"><button class="getbtnshangjia">商家点击兑奖</button></a>{else}<button class="getbtnshangjia">请耐心等待商家兑奖</button>{/if}{else}<a href="{php echo $_W['siteroot'].$this->createMobileUrl('awardget', array('rid' => $rid,'giftid' => $row3['id'],'from_user' => $page_from_user))}"><button class="getbtn">点击领取</button></a>{/if}{/if}</div>
+		{/if}
+		<div style=" padding:5px;">{php echo htmlspecialchars_decode($row3['description']);}</div>
+ 	</div>
+	<div style="height:10px;"></div>
+	{/if}
+	{/loop}	
+	{if $yaoqingnum>=$giftnumzd}
+	    <div class="cunber_title"><span>已邀请<b>{$yaoqingnum}</b>人</span> 已拥有所有奖品资格</div>
+		<div><a href="{$_W['siteroot']}{php echo $this->createMobileUrl('paihang', array('rid' => $rid))}"><button class="paihang">神秘模式已开启 恭喜您进入爆表排行榜</button></a></div>
+	{else}
+	    <div class="cunber_title"><span>已邀请<b>{$yaoqingnum}</b>人</span>{if !empty($usergift)}还需<b>{$zgnum}</b>人你就能获得<u>{$zggift}</u>{else}<u>出错了!联系管理员{/if}</div>
+	{/if}
+ 	<div class="copyright">
+    {if $reply['iscopyright']==1}<a href="{$reply['copyrighturl']}">&copy;{$reply['copyright']}</a>{else}<a href="javascript:;">{if empty($footer_off)}&copy;{if empty($_W['account']['name'])}微动力团队{else}{$_W['account']['name']}{/if}&nbsp;&nbsp;{$_W['setting']['copyright']['statcode']}{/if}</a>{/if}
+ 	</div> 	
+ 	<div class="sub_b">
+	    {if !empty($mygift)}
+			<dl>
+ 			    <dt><span>&nbsp;</span><img src="./source/modules/stonefish_grabgifts/template/images/a4.jpg"/></dt>
+ 			    <dd><a href="{$mygifturl}">我的活动页</a></dd>
+ 		    </dl>
+		{else}
+		    <dl>
+ 			    <dt><span>&nbsp;</span><a href="" class="lb"><img src="./source/modules/stonefish_grabgifts/template/images/a4.jpg" alt="" /></a></dt>
+ 			    <dd><a href="">出错了!联系管理员</a></dd>
+ 		    </dl>
+		{/if}
+ 	</div>
+ </div>
+<div class="share-layer"></div>
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	window.shareData = {
+		"imgUrl": "{$picture}",
+		"timeLineLink": "{$shareurl}",
+		"sendFriendLink": "{$shareurl}",
+		"weiboLink": "{$shareurl}",
+		"tTitle": "{$reply['sharetitle']}",
+        "fTitle": "{$reply['sharetitle']}",
+        "tContent": "{$reply['sharecontent']}",
+        "fContent": "{$reply['sharecontent']}",
+        "wContent": "{$reply['sharecontent']}" 
+	};
+
+	// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+		WeixinJSBridge.invoke('sendAppMessage', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.sendFriendLink,
+			"desc": window.shareData.fContent,
+			"title": window.shareData.fTitle
+		}, function (res) {
+			_report('send_msg', res.err_msg);
+		})
+	});
+
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function (argv) {
+		WeixinJSBridge.invoke('shareTimeline', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.timeLineLink,
+			"desc": window.shareData.tContent,
+			"title": window.shareData.tTitle
+		}, function (res) {
+			_report('timeline', res.err_msg);
+		});
+	});
+
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function (argv) {
+		WeixinJSBridge.invoke('shareWeibo', {
+			"content": window.shareData.wContent,
+			"url": window.shareData.weiboLink
+		}, function (res) {
+			_report('weibo', res.err_msg);
+		});
+	});
+}, false);
+
+function onBridgeReady(){
+ WeixinJSBridge.call('hideOptionMenu');
+}
+
+if (typeof WeixinJSBridge == "undefined"){
+    if( document.addEventListener ){
+        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+    }else if (document.attachEvent){
+        document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+    }
+}else{
+    onBridgeReady();
+}
+</script>
+</body>
+</html>

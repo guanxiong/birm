@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[360全景]]></name>
+		<identifie><![CDATA[ipano]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[360全景]]></ability>
+		<description><![CDATA[360全景]]></description>
+		<author><![CDATA[迷失卍国度]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[
+    DROP TABLE IF EXISTS `ims_ipano_reply`;
+    CREATE TABLE `ims_ipano_reply` (
+      `id` int(10) NOT NULL AUTO_INCREMENT,
+      `rid` int(10) NOT NULL DEFAULT '0',
+      `weid` int(10) NOT NULL DEFAULT '0',
+      `type` tinyint(1) NOT NULL DEFAULT '1',
+      `title` varchar(50) NOT NULL,
+      `description` text NOT NULL,
+      `picture` varchar(200) NOT NULL,
+      `picture1` varchar(200) NOT NULL,
+      `picture2` varchar(200) NOT NULL,
+      `picture3` varchar(200) NOT NULL,
+      `picture4` varchar(200) NOT NULL,
+      `picture5` varchar(200) NOT NULL,
+      `picture6` varchar(200) NOT NULL,
+      `music` varchar(400) NOT NULL,
+      `status` tinyint(1) NOT NULL DEFAULT '0',
+      `dateline` int(10) NOT NULL DEFAULT '0',
+      PRIMARY KEY (`id`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+    ]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

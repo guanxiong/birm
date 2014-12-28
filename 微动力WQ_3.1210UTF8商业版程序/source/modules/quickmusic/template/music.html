@@ -1,0 +1,154 @@
+{template 'common/header'}
+<link type="text/css" rel="stylesheet" href="./source/modules/quicksurvay/style/base.css" />
+<script type="text/javascript" src="./source/modules/quicksurvay/script/jquery.watermarker.js?ver=239"></script>
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('music', array('op' => 'post'));}">添加单曲</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('music', array('op' => 'display'));}">管理单曲</a></li>
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" onsubmit="return musicHandler.doAdd(this)" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="music_id" value="{$item['music_id']}" />
+		<h4>编辑</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">曲名<span class="red">*</span></label></th>
+				<td>
+					<input type="text" id="title" name="title" class="span5" value="{$item['title']}" placeholder="爱情买卖" />
+				</td>
+			</tr>	
+			<tr>
+				<th><label for="">作者或版权信息</label></th>
+				<td>
+					<input type="text" id="author" name="author" class="span5" value="{$item['author']}" placeholder="雯雯法语酷资料库" />
+				</td>
+			</tr>	
+   
+			<tr>
+			<th><label for="">音频链接<span class="red">*</span></label></th>
+            <td>
+                <div class="input-append">
+                    <input id="url" class="span6" type="text" name="url" value="{$item['url']}" placeholder="">
+                    <input type="button" id="music-attach-btn" fieldname="music-attach-new[]" class="btn" value="<i class='icon-upload-alt'></i>" style="font-size:14px;width:55px;margin-left:-1px;">
+                </div>
+                <span class="help-block">选择上传的音频文件或直接输入URL地址，常用格式：mp3</span>
+            </td>
+	        </tr>
+			<tr>
+				<th><label for="">封面图</label></th>
+				<td>
+					{php echo tpl_form_field_image('cover', $tape['cover']);}
+					<span class="red">封面图像素必须为300px*300px，否则影响美观</span>
+				</td>
+			</tr>
+			<tr>
+				<th>歌词</th>
+				<td>
+					<textarea id="lyrics" style="height:100px; width:100%;" class="span7" name="lyrics" cols="70" placeholder="">{$item['lyrics']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>介绍</th>
+				<td>
+					<textarea id="explain" style="height:100px; width:100%;" class="span7 richtext-clone" name="explain" cols="70" placeholder="">{$item['explain']}</textarea>
+				</td>
+			</tr>
+		<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	kindeditor($('.richtext-clone'));
+//-->
+</script>
+ 
+
+<script type="text/javascript">
+<!--
+	var musicHandler = {
+		'doAdd' : function(form) {
+			var parent = $(form);
+			if ($('#title', parent).val() == '') {
+				message('请输入曲名！', '', 'error');
+				return false;
+			}
+			if ($('#url', parent).val() == '') {
+				message('请输入音频地址或是上传音频文件！', '', 'error');
+				return false;
+			}
+			return true;
+		},
+		'kindeditorUploadBtn' : function(obj) {
+			if (typeof KindEditor == 'undefined') {
+				$.getScript('./resource/script/kindeditor/kindeditor-min.js', initUploader);
+			} else {
+				initUploader();
+			}
+			function initUploader() {
+				var uploadbutton = KindEditor.uploadbutton({
+					button : obj,
+					fieldName : 'attachFile',
+					url : '{php echo create_url('site/module/uploadmusic', array('name' => 'music'))}',
+					width : 100,
+					afterUpload : function(data) {
+						if (data.error === 0) {
+							$(uploadbutton.div.parent().parent().parent().parent().parent()[0]).find('#url').val(data.filename);
+						} else {
+							message('上传失败，错误信息：'+data.message, '', 'error');
+						}
+						$(uploadbutton.div).removeClass("up_loading");
+					},
+					afterError : function(str) {
+						message('上传失败，错误信息：'+str, '', 'error');
+					}
+				});
+				uploadbutton.fileBox.change(function(e) {
+					$(uploadbutton.div).addClass("up_loading");
+					uploadbutton.submit();
+				});
+			}
+		}
+	};
+	$(function(){
+		musicHandler.kindeditorUploadBtn($('#music-attach-btn'));
+	});
+//-->
+</script>
+{elseif $operation == 'display'}
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="max-width:10px;">编号</th>
+					<th style="min-width:200px;max-width:300px;">曲名</th>
+					<th style="min-width:200px;max-width:400px;">预览</th>
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td style="max-width:10px;">{$item['music_id']}</td>
+					<td style="min-width:200px;max-width:300px;">{$item['title']}</td>
+					<td><audio preload="none" src="{php echo strpos($item['url'], 'http://') === FALSE ? $_W['attachurl'] . $item['url'] : $item['url']}" controls="controls">您的浏览器不支持预览</audio></td>
+					<td style="text-align:right; min-width:60px;">
+						<a href="{php echo $this->CreateMobileUrl('tape', array('music_id' => $item['music_id'], 'op' => 'display', 'preview'=>1))}" title="预览" class="btn btn-small"><i class="icon-eye-open"></i></a>
+						<a href="{php echo $this->CreateWebUrl('music', array('music_id' => $item['music_id'], 'op' => 'post'))}" title="编辑" class="btn btn-small"><i class="icon-edit"></i></a>
+						<a href="{php echo $this->CreateWebUrl('music', array('music_id' => $item['music_id'], 'op' => 'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除" class="btn btn-small"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+{/if}
+{template 'common/footer'}

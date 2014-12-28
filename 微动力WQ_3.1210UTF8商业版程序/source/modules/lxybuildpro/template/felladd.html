@@ -1,0 +1,40 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+<li{if $_GPC['do'] == 'buildlists'} class="active"{/if}><a href="{php echo $this->createWeburl('buildlists');}">楼盘管理</a></li>
+	<li{if $_GPC['do'] == 'felllist'} class="active"{/if}><a href="{php echo $this->createWeburl('felllist', array('hid'=>$hid));}">印象管理</a></li>
+	<li{if $_GPC['do'] == 'felladd'} class="active"{/if}><a href="{php echo $this->createWeburl('felladd', array('hid'=>$hid));}">添加印象</a></li>
+</ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="hid" value="{$hid}">
+    <input type="hidden" name="yid" value="{$yid}">
+  <h4>印象基本信息</h4>
+	<table class="tb">
+		<tr>
+			<th width="68">标题</th>
+			<td width="222"><input type="text" name="title" value="{$item['title']}" class="span5" />
+		    * 尽量简单，不要超过20字</td>
+		</tr>
+		<tr>
+			<th>显示顺序</th>
+			<td><input type="text" name="sort" value="{$item['sort']}" class="span5" />
+		    * 数值越大越靠前</td>
+		</tr>
+		<tr>
+			<th>印象数</th>
+			<td><input type="text" name="yinxiang_number" value="{$item['yinxiang_number']}" class="span5" /></td>
+		</tr>
+        		<tr>
+			<th>是否显示</th>
+			<td><input type="checkbox" checked="checked" value="1" name="isshow" id="isshow" />
+			  <label for="isshow"></label></td>
+		</tr>
+        <tr>
+			<th>&nbsp;</th>
+			<td>
+            	 <button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+            	 <input type="hidden" name="token" value="{$_W['token']}" /></td>
+		</tr>
+	</table>
+</form>
+{template 'common/footer'}

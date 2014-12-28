@@ -1,0 +1,17 @@
+<table class="table table-hover">
+	<tbody>
+		{loop $ds $item}
+		<tr>
+			{php $o = array(); }
+			{php $o['logo'] = $this->getPicUrl($item['logo'])}
+			{php $o['explain'] = strip_tags(htmlspecialchars_decode($item['explain']))} 
+			{php $o['title'] = strip_tags(htmlspecialchars_decode($item['title']))} 
+			{php $o['tape_id'] = $item['tape_id']}
+			<td title="{$o['explain']}">{$o['title']}</td>
+			<td style="width:80px;">
+				<a href="javascript:;" onclick='select_entry({php echo json_encode($o);});$("#modal-module-menus").modal("hide");'>添加</a>
+			</td>
+		</tr>
+		{/loop}
+	</tbody>
+</table>

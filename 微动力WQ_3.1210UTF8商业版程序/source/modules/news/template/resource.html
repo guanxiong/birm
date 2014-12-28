@@ -1,0 +1,15 @@
+<table class="table table-hover">
+	<tbody>
+		{loop $result $item}
+		<tr>
+			<td style="width:80px;"><a href="javascript:;" onclick="addModuleMenu('{$item['id']}')">添加</a></td>
+			<td style="width:100px;">{$item['title']}</td>
+		</tr>
+		{/loop}
+	</tbody>
+</table>
+<script type="text/javascript">
+<!--
+	var list = {php echo json_encode($result);};
+//-->
+</script>

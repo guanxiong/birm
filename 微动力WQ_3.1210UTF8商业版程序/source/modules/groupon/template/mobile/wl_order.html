@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>团购首页</title>
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link href="/source/modules/groupon/style/css/main.css" rel="stylesheet" />
+    <link href="/source/modules/groupon/style/css/dialog.css" rel="stylesheet" />
+
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+});
+</script>
+
+    <script src="/source/modules/groupon/style/js/jquery.min.js"></script>
+    <script src="/source/modules/groupon/style/js/swipe.js"></script>
+    <script src="/source/modules/groupon/style/js/dialog_min.js"></script>
+    <script src="/source/modules/groupon/style/js/global.js"></script>
+</head>
+<body onselectstart="return true;" ondragstart="return false;" class="gbuy_coupon gbuy_coupon2 gbuy_orderList">
+<div>
+    <div id="container" class="container animate">
+        <header>
+            <div class="nav_coupon">
+                <ul class="box">
+                    <li><a href="{php echo $this->createMobileUrl('wlorder',array('status'=>1));}" {if $_GPC['status']==1&&empty($_GPC['ispay'])}class="on"{/if}>待付款</a></li>
+                    <li><a href="{php echo $this->createMobileUrl('wlorder',array('ispay'=>1));}" {if $_GPC['ispay']==1}class="on"{/if}>已付款</a></li>
+                    <li><a href="{php echo $this->createMobileUrl('wlorder',array('status'=>-1,'ispay'=>-1));}" {if $_GPC['status']==-1}class="on"{/if}>失效订单</a></li>
+                </ul>
+            </div>
+        </header>
+        <div class="body">
+            <ul class="list_coupon">
+				{loop $list $row}
+                 <li>
+                    <a href="{php echo $this->createMobileUrl('wlorderdetail', array('oid' => $row['id']));}" class="tbox">
+                        <div>
+                            <figure>
+                                {php $row['phout_url']=explode('|',$row['thumb_list']);}
+								{loop $row['phout_url'] $row2}
+									{php if (empty($row2)) continue;}
+									<img src="{$_W['attachurl']}{$row2}" />
+									{php break;}
+								{/loop}
+                            </figure>
+                        </div>
+                        <div>
+                            <h3>{$row['title']}</h3>
+                            <p class="price">￥{$row['price']}</p>
+							{if $row['ispay']==0}
+                            <label class="state">待付款</label>
+							{elseif $row['ispay']==1}
+							<label class="state">已付款</label>
+							{/if}
+                        </div>
+                    </a>
+                </li>
+                {/loop}
+			</ul>
+        </div>
+	{template wl_footer} 
+    </div>
+</div>
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideOptionMenu');
+});
+</script>
+
+</body>
+
+</html>

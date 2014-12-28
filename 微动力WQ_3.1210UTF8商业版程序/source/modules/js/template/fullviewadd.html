@@ -1,0 +1,97 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+    	<li{if $_GPC['do'] == 'test'} class="active"{/if}><a href="{php echo $this->createWeburl('test');}">俱乐部管理</a></li>
+       <li{if $_GPC['do'] == 'houselist'} class="active"{/if}><a href="{php echo $this->createWeburl('houselist', array('hid'=>$hid));}">项目管理</a></li>
+	<li{if $_GPC['do'] == 'fullviewlist'} class="active"{/if}><a href="{php echo $this->createWeburl('fullviewlist',array('hsid'=>$hsid,'hid'=>$hid));}">全景管理</a></li>
+	<li{if $_GPC['do'] == 'fullviewadd'} class="active"{/if}><a href="{php echo $this->createWeburl('fullviewadd', array('hsid'=>$hsid,'hid'=>$hid,'id'=>$id));}">添加全景</a></li>
+        
+        </ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="hid" value="{$hsid}">
+    <input type="hidden" name="id" value="{$id}">
+  <h4>全景图设置</h4>
+	<table class="tb">
+		<tr>
+			<th width="68">标题：</th>
+			<td width="222"><input type="text" name="title" value="{$item['title']}" class="span5" />
+		    * 尽量简单，不要超过20字</td>
+		</tr>
+		<tr>
+			<th>显示顺序：</th>
+			<td><input type="text" name="sort" value="{$item['sort']}" class="span5" />
+		    * 数值越大越靠前</td>
+		</tr>
+        
+        <tr>
+					<th>是否显示：</th>
+					<td>
+                                                <label class="radio inline"><input type="radio" name="status" value="1" {if $item['status']=='1'||empty($item['status'])} checked="checked" {/if}> 是</label>&nbsp;&nbsp;&nbsp;
+                                                <label class="radio inline"><input type="radio" name="status" value="0" {if $item['status']=='0'} checked="checked" {/if} > 否</label>
+                                               
+                    </td>
+				</tr>
+        		<tr>
+			<th>相册图片-前：</th>
+			<td><div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getdefaultfullviewpic(1,$item['pic_qian'])}" width="200" /></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic_qian" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a></div>
+				</div></td>
+		</tr>
+        
+        <tr>
+			<th>相册图片-后：</th>
+			<td><div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getdefaultfullviewpic(2,$item['pic_hou'])}" width="200" /></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic_hou" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a></div>
+				</div></td>
+		</tr>
+        <tr>
+			<th>相册图片-左：</th>
+			<td><div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getdefaultfullviewpic(3,$item['pic_zuo'])}" width="200" /></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic_zuo" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a></div>
+				</div></td>
+		</tr>
+        <tr>
+			<th>相册图片-右：</th>
+			<td><div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getdefaultfullviewpic(4,$item['pic_you'])}" width="200" /></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic_you" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a></div>
+				</div></td>
+		</tr>
+        <tr>
+			<th>相册图片-上：</th>
+			<td><div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getdefaultfullviewpic(5,$item['pic_shang'])}" width="200" /></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic_shang" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a></div>
+				</div></td>
+		</tr>
+        <tr>
+			<th>相册图片-下：</th>
+			<td><div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getdefaultfullviewpic(6,$item['pic_xia'])}" width="200" /></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic_xia" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a></div>
+				</div></td>
+		</tr>
+        <tr>
+			<th>&nbsp;</th>
+			<td>
+            	 <button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+            	 <input type="hidden" name="token" value="{$_W['token']}" /></td>
+		</tr>
+	</table>
+</form>
+{template 'common/footer'}

@@ -1,0 +1,163 @@
+{template 'common/header'}
+<style>
+.sub-search input,.sub-search select{margin-bottom:0;}
+</style>
+    <div class="main">
+	
+		<div class="stat">
+			<div class="stat-div">
+			
+				<div class="navbar navbar-static-top">
+
+					<div class="navbar-inner">
+
+						<span class="brand">凑对名单</span>
+
+					</div>
+
+				</div>
+
+				<div class="sub-item">
+
+					<h4 class="sub-title">搜索</h4>
+
+					<form action="" method="get">
+
+					<input type="hidden" name="act" value="module" />
+
+					<input type="hidden" name="do" value="list" />
+
+					<input type="hidden" name="name" value="grabseat" />
+
+					<input type="hidden" name="id" value="{$id}" />
+
+					<table class="table sub-search">
+
+						<tr>
+						
+							<th>姓名</th>
+							
+							<td>
+							
+								
+								<input class="span6" name="realname" id="" type="text" value="{$_GPC['realname']}">
+							</td>
+							
+						</tr>
+						
+						<tr>
+						
+							<th>手机</th>
+							
+							<td>
+							
+								
+								<input class="span6" name="mobile" id="" type="text" value="{$_GPC['mobile']}">
+							</td>
+							
+						</tr>
+
+						<tr>
+
+							<th></th>
+
+							<td><input type="submit" name="" value="搜索" class="btn btn-primary" /></td>
+
+						</tr>
+
+					</table>
+
+					</form>
+
+				</div>
+	
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">详细数据  |  总数:{$total}</h4>
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:5%;" class="row-first">选择</td>
+									<th style="width:5%;" class="row-hover">编号<i></i></th>
+									<th style="width:10%;">占座人<i></i></th>
+									<th style="width:15%;">占座人手机<i></i></th>
+									<th style="width:15%;">占座时间<i></i></th>
+									<th style="width:10%;">赴约人<i></i></th>
+									<th style="width:15%;">赴约人手机<i></i></th>
+									<th style="width:15%;">赴约时间<i></i></th>
+									<th style="width:10%;">登记<i></i></th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $row}
+								<tr>
+									<td style="text-align:center;" class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+									<td style="text-align:center;" class="row-hover">{$row['id']}</td>	
+									<td style="text-align:center;" >{$row['grabername']}</td>
+									<td style="text-align:center;" >{$row['grabermobile']}</td>
+									<td style="text-align:center;" >{php echo date('Y-m-d h:i:s', $row[grabtime]);}</td>
+									<td style="text-align:center;" >{$row['fitername']}</td>
+									<td style="text-align:center;" >{$row['fitermobile']}</td>
+									<td style="text-align:center;" >{php echo date('Y-m-d H:i:s', $row['fittime']);}</td>
+									<td style="text-align:center;" >{if $row['status'] == 1}<a href="{php echo $this->createWebUrl('list', array('id' => $id, 'wid' => $row['id'], 'status' => 2))}" class="text-error">标记领奖</a>{elseif $row['status'] == 2}<a href="{php echo $this->createWebUrl('list', array('id' => $id, 'wid' => $row['id'], 'status' => 1))}" class="text-success">取消领奖</a>{/if}</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr>
+								<td style="width:40px; text-align:center; " class="row-first"><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+								<td>
+									<input type="submit" name="delete" value="删除" class="btn btn-primary" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+				{$pager}
+				</div>
+			</div>
+		</div>
+    </div>
+
+<script>
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+});
+</script>
+{template 'common/footer'}

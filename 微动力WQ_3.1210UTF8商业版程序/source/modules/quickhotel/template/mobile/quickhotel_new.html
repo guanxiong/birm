@@ -1,0 +1,49 @@
+{template 'header'}
+	<link type="text/css" rel="stylesheet" href="./source/modules/quickhotel/style/base.css" />
+	<link type="text/css" rel="stylesheet" href="./source/modules/quickhotel/style/style.css?ver=1" />
+	<script type="text/javascript" src="./source/modules/quickhotel/script/script.js"></script>
+	<section class="stay">
+    	<!--content-->
+        <section class="stay_content">
+			{loop $quickhotel_list $item}
+        	<!--box-->
+            <section class="stay_box">
+			<aside class="stay_title">{$item['title']}</aside>
+                <article class="stay_main">
+                    <p class="stay_banner"><img src="{php echo $_W['attachurl'].$item['logo']}" /></p>
+			        <!--item-->
+                    <section class="stay_item">
+                        <section class="stay_item_l fl">
+                            <section class="stay_lump">
+                                <span class="stay_lump_l">剩余房间数：</span>
+                                <p class="stay_lump_r"><span> {$item['room']}</span></p>
+                            </section>
+                        </section>
+                        <section class="stay_item_r fl">
+                            <section class="stay_lump">
+                                <span class="stay_lump_l">价格：</span>
+                                <p class="stay_lump_r"><span>{$item['price']}元</span></p>
+                            </section>
+                        </section>
+                    </section>
+                    <!--item end-->
+	                    <!--item-->
+                    <section class="stay_content">
+						{php echo htmlspecialchars_decode($item['content'])}
+					</section>
+                    <!--item end-->
+					
+                    <!--btn-->
+                    <section class="stay_btn_layer">
+					<span class="stay_btn_l fl"><a href="{$item['position']}"><span>获取位置</span></a></span>
+                        <span class="stay_btn_r fl"><a href="{php echo $this->createMobileUrl('fillinfo', array('id' => $item['id']))}"><span>我要预订</span></a></span>
+                    </section>
+                    <!--btn end-->
+                </article>
+            </section>
+            <!--box end-->
+			{/loop}
+        </section>
+        <!--content end-->
+    </section>
+{template 'footer'}

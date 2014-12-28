@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{if empty($_W['setting']['copyright']['sitename'])}微动力 - 微信公众平台自助引擎 -  Powered by BBS.B2CTUI.COM{else}{$_W['setting']['copyright']['sitename']}{/if}</title>
+<meta name="keywords" content="{if empty($_W['setting']['copyright']['keywords'])}微动力,微信,微信公众平台{else}{$_W['setting']['copyright']['keywords']}{/if}" />
+<meta name="description" content="{if empty($_W['setting']['copyright']['description'])}微信公众平台自助引擎，简称微动力，微动力是一款免费开源的微信公众平台管理系统。{else}{$_W['setting']['copyright']['description']}{/if}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap -->
+<link href="./resource/wdl04/css/bootstrap.css" rel="stylesheet" media="screen">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="bookmark" href="images/favicon.ico" type="image/x-icon">
+<script src="./resource/wdl04/js/jquery.js"></script>
+<script src="./resource/wdl04/js/jqueryui.min.js"></script>
+<script src="./resource/wdl04/js/slider.js"></script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<script type="text/javascript">
+	var current = 0;
+	function ___to(index) {
+		$("#li0").removeClass();
+		$("#li1").removeClass();
+		$("#li8").removeClass();
+		$("#li" + index).addClass('active');
+		$('#main').carousel(index);
+		if (index == 0 || index == 8) {
+			if (index > current) {
+				$('#__ind').animate({
+					left : "-100%"
+				});
+			} else {
+				$('#__ind').animate({
+					left : "100%",
+					speed : 600,
+					callback : function() {
+						this.hide();
+					}
+				});
+			}
+		} else {
+			$('#__ind').show();
+			$('#__ind').animate({
+				left : "0"
+			});
+		}
+		$('#main').carousel('pause');
+		current = index;
+		if (index == 1) {
+			_slide(1);
+		}
+	}
+
+	function ___to2(index) {
+		____to2(index);
+		_slide(index);
+	}
+
+	function ____to2(index) {
+		current = index;
+		$('#main').carousel(index);
+		$('#main').carousel('pause');
+	}
+
+	function ___slide() {
+		$('#__ind').animate({
+			left : "-50",
+			callback : function() {
+				this.hide();
+			}
+		});
+	}
+
+	function _slide(index) {
+		$("#glass").animate({
+			left : $('#gs').offset().left + 39 + (index - 1) * 128,
+			speed : 600
+		});
+		$("#glass-bg").animate({
+			left : $('#gs').offset().left + 39 + (index - 1) * 128,
+			speed : 600
+		});
+	}
+
+	function _left(index) {
+		var slide = $('#' + index).unslider();
+		slide.prev();
+	}
+
+	function _right(index) {
+		var slide = $('#' + index).unslider();
+		slide.next();
+	}
+
+	function preSub() {
+		var is = $('#_i_a').find('input');
+		var b = true;
+		for (var i = 0; i < is.length; i++) {
+			var v = $(is[i]).val();
+			if ($.trim(v) == '') {
+				b = false;
+				break;
+			}
+		}
+		var c = $('#_i_a').find('textarea').val();
+		if (b) {
+			c = $.trim(c);
+			if (c == '')
+				b = false;
+		}
+		if (b) {
+			$('#_sub_info').removeAttr('disabled');
+		} else {
+			$('#_sub_info').attr('disabled', 'disabled');
+		}
+	}
+
+	function send() {
+		$('#infoModal').modal('toggle');
+		var is = $('#_i_a').find('input');
+		var d = '';
+		for (var i = 0; i < is.length; i++) {
+			var v = $(is[i]).val();
+			v = $.trim(v);
+			d += $(is[i]).attr('placeholder');
+			d += ":"
+			d += v + "\n";
+		}
+		var t = $('#_i_a').find('textarea');
+		var c = t.val();
+		c = $.trim(c);
+		d += $(t).attr('placeholder');
+		d += ":"
+		d += c;
+		$.ajax({
+			type : 'post',
+			url : '_submit.jsp',
+			data : 'data=' + d,
+			dataType : 'text',
+			success : function(msg) {
+				$('#infoModal').modal('toggle');
+				if ($.trim(msg) == "ok") {
+					$('#myModal').modal('toggle');
+				}
+			},
+			error : function() {
+				$('#infoModal').modal('toggle');
+			}
+		});
+	}
+
+	$(function() {
+		$('#main').carousel('pause');
+		$('#li8').css('font-size', '18px');
+		$.scrolltotop({
+			controlHTML : '<a class="btn btn-back"  href="javascript:;"></a>',
+			offsety : 60,
+			offsetx : 60
+		});
+		$.each($('.banners'), function(i, item) {
+			$(item).unslider();
+		});
+		$("#glass").draggable({
+			axis : "x",
+			containment : "parent",
+			drag : function(event, ui) {
+				$("#glass-bg").css({
+					left : $(this).css('left')
+				});
+			},
+			stop : function(event, ui) {
+				var left = $("#glass").offset().left;
+				left = left - $('#gs').offset().left - 39;
+				___to2(Math.round(left / 128) + 1);
+			}
+		});
+	});
+
+	$(document).keydown(function(e) {
+		var key = e.which;
+		if (current > 0 && current < 8) {
+			if (key == 37) {
+				var i = current - 1;
+				if (i > 0) {
+					___to2(i);
+				}
+			} else if (key == 39) {
+				var i = current + 1;
+				if (i < 8) {
+					___to2(i);
+				}
+			}
+		}
+	});
+</script>
+<style type="text/css">
+.btn-ttc,.btn-ttc:active,.btn-ttc:hover,.btn-ttc:disabled {
+	background-position: center;
+}
+
+.btn-ttc {
+	background-image: url(./resource/wdl04/images/btn_act.png);
+}
+
+.btn-ttc:active {
+	background-image: url(./resource/wdl04/images/btn_click.png);
+}
+
+.btn-ttc:hover {
+	background-image: url(./resource/wdl04/images/btn_hover.png);
+}
+
+.btn-ttc:disabled {
+	background-image: url(./resource/wdl04/images/btn_disable.png);
+}
+
+.btn-right,.btn-right:active,.btn-right:hover,.btn-us,.btn-us:active,.btn-us:hover
+	{
+	background-color: rgba(0, 0, 0, 0);
+	outline: none;
+	height: 72px;
+	width: 72px;
+	padding: 0px;
+	margin: 0px;
+	border: 0px solid #000;
+}
+
+.btn-right {
+	background-image: url(./resource/wdl04/images/btn_right.png);
+}
+
+.btn-right:active {
+	background-image: url(./resource/wdl04/images/btn_right_active.png);
+}
+
+.btn-right:hover {
+	background-image: url(./resource/wdl04/images/btn_right_hover.png);
+}
+
+.btn-us {
+	background-image: url(./resource/wdl04/images/us.png);
+}
+
+.btn-us:active {
+	background-image: url(./resource/wdl04/images/us_active.png);
+}
+
+.btn-us:hover {
+	background-image: url(./resource/wdl04/images/us_hover.png);
+}
+
+.btn-to-l,.btn-to-l:disabled,.btn-to-l:active,.btn-to-l:hover,.btn-to-r,.btn-to-r:disabled,.btn-to-r:active,.btn-to-r:hover
+	{
+	background-color: rgba(0, 0, 0, 0);
+	outline: none;
+	height: 64px;
+	width: 64px;
+	padding: 0px;
+	margin: 0px;
+	border: 0px solid #000;
+	position: absolute;
+	top: 285px;
+}
+
+.btn-to-r,.btn-to-r:disabled,.btn-to-r:active {
+	left: 408px;
+}
+
+.btn-to-l {
+	background-image: url(./resource/wdl04/images/to_l.png);
+}
+
+.btn-to-l:active {
+	background-image: url(./resource/wdl04/images/to_l_hover.png);
+}
+
+.btn-to-l:disabled {
+	background-image: url(./resource/wdl04/images/to_l_disabled.png);
+}
+
+.btn-to-r {
+	background-image: url(./resource/wdl04/images/to_r.png);
+}
+
+.btn-to-r:active {
+	background-image: url(./resource/wdl04/images/to_r_hover.png);
+}
+
+.btn-to-r:disabled {
+	background-image: url(./resource/wdl04/images/to_r_disabled.png);
+}
+
+.btn-back {
+	width: 64px;
+	height: 64px;
+	padding: 0px;
+	border: 0px solid #fff;
+	background-image: url(./resource/wdl04/images/backtop.png);
+}
+
+.btn-back:hover {
+	background-image: url(./resource/wdl04/images/backtop-hover.png);
+}
+
+.banners {
+	position: relative;
+	overflow: auto;
+	width: 241px;
+	left: 109px;
+	top: 0px;
+}
+
+.banners ul {
+	padding: 0px;
+}
+
+.banners li {
+	list-style: none;
+}
+
+.banners ul li {
+	float: left;
+	height: 634px;
+}
+</style>
+</head>
+<body style="overflow-x: hidden; overflow-y: scroll;">
+
+	<!-- header-->
+
+	<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner" style="background-color: rgba(0, 0, 0, 0.8)">
+		<div id="gs" class="container">
+			<div class="navbar-header">
+				<a href="./" class="navbar-brand" style="outline: none; padding: 0px"><img src="{if !empty($_W['setting']['copyright']['flogo'])}{$_W['attachurl']}{$_W['setting']['copyright']['flogo']}{else}./resource/image/logo.png{/if}" alt="" title="" /></a>
+			</div>
+			<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+				<ul class="nav navbar-nav pull-right">
+			
+					<li id="li0" class="active"><a href="javascript:___to(0)" style="font-size: 18px; outline: none; height: 64px; padding-top: 20px">微信定制</a></li>
+					<li id="li1"><a href="javascript:___to(1)" style="font-size: 18px; outline: none; height: 64px; padding-top: 20px">定制方案</a></li>
+					<li id="li8" style="font-size: 18px;"><a href="javascript:___to(8)" style="outline: none; height: 64px; padding-top: 20px">关于我们</a></li>
+					<li id="li8" style="font-size: 18px;"><a href="{php echo create_url('member/login');}" style="outline: none; height: 64px; padding-top: 20px">登陆</a></li>
+					<li id="li10" style="font-size: 18px;"><a target="_blank" href="/" style="outline: none; height: 64px; padding-top: 20px">咨询合作</a></li>
+					
+
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<div id="main" class="carousel slide">
+		<div class="carousel-inner">
+			<div class="item active">
+				<script type="text/javascript">
+					var bg_image;
+					if (screen.width <= 1024) {
+						bg_image = "./resource/wdl04/images/BG-1024.jpg";
+					}
+
+					else if (screen.width <= 1280) {
+						bg_image = "./resource/wdl04/images/BG-1280.jpg";
+					}
+
+					else if (screen.width <= 1366) {
+						bg_image = "./resource/wdl04/images/BG-1366.jpg";
+					}
+
+					else if (screen.width <= 1600) {
+						bg_image = "./resource/wdl04/images/BG-1600.jpg";
+					}
+
+					else if (screen.width <= 1680) {
+						bg_image = "./resource/wdl04/images/BG-1680.jpg";
+					}
+
+					else if (screen.width <= 1920) {
+						bg_image = "./resource/wdl04/images/BG-1920.jpg";
+					}
+					document.writeln("<div style='background:url(" + bg_image
+							+ ") no-repeat top center;width:100%;height:"
+							+ document.documentElement.clientHeight + "px'>");
+				</script>
+
+				<button type="button" class="btn btn-right" style="position: relative; top: 50%; left: 80%" onClick="javascript:___to(1)"></button>
+			</div>
+		</div>
+
+
+		<div class="item">
+			<div style="height: 680px; background: url(./resource/wdl04/images/1-food.jpg) no-repeat top center">
+			</div>
+			<div class="container">
+				<hr>
+				<div class="row" style="padding-top: 32px">
+					<div class="col-md-5" style="padding-top: 100px;">
+						<h1 style="font-size: 48px; font-weight: 600;">微餐馆</h1>
+						<p style="font-size: 16px; border-top: 1px solid #7f7f7f">餐馆介绍
+							• 菜品介绍 • 预订桌位 • 点餐 • 外卖下单</p>
+						<p class="lead" style="font-size: 15px; margin-top: 100px; color: #7f7f7f">方便快捷，增加客流量。
+							与用户沟通互动，增加客户留存率，通过用户反馈，改善经营不足。
+							解决粗放式的管理、和盲目扩张引起的用户体验下降，通过自建移动平台，统一管理，提升服务档次，增加用户体验过。
+							服务产品化、互联网化，拥抱新事物，突破餐饮行业困境。</p>
+					</div>
+					<div class="col-md-6 col-md-offset-1">
+						<div style="position: absolute; top: 0px; left: -368px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone_.png">
+						</div>
+						<div id="p_1_1" class="banners" style="width: 241px; height: 634px; overflow: hidden;">
+							<ul>
+								<li style="background-image: url(./resource/wdl04/images/1/1.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/1/2.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/1/3.png);"></li>
+							</ul>
+						</div>
+						<a type="button" class="btn btn-to-l" href="javascript:_left('p_1_1')"></a> <a type="button" class="btn btn-to-r" href="javascript:_right('p_1_1')"></a>
+						<div style="position: absolute; top: 0px; left: 100px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone.png">
+						</div>
+					</div>
+				</div>
+				<hr style="background-color: gray; height: 1px; margin-top: 0px;">
+				<div style="margin-bottom: 20px; margin-top: 20px">
+					<p class="h5 text-center" style="color: #848383;">
+						Copyright © 2013-2014 微动力营销-改变生活 All Rights Reserved <img src="./resource/wdl04/images/yidulogo.png" style="width: 19px; height: 19px">.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div style="height: 680px; background: url(./resource/wdl04/images/2-hotel.jpg) no-repeat top center">
+			</div>
+			<div class="container">
+				<hr>
+				<div class="row" style="padding-top: 32px">
+					<div class="col-md-5" style="padding-top: 100px;">
+						<h1 style="font-size: 48px; font-weight: 600;">微酒店</h1>
+						<p style="font-size: 16px; border-top: 1px solid #7f7f7f">酒店介绍
+							• 客房预订 • 客房展示 • 位置定位 • 电话预约</p>
+						<p class="lead" style="font-size: 15px; margin-top: 100px; color: #7f7f7f">自建移动平台，避免对中介代理形成过分依赖。
+							借助移动互联网，酒店和终端客户的距离前所未有地拉近。 消灭库存房量 提升客户的活跃度、参与性、满意度。
+							充分向客户展示自身形象和实力，并且可以适时地根据需要变更价格，持久的直销将形成自己稳固的客源市场。</p>
+					</div>
+					<div class="col-md-6 col-md-offset-1">
+						<div style="position: absolute; top: 0px; left: -368px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone_.png">
+						</div>
+						<div id="p_2_1" class="banners" style="width: 241px; height: 634px; overflow: hidden;">
+							<ul>
+								<li style="background-image: url(./resource/wdl04/images/2/1.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/2/2.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/2/3.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/2/4.png);"></li>
+							</ul>
+						</div>
+						<a type="button" class="btn btn-to-l" href="javascript:_left('p_2_1')"></a> <a type="button" class="btn btn-to-r" href="javascript:_right('p_2_1')"></a>
+						<div style="position: absolute; top: 0px; left: 100px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone.png">
+						</div>
+					</div>
+				</div>
+				<hr style="background-color: gray; height: 1px; margin-top: 0px;">
+				<div style="margin-bottom: 20px; margin-top: 20px">
+					<p class="h5 text-center" style="color: #848383;">
+						Copyright © 2013-2014 微动力营销-改变生活  All Rights Reserved <img src="./resource/wdl04/images/yidulogo.png" style="width: 19px; height: 19px">.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div style="height: 680px; background: url(./resource/wdl04/images/3-house.jpg) no-repeat top center">
+			</div>
+			<div class="container">
+				<hr>
+				<div class="row" style="padding-top: 32px">
+					<div class="col-md-5" style="padding-top: 100px;">
+						<h1 style="font-size: 48px; font-weight: 600;">微房产</h1>
+						<p style="font-size: 16px; border-top: 1px solid #7f7f7f">楼盘介绍
+							• 户型展示 • 样板间全景展示•位置定位及导航</p>
+						<p class="lead" style="font-size: 15px; margin-top: 100px; color: #7f7f7f">提升客户体验、提高服务档次，解决客户看房难的问题。
+							与客户及时有效沟通，深度挖掘客户内在、隐性购房需求，减少客户流失率。
+							通过移动平台，与客户形成长期依存关系，形成好口碑，增加品牌知名度。</p>
+					</div>
+					<div class="col-md-6 col-md-offset-1">
+						<div style="position: absolute; top: 0px; left: -368px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone_.png">
+						</div>
+						<div id="p_3_1" class="banners" style="width: 241px; height: 634px; overflow: hidden;">
+							<ul>
+								<li style="background-image: url(./resource/wdl04/images/3/1.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/3/2.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/3/3.png);"></li>
+							</ul>
+						</div>
+						<a type="button" class="btn btn-to-l" href="javascript:_left('p_3_1')"></a> <a type="button" class="btn btn-to-r" href="javascript:_right('p_3_1')"></a>
+						<div style="position: absolute; top: 0px; left: 100px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone.png">
+						</div>
+					</div>
+				</div>
+				<hr style="background-color: gray; height: 1px; margin-top: 0px;">
+				<div style="margin-bottom: 20px; margin-top: 20px">
+					<p class="h5 text-center" style="color: #848383;">
+						Copyright © 2013-2014 微动力营销-改变生活  All Rights Reserved <img src="./resource/wdl04/images/yidulogo.png" style="width: 19px; height: 19px">.
+					</p>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="item">
+			<div style="height: 680px; background: url(./resource/wdl04/images/4-store.jpg) no-repeat top center">
+			</div>
+			<div class="container">
+				<hr>
+				<div class="row" style="padding-top: 32px">
+					<div class="col-md-5" style="padding-top: 100px;">
+						<h1 style="font-size: 48px; font-weight: 600;">微商城</h1>
+						<p style="font-size: 16px; border-top: 1px solid #7f7f7f">商品展示
+							• 购物车 • 在线支付 • 分享商品到朋友圈</p>
+						<p class="lead" style="font-size: 15px; margin-top: 100px; color: #7f7f7f">实体零售商通过线上线下结合，打造美好的顾客体验是非常必要，以此减少电商对传统零售的冲击。
+							通过微购物，推出特色、差异化产品，弥补本地传统商超零售的不足。
+							微购物不仅仅是购物平台，更是信息沟通平台，通过移动端信息沟通反馈，增加客流量。</p>
+					</div>
+					<div class="col-md-6 col-md-offset-1">
+						<div style="position: absolute; top: 0px; left: -368px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone_.png">
+						</div>
+						<div id="p_4_1" class="banners" style="width: 241px; height: 634px; overflow: hidden;">
+							<ul>
+								<li style="background-image: url(./resource/wdl04/images/4/1.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/4/2.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/4/3.png);"></li>
+							</ul>
+						</div>
+						<a type="button" class="btn btn-to-l" href="javascript:_left('p_4_1')"></a> <a type="button" class="btn btn-to-r" href="javascript:_right('p_4_1')"></a>
+						<div style="position: absolute; top: 0px; left: 100px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone.png">
+						</div>
+					</div>
+				</div>
+				<hr style="background-color: gray; height: 1px; margin-top: 0px;">
+				<div style="margin-bottom: 20px; margin-top: 20px">
+					<p class="h5 text-center" style="color: #848383;">
+						Copyright © 2013-2014 微动力营销-改变生活  All Rights Reserved <img src="./resource/wdl04/images/yidulogo.png" style="width: 19px; height: 19px">.
+					</p>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="item">
+			<div style="height: 680px; background: url(./resource/wdl04/images/5-play.jpg) no-repeat top center">
+			</div>
+			<div class="container">
+				<hr>
+				<div class="row" style="padding-top: 32px">
+					<div class="col-md-5" style="padding-top: 100px;">
+						<h1 style="font-size: 48px; font-weight: 600;">微唱吧</h1>
+						<p style="font-size: 16px; border-top: 1px solid #7f7f7f">KTV简介
+							• 包房展示及预订 • 会员卡</p>
+						<p class="lead" style="font-size: 15px; margin-top: 100px; color: #7f7f7f"></p>
+					</div>
+					<div class="col-md-6 col-md-offset-1">
+						<div style="position: absolute; top: 0px; left: -368px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone_.png">
+						</div>
+						<div id="p_5_1" class="banners" style="width: 241px; height: 634px; overflow: hidden;">
+							<ul>
+								<li style="background-image: url(./resource/wdl04/images/5/1.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/5/2.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/5/3.png);"></li>
+							</ul>
+						</div>
+						<a type="button" class="btn btn-to-l" href="javascript:_left('p_5_1')"></a> <a type="button" class="btn btn-to-r" href="javascript:_right('p_5_1')"></a>
+						<div style="position: absolute; top: 0px; left: 100px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone.png">
+						</div>
+					</div>
+				</div>
+
+				<div class="row" style="padding-top: 32px">
+					<div class="col-md-5" style="padding-top: 100px;">
+						<h1 style="font-size: 48px; font-weight: 600;">微影院</h1>
+						<p style="font-size: 16px; border-top: 1px solid #7f7f7f">影院介绍
+							• 电影介绍 • 优惠活动 • 在线购票 • 会员卡</p>
+						<p class="lead" style="font-size: 15px; margin-top: 100px; color: #7f7f7f"></p>
+					</div>
+					<div class="col-md-6 col-md-offset-1">
+						<div style="position: absolute; top: 0px; left: -368px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone_.png">
+						</div>
+						<div id="p_5_2" class="banners" style="width: 241px; height: 634px; overflow: hidden;">
+							<ul>
+								<li style="background-image: url(./resource/wdl04/images/5/2/1.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/5/2/2.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/5/2/3.png);"></li>
+							</ul>
+						</div>
+						<a type="button" class="btn btn-to-l" href="javascript:_left('p_5_2')"></a> <a type="button" class="btn btn-to-r" href="javascript:_right('p_5_2')"></a>
+						<div style="position: absolute; top: 0px; left: 100px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone.png">
+						</div>
+					</div>
+				</div>
+
+
+
+
+				<div class="row" style="padding-top: 32px">
+					<div class="col-md-5" style="padding-top: 100px;">
+						<h1 style="font-size: 48px; font-weight: 600;">微酒吧</h1>
+						<p style="font-size: 16px; border-top: 1px solid #7f7f7f">酒吧介绍
+							• 最新活动 • 会员卡</p>
+						<p class="lead" style="font-size: 15px; margin-top: 100px; color: #7f7f7f">通过线上线下结合，针对本地娱乐特点，形成独有的娱乐圈子。
+							借助微信平台，增强客户体验，吸引新客户，提高留存率。</p>
+					</div>
+					<div class="col-md-6 col-md-offset-1">
+						<div style="position: absolute; top: 0px; left: -368px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone_.png">
+						</div>
+						<div id="p_5_3" class="banners" style="width: 241px; height: 634px; overflow: hidden;">
+							<ul>
+								<li style="background-image: url(./resource/wdl04/images/5/3/1.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/5/3/2.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/5/3/3.png);"></li>
+							</ul>
+						</div>
+						<a type="button" class="btn btn-to-l" href="javascript:_left('p_5_3')"></a> <a type="button" class="btn btn-to-r" href="javascript:_right('p_5_3')"></a>
+						<div style="position: absolute; top: 0px; left: 100px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone.png">
+						</div>
+					</div>
+				</div>
+				<hr style="background-color: gray; height: 1px; margin-top: 0px;">
+				<div style="margin-bottom: 20px; margin-top: 20px">
+					<p class="h5 text-center" style="color: #848383;">
+						Copyright © 2013-2014 微动力营销-改变生活  All Rights Reserved <img src="./resource/wdl04/images/yidulogo.png" style="width: 19px; height: 19px">.
+					</p>
+				</div>
+
+			</div>
+		</div>
+
+
+
+		<div class="item">
+			<div style="height: 680px; background: url(./resource/wdl04/images/6-medicine.jpg) no-repeat top center">
+			</div>
+			<div class="container">
+				<hr>
+				<div class="row" style="padding-top: 32px">
+					<div class="col-md-5" style="padding-top: 100px;">
+						<h1 style="font-size: 48px; font-weight: 600;">微医疗</h1>
+						<p style="font-size: 16px; border-top: 1px solid #7f7f7f">医院介绍
+							• 医师介绍 • 在线咨询 • 预约看诊</p>
+						<p class="lead" style="font-size: 15px; margin-top: 100px; color: #7f7f7f">增强沟通，通过及时的贴心服务，改善医患关系，得到患者对医院专业度的认可。
+							通过提前线上挂号预约，提前了解患者病情，降低误诊几率。 轻缓型病症，可通过网上咨询、网上就诊，减少高峰期就诊压力。</p>
+					</div>
+					<div class="col-md-6 col-md-offset-1">
+						<div style="position: absolute; top: 0px; left: -368px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone_.png">
+						</div>
+						<div id="p_6_1" class="banners" style="width: 241px; height: 634px; overflow: hidden;">
+							<ul>
+								<li style="background-image: url(./resource/wdl04/images/6/1.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/6/2.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/6/3.png);"></li>
+							</ul>
+						</div>
+						<a type="button" class="btn btn-to-l" href="javascript:_left('p_6_1')"></a> <a type="button" class="btn btn-to-r" href="javascript:_right('p_6_1')"></a>
+						<div style="position: absolute; top: 0px; left: 100px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone.png">
+						</div>
+					</div>
+				</div>
+				<hr style="background-color: gray; height: 1px; margin-top: 0px;">
+				<div style="margin-bottom: 20px; margin-top: 20px">
+					<p class="h5 text-center" style="color: #848383;">
+						Copyright © 2013-2014 微动力营销-改变生活  All Rights Reserved <img src="./resource/wdl04/images/yidulogo.png" style="width: 19px; height: 19px">.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="item">
+			<div style="height: 680px; background: url(./resource/wdl04/images/7-hair.jpg) no-repeat top center">
+			</div>
+			<div class="container">
+				<hr>
+				<div class="row" style="padding-top: 32px">
+					<div class="col-md-5" style="padding-top: 100px;">
+						<h1 style="font-size: 48px; font-weight: 600;">微美发</h1>
+						<p style="font-size: 16px; border-top: 1px solid #7f7f7f">美发师介绍及预约
+							• 会员卡 • 发型设计 • 发型秀</p>
+						<p class="lead" style="font-size: 15px; margin-top: 100px; color: #7f7f7f">通过电子会员卡，方便快捷，解决顾客因会员卡丢失带来的客户流失。
+							对于部分高端顾客，通过移动平台提供贴心的服务，提高留存率。 帮助理发店提高服务质量，降低顾客与店家的沟通成本。
+							通过提前预约，方便店家和发型师及时的处理订单和安排时间。</p>
+					</div>
+					<div class="col-md-6 col-md-offset-1">
+						<div style="position: absolute; top: 0px; left: -368px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone_.png">
+						</div>
+						<div id="p_7_1" class="banners" style="width: 241px; height: 634px; overflow: hidden;">
+							<ul>
+								<li style="background-image: url(./resource/wdl04/images/7/1.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/7/2.png);"></li>
+								<li style="background-image: url(./resource/wdl04/images/7/3.png);"></li>
+							</ul>
+						</div>
+						<a type="button" class="btn btn-to-l" href="javascript:_left('p_7_1')"></a> <a type="button" class="btn btn-to-r" href="javascript:_right('p_7_1')"></a>
+						<div style="position: absolute; top: 0px; left: 100px; z-index: -1">
+							<img src="./resource/wdl04/images/iPhone.png">
+						</div>
+					</div>
+				</div>
+				<hr style="background-color: gray; height: 1px; margin-top: 0px;">
+				<div style="margin-bottom: 20px; margin-top: 20px">
+					<p class="h5 text-center" style="color: #848383;">
+						Copyright © 2013-2014 微动力营销-改变生活  All Rights Reserved <img src="./resource/wdl04/images/yidulogo.png" style="width: 19px; height: 19px">.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="item">
+			<div class="container">
+				<h1 style="text-align: center; margin-top: 100px; font-weight: bold; font-size: 30px">关于
+					我们</h1>
+				<br>
+				<div style="text-align: center; font-size: 14px" >
+				
+</div>
+				
+				<div style="text-align: center; font-size: 14px">
+					<span style="text-align: center; font-size: 14px">————————
+						您可以通过下方的<!--表格将你的信息和需求发送给我们--></span><span style="text-align: center; font-size: 20px; font-weight: bold">
+						  任一  </span><span style="text-align: center; font-size: 14px"><!--通过右侧的-->联系方式联系我们，我们将竭诚为您服务
+						————————</span>
+				
+				</div>
+				
+				<div class="row" style="margin-top: 50px">
+					<div class="col-sm-6" style="border-right: 1px solid #b0b0b0; text-align: center;">
+						<!--<form id="_i_a" style="width: 350px; padding-top: 10px; margin: 0px auto;">
+							<div class="form-group">
+								<input id="_i_1" type="text" placeholder="您的姓名" class="form-control" oninput="preSub()">
+							</div>
+							<div class="form-group">
+								<input type="text" placeholder="公司或单位名称" class="form-control" oninput="preSub()">
+							</div>
+							<div class="form-group">
+								<input type="text" placeholder="您的电话" class="form-control" oninput="preSub()">
+							</div>
+							<div class="form-group">
+								<input type="text" placeholder="您的邮箱" class="form-control" oninput="preSub()">
+							</div>
+							<div class="form-group">
+								<textarea rows="3" cols="20" placeholder="需求概述" class="form-control" oninput="preSub()"></textarea>
+							</div>
+						</form>
+						<button id="_sub_info" class="btn btn-ttc" disabled="disabled" style="width: 350px; height: 50px" onclick="send()"></button>-->
+           
+    
+     
+</div>
+					<div class="col-sm-6" >
+						  
+						
+				</div></div>
+
+				<div class="row" style="margin-top: 50px">
+					<div class="col-sm-6" style="border-right: 1px solid #b0b0b0; text-align: center;">
+						<!--<form id="_i_a" style="width: 350px; padding-top: 10px; margin: 0px auto;">
+							<div class="form-group">
+								<input id="_i_1" type="text" placeholder="您的姓名" class="form-control" oninput="preSub()">
+							</div>
+							<div class="form-group">
+								<input type="text" placeholder="公司或单位名称" class="form-control" oninput="preSub()">
+							</div>
+							<div class="form-group">
+								<input type="text" placeholder="您的电话" class="form-control" oninput="preSub()">
+							</div>
+							<div class="form-group">
+								<input type="text" placeholder="您的邮箱" class="form-control" oninput="preSub()">
+							</div>
+							<div class="form-group">
+								<textarea rows="3" cols="20" placeholder="需求概述" class="form-control" oninput="preSub()"></textarea>
+							</div>
+						</form>
+						<button id="_sub_info" class="btn btn-ttc" disabled="disabled" style="width: 350px; height: 50px" onclick="send()"></button>-->
+          <img src="./resource/wdl04/images/zfy.png" width="179" height="279" style="margin-left: 110px;"> </div>
+					<div class="col-sm-6" style="padding-top: 30px;">
+						<div class="h2" style="font-size: 26px; padding-left: 130px">我们的联系方式</div>
+						<br>
+						<div style="padding-left: 80px; margin-top: 40px">
+							<img src="./resource/wdl04/images/tel.png" style="width: 30px; height: 30px;"><span class="h3" style="vertical-align: middle; margin-left: 20px">{if !empty($_W['setting']['copyright']['phone'])}{$_W['setting']['copyright']['phone']}{/if}</span>
+						</div>
+						<br>
+						<div style="padding-left: 80px; margin-top: 10px">
+							<img src="./resource/wdl04/images/email.png" style="width: 30px; height: 30px;"><span class="h3" style="vertical-align: middle; margin-left: 20px">{if !empty($_W['setting']['copyright']['email'])}{$_W['setting']['copyright']['email']}{/if}</span>
+						</div>
+						<br>
+						<div style="padding-left: 80px; margin-top: 10px">
+							<img src="./resource/wdl04/images/qq.png" style="width: 30px; height: 30px;"><span class="h3" style="vertical-align: middle; margin-right: 20px; margin-left: 20px">{if !empty($_W['setting']['copyright']['qq'])}{$_W['setting']['copyright']['qq']}{/if}</span>
+							<a class="btn btn-primary" href="tencent://message/?uin={if !empty($_W['setting']['copyright']['qq'])}{$_W['setting']['copyright']['qq']}{/if}">QQ在线交流</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="footer" style="text-align: center; padding-top: 80px">
+					<div class="h5" style="color: #848383;">
+						Copyright © 2012-2013 微动力营销-改变生活  All Rights Reserved 
+
+					</div>
+				</div>
+
+				<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="text-align: center;">
+					<img src="./resource/wdl04/images/tips.png" style="vertical-align: middle; margin-top: 20%">
+				</div>
+				<!-- /.modal -->
+				<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-body">正在发送中...</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.modal -->
+				<!-- /.modal -->
+			</div>
+		</div>
+	</div>
+
+	<div id="__ind" style="position: absolute; top: 450px; width: 100%; left: 100%; display: none">
+		<div class="container" style="padding-left: 0px; padding-right: 0px">
+			<div id="glass-bg" style="position: absolute; background: url(./resource/wdl04/images/glass-bg.png); width: 170px; height: 170px; top: 0px;">
+			</div>
+			<div id="btng" class="btn-group">
+				<img src="./resource/wdl04/images/0head.png" class="pull-left" style="width: 66px; height: 170px">
+				<button type="button" class="btn" style="background-color: rgba(0, 0, 0, 0); border: 0px solid #000; background: url(./resource/wdl04/images/1-food.png); height: 170px; width: 128px" onClick="javascript:___to2(1)"></button>
+				<button type="button" class="btn" style="background-color: rgba(0, 0, 0, 0); border: 0px solid #000; background: url(./resource/wdl04/images/2-hotel.png); height: 170px; width: 128px" onClick="javascript:___to2(2)"></button>
+				<button type="button" class="btn" style="background-color: rgba(0, 0, 0, 0); border: 0px solid #000; background: url(./resource/wdl04/images/3-house.png); height: 170px; width: 128px" onClick="javascript:___to2(3)"></button>
+				<button type="button" class="btn" style="background-color: rgba(0, 0, 0, 0); border: 0px solid #000; background: url(./resource/wdl04/images/4-store.png); height: 170px; width: 128px" onClick="javascript:___to2(4)"></button>
+				<button type="button" class="btn" style="background-color: rgba(0, 0, 0, 0); border: 0px solid #000; background: url(./resource/wdl04/images/5-play.png); height: 170px; width: 128px" onClick="javascript:___to2(5)"></button>
+				<button type="button" class="btn" style="background-color: rgba(0, 0, 0, 0); border: 0px solid #000; background: url(./resource/wdl04/images/6-medicine.png); height: 170px; width: 128px" onClick="javascript:___to2(6)"></button>
+				<button type="button" class="btn" style="background-color: rgba(0, 0, 0, 0); border: 0px solid #000; background: url(./resource/wdl04/images/7-hair.png); height: 170px; width: 128px" onClick="javascript:___to2(7)"></button>
+				<img src="./resource/wdl04/images/0tail.png" class="pull-right" style="width: 66px; height: 170px">
+			</div>
+
+			<div id="glass" style="cursor: url(./resource/wdl04/images/hand.gif), move; position: absolute; background: url(./resource/wdl04/images/glass.png); width: 170px; height: 170px; top: 0px; z-index: 3" class="ui-draggable">
+			</div>
+		</div>
+		<button type="button" class="btn btn-us" style="position: absolute; top: 30%; left: 85%" onClick="javascript:___to(8)"></button>
+	</div>
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="./resource/wdl04/js/bootstrap.min.js"></script>
+	<script src="./resource/wdl04/js/scrolltotop.js"></script>
+
+<div class="" id="topcontrol" title="回到顶部" style="position: fixed; bottom: 60px; right: 60px; opacity: 0; cursor: pointer;"><a class="btn btn-back" href="javascript:;"></a></div>
+
+<!----------------------------------------------->
+<style>
+.collapse {
+display: block;
+}
+</style>
+<link rel="stylesheet" type="text/css" media="screen" href="css/online.css" />
+<div id="online_qq_layer">
+<div id="online_qq_tab">
+<div class="online_icon">
+<a title="" id="floatShow" style="display:block" href="javascript:void(0);">&nbsp;</a>
+<a title="" id="floatHide" style="display:none" href="javascript:void(0);">&nbsp;</a>
+</div>
+<!--online_icon end--></div>
+<div style="display: none;" id="onlineService">
+<div class="online_windows overz">
+<div class="online_w_top"></div>
+<!--online_w_top end-->
+<div class="online_w_c overz">
+<div class="online_bar collapse" id="onlineSort1">
+<h2><a onClick="changeOnline(1)">售前客服</a></h2>
+<div class="online_content overz" id="onlineType1" style="display: block;">
+<ul class="overz">
+<li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1797061558&amp;site=qq&amp;menu=yes" class="qq_icon">小微</a></li>
+<li>电话：{if !empty($_W['setting']['copyright']['phone'])}{$_W['setting']['copyright']['phone']}{/if}</li>
+
+</ul>
+</div>
+<!--online_content end--></div>
+<!--online_bar end-->
+<div class="online_bar collapse" id="onlineSort2">
+<h2><a onClick="changeOnline(2)">售后客服</a></h2>
+<div class="online_content overz" id="onlineType2" style="display: block;">
+<ul class="overz">
+<li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin={if !empty($_W['setting']['copyright']['qq'])}{$_W['setting']['copyright']['qq']}{/if}&amp;site=qq&amp;menu=yes" class="qq_icon">微信客服</a></li>
+<li>电话：{if !empty($_W['setting']['copyright']['phone'])}{$_W['setting']['copyright']['phone']}{/if}</li>
+</ul>
+</div>
+</div>
+<!--online_bar end-->
+<div class="online_bar collapse" id="onlineSort3">
+<h2><a onClick="changeOnline(3)">电话咨询</a></h2>
+<div class="online_content overz" id="onlineType3" style="display: block;">
+<ul class="overz">
+  <li>电话：{if !empty($_W['setting']['copyright']['phone'])}{$_W['setting']['copyright']['phone']}{/if}</li>
+  <li>电话：{if !empty($_W['setting']['copyright']['phone'])}{$_W['setting']['copyright']['phone']}{/if}</li>
+</ul>
+</div>
+</div>
+<!--online_bar end--></div>
+<!--online_w_c end-->
+<div class="online_w_bottom"></div>
+<!--online_w_bottom end--></div>
+<!--online_windows end--></div>
+</div>
+<script type="text/javascript">
+function showattention(obj){
+document.getElementById(obj).style.display = 'block';
+}
+function closeattention(obj){
+document.getElementById(obj).style.display = 'none';
+}
+/*	function changeOnline(num) {
+if (isNaN(num) && num == "")
+return;
+for (var i = 1; i <=6 ; i++)
+{
+if (i == num)
+{
+$('#onlineSort'+i).attr('class','online_bar expand');
+$('#onlineType'+i).show();
+}
+else
+{z
+$('#onlineSort'+i).attr('class','online_bar collapse');
+$('#onlineType'+i).hide();
+}
+}
+}*/
+
+$(document).ready(function(){
+$("#floatShow").bind("click",function(){
+$('#onlineService').animate({width: 'show', opacity: 'show'}, 'normal',function(){ $('#onlineService').show(); });$('#floatShow').attr('style','display:none');$('#floatHide').attr('style','display:block');
+return false;
+});
+$("#floatHide").bind("click",function(){
+$('#onlineService').animate({width: 'hide', opacity: 'hide'}, 'normal',function(){ $('#onlineService').hide(); });$('#floatShow').attr('style','display:block');$('#floatHide').attr('style','display:none');
+});
+$(document).bind("click",function(event){
+if ($(event.target).isChildOf("#online_qq_layer") == false)
+{
+$('#onlineService').animate({width: 'hide', opacity: 'hide'}, 'normal',function(){ $('#onlineService').hide(); });$('#floatShow').attr('style','display:block');$('#floatHide').attr('style','display:none');
+}
+});
+jQuery.fn.isChildAndSelfOf = function(b){
+return (this.closest(b).length > 0);
+};
+jQuery.fn.isChildOf = function(b){
+return (this.parents(b).length > 0);
+};
+$("#floatShow").click();
+$("#floatHide").click();
+});
+
+
+  </script>
+<!----------------------------------------------->
+</body></html>

@@ -1,0 +1,136 @@
+{template 'common/header'}
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+
+ <link href="./source/modules/commform/template/style/bootstrap-combined.min.css" rel="stylesheet">
+ <link rel="stylesheet" type="text/css" media="screen"
+     href="./source/modules/commform/template/style/bootstrap-datetimepicker.min.css">     
+<body>
+{template 'menu'}
+{php global $_GPC;}
+<div class="main">
+	<form class="form-horizontal form" id="form" name="form" action="" method="post" enctype="multipart/form-data" >
+		
+		<table class="tb">
+			<tr>
+				<th><label for=""><div align="left"><h4><font color="red">{$_GPC['fn']}</font></h4></div>添加表单字段</label></th>
+				<td>
+				<div class="alert alert-block alert-new wrap-item">
+				 <table id="form" class="tb reply-news-edit">
+			      <tbody> 
+			       <tr> 
+			        <th>显示名称：</th>
+			        <td><input type="text" id="displayname" name="displayname" value="" class="px require" style="width:300px;"></td> 
+			       </tr> 
+			        <tr> 
+			        <th>字段名称：</th>
+			        <td><input type="text" id="fieldname" name="fieldname" value="" class="px require" style="width:300px;"></td> 
+			       </tr> 
+			       <tr> 
+			        <th>输入类型：</th>
+			        <td><select name="inputtype" id="inputtype" onchange="inputtypeChange()">
+			        	<option value="text">文本输入框</option>
+			        	<option value="textarea">多行文本输入框</option>
+			        	<option value="select">下拉列表</option>
+			        	</select>
+			        </td> 
+			       </tr>
+			       <tr id="troptions" style="display:none"> 
+			        <th><span class="red"></span>选项：</th>
+			        <td><input type="text" id="options" name="options" value="" class="px require" style="width:300px;"><span id="tips"></span></td> 
+			       </tr>
+			       <tr> 
+			        <th>是否必填：</th>
+			        <td><select name="require" id="require"><option value="1">必填</option><option value="0" selected>不是必填</option></select></td> 
+			       </tr>
+			       <tr> 
+			        <th>是否显示：</th>
+			        <td><select name="display" id="display"><option value="0" >隐藏</option><option value="1" selected>显示</option></select></td> 
+			       </tr>			        
+			       <tr> 
+			        <th>输入限制：</th>
+			        <td><select name="regexSelect" id="regexSelect" onchange="regexChange()">
+			        <option value="">选择常用输入限制</option>
+			        <option value="/^[\x{4e00}-\x{9fa5}]+$/u">汉字</option>
+			        <option value="/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/">邮箱</option>			        
+			        <option value="/^[-\+]?\d+(\.\d+)?$/">小数</option>
+			        <option value="/^[0-9]{4}[0-9]{1,2}[0-3][0-9]$/">日期</option>	
+			        <option value="/^13[0-9]{9}$|^15[0-9]{9}$|^18[0-9]{9}$/">手机</option>			        
+					<option value="/^[0-9]{1,30}$/">正整数</option>
+			        <option value="/^[1-9]\d*|0$/">0或正整数</option>
+			  		<option value="/^[A-Za-z]+$/">英文大小写字符</option>
+			        </select> <input type="text" name="regex" id="regex" value="" class="px" style="width:300px;"> 可以自己编写正则表达式</td> 
+			       </tr>
+			       
+			        <tr> 
+			        <th>排序：</th>
+			        <td><input type="text" name="zindex" id="zindex" value="" class="px" style="width:300px;"></td> 
+			       </tr>
+			       <tr> 
+			        <th><span class="red"></span>错误提示：</th> 
+			        <td nowrap><input type="text" name="errortip" id="errortip" value="" class="px" style="width:300px;"> 输入错误时的提示内容</td> 
+			       </tr>
+			       <tr><th>&nbsp;</th>
+			       <td>
+							<button type="submit" class="btn btn-primary span1" name="submit" value="提交">提交</button>&nbsp;
+							<input type="button" class="btn btn-primary " name="goback" value="返回" onclick="history.go(-1);"/>
+							<input type="hidden" name="fid" value="{$_GPC['fid']}" />
+							<input type="hidden" name="token" value="{$_W['token']}" />
+					</td>
+			       </tr> 
+			      </tbody>
+			      </table>
+			</div>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+
+function inputtypeChange(){
+	if($('#inputtype').attr('value')=='select'){
+		$('#troptions').css("display","");
+		$('#tips').html("下拉列表的各个选项，多个选项用“|”隔开");
+	}else if($('#inputtype').attr('value')=='datetime'){
+		$('#troptions').css("display","");
+		$('#tips').html("输入时间格式 如：Y-m-d G:i:s");
+	}else{
+		$('#troptions').css("display","none");
+	}
+}
+function regexChange(){
+	$('#regex').attr('value',$('#regexSelect').attr('value'))
+}
+</script>
+<script type="text/javascript">
+	var editor = KindEditor.editor({
+		allowFileManager : true,
+		uploadJson : "./index.php?act=attachment&do=upload",
+		fileManagerJson : "./index.php?act=attachment&do=manager",
+		afterUpload : function(url, data) {
+			$("#upload-image-url-thumb").val(data.filename);
+			$("#upload-image-preview-thumb").html('<img src="'+url+'" width="100" />');
+		}
+	});
+	$("#upload-image-thumb").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				imageUrl : $("#upload-image-url-thumb").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var filename = /images(.*)/.exec(url);
+					$("#upload-image-url-thumb").val(filename[0]);
+					$("#upload-image-preview-thumb").html('<img src="'+url+'" width="100" />');
+				}
+			});
+		});
+	});
+</script>
+<script type="text/javascript">
+<!--
+	kindeditor($('.richtext-clone'));
+//-->
+</script>
+		
+{template 'common/footer'}
+

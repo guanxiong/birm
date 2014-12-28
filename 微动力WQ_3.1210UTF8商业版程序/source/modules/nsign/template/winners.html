@@ -1,0 +1,160 @@
+{template 'common/header'}
+<style>
+.sub-search input,.sub-search select{margin-bottom:0;}
+</style>
+    <div class="main">
+	
+		<div class="stat">
+			<div class="stat-div">
+			
+				<div class="navbar navbar-static-top">
+
+					<div class="navbar-inner">
+
+						<span class="brand">中奖名单</span>
+
+					</div>
+
+				</div>
+
+				<div class="sub-item">
+
+					<h4 class="sub-title">搜索</h4>
+
+					<form action="" method="get">
+
+					<input type="hidden" name="act" value="module" />
+
+					<input type="hidden" name="do" value="winners" />
+
+					<input type="hidden" name="name" value="nsign" />
+
+					<input type="hidden" name="id" value="{$rid}" />
+
+					<table class="table sub-search">
+
+						<tr>
+						
+							<th>姓名</th>
+							
+							<td>
+							
+								
+								<input class="span6" name="username" id="" type="text" value="{$_GPC['username']}">
+							</td>
+							
+						</tr>
+						
+						<tr>
+						
+							<th>电话</th>
+							
+							<td>
+							
+								
+								<input class="span6" name="mobile" id="" type="text" value="{$_GPC['mobile']}">
+							</td>
+							
+						</tr>
+
+						<tr>
+
+							<th></th>
+
+							<td><input type="submit" name="" value="搜索" class="btn btn-primary" /></td>
+
+						</tr>
+
+					</table>
+
+					</form>
+
+				</div>
+	
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">详细数据  |  总中奖数:{$total} </h4>
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:5%;" >编号<i></i></th>
+									<th style="width:10%;">姓名<i></i></th>
+									<th style="width:15%;">电话<i></i></th>
+									<th style="width:15%;">奖项<i></i></th>
+									<th style="width:15%;">奖品<i></i></th>
+									<th style="width:20%;">中奖时间<i></i></th>
+									<th style="width:10%;">达到条件<i></i></th>
+									<th style="width:10%;">操作<i></i></th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $row}
+								<tr>
+									<td style="text-align:center;" >{$row['newid']}</td>	
+									<td style="text-align:center;" >{$row['name']}</td>
+									<td style="text-align:center;" >{$row['mobile']}</td>
+									<td style="text-align:center;" >{$row['type']}</td>
+									<td style="text-align:center;" >{$row['award']}</td>
+									<td style="text-align:center;" >{php echo date("Y-m-d H:i:s" , $row['time'] );}</td>
+									<td style="text-align:center;" >{$row['num']}</td>
+									<td style="text-align:center;" >{if $row['status'] == 0}<a href="{php echo $this->createWebUrl('winners', array('id' => $rid, 'wid' => $row['newid'], 'status' => 1))}" class="text-success">发奖</a>{elseif $row['status'] == 1}<a href="{php echo $this->createWebUrl('winners', array('id' => $rid, 'wid' => $row['newid'], 'status' => 0))}" class="text-error">取消发奖</a>{/if}
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr>
+								<td>
+									
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+				{$pager}
+				</div>
+			</div>
+		</div>
+    </div>
+
+<script>
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+});
+</script>
+{template 'common/footer'}

@@ -1,0 +1,116 @@
+{template 'header'}
+<STYLE TYPE="text/css">
+<!--
+body,td,input,select   {font-size:9pt;}
+textarea,input,button  {font-size:9pt;border:1 solid #808080;background-color:#ececec;color:#808080}
+a:hover {text-decoration:underline; color:#ececec;}
+a {text-decoration:none; color:#808080;}
+
+body{overflow:scroll;overflow-x:hidden}
+.popper{position : absolute;visibility : hidden;}
+//-->
+</style>
+<form method="post" action=""  method="post" onsubmit="return formcheck(this);">
+<div class="mobile-submit">
+		<div class="form-item"><a href="{php echo create_url('mobile/module',array('do' => 'wish','weid'=>empty($_GPC['__weid'])?$_GPC['weid']:$_GPC['__weid'],'userid'=>$userid,'name' => 'floater'))}">返回</a></div>
+		<table class="form-table">		
+			<tr>
+				<th><font color="red">*</font>昵称:<font color="red">(必填)</font></th>
+				<td><input type="text" id="nickname" name="nickname" value="" />
+				</td>
+			</tr>
+			<tr>
+				<th><font color="red">*</font>QQ:<font color="red">(必填)</font></th>
+				<td><input type="text" id="qq" name="qq" value="" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" />
+				</td>
+			</tr>			
+			<tr>
+			<th>类别:</th>
+			<td><select name="wishtype" size="1">
+				<option value="" selected>-请选择-</option>
+				<option value="love">恋 爱</option>
+				<option value="study">学 业</option>
+				<option value="health">健 康</option>
+				<option value="family">家 庭</option>
+				<option value="work">事 业</option>
+				<option value="future">将 来</option>
+				<option value="wealth">财 富</option>
+				<option value="life">生 活</option>
+			</select></td>
+		</tr>
+		<tr>
+			<th>地区:</th>
+			<td><SELECT NAME="native">
+				<option value="" selected>-请选择-</option>
+				<option value=北京>北京</option>
+				<option value=上海>上海</option>
+				<option value=天津>天津</option>
+				<option value=重庆>重庆</option>
+				<option value=河北>河北</option>
+				<option value=山西>山西</option>
+				<option value=内蒙古>内蒙古</option>
+				<option value=辽宁>辽宁</option>
+				<option value=吉林>吉林</option>
+				<option value=黑龙江>黑龙江</option>
+				<option value=江苏>江苏</option>
+				<option value=浙江>浙江</option>
+				<option value=安徽>安徽</option>
+				<option value=福建>福建</option>
+				<option value=江西>江西</option>
+				<option value=山东>山东</option>
+				<option value=河南>河南</option>
+				<option value=湖北>湖北</option>
+				<option value=湖南>湖南</option>
+				<option value=广东>广东</option>
+				<option value=广西>广西</option>
+				<option value=海南>海南</option>
+				<option value=四川>四川</option>
+				<option value=贵州>贵州</option>
+				<option value=云南>云南</option>
+				<option value=西藏>西藏</option>
+				<option value=陕西>陕西</option>
+				<option value=甘肃>甘肃</option>
+				<option value=宁夏>宁夏</option>
+				<option value=青海>青海</option>
+				<option value=新疆>新疆</option>
+				<option value=香港>香港</option>
+				<option value=澳门>澳门</option>
+				<option value=台湾>台湾</option>
+				<option value=其它>其它</option>
+			</select></td>
+		</tr>
+		<tr>
+			<th><font color="red">*</font>祈愿内容:<font color="red">(必填)</font></th>
+			<td><textarea name="msg" rows="3"></textarea> 
+				<input type="submit" name="submit" value="祈愿发送" class="btn btn-success btn-large"	style="width: 100%;" >
+				<input type="hidden" name="token" value="{$_W['token']}" />
+				<input type="hidden" name="userid" value="{$_GPC['userid']}" />
+			</td>
+		</tr>
+		</table>
+</div>
+</form>
+<script type="text/javascript">
+<!--
+function formcheck(form) {			 
+	if (form['nickname'].value == '') {
+		alert("昵称不可为空！");
+		return false;
+	}else if(form['qq'].value == '') {
+		alert("QQ不可为空！");
+		return false;
+	}else if(form['wishtype'].value == '') {
+		alert("类别不可为空！");
+		return false;
+	}else if(form['native'].value == '') {
+		alert("地区不可为空！");
+		return false;
+	}else if(form['msg'].value == '') {
+		alert("内容不可为空！");
+		return false;
+	}									
+	return true;
+}
+//-->
+</script>
+{template 'footer'}

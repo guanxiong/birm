@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>酒店详情页</title>
+        <style>
+            body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {margin: 0; padding: 0; font-family: '微软雅黑'; font-weight:normal;}
+            body, button, input, select, textarea {font: 12px/1.5 tahoma,arial,Hiragino Sans GB,宋体;}
+            .clearfix:after { visibility:hidden; display:block; font-size:0; content:" "; clear:both; height:0;}
+            .clearfix { zoom:1;}
+            .clear{ clear:both;}
+            img{ border:none;}
+            a, button {  cursor: pointer;}
+            ol,ul{list-style:none; text-decoration:none;}
+            a:hover{text-decoration:underline}
+
+            #box{width:640px; }
+            .topbar{ background:url({$images_url}topbar_bg.jpg) no-repeat; height:40px;}
+            .menu{ background:url({$images_url}menu_bg.jpg) no-repeat; height:86px;}
+            .main{ background:#f5f5f5; padding-bottom:20px;}
+            .main .header{ background:url({$images_url}hotel_bg.jpg) repeat-x; height:96px; width:640px;}
+            .main .header .back{ background:url({$images_url}btn_title_back.png) no-repeat; width:130px; height:96px; cursor:pointer;}
+            .main .header .back:hover{ background:url({$images_url}btn_title_back_pressed.png) no-repeat; width:130px; height:96px; cursor:pointer;}
+            .main .header div{ float:left; }
+            .main .header .title{ font-size:30px; color:#FFF;  font-family: '微软雅黑'; line-height:96px; width:370px; text-align:center;}
+            .main .header .phone{ background:url({$images_url}icon_phone.png) no-repeat; width:44px; height:44px; margin-top:26px; cursor:pointer; margin-right:30px;}
+            .main .header .phone:hover{ background:url({$images_url}icon_phone_focus.png) no-repeat; width:44px; height:44px; margin-top:26px; cursor:pointer;}
+            .main .header .home{ background:url({$images_url}icon_home.png) no-repeat; width:44px; height:44px; margin-top:26px; cursor:pointer;}
+            .main .header .home:hover{ background:url({$images_url}icon_home_focus.png) no-repeat; width:44px; height:44px; margin-top:26px; cursor:pointer;}
+
+            .name{ margin:20px; width:600px;  }
+            .name h1{font-size:26px; color:#000;  font-family: '微软雅黑'; line-height:50px; font-weight:normal; }
+            .name h2{ color:#666666;  font-family: '微软雅黑';}
+            .dianping{ margin:20px; height:160px; width:600px;}
+            .fenshu, .pic{ float:left;}
+            .fenshu{ width:422px;height:153px; margin-right:20px;border: 2px solid #E6E6E6;background:#FFF;cursor:pointer;}
+            .fen_left{ float:left; width:370px;padding:0px 0px 0px 20px; height:136px;  }
+            .fenshu:hover,.add:hover,.infomation:hover,.all_style:hover{ background:#e4e4e4;}
+            .fen_left .fen,.all{ line-height:75px; font-size:24px; color:#000;  font-family: '微软雅黑'; }
+            .fen{border-bottom:1px dashed #cecece;   width:370px; height:76px; line-height:75px;}
+            .all{ color:#666666; font-size:20px;}
+            .fen_right{ float:right; ; height:153px; width:30px; text-align:center;}
+            .fen_right img{ margin-top:65px;}
+            .pic{ width:153px; height:153px; background:url({$images_url}pic_ying.PNG)  no-repeat; text-align:center;}
+            .nub{position:absolute; margin-left:105px; margin-top: 118px; text-align:center; color:#FFF;  font-size:20px;}
+            .add,.infomation,.all_style{ margin-top:20px; margin-left:20px; width:600px; height:88px; border: 2px solid #E6E6E6;background:#FFF;cursor:pointer;}
+            .infomation,.all_style{ margin-top:0px;  border-top:none;}
+            .add_pic,.add_name,.add_map,.add_arrow,.info_pic,.info_name,.info_map,.info_arrow{ float:left; margin-right:20px;}
+            .add_pic,.info_pic{ margin-left: 20px; margin-top: 35px;}
+            .add_name,.info_name{ width:410px; height:88px; line-height:88px;font-size:24px; color:#666;}
+            .add_map,.info_map{margin-top: 25px; margin-right:20px;}
+            .add_aroow,.info_arrow{margin-top: 32px; margin-right:0px;}
+            .info_name .kaiye{ line-height:60px; height:20px;}
+            .info_img{ height:34px; width:410px;}
+            .info_img li{ height:34px; width:30px; float:left;}
+            .add_name span{ color:#000;}
+            .change_btn,.collect,.share{background:#fdfdfd repeat;border: 2px solid #E6E6E6; color: #666;  height: 60px; line-height:46px;  margin-top:15px; text-align: center;  font-family: '微软雅黑';width: 99px;font-size:20px; }
+            .change_btn:hover,.collect:hover,.share:hover{ background:#ccc repeat;}
+            .box{margin-left:20px; width:600px; height:200px; border: 2px solid #E6E6E6; border-top:none; background:#FFF;cursor:pointer;}
+            .box_left{ float:left; padding:20px 0px 0px 20px; width:170px;}
+            .box_right{ float:left;}
+            .little_name{ font-size:24px; color:#000;  font-family: '微软雅黑'; }
+            .little_all{ color: #666666;  font-size: 20px;font-family: '微软雅黑';}
+            .cu,.xiang,.fan{  border:#1084bc 2px solid;  border-radius: 6px; width:24px; height:24px; color:#1084bc; font-size:20px; line-height:24px; text-align:center;}
+            .xiang,.fan{  border:#ff9913 2px solid; width:100px;  color:#ff9913;}
+            .fan{ width:50px;}
+            .money,.money_little{font-size:28px; color:#ff9913; font-family: '微软雅黑'; text-align:right;}
+            .money_little{ font-size:20px; color:#ff6601;}
+            .book_box{ text-align:right;}
+            .book{background:#ff9913 repeat; border: 0 none;  height: 50px; line-height: 46px;   text-align: center;  width: 120px;font-size:20px; color:#fff;font-family: '微软雅黑';}
+            .book:hover{ background:#fa7d0d;}
+            .all_style{ height:77px; text-align:center; line-height:77px; font-size:20px; color:#666; }
+            .icon_all{background:url({$images_url}icon_arrowx.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0);  display: inline-block;  height: 21px; margin-left: 5px; overflow: hidden; padding-top: 4px; vertical-align: middle; width: 22px;}
+            .footer_bt{ text-align:center; width:640px; height:85px;}
+            .footer_bt .collect,.share{ float:left; width:200px; height:70px; }
+            .footer_bt .collect{ margin-left:90px; margin-right:60px;}
+        </style>
+    </head>
+
+    <body>
+        <div id="box">
+            <!--<div class="topbar"></div>-->
+            <div class="menu"></div>
+            <!--main-->
+            <div class="main">
+                <div class="header">
+                    <div class="back" onclick="javascript:history.go(-1);"></div>
+                    <div class="title">酒店详情</div>
+                    <div class="phone" onclick='location.href ="tel:{$reply['phone']}"'></div>
+                    <div class="home" onclick="location.href = 'index.html'"></div>
+                </div>
+                <div class="name">
+                    <h1>{$reply['title']}</h1>
+                    <h2>三星级酒店</h2>
+                </div>
+                <div class="dianping">
+                    <div class="fenshu">
+                        <div class="fen_left">
+                            <div class="fen">3.5分 221人点评</div>
+                            <div class="all">环境5.0 卫生3.0 服务3.0 设施3.0</div>
+                        </div>
+                        <div class="fen_right"><img width="20" height="20" src="{$images_url}icon_arrow.png"></div>
+                    </div>
+                    <div class="pic">
+                        <!--a href="#"><div class="nub" >78张</div></a--><img src="{php echo img_url($reply['thumb'])}" width="148" height="148" />
+                    </div>
+                </div>
+                <div class="add">
+                    <div class="add_pic"><img src="{$images_url}icon_destination_act_detail_location.png" width="22" height="24" /></div>
+                    <div class="add_name">{$reply['address']}</div>
+                    <div class="add_map"><a href="http://api.map.baidu.com/geocoder?address={$reply['address']}&output=html"><img src="{$images_url}icon_hotel_map.png" width="56" height="36" /></a></div>
+                    <div class="add_aroow"><img src="{$images_url}icon_arrow.png" width="20" height="20" /></div>
+                </div>
+                <a href="{php echo $this->createMobileUrl('about', array('rid' => $rid));}">
+                <div class="infomation">
+                    <div class="info_pic"><img src="{$images_url}icon_hoteldetail_hotel.png" width="22" height="24" /></div>
+                    <div class="info_name">
+                        <div class="kaiye">2007年开业</div>
+                        <!--<ul class="info_img">-->
+                            <!--<li><img src="{$images_url}icon_hoteldetail_internet.png" width="20" height="20" /></li>-->
+                            <!--<li><img src="{$images_url}icon_hotel_room_wifi.png" width="20" height="20" /></li> -->
+                            <!--<li><img src="{$images_url}icon_hotel_breakfast_small.png" width="20" height="20" /></li>-->
+                            <!--<li><img src="{$images_url}icon_hotel_room_park.png" width="20" height="20" /></li>-->
+                        <!--</ul>-->
+                    </div>
+                    <div class="info_map"><img src="{$images_url}icon_hotel_detail.png" width="56" height="36" /></div>
+                    <div class="info_arrow"><img src="{$images_url}icon_arrow.png" width="20" height="20" /></div>
+                </div>
+                </a>
+                <!--<div class="add">-->
+                    <!--<div class="add_pic"><img src="{$images_url}icon_date_hotel.png" width="22" height="24" /></div>-->
+                    <!--<div class="add_name">入住 <span>04-02</span> 离店 <span>04-07</span></div>-->
+                    <!--<button class="change_btn"  onclick="location.href = '#.html'">修改</button>-->
+                <!--</div>-->
+
+                {loop $rooms $item}
+                <!--box开始-->
+                <div class="box">
+                    <div class="box_left"><img src="{$images_url}info_pic.jpg" width="150" height="150" /></div>
+                    <div class="box_right">
+                        <table width="409" height="164" border="0" style="margin-top:10px;">
+                            <tr>
+                                <td height="54" colspan="2" class="little_name">{$item['style']}</td>
+                                <td colspan="2" class="money">¥ {$item['cprice']}元</td>
+                                <td width="42" rowspan="3" style=" text-align:center;"><img src="{$images_url}icon_arrow.png" width="20" height="20" /></td>
+                            </tr>
+
+                            <tr>  
+                                <td height="54" colspan="2" class="little_all">无早 大床/双床 <span>预付</span></td>
+                                <td colspan="2" class="book_box"><button class="book"  onclick="location.href = '{php echo $this->createMobileUrl('order', array('id' => $item['id'],'rid' => $item['rid']));}'">预定</button></td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <!--box结束-->
+                {/loop}
+
+
+<!--                <div class="all_style">展开全部房型<i class="icon_all"></i></div>--> 
+                <div class="footer_bt">
+                    <button class="collect">收藏</button>
+                    <button class="share">分享</button>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <!--main-->
+        </div>
+    </body>
+</html>

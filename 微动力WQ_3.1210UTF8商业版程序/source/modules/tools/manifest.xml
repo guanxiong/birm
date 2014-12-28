@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[便民小工具]]></name>
+		<identifie><![CDATA[tools]]></identifie>
+		<version><![CDATA[1.0.0]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[69个实用查询小工具]]></ability>
+		<description><![CDATA[69个实用查询小工具]]></description>
+		<author><![CDATA[紫气东来]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="封面设置" do="fm" state="" direct="false" />
+		</cover>
+	</bindings>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

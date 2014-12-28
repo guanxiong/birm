@@ -1,0 +1,16 @@
+<table class="table table-hover">
+	<tbody>
+		{if empty($ds)}
+		<tr>
+			<td>暂时无场景，<a href="{php echo $this->createWeburl('manager')}">添加场景</a></td>
+		</td>
+		{else}
+		{loop $ds $item}
+		<tr>
+			<td title="{$item['reply_description']}">{$item['reply_title']}</td>
+			<td style="width:80px;"><a href="javascript:;" onclick='select_entry({php echo json_encode($item['entry']);})'>添加</a></td>
+		</tr>
+		{/if}
+		{/loop}
+	</tbody>
+</table>

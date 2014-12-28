@@ -1,0 +1,260 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">微预约订单设置</h4>
+	<table>
+		<tbody>
+				{if $reply['status']}
+					<a id="jinyong" href="{php echo create_url('index/module', array('do' => 'status', 'name' => 'weidim','rid' => $reply['rid'], 'status' => 0))}" onclick="return ajaxopen(this.href)" class="btn btn-primary module-button-switch">禁用</a>
+				{else}
+					<a id="qiyong" href="{php echo create_url('index/module', array('do' => 'status', 'name' => 'weidim','rid' => $reply['rid'], 'status' => 1))}" onclick="return ajaxopen(this.href);" class="btn btn-danger module-button-switch">启用</a>
+				{/if}			
+			<!--<tr>
+				<th><a href="{php echo create_url('mobile/module', array('do' => 'weidim', 'name' => 'weidim', 'id' => $reply['rid']))}">查看预约表单</a></th>
+				<td><a href="{php echo create_url('site/module', array('do' => 'weidimlist', 'name' => 'weidim', 'id' => $reply['rid']))}">查看预约名单</a></td>
+			</tr>-->
+			<tr>
+				<th>预约标题</th>
+				<td><input type="text" name="title" value="{$reply['title']}"> </td>
+			</tr>
+			<tr>
+				<th>预约活动时间</th>
+				<th><button style="margin:0;" class="btn span5" id="date-range" type="button"><span class="date-title">从{php echo date('Y-m-d', $reply['start_time'])} 至 {php echo date('Y-m-d', $reply['end_time'])}</span> <i class="icon-caret-down"></i></button>
+				<input name="start_time" type="hidden" value="{php echo date('Y-m-d', $reply['start_time'])}"/>
+				<input name="end_time" type="hidden" value="{php echo date('Y-m-d', $reply['end_time'])}"/></th>
+			</tr>
+			<tr>
+				<th>图文消息图片</th>
+				<td>
+					<div id="" class="uneditable-input reply-edit-cover">
+						<div class="detail">
+							<span class="pull-right">大图片建议尺寸：640像素 * 320像素</span>
+							<input type="button" id="weidim-picture" fieldname="picture{$namesuffix}" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+							<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'weidim-picture-value')" style="{if empty($reply['picture'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+						</div>
+						{if !empty($reply['picture'])}
+						<input type="hidden" name="picture-old" value="{$reply['picture']}">
+						<div id="upload-file-view" class="upload-view">
+							<input type="hidden" id="weidim-picture-value" value="{$reply[picture]}">
+							<img width="100" src="{$_W['attachurl']}{$reply['picture']}">&nbsp;&nbsp;
+						</div>
+						{else}
+						<div id="upload-file-view"></div>
+						{/if}
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>订单详情</th>
+				<td>
+					<textarea style="height:200px; width:535px;" name="description" class="span7 richtext-clone" cols="70">{$reply['description']}</textarea>
+					<div class="help-block">用于图文显示的简介</div>
+				</td>
+			</tr> 
+			<tr>
+				<th>订单页头部图片</th>
+				<td>
+					<div id="" class="uneditable-input reply-edit-cover">
+						<div class="detail">
+							<span class="pull-right">大图片建议尺寸：640像素 * 320像素</span>
+							<input type="button" id="user-headimage" fieldname="headimage{$namesuffix}" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />							
+							<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'user-headimage-value')" style="{if empty($reply['headimage'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+						</div>
+						{if !empty($reply['headimage'])}
+						<input type="hidden" name="headimage-old" value="{$reply['headimage']}">
+						<div id="upload-file-view" class="upload-view">
+							<input type="hidden" id="user-headimage-value" value="{$reply['headimage']}">
+							<img width="100" src="{$_W['attachurl']}{$reply['headimage']}">&nbsp;&nbsp;
+						</div>
+						{else}
+						<div id="upload-file-view"></div>
+						{/if}
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>预约地址</th>
+				<td>
+				    <input type="text" name="address" value="{$reply['address']}">					
+					<div class="help-block">接待预约用户的地址(根据不同的类型, 可以是商家地址、店铺地址、学校地址等等)</div>
+				</td>
+			</tr>
+			<tr>
+				<th>预约电话</th>
+				<td>
+					<input type="text" name="tel" value="{$reply['tel']}">
+					<div class="help-block">接收预约的电话号码，如：0755-88889999。</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="list">
+
+
+<table id="append-list" class="table table-bordered table-hover dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>字段类型</th>
+                                                <th>字段名称</th>
+                                                <th>初始内容</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="orderbody">
+	{if !empty($items)}
+		{php $t=1;}
+		{loop $items $item}				
+		{php include $this->template('weidim/item');}
+		{php $t++;}
+		{/loop}		
+	{else}
+	
+                                           <tr id="line1">
+                                                <td><select name="item-type-new[1]" readonly="readonly" style="width:100px;">
+													<option value="0"  selected="selected">单行文本</option>
+													<option value="1">多行文本</option>
+													<option value="2">日期列表</option>
+													<option value="3" >下拉选项</option>
+													<select>
+												</td>
+                                                <td>
+                                                    <input name="item-fieldname-new[1]" type="text" class="" value="联系人" readonly="readonly"></td>
+                                                <td>
+                                                    <input name="item-fieldcontent-new[1]" type="text" class="wizard-ignore" value="请输入您的名字" readonly="readonly"></td>
+
+                                                <td>默认<input type="hidden" value="1" name="item-isdefault-new[1]" /><input type="hidden" value="1" name="item-orderid-new[1]" /></td>
+                                            </tr>
+                                            <tr id="line2">
+                                                <td><select name="item-type-new[2]" readonly="readonly" style="width:100px;">
+													<option value="0"  selected="selected">单行文本</option>
+													<option value="1">多行文本</option>
+													<option value="2">日期列表</option>
+													<option value="3" >下拉选项</option>
+													<select>
+												</td>
+                                                <td>
+                                                    <input name="item-fieldname-new[2]" type="text" class="wizard-ignore" value="联系电话" readonly="readonly"></td>
+                                                <td>
+                                                    <input name="item-fieldcontent-new[2]" type="text" class="wizard-ignore" value="请输入您的电话" readonly="readonly"></td>
+
+                                                <td>默认<input type="hidden" value="1" name="item-isdefault-new[2]" /><input type="hidden" value="2" name="item-orderid-new[2]" /></td>
+                                            </tr>
+											<tr id="line3">
+                                                <td><select name="item-type-new[3]" style="width:100px;">
+													<option value="0">单行文本</option>
+													<option value="1">多行文本</option>
+													<option value="2">日期列表</option>
+													<option value="3" >下拉选项</option>
+													<select>
+												</td>
+                                                <td>
+                                                    <input name="item-fieldname-new[3]" type="text" class="wizard-ignore" value="预约人数"></td>
+                                                <td>
+                                                    <input name="item-fieldcontent-new[3]" type="text" class="wizard-ignore" value="请输入预约人数"></td>
+
+                                                <td><a href="javascript:;" onclick="deleteItem(3)">删除</a><input type="hidden" value="0" name="item-isdefault-new[3]" /><input type="hidden" value="3" name="item-orderid-new[3]" /></td>
+                                            </tr>
+											<tr id="line4">
+                                                <td><select name="item-type-new[4]" style="width:100px;">
+													<option value="0">单行文本</option>
+													<option value="1">多行文本</option>
+													<option value="2">日期列表</option>
+													<option value="3" selected="selected">下拉选项</option>
+													<select>
+												</td>
+                                                <td>
+                                                    <input name="item-fieldname-new[4]" type="text" class="wizard-ignore" value="性别"></td>
+                                                <td>
+                                                    <input name="item-fieldcontent-new[4]" type="text" class="wizard-ignore" value="男|女"></td>
+
+                                                <td><a href="javascript:;" onclick="deleteItem(4)">删除</a><input type="hidden" value="0" name="item-isdefault-new[4]" /><input type="hidden" value="4" name="item-orderid-new[4]" /></td>
+                                            </tr>											 
+                                            <tr id="line5">
+                                                <td><select name="item-type-new[5]" readonly="readonly" style="width:100px;">
+													<option value="0">单行文本</option>
+													<option value="1" selected="selected">多行文本</option>
+													<option value="2">日期列表</option>
+													<option value="3" >下拉选项</option>
+													<select>
+												</td>
+                                                <td>
+                                                    <input name="item-fieldname-new[5]" type="text" value="留言" readonly="readonly"></td>
+                                                <td>
+                                                    <input name="item-fieldcontent-new[5]" type="text" value="请留言" readonly="readonly"></td>
+
+                                                <td>默认<input type="hidden" value="1" name="item-isdefault-new[5]" /><input type="hidden" value="100" name="item-orderid-new[5]" /></td>
+                                            </tr>
+	{php $t=6;}
+	{/if}
+                                        </tbody>
+                                    </table>
+	</div>
+	<div class="reply-news-edit-button"><a href="javascript:void(0)" id="newline" class="btn"><i class="icon-plus"></i> 添加新字段</a></div>
+</div>
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script type="text/javascript">
+	$('#qiyong, #jinyong').click(function () {
+	setTimeout("history.go(0)",500);	
+	});	
+kindeditor($('.richtext-clone'));
+kindeditorUploadBtn($('#weidim-picture'));
+kindeditorUploadBtn($('#user-headimage'));
+
+function deleteItem(index){
+	$("#line" + index).remove();
+}
+	var cindex = {$t};
+	$("#newline").bind("click", function(){
+		
+		var html = '<tr id="line' + cindex +'">';
+		html += '<td><select name="item-type-new[' + cindex +']" style="width:100px;"><option value="0">单行文本</option><option value="1">多行文本</option><option value="2">日期列表</option><option value="3">下拉选项</option><select></td>';
+		html += '<td><input type="text"  value="" name="item-fieldname-new[' + cindex +']"></td>';
+		html += '<td><input type="text" value="" name="item-fieldcontent-new[' + cindex +']"></td>';
+		html += '<td><p><a href="javascript:;" onclick="deleteItem(' + cindex + ')">删除</a></p><input type="hidden" value="0" name="item-isdefault-new[' + cindex +']" /><input type="hidden" value="' + cindex +'" name="item-orderid-new[' + cindex +']" /></td>';
+		html += '</tr>';
+		$("#orderbody").find("tr:last").before(html);
+		
+		cindex++;
+	});
+
+	$('#date-range').daterangepicker({
+        format: 'YYYY-MM-DD',
+        startDate: $(':hidden[name=start_time]').val(),
+        endDate: $(':hidden[name=end_time]').val(),
+        locale: {
+            applyLabel: '确定',
+            cancelLabel: '取消',
+            fromLabel: '从',
+            toLabel: '至',
+            weekLabel: '周',
+            customRangeLabel: '日期范围',
+            daysOfWeek: moment()._lang._weekdaysMin.slice(),
+            monthNames: moment()._lang._monthsShort.slice(),
+            firstDay: 0
+        }
+    }, function(start_time, end_time){
+        $('#date-range .date-title').html(start_time.format('YYYY-MM-DD') + ' 至 ' + end_time.format('YYYY-MM-DD'));
+        $(':hidden[name=start_time]').val(start_time.format('YYYY-MM-DD'));
+        $(':hidden[name=end_time]').val(end_time.format('YYYY-MM-DD'));
+    });
+
+function add_row() {
+	$.getJSON('{php echo create_url('index/module/formdisplay', array('name' => 'weidim'))}', function(data){
+		if (data.error === 0 && data.content.html != '') {
+			$('#append-list').append(data.content.html);
+			row = $('#'+data.content.id);
+		}
+	});
+}
+//字段类型切换
+$("#append-list").delegate("#award-inkind input", "click", function(){
+	if($(this).val() == 0) {
+		$(this).parents(".item").find(".num").css("display", "none");
+		$(this).parents(".item").find("tr:eq(3),tr:eq(4)").show();
+	} else {
+		$(this).parents(".item").find(".num").css("display", "inline-block");
+		$(this).parents(".item").find("tr:eq(3),tr:eq(4)").hide();
+	}
+});
+</script>

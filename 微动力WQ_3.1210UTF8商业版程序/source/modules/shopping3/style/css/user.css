@@ -1,0 +1,24 @@
+body *{font-size:14px;}
+
+#header{background:#1C2628; height:40px;}
+#header ul li{float:left; height:40px; width:33%; text-align:center; background:url(../images/user/bg.png) -310px -303px no-repeat;}
+#header ul li a{display:block; width:21px; height:21px; margin:0 auto; margin-top:10px; background:url(../images/user/bg.png) 1px -92px no-repeat; cursor:pointer;}
+#header ul li.first{background:none;}
+#header ul li.home a{background-position:-21px -92px;}
+#header ul li.tel a{background-position:-43px -92px;}
+#header ul li.lbs a{background-position:-65px -92px;}
+
+#user_form{width:95%; margin:10px auto; clear:both;}
+#user_form *{text-decoration:none;}
+#user_form .tips{margin-bottom:10px; color:#888; background:#ddd; height:28px; line-height:28px; text-align:center; border-radius:5px;}
+#user_form h1{font-size:20px; font-weight:bold; padding-bottom:10px;}
+#user_form .reg{padding-bottom:20px;}
+#user_form .reg a{display:block; height:40px; line-height:40px; text-align:center; font-size:20px; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; background:#FEAC00; border:1px solid #F57F01; background-image:linear-gradient(bottom, #FE7002 0, #FEAC00 100%); background-image:-moz-linear-gradient(bottom, #FE7002 0, #FEAC00 100%); background-image:-webkit-linear-gradient(bottom, #FE7002 0, #FEAC00 100%); box-shadow:0 1px 0 #FEBE3A inset, 0 1px 2px rgba(0,0,0,0.5); border-radius:5px; color:#fff; text-shadow:0 1px rgba(0,0,0,0.2); text-decoration:none;}
+#user_form .input{padding-bottom:12px;}
+#user_form .input input{height:40px; line-height:40px; border:1px solid #ddd; border-radius:5px; width:100%; text-indent:5px; font-size:16px;}
+#user_form .input select{width:33.3%; height:40px; border:1px solid #ddd; border-radius:5px; padding:5px; background:#fff; color:#a1a1a1;}
+#user_form .submit input{height:40px; line-height:40px; width:100%; text-align:center; font-size:20px; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; background:#F00019; border:1px solid #c10001; background-image:linear-gradient(bottom, #E20018 0, #DC3749 100%); background-image:-moz-linear-gradient(bottom, #E20018 0, #DC3749 100%); background-image:-webkit-linear-gradient(bottom, #E20018 0, #DC3749 100%); box-shadow:0 1px 0 #D95260 inset, 0 1px 2px rgba(0,0,0,0.5); border-radius:5px; color:#fff; text-shadow:0 1px rgba(0,0,0,0.2);}
+
+#user_form .userinfo{border:1px solid #ddd; border-radius:5px; margin-bottom:8px; padding:8px; height:134px; overflow:hidden;}
+#user_form .userinfo .img{float:left; width:132px; line-height:132px; border:1px solid #eee; background:#f7f7f7; color:#888; text-align:center; overflow:hidden;}
+#user_form .userinfo .nickname{float:left; margin-left:8px;}

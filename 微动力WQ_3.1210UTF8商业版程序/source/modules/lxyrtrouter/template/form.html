@@ -1,0 +1,29 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加认证信息</h4>
+	<table>
+		<tbody>
+		
+			<tr>
+				<th>连接成功提示</th>
+				<td><textarea name="oktip" rows="5" class="span7" id="oktip" >{$reply['oktip']}</textarea>
+			  <div class="help-block">路由器认证正常提示下一步操作信息，{url}表示认证网页的放置位置,{key}表示动态验证码的放置位置。例如：本机上网请{url}，如其他设备上网，请在设备登陆界面输入验证码:{key}（验证码有效期10分钟。）<a class="iconEmotion" href="javascript:;" inputid="enter-tips"><i class="icon-github-alt"></i> 表情</a></div>
+              </td>
+			</tr>
+            
+            <tr>
+				<th>选择路由器</th>
+				<td><select name="routerid" id="routerid"   >
+				  
+				{loop $routerlist $ls}          
+					
+				  <option {if $reply['routerid']==$ls['id']} selected="selected"{/if} value="{$ls['id']}" >{$ls['rname']}</option>				  				    
+				{/loop}
+			    
+			    </select></td>
+			</tr>
+
+		</tbody>
+	</table>
+</div>

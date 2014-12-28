@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>QuickBox</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+
+<script src="./source/modules/quickmusic/script/jquery-2.0.0.min.js"></script>
+<script src="./source/modules/quickmusic/script/jquery.lyrics.js?ver=5"></script>
+<script src="./source/modules/quickmusic/script/common.js?ver=5"></script>
+<style>
+body, * {
+	margin:0px;
+	padding:0px;
+}
+
+body{
+	background-color:#000;
+	background: url("{php echo $this->getBackgroundPicUrl($tape['background'])}") no-repeat;
+	background-size: 100% auto;
+	margin:0;
+	font-family: "simsun",Verdana, "Lucida Grande", Arial, Helvetica, sans-serif; sans-serif;
+	font-size:12px;
+}
+
+.qb_container {
+	width: 100%;
+	height:100%;
+	background-size: 100%;
+	margin-top:100px;
+}
+
+.qbox {
+	width:300px;
+	height:300px;
+	margin:0px auto;
+	background: url("./source/modules/quickmusic/images/default_cover_pic.jpg") no-repeat;
+	position:relative;
+}
+
+.cover {
+	width:300px;
+	height:300px;
+	background: url("./source/modules/quickmusic/images/cover_pic2.jpg") no-repeat;
+}
+
+.switch {
+	position:absolute;
+	right:20px;
+	top:20px;
+	width:30px;
+	height:30px;
+	background: url("./source/modules/quickmusic/images/list.png") no-repeat;
+	background-size:30px 30px;
+	z-index:1000;
+}
+.bottombg {
+	bottom:0px;
+	width:300px;
+	height:150px;
+	position:absolute;	
+	background: url("./source/modules/quickmusic/images/playbg.png");
+	background-size: 300px 150px;
+	overflow: hidden;
+
+}
+
+.title {
+	position: absolute;
+	width:100%;
+	text-align: center;
+	font-size:15pt;
+	bottom:90px;
+	color:#fff;
+}
+
+.singer {
+	position: absolute;
+	width:100%;
+	text-align: center;
+	font-size: 10pt;
+	bottom:70px;
+	color:#fff;	
+}
+
+.progress {
+	width:280px;
+	height:10px;
+	margin:0px auto;
+	position: absolute;
+	left:10px;
+	bottom:50px;
+}
+
+.staticbar, .bufferbar, .dynamicbar {
+	border-radius: 3px;
+	position:absolute;
+	left:0px;
+}
+
+.staticbar {
+	width:100%;
+	height:100%;
+	background-color: #333;
+
+}
+
+.bufferbar {
+	width:0%;
+	height:100%;
+	background-color: #444;
+}
+
+.dynamicbar {
+	width:0%;
+	height:100%;
+	background-color: #fff;
+}
+
+
+.control {
+	position:absolute;
+	bottom:10px;
+	width:100%;
+	height:30px;
+}
+.control div {
+	cursor:pointer;
+}
+
+.prevbtn, .nextbtn, .playbtn, .pausebtn {
+	position: absolute;
+	width:30px;
+	height:30px;
+}
+
+.prevbtn {
+	left:50px;
+	background: url("./source/modules/quickmusic/images/prevbtn.png") no-repeat;
+	background-size: 30px 30px;
+
+}
+
+.nextbtn {
+	right:50px;
+	background: url("./source/modules/quickmusic/images/nextbtn.png") no-repeat;
+	background-size: 30px 30px;
+
+}
+
+.playbtn {
+	left:135px;
+	background: url("./source/modules/quickmusic/images/play.png") no-repeat;
+	background-size: 30px 30px;
+}
+
+.pausebtn {
+	left:135px;
+	background: url("./source/modules/quickmusic/images/pausebtn.png") no-repeat;
+	background-size: 30px 30px;
+}
+
+.lyrics_box {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 300px;
+  width: 300px;
+}
+
+.lyrics {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 300px;
+	width: 300px;
+	margin: 0px auto;
+	overflow: hidden;
+  padding:0px 14px 4px 14px;
+
+	background: white; /* 为较旧的或者不支持的浏览器设置备用属性 */
+	background: -moz-linear-gradient(top, #000, white 8%);
+	background: -webkit-gradient(linear, 0 0, 0 8%, from(#000), to(white));
+	border-top: 0px solid white;
+}
+
+
+#lyrics ul{
+  list-style-type: none;
+}
+
+#lrc_list li {
+  font-size:16px;
+}
+.hover {
+	color:red;
+	font-weight:bold;
+}
+
+</style>
+
+
+</head>
+<body>
+
+<div class="qb_container">
+	<div class="qbox">
+		<!-- 封面 -->
+		<div class="cover" id="cover">
+			<div class="switch" onclick="switch_lyrics();"></div>
+		</div>
+		
+		<div class="bottombg">
+			<!-- 进度条 -->
+			<p class="title" id="song_title">风筝</p>
+			<p class="singer" id="song_singer">孙燕姿</p>
+
+			<div class="progress">
+				<div class="staticbar"></div>
+				<div id="bufferbar" class="bufferbar"></div>
+				<div id="dynamicbar" class="dynamicbar"></div>
+			</div>
+			<!-- 控制按钮 -->
+			<div class="control">
+				<div class="prevbtn" onclick="prev_song();"></div>
+				<div class="playbtn" id="playbtn" onclick=""></div> <!-- action bind in js -->
+				<div class="nextbtn" onclick="next_song();"></div>
+			</div>
+		</div>
+		<div class="lyrics_box" id="lyrics_box" style="display:none">
+		<div class="switch" onclick="switch_lyrics();"></div>
+			<div class="lyrics" id="lyrics">
+			<ul id="lrc_list" style="list-style-type:none;"><!--这里就是将要显示歌词的地方--></ul>
+		</div>
+		</div>
+	</div>
+</div>
+
+ <audio id="song_player" src="" preload="auto" autoplay="autoplay"></audio>
+
+
+{php $song_id = 0;}
+{loop $list $song}
+<textarea id="lyrics-{$song_id}" style="display:none">{$song['lyrics']}</textarea>	
+{php $song_id += 1; }
+{/loop}
+
+
+<script>
+
+var songs = [
+{php $song_id = 0;}
+{loop $list $song}
+	{
+		lyrics: $("#lyrics-{$song_id}").val(), 
+		title: "{$song['title']}",
+		singer:"{$song['author']}",
+		url:"{php echo strpos($song['url'], 'http://') === FALSE ? $_W['attachurl'] . $song['url'] : $song['url']}",
+		cover:"{php echo $this->getPicUrl($song['cover'])}"
+	},
+{php $song_id += 1; }
+{/loop}
+];
+
+var open_id = "";
+var cur_song_idx = 0;
+
+$(function() {
+	initsite();
+	player.init('#song_player');
+	play();
+});
+
+function next_song() {
+	cur_song_idx = (songs.length + cur_song_idx + 1) % songs.length;
+	play_song(songs[cur_song_idx]);
+}
+
+function prev_song() {
+	cur_song_idx = (songs.length + cur_song_idx - 1) % songs.length;
+	play_song(songs[cur_song_idx]);
+}
+
+function play() {
+	play_song(songs[cur_song_idx]);
+}
+
+function play_song(song_info) {
+	document.getElementById("song_title").innerHTML = song_info.title;
+	document.getElementById("song_singer").innerHTML = song_info.singer;
+	document.getElementById("song_player").src = song_info.url;
+	$("#cover").css("backgroundImage","url(" + song_info.cover + ")"); 
+	var lyr = song_info.lyrics;
+	$.lrc.start(lyr, player.currentTime);
+}
+
+
+function switch_lyrics() {
+	if ($('#lyrics_box').is(":hidden")) {
+		$('#lyrics_box').show(300);
+	} else {
+		$('#lyrics_box').hide(300);
+	}
+}
+
+</script>
+
+<script type="text/javascript">
+$(function() {
+	//处理固定横向导航条
+	var navbarFixedTop = false, navbarFixedBottom = false;
+	navbarFixedTop = $(".navbar").hasClass("navbar-fixed-top");
+	navbarFixedBottom = $(".navbar").hasClass("navbar-fixed-bottom");
+	if(navbarFixedTop) $("body").css("padding-top", "41px");
+	if(navbarFixedBottom) $("body").css("padding-bottom", "41px");
+});
+
+//对分享时的数据处理
+function _removeHTMLTag(str) {
+	str = str.replace(/<script[^>]*?>[\s\S]*?<\/script>/g,'');
+	str = str.replace(/<style[^>]*?>[\s\S]*?<\/style>/g,'');
+    str = str.replace(/<\/?[^>]*>/g,'');
+    str = str.replace(/\s+/g,'');
+    str = str.replace(/&nbsp;/ig,'');
+    return str;
+}
+function extractUrl(input)
+{
+   // remove quotes and wrapping url()
+   return input.replace(/"/g,"").replace(/url\(|\)$/ig, "");
+}
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	<?php
+		$_share = array();
+		$_share['title'] = (empty($title)) ? $_W['account']['name'] : $title;
+		$_share['link'] = 'http://'.$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '&wxref=mp.weixin.qq.com';
+		$_share['img'] = $_W['siteroot'] . 'source/modules/' . $_GPC['name'] . '/icon.jpg';
+	?>
+	//var _share_img = $('body img:eq(0)').attr("src");
+	//if(typeof(_share_img) == "undefined") _share_img = "{$_share['img']}";
+	//var _share_content = _removeHTMLTag($('body').html()).replace("{$_share['title']}",'');
+  var _share_title = _removeHTMLTag($('#song_title').html());
+  var _share_content = _removeHTMLTag($('#lyrics').html());
+  var _share_img = extractUrl($("#cover").css("background-image"));
+  window.shareData = {
+		"imgUrl": _share_img,
+		"timeLineLink": "{$_share['link']}",
+		"sendFriendLink": "{$_share['link']}",
+		"weiboLink": "{$_share['link']}",
+    "tTitle": _share_title,
+		"tContent":  _share_content,
+    "fTitle": _share_title,
+		"fContent":  _share_content,
+    "wContent":  _share_content
+	};
+
+	// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+		WeixinJSBridge.invoke('sendAppMessage', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.sendFriendLink,
+			"desc": window.shareData.fContent,
+			"title": window.shareData.fTitle
+		}, function (res) {
+			_report('send_msg', res.err_msg);
+		})
+	});
+
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function (argv) {
+		WeixinJSBridge.invoke('shareTimeline', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.timeLineLink,
+			"desc": window.shareData.tContent,
+			"title": window.shareData.tTitle
+		}, function (res) {
+			_report('timeline', res.err_msg);
+		});
+	});
+
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function (argv) {
+		WeixinJSBridge.invoke('shareWeibo', {
+			"content": window.shareData.wContent,
+			"url": window.shareData.weiboLink
+		}, function (res) {
+			_report('weibo', res.err_msg);
+		});
+	});
+}, false);
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+{template 'header'}
+
+             {if $categorylist}
+                <nav id="topnav" class="topnav navbar-fixed-top">
+                    <div class="container">
+                        <ul class="topnav clearfix">
+                            {loop $categorylist $nav}
+                            <li>
+                            <a href='{php echo $this->createMobileUrl('news',array('pcate' => $nav['id']))}'><span>{$nav['name']}</span></a>
+                            </li>
+                            {/loop}
+                        </ul>
+                    </div>
+                </nav>
+                {/if}
+
+    <!-- 暂支持4个吧，下一版本更新 更多分类功能 -->
+    <div class="list news_list mt30">
+    {loop $list $item}
+        <div class="media" style="margin-top:10px;margin-left:10px;">
+            <a class="pull-left" href="{php echo $this->createMobileUrl('detail',array('id' => $item['id']))}">
+                <img class="media-object" src="{$_W['attachurl']}{$item['thumb']}"  width="100" height="62" alt="{$item['title']}">
+            </a>
+            <div class="media-body">
+                <h5 class="media-heading"><a class="pull-left" href="{php echo $this->createMobileUrl('detail',array('id' => $item['id']))}">{$item['title']}</a></h5>
+                <p></p>
+            </div>
+        </div>
+    {/loop}
+    </div>
+
+<script type="text/javascript">
+        var page = 1;
+        // 列表数据返回处理 回填html
+        // var getNewsContentOnlyOutput = function(data) {
+        //     page += 1;
+        //     if (data.list) {
+        //         var tpl = [];
+        //         for (var i = 0; i < data.list.length; i++) {
+        //             var _txtshit = "";
+        //             if (data.list[i].description.length > 150) {
+        //                 _txtshit = data.list[i].description.substring(0, 150) + "...";
+        //             }
+        //             else {
+        //                 _txtshit = data.list[i].description
+        //             };
+        //             // 格式化数据
+        //             jsonp = {
+        //                 title: data.list[i].title,
+        //                 thumb: data.list[i].thumb,
+        //                 desc: _txtshit,
+        //                 createtime: data.list[i].createtime,
+        //                 id: data.list[i].id,
+        //                 loadimg: "{APP_PUBLIC}/img/loadimg.png"
+        //             }
+        //             tpl.push((template("listTpl", jsonp)));
+        //         };
+        //         if (page < 10) {
+        //             $(".more").show();
+        //         } 
+        //         else {
+        //             $(".more").hide();
+        //         };
+        //         tpl = tpl.join("");
+        //         $('.list').append(tpl).find('img').lazyload();
+        //         $('.more').html('<span class="gomore">点击查看更多</span>');
+        //     }
+        //     else{
+        //         $('.more').hide();
+        //     };
+        //     setTimeout(function() {
+        //         $(".loads").hide(); 
+        //     }, 500);
+        // };
+        // require(['jquery','base','lazyLoad','template'],function($){
+        //     var json_url = $('.more').attr('data-ajax');
+        //     M.getlist(json_url,page);
+        //     $('.more').click(function() {
+        //         $(this).html('加载中...');
+        //         M.getlist(json_url,page);
+        //     });
+        //     $('#topnav li').on('click', function() {
+        //         var ccate = $(this).attr('data-ccate');
+        //         var pcate = $(this).attr('data-pcate');
+        //         window.location.href = '{php echo $this->createMobileUrl('news')}&pcate='+pcate+'&ccate='+ccate;
+        //     });
+        // });
+    </script>
+{php $footer_off=1;}
+{template 'footer'}

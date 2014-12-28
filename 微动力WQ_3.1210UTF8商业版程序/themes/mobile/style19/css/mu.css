@@ -1,0 +1,17 @@
+﻿@CHARSET "UTF-8";
+/**********************audio***********************/
+.btn_music{
+    display:inline-block;
+    width:35px;
+    height:35px;
+    background:url('img/NqmD8CDACVdRJQsKrlcgAAAABJRU5ErkJggg==') no-repeat center center;
+    background-size:100% auto;
+    position:fixed;
+    z-index:100;
+    left:15px;
+    top:20px;
+    z-index:9999999;
+}
+.btn_music.on{
+    background-image:url('img/MM6eDvYXLTFMP8EGAB6tfmFGdtWtgAAAABJRU5ErkJggg==');
+}

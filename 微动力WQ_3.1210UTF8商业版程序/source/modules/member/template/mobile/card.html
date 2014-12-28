@@ -1,0 +1,53 @@
+{template 'header'}
+<style>
+body{background:#F9F9F9;}
+.cardsn{position:absolute; color:{$card['color']['number']}; right:20px; bottom:10px; text-shadow:0 1px 0 rgba(255, 255, 255, 0.5); font-size:16px;}
+.cardtitle{position:absolute; right:20px; top:10px; color:{$card['color']['title']}; font-size:16px;}
+.cardlogo{position:absolute; top:10px; left:20px;}
+</style>
+{if !empty($member)}
+<div style="position:relative; margin:10px 5px; max-width:534px; max-height:318px;">
+	<div class="cardsn">卡号：{$member['cardsn']}</div>
+	<div class="cardtitle">{$card['title']}</div>
+	<div class="cardlogo"><img src="{$_W['attachurl']}{$card['logo']}"></div>
+	<img src="{$card['background']['image']}">
+</div>
+{else}
+<div id="profile">
+<form action="" method="post" onsubmit="return checkform(this); return false;">
+<div class="mobile-div img-rounded">
+	<div class="mobile-hd">请填写领卡资料</div>
+	<div class="mobile-content">
+		<table class="form-table">
+		{loop $card['fields'] $item}
+			<tr>
+				<th><label for="">{$item['title']} {if $item['require'] == 1}<span title="必填项" class="text-error">*</span>{/if}</label></th>
+				<td>{php echo tpl_fans_form($item['bind'])}</td>
+			</tr>
+		{/loop}
+		</table>
+	</div>
+</div>
+<div class="mobile-submit">
+	<button type="submit" class="btn btn-success btn-large" style="width:100%;" name="submit" value="提交">提交</button>
+</div>
+<input type="hidden" name="token" value="{$_W['token']}" />
+</form>
+<script type="text/javascript">
+<!--
+	function checkform(form) {
+		{loop $card['fields'] $item}
+			{if !empty($item['require'])}
+			if (form['{$item['bind']}'] && !form['{$item['bind']}'].value) {
+				alert('请填写{$item['title']}项。');
+				return false;
+			}
+			{/if}
+		{/loop}
+		return true;
+	}
+//-->
+</script>
+</div>
+{/if}
+{template 'footer'}

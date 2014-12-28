@@ -1,0 +1,111 @@
+{template 'header'}
+<link type="text/css" rel="stylesheet" href="./source/modules/multisearch/template/mobile/flightsearch/common.css">
+<nav class="navbar navbar-default mynav" role="navigation">
+	<div class="mynav-brand mynav-right">
+		<a href="tel:4008562636"><i class="icon-phone"></i></a>
+	</div>
+	<div class="mynav-brand mynav-left">
+		<a href="#" onclick="history.go(-1);return false;"><i class="icon-chevron-left"></i></a>
+	</div>
+	<p class="mynav-title">查询首页</p>
+</nav>
+<div class="mobile-content">
+	<form class="form-horizontal" method="post" role="form">
+		<div class="form-group">
+			<label class="col-sm-2 title"><i class="icon-angle-right"></i>  始发地</label>
+			<div class="col-sm-10">
+				<span class="form-control input-lg" id="start"></span>
+				<input type="hidden" class="form-control input-lg" name="search[start]" id="start_input">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 title"><i class="icon-angle-right"></i> 目的地</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control input-lg" name="search[end]" id="end_input">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+				<button type="submit" name="submit" value="search" class="btn btn-primary pull-right btn-lg"><i class="icon-search"></i> 查询</button>
+			</div>
+		</div>
+	</form>
+</div>
+<style>
+#citylist_accordion .citylist_cityitem td{width:{php echo 100/3;}%;}
+</style>
+<div id="citylist_accordion" class="panel-group modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="panel">
+		<label class="ui_accordion_header" data-toggle="collapse" data-parent="#citylist_accordion" href="#hot_city">
+			请选择城市
+		</label>
+		<div class="ui_accordion_content collapse in" id="hot_city">
+			<table class="citylist_cityitem">
+				<tbody>
+					<tr>
+						<td>
+							<span class="bgspan1">
+								上海
+							</span>
+						</td>
+						<td>
+							<span class="bgspan1">
+								厦门
+							</span>
+						</td>
+						<td>
+							<span class="bgspan1">
+								大连
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span class="bgspan1">
+								天津
+							</span>
+						</td>
+						<td>
+							<span class="bgspan1">
+								宁波
+							</span>
+						</td>
+						<td>
+							<span class="bgspan1">
+								广州
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span class="bgspan1">
+								深圳
+							</span>
+						</td>
+						<td>
+							<span class="bgspan1">
+								青岛
+							</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script>
+$(function() {
+	var a;
+	$("#start").click(function() {
+		a = "#start";
+		$('#citylist_accordion').modal('toggle');
+	});
+	$("#citylist_accordion").delegate(".bgspan1", "click", function(){
+		$(a).html($.trim($(this).html()));
+		$(a+'_input').val($.trim($(this).html()));
+		$('#citylist_accordion').modal('hide');
+	});
+});
+</script>
+{template 'footer'}

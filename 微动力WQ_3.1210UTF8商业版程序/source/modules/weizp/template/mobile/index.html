@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head time='1398418777'>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    
+    <meta name="description" content=""/>
+    <meta name="keywords" content="" />
+    
+    <title>{$reply['title']}</title>
+
+    <link rel="stylesheet" href="./source/modules/weizp/template/src/css/comm.css" >
+</head>
+<body class="pt">
+<form method="post" action="" id="newthread">
+
+    		<div class="sendInfo">
+            <h4>注册信息</h4>
+            <hr>
+            <input type="hidden" name="token" value="{$_W['token']}" />
+            
+            <div class="sendBorder" style="margin-bottom:10px;">
+            	<input type="text" name="author" value="{$author['author']}" placeholder="姓名" style="border:none;width:100%;">
+            </div>
+             <div class="sendBorder" style="margin-bottom:10px;">
+            	<input type="text" name="phone" value="{$author['phone']}" placeholder="手机" style="border:none;width:100%;">
+            </div>
+             <div class="sendBorder" style="margin-bottom:10px;">
+            	<input type="text" name="qq" value="{$author['qq']}" placeholder="QQ" style="border:none;width:100%;">
+            </div>
+            
+            <div class="sendOperate">                   
+                <div class="operBtn db fr" style="text-align:center;float:none;">
+                	{if empty($author['author'])}
+                    <input type="submit" href="javascript:;" class="sendBtn c1 db" title="" name="submit" id="submitButton" value="注册">
+                    {else}
+                    <input type="hidden" name="uid" value="$author['id']">
+                    <input type="submit" href="javascript:;" class="sendBtn c1 db" title="" name="submit" id="submitButton" value="修改">
+                    {/if}
+                </div>
+            </div>
+    </div>
+
+</form>
+            <div class="topBar">
+    <div class="bottomBarCon">
+        
+        
+        <h2 class="qTitle">{$reply['title']}</h2>
+        {if !empty($author['author'])}
+                <a href="{php echo $this->createMobileUrl('submitzp',array('rid'=>$rid));}" id="mqOption" class="moreC qMore db" style="width:80px;background: -webkit-gradient(linear,0% 0%, 0% 100%, from(#85c429), to(#67a809));height: 34px;padding-top: 0; border: none;margin: 4px;font-size:16px;line-height:34px;">上传作品</a>
+        {/if}
+        </div>
+</div>
+
+
+
+
+</body>
+</html>

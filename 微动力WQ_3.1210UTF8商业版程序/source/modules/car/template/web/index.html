@@ -1,0 +1,216 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="./source/modules/car/style/css/uploadify_t.css" media="all" />
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo create_url('site/module', array('do' => 'index','op'=>'post', 'name' => 'car','weid'=>$weid));}">首页设置</a></li>	
+</ul>
+	<div class="main">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return validate(this);">
+		<h4>汽车频道首页设置</h4><h6>(该设置在“关于我们”显示)</h6>
+		<table class="tb">
+			<tr>
+				<th><label for="">公司名称</label></th>
+				<td>
+					<input type="text" name="title" id="title" class="span5" value="{$theone['title']}" />
+				</td>
+			</tr>
+			<tr>
+				<th>首页店标</th>
+				<td>
+					{php echo tpl_form_field_image('shop_logo', $theone['shop_logo']);}
+					<span class="help-block" style="clear:both">建议图片大小不超过300K(100*100),以免影响展示效果</span>		
+				</td>
+			</tr>				
+			
+			<tr>
+				<th><label for="">公司简介</label></th>
+					<td>
+						<textarea name="description" class="span6" cols="70" style="height:80px">{$theone['description']}</textarea>
+					</td>
+			</tr>
+			<tr>
+				<th><label for="">公司地址</label></th>
+				<td>
+					<input type="text" name="address" id="address" class="span5" value="{$theone['address']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">营业时间</label></th>
+				<td>
+					<input type="text" name="opentime" id="opentime" class="span5" value="{$theone['opentime']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">新车销售、咨询热线</label></th>
+				<td>
+					<input type="text" name="pre_consult" id="pre_consult" class="span5" value="{$theone['pre_consult']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">售后预约热线</label></th>
+				<td>
+					<input type="text" name="aft_consult" id="aft_consult" class="span5" value="{$theone['aft_consult']}" />
+				</td>
+			</tr>
+			
+			<tr>
+				<th><label for="">频道首页幻灯片</label></th>
+				<td>
+					<div id="upimg_main">
+						<div id="file_upload" class="uploadify">
+							<span class="btn btn-file"><span class="fileupload-new" id="file_upload-button">选择图片</span></span><span class="maroon">*</span>
+						</div>		
+						<ul class="ipost-list ui-sortable" id="fileList">
+							{loop $theone['thumb_url'] $row}
+								<li class="imgbox"><a class="thumb_close" href="javascript:void(0)" title="删除"></a>  
+									<input type="hidden" value="{$row}" name="thumb_url[]">
+									<span class="item_box"><img src="{$_W['attachurl']}{$row}"></span>
+								</li>
+							{/loop}
+						</ul>
+						<div id="file_upload_queue" class="uploadifyQueue"></div>
+					</div>
+					<span class="help-block" style="clear:both">建议图片大小不超过300K(640 px*320 px),发布者自己控制尽量不要超过5张，以免影响展示效果</span>																		
+				</td>
+			</tr>	
+			<tr>
+				<th>全部车型背景图</th>
+				<td>
+					{php echo tpl_form_field_image('typethumb', $theone['typethumb']);}
+					<span class="help-block" style="clear:both">建议图片大小不超过300K(315 px * 130px),以免影响展示效果</span>		
+				</td>
+			</tr>				
+			<tr>
+				<th>预约试驾背景图</th>
+				<td>
+					{php echo tpl_form_field_image('yuyue1thumb', $theone['yuyue1thumb']);}
+					<span class="help-block" style="clear:both">建议图片大小不超过300K(315 px * 130px),以免影响展示效果</span>		
+				</td>
+			</tr>				
+			<tr>
+				<th>预约保养背景图</th>
+				<td>
+					{php echo tpl_form_field_image('yuyue2thumb', $theone['yuyue2thumb']);}
+					<span class="help-block" style="clear:both">建议图片大小不超过300K(315 px * 130px),以免影响展示效果</span>		
+				</td>
+			</tr>				
+			<tr>
+				<th>联系销售背景图</th>
+				<td>
+					{php echo tpl_form_field_image('kefuthumb', $theone['kefuthumb']);}
+					<span class="help-block" style="clear:both">建议图片大小不超过300K(315 px * 130px),以免影响展示效果</span>	
+				</td>
+			</tr>				
+			<tr>
+				<th>意见反馈背景图</th>
+				<td>
+					{php echo tpl_form_field_image('messagethumb', $theone['messagethumb']);}
+					<span class="help-block" style="clear:both">建议图片大小不超过300K(315 px * 130px),以免影响展示效果</span>	
+				</td>
+			</tr>				
+			
+			<tr>
+				<th>车主关怀背景图</th>
+				<td>
+					{php echo tpl_form_field_image('carethumb', $theone['carethumb']);}
+					<span class="help-block" style="clear:both">建议图片大小不超过300K(315 px * 130px),以免影响展示效果</span>	
+				</td>
+			</tr>				
+			<tr>
+					<th></th>
+					<td>
+						<input type="hidden"  name="id" value="{$theone['id']}" />
+						<input type="hidden" name="token" value="{$_W['token']}" />
+						<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					</td>
+			</tr>
+				
+		</table>
+		</form>
+<script type="text/javascript">
+	KindEditor.ready(function(K) {
+	var editor = KindEditor.editor({
+		allowFileManager : true,
+		uploadJson : "./index.php?act=attachment&do=upload",
+		fileManagerJson : "./index.php?act=attachment&do=manager",
+ 
+	});
+	$("#file_upload-button").click(function() {
+		editor.loadPlugin("multiimage", function() {
+			editor.plugin.multiImageDialog({
+				imageUrl : $("#upload-image-url-logo").val(),
+				clickFn : function(urlList) {
+						var div =$('#fileList');
+						K.each(urlList, function(i, data) {
+							html='<li class="imgbox"><a class="thumb_close" href="javascript:void(0)" title="删除"></a><input type="hidden" value="'+data.filename+'" name="thumb_url[]"><span class="item_box"><img src="'+data.url+'"></span></li>';
+							div.append(html);
+						});
+						editor.hideDialog();
+					}
+		});
+		});
+	});
+});	
+	$("a.thumb_close").live("click ", function (n) {
+	   $(this).parent().remove();
+	});
+	function validate() {
+		if($.trim($(':text[name="title"]').val()) == '') {
+			message('必须填写公司名称.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="shop_logo"]').val()) == '') {
+			message('请上传首页店标.', '', 'error');
+			return false;
+		}
+		if($.trim($('textarea[name="description"]').val()) == '') {
+			message('必须填写公司简介.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="address"]').val()) == '') {
+			message('必须填写公司地址.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="opentime"]').val()) == '') {
+			message('必须填写营业时间.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="pre_consult"]').val()) == '') {
+			message('必须填写新车销售、咨询热线.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="aft_consult"]').val()) == '') {
+			message('必须填写售后预约热线.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="typethumb"]').val()) == '') {
+			message('请上传车型背景图.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="yuyue1thumb"]').val()) == '') {
+			message('请上传预约试驾背景图.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="yuyue2thumb"]').val()) == '') {
+			message('请上传预约保养', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="kefuthumb"]').val()) == '') {
+			message('请上传销售客服背景图.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="messagethumb"]').val()) == '') {
+			message('请上传意见与建议背景图.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="carethumb"]').val()) == '') {
+			message('请上传车主关怀背景图.', '', 'error');
+			return false;
+		}
+		return true;
+	}
+</script>
+{template 'common/footer'}
+

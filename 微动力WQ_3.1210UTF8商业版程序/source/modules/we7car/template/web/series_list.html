@@ -1,0 +1,43 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('site/module', array('do' => 'Series', 'op'=>'post','name' => 'we7car','weid'=>$_W['weid']))}">添加品牌车系</a></li>	
+	<li  class="active"><a href="{php echo create_url('site/module', array('do' => 'Series', 'name' => 'we7car','weid'=>$_W['weid']))}">品牌车系管理</a></li>	
+</ul>
+	
+	<div class="main">
+		<div class="category">
+ 			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th style="width:10px;"></th>
+						<th style="width:60px;">显示顺序</th>
+						<th style="width:120px;">品牌</th>
+						<th>车系名称</th>
+						<th style="width:80px;">设为显示</th>
+						<th style="width:80px;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+				{loop $list $v} 
+                  <tr>
+						<td></td>
+						<td><input type="text" class="span1" name="listorder" value="{$v['listorder']}"></td>
+						<th>{$seriesArr[$v['bid']]}</th>
+	                    <td><div class="type-parent">{$v['title']}&nbsp;&nbsp;</div></td>
+						<td>{if $v['status']} 显示 {else} 隐藏 {/if}</td>
+						<td><a href="{php echo create_url('site/module', array('do' => 'series','op'=>'post', 'name' => 'we7car','id'=>$v['id']));}">编辑</a>&nbsp;&nbsp;
+						<a href="{php echo create_url('site/module', array('do' => 'series', 'op'=>'del','name' => 'we7car','id'=>$v['id']));}" onclick="return confirm('确认删除此此品牌车系？');return false;">删除</a></td>
+					</tr>
+				{/loop} 
+					<tr>
+						<td></td>
+						<td colspan="7">
+							<a href="{php echo create_url('site/module', array('do' => 'series','op'=>'post', 'name' => 'we7car','id'=>0));}"><i class="icon-plus-sign-alt"></i> 添加汽车品牌车系</a>
+						</td>
+					</tr>
+ 
+				</tbody>
+			</table>
+ 		</div>
+    </div>
+{template 'common/footer'}

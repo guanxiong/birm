@@ -1,0 +1,118 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>信息助手</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <script type="text/javascript" src="./source/modules/sharevote/template/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="./source/modules/sharevote/template/js/jquery.mobile-1.3.2.min.js"></script>
+
+    <link href="./source/modules/sharevote/template/css/jquery.mobile.flatui.min.css" type="text/css" rel="stylesheet">
+    <link href="./source/modules/sharevote/template/css/main.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div data-role="page" data-fullscreen="true">
+    <div data-role="content">
+        <div style="background:#d3d3d3;font-size: 13px;">
+            发布违法、反动投票信息或冒用他人、组织名义发起投票，将依据记录提交公安机关处理，请不要涉及敏感政治话题
+        </div>
+        <form data-ajax="false" action="{php echo create_url('index/module', array('do' => 'send_vote', 'name' => 'sharevote','submit'=>1))}" method="POST" onsubmit="return checkform()">
+            <input type="text" class="title" name="title" placeholder="输入投票标题，直接抛出问题" />
+            <textarea class="add" name="add" placeholder="补充说明，可不填"></textarea>
+            <div data-role="fieldcontain" style="margin-bottom: 10px">
+                <select name="switch" id="switch" data-role="slider">
+                    <option value="on">单选</option>
+                    <option value="off">多选</option>
+                </select>
+            </div>
+            <div class="vote-dv">
+                <input type="text" class="vote" name="vote-1" placeholder="投票选项" />
+                <input type="text" class="vote" name="vote-2" placeholder="投票选项" />
+                <input type="text"  class="vote" name="vote-3"  placeholder="投票选项" />
+                <a data-icon="plus" data-iconpos="right" class="vote-more" data-role="button" onclick="javascript:addvoteitem(this)">添加更多</a>
+            </div>
+            <textarea class="result" name="result" placeholder="投票结果，可不填，投票后显示"></textarea>
+            <input type="text" class="username" name="username" placeholder="留下您的大名" value="{$username}"/>
+            <input type="submit" data-theme="b" value="提交"/>
+            </form>
+    </div>
+    <!--弹出框-->
+    <div data-role="popup" id="notitle-pop"  data-position-to="window"  data-overlay-theme="a" style="width:150px;background: #000000" data-theme="a"  class="ui-corner-all">
+       <font style="color:white;display: block;text-align: center;vertical-align: middle;padding-top:10px;padding-bottom:10px;"> 没有输入投票标题</font>
+    </div>
+    <div data-role="popup" id="voteitem-pop"  data-position-to="window"  data-overlay-theme="a" style="width:150px;background: #000000" data-theme="a"  class="ui-corner-all">
+        <font style="color:white;display: block;text-align: center;vertical-align: middle;padding-top:10px;padding-bottom:10px;"> 至少需要输入两个投票选项</font>
+    </div>
+    <div data-role="popup" id="username-pop"  data-position-to="window"  data-overlay-theme="a" style="width:150px;background: #000000" data-theme="a"  class="ui-corner-all">
+        <font style="color:white;display: block;text-align: center;vertical-align: middle;padding-top:10px;padding-bottom:10px;"> 请署上你的大名</font>
+    </div>
+    <div id="share-pop">
+        <div style="width:100%;float:right;">
+            <div style="width:100%;">
+                <img src="./source/modules/sharevote/template/images/guide.png" style="float:right;width:100%:"/>
+            </div>
+            <div style="height:40px;width:100%;">
+                <a data-role="button" style="height:100%;width:25%;float:right;margin-right:8px;" onclick="javascript:dropshare()">放弃</a>
+                <a data-ajax="false" href="{php echo create_url('index/module', array('do' => 'send_vote', 'name' => 'sharevote'))}" data-role="button" style="height:100%;width:40%;float:right;margin-right:8px;">再发一条</a>
+                <a data-ajax="false" href="{php echo create_url('index/module', array('do' => 'preview_vote', 'name' => 'sharevote','id'=>$vRow['id']))}" data-role="button" style="height:100%;width:25%;float:right;margin-right:8px;">预览</a>
+            </div>
+        </div>
+    </div>
+{if $_GPC['submit']==1 }
+<script>
+    $('#share-pop').show();
+</script>
+{else}
+<script>
+    $('#share-pop').hide();
+</script>
+{/if}
+<script>
+    $(function(){
+
+    });
+
+    var num = 4;
+    function addvoteitem(v){
+        $('.vote-more').prev().after("<input type='text' class='ui-input-text ui-body-c vote' name='vote-"+num+"' placeholder='投票选项' />");
+        num++;
+    }
+    function dropshare(){
+        $('#share-pop').hide();
+    }
+    function checkform(){
+        if($('.title')[0].value == '' || $('.title')[0].value == '输入投票标题，直接抛出问题'){
+                $('#notitle-pop').popup();
+                $('#notitle-pop').popup('open');
+            setTimeout(function(){
+                $('#notitle-pop').popup('close');
+            },2000);
+            return false;
+        }
+        var voteid = 0;
+        $('.vote').each(function(){
+           if($('.vote')[0].value != '' && $('.vote')[0].value != '投票选项') {
+                voteid++;
+           }
+        });
+        if(voteid<2){
+            $('#voteitem-popp').popup();
+            $('#voteitem-pop').popup('open');
+            setTimeout(function(){
+                $('#voteitem-pop').popup('close');
+            },2000);
+            return false;
+        }
+
+        if($('.username')[0].value == '' || $('.username')[0].value == '留下您的大名' ){
+            $('#username-pop').popup();
+            $('#username-pop').popup('open');
+            setTimeout(function(){
+                $('#username-pop').popup('close');
+            },2000);
+            return false;
+        }
+        return true;
+    }
+
+</script>

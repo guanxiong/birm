@@ -1,0 +1,37 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+	<li{if $_GPC['do'] == 'buildlists'} class="active"{/if}><a href="{php echo $this->createWeburl('buildlists');}">楼盘管理</a></li>
+	<li{if $_GPC['do'] == 'buildsub'} class="active"{/if}><a href="{php echo $this->createWeburl('buildsub', array('hid'=>$hid));}">子楼盘管理</a></li>
+	<li{if $_GPC['do'] == 'buildsubadd'} class="active"{/if}><a href="{php echo $this->createWeburl('buildsubadd', array('hid'=>$hid));}">添加子楼盘</a></li>
+</ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="sid" value="{$item['sid']}">
+    <input type="hidden" name="hid" value="{$hid}">
+  <h4>子楼盘基本信息</h4>
+	<table class="tb">
+		<tr>
+			<th width="68">子楼盘名称</th>
+			<td width="222"><input type="text" name="title" value="{$item['title']}" class="span5" />
+		    * 尽量简单，不要超过20字</td>
+		</tr>
+		<tr>
+			<th>显示顺序</th>
+			<td><input type="text" name="sort" value="{$item['sort']}" class="span5" />
+		    * 数值越大越靠前</td>
+		</tr>
+		<tr>
+			<th>子楼盘介绍</th>
+			<td><textarea placeholder="可不填" name="jianjie" id="jianjie" cols="45" rows="5" class="span8">{$item['jianjie']}
+                    &nbsp;</textarea>			  
+		    </td>
+		</tr>
+        <tr>
+			<th>&nbsp;</th>
+			<td>
+            	 <button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+            	 <input type="hidden" name="token" value="{$_W['token']}" /></td>
+		</tr>
+	</table>
+</form>
+{template 'common/footer'}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[极速酒店预订]]></name>
+		<identifie><![CDATA[quickhotel]]></identifie>
+		<version><![CDATA[1.2]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[酒店预订]]></ability>
+		<description><![CDATA[酒店预订]]></description>
+		<author><![CDATA[晓楚]]></author>
+		<url><![CDATA[blog.csdn.net/maray]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+        <cover>
+			<entry title="酒店预订设置" do="quickhotel" />
+        </cover>
+		<menu>
+			<entry title="酒店列表" do="quickhotel" />
+			<entry title="顾客预定" do="reservation" />
+		</menu>
+		<profile>
+			<entry title="我的酒店" do="myquickhotel" />
+		</profile>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE IF NOT EXISTS `ims_quickhotel_reservation` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `quickhotel_id` int(10) unsigned NOT NULL,
+  `room_count` int(10) unsigned NOT NULL,
+  `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_quickhotel_list` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `logo` varchar(255) NOT NULL,
+  `position` varchar(255) NOT NULL,
+  `room` int(11) NOT NULL DEFAULT '0',
+  `price` int(11) NOT NULL DEFAULT '100',
+  `content` text NOT NULL,
+  `createtime` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+	]]></install>
+	<uninstall><![CDATA[
+		
+		DROP TABLE IF EXISTS `ims_quickhotel_list`;
+		DROP TABLE IF EXISTS `ims_quickhotel_reservation`;
+		
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

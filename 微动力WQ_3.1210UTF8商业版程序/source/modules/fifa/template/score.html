@@ -1,0 +1,52 @@
+{template 'common/header'}
+<div class="main">
+	<div style="padding:15px;">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+	<h4>比分设置  -->> {$race['teama']}-{$race['teamb']}</h4>
+	<table>
+		<tbody>
+			
+			
+			
+			<tr>
+				<th>谁赢</th>
+				<td>
+				<select name="whowin">
+						<option value="" >请选择</option>
+						<option value="0" >打平</option>
+						<option value="{$race['groupa']}" >{$race['teama']}</option>
+						<option value="{$race['groupb']}" >{$race['teamb']}</option>
+					</select>
+					<div class="help-block">如果没有结束，请不要选谁赢</div>
+				</td>
+			</tr>
+			<tr>
+				<th>比分</th>
+				<td><input type="text" value="{$race['score']}" class="span1" name="score" >
+					<div class="help-block">比如 ：3:2</div>
+				</td>
+			</tr>
+			
+			<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	</form>
+</div>
+</div>
+<script type="text/javascript">
+kindeditor($('#rule'));
+kindeditor($('#description'));
+
+var fifaHandler = {
+	
+};
+
+
+</script>
+{template 'common/footer'}

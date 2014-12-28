@@ -1,0 +1,48 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo create_url('site/module/Message', array('name'=>'we7car','op'=>'set','weid'=>$weid));}">意见回馈设置</a></li>
+	<li><a href="{php echo create_url('site/module/Message', array('name'=>'we7car','weid'=>$weid));}">意见回馈列表</a></li>
+</ul>
+	<div class="main">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+			<h4>意见回馈设置</h4>
+			<table class="tb">
+				<tr>
+					<th><label for="">显示名称</label></th>
+					<td>
+						<input type="text" name="title" class="span5" value="{$theone['title']}" />
+					</td>
+				</tr>
+				<tr>
+					<th>头部图片</th>
+					<td>
+						{php echo tpl_form_field_image('thumb', $theone['thumb']);}
+					</td>
+				</tr>
+				<tr>
+					<th>是否开启</th>
+					<td>
+						<label class="radio inline"><input type="radio" name="status" value="1"  {if $theone['status'] == 1} checked="true" {/if}> 开启</label>
+						<label class="radio inline"><input type="radio" name="status" value="0" {if $theone['status'] == 0} checked="true" {/if}> 关闭</label>
+					</td>
+				</tr>
+				<tr>
+					<th>是否审核</th>
+					<td>
+						<label class="radio inline"><input type="radio" name="isshow" value="0"  {if $theone['isshow'] == 0} checked="true" {/if}> 是</label>
+						<label class="radio inline"><input type="radio" name="isshow" value="1" {if $theone['isshow'] == 1} checked="true" {/if}>否</label>
+					</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td>
+						<input type="hidden"  name="id" value="{$theone['id']}" />
+						<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					</td>
+				</tr>
+			</table>
+		</form>
+    </div>
+
+{template 'common/footer'}
+

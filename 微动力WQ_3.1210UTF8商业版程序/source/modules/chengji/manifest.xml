@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[正方教务查询]]></name>
+		<identifie><![CDATA[chengji]]></identifie>
+		<version><![CDATA[1.0.0]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[正方教务用来查询成绩,补考,课表,信息等]]></ability>
+		<description><![CDATA[定制模块,所以具体还是要修改的]]></description>
+		<author><![CDATA[Yoby]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[
+	DROP TABLE IF EXISTS `ims_chengji`;
+CREATE TABLE `ims_chengji` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cj_user` varchar(20) DEFAULT NULL,
+  `cj_pass` varchar(64) DEFAULT NULL,
+  `weid` tinyint(3) DEFAULT NULL COMMENT '备用字段微信公众号编号',
+  `num` int(10) DEFAULT NULL COMMENT '备用查询次数',
+  `from_user` varchar(256) DEFAULT NULL,
+  `createtime` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

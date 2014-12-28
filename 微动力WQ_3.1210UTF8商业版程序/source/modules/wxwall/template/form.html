@@ -1,0 +1,86 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加微信墙</h4>
+	<table>
+		<tbody>
+			{if $reply['rid']}
+			<tr>
+				<th>查看内容</th>
+				<td><a href="{php echo $this->createWebUrl('detail', array('id' => $reply['rid']))}" target="_blank">查看内容</a>&nbsp;&nbsp;<a href="{php echo $this->createWebUrl('manage', array('id' => $reply['rid']))}" target="_blank">审核内容</a></td>
+			</tr>
+			{/if}
+			<tr>
+				<th>退出指令</th>
+				<td><input type="text" value="{$reply['quit_command']}" class="span7" name="quit-command">
+					<div class="help-block">用户退出话的指令，如果未设置则默认为“退出”</div></td>
+			</tr>
+			<tr>
+				<th>是否审核</th>
+				<td>
+					<div class="radio inline"><input type="radio" name="isshow" value="1" id="isshow_1" {if $reply['isshow'] == '1'}checked="true"{/if}><label for="isshow_1">是</label></div>
+					<div class="radio inline"><input type="radio" name="isshow" value="0" id="isshow_0"  {if $reply['isshow'] == '0'}checked="true"{/if}><label for="isshow_0">否</label></div>
+					<div class="help-block">当用户在话题中发表内容，是否需要审核，为否为则直接显示内容。</div></td>
+			</tr>
+
+			<tr>
+				<th>进入提示</th>
+				<td><textarea style="height:200px;" class="span7" cols="70" name="enter-tips" id="enter-tips">{$reply['enter_tips']}</textarea>
+					<div class="help-block">当用户进入此话题时，返回用户的提示信息。<a class="iconEmotion" href="javascript:;" inputid="enter-tips"><i class="icon-github-alt"></i> 表情</a></div></td>
+			</tr>
+			<tr>
+				<th>退出提示</th>
+				<td><textarea style="height:200px;" class="span7" cols="70" name="quit-tips" id="quit-tips">{$reply['quit_tips']}</textarea>
+					<div class="help-block">当用户主动退出或是超时退出话题时，返回用户的提示信息。<a class="iconEmotion" href="javascript:;" inputid="quit-tips"><i class="icon-github-alt"></i> 表情</a></div></td>
+			</tr>
+			<tr>
+				<th>发表提示</th>
+				<td><textarea style="height:200px;" class="span7" cols="70"  name="send-tips" id="send-tips">{$reply['send_tips']}</textarea>
+					<div class="help-block">当用户在话题发表内容成功时，返回用户的提示信息。<a class="iconEmotion" href="javascript:;" inputid="send-tips"><i class="icon-github-alt"></i> 表情</a></div></td>
+			</tr>
+			<tr>
+				<th>超时时间</th>
+				<td>
+					<div class="input-append">
+						<input type="text" value="{$reply['timeout']}" class="span6" name="timeout">
+						<span class="add-on">秒</span>
+					</div>
+					<div class="help-block">当用户在话题中未发表内容，并达到此选项设置的时间时，用户自动被踢出话题。</div>
+				</td>
+			</tr>
+			<tr>
+				<th>自定义背景</th>
+				<td>
+					{php echo tpl_form_field_image('background', $reply['background']);}
+					<div class="help-block"></div>
+				</td>
+			</tr>
+			<tr>
+				<th>自定义LOGO</th>
+				<td>
+					{php echo tpl_form_field_image('logo', $reply['logo']);}
+					<div class="help-block"></div>
+				</td>
+			</tr>
+			<tr>
+				<th>开启腾讯墙</th>
+				<td>
+					<div class="radio inline"><input type="radio" name="walls[tx][status]" value="1" id="syncwall_tx_1" {if !empty($reply['syncwall']['tx']['status'])}checked="true"{/if} onclick="$('#syncwall_tx').show();"><label for="syncwall_tx_1">是</label></div>
+					<div class="radio inline"><input type="radio" name="walls[tx][status]" value="0" id="syncwall_tx_0"  {if empty($reply['syncwall']['tx']['status'])}checked="true"{/if} onclick="$('#syncwall_tx').hide();"><label for="syncwall_tx_0">否</label></div>
+					<div class="help-block">开启此选项后，系统自动获取指定的腾讯墙内的数据显示到微动力墙内。</div>
+				</td>
+			</tr>
+			<tbody id="syncwall_tx" {if empty($reply['syncwall']['tx']['status'])}style="display:none;"{/if}>
+			<tr>
+				<th>腾讯墙话题名</th>
+				<td>
+					<div class="input-append">
+						<input type="text" value="{$reply['syncwall']['tx']['subject']}" class="span6" name="walls[tx][subject]">
+					</div>
+					<div class="help-block"></div>
+				</td>
+			</tr>
+			</tbody>
+		</tbody>
+	</table>
+</div>

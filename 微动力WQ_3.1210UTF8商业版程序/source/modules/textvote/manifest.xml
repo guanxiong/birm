@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[文本投票]]></name>
+		<identifie><![CDATA[textvote]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[文本投票最直接最直观的投票]]></ability>
+		<description><![CDATA[文本投票最直接最直观的投票
+直接在微信里进行,不用打开网页哦！]]></description>
+		<author><![CDATA[nbnat.com]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[DROP TABLE IF EXISTS `ims_nb_textvote`;
+CREATE TABLE `ims_nb_textvote` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `config` varchar(255) NOT NULL,
+  `result` varchar(255) NOT NULL,
+  `rule` varchar(255) NOT NULL,
+  `start_time` int(10) unsigned NOT NULL,
+  `end_time` int(10) unsigned NOT NULL,
+  `status` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;]]></install>
+	<uninstall><![CDATA[DROP TABLE `ims_nb_textvote`;]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

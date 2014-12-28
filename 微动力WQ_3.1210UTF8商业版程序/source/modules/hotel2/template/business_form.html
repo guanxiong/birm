@@ -1,0 +1,73 @@
+{template 'common/header'}
+{template 'common'}
+<div class="main">
+    <ul class="nav nav-tabs">		
+        <li><a href="{php echo $this->createWebUrl('business');}">商圈列表</a></li>
+        <li{if $op=='edit' && empty($id)} class="active"{/if}><a href="{php echo $this->createWebUrl('business',array('op'=>'edit'));}">添加商圈</a></li>
+        {if $op=='edit' && !empty($id)}<li class="active"><a href="{php echo $this->createWebUrl('business',array('op'=>'edit','id'=>$id));}">编辑商圈</a></li>{/if}
+    </ul>
+    <form action="" class="form-horizontal form" method="post" onsubmit="return formcheck()">
+        <input type="hidden" name="id" value="{$item['id']}">
+        <h4>商圈基本信息</h4>
+        <table class="tb">
+           <tr>
+                <th>排序：</th>
+                <td><input type="text" id="displayorder" name="displayorder"  class="span7" value="{$item['displayorder']}">
+                    <span class='help-block'>数字越大排名越高</span></td>
+            </tr>
+             <tr>
+                <th><span class="red">*</span><label for="">所在地区：</label></th>
+                <td>
+                    <select name="location_p" id="location_p" class="location span2"></select>
+                    <select name="location_c" id="location_c" class="location span2"></select>
+                    <select name="location_a" id="location_a" class="location span2"></select>
+                    <script type="text/javascript" src="./source/modules/hotel2/template/style/js/region_select.js"></script>
+                    <script type="text/javascript">
+                        var location_p = "{if !empty($item['location_p'])}{$item['location_p']}{else}{/if}";
+                        var location_c = "{if !empty($item['location_c'])}{$item['location_c']}{else}{/if}";
+                        var location_a = "{if !empty($item['location_a'])}{$item['location_a']}{else}{/if}";
+                        new PCAS("location_p", "location_c", "location_a", location_p, location_c, location_a);
+                    </script>
+                </td>
+            </tr>
+            
+            <tr>
+                <th><span class="red">*</span>商圈名称：</th>
+                <td><input type="text" name="title" id="title" value="{$item['title']}" class="span3"></td>
+            </tr>
+              <tr>
+                <th>状态：</th>
+                <td>    <label class="radio inline">
+                    <input type="radio" name="status" value="1" {if $item['status'] == 1}checked{/if}/>显示
+                    </label>
+                    <label class="radio inline">
+                    <input type="radio" name="status" value="0" {if $item['status'] == 0}checked{/if}/>隐藏
+                    </label>
+                    <span class='help-block'>手机前台是否显示</span>
+                    </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+    
+    <script type="text/javascript">
+        kindeditor($('.richtext-clone'));
+        function formcheck() {
+            if ($("#location_p").isEmpty() || $("#location_c").isEmpty() || $("#location_a").isEmpty()) {
+                Tip.focus("location_a", "请选择区域!", "right");
+                return false;
+            }
+            if ($("#title").isEmpty()) {
+                Tip.select("title", "请填写商圈!", "right");
+                return false;
+            }
+            return true;
+        }
+    </script>
+

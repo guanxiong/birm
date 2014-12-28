@@ -1,0 +1,61 @@
+{template 'common/header'}
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" onsubmit="return formcheck(this)">
+		<h4>快递管理</h4>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th class="row-hover span1">快递公司<i></i></th>
+					<th class="row-hover span1">快递编码<i></i></th>
+					<th class="row-hover span1">单号正则<i></i></th>
+					<th class="row-hover">注意事项<i></i></th>
+					<th class="row-hover span1" style="text-align:right;">操作</th>
+				</tr>
+			</thead>
+			<tbody id="status-items">
+			{loop $list $e}
+				<tr>
+					<td><input name="olds[{$e['id']}][name]" type="text" value="{$e['name']}"><input name="olds[{$e['id']}][id]" type="hidden" value="{$e['id']}"></td>
+					<td><input name="olds[{$e['id']}][code]" type="text" value="{$e['code']}"></td>
+					<td><input name="olds[{$e['id']}][reg]" type="text" value="{$e['reg']}"></td>
+					<td><input name="olds[{$e['id']}][note]" type="text" value="{$e['note']}"></td>
+					<td style="text-align:right;">
+					<a onclick="if (confirm('删除操作不可恢复，确认吗？')){ $(this).parent().parent().remove(); return true;} else {return false;}" href="{php echo $this->createWebUrl('expressCompany', array('op' => 'delete', 'id' => $e['id']))}" class="btn btn-mini" title="删除"><i class="icon-remove"></i></a>
+					<a href="{php echo $this->createWebUrl('expressFee', array('id' => $e['id']))}" class="btn btn-mini" title="编辑"><i class="icon-edit"></i></a>
+					</td>
+				</tr>
+			{/loop}
+			</tbody>
+			<tr>
+				<td colspan="5">
+					<a href="javascript:;" onclick="addExpress()"><i class="icon-plus-sign-alt"></i> 添加新快递</a>
+				</td>
+			</tr>
+		</table>
+		<table class="tb">
+			<tr>
+				<td colspan="6">
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="regionid" value="{$_GPC['regionid']}" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	function addExpress() {
+		var html = '' +
+				'<tr>' +
+					'<td><input name="names[]" type="text" /></td>' +
+					'<td><input name="codes[]" type="text" /></td>' +
+					'<td><input name="regs[]" type="text" /></td>' +
+					'<td><input name="notes[]" type="text" value=""></td>' +
+					'<td><a href="javascript:;" onclick="$(this).parent().parent().remove();" class="btn btn-small" title="删除此条目"><i class="icon-remove"></i></a></td>' +
+				'</tr>';
+		$('#status-items').append(html);
+	}
+//-->
+</script>
+{template 'common/footer'}

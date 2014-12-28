@@ -1,0 +1,85 @@
+{template 'header'}
+    <div id="main">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="box">
+                        <div class="box-title">
+                            <div class="span10">
+                                <h3><i class="icon-table"></i>订单管理</h3>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <div class="row-fluid"> 
+                                <form action="" method="post" class="form-horizontal">
+                                    <input name="sn" type="text" class="input-small-z" placeholder="订单编号" />
+                                    <input name="mobile" type="text" class="input-small-z" placeholder="手机号码" /> 
+                                    <span class="help-inline">订单状态：</span>
+                                    <select name="status" class="input-small-s">
+                                        <option selected="selected" value="0">全部状态</option>
+                                        <option value="0">未确认</option>
+                                        <option value="1">已付款</option>
+                                        <option value="2">已完成</option>
+                                    </select>
+                                    <span class="help-inline">成交时间：</span>
+                                    <select name="deal_time" class="input-medium">
+                                        <option selected="selected" value="0">全部订单</option>
+                                        <option value="7">7天内订单</option>
+                                        <option value="30">1个月内订单</option>
+                                        <option value="90">3个月内订单</option>
+                                    </select>
+                                   <button type="submit" class="btn"><i class="icon-search"></i>查询</button>
+                                  <!--button type="button" class="btn" onclick="window.location='exp.html'"><i class="icon-cloud-download"></i>导出</button!-->
+                                </form>
+                            </div>
+                            <div class="row-fluid dataTables_wrapper">
+                                <form action="/plus/formajax.php" method="post" class="form-horizontal">
+                                    <table id="listTable" class="table table-bordered table-hover  dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>订单编号</th>
+                                                <th>会员手机号</th>
+                                                <th>订单总额</th>
+                                                <th>订单状态</th>
+                                                <th>使用状态</th>
+                                                <th>下单时间</th>
+                                                <th>付款时间</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+											{loop $list $row}
+                                            <tr>
+                                                <td>{$row['ordersn']}</td>
+                                                <td>{$row['mobile']}</td>
+                                                <td>￥{$row['totalprice']}</td>
+                                                <td>{if $row['status']==-1}已取消
+													{elseif $row['status']==0}已下单
+													{elseif $row['status']==1}已付款
+													{elseif $row['status']==2}已完成
+													{/if}
+													</td>
+                                                <td>{if $row['ispay']==0}未付款{else}已付款{/if}
+													{if $row['used']==1}未使用
+													{elseif $row['used']==2}已使用
+													{/if}</td>
+                                                <td>{php echo date('Y-m-d H:i:s',$row['createtime'])}</td>
+                                                <td>{if $row['paytime']>0}{php echo date('Y-m-d H:i:s',$row['paytime'])}{/if}</td>
+                                                <td>
+                                                    <a href="{php echo $this->createWebUrl('Order',array('op'=>'detail','oid'=>$row['id']))}" class="btn" title="查看"><i class="icon-search"></i></a> 
+                                                </td>
+                                            </tr>
+											{/loop}
+                                            </tbody>
+                                    </table>
+                                </form>
+                                <div class="dataTables_paginate paging_full_numbers"><span>       </span></div>                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

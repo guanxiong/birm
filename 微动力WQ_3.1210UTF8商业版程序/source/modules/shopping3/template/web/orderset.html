@@ -1,0 +1,38 @@
+{template 'common/header'}
+ <ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('shopset')}">基本设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('mailset')}">邮件设置</a></li>		
+ 	<li><a href="{php echo $this->createWebUrl('printset')}">打印机设置</a></li>	
+	<li><a href="{php echo $this->createWebUrl('smsset')}">短信设置</a></li>	
+	<li  class="active"><a href="{php echo $this->createWebUrl('orderset')}">订单限制</a></li>	
+
+</ul>
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+	<input type="hidden" name="parentid" value="{$set['id']}" />
+		<h4>订单设置<small>防止前台恶意订单</small></h4>
+		<table class="tb">
+ 
+  			<tr>
+				<th><label for="">订单数量</label></th>
+				<td>
+					<input type="number" name="order_limit" class="span6" value="{$set['order_limit']}" />
+					<p class="help-block">后台允许的 未处理订单数，超过此数，无法下单</p>					
+				</td>
+			</tr>
+  		 
+  	 			
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="id" value="{$set['id']}" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+ 
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

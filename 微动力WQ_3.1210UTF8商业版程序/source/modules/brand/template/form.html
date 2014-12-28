@@ -1,0 +1,76 @@
+<div id="form" class="alert alert-block alert-new ">
+	<h4 class="alert-heading">选择要选产的品牌</h4>
+	<table>
+		<tr>
+			<th>操作</th>
+			<td style="width:400px;">
+				<div class="reply-news-edit-button">
+					<button class="btn" style="width:100%;" type="button" onclick="$('#modal-module-menus').modal();">选择要操作的品牌</button>
+				</div>
+			</td>
+		</tr>
+		<tr >
+			<th>品牌信息</th>
+			<td>
+				<input class="input-xlarge" id="b_title" type="text" placeholder="请选择要推广的 微品牌" disabled value="{$brand['bname']}">
+				<input type="hidden" name="bid" value="{$brand['id']}"/>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>图文预览图片</th>
+			<td>
+				{php echo tpl_form_field_image('new_pic', $reply['new_pic']);}
+                    <div class="help-block">用于图文显示的图片</div>
+			</td>
+			</tr>
+			<tr>
+				<th>图文说明</th>
+			<td>
+				  <textarea style="height:200px; width:500px;" class="richtext-clone" name="news_content" id="news_content">{$reply['news_content']}</textarea>
+			</td>
+			
+			
+			
+			
+			
+		</tr>
+		
+		
+		
+	</table>
+</div>
+<div id="modal-module-menus" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true" style=" width:600px;">
+	<div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3>选择要展示的项目</h3></div>
+	<div class="modal-body">
+		<table class="tb">
+			<tr>
+				<th><label for="">搜索关键字</label></th>
+				<td>
+					<div class="input-append" style="display:block;">
+						<input type="text" class="span3" name="keyword" value="" id="search-kwd" /><button type="button" class="btn" onclick="search_entries();">搜索</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div id="module-menus"></div>
+	</div>
+	<div class="modal-footer"><a href="#" class="btn" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+</div>
+<script type="text/javascript">
+	function search_entries() {
+		var kwd = $.trim($('#search-kwd').val());
+		$.post('{php echo $this->createWebUrl('query');}', {keyword: kwd}, function(dat){
+			$('#module-menus').html(dat);
+		});
+	}
+	function select_entry(o) {
+	
+		
+		$("#b_title").val(o.bname);
+		$(':hidden[name="bid"]').val(o.id);
+		
+		$('#modal-module-menus').modal('hide');
+		
+	}
+</script>

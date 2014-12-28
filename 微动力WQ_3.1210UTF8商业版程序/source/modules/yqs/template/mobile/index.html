@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+
+<title>摇钱树</title>
+<style type="text/css">
+body { margin:0; padding:0; font-family:"微软雅黑"; }
+a { text-decoration: none; color:#0f3f94;}
+a:hover { color:#F30; text-decoration:underline;}
+h1 { background:#ccc; margin:0; padding:20px; }
+h2 { margin:0; padding:20px 0; }
+.intro{padding:20px;  line-height:24px;}
+iframe { border:0;display:block; width:320px; height:412px; }
+.p50 { padding-left:50px;}
+pre {line-height:22px; }
+pre span { color:#999; }
+.demo {width:320px; padding:0px; }
+#footer{margin:15px auto; line-height:24px; text-align:center;color:#999; font-size:12px;padding:12px;}
+
+.box{width:260px;background:#F9EDBC;border:5px solid #A6324A;padding:5px;position:relative;color:#333;overflow:hidden;display:none;}
+ .box .close{color:#B7AC7F;display:inline-block;font-size:38px;height:40px;width:40px;line-height:40px;outline:none;overflow:hidden;position:absolute;right:5px;top:0px;text-align:center;text-decoration:none;}
+ .box .close:hover{text-decoration:none;color:#666;}
+ .box .pic{margin:12px;float:left;}
+ .box .title{float:left;font-size:22px;font-weight:bold;margin:38px 0 28px 12px;width:340px;}
+ .box .description{float:left;margin:0 0 0 12px;width:270px;line-height:26px;}
+
+#treeBox{background:#941411;}
+#tree{width:320px;height:370px;margin:0 auto;position:relative;}
+#tree .btn{display:block;position:absolute;left:100px;top:147px;}
+#treeBox .normal{background:url(tree.jpg);background-size:320px;}
+#treeBox .moveLeft{background:url(tree.jpg) 0 -373px;background-size:320px;}
+#treeBox .moveRight{background:url(tree.jpg) 0 -746px;background-size:320px;}
+#treeBox .stop{background:url(tree.jpg) 0 -1118px;background-size:320px;}
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="lottery.js"></script>
+
+</head>
+
+<body>
+
+<div class="demo">
+
+  <div id="treeBox">
+    <div id="tree" class="normal">
+       <img class="btn" onclick="start_lottery()" src="btn.png" width="100"  />
+    </div>
+  </div>
+</div>
+
+
+<div class="box" id="award_1">
+    <a class="close" hidefocus="true" href="javascript:;" onclick="effect.zoomOut('award_1',1);"> × </a>
+    
+    <div class="title">恭喜您抽中的是特等奖</div>
+    <div class="description">获得1000积分</div>
+</div>
+
+<div class="box" id="award_2">
+    <a class="close" hidefocus="true" href="javascript:;" onclick="effect.zoomOut('award_2',1);"> × </a>
+    
+    <div class="title">恭喜您抽中的是一等奖</div>
+    <div class="description">获得100分</div>
+</div>
+
+<div class="box" id="award_3">
+    <a class="close" hidefocus="true" href="javascript:;" onclick="effect.zoomOut('award_3',1);"> × </a>
+   
+    <div class="title">恭喜您抽中的是二等奖</div>
+    <div class="description">获得50积分</div>
+</div>
+
+<div class="box" id="award_4">
+    <a class="close" hidefocus="true" href="javascript:;" onclick="effect.zoomOut('award_4',1);"> × </a>
+    
+    <div class="title">恭喜您抽中的是三等奖</div>
+    <div class="description">获得10积分</div>
+</div><script type="text/javascript">
+/*******************************************/
+/**      author:  hoho                   **/
+/**      http://www.thinkcart.net        **/
+/******************************************/
+
+function tree(id){
+    this.obj = $('#'+id);
+    this.btn = this.obj.find('.btn');
+    this.moveHandler = null;
+    this.move = function(){
+        this.btn.hide();
+        this.obj.attr('class','moveRight');
+        var obj = this.obj;
+        this.moveHandler = setInterval(function(){
+            if(obj.hasClass('moveLeft')){
+                obj.attr('class','moveRight');
+            }else{
+                obj.attr('class','moveLeft');
+            }
+        },100);
+    };
+    this.stop = function(){
+        clearInterval(this.moveHandler);
+        this.obj.attr('class','stop');
+    };
+    this.recover = function(){
+        clearInterval(this.moveHandler);
+        this.btn.show();
+        this.obj.attr('class','normal');
+    };
+}
+
+award_id = 0; //奖品ID
+award_name = '';//中奖名称
+function start_lottery(){
+    var myTree = new tree('tree');
+    $.ajax({
+        url: 'lottery.php',
+        type: "post",
+        data:null,
+        dataType: "json",
+        timeout: 20000,
+        cache: false,
+        beforeSend: function(){// 提交之前
+            myTree.move();
+        },
+        error: function(){//出错
+            myTree.recover();
+            alert('服务端出错！');
+        },
+        success: function(res){//成功
+            if(typeof(res.award_id)!='undefined'){
+                award_id = res.award_id;//得到奖品ID
+                award_name = res.award_name;//得到奖品名称
+                setTimeout(function(){
+                    myTree.stop();
+                    effect.zoomIn('award_'+award_id,1); 
+                },3000);
+                setTimeout(function(){myTree.recover();},8000);
+            }else{
+                myTree.recover();
+                alert('抽奖出错！');
+            }
+        }
+    });
+}
+</script>
+</body>
+</html>

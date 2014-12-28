@@ -1,0 +1,84 @@
+<body>
+
+<ul class="nav nav-tabs">
+</ul>
+ 	    <div id="main">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="box">
+                        <div class="box-title">
+                            <div class="span8">
+                                <h3><i class="icon-table"></i>当月用户消费记录</h3>
+                            </div>
+                            <div class="span4">
+                                <select class="input-small" name="year" id="year">
+                                    <option value="2013" selected="selected">2013年</option>
+                                    <option value="2014">2014年</option>
+                                    <option value="2015">2015年</option>
+                                    <option value="2016">2016年</option>
+                                    <option value="2017">2017年</option>
+                                    <option value="2018">2018年</option>
+                                    <option value="2019">2019年</option>
+                                    <option value="2020">2020年</option>
+                                    <option value="2021">2021年</option>
+                                    <option value="2022">2022年</option>
+                                </select>
+                                <select class="input-small" name="period" id="period">
+                                    <option value="1">1月</option>
+                                    <option value="2">2月</option>
+                                    <option value="3">3月</option>
+                                    <option value="4">4月</option>
+                                    <option value="5">5月</option>
+                                    <option value="6">6月</option>
+                                    <option value="7">7月</option>
+                                    <option value="8">8月</option>
+                                    <option value="9">9月</option>
+                                    <option value="10">10月</option>
+                                    <option value="11">11月</option>
+                                    <option value="12" selected="selected">12月</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="chartdiv" class="box-content"><object type="application/x-shockwave-flash" lang="EN" class="FusionCharts" data="./source/modules/card/style/swf/MSLine.swf" width="100%" height="400" id="ChartId" style="visibility: visible;"><param name="scaleMode" value="noScale"><param name="scale" value="noScale"><param name="wMode" value="opaque"><param name="allowScriptAccess" value="always"><param name="quality" value="best"><param name="flashvars" value="lang=EN&amp;debugMode=0&amp;animation=undefined&amp;DOMId=ChartId&amp;registerWithJS=1&amp;chartWidth=100%&amp;chartHeight=400&amp;InvalidXMLText=Invalid data.&amp;stallLoad=true&amp;dataXML=&amp;dataURL=./source/modules/card/test.xml"></object></div>
+							<script type="text/javascript">
+                              var chart = new FusionCharts("./source/modules/card/style/swf/MSLine.swf", "ChartId", "100%", "400", "0", "0");
+                              chart.setXMLUrl("./source/modules/card/test.xml");
+                              chart.render("chartdiv"); 
+							</script>
+                        <div class="box-content"> 
+                            <table id="listTable" class="table table-bordered table-hover  dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>消费名称</th>
+                                        <th>用户名</th>
+                                        <th>电话</th>
+                                        <th>SN码</th>
+                                        <th>SN码派发时间</th>
+                                        <th>使用时间</th>
+                                        <th>消费门店</th>
+                                        <th>消费金额/(元)</th>
+                                        <th>消费积分</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+					            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<script type="text/ecmascript">
+   $(function () {
+	   $("#period").change(function () {
+		   window.location = "/membercard/ConsumptionStatics?aid=31525&year="+$('#year').val()+"&month="+$(this).val();
+	   })
+	   $("#year").change(function () {
+		   window.location = "/membercard/ConsumptionStatics?aid=31525&year="+$(this).val()+"&month="+$('#period').val();
+	   })
+   })
+</script> </body>

@@ -1,0 +1,347 @@
+{template 'header'}
+<title>${sns['title']}</title>
+<script language='javascript' src='./source/modules/sns/style/jquery.js'></script>
+ 
+<script language='javascript' src='./source/modules/sns/style/jquery.form.js'></script>
+<script language='javascript' src='./source/modules/sns/style/jquery.gcjs.js'></script>
+<script language='javascript' src='./source/modules/sns/style/sns.js'></script>
+
+<link href="./source/modules/sns/style/sns.css" rel="stylesheet" />
+<script language='javascript' src='./source/modules/sns/style/photoswipe/simple-inheritance.min.js'></script>
+<script language='javascript' src='./source/modules/sns/style/photoswipe/photoswipe-1.0.11.min.js'></script>
+<link href="./source/modules/sns/style/photoswipe/photoswipe.css" rel="stylesheet" />
+
+ <div id="header">
+        <div class="base"> 
+             <div class="base_left">
+                 <div class="thumb">
+                      <img src="{php echo empty($sns['logo'])?'./source/modules/sns/style/sns.png':img_url($sns['logo'])}" class="logo" />
+          </div>
+             </div>
+             <div class="base_right">
+                  <div class="t t1">{$sns['title']}</div>
+                  <div class="t t2"><i class="icon-list-alt"></i> {$sns['postcount']} 话题 <i class="icon-user"></i> {$sns['fanscount']} 关注 &nbsp;<a href="{php echo $this->createMobileUrl('register',array('name' => 'sns', 'id' => $id, 'update' => 1))}" >修改个人资料</a></div>
+
+             </div>
+
+         </div>
+</div>
+  {if count($list)<=0}
+        
+        <ul class="round">
+            <li style="padding:5px;text-align:center;">暂时没有任何帖子</li>
+        </ul>
+        {/if}
+        
+{loop $list $row}
+<ul class="round">
+    <li>
+    
+      
+         <div class="base">
+             <div class="base_left">
+                 <div class="thumb">   
+            <img src="{$row['avatar']}" class="logo" />
+           </div>
+             </div>
+             <div class="base_right">
+                  <div class="t t1">{$row['nickname']}</div>
+                  <div class="t t2">{php echo time_tran($row['posttime'])}</div>
+             </div>
+         </div>
+        <div class="des">
+
+            {if $row['isshow'] == 0}
+                <span class="label label-red">
+                    {if $isadmin == 1}
+                    需要审核
+                    {else}
+                    等待审核
+                    {/if}
+                </span>
+            {/if}
+
+            {$row['content']}
+        </div>
+        {if count($row['piclist'])>0}
+        <div class='pics' id="pics_{$row['id']}">
+            {loop $row['piclist'] $pic}
+            <a href="{php echo img_url($pic['attachment'])}" rel="external"><img src="{php echo img_url($pic['attachment'])}" /></a>
+            {/loop}
+        </div>
+        {/if}
+       
+            <div class="funcs">
+                {if $isadmin == 1}
+                    {if $row['isshow'] == 0}
+                    <a href="javascript:;" id="pass_{$row['id']}" onclick="post_ajax('{$row['id']}','{$row['rid']}',1)"><i class='icon-ok'></i> 通过审核</a>
+                    {/if}
+                    <a href="javascript:;" id="del_{$row['id']}" onclick="post_ajax('{$row['id']}','{$row['rid']}',2)"><i class='icon-remove'></i> 删除</a>
+
+                {/if}
+
+                {if $row['isshow'] == 1}
+                <a href="javascript:;" onclick="good('{$row['id']}')"><i class='icon-thumbs-up'></i> 顶(<span id='good_{$row['id']}'>{$row['goodcount']}</span>)</a> 
+                <a href="javascript:;" onclick="reply('{$row['id']}','','{$row['nickname']}')"><i class='icon-pencil'></i> 回复</a>
+                {/if}
+            </div>
+           
+            <div id="reply_{$row['id']}" class='reply'  {if count($row['replies'])<=0}style='display:none'{/if} >
+                
+                 <div class='items'>
+                {loop $row['replies'] $row1}
+                <div class='item' {if $user['id']==$row1['fansid']}onclick="reply('{$row['id']}','{$row1['id']}','{$row1['nickname']}');"{/if}>
+                     <div class="thumb">   {if $row1['avatar']}
+                        <img src="{$row1['avatar']}" class="logo" />
+                        {/if}</div>
+                     {if !empty($row1['tonickname'])}
+                    <span>{$row1['nickname']}</span> 回复 <span>{$row1['tonickname']}</span>
+                    {else}
+                    <span>{$row1['nickname']}</span>
+                    {/if}
+                    ：{$row1['content']}
+                </div>
+                
+                <div class="funcs">
+                {if $isadmin == 1}
+                    {if $row1['isshow'] == 0}
+                    <a href="javascript:;" id="pass_{$row1['id']}" onclick="post_ajax('{$row1['id']}','{$row1['rid']}',3)"><i class='icon-ok'></i> 通过审核</a>
+                    {/if}
+
+                    <a href="javascript:;" id="del_{$row1['id']}" onclick="post_ajax('{$row1['id']}','{$row1['rid']}',4)"><i class='icon-remove'></i> 删除</a>
+                {/if}
+                
+                <!--a href="javascript:;" onclick="good('{$row1['id']}')"><i class='icon-thumbs-up'></i> 顶(<span id='good_{$row1['id']}'>{$row1['goodcount']}</span>)</a> 
+                <a href="javascript:;" onclick="reply('{$row1['id']}','','{$row1['nickname']}')"><i class='icon-pencil'></i> 回复</a-->
+                </div>
+                
+                {/loop}
+                </div>
+                <div class="funcs" style="text-align:left;{if $row1['num']<=3}display:none{/if}">
+                  <a href="javascript:;" onclick="more_reply('{$row['id']}')">更多</a> 
+                  <span style="font-size:11px;color:#bbb">共 <font id="reply_num_{$row['id']}">{$row1['num']}</font> 条回复</span>
+               </div>
+                
+             </div>
+
+    </li>    </ul>
+
+  <script>
+                $(function(){
+                    $("#pics_{$row['id']} a").photoSwipe();
+                });
+  </script>
+           
+    {/loop}  
+    <script>
+    </script>
+ 
+    
+    <div id="reply_div"></div>
+    <div id="reply_div_content">
+         <form action='mobile.php' method='post' id='reply_form'>
+        <input type='hidden' name='act' value='module' />
+        <input type='hidden' name='name' value='sns' />
+        <input type='hidden' name='do' value='post' />
+        <input type='hidden' name='id' value='{$id}' />
+        <input type='hidden' name='weid' value='{$_W['weid']}' />
+        <input type='hidden' id="replyid" name='replyid' value='' />
+        <input type='hidden' id="postid" name='postid' value='' />
+        <textarea id='reply_content' name='reply_content' style='width:100%;height:100px;resize:none' placeholder='回复: "+nickname + "'></textarea>
+        <div style='margin-top:10px;height:35px;top:110px;'>
+        <div style='float:left;margin-left: 5px;;'>
+        <a id='iconEmotion' href='javascript:;' inputId='reply_content'><i class='icon-github-alt'></i> 表情</a>
+        </div>
+        <div style='float:right;'>
+        <span id='reply_last' style='margin-right:5px;'></span>
+        
+        <input type='button' class='btn' id='reply_cancel' class='btn' value='取消' />
+        <input type='button' class='btn btn-success' id='reply_submit' style='color:#fff;margin-left:5px;' value='发帖' />
+        </div>
+        </div>
+        <div id="emotions" class="emotions"></div>
+        </form>
+        
+   
+</div>{$pager}
+    <div class="footermenu">
+        <div class="back"><a href="#" style="display:block;text-decoration: none"><i class="icon-chevron-left"></i></a></div>
+<!--        <div class="men"><a href="#" style="display:block"><i class="icon-list"></i></a></div>-->
+        <div class="post"><a href="{php echo $this->createMobileUrl('post',array('name'=>'sns','id'=>$id))}" style="display:block;text-decoration: none"><i class="icon-edit"></i> 发帖</a></div>
+        
+</div>
+
+
+<script language='javascript'>
+    
+ 
+$(function() {
+	
+        emotions('reply_content');
+        
+                $("#iconEmotion").click(function(e){
+	    //  inputId = $(this).attr("inputId");
+                      if(!eopen){
+                   
+                         $("#reply_div_content").css("height","275px");
+                      }
+                      else{
+                         $("#reply_div_content").css("height","135px");
+                      }
+                      eopen = !eopen;
+                      
+                          
+	});
+        new Swipe($('#emotions')[0], {
+		speed:500,
+		auto:0,
+		callback: function(){
+			var lis = $(this.element).next("ol").children();
+			lis.removeClass("on").eq(this.index).addClass("on");
+		}
+       });
+        $("#reply_form").ajaxForm();
+        $("#reply_content").limitLength(140,"reply_last");
+        $("#reply_cancel").click(function(){
+             reply_close();
+        });
+        $("#reply_submit").click(function(){
+                if($("#reply_content").isEmpty()){
+                alert("请输入内容!");
+                $("#reply_content").focus();
+                return;
+             }
+            tip("正在提交, 请稍后...",false);
+            $("#reply_div_content").css("visibility","hidden");
+            $("#reply_div_content").css("height","135px");
+            $("#reply_form").ajaxSubmit({
+           
+               success:function(data){
+                    data = eval('(' +data + ")");
+                    if(data.result==1){
+                        tip_close();
+                        tip(data.msg);
+                        $("#reply_div").css("visibility","hidden");
+
+                        var postid = $("#postid").val();
+                        var reply_num = parseInt($("#reply_num_" + postid).html()) + 1;
+                        if (reply_num > 4) {
+                            $("#reply_num_" + postid).html(reply_num);
+                        }
+
+                        var  html = "<div class='item'>";
+                        html+='<div class="thumb"><img src="'+ data.reply.avatar +'" class="logo" /></div>';
+                        if(data.reply.tonickname==''){
+                            html+='<span>' + data.reply.nickname + '</span>：'  + data.reply.content +'</div>';    
+                        }
+                        else{
+                             html+='<span>' + data.reply.nickname + ' 回复 ' + data.reply.tonickname + '</span>：'  + data.reply.content +'</div>';
+                        }
+
+                        if(data.reply.isadmin==1) {
+                            html+='<div class="funcs">';
+                                if(data.reply.isshow==0) {
+                                    html+='<a href="javascript:;" id="pass_' + data.reply.id + '" onclick="post_ajax(\'' + data.reply.id + '\',\'' + data.reply.rid + '\',3)"><i class="icon-ok"></i> 通过审核</a>'; 
+                                }
+                            html+='<a href="javascript:;" id="del_' + data.reply.id + '" onclick="post_ajax(\'' + data.reply.id + '\',\'' + data.reply.rid + '\',4)"><i class="icon-remove"></i> 删除</a>';
+                            html+='</div>';
+                        }
+                       
+                        $("#reply_" + data.postid).show();
+                        $("#reply_" + data.postid + " .items").append(html);   
+                    }
+               }
+               
+           });
+        });
+        
+});
+ function more_reply(id){
+        var url  = "{php echo $this->createMobileUrl('morereply',array('name'=>'sns','rid'=>$id))}" + "&id=" + id;
+        tip("正在加载...");
+        $.ajax({
+            url:url,
+            type:"get",
+            dataType:"html",
+            success:function(data){
+                tip_close();
+                //alert(data);
+                $("#reply_" + id +" .funcs").hide();
+                $("#reply_" + id ).html(data);
+            },cache:false
+        });
+ }
+
+    function good(id){
+        var rid = {$id};
+        var url  = "{php echo $this->createMobileUrl('good',array('name'=>'sns'))}" + "&id=" + id + '&rid=' + rid;
+        $.ajax({
+            url:url,
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                if(data.result==1){
+                    if(data.good==1){
+                        $("#good_" + id).html( data.goodcount);
+                    } else {
+                        tip("您已经顶过了",true);
+                    }
+                }
+            }
+        });
+    }
+    var lastid = "";
+    function reply(postid,replyid,nickname){
+      
+        //$("#reply_div_content").show();
+        //$("#reply_div").show();
+        $("#reply_div_content").css("visibility","visible");
+        $("#reply_div").css("visibility","visible");
+        $("#emotions").css("visibility","visible");
+        $("#replyid").val(replyid);
+        $("#postid").val(postid);
+        $("#reply_content").attr("placeholder","回复: " + nickname);
+        $('#reply_content').val("");
+        $('#reply_last').html("140");
+    }
+
+    function reply_close(){
+        $("#reply_div_content").css("visibility","hidden");
+        $("#reply_div").css("visibility","hidden");
+        $("#emotions").css("visibility","hidden");
+        $("#reply_div_content").css("height","135px");eopen =false;
+    }
+    
+     function post_ajax(id, rid, type){
+        var url  = "{php echo $this->createMobileUrl('process',array('name'=>'sns'))}" + "&id=" + id + "&rid=" + rid + "&type=" + type;
+        var is_submit = 1; 
+        
+        if (type == 2 || type == 4) {
+            if(!confirm("确定将此信息删除?")){
+                is_submit = 0; 
+            }
+        }    
+                
+        if (is_submit == 1) {
+            $.ajax({
+                url:url,
+                type:"post",
+                dataType:"json",
+                success:function(data){
+                    if(data.result==1){
+                        location.reload();
+                    } else {
+                        alert(data.error);
+                    }
+                }
+            }); 
+        }    
+    }
+
+</script>
+    <script type="text/javascript">
+document.addEventListener("WeixinJSBridgeReady", function onBridgeReady() {
+WeixinJSBridge.call("hideToolbar");
+});
+</script>
+{template 'footer'}

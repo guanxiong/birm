@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest versionCode="0.5">
+	<application setting="true">
+		<name><![CDATA[投票模块]]></name>
+		<identifie><![CDATA[sharevote]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<ability><![CDATA[分享投票]]></ability>
+		<description><![CDATA[分享投票模块]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true">
+		</rule>
+		<menus embed="false">
+		</menus>
+	</platform>
+	<site>
+		<home embed="false" />
+		<profile embed="false" />
+		<menus embed="false">
+		</menus>
+	</site>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_share_report` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `item` varchar(50) NOT NULL COMMENT '举报的类型',
+  `item_id` int(10) NOT NULL COMMENT '举报类型的id',
+  `content` varchar(500) NOT NULL COMMENT '举报内容',
+  `time` varchar(50) NOT NULL COMMENT '举报时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+CREATE TABLE IF NOT EXISTS `ims_share_vote` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL COMMENT '标题',
+  `voteadd` varchar(100) NOT NULL COMMENT '补充说明',
+  `switch` varchar(50) NOT NULL COMMENT '单选/多选',
+  `vote_item` varchar(300) NOT NULL COMMENT '投票选项',
+  `vote_value` varchar(300) NOT NULL COMMENT '投票数量',
+  `result` varchar(500) NOT NULL COMMENT '投票结果，投票后显示',
+  `username` varchar(100) NOT NULL COMMENT '组织人姓名',
+  `time` varchar(50) NOT NULL COMMENT '时间',
+  `read_times` int(10) NOT NULL COMMENT '阅读次数',
+  `share_times` int(10) NOT NULL COMMENT '分享次数',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33 ;]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

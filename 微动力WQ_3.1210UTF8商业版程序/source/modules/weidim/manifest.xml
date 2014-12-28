@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[微预约]]></name>
+		<identifie><![CDATA[weidim]]></identifie>
+		<version><![CDATA[1.1]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[微预约，在线预约，酒店预订，在线报名等等。]]></ability>
+		<description><![CDATA[此功能模块可以帮助你快速生成自定义在线预约表单，你可以设置成在线预约，酒店预订，在线报名等业务，无限表单字段扩展，轻松实现微信与你的线下业务对接。]]></description>
+		<author><![CDATA[微鼎]]></author>
+		<url><![CDATA[http://www.weidim.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="查看预约名单" do="weidimlist" state="" />			
+		</rule>
+		<home call="getWeidimTiles"></home>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE `ims_weidim_order` (
+`id` int( 10 ) unsigned NOT NULL AUTO_INCREMENT ,
+`rid` int( 10 ) unsigned NOT NULL ,
+`from_user` varchar(50) not null default '',
+`field1` varchar( 100 ) NOT NULL DEFAULT '',
+`field2` varchar( 100 ) NOT NULL DEFAULT '',
+`field3` varchar( 100 ) NOT NULL DEFAULT '',
+`field4` varchar( 100 ) NOT NULL DEFAULT '',
+`field5` varchar( 100 ) NOT NULL DEFAULT '',
+`field6` varchar( 100 ) NOT NULL DEFAULT '',
+`field7` varchar( 100 ) NOT NULL DEFAULT '',
+`field8` varchar( 100 ) NOT NULL DEFAULT '',
+`field9` varchar( 100 ) NOT NULL DEFAULT '',
+`field10` varchar( 100 ) NOT NULL DEFAULT '',
+`field11` varchar( 100 ) NOT NULL DEFAULT '',
+`field12` varchar( 100 ) NOT NULL DEFAULT '',
+`field13` varchar( 100 ) NOT NULL DEFAULT '',
+`field14` varchar( 100 ) NOT NULL DEFAULT '',
+`field15` varchar( 100 ) NOT NULL DEFAULT '',
+`field100` varchar( 100 ) NOT NULL DEFAULT '',
+`status` tinyint(1) NOT NULL default 0 COMMENT '0未受理，1已受理，2已过期',
+`createtime` int unsigned NOT NULL,
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;	
+
+CREATE TABLE `ims_weidim_item` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '字段id',
+`rid` int(10) unsigned NOT NULL COMMENT '规则id',
+`fieldname` varchar(20) NOT NULL COMMENT '字段名称',
+`type` int(10) unsigned NOT NULL COMMENT '字段类型',
+`fieldcontent` varchar(50) NOT NULL COMMENT '字段内容',
+`isdefault` tinyint(1) NOT NULL default 0 COMMENT '是否默认',
+`orderid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序id',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;	
+
+CREATE TABLE `ims_weidim_reply` (
+`id` int( 10 ) unsigned NOT NULL AUTO_INCREMENT comment 'id',
+`rid` int( 10 ) unsigned NOT NULL default 0 comment '规则id',
+`title` varchar( 50 ) NOT NULL comment '规则标题',
+`description` varchar( 255 ) NOT NULL comment '描述',
+`picture` varchar( 100 ) NOT NULL comment '图片',
+`headimage` varchar( 100 ) NOT NULL comment '订单头部图片',
+`address` varchar( 100 ) NOT NULL comment '预约地址',
+`tel` varchar( 50 ) NOT NULL comment '预约电话',
+`start_time` int unsigned NOT NULL comment '开始时间',
+`end_time` int unsigned NOT NULL comment '结束时间',
+`status` tinyint unsigned NOT NULL default 1 comment '开关状态',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;
+
+	]]></install>
+	<uninstall><![CDATA[
+drop table `ims_weidim_item`;
+drop table `ims_weidim_reply`;	
+drop table `ims_weidim_order`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

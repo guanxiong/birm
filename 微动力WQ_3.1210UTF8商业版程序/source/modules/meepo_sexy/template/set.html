@@ -1,0 +1,43 @@
+{template 'common/header'}
+<div class="main">
+ 
+    <form action="" method="post" class="form-horizontal form">
+        <h4>学校设置</h4>
+        <table class="tb">
+            <tr>
+                <th>学校名称</th>
+                <td>
+                    <input type="text" name="school_name" class="span5" value="{php echo $settings['name']}" />
+                </td>
+            </tr>
+            
+        </table>
+        <h4>校花校草设置</h4>
+        <table class="tb">
+            <tr>
+                <th>基本地址</th>
+                <td>
+                    <input type="text" name="school_url" class="span5" value="http://www.facejoking.com/api/top/" />
+                </td>
+            </tr>
+
+
+            <tr>
+                <th><label for="">学校编号</label></th>
+                <td>
+                    <input type="text" name="school_num" class="span6" value="{php echo  $settings['num']}" />
+                </td>
+            </tr>
+			<tr>
+                <th></th>
+                <td>
+                    <input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </td>
+            </tr>			
+           
+        </table>
+
+    </form>
+</div>
+{template 'common/footer'}

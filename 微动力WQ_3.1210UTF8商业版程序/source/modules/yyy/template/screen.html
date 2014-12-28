@@ -1,0 +1,493 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>摇一摇</title>
+<script type="text/javascript" src="resource/script/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="resource/script/jquery-ui-1.10.3.min.js"></script>
+<script type="text/javascript" src="source/modules/yyy/template/js/jquery.flip.min.js"></script>
+
+<script type="text/javascript">
+var countdown = 10;
+
+//第几轮刷统计
+var count=1;
+//刷多少次
+var allcount=50;
+var shaketimes={$reply['shaketimes']};
+//间隔多长刷一次，不能少于5000毫秒
+var flashtime=3200;
+
+var j=0;
+var style="blue stripes";
+function flipdata(i,name,sec){
+//只显示10条数据，0起
+	if (i>9){
+		
+		return;
+	}else{
+		var ccc='';
+		if(sec>10){
+			ccc=sec;
+		}
+		if (i>2){
+			j="<div class='huangguan' >"+(i+1)+"</div>";
+			//style="orange shine";
+		}else{
+			//style="blue stripes";
+			ii=i+1;
+			j="<div class='huangguan' style='background: url(source/modules/yyy/template/images/"+(i+1)+".png) no-repeat center'></div>";
+		}
+		var secs=sec/shaketimes ;
+		secs=secs*100 ;
+		$('#f'+i).flip({
+			speed:150,
+			color: '#f90',
+			content: j+"<div class='number' >"+ name +"</div><div class='progress-bar "+style+"'> <span style='width:"+secs+"%'>"+sec+"</span>",
+			//content:'<div class="uname">'+(i+1) +'.'+ name +'</div><div class="Percentage"><div class="tage" style="width:'+sec+'%"></div></div>',
+		});
+	};
+
+}
+function init(){
+	$("#lefttimes").hide();
+	$("#ranking").show();
+	$('#leftad').show();
+	$('#startdjs').hide();
+	flippage();
+	
+}
+
+function flippage(){
+	if (count> allcount){
+		count=1;
+		return;
+	}
+	var name='';
+	var usertime='';
+	$.getJSON("{php echo create_url('site/module/screenjson', array('name' => 'yyy', 'id' => $reply['rid']))}&rnd="+new Date().getTime(),function(result){
+			$.each(result, function(i, field){
+				name=field['nickname'];
+				usercount=field['count'];
+				if (i==2 && usercount==100) {
+					//count=1000;
+				} ;
+				setTimeout('flipdata('+i+',"'+name+'",'+usercount+')',300*i);
+			});
+	});
+	count++;
+	setTimeout('flippage()',flashtime);
+}
+
+	
+function startgame() {
+		
+		$.getJSON("{php echo create_url('site/module/changestatus', array('name' => 'yyy', 'id' => $reply['rid']))}&rnd="+new Date().getTime(),function(result){
+			start();
+		});
+}
+
+function start() {
+		$('#description').html(countdown--);
+		if (countdown <= 0) {
+		
+			//更新摇一摇状态
+			/*
+			ajaxopen('site.php?act=module&id=153&status=1&name=shake&do=changestatus&weid=5', function(){
+				location.reload();
+			});
+			*/
+			init();
+			return false;
+		} else {
+			setTimeout(function(){
+				start();
+			}, 1000);
+		}
+}
+
+
+{if $reply['shakestatus']==1}
+$(document).ready(function(){ 
+	init();
+});
+{/if}
+</script>
+<!--end-->
+
+<style>
+body, div, ul, li, p {
+	padding: 0;
+	margin: 0;
+}
+body {
+
+	background: url(source/modules/yyy/template/images/bg.jpg) no-repeat center top;
+	font: 13px '微软雅黑', Arial, Helvetica;
+	background-attachment: fixed;
+	background-size: 100%;
+}
+h2, p {
+	text-align: center;
+	color: #fafafa;
+	text-shadow: 0 1px 0 #111;
+}
+a {
+	color: #777;
+}
+
+.head_right > h1 {
+	color: black;
+}
+#lefttimes {
+	width: 500px;
+	float:right;
+}
+#lefttime {
+	width: 500px;
+	font-size:144px;
+	text-align:center;
+	color:#fff;
+}
+#qrcode {
+	width: 500px;
+
+	text-align:center;
+	
+}
+
+#ranking {
+	width: 500px;
+	float:right;
+	display:none;
+}
+#ranking .number{ 
+	width: 120px;
+	height: 40px;
+	line-height:40px;
+	color:#FFF;
+	position: absolute;
+	margin-left: 60px;
+	text-overflow: ellipsis; 
+overflow: hidden; 
+white-space: nowrap; 
+}
+#ranking div {
+	margin-bottom: 8px;
+	clear: both;
+	line-height: 30px;
+	font-weight: bold
+}
+
+
+
+/*---------------------------*/	
+		
+.progress-wbar {
+	width: 500px;
+	background-color: #f90;
+	height: 40px;
+	border-radius: 5px;	
+}
+
+.huangguan{
+	position: absolute;
+	height: 40px;
+	width: 44px;
+	margin-left:10px;
+	line-height:40px;
+	text-align:center;
+}
+.progress-bar {
+	background-color: #fff;
+	height: 30px;
+	margin-top: 5px;
+	margin-right: 5px;
+	width: 300px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	
+	float: right;
+}
+.progress-bar span {
+	color: #666;
+	display: inline-block;
+	height: 100%;
+	width: 0;
+	background-color: #777;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+	-webkit-transition: width .4s ease-in-out;
+	-moz-transition: width .4s ease-in-out;
+	-ms-transition: width .4s ease-in-out;
+	-o-transition: width .4s ease-in-out;
+	transition: width .4s ease-in-out;
+}
+/*---------------------------*/			
+		
+.blue span {
+	background-color: #34c2e3;
+}
+.orange span {
+	background-color: #fff;
+	
+}
+.green span {
+	background-color: #a5df41;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#a5df41), to(#4ca916));
+	background-image: -webkit-linear-gradient(top, #a5df41, #4ca916);
+	background-image: -moz-linear-gradient(top, #a5df41, #4ca916);
+	background-image: -ms-linear-gradient(top, #a5df41, #4ca916);
+	background-image: -o-linear-gradient(top, #a5df41, #4ca916);
+	background-image: linear-gradient(top, #a5df41, #4ca916);
+}
+/*---------------------------*/		
+		
+.stripes span {
+	-webkit-background-size: 30px 30px;
+	-moz-background-size: 30px 30px;
+	background-size: 30px 30px;
+	background-image: -webkit-gradient(linear, left top, right bottom, color-stop(.25, rgba(255, 255, 255, .15)), color-stop(.25, transparent), color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .15)), color-stop(.75, rgba(255, 255, 255, .15)), color-stop(.75, transparent), to(transparent));
+	background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+	background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+	background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+	background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+	background-image: linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+	-webkit-animation: animate-stripes 3s linear infinite;
+	-moz-animation: animate-stripes 3s linear infinite;
+}
+ @-webkit-keyframes animate-stripes {
+	0% {
+		background-position: 0 0;
+	}
+	100% {
+		background-position: 60px 0;
+	}
+}
+ @-moz-keyframes animate-stripes {
+	0% {
+		background-position: 0 0;
+	}
+	100% {
+		background-position: 60px 0;
+	}
+}
+/*---------------------------*/	 
+
+.shine span {
+	position: relative;
+}
+.shine span::after {
+	content: '';
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: #f00;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-animation: animate-shine 4s ease-out infinite;
+	-moz-animation: animate-shine 4s ease-out infinite;
+}
+ @-webkit-keyframes animate-shine {
+	0% {
+		opacity: 1;
+		width: 0;
+	}
+	100% {
+		opacity: 1;
+		width: 100%;
+	}
+}
+ @-moz-keyframes animate-shine {
+	0% {
+		opacity: 1;
+		width: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+		width: 100%;
+	}
+}
+/*---------------------------*/	 
+		
+.glow span {
+	-moz-box-shadow: 0 5px 5px rgba(255, 255, 255, .7) inset, 0 -5px 5px rgba(255, 255, 255, .7) inset;
+	-webkit-box-shadow: 0 5px 5px rgba(255, 255, 255, .7) inset, 0 -5px 5px rgba(255, 255, 255, .7) inset;
+	box-shadow: 0 5px 5px rgba(255, 255, 255, .7) inset, 0 -5px 5px rgba(255, 255, 255, .7) inset;
+	-webkit-animation: animate-glow 1s ease-out infinite;
+	-moz-animation: animate-glow 1s ease-out infinite;
+}
+ @-webkit-keyframes animate-glow {
+	0% {
+		-webkit-box-shadow: 0 5px 5px rgba(255, 255, 255, .7) inset, 0 -5px 5px rgba(255, 255, 255, .7) inset;
+	}
+	50% {
+		-webkit-box-shadow: 0 5px 5px rgba(255, 255, 255, .3) inset, 0 -5px 5px rgba(255, 255, 255, .3) inset;
+	}
+	100% {
+		-webkit-box-shadow: 0 5px 5px rgba(255, 255, 255, .7) inset, 0 -5px 5px rgba(255, 255, 255, .7) inset;
+	}
+}
+ @-moz-keyframes animate-glow {
+	0% {
+		-moz-box-shadow: 0 5px 5px rgba(255, 255, 255, .7) inset, 0 -5px 5px rgba(255, 255, 255, .7) inset;
+	}
+	50% {
+		-moz-box-shadow: 0 5px 5px rgba(255, 255, 255, .3) inset, 0 -5px 5px rgba(255, 255, 255, .3) inset;
+	}
+	100% {
+		-moz-box-shadow: 0 5px 5px rgba(255, 255, 255, .7) inset, 0 -5px 5px rgba(255, 255, 255, .7) inset;
+	}
+}
+
+<!--头部style-->
+ .head {
+	background: rgba(255, 255, 255, .9);
+	margin: 10px;
+}
+.head_info {
+	display: inline-block;
+	float: left;
+	background: rgba(215, 41, 80, .8);
+	color: white;
+}
+.head h1 {
+	padding: 20px;
+	margin: 0;
+}
+.head_flag {
+	float: left;
+	margin: 0;
+	width: 0;
+	height: 0;
+	padding: 0;
+	border: 0;
+	border-top: 20px rgba(215, 41, 80, .8) solid;
+	border-right: 20px rgba(215, 41, 80, 0) solid;
+	border-left: 0;
+}
+.head_right > h1, .head_right > h2, .head_right > h3 {
+	display: inline-block;
+	padding: 20px 0;
+	margin: 0 6px;
+	line-height: 1.2em;
+	color: #444;
+}
+.head_right > h3 > span {
+	font-size: 1.3em;
+	margin: 0 6px;
+	color: black;
+}
+.clear {
+	clear: both;
+}
+.showlast{
+	width:800px;
+	margin:0 auto;
+
+}
+.show_left{
+	width:300px;
+	float:left;
+}
+.shake-time {
+margin: 0 auto;
+width: 200px;
+height: 200px;
+line-height: 200px;
+text-align: center;
+color: #EEE;
+font-size: 80px;
+background: rgba(0, 0, 0, 0.7);
+border: 8px #EEE solid;
+margin-top: 100px;
+}
+.img-circle {
+-webkit-border-radius: 500px;
+-moz-border-radius: 500px;
+border-radius: 500px;
+}
+.shake-button {
+margin: 0 auto;
+width: 200px;
+height: 50px;
+line-height: 50px;
+text-align: center;
+color: #FFF;
+font-size: 25px;
+margin-top: 30px;
+cursor: pointer;
+}
+.common-bg {
+filter: Alpha(opacity=70);
+background: #000;
+background: rgba(0, 0, 0, 0.7);
+-moz-border-radius: 4px;
+border-radius: 4px;
+}
+</style>
+</head>
+
+<body>
+<div  id="head" class="head" style="background: rgba(255, 255, 255, .9);margin: 10px; width:800px; margin-left:auto; margin-right:auto">
+  <div class="head_left">
+    <div class="head_info" onclick="count=55;">
+      <h1>微信火拼摇一摇</h1>
+    </div>
+    <div class="head_flag"></div>
+  </div>
+  <div class="head_right"> 
+    <h2>添加</h2>
+    <h1>{$_W['account']['name']}</h1>
+    <h2>公众账号</h2>
+    <h3>发送<span>{$reply['keyword']}</span> 即可参与</h3>
+  </div>
+
+</div>
+<div class="showlast">
+	<div class="show_left">
+	<div id="startdjs">
+		<div class="shake-time img-circle" id="description">10</div>
+		<div class="shake-button common-bg" onclick="startgame()">开始</div>
+	</div>
+	
+	<div style="display:none;" id="leftad">
+		<img src="{$_W['attachurl']}{$reply['screenpic']}" style="height:470px;width:280px;"></div>
+	 </div>
+	<div id="lefttimes">
+		
+		<div id="qrcode" ><img src="{$_W['attachurl']}{$reply['qrcode']}" style="height:500px;width:500px;"></div>
+	</div>
+	<div id="ranking">
+		<div class='progress-wbar' id='f0'><div class='huangguan' ></div><div class='number'><span ></span></div><div class='progress-bar blue stripes'> <span></span> </div></div>
+		<div class='progress-wbar' id='f1'><div class='huangguan' ></div><div class='number'><span ></span></div><div class='progress-bar blue stripes'> <span></span> </div></div>
+		<div class='progress-wbar' id='f2'><div class='huangguan' ></div><div class='number'><span ></span></div><div class='progress-bar blue stripes'> <span></span> </div></div>
+		<div class='progress-wbar' id='f3'><div class='huangguan' ></div><div class='number'><span ></span></div><div class='progress-bar blue stripes'> <span></span> </div></div>
+		<div class='progress-wbar' id='f4'><div class='huangguan' ></div><div class='number'><span ></span></div><div class='progress-bar blue stripes'> <span></span> </div></div>
+		<div class='progress-wbar' id='f5'><div class='huangguan' ></div><div class='number'><span ></span></div><div class='progress-bar blue stripes'> <span></span> </div></div>
+		<div class='progress-wbar' id='f6'><div class='huangguan' ></div><div class='number'><span ></span></div><div class='progress-bar blue stripes'> <span></span> </div></div>
+		<div class='progress-wbar' id='f7'><div class='huangguan' ></div><div class='number'><span ></span></div><div class='progress-bar blue stripes'> <span></span> </div></div>
+		<div class='progress-wbar' id='f8'><div class='huangguan' ></div><div class='number'><span ></span></div><div class='progress-bar blue stripes'> <span></span> </div></div>
+		<div class='progress-wbar' id='f9'><div class='huangguan' ></div><div class='number'><span ></span></div><div class='progress-bar blue stripes'> <span></span> </div></div>
+
+	</div>
+</div>
+<!-- 未开始，倒计时 -->
+
+
+
+
+</body>
+</html>

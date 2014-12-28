@@ -1,0 +1,32 @@
+{template 'header'}
+<link type="text/css" rel="stylesheet" href="./source/modules/multisearch/template/mobile/default/common.css">
+<nav class="navbar navbar-default mynav" role="navigation">
+	<div class="mynav-brand mynav-right">
+		<a href="tel:{$search['mobile']}"><i class="icon-phone"></i></a>
+	</div>
+	<div class="mynav-brand mynav-left">
+		<a href="#" onclick="history.go(-1);return false;"><i class="icon-chevron-left"></i></a>
+	</div>
+	<p class="mynav-title">{$search['title']}</p>
+</nav>
+<div class="mobile-content">
+	<form class="form-horizontal" method="post" role="form">
+		{loop $search['fields'] $field}
+		{if $field['search']}
+		<div class="form-group">
+			<label class="col-sm-2 title"><i class="icon-angle-right"></i>  {$field['title']}</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control input-lg" name="search[{$field['variable']}]">
+			</div>
+		</div>
+		{/if}
+		{/loop}
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+				<button type="submit" name="submit" value="search" class="btn btn-primary pull-right btn-lg"><i class="icon-search"></i> 查询</button>
+			</div>
+		</div>
+	</form>
+</div>
+{template 'footer'}

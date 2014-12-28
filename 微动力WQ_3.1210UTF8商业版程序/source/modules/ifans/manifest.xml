@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="true">
+		<name><![CDATA[新粉丝模块]]></name>
+		<identifie><![CDATA[ifans]]></identifie>
+		<version><![CDATA[1.1]]></version>
+		<type><![CDATA[customer]]></type>
+		<ability><![CDATA[一键获取粉丝信息，群发信息，客服平台]]></ability>
+		<description><![CDATA[一键获取粉丝信息，群发信息，客服平台]]></description>
+		<author><![CDATA[零壹贰科技]]></author>
+		<url><![CDATA[http://www.b2ctui.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+			<message type="image" />
+			<message type="voice" />
+			<message type="video" />
+			<message type="location" />
+			<message type="link" />
+			<message type="subscribe" />
+			<message type="unsubscribe" />
+			<message type="click" />
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="同步粉丝" do="GetFans" state="" direct="false" />
+			<entry title="粉丝分组" do="Groups" state="" direct="false" />
+			<entry title="粉丝列表" do="Fans" state="" direct="false" />
+			<entry title="素材管理" do="Media" state="" direct="false" />
+			<entry title="群发信息" do="AllSend" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_medias` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `mediatype` varchar(8) NOT NULL,
+  `content` varchar(200) NOT NULL,
+  `mediaurl` varchar(200) NOT NULL,
+  `media_id` varchar(100) NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `ims_ifans_groupsend` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `msgtype` varchar(10) NOT NULL,
+  `msg` varchar(800) NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `errorcode` int(10) unsigned NOT NULL,
+  `time` int(10) unsigned NOT NULL,
+  `starttime` int(10) unsigned NOT NULL,
+  `send_time` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+		]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

@@ -1,0 +1,63 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+  <li{if $_GPC['do'] == 'routerlist'} class="active"{/if}><a href="{php echo  $this->createWebUrl('routerlist');}">路由器管理</a>
+  </li>
+  <li{if $_GPC['do'] == 'routeradd'} class="active"{/if}><a href="{php echo $this->createWebUrl('routeradd');}">添加路由器</a>
+  </li>
+</ul>
+	<div class="search">
+		<form action="{php echo $this->createWeburl('routerlist')}" method="post">
+		  <table class="table table-bordered tb">
+			<tbody>
+				<tr class="span6">
+					<th class="span2">路由器名称</th>
+					<td class="span2">
+						<input class="span2" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+					</td>
+                    <td class="span2">
+                    <button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button>
+                    </td>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<p>
+        <a href="{php echo $this->createWeburl('routeradd', array())}"  class="btn"><i class="icon-plus-sign-alt" ></i>新增路由器</a>
+        </p>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th width="85"  >路由器名称</th>
+					<th width="41" >appId </th>
+					<th width="42" >appKey </th>
+					<th width="85" >nodeId </th>
+					<th width="85" >状态</th>
+					<th width="100">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['rname']}</td>
+					<td>{$item['appid']}</td>
+					<td>{$item['appkey']}</td>
+					<td>{$item['nodeid']}</td>
+					<td><span class="label">{if $item['status']}运行{else}停止{/if}</span></td>
+					<td>
+                
+                    <a href="{php echo $this->createWebUrl('routeradd', array('id' => $item['id']))}" class="btn btn-small" title="编辑"><i class="icon-edit"></i></a>
+						<a onclick="return confirm('确认删除该路由器？');return false;" href="{php echo $this->createWebUrl('delrouter', array('id' => $item['id']))}" class="btn btn-small" title="删除"><i class="icon-remove"></i></a></td>
+				</tr>
+				{/loop}
+
+				<td colspan="9">
+					<input name="token" type="hidden" value="{$_W['token']}" /></td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,103 @@
+
+{if $op==yok}
+{php $header_off=1;}
+{else}
+{php $header_off=0;}
+{/if}
+{template 'aheader'}
+
+{if $op==yok}
+    <div class="container">
+          <div class="panel panel-default mt15">
+            <div class="panel-heading">  系统提示:</div>
+            你好{$user['nickname']}，你不是管理员，你的会员id:{$user['id']}
+    </div>
+    </div>
+    </div>
+{/if}
+{if $tur==index}
+    <div class="container">
+        <div class="panel panel-default mt15">
+            <div class="panel-heading"><span class="glyphicon glyphicon-star"></span> 我的收藏</div>
+            <!-- List group -->
+            <div class="list-group">
+            {loop   $list    $vo}
+      <a href="{php echo $this->createMobileUrl('hdetail', array('hsid'=>$vo['hsid']))}" class="list-group-item">{$vo['title']}                <span class="pull-right glyphicon glyphicon-chevron-right"></span></a>
+{/loop}
+                 <a href="{php echo $this->createMobileUrl('house')}" class="list-group-item">更多楼盘...</a>
+            </div>
+            {$pager}
+        </div>
+    </div>
+{/if}
+{if $tur==yigi}
+    <div class="container">
+        <div class="panel panel-default mt15">
+            <div class="panel-heading"><span class="glyphicon glyphicon-star"></span> 最新预约</div>
+            <!-- List group -->
+            <div class="list-group">
+            {loop   $list    $vo}
+                      <li class="list-group-item navbar">
+                            <a href="{php echo $this->createMobileUrl('hdetail', array('hsid'=>$vo['id']))}">
+     姓名:{$vo['truename']}<br>电话:{$vo['mobile']}<span class="pull-right"> {php echo date('Y-m-d H:i:s', $vo[addtime]);}    </span></a>
+          </li>
+{/loop}
+         
+            </div>
+            {$pager}
+        </div>
+    </div>
+{/if}
+{if $tur==baxkur}
+    <div class="container">
+        <div class="panel panel-default mt15">
+            <div class="panel-heading"> 管理员
+            <span class="pull-right" id="yigi" data-do="add" >添加</span>
+            </div>
+            <!-- List group -->
+            <div class="list-group">
+            {loop   $adminlist    $vo}
+      <a href="{php echo $this->createMobileUrl('admin', array('tur'=>'editbaxkur','id'=>$vo['id']))}" class="list-group-item">{$vo['realname']}                <span class="pull-right">{$vo['mobile']}</span></a>
+{/loop}
+
+            </div>
+            {$pager}
+        </div>
+    </div>
+    
+        <script type="text/javascript">
+        require(['jquery','base','lazyload','template'], function($){
+            var tpl ='';
+            $("#yigi").on("click", function() {
+                var _this = $(this);
+                var obj_type = _this.attr('data-do');
+                    if(obj_type=='add'){
+                        $("#tool_bar_bg").fadeIn();
+                        $("#floatDiv_closeWrap").fadeIn();
+                        var iframe_url = '{php echo $this->createMobileUrl('admin', array('tur'=>'addbaxkur'))}';
+                        M.doFrame(iframe_url);
+                    }
+                return false;
+            });
+
+        });
+    </script>
+    
+    
+{/if}
+{if $tur==tastik}
+    <div class="container">
+        <div class="panel panel-default mt15">
+            <div class="panel-heading"><span class="glyphicon glyphicon-star"></span> 我的收藏</div>
+            <!-- List group -->
+            <div class="list-group">
+            {loop   $list    $vo}
+      <a href="{php echo $this->createMobileUrl('hdetail', array('hsid'=>$vo['hsid']))}" class="list-group-item">{$vo['title']}                <span class="pull-right glyphicon glyphicon-chevron-right"></span></a>
+{/loop}
+                 <a href="{php echo $this->createMobileUrl('house')}" class="list-group-item">更多楼盘...</a>
+            </div>
+            {$pager}
+        </div>
+    </div>
+{/if}
+{php $footer_off=1;} {php $stat_off=1;} {template 'footer'}

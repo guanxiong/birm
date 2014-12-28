@@ -1,0 +1,64 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('rule/post', array('module' => 'sns'))}">添加微吧</a></li>
+	<li class="active"><a href="{php echo create_url('site/module/snslist', array('state' => '', 'name' => 'sns'));}"> 微吧列表</a></li>
+</ul>
+<div class="main">
+	<div class="search">
+		<table class="table table-bordered tb">
+			<div class="sub-item" id="table-list">
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover2">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</th>
+									<th style="width:200px;">SNS分类名</th>
+									<th class="width:200px;">微吧简介</th>
+									<th style="width:100px;">微吧状态</th>
+									<th style="width:150px;">版主ID</th>
+									<th style="width:150px;">贴子数</th>
+									<th style="width:110px;">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $k $row}
+								<tr>
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+									<td>
+										<div class="mainContent">
+											<div class="nickname" style="text-align:left;">{$row[id]}、{$row['name']}</div>
+										</div>
+									</td>
+									<td style="text-align:left;">{$row['description']}</td>
+									<td style="text-align:left;font-size:12px; color:#666;">
+										<div style="margin-bottom:10px;">{if $row['status'] == '0'}暂关闭{else if $row['status'] == '1'}正常{else if $row['status'] == '2'}置顶规则{else} 已被删除{/if}</div>
+									</td>
+									<td style="text-align:left;">{$row['bzuid']}</td>
+									<td style="text-align:left;">{$posttotal[$k]}</td>
+									<td style="text-align: left;">
+                                    	<a href="{php echo create_url('site/module/manage', array('state' => '','id' => $row['rid'] ,'name' => 'sns'))}">贴子管理</a>
+										<a href="{php echo create_url('rule/post', array('id' => $row['rid']))}">修改</a>
+										<a href="{php echo create_url('rule/delete', array('id' => $row['rid'], 'type' => 'rule'))}">删除</a>
+									</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr>
+								<td style="width:40px;" class="row-first"><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+								<td colspan="4">
+									<input type="submit" name="delete" value="删除选中" class="btn btn-primary" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					</form>
+					{$pager}
+				</div>
+		</table>
+	</div>
+</div>
+{template 'common/footer'}

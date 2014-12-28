@@ -1,0 +1,32 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>粉丝管理选项</h4>
+		<table class="tb">
+			<tr>
+				<th>粉丝关注时匹配</th>
+				<td>
+					<input type="radio" name="guanzhupp" value="1" {if $settings['guanzhupp'] == '1'}checked{/if}/>开启 
+					<input type="radio" name="guanzhupp" value="0" {if $settings['guanzhupp'] == '0'}checked={/if}/>关闭
+					<div class="help-block">开启此项后粉丝关注平台，本系统会自动同步粉丝的部分信息！非高级接口请勿开启！！！</div>
+				</td>
+			</tr>
+			<tr>
+				<th>粉丝活跃时匹配</th>
+				<td>
+					<input type="radio" name="huoyuepp" value="1" {if $settings['huoyuepp'] == '1'}checked{/if}/>开启 
+					<input type="radio" name="huoyuepp" value="0" {if $settings['huoyuepp'] == '0'}checked={/if}/>关闭
+					<div class="help-block">开启此项后粉丝与平台互动，本系统会自动同步粉丝的部分信息！非高级接口请勿开启！！！</div>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span2" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

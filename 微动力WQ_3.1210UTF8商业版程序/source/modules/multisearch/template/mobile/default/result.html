@@ -1,0 +1,42 @@
+{template 'header'}
+<link type="text/css" rel="stylesheet" href="./source/modules/multisearch/template/mobile/default/common.css">
+<nav class="navbar navbar-default mynav" role="navigation">
+	<div class="mynav-brand mynav-right">
+		<a href="tel:{$search['mobile']}"><i class="icon-phone"></i></a>
+	</div>
+	<div class="mynav-brand mynav-left">
+		<a href="#" onclick="history.go(-1);return false;"><i class="icon-chevron-left"></i></a>
+	</div>
+	<p class="mynav-title">查询结果</p>
+</nav>
+<div class="mobile-content">
+	<div class="table-responsive">
+		<table class="table table-striped mytable">
+			<tr>
+				{loop $search['fields'] $field}
+				{if $field['type'] == 1}
+				<th>{$field['title']}</th>
+				{/if}
+				{/loop}
+				{if $search['isresearch']}
+				<th></th>
+				{/if}
+			</tr>
+			{loop $list $item}
+			<tr>
+				{loop $search['fields'] $field}
+				{if $field['type'] == 1}
+				{if !empty($item[$field['variable']])}
+				<th>{$item[$field['variable']]}</th>
+				{else}
+				<th>{$item['data'][$field['variable']]}</th>
+				{/if}
+				{/loop}
+				<td>{if $search['isresearch']}<a href="{php echo $this->createMobileUrl('research', array('id' => $item['id'], 'reid' => $id))}">预约</a>{/if}</td>
+				{/if}
+			</tr>
+			{/loop}
+		</table>
+	</div>
+</div>
+{template 'footer'}

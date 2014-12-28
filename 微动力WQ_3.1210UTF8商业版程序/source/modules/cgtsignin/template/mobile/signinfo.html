@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)http://api.hyhaina.com/Snow/index.php/sign_in/sign_list/act_id/3.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
+<meta name="format-detection" content="telephone=no"><title></title>
+<link href="{RES}/css/style_sign2.css" rel="stylesheet" type="text/css">
+<link href="{RES}/css/sprites.css" rel="stylesheet" type="text/css"><script type="text/javascript" src="{RES}/js/jquery.js">
+</script><script type="text/javascript" src="{RES}/js/jquery.swipebox.js"></script>
+<script type="text/javascript" src="{RES}/js/snap.js"></script>
+<script type="text/javascript" src="{RES}/js/custom.js"></script>
+<script type="text/javascript" src="{RES}/js/framework.launcher.js"></script>
+</head><body><div id="preloader" style="display: none;"><div id="status" style="display: none;">
+<p class="center-text">数据正在玩命加载...</p></div></div>
+<div class="wrap"><div class="content_box rit_bg" id="content"><div class="rit_box">
+<div class="rit_main" style="background: url({$_W['attachurl']}{$thumb}) center top no-repeat;background-size: 320px 158px;"><div class="rit_pos"><div class="rit_bak">
+<a href="{php echo $this->createMobileUrl('signindex',array('rid'=>$rid))}">返回签到</a></div></div></div></div>
+<div class="min_box"><div class="rit_info_main"><div class="rit_info_box">
+<div class="rit_info_box_tit">签到列表</div><div class="rit_tit"><span>日期</span><span>签到情况</span><span>时间</span></div>
+<div class="rit_cen"><ul>
+	{loop $row $item}
+<li><span>{$item['time1']}</span><span class="this">签到</span>
+<span style="margin: 5px 0; width: 32.3%; text-align: center;display: inline-block;">{$item['time2']}</span></li>
+<li></li>
+{/loop}
+</ul></div></div></div></div></div></div></body></html>

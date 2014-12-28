@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[积分兑换]]></name>
+		<identifie><![CDATA[credit]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[积分兑换]]></ability>
+		<description><![CDATA[积分兑换，签到积分，购物积分，酒店积分兑换。通过本模块进行营销活动，可以获得用户的真实姓名、手机号码、邮寄地址等。]]></description>
+		<author><![CDATA[晓楚]]></author>
+		<url><![CDATA[http://blog.csdn.net/maray]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+        <cover>
+			<entry title="积分兑换设置" do="award" />
+        </cover>
+		<menu>
+			<entry title="兑换商品管理" do="award" />
+			<entry title="兑换请求管理" do="credit" />
+		</menu>
+		<profile>
+			<entry title="我的积分" do="mycredit" />
+		</profile>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE IF NOT EXISTS `ims_credit_request` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `award_id` int(10) unsigned NOT NULL,
+  `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_award_list` (
+  `award_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `logo` varchar(255) NOT NULL,
+  `amount` int(11) NOT NULL DEFAULT '0',
+   `deadline` datetime NOT NULL,
+  `credit_cost` int(11) NOT NULL DEFAULT '0',
+  `price` int(11) NOT NULL DEFAULT '100',
+  `content` text NOT NULL,
+  `createtime` int(10) NOT NULL,
+  PRIMARY KEY (`award_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+	]]></install>
+	<uninstall><![CDATA[
+		
+		DROP TABLE IF EXISTS `ims_credit_exchange`;
+		DROP TABLE IF EXISTS `ims_award_list`;
+		
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

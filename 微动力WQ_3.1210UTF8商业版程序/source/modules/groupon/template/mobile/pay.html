@@ -1,0 +1,46 @@
+{template 'header'}
+<link type="text/css" rel="stylesheet" href="./source/modules/shopping3/images/common.css">
+<style>
+.mymember{margin-bottom:10px;}
+.table{margin:10px 0;}
+.table td, .table th{border:0;}
+.table th{font-weight:normal; color:#999;}
+.table td{text-align:right; color:#333;}
+.table .ordersn{font-size:20px; text-align:center; color:red;}
+.paybtn{margin:10px 10px 0 0;}
+</style>
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner" style="padding:0 5px;">
+		<a class="btn btn-small btn-inverse pull-right" href="{php echo create_url('mobile/channel', array('name' => 'home', 'weid' => $_W['weid']))}"><i class="icon-user"></i> 个人中心</a>
+		<button class="btn btn-small btn-inverse pull-left" onclick="history.go(-1);"><i class="icon-chevron-left"></i> 返回</button>
+	</div>
+</div>
+<div class="order-detail">
+	<div class="order-detail-list">
+		<table class="table">
+			<tr>
+				<td class="ordersn" colspan="2">订单号：{$order['ordersn']}</td>
+			</tr>
+			<tr>
+				<th>付款方式</th>
+				<td>{if $order['paytype'] == 1}余额付款{else if $order['paytype'] == 2}在线支付{else if $order['paytype'] == 3}现金支付{/if}</td>
+			</tr>
+			<tr>
+				<th>付款金额</th>
+				<td>{php echo sprintf('%.2f', $order['totalprice']);} 元</td>
+			</tr>
+			{if $order['paytype'] == 1}
+			<tr>
+				<th>帐户余额</th>
+				<td>{php echo sprintf('%.2f', $_W['fans']['credit2']);} 元</td>
+			</tr>
+			{/if}
+		</table>
+	</div>
+</div>
+<form action="" method="post" style="overflow:hidden;">
+	<input type="hidden" name="orderid" value="{$orderid}" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+	<input type="submit" name="submit" class="btn btn-success paybtn pull-right" value="立即支付" />
+</form>
+{template 'footer'}

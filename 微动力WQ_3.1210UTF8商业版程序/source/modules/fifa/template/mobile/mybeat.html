@@ -1,0 +1,50 @@
+{template 'header'}
+<link type="text/css" rel="stylesheet" href="./source/modules/fifa/style/base.css" />
+<link type="text/css" rel="stylesheet" href="./source/modules/fifa/style/style.css?v=1" />
+<title></title>
+	<section class="order">
+        <section class="order_content">
+            <section class="order_item">
+		<a href="{php echo $this->createMobileUrl('index')}"><aside>我的积分：130{$profile['credit1']}</aside></a>
+            </section>
+        </section>
+
+    	<!--content-->
+        <section class="order_content">
+			{loop $mybeat $item}
+        	<!--item-->
+            <section class="order_item">
+				<aside>{$item['teama']} VS {$item['teamb']}</aside>
+                <article>
+				
+                	<section class="order_item_r">
+					<p>比分：<span class="red20">{$item['score']}</span></p>
+					{if empty($item['whowin'])}
+						{if $item['whowins']==0}
+							<p>你选择了打平</p>
+						{else}
+							{if $item['whowin']==$item['groupa']}
+								<p>你选择了{$item['teama']}</p>
+							{else}
+								<p>你选择了{$item['teamb']}</p>
+							{/if}
+						{/if}
+					{else}
+						{if $item['whowin']==$item['whowins']}
+							<p>获得积分：100</p>
+						{else}
+							<p>你没猜中</p>
+						
+						{/if}
+					{/if}
+					
+					<p>竞猜日期： {php echo date('Y-m-d H:i:s', $item['createtime'])}</p> 
+                </section>
+                </article>
+            </section>
+            <!--item end-->
+			{/loop}
+        </section>
+        <!--content end-->
+	</section>
+{template 'footer'}

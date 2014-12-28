@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>团购首页</title>
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link href="/source/modules/groupon/style/css/main.css" rel="stylesheet" />
+    <link href="/source/modules/groupon/style/css/dialog.css" rel="stylesheet" />
+
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+});
+</script>
+
+    <script src="/source/modules/groupon/style/js/jquery.min.js"></script>
+    <script src="/source/modules/groupon/style/js/swipe.js"></script>
+    <script src="/source/modules/groupon/style/js/dialog_min.js"></script>
+    <script src="/source/modules/groupon/style/js/global.js"></script>
+</head>
+<body onselectstart="return true;" ondragstart="return false;" class="gbuy_bind">
+
+<div>
+    <div id="container" class="container animate">
+        <div class="body">
+            <ul class="list_bind">
+				{if empty($users['mobile'])}
+                <form id="form_1" action="javascript:;" method="post">
+                    <ol>
+                        <li class="tbox">
+                            <div>
+                                <label class="pre">手机号:</label>
+                            </div>
+                            <div>
+                                <input type="tel" name="telephone" placeholder="" maxlength="13" class="input" />
+                            </div>
+                        </li>
+                        <li class="tbox">
+                            <div>
+                                <label class="pre">验证码:</label>
+                            </div>
+                            <div style="width:100%;">
+                                <input type="number" name="vcode" placeholder="" maxlength="13" class="input" />
+                            </div>
+                            <div style="width:100px;">
+                                <input type="button" value="获取验证码" class="input btn_input" onclick="getVCode(this, event,'form_1', 'telephone')" style="font-size: 12px;"/>
+                            </div>
+                        </li>
+                    </ol>
+                </form>
+				{else}
+                <form id="form_1" action="javascript:;" method="post">
+                    <ol>
+                        <li class="tbox">
+                            <div>
+                                <label class="pre">原手机号:</label>
+                            </div>
+                            <div>
+                                <input type="tel" name="telephone0" placeholder="" maxlength="13" class="input" value="{$users['mobile']}" />
+                            </div>
+                        </li>
+                        <li class="tbox">
+                            <div>
+                                <label class="pre">新手机号:</label>
+                            </div>
+                            <div>
+                                <input type="tel" name="telephone" placeholder="" maxlength="13" class="input" />
+                            </div>
+                        </li>
+                        <li class="tbox">
+                            <div>
+                                <label class="pre">验证码:</label>
+                            </div>
+                            <div style="width:100%;">
+                                <input type="number" name="vcode" placeholder="" maxlength="13" class="input" />
+                            </div>
+                            <div style="width:100px;">
+                                <input type="button" value="获取验证码" class="input btn_input" onclick="getVCode(this, event,'form_1', 'telephone')" />
+                            </div>
+                        </li>
+                    </ol>
+                </form>
+                {/if}
+            </ul>
+        </div>
+        <footer>
+            <section class="header_nav">
+                <ul class="tbox">
+                    <li><a href="javascript:history.go(-1);" class="icons icons_back">&nbsp;</a></li>
+                    <li><a href="javascript:bind();" class="btn">绑定</a></li>
+                </ul>
+            </section>
+        </footer>
+    </div>
+</div>
+<script>
+    $(function(){
+        
+    });
+
+
+    function bind(){
+        var form = $("#form_1")[0];
+        var req = {
+            telephone: $.trim(form['telephone'].value),
+            validCode: $.trim(form['vcode'].value),
+            user_id: 0,
+            bid: 5,
+            pid: 1071,
+            wechatid: '{$_W['fans']['from_user']}'
+        }
+		if(!req.telephone || !req.validCode){
+			   wlalert("请输入手机号和验证码");
+		//
+		}else{
+			loading(true);
+			$.ajax({
+				url: "{php echo $this->createMobileUrl('wlbindsubmit',array('tid'=>$_GPC['tid']));}",
+				type:"post",
+				data:req,
+				dataType:"JSON",
+				success: function(res){
+					loading(false);
+					if(0 == res.errno){
+						confirm('<p class="article" style="font-size:20px;">绑定成功</p>', function(){
+							location.href = "{php echo $this->createMobileUrl('wlcheck',array('tid'=>$_GPC['tid']));}";
+							console.log("del");
+						});
+					}else{
+						confirm('<p class="article" style="font-size:20px;">绑定失败<label style="font-size:14px;color:#aaaaaa;display:block;">请确认您的验证码输入正确</label></p>', function(){
+							console.log("del");
+						},function(){});
+					}
+				}
+			});
+		}
+        //
+
+    }
+
+</script>
+<script type="text/javascript">
+    var intervalId,buttonObj;
+    //发送下一条短信需要间隔的秒数
+    var seconds = 60;
+    function getVCode(clickObj, evt, formId, teleName){
+        var pid = 1071;
+        var form = document.getElementById(formId);
+        var req = {
+            telephone: $.trim(form[teleName].value),
+            pid:pid
+        }
+        if(!req.telephone){
+            wlalert("请输入手机号");return;
+        }
+        clickObj.setAttribute("disabled", "disabled");
+        clickObj.value = "正在发送，请稍候...";
+        $.ajax({
+            url: "{php echo $this->createMobileUrl('wlphonecode',array('tid'=>$groupon['id']));}",
+            type:"post",
+            data:req,
+            dataType:"JSON",
+            success: function(res){
+                if(0 == res.errno){
+                    clickObj.value = '验证码发送成功.';
+                    buttonObj = clickObj;
+					wlalert('验证号:'+res.code);
+                    intervalId = setInterval("ticker()",1000);
+					
+                }else{
+                    alert("失败", 1500);
+                }
+            }
+        });
+    }
+    function ticker(){
+        seconds --;
+        if(seconds > 55){
+            //提示消息显示5秒钟
+        }else if(seconds>0){
+            buttonObj.value = seconds+"秒后可重新获取";
+        }else{
+            clearInterval(intervalId);
+            buttonObj.removeAttribute("disabled");
+            buttonObj.value = "获取验证码";
+            seconds = 60;
+            buttonObj = null;
+        }
+    }
+	
+function wlalert(msg){
+  var d = new iDialog();
+	d.open({
+		classList: "waiting",
+		title:"提示",
+		close:"<span class='close'>×</span>",
+		content:'<p class="article">'+msg+'</p>',
+		btns:[
+			{id:"", name:"确认", onclick:"fn.call();", fn: function(self){
+				self.die();
+			}}
+		]
+	});
+}	
+</script>
+
+</body>
+
+</html>

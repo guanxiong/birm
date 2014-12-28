@@ -1,0 +1,117 @@
+{php $bootstrap_type = 3;}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{if $title}{$title}{else}{if !empty($_W['account']['name'])}{$_W['account']['name']}{/if}{/if}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- Mobile Devices Support @begin -->
+	<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+	<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+	<meta content="no-cache" http-equiv="pragma">
+	<meta content="0" http-equiv="expires">
+	<meta content="telephone=no, address=no" name="format-detection">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<!-- Mobile Devices Support @end -->
+	<meta name="keywords" content="微动力,微信,微信公众平台" />
+	<meta name="description" content="微信公众平台自助引擎，简称微动力，微动力是一款免费开源的微信公众平台管理系统。" />
+	<script type="text/javascript" src="./resource/script/jquery-1.7.2.min.js"></script>
+	{if $bootstrap_type == 3}
+	<link type="text/css" rel="stylesheet" href="./themes/mobile/default/style/bootstrap.css">
+	<script type="text/javascript" src="./themes/mobile/default/script/bootstrap.min.js"></script>
+	{else}
+	<link type="text/css" rel="stylesheet" href="./resource/style/bootstrap.css">
+	<script type="text/javascript" src="./resource/script/bootstrap.js"></script>
+	{/if}
+	<link type="text/css" rel="stylesheet" href="./resource/style/font-awesome.min.css" />
+	<link type="text/css" rel="stylesheet" href="./themes/mobile/default/style/common.mobile.css">
+	<script type="text/javascript" src="./resource/script/cascade.js"></script>
+	<script type="text/javascript" src="./themes/mobile/default/script/jquery.touchwipe.js"></script>
+	<script type="text/javascript" src="./themes/mobile/default/script/swipe.js"></script>
+	<!--[if IE 7]>
+	<link rel="stylesheet" href="./resource/style/font-awesome-ie7.min.css">
+	<![endif]-->
+</head>
+<body>
+{if empty($main_off)}<div class="main">{/if}
+<style>
+body{background:#efefef;}
+.head{height:40px; line-height:40px; background:#769cdc; margin-bottom:5px; padding:0 5px; color:#FFF;}
+.head .bn{display:inline-block; height:30px; line-height:30px; padding:0 10px; margin-top:4px; font-size:20px; border:1px #6c94d6 solid; background:#86a8e2; color:#FFF; text-decoration:none;}
+.head .bn.pull-right{position:absolute; right:5px; top:0;}
+.head .title{font-size:14pt;display:block;padding-left:10px;font-weight:bolder;margin-right:49px;text-align:center;height:40px;line-height:40px;text-overflow:ellipsis;white-space:nowrap;overflow: hidden;}
+.head .order{background:#F9F9F9; position:absolute; z-index:9999; right:0;}
+.head .order li > a{display:block; padding:0 10px; min-width:100px; height:35px; line-height:35px; font-size:16px; color:#666; text-decoration:none; border-top:1px #EEE solid;}
+.head .order li > a i{display:inline-block; width:20px;}
+.head .order li.icon-caret-up{font-size:20px;color:#F9F9F9;position:absolute;top:-11px;right:16px;}
+.navbar-fixed-bottom{max-width:700px; margin:0 auto; background-color:#f9f9f9; border-top:1px #DDD solid; padding:5px 0; overflow:hidden; height:50px;}
+.navbar-fixed-bottom > a{display:inline-block; color:#769cdc; height:40px; line-height:40px; font-size:14px; text-decoration:none; text-align:center; width:100%;}
+.navbar-fixed-bottom > .pull-left{border-right:1px #d4d4d4 solid; width:90px; position:absolute; left:0; top:5px;}
+.navbar-fixed-bottom > .pull-right{border-left:1px #d4d4d4 solid; width:90px; position:absolute; right:0; top:5px;}
+/**/
+.form-horizontal{margin:5px; background:#fafafa; padding:20px 10px 10px 10px; overflow:hidden;}
+.form-horizontal label{color:#555;}
+.form-horizontal .sendverify{margin-right:15px; width:100%;}
+.form-horizontal .resolve{background:#FFF; border-top:2px #769cdc solid; padding:10px;}
+.form-horizontal .resolve .resolver, .resolve .date{text-align:right; color:#888;}
+.form-horizontal .resolve .resolver{color:#779cdc;}
+/**/
+.list{background:#fafafa; padding:10px; margin:5px;}
+.list .hd{border-bottom:1px #DDD dotted; margin-bottom:5px; padding-bottom:5px;}
+.list .hd > span{display:block;}
+.list .hd > span.title{font-size:16px; color:#000;}
+.list .hd > span.date{color:#666; font-size:12px;}
+.list .content{color:#545454; line-height:25px;}
+.list .content .author{color:#999; text-align:right; margin-top:10px;}
+.list .reply{background:#FFF; border-top:2px #769cdc solid; padding:10px; margin-top:10px; overflow:hidden;}
+.list .reply > .pull-left .label, .list .reply > .pull-right .label{display:inline-block;text-align:left;line-height:20px;padding:3px 5px;white-space:normal;}
+.list .reply > .pull-right{width:60%; margin-bottom:10px; text-align:right;}
+.list .reply > .pull-left{width:60%; margin-bottom:10px;}
+.list .reply .reply-more{display:none;}
+.list .reply .reply-more-btn{float:left;width:100%;margin-bottom:-13px; text-align:center; cursor:pointer; border-top:1px #DDD dotted; margin-top:10px; padding-top:10px;}
+.list .reply .reply-more-btn span{padding:5px 30px; background:#9dc0fb; color:#FFF;}
+/**/
+.table{background:#FFF;}
+.table thead th{background:#ecedee; color:#686868; font-weight:normal; border-bottom:1px #c0c0c0 solid !important;}
+.table tbody td{border-color:#e4e6e6 !important;}
+.table tbody td a{color:#333;}
+/**/
+.home-box{overflow:hidden; margin:10px 5px;}
+.home-box > a{float:left; display:block; width:{php echo 100/3;}%; text-align:center; margin-bottom:10px; text-decoration:none; color:#769cdc;}
+.home-box > a div{background:#FFF; margin:0 5px; padding:5px 0;}
+.home-box > a div i{display:block; font-size:30px;}
+.home-box > a div span{display:block; margin-top:10px;}
+/**/
+.tips{background:#fafafa; margin:5px;  padding:10px; text-align:center; font-size:16px; color:#555;}
+.tips .icon{border-bottom:1px #DDD dotted; margin-bottom:10px; padding-bottom:10px;}
+.tips .icon i{font-size:50px; color:#769cdc;}
+/**/
+.pagination {margin:8px 0; padding: 5px 0;}
+.pagination ul li {float:left;}
+.pagination ul li.active a {background-color:#428bca; color:white;}
+/**/
+.width-auto {width:auto;}
+.pull-right {float:right;}
+.pull-left {float:left;}
+.head .title {letter-spacing: 1em;}
+</style>
+<div class="head">
+	<a href="javascript:history.go(-1);" class="bn pull-left"><i class="icon-reply"></i></a>
+	<span class="title">{$title}</span>
+	<a href="javascript:;" onclick="$('.head .order').toggleClass('hide');" class="bn pull-right"><i class="icon-reorder"></i></a>
+	<ul class="unstyled order hide">
+		<li class="icon-caret-up"></li>
+		<li>
+			<a href="{php echo $this->createMobileUrl('home')}"><i class="icon-home"></i> 首页</a>
+			<a href="{php echo $this->createMobileUrl('announcement')}"><i class="icon-bullhorn"></i> 公告</a>
+			<a href="{php echo $this->createMobileUrl('repair')}"><i class="icon-wrench"></i> 报修</a>
+			<a href="{php echo $this->createMobileUrl('report')}"><i class="icon-legal"></i> 投诉</a>
+			<a href="{php echo $this->createMobileUrl('homemaking')}"><i class="icon-group"></i> 家政</a>
+			<a href="{php echo $this->createMobileUrl('houselease')}"><i class="icon-info"></i> 租赁</a>
+			<a href="{php echo $this->createMobileUrl('phone')}"><i class="icon-phone"></i> 电话</a>
+			<a href="{php echo $this->createMobileUrl('express',array('op'=>'display'))}"><i class="icon-phone"></i> 快递</a>
+		</li>
+		</ul>
+</div>

@@ -1,0 +1,32 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*弹出框1个按钮*/
+#war{width:100%;height:100px;}
+.Pop-upbox{width:95%;height:auto; background:#FFF; border:1px solid #CCC; margin:0 auto;border-radius:10px;}
+.upbox_top{width:100%;height:35px; background:#333;margin:0 auto; margin-top:5px;margin-bottom:5px;border-radius:5px;}
+.upbox_top h1{font-size:14px; line-height:35px;float:left;font-family:"宋体";color:#FFF; font-weight:600; margin-left:20px; display:inline;}
+.close{float:right;width:28px; height:28px;margin-right:10px;margin-top:2px;background-image:url("close01.png");background-size:28px 28px;}
+.upbox_cen{width:99%;height:auto;margin-bottom:5px;}
+.upbox_cens{width:99%;height:auto;margin-bottom:5px;padding: 10px;}
+.button_1{width:90%; margin:0 auto;height:35px;color:#6b6464;background-color:#fff;background: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7),to(#e8e7e8));border: 1px solid #c9c9c9;border-radius:5px;}
+.upbox_cen a{font-size:14px; font-weight:600;text-align:center; line-height:34px;text-decoration:none;}
+
+/*弹出框2个按钮*/
+.upbox_cen2{float: left;width:100%;height:auto;margin-bottom:5px;}
+.button_01{width:45%;height:35px;color:#fff;background-color:#fff;background: -webkit-gradient(linear, left top, left bottom, from(#ffba00),to(#ed7d0f));border:1px solid #bc630d;border-radius:5px; float:left;margin:0 3%; display:inline;}
+.button_02{width:45%;height:35px;color:#fff;background-color:#fff;background: -webkit-gradient(linear, left top, left bottom, from(#73e032),to(#56c911));border:1px solid #46af07;border-radius:5px; float:left;}
+.upbox_cen2 a{margin:0 auto;font-size:14px; font-weight:600;text-align:center;line-height:34px;text-decoration:none;}
+
+/*弹出框2个按钮*/
+.upbox_cen02{float:left;width:100%;height:auto;margin-bottom:5px;}
+.button_03{width:45%;height:35px;color:#fff;background-color:#fff;background: -webkit-gradient(linear, left top, left bottom, from(#3fb1fa),to(#0a66ef));border:1px solid #0758d3;border-radius:5px; float:left;margin:0 3%; display:inline;}
+.button_04{width:45%;height:35px;color:#556c8f;background-color:#fff;background: -webkit-gradient(linear, left top, left bottom, from(#e6ebee),to(#c4cad8));border:1px solid #b9bdc9;border-radius:5px; float:left;}
+.upbox_cen02 a{margin:0 auto;font-size:14px; font-weight:600;text-align:center;line-height:34px;text-decoration:none;}
+
+
+
+
+
+
+

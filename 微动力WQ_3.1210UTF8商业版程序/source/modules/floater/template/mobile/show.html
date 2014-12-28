@@ -1,0 +1,32 @@
+{template 'header'}
+<div class="form-item"><a href="{php echo create_url('mobile/module',array('do' => 'wish','weid'=>empty($_GPC['__weid'])?$_GPC['weid']:$_GPC['__weid'],'userid'=>$_GPC['userid'],'name' => 'floater'))}">返回</a></div>
+<table background="./source/modules/floater/template/img/bg.jpg" class="form-table"  width="100%" height="300" >
+	<tr>
+		<td>
+			<table style="background-color: white; Filter: Alpha(opacity = 40)" width="100%"	height=150>
+				<tr>
+					<td align="center">
+						<img src="./source/modules/floater/template/img/c{$row['wishtype']}.gif" align=absmiddle>
+						 来自{$row['native']}的{$row['nickname']},于{$row['time']} 留下此愿
+					</td>
+				</tr>
+				<tr>
+					<td align="center" >
+						&nbsp;&nbsp;{$row['msg']}								
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="bottom" height=35><a
+			href="{php echo create_url('mobile/module',array('do' => 'makeawish','weid'=>empty($_GPC['__weid'])?$_GPC['weid']:$_GPC['__weid'],'userid'=>$userid,'name' => 'floater'))}"><img
+			src="./source/modules/floater/template/img/wish.gif" alt="祈愿"
+			width="72" height="64" border=0></a></td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>
+{template 'footer'}
+

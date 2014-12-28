@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>广告展示 - rippletek</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
+		<!--
+		下面一句js引用请勿修改，oAuth.js保留使用服务器的版本，以便于及时获取到更新的文件，如您将此js下载到本地，可能在后续平台升级过程中遇到问题。
+		-->
+		<script type="text/javascript" src="http://service.rippletek.com/ext/js/oAuth.js"></script>
+		<!--
+		上面一句js引用请勿修改，oAuth.js保留使用服务器的版本，以便于及时获取到更新的文件，如您将此js下载到本地，可能在后续平台升级过程中遇到问题。
+		-->
+	</head>
+	<body>
+		<div align="center">
+			<img style="margin-top:20px;" src="Public/images/logo.png">
+		</div>
+		<div align="center" style="margin-top:20px;">
+			<!--广告图片 在Public/images/ad.jpg 路径下更换图片-->
+			<a href="#"><img src="Public/images/ad.jpg" height="350"></a>
+			<!--倒计时-->
+			<form name="fm" style="margin-top:20px;">
+				<input id="bt" style="height:40px;font-family:微软雅黑;font-size:16px;" type="button" name="Submit" value="" onclick="javascript:rptk_oneclick()"/>
+			</form>
+		</div>
+		<!--按钮定时-->
+		<script language="javascript">
+			document.fm.Submit.disabled = true;
+			var speed = 1000; // 速度 一般不用修改
+			var wait = 10; // 停留时间 单位：秒
+				function updateinfo(){
+					if(wait == 0){
+						document.fm.Submit.value = "网络已经准备好，马上开始上网";
+						document.fm.Submit.disabled = false;
+					}
+				else{
+						document.fm.Submit.value = "请喝口茶，还有"+wait+"秒就能上网了";
+						wait--;
+						window.setTimeout("updateinfo()",speed);
+					}
+				}
+			updateinfo();
+		</script>
+	</body>
+</html>

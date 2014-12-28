@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="true">
+		<name><![CDATA[通用表单]]></name>
+		<identifie><![CDATA[commform]]></identifie>
+		<version><![CDATA[0.1]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[自定义生成通用维护表单]]></ability>
+		<description><![CDATA[自定义生成通用维护表单]]></description>
+		<author><![CDATA[Godietion Koo]]></author>
+		<url><![CDATA[http://beidoulbs.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[
+	DROP TABLE IF EXISTS `ims_defineform`;
+	DROP TABLE IF  EXISTS  `ims_defineformfields`;
+CREATE TABLE `ims_defineform` (
+  `id` int(8) NOT NULL auto_increment COMMENT '序号',
+  `weid` varchar(30) NOT NULL default '' COMMENT '公众号ID',
+  `name` varchar(100) NOT NULL default '' COMMENT '表单名称',
+  `ruleid` int(8)   default 0 COMMENT '规则ID',
+  `keyword` varchar(100) default '' COMMENT '关键字',
+  `intro` varchar(400) NOT NULL default '' COMMENT '介绍',
+  `content` text NOT NULL COMMENT '内容',
+  `time` int(8) NOT NULL default '0' COMMENT '创建时间',
+  `successtip` varchar(60) NOT NULL default '' COMMENT '成功提示',
+  `failtip` varchar(60) NOT NULL default '' COMMENT '失败提示',
+  `endtime` int(8) NOT NULL default '0' COMMENT '结束时间',
+  `logourl` varchar(100) NOT NULL default '' COMMENT 'LOGO',
+  `bannerurl` varchar(100) NOT NULL default '' COMMENT 'banner',
+  `status` tinyint(1) NOT NULL default 0 COMMENT '表单状态',
+  PRIMARY KEY  (`id`),
+  KEY `weid` (`weid`),
+  KEY `endtime` (`endtime`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_defineformfields` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `formid` int(8) NOT NULL DEFAULT '0',
+  `displayname` varchar(30) NOT NULL DEFAULT '',
+  `fieldname` varchar(30) NOT NULL DEFAULT '',
+  `inputtype` varchar(20) NOT NULL DEFAULT '',
+  `options` varchar(200) NOT NULL DEFAULT '',
+  `require` tinyint(1) NOT NULL DEFAULT '0',
+  `display` tinyint(1) NOT NULL DEFAULT '0',
+  `regex` varchar(100) NOT NULL DEFAULT '',
+  `zindex` tinyint(2) NOT NULL DEFAULT '0',
+  `errortip` varchar(100) NOT NULL DEFAULT '',
+  `time` int(8) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `formid` (`formid`,zindex)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_defineform`;
+	DROP TABLE IF  EXISTS  `ims_defineformfields`;
+]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

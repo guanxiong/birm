@@ -1,0 +1,476 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{if empty($_W['setting']['copyright']['sitename'])}微动力 - 微信公众平台自助引擎 -  Powered by BBS.B2CTUI.COM{else}{$_W['setting']['copyright']['sitename']}{/if}</title>
+<meta name="keywords" content="{if empty($_W['setting']['copyright']['keywords'])}微动力,微信,微信公众平台{else}{$_W['setting']['copyright']['keywords']}{/if}" />
+<meta name="description" content="{if empty($_W['setting']['copyright']['description'])}微信公众平台自助引擎，简称微动力，微动力是一款免费开源的微信公众平台管理系统。{else}{$_W['setting']['copyright']['description']}{/if}" />
+<link href="./resource/wdl05/css/global.css" rel="stylesheet" type="text/css" />
+<link href="./resource/wdl05/css/style.css" rel="stylesheet" type="text/css" />
+<link href="./resource/wdl05/css/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="./resource/wdl05/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="./resource/wdl05/js/weixin.js"></script>
+<script type="text/javascript">
+var $j=jQuery.noConflict();
+$j(document).ready(function(){
+	var len=$j("#banner li").length;
+	var i=0;
+	var lunhuan;
+	var kuan=$j('#banner .c').width();//$(window).width();
+	$j("#banner li").css('width',kuan);
+
+	function huan()
+	{	
+		//$("#banner li:eq("+i+")").siblings("li").fadeOut(100);
+		//$("#banner li:eq("+i+")").fadeIn(100);
+		$j("#banner li:eq("+i+")").siblings("li").hide();
+		$j("#banner li:eq("+i+")").show();
+		$j("#banner .btn img").attr('src', './resource/wdl05/images/b0.png');
+		$j("#banner .btn img").eq(i).attr('src', './resource/wdl05/images/b1.png');
+		i=i+1
+		if(i==len)
+		{i=0}
+	
+	}
+	lunhuan=setInterval(huan,4000);
+	$j('#banner .btn img').click(function(){
+		clearInterval(lunhuan);
+		var v=$j(this).index();
+		/*$("#banner li:eq("+v+")").siblings("li").fadeOut(500);
+		$("#banner li:eq("+v+")").fadeIn(1500);*/
+		$j("#banner li:eq("+v+")").siblings("li").hide();
+		$j("#banner li:eq("+v+")").show();
+		$j("#banner .btn img").attr('src', './resource/wdl05/images/b0.png');
+		$j("#banner .btn img").eq(v).attr('src', './resource/wdl05/images/b1.png');
+		i=v+1
+		if(i==len)
+		{i=0}
+		
+		lunhuan=setInterval(huan,4000);	
+	});
+	
+	
+	$j('#function li[class=list]').hover(
+		function(){
+			$j(this).addClass('hover');
+		},
+		
+		function(){
+			$j(this).removeClass('hover');
+		}
+	);
+})
+</script>
+</head>
+
+<body>
+
+<div id="header">	<div class="wrap">
+		<div class="left logo"><a href="/"><img src="{if !empty($_W['setting']['copyright']['flogo'])}{$_W['attachurl']}{$_W['setting']['copyright']['flogo']}{else}./resource/image/logo.png{/if}" alt="" title="" /></a></div>
+		<div class="right menu">
+			<ul>
+				<li><a href="/" class="cur">首页</a></li>
+                <li><a href="#" class="">产品</a></li>
+                <li><a href="#" class="">案例</a></li>
+				<li><a href="./member.php?act=register" class="">注册</a></li>
+				<li><a href="./member.php?act=login" class="">登陆</a></li>
+			</ul>
+		  <div class="tel">
+           	<label><img src="./resource/wdl05/images/tel.jpg" /> 全国渠道加盟热线</label>
+              <span>{if !empty($_W['setting']['copyright']['phone'])}{$_W['setting']['copyright']['phone']}{/if}</span></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+    <div id="banner">
+    	<div class="c">
+            <ul>
+            	<li class="b3"><a href="#"></a></li>
+				<li class="b8"><a href="#"></a></li>
+                <li class="b9"><a href="#"></a></li>
+                <li class="b6"><a href="#"></a></li>
+				<li class="b7"><a href="#"></a></li>
+                <li class="b1"><a href="#"></a></li>
+            </ul>
+            <div class="btn">
+                <img src="./resource/wdl05/images/b1.png" />
+                <img src="./resource/wdl05/images/b0.png" />
+				<img src="./resource/wdl05/images/b0.png" />
+                <img src="./resource/wdl05/images/b0.png" />
+                <img src="./resource/wdl05/images/b0.png" />
+                <img src="./resource/wdl05/images/b0.png" />			</div>
+        </div>
+    </div>
+	
+    <div id="index_blank"></div>
+	<div class="wrap">
+		<div><img src="./resource/wdl05/images/index/function_title.jpg" /></div>
+        <div id="function">
+        	<ul>
+            	<li class="list">
+                	<a href="#">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_0.png" /></div>
+                        <h3>微官网</h3>
+                        <div class="info">5分钟轻松建站<br />打造炫酷微官网</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_1.png" /></div>
+						<div class="news"><img src="./resource/wdl05/images/news_b.gif" /></div>
+                        <h3>微会员V2.0</h3>
+                        <div class="info">方便携带 永不挂失<br />消费积分 一卡配备</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#">
+                        <div class="img"><img src="./resource/wdl05/images/index/wphoto.png" /></div>
+						<div class="news"><img src="./resource/wdl05/images/news_b.gif" /></div>
+                        <h3>微拍</h3>
+                        <div class="info">微硬件,扫描二维码<br />现场打印图片,吸纳粉丝</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#tuan">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_3.png" /></div>
+						
+                        <h3>微团购</h3>
+                        <div class="info">团购搬进微信公众平台<br />同微信分享6亿用户</div>
+                    </a>                </li>
+                <li class="line0"></li>
+				<li class="list">
+                	<a href="#">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_2.png" /></div>
+                        <h3>微商城</h3>
+                        <div class="info">小微信也有大商城<br />电商轻松就能走入微信</div>
+                    </a>                </li>
+				<li class="line1"></li>
+				
+				
+				<li class="list">
+                	<a href="#">
+                        <div class="img"><img src="./resource/wdl05/images/index/lsmax.png" /></div>
+                        <h3>微信墙</h3>
+                        <div class="info">活跃现场气氛<br />投票抽奖互动</div>
+                    </a>                </li>
+				<li class="line0"></li>
+				<li class="list">
+                	<a href="#you">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_23.png" /></div>
+						<div class="news"><img src="./resource/wdl05/images/news_b.gif" /></div>
+                        <h3>优惠卷</h3>
+                        <div class="info">整合会员卡功能<br />微信营销必备</div>
+                    </a>                </li>
+				
+				<li class="line0"></li>
+				<li class="list">
+                	<a href="#kf">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_24.png" /></div>
+						<div class="news"><img src="./resource/wdl05/images/news_b.gif" /></div>
+                        <h3>客服系统</h3>
+                        <div class="info">高级接口,多座席<br />随时与粉丝互动</div>
+                    </a>                </li>
+				
+				<li class="line0"></li>
+				<li class="list">
+                	<a href="#miao">
+                        <div class="img"><img src="./resource/wdl05/images/index/wms.png" /></div>
+                        <h3>微秒杀</h3>
+                        <div class="info">限时抢购,内测中<br />结合积分与库存</div>
+                    </a>                </li>
+
+				<li class="line0"></li>
+				
+				<li class="list">
+                	<a href="#">
+                        <div class="img"><img src="./resource/wdl05/images/index/yzdd.png" /></div>
+                        <h3>一站到底</h3>
+                        <div class="info">最短时间抢答问题<br />根据结果可获得积分</div>
+                    </a>                </li>
+            	
+                <li class="line1"></li>
+				
+				
+				<li class="list">
+                	<a href="#">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_21.png" /></div>
+                        <h3>数据魔方</h3>
+                        <div class="info">详尽的分析报告<br />准确的决策数据</div>
+                    </a>                </li>
+                <li class="line0"></li>
+				<li class="list">
+                	<a href="#">
+                        <div class="img"><img src="./resource/wdl05/images/index/bmtool.png" /></div>
+                        <h3>便民工具</h3>
+                        <div class="info">各类查询接口<br />天气,电话,身份证,区号等</div>
+                    </a>                </li>
+                <li class="line0"></li>
+				<li class="list">
+                	<a href="#diaoyan">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_4.png" /></div>
+                        <h3>微调研</h3>
+                        <div class="info">无需人力 电子调研<br />为市场调研加一份有力数据</div>
+                    </a>                </li>
+                <li class="line0"></li>
+				<li class="list">
+                	<a href="#360">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_20.png" /></div>
+                        <h3>360全景</h3>
+                        <div class="info">更直观地看产品<br />提高用户体验</div>
+                    </a>                </li>
+                <li class="line0"></li>
+				<li class="list">
+                	<a href="javascript:void(0)">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_22.png" /></div>
+                        <h3>智能二维码</h3>
+                        <div class="info">高级接口,营销辅助<br />生成不同渠道二维码</div>
+                    </a>                </li>
+                <li class="line1"></li>
+				
+				
+            	<li class="list">
+                	<a href="#photo">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_5.png" /></div>
+                        <h3>微相册</h3>
+                        <div class="info">各行各业<br />照片展现轻松搞定</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#card">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_6.png" /></div>
+                        <h3>微名片</h3>
+                        <div class="info">网络名片<br />轻松派发</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#talk">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_7.png" /></div>
+                        <h3>微吧</h3>
+                        <div class="info">大小事<br />协同处理效率高</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#yuyue">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_8.png" /></div>
+                        <h3>微预约</h3>
+                        <div class="info">各种预约 一键即可<br />短信邮件会立即通知商户</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#lbs">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_9.png" /></div>
+                        <h3>门店管理</h3>
+                        <div class="info">随时随地<br />了解门店各种情形</div>
+                    </a>                </li>
+                <li class="line1"></li>
+
+            	<li class="list">
+                	<a href="#wedding">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_10.png" /></div>
+                        <h3>微喜帖</h3>
+                        <div class="info">电子喜帖 祝福墙<br />传递各种幸福</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#hotel">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_11.png" /></div>
+                        <h3>微酒店</h3>
+                        <div class="info">在线订房<br />最适合酒店的行业模板</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#estate">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_12.png" /></div>
+                        <h3>微房产</h3>
+                        <div class="info">在线看房<br />全方位环境展示模板</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#dining">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_13.png" /></div>
+                        <h3>微餐饮</h3>
+                        <div class="info">扫一扫促销活动<br />便捷在线订餐系统</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="javascript:void(0)">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_14.png" /></div>
+                        <h3>智能客服</h3>
+                        <div class="info">24小时客服<br />提供随时随地服务</div>
+                    </a>                </li>
+                <li class="line1"></li>
+
+            	<li class="list">
+                	<a href="#02">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_15.png" /></div>
+                        <h3>自定义菜单</h3>
+                        <div class="info">多级菜单导航<br />个性化栏目链接</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#alipay">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_16.png" /></div>
+                        <h3>微支付</h3>
+                        <div class="info">内嵌微支付接口<br />不需要再跳转其他平台</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#gua">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_17.png" /></div>
+                        <h3>刮刮乐</h3>
+                        <div class="info">轻轻一刮<br />娱乐奖品同时有</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#zhuan">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_18.png" /></div>
+                        <h3>幸运大转盘</h3>
+                        <div class="info">转转转<br />转出你的好运气</div>
+                    </a>                </li>
+                <li class="line0"></li>
+            	<li class="list">
+                	<a href="#fruit">
+                        <div class="img"><img src="./resource/wdl05/images/index/i_19.png" /></div>
+                        <h3>水果达人</h3>
+                        <div class="info">手指点一点<br />水果给你送大奖</div>
+                    </a>                </li>
+                <li class="line1"></li>
+            </ul>
+        </div>
+		<div class="blank20"></div>
+		<div><img src="./resource/wdl05/images/index/case_title.jpg" /></div>
+		<div class="blank12"></div>
+        <div id="index_mc_0">
+        	<div class="contents">
+                <div class="l"><a href="javascript:void(0);" onclick="this.blur(); Tscroll_right();"><img src="./resource/wdl05/images/leftbtn.jpg" /></a></div>
+                <div class="list" id="index_product_scroll">
+                    <div class="Cont" id="scroller">
+                        <div class="ScrCont" onMouseOver="Tstop_scroll();" onMouseOut="Tstart_scroll();">
+                            <div id="scroller_contents_0">
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-0.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-0-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-0.jpg';" /></div><img src="./resource/wdl05/images/case/list-0-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-1.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-1-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-1.jpg';" /></div><img src="./resource/wdl05/images/case/list-1-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-2.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-2-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-2.jpg';" /></div><img src="./resource/wdl05/images/case/list-2-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-3.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-3-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-3.jpg';" /></div><img src="./resource/wdl05/images/case/list-3-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-4.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-4-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-4.jpg';" /></div><img src="./resource/wdl05/images/case/list-4-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-5.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-5-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-5.jpg';" /></div><img src="./resource/wdl05/images/case/list-5-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-6.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-6-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-6.jpg';" /></div><img src="./resource/wdl05/images/case/list-6-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-7.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-7-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-7.jpg';" /></div><img src="./resource/wdl05/images/case/list-7-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-8.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-8-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-8.jpg';" /></div><img src="./resource/wdl05/images/case/list-8-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-9.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-9-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-9.jpg';" /></div><img src="./resource/wdl05/images/case/list-9-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-10.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-10-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-10.jpg';" /></div><img src="./resource/wdl05/images/case/list-10-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-11.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-11-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-11.jpg';" /></div><img src="./resource/wdl05/images/case/list-11-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-0.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-0-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-0.jpg';" /></div><img src="./resource/wdl05/images/case/list-0-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-1.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-1-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-1.jpg';" /></div><img src="./resource/wdl05/images/case/list-1-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-2.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-2-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-2.jpg';" /></div><img src="./resource/wdl05/images/case/list-2-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-3.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-3-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-3.jpg';" /></div><img src="./resource/wdl05/images/case/list-3-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-4.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-4-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-4.jpg';" /></div><img src="./resource/wdl05/images/case/list-4-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-5.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-5-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-5.jpg';" /></div><img src="./resource/wdl05/images/case/list-5-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-6.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-6-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-6.jpg';" /></div><img src="./resource/wdl05/images/case/list-6-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-7.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-7-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-7.jpg';" /></div><img src="./resource/wdl05/images/case/list-7-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-8.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-8-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-8.jpg';" /></div><img src="./resource/wdl05/images/case/list-8-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-9.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-9-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-9.jpg';" /></div><img src="./resource/wdl05/images/case/list-9-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-10.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-10-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-10.jpg';" /></div><img src="./resource/wdl05/images/case/list-10-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-11.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-11-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-11.jpg';" /></div><img src="./resource/wdl05/images/case/list-11-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-0.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-0-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-0.jpg';" /></div><img src="./resource/wdl05/images/case/list-0-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-1.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-1-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-1.jpg';" /></div><img src="./resource/wdl05/images/case/list-1-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-2.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-2-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-2.jpg';" /></div><img src="./resource/wdl05/images/case/list-2-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-3.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-3-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-3.jpg';" /></div><img src="./resource/wdl05/images/case/list-3-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-4.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-4-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-4.jpg';" /></div><img src="./resource/wdl05/images/case/list-4-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-5.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-5-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-5.jpg';" /></div><img src="./resource/wdl05/images/case/list-5-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-6.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-6-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-6.jpg';" /></div><img src="./resource/wdl05/images/case/list-6-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-7.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-7-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-7.jpg';" /></div><img src="./resource/wdl05/images/case/list-7-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-8.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-8-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-8.jpg';" /></div><img src="./resource/wdl05/images/case/list-8-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-9.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-9-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-9.jpg';" /></div><img src="./resource/wdl05/images/case/list-9-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-10.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-10-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-10.jpg';" /></div><img src="./resource/wdl05/images/case/list-10-1.jpg" style="display:none;" />
+                                </div>
+                                                            <div class="item">
+                                	<div class="img"><img src="./resource/wdl05/images/case/list-11.jpg" onmouseover="this.src='./resource/wdl05/images/case/list-11-1.jpg';" onmouseout="this.src='./resource/wdl05/images/case/list-11.jpg';" /></div><img src="./resource/wdl05/images/case/list-11-1.jpg" style="display:none;" />
+                                </div>
+                                                        </div>
+                            <div id="scroller_contents_1"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="r"><a href="javascript:void(0);" onclick="this.blur(); Tscroll_left();"><img src="./resource/wdl05/images/rightbtn.jpg" /></a></div>
+                <script language="javascript" src="/resource/wdl05/js/scroller.js"></script>
+            </div>
+        </div>
+	</div>
+	
+	
+<div class="blank9"></div>
+<div id="footer">
+	<div class="f"><a href="./">微动力</a> © 版权所有 <a href="http://www.miitbeian.gov.cn" target="_blank" style=" color:#FFF;"> 京ICP备00000001号</a><br />
+地址：中国北京  Email：<a href="mailto:{if !empty($_W['setting']['copyright']['email'])}{$_W['setting']['copyright']['email']}{/if}">{if !empty($_W['setting']['copyright']['email'])}{$_W['setting']['copyright']['email']}{/if}</a></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[时光轴]]></name>
+		<identifie><![CDATA[timeaxis]]></identifie>
+		<version><![CDATA[1.1]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[时光轴展示]]></ability>
+		<description><![CDATA[通过类似时光轴的形式，对某些活动流程或重要的事件进行展示]]></description>
+		<author><![CDATA[topone4tvs]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes></subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="活动管理" do="list"/>
+		</menu>
+		<home call="getAxisTitles"></home>
+	</bindings>
+	<install><![CDATA[DROP TABLE IF EXISTS `ims_timeaxis`;
+CREATE TABLE `ims_timeaxis` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL COMMENT '活动名称',
+  `time` int(11) unsigned NOT NULL,
+  `bgimg` varchar(255) NOT NULL COMMENT '背景图片或颜色',
+  `bgcol` varchar(30) NOT NULL COMMENT '内容背景色',
+  `items` varchar(5000) NOT NULL,
+  PRIMARY KEY (`id`,`weid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `ims_timeaxis_rep`;
+CREATE TABLE `ims_timeaxis_rep` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `weid` int(10) unsigned NOT NULL,
+  `reptitle` varchar(100) NOT NULL DEFAULT '',
+  `repinfo` varchar(255) DEFAULT '',
+  `repimg` varchar(255) DEFAULT NULL,
+  `axisid` int(10) unsigned NOT NULL COMMENT '时光轴活动id',
+  PRIMARY KEY (`id`,`rid`,`weid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

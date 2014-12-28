@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[别踩白块儿]]></name>
+		<identifie><![CDATA[black]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[超酷的别踩白块游戏，打开即玩]]></ability>
+		<description><![CDATA[分享出去的页面（调用的微动力自带的验证页面，如有个性需求请自行修改）会要求收听公众号，增加粉丝]]></description>
+		<author><![CDATA[Young]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE `ims_black_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `cover` varchar(255) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+	
+]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_black_reply`;]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

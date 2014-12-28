@@ -1,0 +1,16 @@
+<?php
+//定义头部
+header("Content-Type: application/vnd.ms-excel;");
+//定义文件名
+header("Content-Disposition:filename=".$paper['title']. "-" . date('Y-m-d') . ".csv");
+
+$mobile = "手机号码";
+$realname= "姓名";
+$usermark = "分数";
+?>
+"{php echo iconv('utf-8', 'gbk', $paper['title'])}"
+
+"{php echo iconv('utf-8', 'gbk', $realname)}","{php echo iconv('utf-8', 'gbk', $mobile)}","{php echo iconv('utf-8', 'gbk', $usermark)}"
+{loop $records $item}
+"{php echo iconv('utf-8', 'gbk', $item['realname'])}","{php echo iconv('utf-8', 'gbk', $item['mobile'])}","{php echo iconv('utf-8', 'gbk', $item['usermark'])}"
+{/loop}

@@ -1,0 +1,251 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+    <a class="close" data-dismiss="alert">×</a>
+    <h4 class="alert-heading">酒店设置</h4>
+    <table>
+        <tbody>		
+            <tr>
+                <th><span class="red">*</span>酒店名称：</th>
+                <td><input type="text" name="title" id="title"  class="span7" value="{$reply['title']}"> </td>
+            </tr>
+             <tr>
+              <th><span class="red">*</span>封面图片：</th>
+                <td>
+                 <div id="thumb_div" tabindex="-1" class="uneditable-input reply-edit-cover">
+						<div class="detail">
+							<span class="pull-right">大图片建议尺寸：700像素 * 300像素</span>
+							<input type="button" id="thumb" fieldname="thumb" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+							<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this,'thumb')" style="{if empty($reply['thumb'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+						</div>
+						<div id="upload-file-view" class="upload-view thumb_preview">
+						  <input type="hidden" id="thumb-value" name="thumb" value="{$reply['thumb']}">
+						  <img width="100" src="{php echo img_url($reply['thumb'])}"  onerror="$('.thumb_preview').html('')">&nbsp;&nbsp;
+						</div>
+					</div>
+                </td>
+            </tr>
+         
+            <tr>
+                <th><span class="red">*</span>酒店电话：</th>
+                <td><input type="text" id="phone" name="phone"  class="span7" value="{$reply['phone']}"> </td>
+            </tr>
+            <tr>
+                <th><span class="red">*</span>酒店地址：</th>
+                <td><input type="text" id="address" name="address"  class="span7" value="{$reply['address']}"> </td>
+            </tr>
+             <tr>
+                <th><label for="">所在地区：</label></th>
+                <td>
+                    <select name="location_p" id="location_p" class="location span2"></select>
+                    <select name="location_c" id="location_c" class="location span2"></select>
+                    <select name="location_a" id="location_a" class="location span2"></select>
+                    <script type="text/javascript" src="./source/modules/icard/template/js/region_select.js"></script>
+                    <script type="text/javascript">
+                        var location_p = "{if !empty($reply['location_p'])}{$reply['location_p']}{else}{/if}";
+                        var location_c = "{if !empty($reply['location_c'])}{$reply['location_c']}{else}{/if}";
+                        var location_a = "{if !empty($reply['location_a'])}{$reply['location_a']}{else}{/if}";
+                        new PCAS("location_p", "location_c", "location_a", location_p, location_c, location_a);
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="">酒店地图：</label></th>
+                <td>
+                    <div class="input-append">
+                        <input type="text" id="place" class="input-xlarge valid" name="place" value="" data-rule-required="true">
+                        <button class="btn" type="button" id="positioning" onclick="bmap.searchMapByAddress($('#place').val())">搜索</button>
+                    </div>
+                   
+                    <div id="l-map" style="overflow: hidden; position: relative; z-index: 0; background-image: url(http://api.map.baidu.com/images/bg.png);width: 500px; height: 300px;margin-top: 10px; color: rgb(0, 0, 0); text-align: left;"></div>
+                    <div id="r-result">
+                        <input type="hidden" id="lat" name="lat"> <input type="hidden" id="lng" name="lng">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th><span class="red">*</span>酒店介绍：</th>
+                <td>
+                    <textarea style="height:100px;" id="description" name="description" class="span7  richtext-clone" cols="60">{$reply['description']}</textarea>
+                    <div class="help-block">用于正文内的详情</div>
+                </td>
+            </tr>
+            <tr>
+                <th><span class="red">*</span>订房说明：</th>
+                <td>
+                    <textarea style="height:100px;" name="content" id="content" class="span7 richtext-clone" cols="60">{$reply['content']}</textarea>
+                    <div class="help-block">生成推广码后页面中显示，多为推荐、邀请的说明。</div>
+                </td>
+            </tr>
+            
+             <tr>
+              <th><span class="red">*</span>订单头部图片：</th>
+                <td>
+                 <div id="thumborder_div" tabindex="-1" class="uneditable-input reply-edit-cover">
+						<div class="detail">
+							<span class="pull-right">大图片建议尺寸：700像素 * 300像素</span>
+							<input type="button" id="thumborder" fieldname="thumborder" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+							<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this,'thumborder')" style="{if empty($reply['thumborder'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+						</div>
+						<div id="upload-file-view" class="upload-view thumborder_preview">
+						  <input type="hidden" id="thumborder-value" name="thumborder" value="{$reply['thumborder']}">
+						  <img width="100" src="{php echo img_url($reply['thumborder'])}"  onerror="$('.thumborder_preview').html('')">&nbsp;&nbsp;
+						</div>
+					</div>
+                </td>
+            </tr>
+            <tr>
+                <th>接收订单邮箱：</th>
+                <td><input type="text" id="mail" name="mail"  class="span7" value="{$reply['mail']}">
+                    <span class="help-block">如果客户下订单，自动发送给此邮箱，如果不填写，则不发送</span></td>
+            </tr>
+        </tbody>
+    </table>	
+</div>
+
+<script type="text/javascript">
+             kindeditorUploadBtn($('#thumb'),function(){  
+ 	   $('#thumb').html("<i class='icon-upload-alt'></i> 上传").removeAttr("disabled");
+ 	},function(){
+ 
+ 	    $('#thumb').html("正在上传...").attr("disabled",true);
+ 	});
+           kindeditorUploadBtn($('#thumborder'),function(){  
+ 	   $('#thumborder').html("<i class='icon-upload-alt'></i> 上传").removeAttr("disabled");
+ 	},function(){
+ 
+ 	    $('#thumborder').html("正在上传...").attr("disabled",true);
+ 	});
+ 
+
+            kindeditor($('.richtext-clone'));
+
+</script>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/getscript?v=1.4&ak=&services=&t=20140102035142"></script>
+<script type="text/javascript">
+    $(function(){
+        $(".location").change(function(){
+            bmap.searchMapByPCD();
+        });
+    });
+    new PCAS("location_p", "location_c", "location_a", location_p, location_c, location_a);
+    var bmap = {
+        'option' : {
+            'lock' : false,
+            'container' : 'l-map',
+            'infoWindow' : {'width' : 250, 'height' : 100, 'title' : ''},
+            'point' : {'lng' : "{if $reply['lng']!='0.0000000000' && !empty($reply['lng'])}{$reply['lng']}{else}116.735049{/if}", 'lat' : "{if $reply['lat']!='0.0000000000' && !empty($reply['lat'])}{$reply['lat']}{else}23.367896{/if}"}
+        },
+        'init' : function(option) {
+            var $this = this;
+            $this.option = $.extend({},$this.option,option);
+
+            $this.option.defaultPoint = new BMap.Point($this.option.point.lng, $this.option.point.lat);
+            $this.bgeo = new BMap.Geocoder();
+            $this.bmap = new BMap.Map($this.option.container);
+            $this.bmap.centerAndZoom($this.option.defaultPoint, 15);
+            $this.bmap.enableScrollWheelZoom();
+            $this.bmap.enableDragging();
+            $this.bmap.enableContinuousZoom();
+            $this.bmap.addControl(new BMap.NavigationControl());
+            $this.bmap.addControl(new BMap.OverviewMapControl());
+            //添加标注
+            $this.marker = new BMap.Marker($this.option.defaultPoint);
+            $this.marker.setLabel(new BMap.Label('请您移动此标记，选择您的坐标！', {'offset':new BMap.Size(10,-20)}));
+            $this.marker.enableDragging();
+            $this.bmap.addOverlay($this.marker);
+            //$this.marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+            $this.showPointValue($this.marker.getPosition());
+            //拖动地图事件
+            $this.bmap.addEventListener("dragging", function() {
+                $this.setMarkerCenter();
+                $this.option.lock = false;
+            });
+            //缩入地图事件
+            $this.bmap.addEventListener("zoomend", function() {
+                $this.setMarkerCenter();
+                $this.option.lock = false;
+            });
+            //拖动标记事件
+            $this.marker.addEventListener("dragend", function (e) {
+                $this.showPointValue();
+                $this.showAddress();
+                $this.bmap.panTo(new BMap.Point(e.point.lng, e.point.lat));
+                $this.option.lock = false;
+                $this.marker.setAnimation(null);
+            });
+        },
+        'searchMapByAddress' : function(address) {
+            var $this = this;
+            $this.bgeo.getPoint(address, function (point) {
+                if (point) {
+                    $this.showPointValue();
+                    $this.showAddress();
+                    $this.bmap.panTo(point);
+                    $this.setMarkerCenter();
+                }
+            });
+        },
+        'searchMapByPCD' : function(address) {
+            var $this = this;
+            $this.option.lock = true;
+            $this.searchMapByAddress($('#location_p').val()+$('#location_c').val()+$('#location_a').val());
+        },
+        'setMarkerCenter' : function() {
+            var $this = this;
+            var center = $this.bmap.getCenter();
+            $this.marker.setPosition(new BMap.Point(center.lng, center.lat));
+            $this.showPointValue();
+            $this.showAddress();
+        },
+        'showPointValue' : function() {
+            var $this = this;
+            var point = $this.marker.getPosition();
+            $('#lng').val(point.lng);
+            $('#lat').val(point.lat);
+        },
+        'showAddress' : function() {
+            var $this = this;
+            var point = $this.marker.getPosition();
+            $this.bgeo.getLocation(point, function (s) {
+                if (s) {
+                    $('#place').val(s.address);
+                    if (!$this.option.lock) {
+                        new PCAS("location_p", "location_c", "location_a", s.addressComponents.province, s.addressComponents.city, s.addressComponents.district);
+                    }
+                }
+            });
+        }
+    };
+    $(function(){
+        var option = {};
+        bmap.init(option);
+    });
+
+
+var itemcheck = function(){
+    if($("#title").isEmpty()){
+        Tip.focus("title","请填写酒店名称!","right");
+        return false;
+    }
+     if($("#thumb-value").length<=0 || $("#thumb-value").isEmpty()){
+		Tip.focus("thumb_div","请上传封面图片!","right");
+		return false;
+   }
+    if($("#address").isEmpty()){
+        Tip.focus("address","请填写酒店地址!","right");
+        return false;
+    }
+    if($("#phone").isEmpty()){
+        Tip.focus("phone","请填写酒店电话!","right");
+        return false;
+    }
+   if($("#thumborder-value").length<=0 || $("#thumborder-value").isEmpty()){
+		Tip.focus("thumborder_div","请上传订单头部图片!","right");
+		return false;
+   }
+    return true;
+    
+}
+</script>

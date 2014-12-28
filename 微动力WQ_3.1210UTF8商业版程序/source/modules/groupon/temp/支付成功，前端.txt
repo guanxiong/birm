@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>团购首页</title>
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link href="http://stc.weimob.com/css/tg/main.css?v=2014-02-24-1" rel="stylesheet">
+    <link href="http://stc.weimob.com/css/tg/dialog.css?v=2014-02-24-1" rel="stylesheet">
+
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+});
+</script>
+
+    <script src="http://stc.weimob.com/src/jquery.min.js?v=2014-02-24-1"></script>
+    <script src="http://stc.weimob.com/src/tg/swipe.js?v=2014-02-24-1"></script>
+    <script src="http://stc.weimob.com/src/tg/dialog_min.js?v=2014-02-24-1"></script>
+    <script src="http://stc.weimob.com/src/tg/global.js?v=2014-02-24-1"></script>
+<script type="text/javascript">navigator.__defineGetter__('userAgent', function () { return 'Mozilla/5.0 (Linux; U; Android 2.3.6; zh-cn; GT-S5660 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1 MicroMessenger/4.5.255'; });</script></head>
+<body onselectstart="return true;" ondragstart="return false;" class="gbuy_payState">
+
+<div>
+    <div id="container" class="container animate">
+        <header></header>
+        <div class="body">
+            <section class="section_pay pay_success">
+                <article>
+                    <header>
+                        <label>
+                            <span class="icons icons_success">&nbsp;</span>团购成功
+                        </label>
+                    </header>
+                    <div class="tip">
+                        团购券生成可能会有延迟，请耐心等待。<br>
+                        请在有效期内使用团购券！
+                    </div>
+                </article>
+
+            </section>
+        </div>
+        <footer>
+            <section class="header_nav">
+                <ul class="tbox">
+                    <li><a href="javascript:history.go(-1);" class="icons icons_back">&nbsp;</a></li>
+                    <li><a href="/tg/Eticket/index/pid/72997/bid/150263/wechatid/fromuse666/" class="btn">查看团购券</a></li>
+                </ul>
+            </section>
+        </footer>
+    </div>
+</div>
+
+
+
+
+</body></html>

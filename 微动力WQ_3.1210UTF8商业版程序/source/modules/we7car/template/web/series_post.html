@@ -1,0 +1,72 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo create_url('site/module', array('do' => 'Series', 'op'=>'post','name' => 'we7car','weid'=>$_W['weid']))}">添加品牌车系</a></li>	
+	<li ><a href="{php echo create_url('site/module', array('do' => 'Series', 'name' => 'we7car','weid'=>$_W['weid']))}">品牌车系管理</a></li>	
+</ul>
+	<div class="main">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+			<h4>修改品牌车系设置</h4>
+			<table class="tb">
+				<tr>
+					<th><label for="">排序</label></th>
+					<td>
+						<input type="text" name="listorder" class="span6" value="{$theone['listorder']}" />
+					</td>
+				</tr>				
+				<tr>
+					<th><label for="">品牌</label></th>
+					<td>
+						<select class="span3" name="bid">
+							{loop $brand $row}
+								<option value="{$row['id']}"  {if $row['id'] == $theone['bid']} selected="selected"{/if}>{$row['title']}</option>
+							{/loop}
+						</select>
+						</td>
+				</tr>
+				<tr>
+					<th><label for="">车系名称</label></th>
+					<td>
+						<input type="text" name="title" class="span5" value="{$theone['title']}" />
+					</td>
+				</tr>	
+				<tr>
+					<th><label for="">车系简称</label></th>
+					<td>
+						<input type="text" name="subtitle" class="span5" value="{$theone['subtitle']}" />
+					</td>
+				</tr>							
+				<tr>
+					<th>图片</th>
+					<td>
+						{php echo tpl_form_field_image('thumb', $theone['thumb']);}
+					</td>
+				</tr>				
+				<tr>
+					<th><label for="">车系亮点</label></th>
+					<td>
+						<textarea name="description" class="span6" cols="70" style="height:80px">{$theone['description']}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="">是否显示</label></th>
+					<td>
+						<label for="isshow1" class="radio inline"><input type="radio" name="status" value="1" id="isshow1" {if $theone['status'] == 1}  checked="true" {/if}> 是</label>&nbsp;&nbsp;&nbsp;
+						<label for="isshow0" class="radio inline"><input type="radio" name="status" value="0" id="isshow0"  {if $theone['status'] == 0}  checked="true" {/if}> 否</label>
+					</td>
+				</tr>				
+				<tr>
+					<th></th>
+					<td>
+						<input type="hidden"  name="id" value="{$theone['id']}" />
+						<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					</td>
+				</tr>
+			</table>
+		</form>
+    </div>
+<script type="text/javascript">
+	kindeditor($('#rule'));
+	kindeditorUploadBtn($('#user-picture'));
+</script>	
+{template 'common/footer'}
+

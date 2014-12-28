@@ -1,0 +1,155 @@
+{template 'common/header'}
+<style type="text/css">
+table li{padding:5px 0;}
+small a{color:#999;}
+</style>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('site/module', array('do' => 'Yuyue','op'=>'post', 'name' => 'car','weid'=>$weid));}">添加预约</a></li>
+	<li><a href="{php echo create_url('site/module', array('do' => 'Yuyue','op'=>'list', 'name' => 'car','weid'=>$weid));}">预约管理</a></li>
+	<li  class="active"><a href="{php echo create_url('site/module', array('do' => 'Yuyue','op'=>'show','id' => $sid, 'name' => 'car','weid'=>$weid));}">预约订单</a></li>
+</ul>
+<div class="main">
+	<div class="form form-horizontal">
+		<h4>订单详情</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">预约类型</label></th>
+				<td>
+					{if $reply['yytype'] == 1}
+						预约试驾
+					{else}
+						预约保养
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">预约标题</label></th>
+				<td>
+					{$reply['title']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">预约活动说明</label></th>
+				<td>
+					{$reply['description']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">图片介绍</label></th>
+				<td>
+					<img src="{$_W['attachurl']}{$reply['topbanner']}" style="height:150px;" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">创建时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $reply['createtime']);}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">开始时间~结束时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $reply['start_time']);}~{php echo date('Y-m-d H:i:s', $reply['end_time']);}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">状态</label></th>
+				<td>
+					<label>
+					{if $reply['isshow'] == '1'}
+						<i class="icon-check"> &nbsp; 当前预约活动生效中</i>
+					{else}
+						<i class="icon-check-empty"> &nbsp; 当前预约活动已失效</i>
+					{/if}
+					</label>
+				</td>
+			</tr>
+		</table>
+		<h4>用户提交的信息</h4>
+		<table class="tb">
+		<form action="">
+			<input type="hidden" name="id" value="{$orderone['id']}">
+			<input type="hidden" name="op" value="status">
+			<input type="hidden" name="act" value="module" />
+			<input type="hidden" name="name" value="car" />
+			<input type="hidden" name="do" value="yuyue" />
+			<input type="hidden" name="sid" value={$orderone['sid']} />	
+			<tr> 
+				<th style="width:200px"><label>客服处理状态</label></th>
+				<td style="text-align: left;">
+				{if $orderone['status']==0}
+					<span class="label label-important">未处理</span>
+				{else}
+					<span class="label label-success">已处理</span>
+				{/if}
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label>设置处理状态</label></th>
+				<td style="text-align: left;">
+					<label class="radio inline"><input type="radio" name="status" value="1" {if $orderone['status']==1}checked{/if}>已处理</label>
+					<label class="radio inline" ><input type="radio" name="status" value="0" {if $orderone['status']==0}checked{/if}>未处理</label>
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">用户</label></th>
+				<td>
+					<a href="{php echo create_url('site/module/profile', array('name' => 'fans', 'from_user' => $orderone['from_user']));}">{$orderone['from_user']}</a>
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">真实姓名</label></th>
+				<td>
+					{if $orderone['realname']!=""} {$orderone['realname']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">手机号</label></th>
+				<td>
+					{if $orderone['mobile']!=""} {$orderone['mobile']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">用户提交时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $orderone['createtime']);}
+				</td>
+			</tr>			
+			<tr>
+				<th><label for="">预约试车时间</label></th>
+				<td>
+					{php echo date('Y-m-d', $orderone['dateline']);}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">车型信息</label></th>
+				<td>
+					{$orderone['brand_cn']}-{$orderone['serie_cn']}-{$orderone['type_cn']}
+				</td>
+			</tr>
+			{loop $fields $field}
+			<tr>
+				<th><label for="">{$field['title']}</label></th>
+				<td>
+					{$orderone['data'][$field['fid']]} 
+				</td>
+			</tr>
+			{/loop}
+			<tr>
+				<th><label for="">备注</label></th>
+				<td>
+					{$orderone['note']} 
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />
+					<input type="submit" class="btn btn-primary span3" name="submit"  value="提交" />
+				</td>
+			</tr>
+			</form>
+		</table>
+	</div>
+</div>
+{template 'common/footer'}

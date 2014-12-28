@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+	margin: 0;
+	padding: 0;color: #444444;
+	font: 14px/1.5 Microsoft YaHei, Helvitica, Verdana, Arial, san-serif;
+}
+div {display: block;}
+
+/*活动已结束*/
+.activity-scratch-end {background:url(../images/activity_bg.jpg) #944f20;overflow-x: hidden;}
+.banner {text-align: center;}
+.main img {max-width: 100%;border: 0 none;}
+.content {margin: 0px 0 15px 0;}
+.boxcontent {margin: 15px 15px 0;border-radius: 5px;padding: 2px;background-color: #FEF8B2;-webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);-moz-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);-o-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);}
+.box {border-radius: 5px;font-size: 14px;border: 1px dashed rgba(0, 0, 0, 0.3);}
+.box .title-red {padding: 0 5px 0px 10px;background:url(../images/title-bg-red.png) no-repeat;border-radius: 3px 3px 3px 0;color: #ffffff;height: 22px;margin: -1px;}
+.box .Detail{padding: 15px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

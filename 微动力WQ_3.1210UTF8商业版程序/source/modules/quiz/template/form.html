@@ -1,0 +1,76 @@
+<div id="form" class="alert alert-block alert-new ">
+	{if $reply['rid']}
+	<h4 class="alert-heading"><a href="{php echo create_url('site/module/show', array('name' => 'quiz', 'id' => $reply['rid']))}"  target="_blank">查看结果</a></h4>
+	{/if}
+	<table width="100%" class="tb">
+		<tr>
+			<td colspan="2">
+				<div class="reply-news-edit-button">
+					<button class="btn" style="width:100%;" type="button" onclick="popwin = $('#modal-module-menus').modal();">选择要加入的问题</button>
+				</div>
+			</td>
+		</tr>
+		<tr>
+				<input type="hidden" name="reply_id" id="reply_id" value="{$reply['id']}" />
+				<input type="hidden" name="qid" id="qid" value="{$reply['qid']}" />
+				<td id="entry" colspan="2">
+				{if isset($reply['id'])}
+				<div class="alert alert-info reply-news-list reply-news-list-first" id="preview_0">
+					<div class="reply-news-list-cover">{$reply['config']}</div>
+					<div class="reply-news-list-detail">
+						<div class="title"><span class="pull-right"><a onclick="delete_entry(this);" href="#">删除</a></span>{$reply['question']}</div>
+						<div class="content">{$reply['answer']}</div>
+					</div>
+				</div>
+				{/if}
+			</td>
+		</tr>
+	</table>
+</div>
+<div id="modal-module-menus" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true" style=" width:600px;">
+	<div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3>选择要加入的问题</h3></div>
+	<div class="modal-body">
+		<table class="tb">
+			<tr>
+				<th><label for="">搜索关键字</label></th>
+				<td>
+					<div class="input-append" style="display:block;">
+						<input type="text" class="span3" name="keyword" value="" id="search-kwd" /><button type="button" class="btn" onclick="search_entries();">搜索</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div id="module-menus"></div>
+	</div>
+	<div class="modal-footer"><a href="#" class="btn" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+</div>
+<script type="text/javascript">
+	var popwin;
+	function search_entries() {
+		var kwd = $.trim($('#search-kwd').val());
+		$.post('{php echo $this->createWebUrl('query');}', {keyword: kwd}, function(dat){
+			$('#module-menus').html(dat);
+		});
+	}
+	function select_entry(o) {
+		var html = '<div id="preview_'+$('#entry div.alert').size()+'" class="alert alert-info reply-news-list">' +
+					'<div class="reply-news-list-cover">选项：'+o.config+'</div>' +
+					'<div class="reply-news-list-detail"><div class="title">问题：'+o.question+'</div>' +
+					'<div class="content">答案：'+o.answer+'</div></div></div>' +
+					'<input type="hidden" name="qid" value="'+o.qid+'"/>';
+		var obj = $(html);
+		if ($('#entry div.alert').size() >= 1) {
+			popwin.modal('hide');
+			message('最多只能选择一个问题！');
+			return false;
+		}
+		if ($('#entry div').size() == 0) {
+			obj.addClass('reply-news-list-first');
+		}
+		$('#entry').append(obj);
+	}
+	function delete_entry(o) {
+		var obj = $('#preview_0');
+		$('#entry').empty(obj);
+	}
+</script>

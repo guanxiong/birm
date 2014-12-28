@@ -1,0 +1,112 @@
+			<tr>
+				<th><label for="">选项<span class="red">*</span></label></th>
+				<td>
+					<textarea style="height:100px; width:100%;" class="span7 richtext-clone" name="explain" cols="70" placeholder="香港特别行政区、澳门特别行政区两个">{$item['explain']}</textarea>
+					<textarea style="height:200px; width:100%;" class="span7 jq_watermark" name="body" cols="70" placeholder="A. 1<br />B. 2<br />C. 3<br/>D. 以上都不是<br /><br />注意：每个选项一行，必须以大写A到Z开头">{$item['body']}</textarea>
+					<span class="help-block"></span>
+				</td>
+			</tr>
+			<tr>
+				<th>答案解析</th>
+				<td>
+				</td>
+			</tr>
+		<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	kindeditor($('.richtext-clone'));
+//-->
+</script>
+ 
+<script type="text/javascript">
+	function check(form) {
+
+		if (!form['title'].value) {
+			$("input[name='title']").focus();
+			alert('请输入题干！');
+			return false;
+		}
+
+		if (form['body'].value.length <= 0) {
+			$("textarea[name='body']").focus();
+			alert("选项不能为空");
+			return false;
+		} else {
+			var is_valid = true;
+			$.each(form['body'].value.split('\n'), 
+					function(i, value) {
+					if (!/^[A-Z]{1}/.test(value)) {
+					$("textarea[name='body']").focus();
+					alert('第'+(i+1)+'行['+value+']格式错误。\n\n' +
+						'(1) 每个选项必须独占一行\n(2) 不能有空白行\n(3) 每个选项以大写字母A-Z开头, 如\n\n' +
+						'Which is different from the other two?\nA. Apple\nB. Orange\nC. Food');
+					is_valid = false;
+					return false;
+					}
+					}
+				  );
+			if (!is_valid) return false;
+		}
+
+
+		if (!form['answer'].value) {
+			$("input[name='answer']").focus();
+			alert('请输入答案！若本试卷题无标准答案，请输入A');
+			return false;
+		} else {
+			var is_valid = true;
+			$.each(form['answer'].value.split(','), 
+					function(i, value) {
+					if (!/^[A-Z]{1}$/.test(value)) {
+					alert('第'+(i+1)+'个选项['+value+']不是合法的答案\n' +
+						'(1) 答案必须是大写字母A-Z\n(2) 支持多项选择, 多个选项之间用逗号分隔，如A,C');
+					is_valid = false;
+					return false;
+					}
+					}
+				  );
+			if (!is_valid) return false;
+		}
+
+		return true;
+	}
+</script>
+ 
+{elseif $operation == 'display'}
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="max-width:10px;">题号</th>
+					<th style="min-width:200px;max-width:300px;">题干</th>
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td style="max-width:10px;">{$item['choice_id']}</td>
+					<td style="min-width:200px;max-width:300px;">{$item['title']}</td>
+					<td style="text-align:right; min-width:60px;">
+						<a href="{php echo $this->CreateMobileUrl('paper', array('choice_id' => $item['choice_id'], 'op' => 'display', 'preview'=>1))}" title="预览" class="btn btn-small"><i class="icon-eye-open"></i></a>
+						<a href="{php echo $this->CreateWebUrl('choice', array('choice_id' => $item['choice_id'], 'op' => 'post'))}" title="编辑" class="btn btn-small"><i class="icon-edit"></i></a>
+						<a href="{php echo $this->CreateWebUrl('choice', array('choice_id' => $item['choice_id'], 'op' => 'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除" class="btn btn-small"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+{/if}
+{template 'common/footer'}

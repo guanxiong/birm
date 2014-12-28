@@ -1,0 +1,70 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li{if $_GPC['do'] == 'manage' || $_GPC['do'] == '' } class="active"{/if}><a href="{php echo $this->createWebUrl('manage');}">地方话管理</a></li>
+        <li{if $_GPC['do'] == 'post'} class="active"{/if}><a href="{php echo $this->createWebUrl('post');}">添加地方话</a></li>
+    </ul>
+    <div class="search">
+        <form action="site.php" method="get">
+            <input type="hidden" name="act" value="module" />
+            <input type="hidden" name="name" value="dialect" />
+            <input type="hidden" name="do" value="manage" />
+            <table class="table table-bordered tb">
+                <tbody>
+                    <tr>
+                        <th>关键字</th>
+                        <td>
+                            <input class="span6" name="keywords" id="" type="text" value="{$_GPC['keywords']}">
+                        </td>
+                    </tr>
+                    <tr>
+                    <tr class="search-submit">
+                        <td colspan="2"><button class="btn btn-primary pull-left span2" style='margin-left:95px;'><i class="icon-search icon-large"></i> 搜索</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div style="padding:15px;">
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+                <tr>
+                    <th class="row-hover span2">地方名称</th>
+                    <th class="row-hover">名称</th>
+                    <th class="row-hover">题量</th>
+                    <th class="row-hover">参与人数</th>
+                    <th class="row-hover">分享次数</th>
+                    <th class="row-hover">总浏览数</th>
+                    <th class="row-hover">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {loop $list $row}
+                <tr> 
+                    <td>{$row['dialect']} </td>
+                    <td>{$row['title']}</td>
+                    <td>{$row['titlenum']}</td>
+                    <td>{$row['people']}</td>
+                    <td>{$row['share_num']}</td>
+                    <td>{$row['viewnum']}</td>
+                    <td >
+                        <a class="btn" href="{php echo $this->createWebUrl('post', array('id' => $row['id']))}" title="编辑"><i class="icon-edit"></i></a>
+                        <a class="btn" href="#" onclick="drop_confirm('您确定要删除吗?', '{php echo $this->createWebUrl('post',array('op'=>'delete', 'id'=>$row['id']))}');" title="删除"><i class="icon-remove"></i></a>
+                        <a href="{php echo $this->createWebUrl('question', array('id' => $row['id']))}" class="btn btn-info">题库管理</a>
+                        <a href="{php echo $this->createWebUrl('scoretxt', array('id' => $row['id']))}" class="btn btn-primary">评分管理</a>
+                    </td>
+                </tr>
+                {/loop}
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+</div>
+<script type="text/javascript">
+    function drop_confirm(msg, url){
+        if(confirm(msg)){
+            window.location = url;
+        }
+    }
+</script>
+{template 'common/footer'}

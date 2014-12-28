@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="true">
+		<name><![CDATA[看看你是有多色]]></name>
+		<identifie><![CDATA[yobyse]]></identifie>
+		<version><![CDATA[1.0.1]]></version>
+		<type><![CDATA[wdlgame]]></type>
+		<ability><![CDATA[色盲检测]]></ability>
+		<description><![CDATA[色盲检测游戏]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="封面设置" do="fm" state="" direct="false" />
+		</cover>
+		<home>
+			<entry title="导航设置" do="dh" state="" direct="false" />
+		</home>
+	</bindings>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

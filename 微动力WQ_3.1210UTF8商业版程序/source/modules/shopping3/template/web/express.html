@@ -1,0 +1,78 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('express',array('op' =>'post'))}">添加物流</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('express',array('op' =>'display'))}">物流方式</a></li>
+</ul>
+{if $operation == 'display'}
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:30px;">ID</th>
+					<th style="width:60px;">显示顺序</th>					
+					<th style="width:200px;">物流名称</th>
+					<th style="width:80px;">物流价格</th>
+					<th style="width:300px;">区域说明</th>
+					<th >操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['id']}</td>
+					<td>{$item['displayorder']}</td>
+					<td>{$item['express_name']}</td>
+					<td>{$item['express_price']}</td>
+					<td>{$item['express_area']}</td>
+					<td style="text-align:left;"><a href="{php echo $this->createWebUrl('express', array('op' => 'post', 'id' => $item['id']))}">修改</a> <a href="{php echo $this->createWebUrl('express', array('op' => 'delete', 'id' => $item['id']))}">删除</a> </td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+</div>
+{elseif $operation == 'post'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="{$express['id']}" />
+		<h4>物流详细设置</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">排序</label></th>
+				<td>
+					<input type="text" name="displayorder" class="span6" value="{$express['displayorder']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">快递名称</label></th>
+				<td>
+					<input type="text" name="express_name" class="span6" value="{$express['express_name']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">快递价格</label></th>
+				<td>
+					<input type="text" name="express_price" class="span6" value="{$express['express_price']}" />
+				</td>
+			</tr>			
+			<tr>
+				<th><label for="">配送区域</label></th>
+				<td>
+					<input type="text" name="express_area" class="span6" value="{$express['express_area']}" />
+					<p class="help-block">这里注明，配送区域，以免客户错误下订</p>
+				</td>
+			</tr>				
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{/if}
+{template 'common/footer'}

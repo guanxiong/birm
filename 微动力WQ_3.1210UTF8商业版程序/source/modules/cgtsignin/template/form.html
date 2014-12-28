@@ -1,0 +1,104 @@
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+ <link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加签到信息</h4>
+	<table>
+		<tbody>
+		
+	
+			
+			<tr>
+				<th><label for="">背景图片</label></th>
+				<td>
+					<div class="fileupload fileupload-new" data-provides="fileupload">
+						<div class="fileupload-preview thumbnail" style="width: 450px; height: 225px;">
+						{if $reply['thumb']}<img src="{$_W['attachurl']}{$reply['thumb']}" width="450" />
+						{else}
+						<img src="{$_W['siteroot']}/source/modules/lxysignin/template/style/images/registration_top.jpg" width="450" />
+						
+						{/if}
+						
+						</div>
+						<div>
+							<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="thumb" type="file" /></span>
+							<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+							{if $reply['thumb']}<button type="submit" name="fileupload-delete" value="{$reply['thumb']}" class="btn fileupload-new">删除</button>{/if}
+						 *签到背景图片默认大小640*320</div>
+					</div>
+					<span class="help-block"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>活动日期</td>
+				<td>
+					<button style="margin:0;" class="btn span5" id="date-range" type="button">
+					<span class="date-title">{$reply['start_time']} 至 {$reply['end_time']}</span> 
+					<i class="icon-caret-down"></i></button>
+					<input name="start_time" type="hidden" value="{$reply['start_time']}">
+					<input name="end_time" type="hidden" value="{$reply['end_time']}">
+				</td>
+			</tr>
+			
+          <tr>
+				<th>连续签到几天奖励</th>
+				<td><input type="text" placeholder="这里设置天数" value="{$reply['days']}" class="span5" name="days" id="days">天
+				</td>
+			</tr>
+			
+			   <tr>
+				<th>签到一次送多少积分</th>
+				<td><input type="text" placeholder="这里设置积分数" value="{$reply['credit']}" class="span5" name="credit" id="credit">分
+				</td>
+			</tr>
+		
+            <tr>
+				<th>签到说明</th>
+				<td>
+					<textarea style="height:400px; width:100%;" class="span7 richtext-clone" name="awardrules" id="awardrules" cols="70">{$reply['awardrules']}</textarea>
+             </td>
+			</tr>
+            
+            <tr>
+				<th>奖项说明</th>
+				<td>
+					<textarea style="height:400px; width:100%;" class="span7 richtext-clone" name="awardinfo" id="awardinfo" cols="70">{$reply['awardinfo']}</textarea>
+			
+			
+					</td>
+			</tr>
+
+		</tbody>
+	</table>
+</div>
+<script type="text/javascript">
+
+$(function() {
+	kindeditor($('.richtext-clone')); 
+	$('#date-range').daterangepicker({
+        format: 'YYYY-MM-DD',
+        startDate: $(':hidden[name=start_time]').val(),
+        endDate: $(':hidden[name=end_time]').val(),
+        locale: {
+            applyLabel: '确定',
+            cancelLabel: '取消',
+            fromLabel: '从',
+            toLabel: '至',
+            weekLabel: '周',
+            customRangeLabel: '日期范围',
+            daysOfWeek: moment()._lang._weekdaysMin.slice(),
+            monthNames: moment()._lang._monthsShort.slice(),
+            firstDay: 0
+        }
+    }, function(start, end){
+        $('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+        $(':hidden[name=start_time]').val(start.format('YYYY-MM-DD'));
+        $(':hidden[name=end_time]').val(end.format('YYYY-MM-DD'));
+    });
+});
+
+
+</script>

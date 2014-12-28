@@ -1,0 +1,199 @@
+{template 'header'}
+{template 'slide'}
+<body>
+    <section>
+           <a href="tel:{$_W['styles']['indextel']}" class="link_tel icon-phone">{$_W['styles']['indextel']}</a>
+    </section>
+</body>
+
+<style >
+.box_swipe{
+    overflow:hidden;
+    position:relative;
+}
+.box_swipe ul{
+    -webkit-padding-start: 0px;
+}
+
+.box_swipe>ol{
+    height:20px;
+    position: relative;
+    z-index:10;
+    margin-top:-25px;
+    text-align:right;
+    padding-right:15px;
+    background-color:rgba(0,0,0,0.3);
+}
+.box_swipe>ol>li{
+    display:inline-block;
+    margin:5px 0;
+    width:8px;
+    height:8px;
+    background-color:#757575;
+    border-radius: 8px;
+}
+.box_swipe>ol>li.on{
+    background-color:#ffffff;
+}
+
+body
+{
+   font:{$_W['styles']['fontsize']}{$_W['styles']['fontfamily']};
+
+   color:{$_W['styles']['fontcolor']};
+
+   padding:0;
+
+   margin:0
+
+   background-image:url('{if !empty($_W['styles']['indexbgimg'])}{$_W['styles']['indexbgimg']}{/if}');
+
+   background-size:cover;
+
+   background-color:{if empty($_W['styles']['indexbgcolor'])}##77c{else}{$_W['styles']['indexbgcolor
+   ']}{/if};
+
+   {$_W['styles']['indexbgextra']}
+}
+a{color:{$_W['styles']['linkcolor']}; text-decoration:none;}
+
+{$_W['styles']['css']};
+
+.box{width:100%;overflow:hidden;}
+
+
+
+.link_tel
+{
+    display:block!important;
+    line-height:40px!important;
+    margin:3px 3px 0 3px;
+    margin-top:10px!important;
+    background:#ea5946;
+    color:#fff!important;
+    text-align:center;
+    border-radius:5px;
+    word-spacing:nowrap;
+    overflow:hidden;
+    font-size:18px;
+    position:relative;
+}
+
+.link_tel:before{
+    font-size:20px;
+    margin-left:0;
+    position:absolute;
+    left:10px;
+    top:2px;
+    font-size:25px;
+}
+.mainmenu {
+	display: block;
+    margin:3px auto 4px;
+    width: 100%;
+}
+.mainmenu li {
+	width:50%;
+	float:left;
+	display: block;
+	-moz-user-select:none;
+	-webkit-user-select:none;
+	-ms-user-select:none;
+}
+.menubtn {
+	display: block;
+	text-decoration:none;
+	color:#000;
+	background-color: #ffffff;
+	padding:8px 10px;
+	box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.15);
+	-moz-box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.15);
+	-webkit-box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.15);
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+}
+.mainmenu li:nth-child(odd) .menubtn{
+	margin: 2px 2px 1px 5px;
+}
+.mainmenu li:nth-child(even) .menubtn{
+	margin: 2px 5px 1px 2px;
+}
+.menubtn .menumesg {
+	padding:0px;
+}
+.menubtn .menuimg {
+	margin:0 auto;
+	height:100px;
+	padding: 6px;
+    width: 100px;
+	display:block;
+	overflow:hidden;
+	-webkit-border-radius:100px;
+	-moz-border-radius:100px;
+	border-radius:100px;
+	box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.11) inset;
+	-moz-box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.11) inset;
+	-webkit-box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.11) inset;
+	
+}
+.menubtn .menuimg2 {
+	height:100px;
+	width:100px;
+	display:block;
+	overflow:hidden;
+	-webkit-border-radius:100px;
+	-moz-border-radius:100px;
+	border-radius:100px;
+}
+
+.mainmenu li div img {
+	border:0;
+	height:100px;
+	width:100px;
+}
+.mainmenu li .menutitle {
+	padding:6px 0 3px;
+	text-decoration: none;
+	color:#000;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align:center;
+}
+.mainmenu li .menutext {
+	color: #bbbbbb;
+    display: none;
+    font-size: 12px;
+	line-height: 16px;
+    height: 32px;
+    overflow: hidden;
+	text-align:center;
+}
+.clr {
+	display:block;
+	clear:both;
+	height:0;
+	overflow:hidden;
+}
+</style>
+
+<ul class="mainmenu">
+
+{loop $navs $nav}    
+<li>
+<a href="{$nav['url']}">
+<div class="menubtn">
+<div class="menumesg">
+<div class="menuimg"><div class="menuimg2">{if !empty($nav['icon'])}<img src="{$_W['attachurl']}{$nav['icon']}">{else}<i class="{$nav['css']['icon']['icon']} img-circle" style="{$nav['css']['icon']['style']}"></i>{/if}</div></div>
+<div class="menutitle">{$nav['name']}</div>
+<div class="menutext"></div>
+</div>
+</div>
+</a>
+</li>
+{/loop}
+
+<div class="clr"></div>
+</ul>
+{template 'footer'}

@@ -1,0 +1,131 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo create_url('site/module/choice', array('name' => 'quickexam', 'op' => 'post'));}">添加</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo create_url('site/module/choice', array('name' => 'quickexam', 'op' => 'display'));}">管理</a></li>
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" onsubmit="return check(this)" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="choice_id" value="{$item['choice_id']}" />
+		<h4>编辑</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">题干</label></th>
+				<td>
+					<input type="text" name="title" class="span5" value="{$item['title']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">选项</label></th>
+				<td>
+					<textarea style="height:200px; width:100%;" class="span7" name="body" cols="70">{$item['body']}</textarea>
+					<span class="help-block">可设置多个选项</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">答案</label></th>
+				<td>
+					<input type="text" name="answer" class="span2" value="{$item['answer']}" />
+					<span class="help-block">参考答案</span>
+				</td>
+			</tr>
+			<tr>
+				<th>答案解析</th>
+				<td>
+					<textarea style="height:100px; width:100%;" class="span7 richtext-clone" name="explain" cols="70">{$item['explain']}</textarea>
+				</td>
+			</tr>
+		<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	kindeditor($('.richtext-clone'));
+//-->
+</script>
+ 
+<script type="text/javascript">
+	function check(form) {
+
+		if (!form['title'].value) {
+			alert('请输入题干！');
+			return false;
+		}
+
+		if (form['body'].value.length <= 0) {
+			alert("选项不能为空");
+			return false;
+		} else {
+			var is_valid = true;
+			$.each(form['body'].value.split('\n'), 
+					function(i, value) {
+					if (!/^[A-Z]{1}/.test(value)) {
+					alert('第'+(i+1)+'行['+value+']格式错误。\n\n' +
+						'(1) 每个选项必须独占一行\n(2)不能有空白行\n(3)每个选项以大写字母A-Z开头, 如\n\n' +
+						'Which is different from the other two?\nA. Apple\nB. Orange\nC. Food');
+					is_valid = false;
+					return false;
+					}
+					}
+				  );
+			if (!is_valid) return false;
+		}
+
+
+		if (!form['answer'].value) {
+			alert('请输入答案！');
+			return false;
+		} else {
+			var is_valid = true;
+			$.each(form['answer'].value.split(','), 
+					function(i, value) {
+					if (!/^[A-Z]{1}$/.test(value)) {
+					alert('第'+(i+1)+'个选项['+value+']不是合法的答案\n' +
+						'(1) 答案必须是大写字母A-Z\n(2) 支持多项选择, 多个选项之间用逗号分隔，如A,C');
+					is_valid = false;
+					return false;
+					}
+					}
+				  );
+			if (!is_valid) return false;
+		}
+
+		return true;
+	}
+</script>
+ 
+{elseif $operation == 'display'}
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="max-width:10px;">题号</th>
+					<th style="min-width:200px">题干</th>
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['choice_id']}</td>
+					<td>{$item['title']}</td>
+					<td style="text-align:right;">
+						<a href="{php echo create_url('site/module/choice', array('name' => 'quickexam', 'choice_id' => $item['choice_id'], 'op' => 'post'))}" title="编辑" class="btn btn-small"><i class="icon-edit"></i></a>
+						<a href="{php echo create_url('site/module/choice', array('name' => 'quickexam', 'choice_id' => $item['choice_id'], 'op' => 'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除" class="btn btn-small"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+{/if}
+{template 'common/footer'}

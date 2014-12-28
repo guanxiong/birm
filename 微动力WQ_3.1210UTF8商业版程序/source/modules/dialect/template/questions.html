@@ -1,0 +1,90 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li><a href="{php echo $this->createWebUrl('manage');}">地方话管理</a></li>
+        <li{if $_GPC['op'] == ''} class="active"{/if}><a href="{php echo $this->createWebUrl('question',array('id'=>$_GPC['id']));}">题库管理</a></li>
+    </ul>
+    <div class="alert alert-error" style="margin:15px 30px;">
+        每一项答案用回车隔开，得分对应每项答案，同样用回车隔开。点击<a href="#" onclick="$('#case').show();">查看示例</a>
+    </div>
+    <form class="form-horizontal form" action="" method="post" onsubmit="return formcheck(this)">
+        <input name="weid" type="hidden" value="{$_W['weid']}">
+        <input type="hidden" name="id" value="{$_GPC['id']}" />
+        <div style="padding:15px;">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                    <tr>
+                        <th class="row-hover span1">题号</th>
+                        <th class="row-hover span5">问题</th>
+                        <th class="row-hover span2">答案</th>
+                        <th class="row-hover span2">得分</th>
+                        <th class="row-hover span2">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="case" style="display:none;">
+                    <tr class="error">
+                        <td></td>
+                        <td><textarea class="span5" rows="4">甲：小妹儿，瓷马不？乙：不瓷，不瓷。问：甲的职业是？
+</textarea></td>
+                        <td><textarea class="span3" rows="4">A 卖陶瓷马的
+B 卖马肉的
+C 出租马的</textarea></td>
+                        <td><textarea class="span2" rows="4">0
+0
+10</textarea></td>
+                        <td>这是一条示例 <a href="javascript:;" onclick="$(this).parent().parent().parent().hide();" class="btn btn-small" title="删除此条目"><i class="icon-remove"></i></a></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    {loop $list $row}
+                    <tr> 
+                        <td>{$row['id']} </td>
+                        <td><textarea id="question[]" name="question[]" class="span5" rows="4">{$row['question']}</textarea></td>
+                        <td><textarea id="answers[]" name="answers[]" class="span3" rows="4">{$row['answers']}</textarea></td>
+                        <td><textarea id="score[]" name="score[]" class="span2" rows="4">{$row['score']}</textarea></td>
+                        <td >
+                            <a class="btn" href="{php echo $this->createWebUrl('post', array('id' => $row['id']))}" title="编辑"><i class="icon-edit"></i></a>
+                            <a href="javascript:;" onclick="$(this).parent().parent().remove();" class="btn btn-small" title="删除此条目"><i class="icon-remove"></i></a>
+                        </td>
+                    </tr>
+                    {/loop}
+                </tbody>
+                <tbody id="status-items"></tbody>
+                <tr>
+                    <td colspan="5">
+                        <a href="javascript:;" onclick="addStatusItem()" class="btn btn-link"><i class="icon-plus-sign-alt"></i> 添加新问题</a>
+                    </td>
+                </tr>
+            </table>
+            <table class="tb">
+                <tr>
+                    <td colspan="5">
+                        <button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                    </td>
+                </tr>
+            </table>
+            {$pager}
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    function drop_confirm(msg, url){
+        if(confirm(msg)){
+            window.location = url;
+        }
+    }
+    function addStatusItem() {
+        var html = '' +
+                '<tr>' +
+                    '<td></td>' +
+                    '<td><textarea id="question[]" name="question[]" class="span5" rows="4"></textarea></td>' +
+                    '<td><textarea id="answers[]" name="answers[]" class="span3" rows="4"></textarea></td>' +
+                    '<td><textarea id="score[]" name="score[]" class="span2" rows="4"></textarea></td>' +
+                    '<td><a href="javascript:;" onclick="$(this).parent().parent().remove();" class="btn btn-small" title="删除此条目"><i class="icon-remove"></i></a></td>' +
+                '</tr>';
+        $('#status-items').append(html);
+    }
+</script>
+{template 'common/footer'}

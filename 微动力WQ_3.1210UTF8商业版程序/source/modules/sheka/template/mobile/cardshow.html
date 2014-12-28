@@ -1,0 +1,92 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>{if empty($_W['settings']['name'])}{$_W['account']['name']}{else}{$_W['settings']['name']}{/if}</title>
+<link href="./source/modules/sheka/static/cardshow.css" rel="stylesheet" type="text/css" />
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="./source/modules/sheka/static/cardshow.js"></script>
+<script>
+var params = {"cardFrom":"{$cardFrom}","cardTo":"{$cardTo}","cardBody":"{$cardBody}"};    
+(function(){
+    var onBridgeReady =  function () {
+    var appId='',
+    <?php 
+    
+    		$thumb = explode('/',$data['thumb']);	
+				$newname=$thumb[0].'/'.$thumb[1].'/'.$thumb[2].'/'.$thumb[3].'/s_'.$thumb[4];
+    ?>
+    
+    imgUrl = '{$_W['attachurl']}{$newname}',
+    link = location.href,
+    title = '{$cardFrom}发来了贺卡',
+    desc = '{$cardBody}';
+    fakeid = '';            
+    WeixinJSBridge.on('menu:share:appmessage', function(argv){
+        WeixinJSBridge.invoke('sendAppMessage',{
+            "appid"      : appId,
+            "img_url"    : imgUrl, 
+            "img_width"  : "200",
+            "img_height" : "200",
+            "link"       : link, 
+            "desc"       : desc,  
+            "title"      : title,   
+            }, function(res) { 
+            });
+    });
+
+    WeixinJSBridge.on('menu:share:timeline', function(argv){
+        WeixinJSBridge.invoke('shareTimeline',{
+            "img_url"    : imgUrl,
+            "img_width"  : "200",
+            "img_height" : "200",
+            "link"       : link,
+            "desc"       : desc,
+            "title"      : title,
+            }, function(res) { 
+            });
+    });
+}
+if(document.addEventListener){
+    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+} else if(document.attachEvent){
+    document.attachEvent('WeixinJSBridgeReady'   , onBridgeReady);
+    document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);
+}
+})();
+</script>
+</head>
+<body>
+<div id="loading" style="width:13%;height:12%;margin: 40% 45%; position: absolute; background: url('./source/modules/sheka/images/loading.gif') no-repeat center;background-size: 100%;">
+</div>
+<div class="priviewBox">
+<iframe type="text/html" id="obj" src="{php echo $this->createMobileUrl('temp', array('id' => $data['id']))}" style="width:100%; height:100%; border:none; position:absolute;"></iframe>
+</div>
+<div class="btnBox" id="btnBox">
+<div class="priview" id="priview2" style="display:block;">
+<a href="{php echo $this->createMobileUrl('list', array('classid' => $data['classid']))}" rel="external" id="back" class="btnPink">返回修改</a>
+<a href="javascript:void(0);" id="send" class="btnBlue">发给朋友</a>
+</div>
+<div class="priview" id="priview3" style="">
+<a href="javascript:void(0);" id="sendother" class="btnblack" style="display:none;">关注我们的公众号获取很多贺卡</a>
+</div>
+</div>
+<div id="cover"></div>
+<div id="guide">
+<div><img src="./source/modules/sheka/images/guide.png"></div>
+<div id="guide_button">
+<div class="left"><button class="button2" onclick="location.href='{php echo $this->createMobileUrl('sendform', array('id' => $data['id']))}'">再生成一张</button></div>
+<div class="left"><button class="button2" onclick="location.href='/{php echo $this->createMobileUrl('index')}'">挑选其他贺卡</button></div>
+</div>
+</div>
+<div id="guide2">
+<div><img src="./source/modules/sheka/images/guide2.png"></div>
+<div id="guide_button2">
+<div class="left"><button class="button2" onclick="location.href='{php echo $this->createMobileUrl('list', array('classid' => $data['classid']))}'">定制本张贺卡</button></div>
+<div class="left"><button class="button2" onclick="location.href='{php echo $this->createMobileUrl('sendform', array('id' => $data['id']))}'">挑选更多贺卡</button></div>
+</div>
+</div>
+
+</body>
+</html>

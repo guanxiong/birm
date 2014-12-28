@@ -1,0 +1,37 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('site/module', array('do' => 'addquestion', 'name' => 'fighting'));}">添加题目</a></li>
+	<li><a href="{php echo create_url('site/module', array('do' => 'detail', 'name' => 'fighting'));}">管理题目</a></li>
+	<li><a href="{php echo create_url('site/module', array('do' => 'ShowPlay', 'name' => 'fighting'));}">活动列表</a></li>
+	<li class="active"><a href="">更改信息</a></li>
+</ul>
+<div class="main">
+	<div class="search">
+		<form action="" method="post">
+			<input type="hidden" name="id" value="{$list['id']}" />
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th>昵称</th>
+					<td>
+							<input class="span8" name="nickname" id="" type="text" value="{$list['nickname']}">
+					</td>
+				</tr>
+				<tr>
+					<th>最后得分</th>
+					<td>
+							<input class="span4" name="lastcredit" id="" type="text" value="{$list['lastcredit']}">
+					</td>
+				</tr>
+				 <tr class="search-submit">
+					<td colspan="2">
+						<input type="submit" name="edit" value="完成编辑" class="btn pull-right span2">
+						<input type="hidden" name="token" value="{$_W['token']}" />
+					</td>
+				 </tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+</div>
+{template 'common/footer'}

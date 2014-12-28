@@ -1,0 +1,4 @@
+<?phpdefined('IN_IA') or exit('Access Denied');
+class BaomingModuleSite extends WeModuleSite {
+ public function doWebbaominglist() {		global $_W;		checklogin();		checkaccount();		// select a.rid, name, qq, tel, ip, b.qi from ims_baoming_list as a left join ims_baoming_reply as b on a.rid = b.rid where 1 order by a.id desc		//$list = pdo_fetchall("SELECT * FROM ".tablename($this->table)." order by id desc");		$list = pdo_fetchall("select a.rid, name, qq, tel, ip, b.qi from ".tablename($this->table)." as a left join ".tablename($this->tablename)." as b on a.rid = b.rid where 1 order by a.id desc");		//message('成功！', create_url('site/module/baominglist', array('name' => 'baoming', 'op' => 'display')), 'success');		include $this->template('baoming/list');	}
+ }

@@ -1,0 +1,37 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>WIFI营销系统</h4>
+		<table class="tb">
+			<tr>
+				<th>appId</th>
+				<td>
+					<input type="text" name="appId" class="span3" value="{$settings['appId']}" />
+					<div class="help-block"></div>
+				</td>
+			</tr>
+			<tr>
+				<th>appKey</th>
+				<td>
+					<input type="text" name="appKey" class="span3" value="{$settings['appKey']}" />
+					<div class="help-block"></div>
+				</td>
+			</tr>
+			<tr>
+				<th>nodeId</th>
+				<td>
+					<input type="text" name="nodeId" class="span3" value="{$settings['nodeId']}" />
+					<div class="help-block"></div>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

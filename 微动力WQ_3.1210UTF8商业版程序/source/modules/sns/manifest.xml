@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[微贴吧]]></name>
+		<identifie><![CDATA[sns]]></identifie>
+		<version><![CDATA[1.24]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[互动交流模块]]></ability>
+		<description><![CDATA[为用户提供如：微心情，微吧，微问答等相似功能的互动模型。]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+			<message type="image" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="管理贴子" do="manage" state="" direct="false" />
+			<entry title="微社区列表" do="snslist" state="" direct="false" />
+		</rule>
+		<menu>
+			<entry title="微社区列表" do="snslist" state="" direct="false" />
+		</menu>
+		<home call="getHomeTiles">
+		</home>
+		<profile call="getProfileTiles">
+		</profile>
+	</bindings>
+	<install><![CDATA[
+	CREATE TABLE IF NOT EXISTS `ims_sns` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `weid` INT(10) UNSIGNED NOT NULL  COMMENT '公号ID',
+  `bzuid` varchar(500) NOT NULL COMMENT '版主ID',
+  `picture` varchar(100) NOT NULL COMMENT '介绍图片',
+  `description` varchar(100) NOT NULL COMMENT '模型描述',
+  `rule` varchar(1000) NOT NULL COMMENT '前端模型介绍',
+  `type` varchar(30) NOT NULL COMMENT '类型',
+  `default_tips` varchar(100) NOT NULL COMMENT '默认提示信息',
+  `send_tips` varchar(200) NOT NULL COMMENT '发送内容提示',
+  `jhcredit` int(10) NOT NULL COMMENT '加精华积分',
+  `isshow` int(2) NOT NULL DEFAULT '0' COMMENT '是否审核',
+  `postcredit` int(11) NOT NULL COMMENT '发表奖励积分',
+  `replycredit` int(11) NOT NULL COMMENT '回复奖奖励积分',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `ims_sns_post` (
+  `post_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '帖子ID',
+  `rid` int(11) NOT NULL COMMENT '所属模型ID',
+  `post_uid` varchar(125) NOT NULL COMMENT '发表者FORMUSER',
+  `title` varchar(255) NOT NULL COMMENT '帖子标题',
+  `content` text NOT NULL COMMENT '帖子内容',
+  `post_time` int(11) NOT NULL COMMENT '发表时间',
+  `reply_count` int(10) DEFAULT '0' COMMENT '回复数',
+  `read_count` int(10) DEFAULT '0' COMMENT '浏览数',
+  `last_reply_uid` int(11) DEFAULT '0' COMMENT '最后回复人',
+  `last_reply_time` int(11) DEFAULT '0' COMMENT '最后回复时间',
+  `digest` tinyint(1) DEFAULT '0' COMMENT '全局精华 0-否 1-是',
+  `top` tinyint(1) DEFAULT '0' COMMENT '置顶帖 0-否 1-吧内 2-全局',
+  `lock` tinyint(1) DEFAULT '0' COMMENT '锁帖（不允许回复）0-否 1-是',
+  `recommend` tinyint(1) DEFAULT '0' COMMENT '是否设为推荐',
+  `recommend_time` int(11) DEFAULT '0' COMMENT '设为推荐的时间',
+  `is_del` tinyint(2) DEFAULT '0' COMMENT '是否已删除 0-否 1-是',
+  `reply_all_count` int(11) NOT NULL DEFAULT '0' COMMENT '全部评论数目',
+  `weid` tinyint(2) NOT NULL,
+  PRIMARY KEY (`post_id`),
+  KEY `id_recommend` (`recommend_time`,`rid`,`recommend`),
+  KEY `post_time` (`post_time`,`rid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_sns_reply` (
+  `reply_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '回复ID',
+  `rid` int(11) NOT NULL COMMENT '所属规则',
+  `post_id` int(11) NOT NULL COMMENT '所属帖子ID',
+  `post_uid` varchar(125) NOT NULL COMMENT '帖子作者formuser',
+  `uid` varchar(125) NOT NULL COMMENT '回复者ID',
+  `to_reply_id` int(11) NOT NULL DEFAULT '0' COMMENT '回复的评论id',
+  `to_uid` varchar(125) NOT NULL DEFAULT '0' COMMENT '被回复的评论的作者的uid',
+  `ctime` int(11) NOT NULL COMMENT '回复时间',
+  `content` text NOT NULL COMMENT '回复内容',
+  `is_del` tinyint(2) DEFAULT '0' COMMENT '是否已删除 0-否 1-是',
+  `storey` int(11) NOT NULL DEFAULT '0' COMMENT '绝对楼层',
+  `weid` tinyint(2) NOT NULL,
+  PRIMARY KEY (`reply_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+	]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_sns_reply`;
+	DROP TABLE IF EXISTS `ims_sns_post`;
+	DROP TABLE IF EXISTS `ims_sns`;
+	
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+
+	<application setting="false">
+	
+		<name><![CDATA[积分兑换艮随]]></name>
+		
+		<identifie><![CDATA[exchange]]></identifie>
+		
+		<version><![CDATA[1.0]]></version>
+		
+		<type><![CDATA[activity]]></type>
+		
+		<ability><![CDATA[积分兑换]]></ability>
+		
+		<description><![CDATA[积分兑换]]></description>
+		
+		<author><![CDATA[艮随]]></author>
+		
+		<url><![CDATA[]]></url>
+		
+	</application>
+	
+	<platform>
+	
+		<subscribes>
+		
+		</subscribes>
+		
+		<handles>
+		
+			<message type="text" />
+			
+		</handles>
+		
+		<rule embed="true" />
+		
+	</platform>
+	
+	<bindings>
+	
+		<rule>
+		
+			<entry title="兑换记录" do="display" />
+
+		</rule>
+		
+	</bindings>
+	
+	<install><![CDATA[
+
+
+CREATE TABLE IF NOT EXISTS `ims_exchange_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `title` text NOT NULL,
+  `product` text NOT NULL,
+  `price` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `times` int(11) NOT NULL,
+  `picture` text NOT NULL,
+  `description` text NOT NULL,
+  `content` text NOT NULL,
+  `success` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+	
+
+CREATE TABLE IF NOT EXISTS `ims_exchange_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `rid` int(11) NOT NULL,
+  `openid` text NOT NULL,
+  `name` text NOT NULL,
+  `mobile` text NOT NULL,
+  `nums` int(11) NOT NULL,
+  `cprice` int(11) NOT NULL,
+  `time` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+
+		]]></install>
+		
+	<uninstall><![CDATA[
+
+	DROP TABLE IF EXISTS `ims_exchange_reply`;
+	DROP TABLE IF EXISTS `ims_exchange_record`;
+
+		]]></uninstall>
+		
+	<upgrade><![CDATA[]]></upgrade>
+	
+</manifest>

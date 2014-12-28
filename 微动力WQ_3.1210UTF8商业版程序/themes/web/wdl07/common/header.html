@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="X-UA-Compatible" content="IE=8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{if empty($_W['setting']['copyright']['sitename'])}微动力 - 微信公众平台自助引擎{else}{$_W['setting']['copyright']['sitename']}{/if}</title>
+<meta name="keywords" content="{if empty($_W['setting']['copyright']['keywords'])}微动力,微信,微信公众平台{else}{$_W['setting']['copyright']['keywords']}{/if}" />
+<meta name="description" content="{if empty($_W['setting']['copyright']['description'])}微信公众平台自助引擎，简称微动力，微动力是一款免费开源的微信公众平台管理系统。{else}{$_W['setting']['copyright']['description']}{/if}" />
+<!--新增-->
+<link type="text/css" rel="stylesheet" href="./resource/style/bootstrap.css" />
+<link type="text/css" rel="stylesheet" href="./resource/style/font-awesome.css" />
+<link type="text/css" rel="stylesheet" href="./resource/wdl07/style/frame_v3.css">
+<!--微动力自带--> 
+<script type="text/javascript" src="./resource/script/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="./resource/script/bootstrap.js"></script>
+<script type="text/javascript" src="./resource/wdl07/style/jquery.tipsy.js"></script> 
+<script type="text/javascript" src="./resource/script/common.js"></script>
+<script type="text/javascript" src="./resource/script/emotions.js"></script>
+{if $initNG}<script type="text/javascript" src="./resource/script/angular.min.js"></script> {/if}
+<script type="text/javascript" src="./resource/script/jquery.mCustomScrollbar.concat.min.js"></script>
+<script type="text/javascript">
+cookie.prefix = '{$_W['config']['cookie']['pre']}';
+</script>
+<!--框架页样式--> 
+<style>
+.main-menu-group .menu {
+float: left;
+cursor: pointer;
+width: 120px;
+margin-left: 10px;
+margin-right: 10px;
+margin-bottom: 15px;
+height: 92px;
+background-color: #fff;
+position: relative;
+border-radius: 5px;
+}
+.main-menu-group .menu .bimg {
+position: absolute;
+left: 40px;
+top: 12px;
+}
+.main-menu-group .menu .name {
+color: #000;
+position: absolute;
+bottom: 6px;
+width: 120px;
+right: auto;
+text-align: center;
+font-size: 14px;
+padding-top: 2px;
+border-top: solid 2px #1d226f;
+}
+
+</style>
+<!--[if IE 7]>
+<link rel="stylesheet" href="./resource/style/font-awesome-ie7.min.css">
+<![endif]-->
+<!--[if lte IE 6]>
+<link rel="stylesheet" type="text/css" href="./resource/style/bootstrap-ie6.min.css">
+<link rel="stylesheet" type="text/css" href="./resource/style/ie.css">
+<![endif]-->
+</head>
+<body {if $action == 'frame'} style="height:100%; overflow:hidden;" {/if} class="showmenu">

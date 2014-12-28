@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[茶叶蛋]]></name>
+		<identifie><![CDATA[cyd]]></identifie>
+		<version><![CDATA[1.2]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[趣味性抽奖类营销功能]]></ability>
+		<description><![CDATA[茶叶蛋可以增强粉丝与公众号的互动、提升公众号的黏性，让你在短时间内迅速引爆人气。]]></description>
+		<author><![CDATA[WeEngine Team]]></author>
+		<url><![CDATA[http://bbs.we7.cc/forum.php?mod=forumdisplay&fid=36&filter=typeid&typeid=1]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+    <bindings>
+		<rule>
+			<entry title="中奖名单" do="awardlist" state="" />
+        </rule>
+		<home call="gethometiles"></home>
+	</bindings>
+
+	<install><![CDATA[
+
+CREATE TABLE IF NOT EXISTS `ims_cyd_award` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `title` varchar(50) NOT NULL COMMENT '奖品名称',
+  `total` int(11) NOT NULL COMMENT '数量',
+  `probalilty` varchar(5) NOT NULL COMMENT '概率单位%',
+  `description` varchar(100) NOT NULL DEFAULT '' COMMENT '描述',
+  `inkind` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否是实物',
+  `activation_code` varchar(2000) NOT NULL COMMENT '激活码',
+  `activation_url` varchar(200) NOT NULL COMMENT '激活地址',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_cyd_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `picture` varchar(100) NOT NULL COMMENT '活动图片',
+  `description` varchar(100) NOT NULL COMMENT '活动描述',
+  `rule` varchar(1000) NOT NULL COMMENT '规则',
+  `periodlottery` SMALLINT( 10 ) UNSIGNED NOT NULL DEFAULT '1' COMMENT '0为无周期',
+  `maxlottery` tinyint(3) unsigned NOT NULL COMMENT '最大抽奖数',
+  `hitcredit` int(11) NOT NULL COMMENT '中奖奖励积分',
+  `misscredit` int(11) NOT NULL COMMENT '未中奖奖励积分',
+  `start_time` int(10) unsigned NOT NULL COMMENT '开始日期',
+  `end_time` int(10) unsigned NOT NULL COMMENT '结束日期',
+  `fansstatus` int(10) unsigned NOT NULL COMMENT '粉丝状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_cyd_winner` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `aid` int(10) unsigned NOT NULL COMMENT '奖品ID',
+  `from_user` varchar(50) NOT NULL COMMENT '用户唯一身份ID',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0未领奖，1不需要领奖，2已领奖',
+  `createtime` int(10) unsigned NOT NULL COMMENT '获奖日期',
+  PRIMARY KEY (`id`),
+  KEY `idx_createtime_fromuser` (`createtime`,`from_user`),
+  KEY `idx_fromuser_rid` (`from_user`,`rid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

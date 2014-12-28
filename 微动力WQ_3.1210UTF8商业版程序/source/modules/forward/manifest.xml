@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="true">
+		<name><![CDATA[转发有礼]]></name>
+		<identifie><![CDATA[forward]]></identifie>
+		<version><![CDATA[1.2]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[转发有礼是您的微信公众号运营的利器，是您涨粉和宣传最好的工具。]]></ability>		
+		<description><![CDATA[你的粉丝将你要传播的图文分享到朋友圈或者好友，即可获得点击量，每个人均被鼓励去大量分享，而获得高点击量；公众号根据不同的点击量给予不同的礼品或者优惠奖励；赶紧启动转发有礼，让粉丝疯狂分享你的图文吧！]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[http://bbs.b2ctui.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>			
+			<entry title="转发模块管理" do="eventlist" />
+			<entry title="转发有礼管理" do="sharelist" />
+			<entry title="转发数据管理" do="sharedata" />
+		</menu>
+		<rule>
+			<entry title="查看排名情况" do="shareranklist" state="" />			
+		</rule>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE IF NOT EXISTS `ims_forward_data` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+`from_user` varchar(50) not null default '' COMMENT '用户openid',
+`rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+`uid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分享人UID',
+`shareip` varchar(15) NOT NULL DEFAULT '' COMMENT '转发有礼IP',
+`sharetime` int unsigned NOT NULL COMMENT '分享时间',
+`viewnum` int(10) unsigned NOT NULL DEFAULT '1' COMMENT '查看次数',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET =utf8;	
+
+CREATE TABLE IF NOT EXISTS`ims_forward_list` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+`weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+`from_user` varchar(50) not null default '' COMMENT '用户openid',
+`sharenum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分享量',
+`sharetime` int unsigned NOT NULL COMMENT '最后分享时间',
+`status` tinyint unsigned NOT NULL default 1 comment '是否禁止',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET =utf8;	
+
+CREATE TABLE IF NOT EXISTS `ims_forward_reply` (
+`id` int( 10 ) unsigned NOT NULL AUTO_INCREMENT ,
+`rid` int( 10 ) unsigned NOT NULL default 0 comment '规则id',
+`parentid` int(10) unsigned NOT NULL DEFAULT '0',
+`title` varchar( 50 ) NOT NULL comment '规则标题',
+`credit` int( 10 ) unsigned NOT NULL default '0' comment '奖励积分',
+`shareurl` varchar( 255 ) NOT NULL comment '活动网址',
+`picture` varchar( 100 ) NOT NULL comment '图片',
+`start_time` int unsigned NOT NULL comment '开始时间',
+`end_time` int unsigned NOT NULL comment '结束时间',
+`description` varchar( 255 ) NOT NULL comment '描述',
+`content` text NOT NULL comment '内容',
+`status` tinyint unsigned NOT NULL default 1 comment '开关状态',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET =utf8;	
+
+
+	]]></install>
+	<uninstall><![CDATA[
+drop table `ims_forward_list`;
+drop table `ims_forward_reply`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

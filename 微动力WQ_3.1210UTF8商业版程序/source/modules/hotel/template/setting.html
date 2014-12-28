@@ -1,0 +1,92 @@
+{template 'common/header'}
+<div class="main">
+
+	<form action="" method="post" class="form-horizontal form">
+	
+		<h4>邮件设置</h4>
+		
+		<table class="tb">
+		
+			<tr>
+			
+				<th>邮箱服务器</th>
+				
+				<td>
+				
+					<select name="host" class="span3">
+					
+						<option value="smtp.qq.com" {if $settings['host'] == 'smtp.qq.com' } selected="selected"{/if}>QQ邮箱</option>	
+						
+						<option value="smtp.126.com" {if $settings['host'] == 'smtp.126.com' } selected="selected"{/if}>126邮箱</option>	
+
+						<option value="smtp.163.com" {if $settings['host'] == 'smtp.163.com' } selected="selected"{/if}>163邮箱</option>
+
+						<option value="smtp.sina.com" {if $settings['host'] == 'smtp.sina.com' } selected="selected"{/if}>sina邮箱</option>						
+						
+					</select>
+				
+					<div>QQ邮箱务必开启smtp服务</div>
+				</td>
+
+			</tr>
+			
+			<tr>
+			
+				<th>发件邮箱</th>
+				
+				<td>
+				
+					<input type="text" name="sendmail" class="span3" value="{$settings['sendmail']}" />
+					<div>通过此邮箱向商家发送订单信息</div>
+				</td>
+
+			</tr>
+			
+			<tr>
+			
+				<th>发件邮箱用户名</th>
+				
+				<td>
+				
+					<input type="text" name="senduser" class="span3" value="{$settings['senduser']}" />
+					<div>邮箱用户名</div>
+				</td>
+
+			</tr>
+			
+			<tr>
+			
+				<th>发件邮箱密码</th>
+				
+				<td>
+				
+					<input type="password" name="sendpwd" class="span3" value="{$settings['sendpwd']}" />
+					<div>邮箱密码</div>
+				</td>
+
+			</tr>
+			
+			<tr>
+			
+				<th></th>
+				
+				<td>
+					
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" style="height:30px" />
+					
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				
+				</td>
+				
+			</tr>
+			
+		</table>
+		
+	</form>
+	
+</div>
+
+<link rel="stylesheet" type="text/css" href="./source/modules/grabseat/template/style/css/main.css" />
+<link rel="stylesheet" type="text/css" href="./source/modules/grabseat/template/style/css/jquery-ui.css" />
+
+{template 'common/footer'}

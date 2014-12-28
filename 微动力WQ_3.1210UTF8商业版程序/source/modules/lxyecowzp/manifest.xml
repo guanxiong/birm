@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[微招聘]]></name>
+		<identifie><![CDATA[lxyecowzp]]></identifie>
+		<version><![CDATA[0.3]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[微招聘]]></ability>
+		<description><![CDATA[用于企业员工招聘管理]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="招聘维护" do="wzpindex" state="" direct="false" />
+		</menu>
+		<home call="gethometiles"></home>
+	</bindings>
+	<install><![CDATA[	
+
+DROP TABLE IF EXISTS `ims_lxy_ecowzp`;
+CREATE TABLE `ims_lxy_ecowzp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属帐号',
+  `title` varchar(50) NOT NULL COMMENT '企业名称',
+  `thumb` varchar(250) NOT NULL COMMENT '企业封面图片',
+  `content` text NOT NULL COMMENT '企业介绍：',
+  `tel` varchar(13) NOT NULL COMMENT '企业电话',
+  `mobile` varchar(13) NOT NULL COMMENT '手机号',
+  `info` varchar(50) NOT NULL COMMENT '招聘说明',
+  `isview` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否显示',
+  `displayorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `address` varchar(50) NOT NULL COMMENT '企业地址',
+  `province` varchar(50) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `dist` varchar(50) DEFAULT NULL,
+  `jw_addr` varchar(255) DEFAULT NULL COMMENT '经纬地址',
+  `lng` varchar(12) DEFAULT '116.403694',
+  `lat` varchar(12) DEFAULT '39.916042',
+  `createtime` int(11) NOT NULL COMMENT '创建日期',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='企业信息设置';
+
+-- ----------------------------
+-- Table structure for ims_lxy_ecowzp_list_add
+-- ----------------------------
+DROP TABLE IF EXISTS `ims_lxy_ecowzp_list_add`;
+CREATE TABLE `ims_lxy_ecowzp_list_add` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属帐号',
+  `hid` int(11) NOT NULL COMMENT '企业id',
+  `copname` varchar(255) DEFAULT NULL,
+  `title` varchar(50) NOT NULL COMMENT '招聘类型',
+  `number` int(5) NOT NULL COMMENT '招聘人数',
+  `zptype` varchar(10) DEFAULT NULL,
+  `contactperson` varchar(50) DEFAULT NULL,
+  `contacttel` varchar(50) DEFAULT NULL,
+  `info` text NOT NULL COMMENT '简要说明',
+  `addr` varchar(255) DEFAULT NULL,
+  `content` varchar(50) NOT NULL COMMENT '文字描述',
+  `displayorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `createtime` int(11) NOT NULL COMMENT '创建日期',
+  `hitnumber` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='招聘信息表';
+
+-- ----------------------------
+-- Table structure for ims_lxy_ecowzp_order
+-- ----------------------------
+DROP TABLE IF EXISTS `ims_lxy_ecowzp_order`;
+CREATE TABLE `ims_lxy_ecowzp_order` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属帐号',
+  `hid` int(11) NOT NULL COMMENT '企业id',
+  `people` varchar(50) NOT NULL COMMENT '求职人',
+  `tel` varchar(13) NOT NULL COMMENT '电话',
+  `title` varchar(50) NOT NULL COMMENT '求职类型',
+  `sex` varchar(20) DEFAULT NULL,
+  `older` int(11) DEFAULT NULL,
+  `experience` varchar(500) DEFAULT NULL,
+  `order_status` int(11) NOT NULL COMMENT '简历状态 1 已查看,2 未查看,3 未处理',
+  `remarks` varchar(250) NOT NULL COMMENT '留言备注',
+  `createtime` int(11) NOT NULL COMMENT '创建日期',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='简历管理';
+
+-- ----------------------------
+-- Table structure for ims_lxy_ecowzp_reply
+-- ----------------------------
+DROP TABLE IF EXISTS `ims_lxy_ecowzp_reply`;
+CREATE TABLE `ims_lxy_ecowzp_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+  `hid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '企业id',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+	
+]]></install>
+	<uninstall><![CDATA[
+	]]></uninstall>
+	<upgrade><![CDATA[
+	alter table `ims_lxy_ecowzp` add email varchar(255);
+	]]></upgrade>
+</manifest>

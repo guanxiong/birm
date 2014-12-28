@@ -1,0 +1,108 @@
+{template 'common/header'}
+<script type="text/javascript" src="./resource/script/jquery-ui-1.10.3.min.js"></script>
+<script type="text/javascript">
+var pIndex = 1;
+var currentEntity = null;
+function setMenuAction() {
+	//if(o == null) return;
+	pIndex = 1;
+	//currentEntity = o;
+	/*var o = currentEntity;
+	var tab = $(o).data('do');
+	if(!tab) {
+		tab = '';
+	}*/
+	$("#modal-message").remove();//清除模态对话框
+	ajaxshow('{php echo create_url('rule/ptrule');}', '设置扫描二维码指向规则', {width: 900, height: 700}, {hide: saveMenuAction, shown: loadRules});
+}
+function saveMenuAction(e) {
+	var o = currentEntity;
+	if(o == null) return;
+	$(o).data('do', 'rule');
+}
+function loadRule(rid) {
+	$.post('{php echo create_url('rule/ltrule');}', {rule: rid}, function(dat){
+		$('#rule-single').html(dat);
+	});
+}
+function loadRules(e) {
+	//console.log(e);
+	if(e && e.target && $(e.target).is('a')) {
+		return;
+	}
+	if($('#modal-message .modal-body').html() == '') {
+		setTimeout(function(){loadRules();}, 100);
+		return;
+	}
+	var kwd = $('#kw').val();
+	var rid = '';
+	var o = currentEntity;
+	if(currentEntity != null) {
+		rid = $(o).data('rule');
+	}
+	if(!rid) {
+		rid = '';
+	}
+	$.post('{php echo create_url('rule/ltrule');}rule=' + rid + '&page=' + pIndex, {keyword: kwd, page: pIndex, rule: rid}, function(dat){
+		$('#rules').html(dat);
+	});
+}
+
+function selectRule(mod, rid) {
+	var o = currentEntity;
+	if(o == null) return;
+	$(o).data('module', mod);
+	$(o).data('rule', rid);
+	loadRule(rid);
+}
+
+function saveForm(){
+	var o = currentEntity;
+	var module = $(o).data('module');
+	if(!module) {
+		module = '';
+	}
+	var rid = $(o).data('rule');
+	rid = parseInt(rid);
+	if(isNaN(rid)){
+		message('抱歉，没有设置任何当前指向规则！', '', 'error');
+		return false;
+	}
+	var dat = '{';
+	dat += '"module": "' + module + '", "rule": "' + rid + '"';
+	dat += '}';
+	$('#qrcode_rule').val(dat);
+	return true;
+}
+</script>
+	<div class="main" id="qrcode_main">
+		<form id="former" action="" method="post" class="form-horizontal form" onsubmit="return saveForm();">
+		<h4>带参数二维码 <small>设定公众号码带参数二维码的相关功能，这个设置是针对当前公众号的</small></h4>
+		<table class="tb">
+			<tr>
+				<th style="width:120px;">扫描二维码指向规则</th>
+				<td>
+					<input name="setting_btn" type="button" value="设置" class="btn" onclick="setMenuAction();" />
+					<div class="help-block">设置当用户通过维信扫一扫功能扫描二维码时自动回复的规则。</div>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="保存" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+					<input id="qrcode_rule" name="qrcode_rule" type="hidden" />
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	<script type="text/javascript">
+	$(function() {
+		currentEntity=$("#qrcode_main");
+		var o=currentEntity;
+		$(o).data('module', '{$settings['qrc_module']}');
+		$(o).data('rule', '{$settings['qrc_rule']}');
+	});
+	</script>
+{template 'common/footer'}

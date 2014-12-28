@@ -1,0 +1,59 @@
+{if empty($item)}
+	{php $namesuffix = '-new[]';}
+	{php $itemid = '(itemid)';}
+	{php $switch = 'on new_add';}
+{else}
+	{php $namesuffix = '['.$item['id'].']'}
+	{php $itemid = 'music-item-' . $item['id'];}
+	{php $switch = 'off';}
+{/if}
+<div id="show" class="span6 alert alert-info {if empty($item)}hide{/if}">
+	<span class="pull-right">
+		{if !empty($item)}<a href="{php echo create_url('site/module/delete', array('name' => 'music', 'id' => $item[id]))}" onclick="return doDeleteItem('{$itemid}', this.href)" style="margin-right:5px;">删除</a>{else}<a onclick="doDeleteItem('{$itemid}');" href="javascript:;" style="margin-right:5px;">删除</a>{/if}
+		<a style="margin-right:5px;" onclick="doEditItem('{$itemid}');musicHandler.doEditItem('{$itemid}');" id="{$row[id]}" href="javascript:;">编辑</a>
+	</span>
+	<div class="content" id="music_off"><span class="music_button" style="display:inline-block;width:20px;color:#58859b;cursor:pointer;" music_url="{$item['url']}" music_switch="1"><i class="icon-play icon-large"></i></span><span class="music_title" id="title">{$item['title']}</span><span class="jp" id="jp-{$item[id]}"></span></div>
+</div>
+<div id="form" class="alert alert-block alert-new {if !empty($item)}hide{/if}">
+	<a class="close" onclick="$(this).parents('.item').find('#form').hide();$(this).parents('.item').find('#show').show();musicHandler.doEditItem('{$itemid}');">×</a>
+	<h4 class="alert-heading">添加回复内容</h4>
+	<table>
+		<tr>
+			<th>音频标题</th>
+			<td>
+				<input type="text" id="item-title" class="span7" placeholder="" name="music-title{$namesuffix}" value="{$item['title']}">
+			</td>
+		</tr>
+		<tr>
+			<th>音频链接</th>
+			<td>
+				{if !empty($item)}
+				<input type="hidden" name="music-url-old{$namesuffix}" value="{$item['url']}">
+				{/if}
+				<div class="input-append">
+					<input id="item-url" class="span6" type="text" name="music-url{$namesuffix}" value="{$item['url']}" placeholder="">
+					<input type="button" id="music-attach-btn" fieldname="music-attach{$namesuffix}" class="btn" value="<i class='icon-upload-alt'></i>" style="font-size:14px;width:55px;margin-left:-1px;">
+				</div>
+				<span class="help-block">选择上传的音频文件或直接输入URL地址，常用格式：mp3</span>
+			</td>
+		</tr>
+		<tr>
+			<th>高品质链接</th>
+			<td>
+				<input type="text" id="" class="span7" placeholder="" name="music-hqurl{$namesuffix}" value="{$item['hqurl']}">
+				<span class="help-block">没有高品质音乐链接，请留空。高质量音乐链接，WIFI环境优先使用该链接播放音乐</span>
+			</td>
+		</tr>
+		<tr>
+		<th>描述</th>
+			<td>
+				<textarea style="height:80px;" class="span7" cols="70" name="music-description{$namesuffix}">{$item['description']}</textarea>
+				<span class="help-block">描述内容将出现在音乐名称下方，建议控制在20个汉字以内最佳</span>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td><button type="button" onclick="musicHandler.doAdd('{$itemid}')" class="btn btn-primary span2">完成</button></td>
+		</tr>
+	</table>
+</div>

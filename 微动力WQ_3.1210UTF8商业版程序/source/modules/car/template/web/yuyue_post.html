@@ -1,0 +1,405 @@
+{template 'common/header'}
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+ <link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo create_url('site/module', array('do' => 'Yuyue','op'=>'post', 'name' => 'car','weid'=>$weid));}">添加预约</a></li>	
+	<li><a href="{php echo create_url('site/module', array('do' => 'Yuyue','op'=>'list', 'name' => 'car','weid'=>$weid));}">预约管理</a></li>
+	<li ><a href="{php echo create_url('site/module', array('do' => 'Yuyue','op'=>'show', 'name' => 'car','weid'=>$weid));}">预约订单</a></li>
+</ul>
+	<div class="main">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return validate(this);">
+	<h4 >添加微预约信息</h4>
+	<table  class="tb">
+		<tbody>			
+			<tr>
+				<td><label for="">是否开启</label></td>
+				<td>
+					<label for="isshow1" class="radio inline"><input type="radio" name="isshow" value="1" id="isshow1" {if $item['isshow'] == 1}  checked="true" {/if}> 开启</label>&nbsp;&nbsp;&nbsp;
+					<label for="isshow0" class="radio inline"><input type="radio" name="isshow" value="0" id="isshow0"  {if $item['isshow'] == 0}  checked="true" {/if}> 关闭</label>
+					<div class="help-block">开启某个预约后，同类型的预约将被系统自动关闭</div>		
+				</td>
+			</tr>
+			<tr>
+				<td><label for="">预约类型</label></td>
+				<td>
+					<label for="yytype1" class="radio inline"><input type="radio" name="yytype" value="1" id="yytype1" {if $item['yytype'] == 1}  checked="true" {/if}> 预约试驾</label>&nbsp;&nbsp;&nbsp;
+					<label for="yytype2" class="radio inline"><input type="radio" name="yytype" value="2" id="yytype2"  {if $item['yytype'] == 2}  checked="true" {/if}> 预约保养</label>
+					<div class="help-block">每个类型只能有一条预约，多个预约的话，以最新一条为准</div>					
+				</td>
+			</tr>				
+			<tr>
+				<td><label for="">每人可预约次数</label></td>
+				<td>
+					<input type="text" id="" class="span3" placeholder="" name="pertotal" value="{$item['pertotal']}">
+					<div class="help-block"> 0 代表不限制</div>	
+				</td>
+			</tr>				
+			<tr>
+				<td>标题</td>
+				<td>
+					<input type="text" id="" class="span7" placeholder="" name="title" value="{$item['title']}">
+				</td>
+			</tr>
+			<tr>
+				<th>预约说明</th>
+				<td>
+					<textarea style="height:50px;" name="description" class="span7" cols="60">{$item['description']}</textarea>
+					<div class="help-block">用于图文显示的简介</div>
+				</td>
+			</tr>					
+			<tr>
+				<th><label for="">开启时间</label></th>
+				<td>
+					{php echo tpl_form_field_date('starttime', date('Y-m-d',$item['start_time']), true)}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">结束时间</label></th>
+				<td>
+					{php echo tpl_form_field_date('endtime', date('Y-m-d',$item['end_time']), true)}
+				</td>
+			</tr>
+	
+			<tr>
+				<td>预约电话</td>
+				<td>
+					<input type="text" id="" class="span4" placeholder="" name="mobile" value="{$item['mobile']}">
+				</td>
+			</tr>
+			<tr>
+				<td>订单头部图片</td>
+				<td>
+					{php echo tpl_form_field_image('topbanner', $item['topbanner']);}
+				</td>
+			</tr>	
+ 			<tr>
+				<td>预约地址</td>
+				<td>
+					<input type="text" id="" class="span7" placeholder="" name="address" value="{$item['address']}">
+				</td>
+			</tr>	
+			<tr>
+				<td><label for="">详细地址</label></td>
+				<td><div class="input-append"><input type="text" id="address" name="addressmap" value="{$item['address']}"  class="span5" /><button type="button" class="btn" name="submit" value="搜索" onclick="bmap.searchMapByAddress($('#address').val())">搜索</button></div><span class="help-block">可以通过查询地址，快速定位地图位置。</span></td>
+			</tr>
+			<tr>
+				<td><label for="">坐标：</label></td>
+				<td><input type="text" name="location_x" id="lng" value="{$item['location_x']}"  class="span3" /> - <input type="text" id="lat" name="location_y" value="{$item['location_y']}"  class="span3" /></td>
+			</tr>
+		
+			<tr>
+				<td></td>
+				<td><div id="baidumap" style="width:500px; height:300px;"></div></td>
+			</tr>
+ 		</tbody>
+	</table>
+	<h4 class="alert-heading">订单内容设置</h4>	
+	<table id="listTable" class="table table-bordered table-hover dataTable">
+		<thead>
+			<tr>
+				<th style="width:80px">字段类型</td>
+				<th style="width:120px">字段名称</td>
+				<th style="width:600px">初始内容</td>
+				<td>操作</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>单行文字：</td>
+				<td>
+					<input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="联系人" readonly="readonly"></td>
+				<td>
+					<input name="add[order][]" type="text" style="width:600px" disabled="disabled" class="wizard-ignore" value="请输入您的名字" readonly="readonly"></td>
+
+				<td>
+					必填项(*)
+				</td>
+			</tr>
+			<tr>
+				<td>单行文字：</td>
+				<td>
+					<input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="联系电话" readonly="readonly"></td>
+				<td>
+					<input name="add[order][]" type="text"  style="width:600px" disabled="disabled" class="wizard-ignore" value="请输入您的电话" readonly="readonly"></td>
+
+				<td>
+					必填项(*)
+				</td>
+			</tr>
+			<tr>
+				<td>日期选择：</td>
+				<td>
+					<input name=" " type="text" disabled="disabled" class="wizard-ignore" value="预约日期" onchange="$('odid').value='请输入'+this.value;"></td>
+				<td>
+					<input name="add[order][]" type="text" disabled="disabled"  style="width:600px" id="odid" class="wizard-ignore" value="请选择预约日期"></td>
+
+				<td>
+					必填项(*)
+				</td>
+			</tr>
+			<tr>
+				<td width="120">下拉框：</td>
+				<td><input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="品牌" readonly="readonly"></td>
+				<td><input name="keyword" type="text" style="width:600px" disabled="disabled" class="wizard-ignore" value="绑定品牌数据" readonly="readonly"></td>
+				<td>
+					必填项(*)
+				</td>
+			</tr>
+			<tr>
+				<td width="120">下拉框：</td>
+				<td><input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="车系" readonly="readonly"></td>
+				<td><input name="keyword" type="text" style="width:600px" disabled="disabled" class="wizard-ignore" value="绑定车系数据" readonly="readonly"></td>
+				<td>
+					必填项(*)
+				</td>
+			</tr>
+			<tr>
+				<td width="120">下拉框：</td>
+				<td><input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="车型" readonly="readonly"></td>
+				<td><input name="keyword" type="text"style="width:600px" disabled="disabled" class="wizard-ignore" value="绑定车型数据" readonly="readonly"></td>
+				<td>
+					必填项(*)
+				</td>
+			</tr>
+			{loop $ds $field}
+				{if $field['type'] == 'text'}
+			<tr>
+				<td>文本框：</td>
+				<td>
+					<input name="titles[{$field['fid']}]" type="text" value="{$field['title']}" class="wizard-ignore" ></td>
+					<input type="hidden" value="text" name="types[{$field['fid']}]">
+				<td>
+					<input name="values[{$field['fid']}]" type="text" style="width:600px"  value="{$field['value']}" class="wizard-ignore" ></td>
+				<td>
+					<a href="javascript:;" onclick="$(this).parent().parent().remove();">删除</a>
+				</td>
+			</tr>
+				{elseif $field['type'] == 'select'}
+			<tr>
+				<td>下拉框：</td>
+				<td>
+					<input name="titles[{$field['fid']}]" type="text" value="{$field['title']}" class="wizard-ignore"></td>
+					<input type="hidden" value="select" name="types[{$field['fid']}]">
+				<td>
+					<input name="values[{$field['fid']}]" type="text" style="width:600px" class="wizard-ignore" value="{$field['value']}"></td>
+				<td>
+					<a href="javascript:;" onclick="$(this).parent().parent().remove();">删除</a>
+				</td>
+			</tr>
+				
+					
+				{/if}
+			{/loop}
+			<tr id="flag">
+				<td>多行文字：</td>
+				<td>
+					<input name="" type="text" value="备注" readonly></td>
+				<td>
+					<input name="note" type="text" style="width:600px" value="请添加备注" ></td>
+				<td>订单默认项</td>
+			</tr>
+			<tr>
+				<td colspan="3" style="text-align:left">
+					<a href="javascript:addtext();"><i class="icon-plus-sign-alt"></i> 添加文本框</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="javascript:addselect();"><i class="icon-plus-sign-alt"></i> 添加下拉框</a>
+				</td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+	<table>
+		<tr>
+			<td></td>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+	</table>
+ </div>
+ 					
+<script text="text/javascript">
+	function addtext(){
+		$html=
+			'<tr>' +
+			'<td>文本框：</td>'+
+			'<td><input name="titles[]" type="text" class="span3" placeholder="请认真填写名称" /></td>' +
+			'<input name="types[]" type="hidden" value="text"/>' +
+			'<td><input type="text"  name="values[]" style="width:600px"/></td>' +
+			'<td><a href="javascript:;" onclick="$(this).parent().parent().remove();">删除</a></td>'+
+		'</tr>'+
+		'</tr>';
+		$("#flag").before($html);	
+	};
+	function addselect(){
+		$html=
+			'<tr>' +
+			'<td>下拉框：</td>'+
+			'<td><input name="titles[]" type="text" class="span3" placeholder="请认真填写名称" /></td>' +
+			'<input name="types[]" type="hidden" value="select"/>' +
+			'<td><input type="text" name="values[]" style="width:600px" placeholder="每个选项之间以“|”分割"/></td>' +
+			'<td><a href="javascript:;" onclick="$(this).parent().parent().remove();">删除</a></td>'+
+		'</tr>'+
+		'</tr>';
+		$("#flag").before($html);	
+	};
+
+
+
+
+	function validate() {
+		if($.trim($(':text[name="title"]').val()) == '') {
+			message('必须填写预约标题.', '', 'error');
+			return false;
+		}
+		if($.trim($('textarea[name="description"]').val()) == '') {
+			message('请填写预约说明.', '', 'error');
+			return false;
+		}
+		if($.trim($(':text[name="mobile"]').val()) == '') {			
+			message('必须填写预约电话.', '', 'error');
+			return false;			
+		}
+		if($.trim($(':text[name="topbanner"]').val()) == '') {			
+			message('必须上传订单头部图片.', '', 'error');
+			return false;			
+		}
+		if($.trim($(':text[name="address"]').val()) == '') {			
+			message('必须填写预约地址.', '', 'error');
+			return false;			
+		}
+		if($.trim($(':text[name="topbanner"]').val()) == '') {			
+			message('必须上传订单头部图片.', '', 'error');
+			return false;			
+		}
+		
+		var isError = false;
+		$(':text[name^="titles"]').each(function(){
+			if($.trim($(this).val()) == '') {
+				isError = true;
+			}
+		});
+		if(isError) {
+			message('必须要设定每个字段的标题.', '', 'error');
+			return false;
+		}
+		var isError = false;
+		$(':hidden[name^="types"]').each(function(){
+
+			if($(this).val()=='select'){
+				var parent = $(this).parent();
+				if($.trim(parent.find(':text[name^="values"]').val())==''){
+					isError = true;
+				}
+
+			}
+		});
+		if(isError) {
+			message('下拉选择项目必须要设定扩展项,用"||" 隔开.', '', 'error');
+			return false;
+		}
+		return true;
+	}
+</script>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>  
+<script type="text/javascript">
+ var bmap = {
+	'option' : {
+		'lock' : false,
+		'container' : 'baidumap',
+		'infoWindow' : {'width' : 250, 'height' : 100, 'title' : ''},
+		'point' : {'lng' : 116.403851, 'lat' : 39.915177}
+	},
+	'init' : function(option) {
+		var $this = this;
+		$this.option = $.extend({},$this.option,option);
+		$this.option.defaultPoint = new BMap.Point($this.option.point.lng, $this.option.point.lat);
+		$this.bgeo = new BMap.Geocoder();
+		$this.bmap = new BMap.Map($this.option.container);
+		$this.bmap.centerAndZoom($this.option.defaultPoint, 15);
+		$this.bmap.enableScrollWheelZoom();
+		$this.bmap.enableDragging();
+		$this.bmap.enableContinuousZoom();
+		$this.bmap.addControl(new BMap.NavigationControl());
+		$this.bmap.addControl(new BMap.OverviewMapControl());
+		//添加标注
+		$this.marker = new BMap.Marker($this.option.defaultPoint);
+		$this.marker.setLabel(new BMap.Label('请您移动此标记，选择您的坐标！', {'offset':new BMap.Size(10,-20)}));
+		$this.marker.enableDragging();
+		$this.bmap.addOverlay($this.marker);
+		//$this.marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+		$this.showPointValue($this.marker.getPosition());
+		//拖动地图事件
+		$this.bmap.addEventListener("dragging", function() {
+			$this.setMarkerCenter();
+			$this.option.lock = false;
+		});
+		//缩入地图事件
+		$this.bmap.addEventListener("zoomend", function() {
+			$this.setMarkerCenter();
+			$this.option.lock = false;
+		});
+		//拖动标记事件
+		$this.marker.addEventListener("dragend", function (e) {
+			$this.showPointValue();
+			$this.showAddress();
+			$this.bmap.panTo(new BMap.Point(e.point.lng, e.point.lat));
+			$this.option.lock = false;
+			$this.marker.setAnimation(null);
+		});
+	},
+	'searchMapByAddress' : function(address) {
+		var $this = this;
+		 $this.bgeo.getPoint(address, function (point) {
+			if (point) {
+				$this.showPointValue();
+				$this.showAddress();
+				$this.bmap.panTo(point);
+				$this.setMarkerCenter();
+			}
+		});
+	},
+	'searchMapByPCD' : function(address) {
+		var $this = this;
+		$this.option.lock = true;
+		$this.searchMapByAddress($('#sel-provance').val()+$('#sel-city').val()+$('#sel-area').val());
+	},
+	'setMarkerCenter' : function() {
+		var $this = this;
+		var center = $this.bmap.getCenter();
+		$this.marker.setPosition(new BMap.Point(center.lng, center.lat));
+		$this.showPointValue();
+		$this.showAddress();
+	},
+	'showPointValue' : function() {
+		var $this = this;
+		var point = $this.marker.getPosition();
+		$('#lng').val(point.lng);
+		$('#lat').val(point.lat);
+	},
+	'showAddress' : function() {
+		var $this = this;
+		var point = $this.marker.getPosition();
+		$this.bgeo.getLocation(point, function (s) {
+			if (s) {
+				$('#address').val(s.address);
+				if (!$this.option.lock) {
+					cascdeInit(s.addressComponents.province,s.addressComponents.city,s.addressComponents.district);
+				}
+			}
+		});
+	}
+};
+$(function(){
+	var option = {};
+	{if !empty($item['location_x']) && !empty($item['location_y'])}
+	option = {'point' : {'lng' : '{$item['location_x']}', 'lat' : '{$item['location_y']}'}}
+	{/if}
+	bmap.init(option);
+});
+</script>
+{template 'common/footer'}
+

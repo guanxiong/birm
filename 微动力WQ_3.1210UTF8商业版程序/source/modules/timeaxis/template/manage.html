@@ -1,0 +1,238 @@
+{template 'common/header'}
+<script type="text/javascript" src="./resource/script/jquery-ui-1.10.3.min.js"></script>
+<style>
+#showframe {width: 400px; position: fixed; margin-left: 740px;}
+#showfram h4 {margin: 15px;}
+#shoppanel {width: 400px; height: 400px; padding-top: 15px; position: fixed;  z-index: 11; overflow-y:auto ; overflow-x:auto ; border: none;}
+#addbtn {position:absolute; margin: 5px;}
+</style>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo create_url('site/module', array('do' => 'manage', 'name' => 'timeaxis'));}">活动管理</a></li>
+	<li><a href="{php echo create_url('site/module', array('do' => 'list', 'name' => 'timeaxis'));}">活动列表</a></li>
+</ul>
+<div class="main">
+<form class="form-horizontal form" style="width:719px;float:left" method="post" enctype="multipart/form-data">
+	<h4>活动设置</h4>
+	<div class="alert alert-block alert-new">
+		<table class="table table-hover" id="cfgbox">
+			<tbody>
+				{if $timeinf['url'] != ''}
+				<tr>
+					<td>访问地址</td>
+					<td><input type="text" disabled="disabled" value="{$timeinf['url']}"></a>
+					<span class="help-block">
+						<p style="color:red">三次连击全部选中，复制后即可粘贴到您需要使用到的地方</p>
+					</span>
+					</td>
+				</tr>
+				{/if}
+				<tr>
+					<td>活动名称</td>
+					<td><input name="title" type="text" placeholder="活动名称" value="{$timeinf['title']}"/></td>
+				</tr>
+				<tr>
+					<td>页面背景</td>
+					<td>
+					<div>
+						{php echo tpl_form_field_color('bgcol',$timeinf['bgcol']);}
+					</div>
+					<div style="display:block; margin-top:5px;">
+						{php echo tpl_form_field_image('bgimg', $timeinf['bgimg'],'',false);}
+						<span class="help-block">
+							<p style="color:red">颜色为段落文字的背景色；图片为整个页面的背景图片。</p>
+						</span>
+					</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="alert alert-block alert-new">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th style="width:30px;"></th>
+					<th style="width:40px;">类型</th>
+					<th style="width:30px;">方向</th>
+					<th style="width:50px;">标题</th>
+					<th style="width:150px;">内容</th>
+					<th style="width:60px;">扩展</th>
+				</tr>
+			</thead>
+			<tbody id="re-items">
+			{loop $timeinf['items'] $k $item}
+				<tr id="{$k}">
+					<td>
+						<a href="javascript:;" class="icon-move" title="拖动调整此条目显示顺序" style="margin-top:10px;"></a>&nbsp;&nbsp;
+						<a href="javascript:;" onclick="deleteItem(this)" class="icon-remove-sign" style="margin-top:10px;" title="删除此条目"></a>
+					</td>
+					<td>
+					{if $item['type'] == 0}
+						标题
+						<input class="type" type="hidden" name="items[type][]" value="0"/>
+					{else if $item['type'] == 1}
+						段落
+						<input class="type" type="hidden" name="items[type][]" value="1"/>
+					{else}
+						图片
+						<input class="type" type="hidden" name="items[type][]" value="2"/>
+					{/if}
+					</td>
+					<td>
+						<input type="radio" name="direct{$k}" value="l" data-tg="{$k}" onchange="recordDec(this)"
+						{if $item['direct'] == 'l'} checked{/if}
+						>左<br/>
+						<input type="radio" name="direct{$k}" value="r" data-tg="{$k}" onchange="recordDec(this)"
+						{if $item['direct'] == 'r'} checked{/if}
+						>右
+						<input class="direct" type="hidden" name="items[direct][]" 
+						value="{$item['direct']}"/>
+					</td>
+					<td>
+						<input class="span2 title" name="items[title][]" type="text" placeholder="标题内容(可不填)" data-tg="{$k}" value="{$item['title']}">
+					</td>
+					<td>
+					{if $item['type'] == 2}
+						<div style="display:block; margin-top:5px;" class="input-append">
+							<input class="span2 detail" type="text" name="items[detail][]" id="upload-image-url-{$k}" autocomplete="off" value="{$item['detail']}">
+							<button class="btn upimg" type="button" id="upload-image-{$k}" data-tg="{$k}" onclick="upimg('{$k}')">选择图片</button>
+						</div>
+					{else}
+						<textarea class="span2 detail" name="items[detail][]" rows="2" data-tg="{$k}">{$item['detail']}</textarea>
+					{/if}
+					</td>
+					<td></td>
+				</tr>
+			{/loop}
+			</tbody>
+		</table>
+	</div>
+	<div class="alert alert-block alert-new" >
+		<label for="typebox" style="display:inline-block">添加项目</label>
+		<select name="type" id="typebox">
+			<option value="title">标题</option>
+			<option value="para">段落</option>
+			<option value="pic">图片</option>
+		</select>
+		<a id="addbtn" href="javascript:;" onclick="addItem();">添加填写项目 <i class="icon-plus-sign" title="添加填写项目"></i></a>
+	</div>
+	<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+	<a type="button" class="btn btn-primary span3" name="preview" href="javascript:preview()">预览</a>
+	<input type="hidden" name="token" value="{$_W['token']}" />
+</form>
+<link rel="stylesheet" href="./source/modules/timeaxis/template/css/axis.css">
+<div id="showframe">
+	<h4>预览效果</h4>
+	<div id="shoppanel">
+	<div class="wrap" style="width: 320px;height:auto;">
+	    <div class="shareListBox" style="overflow:auto;">
+	    </div>
+	</div>
+	</div>
+</div>
+</div>
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<script type="text/javascript">
+var itemnum = {php echo count($timeinf['items'])-1;};
+$(document).ready(function(){
+	$('#re-items').sortable({handle: '.icon-move'});
+	if(itemnum != 0){
+		preview();
+	}
+});
+
+function addItem(){
+	var tp = $('#typebox').val();
+	var html = '';
+	itemnum++;
+	if('title' == tp){
+		html = '<tr id='+itemnum+'><td><a href="javascript:;" class="icon-move" title="拖动调整此条目显示顺序" style="margin-top:10px;"></a>&nbsp;&nbsp;<a href="javascript:;" onclick="deleteItem(this)" class="icon-remove-sign" style="margin-top:10px;" title="删除此条目"></a></td><td>标题<input class="type" type="hidden" name="items[type][]" value="0"/></td><td><input type="radio" name="direct'+itemnum+'" value="l" data-tg='+itemnum+' onchange="recordDec(this)">左<br/><input type="radio" name="direct'+itemnum+'" value="r" data-tg='+itemnum+' onchange="recordDec(this)">右<input class="direct" type="hidden" name="items[direct][]" value="l"/></td><td><input class="span2 title" name="items[title][]" type="text" placeholder="标题内容(可不填)" data-tg='+itemnum+'></td><td><textarea class="span2 detail" name="items[detail][]" rows="2" data-tg='+itemnum+'></textarea></td><td></td></tr>';
+	} else if('para' == tp) {
+		html = '<tr id='+itemnum+'><td><a href="javascript:;" class="icon-move" title="拖动调整此条目显示顺序" style="margin-top:10px;"></a>&nbsp;&nbsp;<a href="javascript:;" onclick="deleteItem(this)" class="icon-remove-sign" style="margin-top:10px;" title="删除此条目"></a></td><td>段落<input class="type" type="hidden" name="items[type][]" value="1"/></td><td><input type="radio" name="direct'+itemnum+'" value="l" data-tg='+itemnum+' onchange="recordDec(this)">左<br/><input type="radio" name="direct'+itemnum+'" value="r" data-tg='+itemnum+' onchange="recordDec(this)">右<input class="direct" type="hidden" name="items[direct][]" value="l"/></td><td><input class="span2 title" name="items[title][]" type="text" placeholder="标题内容(可不填)" data-tg='+itemnum+'></td><td><textarea class="span2 detail" name="items[detail][]" id="" rows="2" data-tg='+itemnum+'></textarea></td><td></td></tr>';
+	} else if('pic' == tp) {
+		html = '<tr id='+itemnum+'><td><a href="javascript:;" class="icon-move" title="拖动调整此条目显示顺序" style="margin-top:10px;"></a>&nbsp;&nbsp;<a href="javascript:;" onclick="deleteItem(this)" class="icon-remove-sign" style="margin-top:10px;" title="删除此条目"></a></td><td>图片<input class="type" type="hidden" name="items[type][]" value="2"/></td><td><input type="radio" name="direct'+itemnum+'" value="l" data-tg='+itemnum+' onchange="recordDec(this)">左<br/><input type="radio"  name="direct'+itemnum+'" value="r" data-tg='+itemnum+' onchange="recordDec(this)">右<input class="direct" type="hidden" name="items[direct][]" value="l"/></td><td><input class="span2 title" name="items[title][]" type="text" placeholder="标题内容(可不填)" data-tg='+itemnum+'></td><td><div style="display:block; margin-top:5px;" class="input-append"><input class="span2 detail" type="text" value name="items[detail][]" id="upload-image-url-'+itemnum+'" autocomplete="off"><button class="btn upimg" type="button" id="upload-image-'+itemnum+'" data-tg="'+itemnum+'" onclick="upimg('+itemnum+')">选择图片</button></div></td><td></td></tr>';
+	}
+	$('#re-items').append(html);
+}
+function deleteItem(o) {
+	$(o).parent().parent().remove();
+}
+
+function recordDec(obj){
+	var v = $(obj).val();
+	$(obj).parent().find(':hidden[name="items[direct][]"]').val(v);
+}
+var editor = KindEditor.editor({
+	allowFileManager : true,
+	uploadJson : "./index.php?act=attachment&do=upload",
+	fileManagerJson : "./index.php?act=attachment&do=manager",
+	afterUpload : function(url, data) {
+	}
+});
+function upimg(i){
+	editor.loadPlugin("image", function() {
+		editor.plugin.imageDialog({
+			tabIndex : 1,
+			imageUrl : $("#upload-image-url-"+i).val(),
+			clickFn : function(url) {
+				editor.hideDialog();
+				var val = url;
+				if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+					var filename = /images(.*)/.exec(url);
+					if(filename && filename[0]) {
+						val = filename[0];
+					}
+				}
+				$("#upload-image-url-"+i).val(val);
+			}
+		});
+	});
+}
+$("button.upimg").click(function() {
+	var tag = $(this).attr('data-tg');
+	editor.loadPlugin("image", function() {
+		editor.plugin.imageDialog({
+			tabIndex : 1,
+			imageUrl : $("#upload-image-url-"+tag).val(),
+			clickFn : function(url) {
+				editor.hideDialog();
+				var val = url;
+				if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+					var filename = /images(.*)/.exec(url);
+					if(filename && filename[0]) {
+						val = filename[0];
+					}
+				}
+				$("#upload-image-url-"+tag).val(val);
+			}
+		});
+	});
+});
+
+function preview(){
+	var html = new Array();
+	html['l'] = '<ul class="share-l" id="shareLeftId">';
+	html['r'] = '<ul class="share-r" id="shareRightId">';
+	var bgcol = $('input[name=bgcol]').val();
+	$('#re-items').find('tr').each(function(){
+		var di = $(this).find('.direct').val();
+		var tp = $(this).find('.type').val();
+		var tt = $(this).find('.title').val();
+		var de = $(this).find('.detail').val();
+		if('0' == tp){
+			html[di] += '<li><div class="title" style="background-color:'+bgcol+'"><h3>'+de+'</h3><h6>'+tt+'</h6></div><div class="photo"></div></li>'
+		} else if('1' == tp){
+			html[di] += '<li><div class="para" style="background-color:'+bgcol+'"><p>&nbsp;&nbsp;&nbsp;&nbsp;'+de+'</p><h6>'+tt+'</h6></div><div class="photo"></div>'
+		} else if('2' == tp){
+			html[di] += '<li><div class="pic"><img src="./resource/attachment/'+de+'"></div><span class="date">'+tt+'</span><div class="photo"></div></li>'
+		}
+	});
+	html['l'] += '</ul>';
+	html['r'] += '</ul>';
+	$('div.shareListBox').html(html['l']+html['r']+'<div class="clear"></div>');
+}
+</script>
+{template 'common/footer'}

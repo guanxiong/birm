@@ -1,0 +1,64 @@
+{template 'common/header'}
+<div class="main">
+
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+
+	<input type="hidden" name="id" value="{$item['id']}">
+	
+	<h4>订单处理</h4>
+	
+	<table class="tb">
+	
+		<tr>
+		
+			<th>操作</th>
+			
+			<td>
+			
+				<select name="status" class="span2">
+				
+					<option value="0" {if $item['status'] == 0 } selected="selected"{/if}>忽略</option>	
+					
+					<option value="1" {if $item['status'] == 1 } selected="selected"{/if}>接受</option>	
+					
+					<option value="2" {if $item['status'] == 2 } selected="selected"{/if}>拒绝</option>	
+					
+				</select>
+			
+			</td>
+		
+		</tr>
+		
+		<tr>
+		
+			<th>备注</th>
+			
+			<td>
+			
+				<textarea style="height:100px;" class="span7 richtext-clone" name="msg" cols="70" id="reply-add-text">{$item['msg']}</textarea>
+			
+			</td>
+			
+		</tr>
+		
+		<tr>
+			
+			<th></th>
+			
+			<td>
+			
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			
+			</td>
+		
+		</tr>
+	
+	</table>
+	
+</form>
+
+<script type="text/javascript" src="./resource/script/cascade.js"></script>
+
+{template 'common/footer'}

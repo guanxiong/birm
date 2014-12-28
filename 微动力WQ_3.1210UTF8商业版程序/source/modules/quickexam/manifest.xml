@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[在线测试]]></name>
+		<identifie><![CDATA[quickexam]]></identifie>
+		<version><![CDATA[0.2]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[在线测试]]></ability>
+		<description><![CDATA[在线测试]]></description>
+		<author><![CDATA[晓楚]]></author>
+		<url><![CDATA[blog.csdn.net/maray]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+        <cover>
+			<entry title="在线测试设置" do="exam" />
+        </cover>
+		<menu>
+			<entry title="题库" do="choice" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE IF NOT EXISTS `ims_exam_choice` (
+  `choice_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(1024) NOT NULL,
+  `body` varchar(65530) NOT NULL,
+  `answer` varchar(1024) NOT NULL,
+  `explain` varchar(65530),
+  PRIMARY KEY (`choice_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_exam_paper` (
+  `exam_id` int(10) unsigned NOT NULL,
+  `choice_id` int(10) unsigned NOT NULL,
+  `weid` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`exam_id`, `choice_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_exam_desc` (
+  `exam_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(256) NOT NULL,
+  `weid` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`exam_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+	]]></install>
+	<uninstall><![CDATA[
+		
+		DROP TABLE IF EXISTS `ims_exam_paper`;
+		DROP TABLE IF EXISTS `ims_exam_desc`;
+		DROP TABLE IF EXISTS `ims_exam_choice`;
+		
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[微汽车]]></name>
+		<identifie><![CDATA[we7car]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[微汽车]]></ability>
+		<description><![CDATA[微汽车]]></description>
+		<author><![CDATA[微动力 & WeEngine Team]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+  			<entry title="汽车车型入口设置" do="series" />
+ 			<entry title="车主关怀入口设置" do="guanhuai" />
+ 			<entry title="意见回馈入口设置" do="message" />
+			<entry title="实用工具入口设置" do="tool" />
+		</cover>
+		<menu>
+			<entry title="汽车品牌管理" do="brand" direct="false" />
+			<entry title="汽车车系管理" do="series" direct="false" />
+			<entry title="汽车车型管理" do="type" direct="false" />
+			<entry title="预约试驾设置" do="yuyue" direct="false" />
+			<entry title="车主关怀设置" do="guanhuai" direct="false" />
+			<entry title="销售客服管理" do="kefu" direct="false" />
+			<entry title="意见回馈设置" do="message" direct="false" />
+			<entry title="实用工具设置" do="tool" direct="false" />
+		</menu>
+		<home>
+			<entry title="汽车车型" do="series" />
+			<entry title="预约试驾" do="yuyue" />
+			<entry title="车主关怀" do="guanhuai" />
+			<entry title="销售客服" do="kefu" />
+			<entry title="意见回馈" do="message" />
+			<entry title="实用工具" do="tool" />
+		</home>
+	</bindings>
+	<install><![CDATA[
+	CREATE TABLE IF NOT EXISTS `ims_weicar_brand` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `listorder` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `officialweb` varchar(100) NOT NULL,
+  `logo` varchar(200) NOT NULL,
+  `description` text NOT NULL,
+  `createtime` int(10) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE IF NOT EXISTS `ims_weicar_category` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) NOT NULL DEFAULT '0',
+  `title` varchar(50) NOT NULL COMMENT '分类名称',
+  `listorder` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否开启',
+  `icon` varchar(100) NOT NULL DEFAULT '' COMMENT '分类图标',
+  `type` tinyint(4) NOT NULL,
+  `param` int(11) NOT NULL,
+  `jumpurl` varchar(500) NOT NULL,
+  `description` varchar(100) NOT NULL DEFAULT '' COMMENT '分类描述',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE IF NOT EXISTS `ims_weicar_flash` (
+  `rid` int(11) NOT NULL,
+  `thumbs` text NOT NULL,
+  UNIQUE KEY `rid` (`rid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE IF NOT EXISTS `ims_weicar_guan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `car_model` varchar(50) NOT NULL,
+  `car_series` varchar(50) NOT NULL,
+  `car_type` varchar(50) NOT NULL,
+  `car_no` varchar(50) NOT NULL,
+  `car_userName` varchar(50) NOT NULL,
+  `car_startTime` varchar(50) NOT NULL,
+  `car_photo` varchar(100) NOT NULL,
+  `car_insurance_lastDate` varchar(20) NOT NULL,
+  `car_insurance_lastCost` int(11) NOT NULL,
+  `car_care_mileage` int(11) NOT NULL,
+  `car_care_lastDate` varchar(20) NOT NULL,
+  `car_care_lastCost` varchar(20) NOT NULL,
+  `createtime` int(10) NOT NULL,
+  `isshow` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE IF NOT EXISTS `ims_weicar_kefu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `listorder` int(11) NOT NULL,
+  `kefuname` varchar(50) NOT NULL,
+  `headthumb` varchar(200) NOT NULL,
+  `kefutel` varchar(20) NOT NULL,
+  `pre_sales` tinyint(2) NOT NULL,
+  `aft_sales` tinyint(2) NOT NULL,
+  `description` text NOT NULL,
+  `createtime` int(10) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE IF NOT EXISTS `ims_weicar_message_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `nickname` varchar(30) DEFAULT NULL,
+  `info` varchar(200) DEFAULT NULL,
+  `fid` int(11) DEFAULT '0',
+  `isshow` tinyint(1) DEFAULT '0',
+  `create_time` int(11) DEFAULT NULL,
+  `from_user` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_weicar_message_set` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `thumb` varchar(200) NOT NULL,
+  `status` int(1) NOT NULL,
+  `isshow` tinyint(1) NOT NULL,
+  `create_time` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_weicar_relate` (
+  `rid` int(11) NOT NULL,
+  `aboutid` int(11) DEFAULT NULL,
+  `xinshangid` int(11) DEFAULT NULL,
+  `zixunid` int(11) DEFAULT NULL,
+  `youhuiid` int(11) DEFAULT NULL,
+  `ershouid` int(11) DEFAULT NULL,
+  `xiangceid` int(11) NOT NULL,
+  `newsid` int(11) NOT NULL,
+  `yuyueid` int(11) NOT NULL,
+  `cardid` int(11) NOT NULL,
+  `hometel` varchar(30) NOT NULL,
+  `logo` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`rid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE IF NOT EXISTS `ims_weicar_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `thumb` varchar(60) NOT NULL,
+  `url` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE IF NOT EXISTS `ims_weicar_series` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `bid` int(11) NOT NULL,
+  `listorder` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `subtitle` varchar(20) NOT NULL,
+  `thumb` varchar(200) NOT NULL,
+  `description` text NOT NULL,
+  `createtime` int(10) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE IF NOT EXISTS `ims_weicar_set` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `wecar_logo` varchar(200) NOT NULL,
+  `guanhuai_thumb` varchar(200) NOT NULL,
+  `status` int(1) NOT NULL,
+  `isshow` tinyint(1) NOT NULL,
+  `tools` varchar(50) NOT NULL,
+  `create_time` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_weicar_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `listorder` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `weid` int(11) NOT NULL,
+  `bid` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  `pyear` varchar(10) NOT NULL,
+  `price1` varchar(50) NOT NULL,
+  `price2` varchar(50) NOT NULL,
+  `thumb` varchar(100) NOT NULL,
+  `thumbArr` varchar(500) NOT NULL,
+  `output` varchar(10) NOT NULL,
+  `gearnum` varchar(10) NOT NULL,
+  `gear_box` varchar(30) NOT NULL,
+  `xiangceid` int(11) NOT NULL,
+  `createtime` int(10) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE IF NOT EXISTS `ims_weicar_yuyue_list` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `yytype` tinyint(11) NOT NULL,
+  `from_user` varchar(50) NOT NULL DEFAULT '',
+  `contact` varchar(50) NOT NULL,
+  `dateline` varchar(50) NOT NULL,
+  `timepart` varchar(50) NOT NULL,
+  `remark` varchar(50) NOT NULL,
+  `contacttel` varchar(50) NOT NULL,
+  `fieldsigle` varchar(500) NOT NULL,
+  `fielddownload` varchar(500) NOT NULL,
+  `ip` varchar(50) NOT NULL,
+  `createtime` int(10) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE IF NOT EXISTS `ims_weicar_yuyue_set` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(50) NOT NULL,
+  `yytype` tinyint(2) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `thumb` varchar(60) NOT NULL,
+  `start_time` int(10) unsigned NOT NULL,
+  `end_time` int(10) unsigned NOT NULL,
+  `address` varchar(200) NOT NULL,
+  `mobile` varchar(30) NOT NULL,
+  `location_x` float NOT NULL,
+  `location_y` float NOT NULL,
+  `topbanner` varchar(150) DEFAULT NULL,
+  `typename1` varchar(20) DEFAULT NULL,
+  `typename2` varchar(20) DEFAULT NULL,
+  `typename3` varchar(20) DEFAULT NULL,
+  `name_show` tinyint(4) DEFAULT NULL,
+  `tel_show` tinyint(4) DEFAULT NULL,
+  `date_show` tinyint(4) DEFAULT NULL,
+  `time_show` tinyint(4) DEFAULT NULL,
+  `trtxt` text NOT NULL,
+  `strtxt` text NOT NULL,
+  `txt1` varchar(20) DEFAULT NULL,
+  `txt2` varchar(20) DEFAULT NULL,
+  `txt3` varchar(20) DEFAULT NULL,
+  `txt4` varchar(20) DEFAULT NULL,
+  `txt5` varchar(20) DEFAULT NULL,
+  `txt6` varchar(20) NOT NULL,
+  `txt7` varchar(20) NOT NULL,
+  `txt8` varchar(20) NOT NULL,
+  `txt9` varchar(20) NOT NULL,
+  `value1` varchar(50) DEFAULT NULL,
+  `value2` varchar(50) DEFAULT NULL,
+  `value3` varchar(50) DEFAULT NULL,
+  `value4` varchar(50) DEFAULT NULL,
+  `value5` varchar(50) DEFAULT NULL,
+  `value6` varchar(50) NOT NULL,
+  `value7` varchar(50) NOT NULL,
+  `value8` varchar(50) NOT NULL,
+  `value9` varchar(50) NOT NULL,
+  `select1` varchar(20) DEFAULT NULL,
+  `select2` varchar(20) DEFAULT NULL,
+  `select3` varchar(20) DEFAULT NULL,
+  `select4` varchar(20) DEFAULT NULL,
+  `select5` varchar(20) DEFAULT NULL,
+  `svalue1` varchar(200) DEFAULT NULL,
+  `svalue2` varchar(200) DEFAULT NULL,
+  `svalue3` varchar(200) DEFAULT NULL,
+  `svalue4` varchar(200) DEFAULT NULL,
+  `svalue5` varchar(200) DEFAULT NULL,
+  `datename` varchar(20) DEFAULT NULL,
+  `copyright` varchar(20) NOT NULL,
+  `isshow` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `shareurl` varchar(300) NOT NULL COMMENT '分享地址',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

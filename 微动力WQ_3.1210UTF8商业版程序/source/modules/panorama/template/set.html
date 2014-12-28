@@ -1,0 +1,246 @@
+{template 'common/header'}
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<!-- 
+<link rel="stylesheet" href="./source/modules/panorama/style/default.css" />
+-->
+<link rel="stylesheet" href="./source/modules/panorama/style/prettify.css" />
+<link rel="stylesheet" href="./source/modules/panorama/style/style.css" />
+
+<script type="text/javascript">
+KindEditor.ready(function(K) {
+var editor = K.editor({
+  allowFileManager : true,
+  uploadJson : "./index.php?act=attachment&do=upload",
+  fileManagerJson : "./index.php?act=attachment&do=manager",
+  });
+  $(".up .a_upload").click(function() {
+    var name = $(this).attr("id");
+     // alert(name);
+     if(name == 'frontpic'){
+    editor.loadPlugin("image", function() {
+    editor.plugin.imageDialog({
+      imageUrl : $(".pic #frontpic").val(),
+      clickFn : function(url) {
+        editor.hideDialog();
+          html='<img src="'+url+'" style="width:145px;">';
+          $("#front_picsrc").html(html);
+          $(".pic #frontpic").val(url);
+      }
+    });
+  });
+  }
+
+   if(name == 'rightpic'){
+    editor.loadPlugin("image", function() {
+    editor.plugin.imageDialog({
+      imageUrl : $(".pic #rightpic").val(),
+      clickFn : function(url) {
+        editor.hideDialog();
+          html='<img src="'+url+'" style="width:145px;">';
+          $("#right_picsrc").html(html);
+          $(".pic #rightpic").val(url);
+      }
+    });
+  });
+  }
+
+  if(name == 'backpic'){
+    editor.loadPlugin("image", function() {
+    editor.plugin.imageDialog({
+      imageUrl : $(".pic #backpic").val(),
+      clickFn : function(url) {
+        editor.hideDialog();
+          html='<img src="'+url+'" style="width:145px;">';
+          $("#back_picsrc").html(html);
+          $(".pic #backpic").val(url);
+      }
+    });
+  });
+  }
+
+  if(name == 'leftpic'){
+    editor.loadPlugin("image", function() {
+    editor.plugin.imageDialog({
+      imageUrl : $(".pic #leftpic").val(),
+      clickFn : function(url) {
+        editor.hideDialog();
+          html='<img src="'+url+'" style="width:145px;">';
+          $("#left_picsrc").html(html);
+          $(".pic #leftpic").val(url);
+      }
+    });
+  });
+  }
+
+  if(name == 'toppic'){
+    editor.loadPlugin("image", function() {
+    editor.plugin.imageDialog({
+      imageUrl : $(".pic #toppic").val(),
+      clickFn : function(url) {
+        editor.hideDialog();
+          html='<img src="'+url+'" style="width:145px;">';
+          $("#top_picsrc").html(html);
+          $(".pic #toppic").val(url);
+      }
+    });
+  });
+  }
+
+  if(name == 'bottompic'){
+    editor.loadPlugin("image", function() {
+    editor.plugin.imageDialog({
+      imageUrl : $(".pic #bottompic").val(),
+      clickFn : function(url) {
+        editor.hideDialog();
+          html='<img src="'+url+'" style="width:145px;">';
+          $("#bottom_picsrc").html(html);
+          $(".pic #bottompic").val(url);
+      }
+    });
+  });
+  }
+
+
+
+
+});
+});
+</script>
+
+<div class="content">
+  <div class="cLineB">
+    <h4>360°全景设置</h4>
+    <a href="{php echo create_url('site/module/panoramaset',array('name'=>
+      'panorama'))}" class="right  btnGreen" style="margin-top:-27px">返回
+    </a>
+  </div>
+  <form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+
+    <!-- <if condition="$isUpdate eq 1">
+    <input type="hidden" name="id" value="" />
+  </if>
+  -->
+  <!-- <input type="hidden" name="discount" id="discount" value="" />
+  -->
+  <div class="msgWrap bgfc">
+    <table class="userinfoArea" border="0" cellspacing="0" cellpadding="0" width="100%">
+      <!-- <tbody>
+      -->
+      <tr>
+        <td align="right">
+          <label for="title">名称：</label>
+        </td>
+        <td>
+          <input type="text"  name='title' value="{$set['title']}" style="width:420px;"></td>
+      </tr>
+      <tr>
+        <td align="right">
+          <label for="title">关键词：</label>
+        </td>
+        <td>
+          <input type="text"  value="{$set['keyword']}" name="keyword" style="width:420px;"></td>
+      </tr>
+      <tr>
+        <td align="right">
+          <label for="title">顺序数字：</label>
+        </td>
+        <td>
+          <input type="text"  value="{$set['taxis']}" name="taxis" style="width:420px;">由小到大排列</td>
+      </tr>
+      <tr>
+        <td align="right">&nbsp;</td>
+        <td>
+          <table border="0" cellspacing="0" cellpadding="0" class="quanjing">
+            <tbody>
+              <tr>
+                <td align="center">前</td>
+                <td align="center">右</td>
+                <td align="center">后</td>
+                <td align="center">左</td>
+                <td align="center">顶部</td>
+                <td align="center">底部</td>
+              </tr>
+              <tr class='picsrc'>
+                <td align="center" style="border:2px solid white;" id='front_picsrc'>
+                  <img src="{$set['frontpic']}" id="frontpic_src" style="width:145px;"></td>
+                <td align="center" style="border:2px solid white;" id='right_picsrc'>
+                  <img src="{$set['rightpic']}" id="rightpic_src" style="width:145px;"></td>
+                <td align="center" style="border:2px solid white;"  id='back_picsrc'>
+                  <img src="{$set['backpic']}" id="backpic_src" style="width:145px;"></td>
+                <td align="center" style="border:2px solid white;" id='left_picsrc'>
+                  <img src="{$set['leftpic']}" id="leftpic_src" style="width:145px;"></td>
+                <td align="center" style="border:2px solid white;" id='top_picsrc'>
+                  <img src="{$set['toppic']}" id="toppic_src" style="width:145px;"></td>
+                <td align="center" style="border:2px solid white;" id='bottom_picsrc'>
+                  <img src="{$set['bottompic']}" id="bottompic_src" style="width:145px;"></td>
+              </tr>
+              <tr class='pic'>
+                <td>
+                  <input type="text" class="px" id="frontpic" value="{$set['frontpic']}" name="frontpic" style="width:135px;"></td>
+                <td>
+                  <input type="text" class="px" id="rightpic" value="{$set['rightpic']}" name="rightpic" style="width:135px;"></td>
+                <td>
+                  <input type="text" class="px" id="backpic" value="{$set['backpic']}" name="backpic" style="width:135px;"></td>
+                <td>
+                  <input type="text" class="px" id="leftpic" value="{$set['leftpic']}" name="leftpic" style="width:135px;"></td>
+                <td>
+                  <input type="text" class="px" id="toppic" value="{$set['toppic']}" name="toppic" style="width:135px;"></td>
+                <td>
+                  <input type="text" class="px" id="bottompic" value="{$set['bottompic']}" name="bottompic" style="width:135px;"></td>
+              </tr>
+              <tr class='up'>
+                <td align="center">
+                  <a href="###"  class="a_upload" id="frontpic" >上传</a>
+                  <a href="###" onclick="viewImg('frontpic')">预览</a>
+                </td>
+                <td align="center">
+                  <a href="###"  class="a_upload"  id="rightpic">上传</a>
+                  <a href="###" onclick="viewImg('rightpic')">预览</a>
+                </td>
+                <td align="center">
+                  <a href="###"  class="a_upload" id="backpic" >上传</a>
+                  <a href="###" onclick="viewImg('backpic')">预览</a>
+                </td>
+                <td align="center">
+                  <a href="###"  class="a_upload" id="leftpic">上传</a>
+                  <a href="###" onclick="viewImg('leftpic')">预览</a>
+                </td>
+                <td align="center">
+                  <a href="###"  class="a_upload" id="toppic">上传</a>
+                  <a href="###" onclick="viewImg('toppic')">预览</a>
+                </td>
+                <td align="center">
+                  <a href="###"  class="a_upload" id="bottompic">上传</a>
+                  <a href="###" onclick="viewImg('bottompic')">预览</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="right" valign="top">
+          <label for="catepic">描述信息：</label>
+        </td>
+        <td>
+          <textarea name="intro"  style="width:420px; height:150px;text-align:left;">{$set['intro']}</textarea>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="3">
+          <button  type="submit" name="button" class="btnGreen">保存</button>
+          <!--  <input type='submit' value='保存' class="btnGreen" />
+          -->
+          <a href="{php echo create_url('site/module/panoramaset',array('name'=>'panorama'))}" class="btnGray vm">取消</a>
+        </td>
+      </tr>
+  </table>
+</div>
+<input type="hidden" name="token" value="{$_W['token']}" />
+</form>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[楼盘户型管理]]></name>
+		<identifie><![CDATA[lxybuilding]]></identifie>
+		<version><![CDATA[0.5]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[楼盘户型管理]]></ability>
+		<description><![CDATA[供房产公司维护楼盘相关信息，包括户型楼盘的展示]]></description>
+		<author><![CDATA[大路货]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="楼盘管理" do="Post" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+	CREATE TABLE `ims_lxy_building_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+  `title` varchar(50) NOT NULL COMMENT '规则标题',
+  `description` varchar(255) NOT NULL COMMENT '描述',
+  `picture` varchar(100) NOT NULL COMMENT '图片',
+  `buildurl` varchar(255) NOT NULL COMMENT '楼盘显示url',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '开关状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+	
+CREATE TABLE `ims_lxy_building_info_head` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '楼盘简介',
+  `title` varchar(200) DEFAULT NULL,
+  `buildingintro` varchar(500) DEFAULT NULL,
+  `province` varchar(50) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `dist` varchar(50) DEFAULT NULL,
+  `lng` varchar(10) DEFAULT NULL COMMENT '坐标经度',
+  `lat` varchar(10) DEFAULT NULL COMMENT '坐标纬度',
+  `traffic` varchar(500) DEFAULT NULL,
+  `projectintro` varchar(500) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `thumb` varchar(200) DEFAULT NULL,
+  `video` varchar(200) DEFAULT NULL,
+  `weid` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `createtime` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for ims_lxy_building_info_list
+-- ----------------------------
+DROP TABLE IF EXISTS `ims_lxy_building_info_list`;
+CREATE TABLE `ims_lxy_building_info_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hid` int(11) NOT NULL,
+  `typename` varchar(255) DEFAULT NULL,
+  `housename` varchar(255) DEFAULT NULL,
+  `rooms` varchar(255) DEFAULT NULL,
+  `size` float DEFAULT NULL,
+  `photourl` varchar(200) DEFAULT NULL,
+  `panourl` varchar(200) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `createtime` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

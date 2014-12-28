@@ -1,0 +1,138 @@
+{template 'common/header'}
+<link rel="stylesheet" href="./resource/wdl03/css/reset.css"  />
+<link rel="stylesheet" href="./resource/wdl03/css/960.css"  />
+<link rel="stylesheet" href="./resource/wdl03/css/style.css"  />
+<link rel="stylesheet" href="./resource/wdl03/css/flexslider.css"  />
+<script src="./resource/wdl03/js/jquery-1.8.3.min.js" type="text/javascript" ></script>
+<script src="./resource/wdl03/js/jquery.flexslider-min.js" type="text/javascript" ></script>
+<script>$(document).ready(function(){$('.flexslider').flexslider({animation: "fade",controlNav: false});}); </script>
+<!--[if IE 6]><script type="text/javascript" src="./resource/skin/js/dd_belatedpng.js"></script><![endif]-->
+<!--[if IE 6]>
+<script type="text/javascript">
+	DD_belatedPNG.fix("img");
+</script>
+<![endif]-->
+<!--[if lte IE 6]>
+<style>
+/*ie6提示*/
+#ie6-warning{width:100%;background:#ffffe1;padding:5px 0;font-size:12px}
+#ie6-warning p{width:1100px;margin:0 auto;}
+</style>
+<div id="ie6-warning" class="cl wp"><p>您正在使用 Internet Explorer 6，您的IE浏览器版本过低，在本页面的显示效果可能有差异。建议您升级到 <a href="#" target="_blank">Internet Explorer 8</a> 或以下浏览器：
+<a href="#">Firefox</a> / <a href="#">Chrome</a> / <a href="#">Safari</a> / <a href="#">Opera</a></p></div>
+<![endif]-->
+<a name="link_back" id="link_back"></a>
+    <div id="header"> 
+        <!-- Start Header -->
+        <div class="container_12">
+            <div class="grid_6">
+                <h1><a href="#"><img src="{if !empty($_W['setting']['copyright']['flogo'])}{$_W['attachurl']}{$_W['setting']['copyright']['flogo']}{else}./resource/wdl03/images/logo.png{/if}"  alt="Appage" title="Home" width="200px" height="40px" /></a></h1>
+            </div>
+            <div class="grid_6">
+                <ul>
+					{if !empty($_W['setting']['register']['open'])}<li><a href="{php echo create_url('member/register');}" >注册</a></li>{/if}
+                    <li><a href="{php echo create_url('member/login');}" >登录</a></li>
+                    
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <!-- End Header --> 
+    </div>
+
+    <!-- Start Slider -->
+    <div id="cover" class="row">
+        <div class="container_12">
+            <div class="grid_12">
+                <div class="cover_container">
+                    <div id="title">
+                        <h1>赶快使用微信对话吧</h1>
+                        <p>用微信扫描二维码，之后您就可以发送关键字搜索论坛，并且还有绑定账户，接受短消息等一系列功能喔</p>
+                        <div class="clear"></div>
+                        <span class="transparent">快速、简单、靠谱</span> </div>
+                    <div class="flexslider">
+                        <ul class="slides">
+                            <li><img src="./resource/wdl03/images/slide1.jpg" /></li>
+                            <li><img src="./resource/wdl03/images/slide2.jpg" /></li>
+                            <li><img src="./resource/wdl03/images/slide3.jpg" /></li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+    <!-- End Slider --> 
+
+    <!-- Start Product Features -->
+
+    <div id="product-features" class="row">
+        <div class="container_12">
+            <div class="grid_4">
+                <h5><a href="#link_features" class="action_features anchorLink">简单的步骤</a></h5>
+                <p>拿起手机，打开微信，扫描我们的二维码即可加网站为好友噢</p>
+            </div>
+            <div class="grid_4">
+                <h5><a href="#link_features" class="action_features anchorLink">多种触发指令</a></h5>
+                <p>您可以直接在对话框中输入关键字，或者发送指定命令，获得更多功能</p>
+            </div>
+            <div class="grid_4">
+                <h5>更多的功能</h5>
+                <p>依托微信平台，今后我们会推出更多的功能，给您提供更多的命令集合，让您在手机上能够直接得到网站快速、简单、可靠的即时资源</p>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <!-- End Product Features --> 
+    <!-- Start Intro -->
+    <div id="intro" class="row">
+        <div class="container_12">
+            <div class="grid_12">
+                <h3>现在拿起手机，开始扫描二维码，跟网站对话吧!</h3>
+                <h6>Picked up a phone now, start scanning two-dimensional code, conversation with website.</h6>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <!-- End Intro --> 
+
+    <!-- Start Product Checklist --> 
+
+    <a name="link_features" id="link_features"></a>
+    <div id="checklist" class="row">
+        <div class="container_12">
+            <div class="grid_6"> <a href="#"><img src="./resource/wdl03/images/wxlogo.jpg"  alt="Sample" title="sample" width="430px" height="430px" class="phone" /></a> </div>
+            <div class="grid_6">
+                <div class="box"> <img src="./resource/wdl03/images/icon1.png"  alt="Sample" title="sample" width="60px" height="60px" />
+                    <h5>社区交互</h5>
+                    <p>让微信完美衔接. 无需离开微信客户端即可互动</p>
+                    <div class="clear"></div>
+                    <img src="./resource/wdl03/images/icon2.png"  width="60px" height="60px" />
+                    <h5>自定义回复</h5>
+                    <p>自定义回复指定触发词. 文字, 图文随意选择</p>
+                    <div class="clear"></div>
+                    <img src="./resource/wdl03/images/icon3.png"  width="60px" height="60px" />
+                    <h5>自定义菜单</h5>
+                    <p>设置自定义菜单, 让交互更简单.(可绑定任何命令)</p>
+                    <div class="clear"></div>
+                    <img src="./resource/wdl03/images/icon4.png" width="60px" height="60px" />
+                    <h5>便民功能</h5>
+                    <p>热门功能: 地图, 音乐, 快递, 天气, 翻译, 电影, 图书...</p>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+    <div id="footer" class="row">{if empty($_W['setting']['copyright']['footerleft'])}Powered by <a href="http://www.b2ctui.com"><b>零壹贰科技</b></a> &copy; 2014 <a href="http://www.b2ctui.com">www.b2ctui.com</a>{else}{$_W['setting']['copyright']['footerleft']}{/if}
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

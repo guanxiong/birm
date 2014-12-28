@@ -1,0 +1,392 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="./source/modules/smashegg/style/css/reset.css?2014-01-17-4" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/smashegg/style/css/main.css?2014-01-17-4" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/smashegg/style/css/dialog.css?2014-01-17-4" media="all" />
+<script type="text/javascript" src="./source/modules/smashegg/style/js/zepto.js?2014-01-17-4"></script>
+<script type="text/javascript" src="./source/modules/smashegg/style/js/dialog_min.js?2014-01-17-4"></script>
+<script type="text/javascript" src="./source/modules/smashegg/style/js/player_min.js?2014-01-17-4"></script>
+<script type="text/javascript" src="./source/modules/smashegg/style/js/main.js?2014-01-17-4"></script>
+<title>砸金蛋活动</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+        <!-- Mobile Devices Support @begin -->
+            <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+            <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+            <meta content="no-cache" http-equiv="pragma">
+            <meta content="0" http-equiv="expires">
+            <meta content="telephone=no, address=no" name="format-detection">
+            <meta content="width=device-width, initial-scale=1.0" name="viewport">
+            <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <!-- Mobile Devices Support @end -->
+    </head>
+    <body onselectstart="return true;" ondragstart="return false;">
+        <script>
+{if $running==false}
+document.addEventListener("DOMContentLoaded", function(){
+	playbox.init("playbox");
+	//
+	var shape = document.getElementById("shape");
+	var hitObj = {
+		handleEvent: function(evt){
+			alert("{$msg}")		}
+	}
+	shape.addEventListener("click", hitObj, false);
+}, false);
+{else}
+document.addEventListener("DOMContentLoaded", function(){
+	playbox.init("playbox");
+	//
+	var shape = document.getElementById("shape");
+	var hitObj = {
+		handleEvent: function(evt){
+						if("SPAN" == evt.target.tagName){
+				var audio = new Audio();
+				audio.src = "{$_W['siteroot']}source/modules/smashegg/style/mp3/smashegg.mp3";
+				audio.play();
+				setTimeout(function(){
+					evt.target.classList.toggle("on");
+					//var rand = Math.round(Math.random()*10);
+					$.ajax({
+						url: "{php echo $this->createMobileUrl('getaward', array('id' => $id))}",
+						type: "POST",
+						dataType: "json",
+						async:true,
+						success: function(res){
+							if(1 == res.success){
+								evt.target.classList.toggle("luck");
+							}
+							setTimeout(function(){
+								if(1 == res.success){
+									var urls = ["{$_W['siteroot']}source/modules/smashegg/style/img/coin.png"];
+									getCoin(urls);
+									jg(res.data);
+								}else{
+									lqsb();
+								}
+							}, 2000);
+						}
+					});
+					
+				}, 100);
+				$("#hit").addClass("on").css({left: evt.pageX+"px", top:evt.pageY +"px"});
+			}
+			//shape.classList.toggle("pause");
+			shape.removeEventListener("click", hitObj, false);
+			//setTimeout(function(){$("#hit").removeClass("on");}, 1500);
+					}
+	}
+	shape.addEventListener("click", hitObj, false);
+}, false);
+{/if}
+</script>
+<div class="body pb_10">
+		<div style="position:absolute;left:10px;top:10px;z-index:350;">
+		<a href="javascript:;" id="playbox" class="btn_music" onclick="playbox.init(this).play();" ontouchstart="event.stopPropagation();"></a>
+		<audio id="audio" loop src="{$_W['siteroot']}source/modules/smashegg/style/mp3/default.mp3" style="pointer-events:none;display:none;width:0!important;height:0!important;"></audio>
+	</div>
+	<section class="stage">
+		<img src="./source/modules/smashegg/style/img/stage.jpg" />
+		 <div id="shape" class="cube on">
+	        <div class="plane one"><span><figure>&nbsp;</figure></span></div>
+	        <div class="plane two"><span><figure>&nbsp;</figure></span></div>
+	        <div class="plane three"><span><figure>&nbsp;</figure></span></div>
+	      </div>
+	      <div id="hit" class="hit"><img src="./source/modules/smashegg/style/img/1.png" /></div>
+	</section>
+		<section>
+		<div class="instro_wall">
+			<article>
+				<h6>参与次数</h6>
+				<div>
+					<p>{$detail}</p>
+				</div>
+			</article>
+			<article>
+				<h6>活动说明</h6>
+				<div>
+					<p>{php echo htmlspecialchars_decode($reply['content'])}</p>
+				</div>
+			</article>
+				<article class="a3">
+				<h6>活动奖项</h6>
+				<div>
+					<ul>
+						<ol>
+						{$awardstr}
+						</ol>
+					</ul>
+				</div>
+			</article>
+			{if !empty($award)}
+			<article>
+				<h6>中奖纪录</h6><small onclick=lqcg()>领取信息</small>
+				<div>
+					<table>
+						{loop $award $row}
+						<tr>
+							<td>{php echo date('Y-m-d H:i',$row['createtime']);}</td>							
+							<td>{$row['award_sn']}</td>
+							<td>{$row['name']}</td>						
+						</tr>
+						{/loop}
+					</table>
+				</div>
+			</article>
+			{/if}
+					</div>
+	</section>
+	<footer style="text-align:center; color:#fff;margin-right:20px"><a style="color:#fff;">{$reply['copyright']}</a></footer>
+</div>
+<script>
+	//申请兑换
+	function sqdh(arg){
+		var d1 = new iDialog();
+		d1.open({
+			classList: "apply",
+			title:"",
+			close:"",
+			content:'<div class="header"><h6 style="color:#fff;">申请兑换</h6></div>\
+				<table>\
+					<tr><td><input type="text" id="d1_1" placeholder="" maxlength="30" readonly="readonly" value="SN码：'+arg.code+'" /></td></tr>\
+					<tr><td><input type="text" id="d1_2" placeholder="请输入兑奖密码" maxlength="30" /></td></tr>\
+				</table>',
+			btns:[
+				{id:"", name:"确定", onclick:"fn.call();", fn: function(self){
+					var obj = {
+						d1_1: $.trim($("#d1_1").val()),
+						parssword: $.trim($("#d1_2").val()),
+						id:1760,
+						sdid:105822,
+						snid:arg.snid
+					}
+					$.ajax({
+						url:"{php echo $this->createMobileUrl('settel', array('id' => $id))}",
+						type:"POST",
+						dataType: "json",
+						data:obj,
+						success: function(res){
+							if(1 == res.success){
+								alert('兑奖状态已经记录');
+								location.href = location.href + "&r="+Math.random();
+								self.die();
+							}else{
+								alert('兑奖密码错误');
+							}
+						}
+					});
+				}},
+				{id:"", name:"关闭", onclick:"fn.call();", fn: function(self){
+					self.die();
+				},}
+			]
+		});
+	}
+
+	//领取
+	function lq(arg){
+		var d2 = new iDialog();
+		d2.open({
+			classList: "get",
+			title:"",
+			close:"",
+			content:'<div class="header"><h6>SN码：'+arg.code+'</h6></div>\
+				<table>\
+					<tr><td><input type="text" id="d2_1" placeholder="请输入联系人" maxlength="30" /></td></tr>\
+					<tr><td><input type="text" id="d2_2" placeholder="请输入手机号，以便领取奖品" maxlength="30" /></td></tr>\
+				</table>',
+			btns:[
+				{id:"", name:"领取", onclick:"fn.call();", fn: function(self){
+					var obj = {
+						username: $.trim($("#d2_1").val()),
+						tel: $.trim($("#d2_2").val()),
+						snid:arg.snid
+					}
+					$.ajax({
+						url:"{php echo $this->createMobileUrl('settel', array('id' => $id))}",
+						type:"POST",
+						data:obj,
+						dataType: "json",
+						success: function(res){
+							if(1 == res.success){
+								self.die();
+								lqcg();
+							}else{
+								console.log( );
+							}
+						}
+					});
+				}},
+				{id:"", name:"关闭", onclick:"fn.call();", fn: function(self){
+					if('no' != arg.loca){
+						location.href = location.href + "&r="+Math.random();
+					}
+					self.die();
+				},}
+			]
+		});
+	}
+
+	//结果
+	function jg(arg){
+		var d3 = new iDialog();
+		d3.open({
+			classList: "result",
+			title:"",
+			close:"",
+			content:'<div class="header"><h5 style="color:#2f8ae5;font-size:16px;">恭喜您中奖了！您的运气实在是太好了！</h6></div>\
+				<table><tr>\
+					<td style="width:75px;"><label>'+arg.c_type+'</label></td>\
+					<td><img src="'+arg.c_pic+'" /></td>\
+					<td style="width:75px;"><label>'+arg.c_name+'</label></td>\
+				</tr></table>',
+			btns:[
+				{id:"", name:"领取奖品", onclick:"fn.call();", fn: function(self){
+					self.die();
+					lq(arg);
+				}},
+				{id:"", name:"关闭", onclick:"fn.call();", fn: function(self){
+					location.href = location.href + "&r="+Math.random();
+					self.die();
+				},}
+			]
+		});
+	}
+	{if (!empty($awardone)&&empty($fans['tel']))}	
+	//领取结果
+	$(function(){
+		var d4 = new iDialog();
+		d4.open({
+			classList: "result get_result",
+			title:"",
+			close:"",
+			content:'<div class="header"><h6>您已中奖</h6></div>\
+				<table><tr>\
+					<td style="width:75px;"><label>{$awardone['name']}</label></td>\
+					<td><img src="" /></td>\
+					<td style="width:75px;"><label>{$awardone['description']}</label></td>\
+				</tr></table>',
+			btns:[
+				{id:"", name:"领取奖品", onclick:"fn.call();", fn: function(self){
+					self.die();
+					lq({code:"{$awardone['award_sn']}"});
+				}},
+				{id:"", name:"关闭", onclick:"fn.call();", fn: function(self){
+					self.die();
+				},}
+			]
+		});
+	});
+	{/if}
+
+	//领取结果-成功
+	function lqcg(){
+		var d5 = new iDialog();
+		d5.open({
+			classList: "success",
+			title:"",
+			close:"",
+			content:'<div class="header"><h6>成功领取</h6></div>\
+				<table><tr>\
+					<td><img src="./source/modules/smashegg/style/img/7.png" /></td>\
+					<td style="width:170px;"><label>{$reply['ticket_information']}</label></td>\
+				</tr></table>',
+			btns:[
+				{id:"", name:"知道了", onclick:"fn.call();", fn: function(self){
+					location.href = location.href + "&r="+Math.random();
+					self.die();
+				}},
+			]
+		});
+	}
+
+	//砸蛋结果-失败
+	function lqsb(){
+		var d6 = new iDialog();
+		d6.open({
+			classList: "failed",
+			title:"",
+			close:"",
+			content:'<div class="header">感谢您的参与，请再接再厉哟！</div>\
+				<table><tr>\
+					<td><img src="./source/modules/smashegg/style/img/8.png" /></td>\
+				</tr></table>',
+			btns:[
+				{id:"", name:"再砸一次", onclick:"fn.call();", fn: function(self){
+					location.href = "{php echo $this->createMobileUrl('index', array('id' => $id))}&r="+Math.random();
+				}},
+			]
+		});
+	}
+	
+	window.alert = function(str){
+		var d7 = new iDialog();
+		d7.open({
+			classList: "alert",
+			title:"",
+			close:"",
+			content:str,
+			btns:[
+				{id:"", name:"确定", onclick:"fn.call();", fn: function(self){
+					self.die();
+				}},
+			]
+		});
+	}
+	        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        window.shareData = {  
+            "imgUrl": "{$shareimg}", 
+            "timeLineLink": "{$sharelink}", 
+            "sendFriendLink": "{$sharelink}", 
+            "weiboLink":"{$sharelink}", 
+            "tTitle": "{$sharetitle}",
+            "tContent":  "{$sharedesc}",
+            "fTitle":  "{$sharetitle}",
+            "fContent":  "{$sharedesc}",
+            "wContent":  "{$sharedesc}",
+        };
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+            WeixinJSBridge.invoke('sendAppMessage', { 
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.sendFriendLink,
+                "desc": window.shareData.fContent,
+                "title": window.shareData.fTitle
+            }, function (res) {
+                _report('send_msg', res.err_msg);
+            })
+        });
+
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function (argv) {
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.timeLineLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tTitle
+            }, function (res) {
+                _report('timeline', res.err_msg);
+            });
+        });
+
+        // 分享到微博
+        WeixinJSBridge.on('menu:share:weibo', function (argv) {
+            WeixinJSBridge.invoke('shareWeibo', {
+                "content": window.shareData.wContent,
+                "url": window.shareData.weiboLink,
+            }, function (res) {
+                _report('weibo', res.err_msg);
+            });
+        });
+        }, false)
+</script>
+<div mark="stat_code" style="width:0px; height:0px; display:none;"></div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>参数设置</h4>
+		<table class="tb">
+			<tr>
+				<th>每天发送图片数量</th>
+				<td>
+					<input type="text" name="picnum" class="span2" value="{$settings['picnum']}" /> 单位：张（输入“-1”表示不限制）
+					<div class="help-block">设置用户在一天的时间内（0：00-24：00）每个用户的有效图片发送张数</div>
+				</td>
+			</tr>
+			<tr>
+				<th>是否需要输入描述</th>
+				<td>
+					<input type="radio" name="isdes" value="1" {if $settings['isdes'] == '1' || empty($settings['isdes'])}checked{/if}/> 是
+					<input type="radio" name="isdes" value="0" {if $settings['isdes'] == '0'}checked{/if}/> 否
+					<div class="help-block">设置用户发送图片是否需要输入描述信息</div>
+				</td>
+			</tr>
+			<tr>
+				<th>是否需要审核</th>
+				<td>
+					<input type="radio" name="isstatus" value="1" {if $settings['isstatus'] == '1' || empty($settings['isstatus'])}checked{/if}/> 是
+					<input type="radio" name="isstatus" value="0" {if $settings['isstatus'] == '0'}checked{/if}/> 否
+					<div class="help-block">设置用户发送图片是否需要经过审核后再显示</div>
+				</td>
+			</tr>
+			<tr>
+				<th>照片墙头部说明</th>
+				<td>
+					<input type="text" name="topinfo" class="span9"  maxlength="48" value="{$settings['topinfo']}" />
+					<div class="help-block">输入照片页面的顶部信息，限制46个字。例如:一起分享你的美好</div>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

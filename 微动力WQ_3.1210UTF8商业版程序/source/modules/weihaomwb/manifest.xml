@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.52">
+	<application setting="false">
+		<name><![CDATA[踩白块]]></name>
+		<identifie><![CDATA[weihaomwb]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[wdlgame]]></type>
+		<ability><![CDATA[拆包装,踩虫子,抽老板耳光...无所不能]]></ability>
+		<description><![CDATA[拆包装,踩虫子,抽老板耳光...无所不能]]></description>
+		<author><![CDATA[微动力 ]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<install><![CDATA[
+CREATE TABLE `ims_weihaomwb_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `cover` varchar(255) DEFAULT NULL,
+  `description` text,
+  `title1` varchar(255) DEFAULT NULL,
+  `description1` text,
+  `fimg` varchar(255) DEFAULT NULL,
+  `bimg` varchar(255) DEFAULT NULL,
+  `bgmusic` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_weihaomwb_user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `rid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) DEFAULT NULL,
+  `realname` varchar(50) DEFAULT NULL,
+  `score` int(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+]]></install>
+	<uninstall><![CDATA[
+	drop table if exists `ims_weihaomwb_reply`;
+	drop table if exists `ims_weihaomwb_user`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

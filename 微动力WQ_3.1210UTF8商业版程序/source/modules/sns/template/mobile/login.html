@@ -1,0 +1,43 @@
+{template 'header'}
+ <div class="container-fluid">                        
+
+	<div class="row-fluid" id="login">
+		
+        
+      <div style="margin:60px auto; txt-align:center " id="gz">
+      <img src="{$_W[attachurl]}/qrcode_{$wechat['weid']}.jpg?weid={$wechat['account']}"  />
+      <br /><a href="http://mp.weixin.qq.com/mp/redirect?url=weixin://addfriend/{$wechat['username']}">  扫描上图,关注<b>[{$wechat['username']}]</b> 发送：[微吧] 参与讨论</a>
+      </div>  
+	</div>
+</div> 
+
+<script>
+
+//关注微信号http://weixin.qq.com/r/-XVIUFbEMQtOrRIz9yDv这个是广安吧二维码地址
+$(function() {
+       var onBridgeReady =  function () {
+ 			jQuery("#gz").click(function(){
+	 	
+            //WeixinJSBridge.invoke('profile',{'username':'{$wechat['original']}','scene':'57'});
+			//WeixinJSBridge.invoke('addContact', { webtype: '1', username: '{$wechat['original']}' });
+			WeixinJSBridge.invoke('addContact',{
+                            "webtype" : "1", // 添加联系人的场景，1表示企业联系人。
+                            "username" : "{$wechat['username']}",　// {$wechat['original']}需要添加的联系人username
+                    })
+			
+          })
+		   
+		// 隐藏右上角的选项菜单入口;和下面的工具栏
+		WeixinJSBridge.call('hideOptionMenu');
+		WeixinJSBridge.call('hideToolbar');
+		};
+	if(document.addEventListener){
+          document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        } else if(document.attachEvent){
+          document.attachEvent('WeixinJSBridgeReady'   , onBridgeReady);
+          document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);
+        }	
+       
+});
+</script>
+{template 'footer'}

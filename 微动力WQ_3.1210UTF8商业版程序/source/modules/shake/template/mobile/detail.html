@@ -1,0 +1,104 @@
+{template 'header'}
+<script type="text/javascript">
+<!--
+	$(function(){
+		$(".shake-main").height($(window).height());
+		if (window.DeviceMotionEvent) {
+			window.addEventListener('devicemotion', deviceMotionHandler, false);
+	　　} else{
+	　　　　alert('您使用的设备或是浏览器不支持摇一摇功能，如果您是Android手机，您可以用UCWeb、chrome等第三方浏览器。')
+	　　}
+
+		$(".progress-bar").attr("aria-valuemax", MAXSHAKECOUNT);
+	});
+
+	var SHAKE_THRESHOLD = {php echo empty($reply['speed']) ? 3000 : $reply['speed']};
+	var INTERVAL = {php echo empty($reply['interval']) ? 100 : $reply['interval']};
+	var MAXSHAKECOUNT = {php echo empty($reply['maxshake']) ? 100 : $reply['maxshake']};
+
+	var last_update = 0;
+	var x;
+	var y;
+	var z;
+	var last_x;
+	var last_y;
+	var last_z;
+	var lastupdate = 0;
+	var shakecount = 0;
+
+
+	function deviceMotionHandler(eventData) {
+		var acceleration = eventData.accelerationIncludingGravity;
+		var curTime = new Date().getTime();
+		var diffTime = curTime -last_update;
+		if (diffTime > INTERVAL) {
+			last_update = curTime;
+			x = acceleration.x;
+			y = acceleration.y;
+			z = acceleration.z;
+			var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+			if (speed > SHAKE_THRESHOLD && shakecount < MAXSHAKECOUNT) {
+				$.getJSON('{php echo $this->createMobileUrl('shake', array('rid' => $reply['rid']))}', function(s){
+					if (s.message.status == '2') {
+						location.href = '{php echo $this->createMobileUrl('detail', array('rid' => $reply['rid'], 'weid' => $_W['weid']))}';
+						return;
+					}
+					if (s.message.lastupdate > lastupdate) {
+						if (s.message.shakecount >= MAXSHAKECOUNT) {
+							progressBar(MAXSHAKECOUNT);
+							return;
+						}
+						lastupdate = s.message.lastupdate;
+						shakecount = s.message.shakecount;
+						progressBar(s.message.shakecount);
+						return;
+					}
+				});
+			}
+			last_x = x;
+			last_y = y;
+			last_z = z;
+		}
+	}
+	//进度条
+	function progressBar(a) {
+		$(".progress-bar").attr("aria-valuenow", a).attr("style", 'width:'+Math.round(a/{$reply['maxshake']}*10000)/100+'%;');
+	}
+//-->
+</script>
+<style>
+body{background:#282c2d;}
+.common-bg{filter:Alpha(opacity=70); background:#000; background:rgba(0, 0, 0, 0.7); -moz-border-radius:4px; border-radius:4px;}
+.shake-main{padding:15px 10px;}
+.shake-nav-bottom{overflow:hidden; width:100%; position:absolute; left:0; bottom:15px;}
+.shake-nav-bottom .col-xs-6{text-align:center;}
+.shake-nav-bottom .col-xs-6 i{font-size:30px;}
+.shake-nav-bottom .col-xs-6 a{color:#5f6364; text-decoration:none;}
+.shake-pic{height:210px; background:url('./source/modules/shake/template/mobile/shake.png') no-repeat center; margin-top:60px;}
+</style>
+<div class="shake-main">
+	{if $reply['status'] == 2}
+	<div class="common-bg" style="padding:10px; color:#FFF;">活动结束，请查看大屏幕中奖情况。</div>
+	{else}
+	<div class="progress progress-striped active" style="height:35px; background:#b9bdc0;">
+		<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="0" style="{if $member['shakecount']}width:{php echo round($member['shakecount'] / $reply['maxshake'], 4) * 100}%;{else}width:1%;{/if}"></div>
+	</div>
+	{/if}
+	<div class="shake-pic"></div>
+	<div class="shake-nav-bottom">
+		<div class="col-xs-6">
+			<a href="#">
+				<div><i class="icon-user"></i></div>
+				<div>个人中心</div>
+			</a>
+		</div>
+		<div class="col-xs-6">
+			<a href="#">
+				<div><i class="icon-list-ol"></i></div>
+				<div>我的排名</div>
+			</a>
+		</div>
+	</div>
+</div>
+{php $footer_off = 1;}
+{template 'footer'}

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[新微餐饮]]></name>
+		<identifie><![CDATA[shopping3]]></identifie>
+		<version><![CDATA[2.1]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[微商城(餐饮版)]]></ability>
+		<description><![CDATA[微商城 for 餐饮]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="微餐饮入口设置" do="wlhome" />
+		</cover>
+		<menu>
+			<entry title="基本设置" do="shopset" />
+			<entry title="订单管理" do="order" />
+			<entry title="商品管理" do="goods" />
+			<entry title="商品分类" do="category" />
+			<entry title="智能选餐" do="genius" />
+			 <entry title="模板设置" do="template" />
+		</menu>
+		<home>
+			<entry title="微餐饮" do="wlindex" />
+		</home>
+		<profile>
+			<entry title="我的订单" do="wlorder" />
+		</profile>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_shopping3_address` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `username` varchar(20) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `tel` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_shopping3_cart` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `goodsid` int(11) NOT NULL,
+  `goodstype` tinyint(1) NOT NULL DEFAULT '1',
+  `price` varchar(10) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `total` int(10) unsigned NOT NULL,
+  `create_time` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_shopping3_category` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属帐号',
+  `name` varchar(50) NOT NULL COMMENT '分类名称',
+  `parentid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级分类ID,0为第一级',
+  `displayorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `enabled` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否开启',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_shopping3_express` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `express_name` varchar(50) DEFAULT NULL,
+  `displayorder` int(11) NOT NULL,
+  `express_price` varchar(10) DEFAULT NULL,
+  `express_area` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_shopping3_fans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `password` varchar(40) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `login_nums` int(11) DEFAULT NULL,
+  `login_time` int(10) DEFAULT NULL,
+  `crteate_time` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_shopping3_fans_like` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `fansid` int(11) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `goodsid` int(10) unsigned NOT NULL DEFAULT '0',
+  `checked` tinyint(1) NOT NULL,
+  `create_time` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_shopping3_genius` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `rens` tinyint(4) NOT NULL,
+  `displayorder` tinyint(4) NOT NULL,
+  `sort` tinyint(4) DEFAULT NULL,
+  `nums` tinyint(4) NOT NULL,
+  `dishes` text NOT NULL COMMENT '菜品的ID，以逗号隔开',
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_shopping3_goods` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pcate` int(10) unsigned NOT NULL DEFAULT '0',
+  `ccate` int(10) unsigned NOT NULL DEFAULT '0',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '1为实体，2为虚拟',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `displayorder` int(10) unsigned NOT NULL DEFAULT '0',
+  `isindex` tinyint(1) NOT NULL,
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `thumb` varchar(100) NOT NULL DEFAULT '',
+  `unit` varchar(5) NOT NULL DEFAULT '',
+  `description` varchar(1000) NOT NULL DEFAULT '',
+  `content` text NOT NULL,
+  `goodssn` varchar(50) NOT NULL DEFAULT '',
+  `productsn` varchar(50) NOT NULL DEFAULT '',
+  `marketprice` varchar(10) NOT NULL DEFAULT '',
+  `productprice` varchar(10) NOT NULL DEFAULT '',
+  `total` int(10) NOT NULL DEFAULT '0',
+  `sellnums` int(10) NOT NULL DEFAULT '0',
+  `thumb_url` varchar(1000) DEFAULT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  `hits` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_shopping3_order` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `ordersn` varchar(30) NOT NULL,
+  `expressprice` varchar(5) NOT NULL COMMENT '快递费',
+  `totalnum` tinyint(4) NOT NULL,
+  `totalprice` varchar(10) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '-1取消状态，0普通状态，1为已付款，2为成功',
+  `sendtype` tinyint(1) unsigned NOT NULL COMMENT '1为快递，2为自提',
+  `sendstatus` tinyint(1) NOT NULL COMMENT '配送状态',
+  `order_type` tinyint(2) NOT NULL,
+  `ispay` tinyint(1) NOT NULL,
+  `paytype` tinyint(1) unsigned NOT NULL COMMENT '1为余额，2为在线，3为到付',
+  `seat_type` tinyint(2) NOT NULL,
+  `guest_name` varchar(30) NOT NULL,
+  `tel` varchar(20) NOT NULL,
+  `sex` tinyint(2) NOT NULL,
+  `guest_address` varchar(200) NOT NULL,
+  `time_day` varchar(12) NOT NULL,
+  `time_hour` varchar(4) NOT NULL,
+  `time_second` varchar(4) NOT NULL,
+  `remark` varchar(1000) NOT NULL DEFAULT '',
+  `secretid` varchar(4) NOT NULL,
+  `print_sta` tinyint(2) NOT NULL,
+  `sms_sta` varchar(3) NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  `desk` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_shopping3_order_goods` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `orderid` int(10) unsigned NOT NULL,
+  `goodsid` int(10) unsigned NOT NULL,
+  `total` int(10) unsigned NOT NULL DEFAULT '1',
+  `description` varchar(30) NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_shopping3_set` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `shop_name` varchar(50) DEFAULT NULL,
+  `thumb` varchar(1000) DEFAULT NULL,
+  `shop_tel` varchar(20) NOT NULL,
+  `shop_address` varchar(120) NOT NULL,
+  `shop_notice` varchar(500) NOT NULL,
+  `lng` varchar(20) NOT NULL,
+  `lat` varchar(20) NOT NULL,
+  `paytype1` tinyint(1) NOT NULL,
+  `paytype2` tinyint(1) NOT NULL,
+  `paytype3` tinyint(1) NOT NULL,
+  `mail_status` tinyint(1) NOT NULL,
+  `mail_smtp` varchar(50) NOT NULL,
+  `mail_user` varchar(50) NOT NULL,
+  `mail_psw` varchar(50) NOT NULL,
+  `mail_to` varchar(50) NOT NULL,
+  `print_status` tinyint(1) NOT NULL,
+  `print_type` tinyint(2) NOT NULL,
+  `print_usr` varchar(50) NOT NULL,
+  `print_nums` tinyint(3) NOT NULL,
+  `print_top` varchar(30) NOT NULL,
+  `print_bottom` varchar(30) NOT NULL,
+  `sms_status` tinyint(1) NOT NULL,
+  `sms_type` tinyint(2) NOT NULL COMMENT '0商家，1客户，2both',
+  `sms_phone` varchar(20) NOT NULL,
+  `sms_from` tinyint(2) NOT NULL DEFAULT '1' COMMENT '1是打印机自己发，2是短信平台',
+  `sms_secret` varchar(80) NOT NULL,
+  `sms_text` varchar(200) NOT NULL,
+  `sms_resgister` tinyint(1) NOT NULL DEFAULT '1',
+  `order_limit` tinyint(4) NOT NULL,
+  `print_mkey` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_shopping3_set`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

@@ -1,0 +1,63 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+				<li{if $_GPC['do'] == 'Display'} class="active"{/if}><a href="{php echo create_url('site/module/Display', array('name' => 'lxybuilding'));}">楼盘管理</a>
+                <li{if $_GPC['do'] == 'StyleList'} class="active"{/if}><a href="{php echo create_url('site/module/StyleList', array('name' => 'lxybuilding','hid'=>$hid));}">户型管理</a></li>
+
+        
+        </ul>
+	<div class="search">
+		<form action="index.php" method="get">
+		<input type="hidden" name="act" value="module" />
+		<input type="hidden" name="do" value="StyleList" />
+		<input type="hidden" name="name" value="lxybuilding" />
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th>房型名称</th>
+					<td>
+						<input class="span6" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+					</td>
+				</tr>
+				<tr class="search-submit">
+				   <td colspan="2"><button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button></td>
+				 </tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th width="200" style="width:200px;">房型类别</th>
+					<th width="200" style="width:200px;"><span style="width:100px;">房型名称</span></th>
+					<th width="101" style="width:100px;">户型</th>
+					<th width="251" style="">面积</th>
+					<th width="77" style="">&nbsp;</th>
+					<th width="54" style="min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['typename']}</td>
+					<td>{$item['housename']}</td>
+					<td>{$item['rooms']}</td>
+					<td>{$item['size']}</td>
+					<td>&nbsp;</td>
+					<td><span><a href="{php echo create_url('site/module/StylePost', array('name' => 'lxybuilding', 'id' => $item['id'],'hid'=>$hid,'title'=>$title))}">编辑</a>&nbsp;<a onclick="return confirm('此操作不可恢复，确认吗？'); return false;" href="{php echo create_url('site/module/delete', array('name' => 'lxybuilding', 'id' => $item['id']))}">删除</a></span></td>
+				</tr>
+				{/loop}
+			</tbody>
+			<tr>
+				<td colspan="6">
+					<input name="token" type="hidden" value="{$_W['token']}" />
+					<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+				</td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</div>
+{template 'common/footer'}

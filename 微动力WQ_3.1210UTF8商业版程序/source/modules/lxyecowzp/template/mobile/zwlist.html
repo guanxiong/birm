@@ -1,0 +1,72 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta content="marksense" name="author"> 
+<meta name="viewport" content="width=device-width,initial-scale=1.33,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=yes" name="format-detection" />
+<title>最新招聘信息</title>
+<script language="javascript" src="./resource/script/jquery-1.7.2.min.js"></script>
+<script language="javascript" src="./source/modules/lxyecowzp/template/js/recruitment.js"></script>
+<link rel="stylesheet" type="text/css" href="./source/modules/lxyecowzp/template/css/global.css">
+<link rel="stylesheet" type="text/css" href="./source/modules/lxyecowzp/template/css/recruitment.css">
+</head>
+<body>
+  <header class="header">
+    <h1>微招聘</h1>
+    <a class="back-home" href="{php echo $this->createMobileUrl('showallzwlist')}"><img src="./source/modules/lxyecowzp/template/images/back_home.png" /></a>
+  </header>
+  <ul class="recur">
+    {loop $list $row}
+    <a href="{php echo $this->createMobileUrl('showdetail',array('id'=>$row['id']))}">
+    <li>
+      <p class="name">{$row['copname']}诚招{$row['title']}{$row['number']}人</p>
+      <p class="info"><span>发布时间：{php echo date('Y-m-d H:i:s',$row['createtime'])}</span></p>
+    </li>
+    </a>
+    
+    {/loop}
+    
+
+    
+  </ul>
+  <aside class="more"><a href="javascript:void(0);" onclick="getMoreRecru(2)">查看更多</a></div>
+  <img src="./source/modules/lxyecowzp/template/images/hm.gif" class="baiduStats" />
+</body>
+<script type="text/javascript">
+function getMoreRecru(page){
+	
+	var ajxurl="{php echo $this->createMobileUrl('Ajaxgetzwlist').'&pages='}"+page;
+	 $.ajax({
+		type:"GET",
+		url:ajxurl,
+		dataType:'json',
+		beforeSend:function(XMLHttpRequest){ 
+			$('.more').html('<img src="../images/loading.gif" />');
+        },
+		success:function(data){
+			if (data.success){
+				if (data.list.length > 0){
+					for (var i in data.list){
+						var info = data.list[i];
+						$('.recur').append('<a href="{php echo $this->createMobileUrl('Ajaxgetzwlist')}&id='+info.id+'"><li><p class="name">'+info.company+'招聘'+info.position+info.number+'名</p><p class="info"><span>发布时间：'+info.pubdate+'</span></p></li></a>');
+					};
+					page+= 1;
+					$('.more').html('<a href="javascript:void(0);" onclick="getMoreRecru('+page+');">查看更多</a>');
+				}
+				else{
+                   $('.more').html('没有更多内容了...');
+				}
+			}
+			else{
+				alert('加载失败, 当前网络不给力?');
+                $('.more').html('<a href="javascript:void(0);" onclick="getMoreRecru('+page+');">再次尝试加载</a>');
+			}
+		}
+	 });
+}
+</script>
+</html>

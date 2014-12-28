@@ -1,0 +1,266 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="./source/modules/shopping3/style/css/uploadify_t.css" media="all" />
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('goods', array('op' => 'post'))}">添加商品</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('goods', array('op' => 'display'))}">管理商品</a></li>
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}" />
+		<h4>添加商品</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">排序</label></th>
+				<td>
+					<input type="text" name="displayorder" class="span2" value="{$item['displayorder']}" />  <input type="checkbox" name="isindex" value="1" {if $item['isindex']==1}checked{/if} >是否首页推荐
+				</td>
+			</tr>
+			<tr>
+				<th>分类</th>
+				<td>
+					<select class="span3" style="margin-right:15px;" name="pcate"    autocomplete="off">
+						<option value="0">请选择一级分类</option>
+						{loop $category $row}
+						{if $row['parentid'] == 0}
+						<option value="{$row['id']}" {if $row['id'] == $item['pcate']} selected="selected"{/if}>{$row['name']}</option>
+						{/if}
+						{/loop}
+					</select>
+					 
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">商品名称</label></th>
+				<td>
+					<input type="text" name="goodsname" class="span6" value="{$item['title']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">商品单位</label></th>
+				<td>
+					<input type="text" name="unit" class="span3" value="{$item['unit']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">商品类型</label></th>
+				<td>
+					<label for="isshow3" class="radio inline"><input type="radio" name="type" value="1" id="isshow3" {if empty($item) || $item['type'] == 1}checked="true"{/if} onclick="$('#product').show()" /> 实体商品</label>&nbsp;&nbsp;&nbsp;<label for="isshow4" class="radio inline"><input type="radio" name="type" value="2" id="isshow4"  {if $item['type'] == 2}checked="true"{/if}  onclick="$('#product').hide()" /> 虚拟商品</label>
+					<span class="help-block">虚拟商品，例如：优惠券，打折卡等，需要用户去店里消费使用的。实体商品，需要进行用户自提或是邮递的商品。</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">是否上架</label></th>
+				<td>
+					<label for="isshow1" class="radio inline"><input type="radio" name="status" value="1" id="isshow1" {if  $item['status'] == 1}checked="true"{/if} /> 是</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for="isshow2" class="radio inline"><input type="radio" name="status" value="0" id="isshow2"  {if $item['status'] == 0}checked="true"{/if} /> 否</label>
+					<span class="help-block"></span>
+				</td>
+			</tr>
+			<tr>
+				<th>商品图片</th>
+				<td>
+					<div id="upimg_main">
+						<div id="file_upload" class="uploadify">
+						<span class="btn btn-file"><span class="fileupload-new" id="file_upload-button">选择图片</span></span><span class="maroon">*</span></div>
+						<div id="file_upload-queue" class="uploadify-queue"></div>
+						<ul class="ipost-list ui-sortable" id="fileList">
+							{loop $item['thumbArr'] $row}
+							<li class="imgbox"><a class="thumb_close" href="javascript:void(0)" title="删除"></a>  
+							<input type="hidden" value="{$row}" name="thumb_url[]">
+							<span class="item_box"><img src="{$row}"></span>
+							</li>
+							{/loop}
+						</ul>
+						<div id="file_upload_queue" class="uploadifyQueue"></div>
+					</div>
+ 					<span class="help-block" style="clear:both">商品展示图片，第一张默认为商品缩略图</span>					
+				</td>
+			</tr>	
+			<tr>
+				<th><label for="">商品编号</label></th>
+				<td>
+					<input type="text" name="goodssn" class="span6" value="{$item['goodssn']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">商品条码</label></th>
+				<td>
+					<input type="text" name="productsn" class="span6" value="{$item['productsn']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">优惠价</label></th>
+				<td>
+					<input type="text" name="marketprice" class="span3" value="{$item['marketprice']}" /> 元
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">销售价</label></th>
+				<td>
+					<input type="text" name="productprice" class="span3" value="{$item['productprice']}" /> 元
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">库存</label></th>
+				<td>
+					<input type="text" name="total" class="span2" value="{$item['total']}" />
+					<span class="help-block">当前商品的库存数量，设置-1则表示不限制。</span>
+				</td>
+			</tr>
+			<tr>
+				<th>简介</th>
+				<td>
+					<textarea style="height:150px;" class="span7" name="description" cols="70">{$item['description']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>内容</th>
+				<td>
+					<textarea style="height:400px; width:100%;" class="span7 richtext-clone" name="content" cols="70">{$item['content']}</textarea>
+				</td>
+			</tr>
+		
+		<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	var category = {php echo json_encode($children)};
+	kindeditor($('.richtext-clone'));
+//-->
+</script>
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+ <script type="text/javascript">
+var editor = KindEditor.editor({
+	allowFileManager : true,
+	uploadJson : "./index.php?act=attachment&do=upload",
+	fileManagerJson : "./index.php?act=attachment&do=manager",
+	 
+	});
+	$("#file_upload-button").click(function() {
+		editor.loadPlugin("image", function() {
+		editor.plugin.imageDialog({
+			imageUrl : $("#upload-image-url-thumb").val(),
+			clickFn : function(url) {
+				editor.hideDialog();
+				var filename = /images(.*)/.exec(url);
+					html='<li class="imgbox"><a class="thumb_close" href="javascript:void(0)" title="删除"></a><input type="hidden" value="'+url+'" name="thumb_url[]"><span class="item_box"><img src="'+url+'"></span></li>';
+					$("#fileList").append(html);
+			}
+		});
+	});
+});
+        $("a.thumb_close").live("click ", function (n) {
+           $(this).parent().remove();
+        });
+
+</script>			
+{elseif $operation == 'display'}
+<div class="main">
+	<div class="search">
+		<form action="site.php" method="get">
+		<input type="hidden" name="act" value="module" />
+		<input type="hidden" name="do" value="goods" />
+		<input type="hidden" name="op" value="display" />
+		<input type="hidden" name="name" value="shopping3" />
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th>关键字</th>
+					<td>
+						<input class="span6" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+					</td>
+				</tr>
+				<tr>
+					<th>状态</th>
+					<td>
+						<select name="status">
+							<option value="1" {if !empty($_GPC['status'])} selected{/if}>上架</option>
+							<option value="0" {if empty($_GPC['status'])} selected{/if}>下架</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>分类</th>
+					<td>
+						<select class="span3" style="margin-right:15px;" name="cate_1" >
+							<option value="0">请选择一级分类</option>
+							{loop $category $row}
+							{if $row['parentid'] == 0}
+							<option value="{$row['id']}" {if $row['id'] == $_GPC['cate_1']} selected="selected"{/if}>{$row['name']}</option>
+							{/if}
+							{/loop}
+						</select>
+						 
+					</td>
+				</tr>
+				<tr>
+				 <tr class="search-submit">
+					<td colspan="2"><button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button></td>
+				 </tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<form action="" method="post" onsubmit="return formcheck(this)">				
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:10px;"></th>
+					<th style="width:60px;">显示顺序</th>
+					<th style="width:30px;">ID</th>
+					<th style="min-width:150px;">商品标题</th>
+ 					<th style="width:100px;">销售价/成本价</th>
+					<th style="width:100px;">销售量/库存</th>
+					<th style="width:100px;">属性</th>
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td></td>
+					<td><input type="text" class="span1" name="displayorder[{$item['id']}]" value="{$item['displayorder']}"></td>				
+					<td>{$item['id']}</td>
+					<td>{if !empty($category[$item['pcate']])}<span class="text-error">[{$category[$item['pcate']]['name']}] </span>{/if}{if !empty($children[$item['pcate']])}<span class="text-info">[{$children[$item['pcate']][$item['ccate']][1]}] </span>{/if}{$item['title']}</td>
+ 					<td style="background:#f2dede;">{$item['marketprice']}元 / {$item['productprice']}元</td>
+					<td style="background:#a2dede;">{$item['sellnums']}/ {if $item['total']<0}无限{else}{$item['total']}{/if}</td>					
+					<td>{if $item['status']}<span class="label label-success">上架</span>{else}<span class="label label-error">下架</span>{/if}&nbsp;{if $item['isindex'] == 1}<span class="label label-info">首页</span>{/if}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('goods', array('id' => $item['id'], 'op' => 'post'))}">编辑</a>&nbsp;&nbsp;<a href="{php echo $this->createWebUrl('goods', array('id' => $item['id'], 'op' => 'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;">删除</a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+			<tr>
+				<td></td>
+				<td colspan="3">
+					<input name="token" type="hidden" value="{$_W['token']}" />
+					<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+				</td>
+			</tr>
+		</table>
+		</form>
+		{$pager}
+	</div>
+</div>
+<script type="text/javascript">
+<!--
+	var category = {php echo json_encode($children)};
+	
+//-->
+</script>
+{/if}
+{template 'common/footer'}

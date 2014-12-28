@@ -1,0 +1,99 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加凑一对活动</h4>
+	<table>
+		<tbody>		
+			<tr>
+				<th>回复标题</th>
+				<td><input type="text" name="title" value="{$reply['title']}"> </td>
+			</tr>
+			<tr>
+				<th>图文消息图片</th>
+				<td>
+					<div id="" class="uneditable-input reply-edit-cover">
+						<div class="detail">
+							<span class="pull-right">大图片建议尺寸：640像素 * 320像素</span>
+							<input type="button" id="bless-picture" fieldname="picture{$namesuffix}" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+							<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, ''{php echo create_url('site/module/deleteimage', array('id' => $reply['id'], 'name' => 'grabseat'))}'')" style="{if empty($reply['picture'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+						</div>
+						{if !empty($reply['picture'])}
+						<input type="hidden" name="picture-old" value="{$reply['picture']}">
+						<div id="upload-file-view" class="upload-view">
+							<input type="hidden" id="bless-picture-value" value="{$reply[picture]}">
+							<img width="100" src="{$_W['attachurl']}{$reply['picture']}">&nbsp;&nbsp;
+						</div>
+						{else}
+						<div id="upload-file-view"></div>
+						{/if}
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>活动描述</th>
+				<td>
+					<textarea style="height:50px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于图文显示的简介</div>
+				</td>
+			</tr>
+			<tr>
+				<th>活动详情</th>
+				<td>
+					<textarea style="height:100px;" name="content" class="span7 richtext-clone" cols="60">{$reply['content']}</textarea>
+					<div class="help-block">用于正文内的详情</div>
+				</td>
+			</tr>
+			<tr>
+				<th>抢座后提示</th>
+				<td>
+					<textarea style="height:100px;" name="showcontent" class="span7 richtext-clone" cols="60">{$reply['showcontent']}</textarea>
+					<div class="help-block">抢座完成页面中显示，多为分享邀请的说明。</div>
+				</td>
+			</tr>
+			<tr>
+				<th>赴约后提示</th>
+				<td>
+					<textarea style="height:100px;" name="fitcontent" class="span7 richtext-clone" cols="60">{$reply['fitcontent']}</textarea>
+					<div class="help-block">成功赴约的页面中显示，多为奖励内容的说明。</div>
+				</td>
+			</tr>			
+		</tbody>
+	</table>	
+</div>
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script type="text/javascript">
+	$('#qiyong, #jinyong').click(function () {
+	setTimeout("history.go(0)",500);	
+	});	
+kindeditor($('#rule'));
+kindeditorUploadBtn($('#bless-picture'));
+kindeditorUploadBtn($('#user-bgimage'));
+
+	$('#date-range').daterangepicker({
+        format: 'YYYY-MM-DD',
+        startDate: $(':hidden[name=start_time]').val(),
+        endDate: $(':hidden[name=end_time]').val(),
+        locale: {
+            applyLabel: '确定',
+            cancelLabel: '取消',
+            fromLabel: '从',
+            toLabel: '至',
+            weekLabel: '周',
+            customRangeLabel: '日期范围',
+            daysOfWeek: moment()._lang._weekdaysMin.slice(),
+            monthNames: moment()._lang._monthsShort.slice(),
+            firstDay: 0
+        }
+    }, function(start_time, end_time){
+        $('#date-range .date-title').html(start_time.format('YYYY-MM-DD') + ' 至 ' + end_time.format('YYYY-MM-DD'));
+        $(':hidden[name=start_time]').val(start_time.format('YYYY-MM-DD'));
+        $(':hidden[name=end_time]').val(end_time.format('YYYY-MM-DD'));
+    });
+
+</script>
+<script type="text/javascript">
+
+	kindeditor($('.richtext-clone'));
+
+</script>

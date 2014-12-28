@@ -1,0 +1,138 @@
+*{padding:0;margin:0;}
+li{list-style:none;}
+.main ul{background:url(line.png) 210px 0 repeat-y;background-size:2px 4px;width:320px;float:right;padding:0 0 30px 0;}
+.main li{height:75px;width:160px;margin:15px 0 0 20px;background:url(bg.png) repeat;padding:5px;}
+.main .icon{display:block;background:url(menu_bg2.png) 0 0 no-repeat;height:74px;width:134px;background-size:144px 84px;float:left;padding:10px 0 0 10px;margin:0 0 0 45px;}
+.main #m3 .icon{background:url(menu_bg1.png) 0 0 no-repeat;width:179px;background-size:189px 84px;margin:0;}
+.main li a{font-size:12px;color:#fff;text-decoration:none;display:block;width:300px;height:84px;}
+.main .icon em{display:block;width:115px;height:65px;}
+.main #m3 .icon em{width:160px;height:65px;}
+.main .title{float:left;line-height:44px;padding:0 0 0 10px;max-width:84px; white-space:nowrap;overflow:hidden;font-size:12px;}
+
+.copyright{padding:8px 0;text-align:center;font-size:14px;color:#666; position:fixed; bottom:0; width:100%; z-index:3}
+.copyright a{color:#666;}
+/*iscroll*/
+
+.banner {
+	width:100%;
+	margin:0 auto;
+	padding:0;
+	background-color:#151515;
+}
+#wrapper {
+	margin:0;
+	width:100%;
+	height:auto;
+	float:left;
+	position:relative;	/* On older OS versions "position" and "z-index" must be defined, */
+	z-index:1;			/* it seems that recent webkit is less picky and works anyway. */
+	overflow:hidden;
+	
+}
+
+#scroller {
+	height:auto;
+	float:left;
+	padding:0;
+}
+
+#scroller ul {
+	list-style:none;
+	display:block;
+	float:left;
+	width:100%;
+	height:auto;
+	padding:0;
+	margin:0;
+	text-align:left;
+}
+
+#scroller li {
+	
+	display:block; float:left;
+	width:auto; height:auto;
+	text-align:center;
+	font-size:0px;
+	padding:0;
+	position:relative;
+}
+#scroller li a{
+	
+	display:block;
+	padding:0;
+	margin:0;
+}
+#scroller li p{
+	position:absolute;
+	z-index:2;
+	display:block;
+	width:100%;
+	bottom:0;
+	background-color:rgba(0, 0, 0, 0.5);
+	color:#F4F4F4;
+	font-size:14px;
+	text-indent: 55px;
+	line-height:24px;
+	text-align: left;
+    text-indent: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+	padding:0;
+	margin:0;
+}
+#nav {
+	float: right;
+    margin-top: -15px;
+    padding: 0;
+    position: relative;
+    width: auto;
+    z-index: 3;
+}
+
+#prev, #next {
+	float:left;
+	font-weight:bold;
+	font-size:14px;
+	padding:5px 0;
+	width:80px;
+	display: none;
+}
+
+#next {
+	float:right;
+	text-align:right;
+}
+
+#indicator > li {
+	display:block; float:left;
+	list-style:none;
+	padding:0; margin:0;
+}
+
+#indicator {
+	display: block;
+    margin: 0 8px;
+    padding: 0;
+    width: auto;
+}
+
+#indicator > li {
+	text-indent:-9999em;
+	width:8px; height:8px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	-o-border-radius:4px;
+	border-radius:4px;
+	background:#888;
+	overflow:hidden;
+	margin-right:4px;
+}
+
+#indicator > li.active {
+	background:#DDDDDD;
+}
+
+#indicator > li:last-child {
+	margin:0;
+}
+

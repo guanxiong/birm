@@ -1,0 +1,98 @@
+{template 'header'}
+{php global $_W,$_GPC;}
+<br>
+<div class="stock">
+	<div class="tabbable"> <!-- Only required for left/right tabs -->
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#tab1" data-toggle="tab">基本信息</a></li>
+			<li><a href="#tab2" data-toggle="tab" >K线图</a></li>
+		</ul>
+		<div class="tab-content" style="padding:0 10px; margin-top:10px;">
+			<div class="tab-pane active" id="tab1">
+				<table class="form-table">					
+					<div class="mobile-div img-rounded">
+						<div class="mobile-hd" style="border-bottom:0;">证券名称：{$data['name']} {php if (!empty($row)) echo '关注涨跌:'.sprintf("%.2f",$data['nowPri']-($row['stkprice']==0?$row['lastprice']:$row['stkprice']))}
+						</div>
+						<div>
+													
+								{if empty($row)}
+									<div align="left"> 	
+									<button class="btn btn-warning" onclick="option('add');">添加到自选</button>
+									</div>
+								{else}
+									<div align="right"> 
+									<button class="btn btn-success" onclick="option('remove');">移除自选</button>
+									</div>	
+								{/if}
+													
+							<div class="mobile-content">
+<pre>							
+股票代码:{php echo $data['gid'].''}	当前价格: {php echo $data['nowPri'].'<br>'}
+涨跌: {php echo $dpdata['nowPic'].''}	涨幅: {php echo $dpdata['rate'].'%<br>'}
+今日最高价: {php echo $data['todayMax'].''}	今日最低价: {php echo $data['todayMin'].'<br>'}
+竞买价: {php echo $data['competitivePri'].''}	竞卖价：{php echo $data['competitivePri'].'<br>'}
+成交量: {php echo $dpdata['traNumber'].'手'}	成交金额：{php echo $dpdata['traAmount'].'万<br>'}
+{php echo'------------------------------<br>'}
+卖五报价: {php echo $data['sellFivePri'].''}	卖五: {php echo $data['sellFive'].'<br>'}
+卖四报价: {php echo $data['sellFourPri'].''}	卖四: {php echo $data['sellFour'].'<br>'}
+卖三报价: {php echo $data['sellThreePri'].''}	卖三: {php echo $data['sellThree'].'<br>'}
+卖二报价: {php echo $data['sellTwoPri'].''}	卖二: {php echo $data['buyTwo'].'<br>'}
+卖一报价: {php echo $data['sellOnePri'].''}	卖二: {php echo $data['sellOne'].'<br>'}
+{php echo'------------------------------<br>'}
+买五报价: {php echo $data['buyFivePri'].''}	买五: {php echo $data['buyFive'].'<br>'}
+买四报价: {php echo $data['buyFourPri'].''}	买四: {php echo $data['buyFour'].'<br>'}
+买三报价: {php echo $data['buyThreePri'].''}	买三: {php echo $data['buyThree'].'<br>'}
+买二报价: {php echo $data['buyOnePri'].''}	买二: {php echo $data['buyTwo'].'<br>'}
+买一报价: {php echo $data['buyOnePri'].''}	买一: {php echo $data['buyOne'].'<br>'}
+{php echo'-------------------------------<br>'}
+日期: {php echo $data['date'].''}	时间: {php echo $data['time'].'<br>'}
+</pre>
+							</div>
+						</div>
+					</div>
+				</table>
+			</div>
+			<div class="tab-pane" id="tab2">
+				<div class="mobile-div img-rounded">
+						<span class="mobile-li" data-toggle="collapse" data-target="#pastlist-1">分时K线图</span>					
+						<div class="collapse in" id="pastlist-1">
+							<img alt="" src="{$dpimg['minurl']}">
+						</div>	
+						<span class="mobile-li" data-toggle="collapse" data-target="#pastlist-2">日K线图</span>
+						<div class="collapse in" id="pastlist-2">
+							<img alt="" src="{$dpimg['dayurl']}">
+						</div>	
+						<span class="mobile-li" data-toggle="collapse" data-target="#pastlist-3">周K线图</span>
+						<div class="collapse in" id="pastlist-3">
+							<img alt="" src="{$dpimg['weekurl']}">
+						</div>	
+						<span class="mobile-li" data-toggle="collapse" data-target="#pastlist-4">月K线图</span>
+						<div class="collapse in" id="pastlist-4">
+							<img alt="" src="{$dpimg['monthurl']}">
+						</div>																										
+				</div>													
+			</div>			
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+<!--
+function option(action){
+	$.ajax({
+            type: "POST",
+            url: "{$_W['siteroot']}/mobile.php?act=module&userid={$userid}&name=stock&do=optional&opt="+action+"&weid=1&stkname={php echo urlencode($data['name'])}&stkcode={$data['gid']}&stkprice={$data['nowPri']}&lastprice={$data['yestodEndPri']}",
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "text",
+            success: function (data) {
+                // Play with returned data in JSON format
+				alert(data);
+            },
+            error: function (msg) {
+                alert(msg['message']);
+            }
+	 });  	
+}
+//-->
+</script>
+{template 'footer'}

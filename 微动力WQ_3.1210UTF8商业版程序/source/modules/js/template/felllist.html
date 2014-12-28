@@ -1,0 +1,62 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+				<li{if $_GPC['do'] == 'test'} class="active"{/if}><a href="{php echo $this->createWeburl('test');}">俱乐部管理</a></li>
+                <li{if $_GPC['do'] == 'felllist'} class="active"{/if}><a href="{php echo $this->createWeburl('felllist', array('hid'=>$hid));}">印象管理</a></li>
+
+        
+        </ul>
+	<div class="search">
+		<form action="{php echo $this->createWeburl('felllist',array('hid'=>$hid))}" method="post">
+		  <table class="table table-bordered tb">
+			<tbody>
+				<tr class="span6">
+					<th class="span2">印象名称：</th>
+					<td class="span2">
+						<input class="span2" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+					</td>
+                    <td class="span2">
+                    <button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button>
+                    </td>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+    <a href="{php echo $this->createWeburl('felladd', array('hid'=>$hid))}"  class="btn"><i class="icon-plus-sign-alt"></i>添加印象</a>
+    <p>
+    <table class="table table-hover">
+		<thead class="navbar-inner">
+				<tr>
+					<th width="200" style="width:200px;">印象标题</th>
+					<th width="200" style="width:200px;"><span style="width:100px;">印象数</span></th>
+					<th width="101" style="width:100px;">是否显示</th>
+                    <th width="101" style="width:100px;">显示顺序</th>
+
+					<th width="54" style="min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['title']}</td>
+					<td>{$item['yinxiang_number']}</td>
+                    <td><span class="label">{if $item['isshow']}显示{else}隐藏{/if}</span></td>
+					<td>{$item['sort']}</td>
+					<td><a  href="{php echo $this->createWebUrl('felladd', array('hid'=>$hid,'yid' => $item['yid']))}" class="btn " title="编辑"><i class="icon-edit"></i></a>
+					<a onclick="return confirm('是否要删除该印象？');return false;" href="{php echo $this->createWebUrl('delfell', array('yid' => $item['yid']))}" class="btn btn-small" title="删除"><i class="icon-remove"></i></a></td>
+				</tr>
+				{/loop}
+			</tbody>
+			<tr>
+				<td colspan="6">
+					<input name="token" type="hidden" value="{$_W['token']}" />
+					<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+				</td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</div>
+{template 'common/footer'}

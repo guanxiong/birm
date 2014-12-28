@@ -1,0 +1,52 @@
+{template 'header'}
+
+<div class="container">
+    <div class="mt15">
+        <form role="form" method="post" action="">
+         <input type='hidden' name="id" value="{$member['id']}" class="form-control" >
+            <div id="tabs_1">
+                <div class="form-group">
+                    <label>姓名</label>
+                    <input name="realname" value="{$member['realname']}" class="form-control" id="realname" placeholder="请填写你的姓名">
+                </div>
+                <div class="form-group">
+                    <label>昵称</label>
+                    <input name="nickname" value="{$member['nickname']}" class="form-control" id="nickname" placeholder="请填写你的昵称">
+                </div>
+  
+                <div class="form-group">
+                    <label>手机</label>
+                    <input id="mobile" name="mobile" value="{$member['mobile']}" class="form-control" placeholder="请填写你的手机">
+                </div>
+                <!-- <input class="btn btn-danger btn-block"  name="submit" value="保存资料"> -->
+                <button type="submit" name="submit" value="yes" class="btn btn-danger btn-block" style="width:100%;">提交登记</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    // require(['jquery', 'base'], function ($) {
+
+    //     $("#edit_form_submit").on('click', function() {
+    //         var _this = $(this);
+    //         if(_this.hasClass("isLoading")){
+    //             return false;
+    //         }
+    //         _this.addClass("isLoading").html("loading...");
+    //         var realname = $('#realname').val();
+    //         var nickname = $('#nickname').val();
+    //         var mobile = $('#mobile').val();
+    //         var param = {"realname":realname,"mobile":mobile,"nickname":nickname,"token":'$_W['token']',"submit":'submit'};
+    //         $.post(document.location.href, param, function(data) {
+    //              M.message(data.message);
+    //                          setTimeout(function() {
+    //                      window.location.href = "{php echo $this->createMobileUrl('reg')}";
+    //         }, 2000);
+
+    //             _this.removeClass("isLoading").html("保存资料");
+    //         },'json');
+    //     });
+    // });
+</script>
+{php $footer_off=1;}{php $stat_off=1;}
+{template 'footer'}

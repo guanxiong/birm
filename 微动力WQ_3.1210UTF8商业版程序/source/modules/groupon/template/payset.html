@@ -1,0 +1,85 @@
+{template 'header'}
+<link rel="stylesheet" type="text/css" href="/source/modules/groupon/style/css/bootstrap_switch.css?2014-03-07-1" media="all" />
+<script type="text/javascript" src="/source/modules/groupon/style/js/bootstrap_switch.js?2014-03-07-1"></script>
+
+   <div id="main">
+        <div class="container-fluid">
+
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="box">
+                        <div class="box-title">
+                            <div class="span10">
+                                <h3><i class=" icon-external-link"></i>支付方式设置<small>在线支付需要微动力内部开启设置</small></h3>
+                            </div>
+                            <div class="span2"><a class="btn" href="Javascript:window.history.go(-1)">返回</a></div>
+                        </div>
+
+                        <div class="box-content">
+                            <table class="table table-bordered table-hover  dataTable" id="apptable">
+                                <thead>
+                                    <tr>
+                                        <th>支付方式</th>
+                                        <!--<th>回复关键词</th> -->
+                                        <th>状态</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="sn weather">余额支付</span></td>
+                                        <!--<td>保险计算</td> -->
+                                        <td>
+                                            <div class="switch switch-small">
+                                                <input type="checkbox" name="payType1"  value="1" {if $payset['payset1']==1}checked="checked"{/if}/>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="sn shoper">在线支付</span></td>
+                                        <!--<td>车贷计算</td> -->
+                                        <td>
+                                            <div class="switch switch-small">
+												<input type="checkbox" name="payType2"  value="2" {if $payset['payset2']==1}checked="checked"{/if}/>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="sn bk">货到付款</span></td>
+                                        <!--<td>全款计算</td> -->
+                                        <td>
+                                            <div class="switch switch-small">
+												<input type="checkbox" name="payType3"  value="3" {if $payset['payset3']==1}checked="checked"{/if}/>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                  
+
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $('div.switch').on('switch-change', function (e, data) {
+                var $el = $(data.el), value = data.value, key = $el.attr('value');
+                $.post('{php echo $this->createWebUrl('payset',array('subcp'=>'ajax'))}', { 'weid': {$_W['weid']}, 'appid': key, 'chk': value }, function (data) {
+                    console.log(data);
+                });
+            });
+
+        });
+
+    </script>
+</body>
+</body>
+</html>

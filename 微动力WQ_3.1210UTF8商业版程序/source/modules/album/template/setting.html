@@ -1,0 +1,24 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>相册展现方式</h4>
+		<table class="tb">
+			<tr>
+				<th>相册展示方式</th>
+				<td>
+					<label class="radio inline"><input type="radio" value="1" name="style[albumlisttype]" {if empty($styles['albumlisttype']['content']) || $styles['albumlisttype']['content'] == '1'} checked{/if}> 单行</label>
+					<label class="radio inline"><input type="radio" value="2" name="style[albumlisttype]" {if $styles['albumlisttype']['content'] == '2'} checked{/if}> 双行</label>
+					<label class="radio inline"><input type="radio" value="3" name="style[albumlisttype]" {if $styles['albumlisttype']['content'] == '3'} checked{/if}> 瀑布流</label>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,19 @@
+{template 'header'}
+{php global $_W;}
+<table>
+<tr>
+<th>股票代码</th>
+<td><input name="stkcode"  type="text" id="stkcode" value="399300"></td>
+<td><button class="btn btn-warning" onclick="doQuery('add');">查找</button>
+</tr>
+</table>
+<iframe id="query" name="query" width="100%" height="600" frameborder=0 src="{php echo $_W['siteroot'].$this->createMobileUrl('show',array('userid'=>$userid))}&stkcode=399300"></iframe>
+<script>
+$(document.body).css({
+"overflow-x":"hidden",
+"overflow-y":"hidden"
+});
+function doQuery(){
+	document.getElementById('query').src="{php echo $_W['siteroot'].$this->createMobileUrl('show',array('userid'=>$userid))}&stkcode="+document.getElementById('stkcode').value;
+}
+</script>

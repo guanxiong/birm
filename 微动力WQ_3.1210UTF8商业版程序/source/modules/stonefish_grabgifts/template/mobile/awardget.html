@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$reply['title']}</title>
+<link rel="stylesheet" type="text/css" href="./source/modules/stonefish_grabgifts/template/css/style.css">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<meta name="Description" content="{$reply['description']}" />
+<!-- Mobile Devices Support @begin -->
+<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<!-- Mobile Devices Support @end -->
+<style>
+body{background-color:{$reply['bgcolor']};}
+.product li{ width: 96%; float: left; padding:0 2%;}
+</style>
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+ <div class="center"> 	
+	{if !empty($mygift)}
+	<div class="top"><span>{$mygift['nickname']}</span> 恭喜您中奖了</div>
+	{else}
+	<div class="top"><span>出错了!联系管理员</span></div>
+    {/if}
+	<div class="con">
+	<div class="pri">
+		<div class="pricebg">		    
+			<p style="text-align:left;line-height:22px;">{$reply['userinfo']}</p>
+		</div>
+	</div>	
+	<img class="infor" src="./source/modules/stonefish_grabgifts/template/images/infor.png" />
+	<form action="{php echo $this->createMobileUrl('awardinfoget', array('rid' => $rid))}" method="post" id="form1">
+	<input name="giftid" type="hidden" value="{$giftid}" >
+	<ul class="wrinfor">
+		<li class="nam" {if $reply['isrealname']==0}style="display:none"{/if}><div class="pad"><input type="text" name="realname" value="{$profile['realname']}" placeholder="请输入您的姓名" /></div></li>
+		<li class="tel" {if $reply['ismobile']==0}style="display:none"{/if}><div class="pad"><input type="tel" name="mobile" value="{$profile['mobile']}" placeholder="请输入您的手机号" maxlength="11" /></div></li>
+		<li class="weixin" {if $reply['isweixin']==0}style="display:none"{/if}><div class="pad"><input type="text" name="weixin" value="{$profile['nickname']}" placeholder="请输入您的微信号" /></div></li>
+		<li class="qqhao" {if $reply['isqqhao']==0}style="display:none"{/if}><div class="pad"><input type="tel" name="qqhao" value="{$profile['qq']}" placeholder="请输入您的QQ号码" /></div></li>
+		<li class="email" {if $reply['isemail']==0}style="display:none"{/if}><div class="pad"><input type="email" name="email" value="{$profile['email']}" placeholder="请输入您的邮箱地址" /></div></li>
+		<li class="address" {if $reply['isaddress']==0}style="display:none"{/if}><div class="pad"><input type="text" name="address" value="{$profile['address']}" placeholder="请输入您的联系地址" /></div></li>
+	</ul>
+	<div class="btn" style="width:90%;margin:30px auto 30px;"><input type="submit" value="提交资料" style="width:100%;font-size:100%;" onclick="return submit_data()"/></div>
+	</form>
+	</div>
+    <div class="copyright">
+    {if $reply['iscopyright']==1}<a href="{$reply['copyrighturl']}">&copy;{$reply['copyright']}</a>{else}<a href="javascript:;">{if empty($footer_off)}&copy;{if empty($_W['account']['name'])}微动力团队{else}{$_W['account']['name']}{/if}&nbsp;&nbsp;{$_W['setting']['copyright']['statcode']}{/if}</a>{/if}
+    </div>
+ 	<div class="sub_b">
+	    {if !empty($mygift)}
+			<dl>
+ 			    <dt><span>&nbsp;</span><img src="./source/modules/stonefish_grabgifts/template/images/a4.jpg"/></dt>
+ 			    <dd><a href="{$mygifturl}">我的活动页</a></dd>
+ 		    </dl>
+		{else}
+		    <dl>
+ 			    <dt><span>&nbsp;</span><a href="" class="lb"><img src="./source/modules/stonefish_grabgifts/template/images/a4.jpg" alt="" /></a></dt>
+ 			    <dd><a href="">出错了!联系管理员</a></dd>
+ 		    </dl>
+		{/if}
+ 	</div>
+ </div>
+<script type="text/javascript">
+<!--
+function submit_data()
+{
+	var form1    = document.getElementById("form1");	        	
+	var realname = form1.realname.value;
+	var weixin   = form1.weixin.value;
+	var mobile   = form1.mobile.value;
+	var qqhao    = form1.qqhao.value;
+	var email    = form1.email.value;
+	var address  = form1.address.value;
+
+	{if $reply['isrealname']==1}
+	if(realname==''){
+		alert('请输入您的姓名');
+		return false;
+	}
+	{/if}
+	{if $reply['ismobile']==1}
+	if( !isMobile(mobile) ) {
+		alert('请输入您正确的手机号');
+		return false;
+	}
+	{/if}
+	{if $reply['isweixin']==1}
+	if(weixin==''){
+		alert('请输入您的微信号');
+		return false;
+	}
+	{/if}
+	{if $reply['isqqhao']==1}
+	if(qqhao==''){
+		alert('请输入您的QQ号码');
+		return false;
+	}
+	{/if}
+	{if $reply['isemail']==1}
+	if(!CheckMail(email)){
+		alert('请输入您的邮政地址');
+		return false;
+	}
+	{/if}
+	{if $reply['isaddress']==1}
+	if(address==''){
+		alert('请输入您的联系地址');
+		return false;
+	}
+	{/if}	
+	return true;
+}
+//-->
+/**
+ * js验证手机号
+ * @param strValue
+ * @returns
+ */
+function isMobile(strValue)
+{
+    return executeExp(/^(13|15|18|17)\d{9}$/, strValue);
+}
+
+/**
+ * 验证邮箱格式
+ * @param mail
+ * @returns {Boolean}
+ */
+function CheckMail(mail) {
+	var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+	return executeExp(myreg, mail);
+}
+</script>
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	window.shareData = {
+		"imgUrl": "{$picture}",
+		"timeLineLink": "{$shareurl}",
+		"sendFriendLink": "{$shareurl}",
+		"weiboLink": "{$shareurl}",
+		"tTitle": "{$reply['sharetitle']}",
+        "fTitle": "{$reply['sharetitle']}",
+        "tContent": "{$reply['sharecontent']}",
+        "fContent": "{$reply['sharecontent']}",
+        "wContent": "{$reply['sharecontent']}" 
+	};
+
+	// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+		WeixinJSBridge.invoke('sendAppMessage', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.sendFriendLink,
+			"desc": window.shareData.fContent,
+			"title": window.shareData.fTitle
+		}, function (res) {
+			_report('send_msg', res.err_msg);
+		})
+	});
+
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function (argv) {
+		WeixinJSBridge.invoke('shareTimeline', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.timeLineLink,
+			"desc": window.shareData.tContent,
+			"title": window.shareData.tTitle
+		}, function (res) {
+			_report('timeline', res.err_msg);
+		});
+	});
+
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function (argv) {
+		WeixinJSBridge.invoke('shareWeibo', {
+			"content": window.shareData.wContent,
+			"url": window.shareData.weiboLink
+		}, function (res) {
+			_report('weibo', res.err_msg);
+		});
+	});
+}, false);
+
+function onBridgeReady(){
+ WeixinJSBridge.call('hideOptionMenu');
+}
+
+if (typeof WeixinJSBridge == "undefined"){
+    if( document.addEventListener ){
+        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+    }else if (document.attachEvent){
+        document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+    }
+}else{
+    onBridgeReady();
+}
+</script>
+</body>
+</html>

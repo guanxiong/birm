@@ -1,0 +1,43 @@
+{template 'common/header'}
+
+
+<div class="main">
+	<div style="padding:15px;">
+	<h4>姓名：{$profile['nickname']},电话：{$profile['mobile']}</h4>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:150px;">场次</th>
+					<th style="width:60px;">比分</th>
+					<th style="min-width:200px;">选择</th>
+					<th style="width:60px;">得分</th>
+					<th style="width:120px;">竞猜时间</th>
+					
+					
+					
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['id']} ->{$item['teama']} VS {$item['teamb']}</td>
+					<td >{$item['score']}</td>
+					<td>{if $item['whowins']==$item['groupa']}{$item['teama']}{/if}
+					{if $item['whowins']==$item['groupb']}{$item['teamb']}{/if}
+					{if $item['whowins']==0}打平{/if}
+					</td>
+					<td >{$item['scores']}</td>
+					<td>{php echo date('y-m-d H:i:s', $item['createtime'])}</td>
+					
+					
+				
+				</tr>
+				
+				{/loop}
+			</tbody>
+			
+		</table>
+	</div>
+</div>
+
+{template 'common/footer'}

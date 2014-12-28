@@ -1,0 +1,38 @@
+{template 'header'}
+<script type="text/javascript" src="./resource/script/jquery-1.7.2.min.js"></script>
+<link rel="stylesheet" href="./source/modules/floater/template/tip-yellow/tip-yellow.css" type="text/css" />
+<script type="text/javascript" src="./source/modules/floater/template/js/jquery.poshytip.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+$(function(){
+	{loop $list $row}
+	$('#{php echo $row['wishtype'].$row['id']}').poshytip();
+	{/loop}
+
+});
+//]]>
+</script>
+<table id="tab"	background="./source/modules/floater/template/img/bg.jpg" width="100%" height="300" >
+	<tr>
+		<td valign="top" align="left">
+			<a href="{php echo create_url('mobile/module',array('do' => 'makeawish','weid'=>empty($_GPC['__weid'])?$_GPC['weid']:$_GPC['__weid'],'userid'=>$_GPC['userid'],'name' => 'floater'))}"><img
+			src="./source/modules/floater/template/img/wish.gif" alt="祈愿"	width="72" height="65" border=0>
+			</a>			
+		</td>		
+	</tr>
+	<tr>
+		<td colspan="2">	
+			{loop $list $row}
+			<marquee scrollamount={php echo  rand(1,3)} delay=0> 
+			<a id="{php echo $row['wishtype'].$row['id']}" href="{php echo create_url('mobile/module',array('do' => 'show','weid'=>empty($_GPC['__weid'])?$_GPC['weid']:$_GPC['__weid'],'userid'=>$_GPC['userid'],'name' => 'floater','wishid'=>$row['id']))}" title="{$row['msg']}"> 
+				<img src="./source/modules/floater/template/img/c{$row['wishtype']}.gif" border=0>
+			</a>
+			</marquee>
+			{/loop}
+		</td>
+	</tr>	
+</table>
+<div>
+{$pager}	
+</div>
+{template 'footer'}

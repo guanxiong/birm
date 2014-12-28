@@ -1,0 +1,258 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Now大了</title>
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+	<link  rel="stylesheet"  type="text/css"  href="./source/modules/nowbig/template/css/style.css">
+	<script  type="text/javascript"  async=""  src="./source/modules/nowbig/template/js/sm.js"></script>
+	<script  type="text/javascript"  src="./source/modules/nowbig/template/js/jquery-2.1.js"></script>
+	<script  type="text/javascript"  src="./source/modules/nowbig/template/js/common.js"></script>
+	<script  src="./source/modules/nowbig/template/js/megapix-image.js"></script>
+	<script  type="text/javascript">
+	var ua = navigator.userAgent;
+	if ( /Android/i.test(ua) && /(2\.[1|2|3]\.[\d];)/i.test(ua) ){
+		//alert(ua)
+        window.location.href="http://www.mizone.cc/1L/mobile.php?mod=low"; 
+    }
+	$(function(){
+		setWidth(640,960);
+	});
+	var _smq = _smq || [];
+	_smq.push(['_setAccount', '8F7A55F', new Date()]);
+	_smq.push(['_setClickTimeOut', 400]);
+	_smq.push(['_setDirectoryIndex', 'index.html']);
+	_smq.push(['pageview']);
+
+	(function() {
+	var sm = document.createElement('script'); sm.type = 'text/javascript'; sm.async = true;
+	sm.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdnmaster.com/sitemaster/sm.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sm, s);
+	})();
+	</script>
+<meta  name="viewport"  content="target-densitydpi=device-dpi, width=640, user-scalable=no">
+	<script  type="text/javascript">
+	var url='{$posturl}';
+	var attachurl='{$attachurl}';
+	</script>
+</head>
+<body>
+<div  class="wrap">
+	<div  class="main now">
+		
+		<div  class="now_container">
+			<div  class="canvas_box"  id="canvas_box">
+				<div  class="preview">
+					<canvas  id="slideshow"  width="620"  height="400"></canvas>
+		            <canvas  id="obj"  width="150"  height="150"></canvas>
+				</div>
+		            
+	            <canvas  id="result"  style="display:none;"></canvas>
+	            <div  id="mask"  class="mask"></div>
+			</div>
+			
+			<div  class="success">
+				
+			</div>
+
+			<div  class="kuang"></div>
+        </div>
+        <div  class="tools">
+			<input  type="button"  id="btn1"  value="撤销" onclick=" _smq.push(['custom','1Lmo','1Lmo_undo']);">
+			<input  type="button"  id="btn2"  value="加大" onclick="changeiDst('up')">
+			<input  type="button"  id="btn3"  value="减少" changeiDst('down')>
+			<input  type="button"  id="btn5"  value="美化" onclick="beautify()">
+			<div  id="btn4">
+				<input  type="file"  id="btn_change"  value="换一张图" onclick="_smq.push(['custom','1Lmo','1Lmo_change']);">
+			</div>
+			
+			
+		</div>
+
+        <div  class="prompt_box">
+        	<div  class="prompt prompt_choose"></div>
+			<div  class="prompt prompt_share"></div>
+        </div>
+		
+	
+		<div  class="btnbox">
+			<div  class="btn_now">
+				<input  type="file"  id="file"  class="now_file" >
+			</div>
+			<div  class="btn_save">
+				<a  href="javascript:void(0)"  class="tid" >保存</a>
+			</div>
+
+			<div  class="btn_share">
+				<input  name="photo"  type="hidden"  id="photo"  value="">
+				<input  name="lineLink"  type="hidden"  id="lineLink"  value="http://www.mizone.cc/1L/">
+				<a  href="javascript:void(0)"  id="weixin" ></a>
+			</div>
+			<div  class="btn_replay">
+				<a  href="http://www.mizone.cc/1L/mobile.php"  class="tid">再玩一次</a>
+			</div>
+		</div>
+        
+	</div>
+	<div  class="pop_loading">
+		<div  class="box"></div>
+	</div>
+	<div  class="pop_wx">
+		<div  class="box">
+			<span  class="close"></span>
+			<p  id="lcode"></p>
+		</div>
+	</div>
+	<div  class="nav nav_now">
+		<a  href="#"  class="nav_1" ></a>
+		<a  href="#"  class="nav_2" ></a>
+		<a  href="#"  class="nav_3" ></a>
+	</div>
+	<img  src="./source/modules/nowbig/template/css/bg_loading_pop.png"  width="1"  height="1"  style="position:absolute; left:0; top:0; z-index:-1; opacity:0;">
+	<canvas  id="canvas0"  width="620"  height="400"  style="display:none;"></canvas>
+	<input  type="hidden"  id="img0">
+	<input  type="hidden"  id="img1">
+	<input  type="hidden"  id="img2">
+</div>
+<script  src="./source/modules/nowbig/template/js/alloyimage.js"></script>
+<script  src="./source/modules/nowbig/template/js/script_m.js"></script>
+<script>
+	var isWX = navigator.userAgent.indexOf('MicroMessenger');
+	if(isWX > -1){
+		//alert('is weixin')
+	}
+    init();
+    $(function(){
+    	var count = 0;
+    	$(".btn_save").bind("click", function(){
+	    	$(".pop_loading").show();
+	    	setTimeout(function(){
+	    		savePhoto();
+	    	}, 200);
+	    	
+	    	$(".mask").hide();
+	    	$(".btn_share").show().siblings().hide();
+	    	$(".prompt_share").show().siblings().hide();
+	    	$(".tools").hide();
+	    });
+
+
+	    //分享成功
+	   	// $(".btn_share").bind("click", function(){
+	   		
+	   	// })
+    	$(".tools #btn1").bind("click", function(){
+    		count++;
+    		turn(count);
+    	})
+
+		$(".btn_share").bind("click", function(){
+	   		$(".pop_wx").show();
+	   		$(".success").show();
+	   		$(".btn_replay").show().siblings().hide();
+	   		$(".prompt_share").show().hide();
+	   	});
+	   	$(".pop_wx .close").bind("click",function(){
+	   		$(".pop_wx").hide();
+	   	})
+    })
+    
+	
+	//var imgUrl = '';
+	//var lineLink = 'http://www.mizone.cc/1L/';
+	var descContent = "";
+	var shareTitle = '#NOW大了# 手贱发了照片，不小心NOW大了你，戳链接回复状态吧！';
+	var appid = '';
+	
+	function shareFriend() {
+		WeixinJSBridge.invoke('sendAppMessage',{
+			"appid": appid,
+			"img_url": $("#photo").val(),
+			"img_width": "200",
+			"img_height": "200",
+			"link": $("#lineLink").val(),
+			"desc": descContent,
+			"title": shareTitle
+		}, function(res) {
+			//_report('send_msg', res.err_msg);
+		})
+	}
+	function shareTimeline() {
+		WeixinJSBridge.invoke('shareTimeline',{
+			"img_url": $("#photo").val(),
+			"img_width": "200",
+			"img_height": "200",
+			"link": $("#lineLink").val(),
+			"desc": descContent,
+			"title": shareTitle
+		}, function(res) {
+			   //_report('timeline', res.err_msg);
+		});
+	}
+	function shareWeibo() {
+		WeixinJSBridge.invoke('shareWeibo',{
+			"content": descContent,
+			"url": $("#lineLink").val(),
+		}, function(res) {
+			//_report('weibo', res.err_msg);
+		});
+	}
+	// 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		// 发送给好友
+		WeixinJSBridge.on('menu:share:appmessage', function(argv){
+			shareFriend();
+		});
+		// 分享到朋友圈
+		WeixinJSBridge.on('menu:share:timeline', function(argv){
+			shareTimeline();
+		});
+		// 分享到微博
+		WeixinJSBridge.on('menu:share:weibo', function(argv){
+			shareWeibo();
+		});
+	}, false);
+
+</script>
+<script  src="./source/modules/nowbig/template/js/drag.js"></script>
+
+<script  type="text/javascript">
+	getDragClass({
+        el: $(".now_container")[0],
+        start : function(){
+        	var imgs = document.getElementById("canvas_box");
+        	this.w = parseInt(imgs.offsetWidth) - 640;
+        	this.h = parseInt(imgs.offsetHeight) - 400;
+            this.nowX = parseInt(imgs.style.left) || 0;
+            this.nowY = parseInt(imgs.style.top) || 0;
+        },
+        move: function() {
+            this.nowPoint.x;
+            this.startPoint.x;
+            this.x = this.nowX + this.nowPoint.x - this.startPoint.x;
+            this.y = this.nowY + this.nowPoint.y - this.startPoint.y;
+            this.x = this.x > 0 ? 0 : (this.x < -this.w ? -this.w : this.x);
+            this.y = this.y > 0 ? 0 : (this.y < -this.h ? -this.h : this.y);
+            dragImg($("#canvas_box"), 0, this.y);
+                        console.log(this.w)
+
+        },
+        end: function() {
+        	var _this = this;
+        	var imgs = document.getElementById("canvas_box");
+        	_this.moveX = parseInt(imgs.style.left);
+        	
+            _this.nowX = this.moveX > 0 ? 0 : this.moveX < _this.out ? _this.out : this.moveX;
+            //alert(this.nowX)
+        }
+    });
+	function dragImg(o, x, y){
+    	o.css({"left": x, "top": y})
+    }
+    
+</script>
+
+</body>
+</html>

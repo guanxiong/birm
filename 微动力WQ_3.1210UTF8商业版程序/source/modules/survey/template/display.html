@@ -1,0 +1,90 @@
+{template 'common/header'}
+<style>
+.table td span{display:inline-block;}
+.table td input{margin-bottom:0;}
+</style>
+<script type="text/javascript">
+$(function(){
+	$(".main").delegate("span.switch", "click", function(){
+		var sw;
+		var a = $(this).find("i");
+		var sid = $(this).attr("value");
+		if(a.attr("class") == 'icon-play') {
+			a.attr("class", "icon-stop");
+			a.parent().attr("title", "关闭");
+			sw = '1';
+		} else {
+			a.attr("class", "icon-play");
+			a.parent().attr("title", "开启");
+			sw = '0';
+		}
+		$.post(location.href, {'sid': sid, 'switch': sw}, function(dat){
+		});
+	});
+});
+</script>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo $this->createWebUrl('display')}">调研活动列表</a></li>
+	<li><a href="{php echo $this->createWebUrl('post')}">新建调研活动</a></li>
+</ul>
+<form action="" method="post">
+<div class="main">
+	<div class="search">
+		<form action="site.php" method="get">
+		<input type="hidden" name="act" value="module" />
+		<input type="hidden" name="name" value="survey" />
+		<input type="hidden" name="do" value="display" />
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th>状态</th>
+					<td>
+						<select name="status">
+							<option value="1" {if $_GPC['status'] == '1'} selected{/if}>启用</option>
+							<option value="0" {if $_GPC['status'] == '0'} selected{/if}>禁用</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>关键字</th>
+					<td>
+							<input class="span6" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+					</td>
+				</tr>
+				 <tr class="search-submit">
+					<td colspan="2"><button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button></td>
+				 </tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:200px;">调研活动名称</th>
+					<th style="width:260px;">直接链接</th>
+					<th style="width:200px;">启动时间</th>
+					<th style="min-width:160px; text-align:right;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $ds $row}
+				<tr>
+					<td><a href="{php echo $this->createWebUrl('manage', array('id' => $row['sid']))}">{$row['title']}</a></td>
+					<td><input type="text" class="span3" value="{$row['link']}" /></td>
+					<td>{if $row['isstart']}{php echo date('Y/m/d H:i:s', $row['starttime'])}{else}未开始{/if}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('manage', array('id' => $row['sid']))}" class="btn btn-small" title="调研详情"><i class="icon-search"></i></a>
+						<a href="{php echo $this->createWebUrl('post', array('id' => $row['sid']))}" class="btn btn-small" title="编辑"><i class="icon-edit"></i></a>
+						<a href="{php echo $this->createWebUrl('delete', array('id' => $row['sid']))}" onclick="return confirm('删除调研活动将删除所有关联的调研记录，确认吗？');return false;" class="btn btn-small" title="删除"><i class="icon-remove"></i></a>
+						<span class="btn btn-small switch" value="{$row['sid']}" {if $row['switch'] == 0}title="开启"><i class="icon-play"></i>{else}title="关闭"><i class="icon-stop"></i>{/if}</span>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+</form>
+{template 'common/footer'}

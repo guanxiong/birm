@@ -1,0 +1,19 @@
+body{ margin:0 auto; width:100%; background:url(../images/recru_bg.jpg); color:#4d4f4e; font-size:18px; -webkit-text-size-adjust:none; }
+.header{ width:100%; height:55px; text-align:center; line-height:55px; background:url(../images/recru_header_bg.jpg); background-size:contain; color:#9dd3f5; box-shadow:0 2px 5px #494949; position:relative; }
+.header a.back-list{ width:25px; height:25px; position:absolute; top:14px; left:16px; }
+.header a.back-home{ display:block; width:25px; height:25px; padding:5px; border-radius:4px; position:absolute; top:7px; right:8px; background:#2b2b2b; line-height:25px; box-shadow:0 0 4px #191919; }
+.header a img{ max-width:100%; }
+.header h1{ font-size:20px; text-shadow: 1px 1px 0 #000; }
+.recur{ width:100%; margin-top:10px; }
+.recur a{ color:#4d4f4e; }
+.recur li{ border-bottom:1px solid #d2d2d2; }
+.recur p.name{ line-height:20px; font-size:16px; padding:10px 6px 10px 10px; }
+.recur p.info{ font-size:12px; color:#7c7c7c; padding:0 6px 10px 10px; }
+.recur p.info span{ padding-right:8px; }
+.more{ width:100%; font-size:16px; height:60px; line-height:60px; text-align:center; }
+.more a{ width:100%; height:100%; display:block; color:#323232; }
+.view{ width:100%; line-height:24px; padding-top:8px; font-size:15px; }
+.view p{ margin:0; padding:5px 15px; }
+.view p em{ color:#6c6d6c; font-style:normal; }
+.view p em a{ color:#4d4f4e; }
+.view pre{ margin:0; padding:0 15px; line-height:20px; color:#6c6d6c; white-space:pre-wrap; word-wrap:break-word; }

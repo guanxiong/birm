@@ -1,0 +1,90 @@
+
+{php $header_off=1;}
+{template 'header'}
+    <div class="container">
+        <form role="form" class="mt15" method="post">
+            <div class="help-block">请确认联系人信息</div>
+            <div class="form-group">
+                <input type="tel" name="mobile" value="" class="form-control" id="mobile" placeholder="请输入手机号">
+            </div>
+            <div class="form-group">
+                <input type="realname" name="realname" value="冯齐跃" class="form-control" id="realname" placeholder="请输入姓名">
+            </div>
+            <div class="form-group">
+                <span class="btn btn-danger btn-block" id="login_form_submit">确认登记</span>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+    require(['jquery','base'], function($) {
+        var _LoginSMS = {
+            doTime: function() {
+                var time = 60;
+                var code_time = $("#honey_times");
+                var timeGO = setInterval(function() {
+                    time--;
+                    code_time.html(time);
+                }, 1000);
+
+                setTimeout(function() {
+                    $("#catch_times").hide().next().show();
+                    clearInterval(timeGO);
+                }, time * 1000)
+            },
+            init: function() {
+                var _Iframe = window.parent["Iframe"];
+                    _Iframe.height(document.body.offsetHeight);
+                var mobile = cookie.get("mlmobile"); //手机号
+                    mobile  = mobile ? mobile:'{$user['mobile']}';
+                var realname = cookie.get("mlrealname"); //姓名
+                    realname  = realname ? realname:'{$user['realname']}';
+                
+                $("#mobile").val(mobile);
+                $("#realname").val(realname);
+                $("#login_form_submit").bind("click",function(){
+                    var _this = $(this);
+                    if(_this.hasClass("isLoading")){//正在提交 直接返回
+                        return;
+                    }
+                    _this.addClass("isLoading").html("loading...");
+                    var realname = $("#realname").val();
+                    if(!realname){
+                        M.message("请输入姓名");
+                        _this.removeClass("isLoading").html("确认");
+                        return;
+                    }
+                    if(realname.length < 2 || realname.length > 6 ){
+                        M.message("您确定这是你姓名？");
+                        _this.removeClass("isLoading").html("确认");
+                        return;
+                    }
+                    //给表单传值
+                    var param={
+                        "mobile":mobile,
+                        "realname":realname,
+                        "itemid":M.urlQuery('itemid'),
+                        "token":'{$_W['token']}',
+                        "submit":'submit',
+                    };
+                    $.post(M.baseDomain + "/{php echo $this->createMobileUrl('lookhouse')}", param, function(data) {
+                        if(data.type=='success'){
+                            M.message(data.message,function(){
+                                cookie.set("mlrealname",realname);
+                                _Iframe.reload();
+                            })
+                        }
+                        else{
+                            M.message(data.message);
+                            _this.removeClass("isLoading").html("登录");
+                        }
+                    }, 'json');
+                })
+            }
+        }
+        _LoginSMS.init();
+    });
+    </script>
+
+
+
+{php $footer_off=1;} {php $stat_off=1;} {template 'footer'}

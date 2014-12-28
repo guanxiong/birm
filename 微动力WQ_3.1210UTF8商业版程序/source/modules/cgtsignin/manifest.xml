@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[图文签到]]></name>
+		<identifie><![CDATA[cgtsignin]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[图文签到]]></ability>
+		<description><![CDATA[可自由设置签到时间、奖励积分等]]></description>
+		<author><![CDATA[福州程序员 qq群:342893058]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<home>
+			<entry title="签到" do="signhome" />
+		</home>
+		<menu>
+			<entry title="签到信息" do="display" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE if not exists `ims_cgt_signin_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `name` varchar(20) NOT NULL,
+   `mobile` varchar(20) NOT NULL,
+  `time` int(11) NOT NULL COMMENT '签到时间',
+  `rank` int(11)  NULL COMMENT '排名',
+  `continuedays` int(11) NOT NULL DEFAULT '0',
+   `credit` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists `ims_cgt_signin_reply` (
+  `id` int(123) NOT NULL AUTO_INCREMENT,
+  `rid` int(123) NOT NULL COMMENT '规则ID',
+  `awardrules`  text DEFAULT NULL,
+  `awardinfo` text DEFAULT NULL,
+  `days` int(11) NOT NULL DEFAULT '0',
+   `credit` int(11) NOT NULL DEFAULT '0',
+  `thumb` varchar(255) DEFAULT NULL,
+  `start_time` int(11) NOT NULL COMMENT '开始时间',
+  `end_time` int(11) NOT NULL COMMENT '结束时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[
+
+		]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[附近商户]]></name>
+		<identifie><![CDATA[fujin]]></identifie>
+		<version><![CDATA[1.2]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[搜索附近商家，以及服务地点]]></ability>
+		<description><![CDATA[通过回复地理位置，检索附近的商户，服务场所以及其他地点信息。]]></description>
+		<author><![CDATA[topone4tvs]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+			<message type="location" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

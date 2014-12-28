@@ -1,0 +1,50 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+	<li{if $_GPC['do'] == 'media'} class="active"{/if}><a href="{php echo $this->createWebUrl('media');}">素材管理</a></li>
+	<li{if $_GPC['do'] == 'mediapost'} class="active"{/if}><a href="{php echo $this->createWebUrl('mediapost');}">添加素材</a></li>
+</ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="{$item['id']}">
+	<h4>素材基本信息</h4>
+	<table class="tb">
+		<tr>
+			<th>名称</th>
+			<td><input type="text" name="title" value="{$item['title']}" class="span5"></td>
+		</tr>
+		<tr>
+			<th>媒体类型</th>
+			<td><select id="select01" name="mediatype">
+                <option value="image">image</option>
+                <option value="voice">voice</option>
+                <option value="video">video</option>
+                <option value="thumb">thumb</option>
+            </td>
+		</tr>
+		<tr>
+			<th><label for="">文件</label></th>
+			<td>
+				<div class="fileupload fileupload-new" data-provides="fileupload">
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择文件</span><span class="fileupload-exists">更改</span><input name="file" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>简介</th>
+			<td>
+				<textarea style="height:100px;" class="span7 richtext-clone" name="content" cols="70" id="reply-add-text">{$item['content']}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+	</table>
+</form>
+{template 'common/footer'}

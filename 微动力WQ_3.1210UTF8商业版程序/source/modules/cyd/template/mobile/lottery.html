@@ -1,0 +1,308 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>只砸不吃茶叶蛋!</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta http-equiv="x-rim-auto-match" content="none">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" type="text/css" href="source/modules/cyd/template/style/global.css?var=1">
+<link rel="stylesheet" type="text/css" href="source/modules/cyd/template/style/mobile.css">
+<style>
+body { background: #ed3338; }
+</style>
+</head>
+<body>
+<section class="wrap">
+
+  <div class="main eggsBg">
+    <div class="eggsShadow"></div>
+    <div class="eggsTextTop" >
+      <ul>
+        <li class="animated" style="display:block;"><img src="source/modules/cyd/template/images/eggsPic_04_textTop.png" width="100%"></li>
+        <li class="animated"><img src="source/modules/cyd/template/images/eggsPic_02_textTop.png" width="100%"></li>
+        <li class="animated"><img src="source/modules/cyd/template/images/eggsPic_03_textTop.png" width="100%"></li>
+        <li class="animated"><img src="source/modules/cyd/template/images/eggsPic_01_textTop.png" width="100%"></li>
+      </ul>
+    </div>
+    <div class="eggsHd">
+      <div class="SliderWrap">
+        <div class="iosSlider">
+          <div class="slider" onclick="warn();">
+            <div class="item"> <img src="source/modules/cyd/template/images/eggsPic_04.png" /> </div>
+            <div class="item"> <img src="source/modules/cyd/template/images/eggsPic_02.png" /> </div>
+            <div class="item"> <img src="source/modules/cyd/template/images/eggsPic_03.png" /> </div>
+            <div class="item"> <img src="source/modules/cyd/template/images/eggsPic_01.png" /> </div>
+          </div>
+        </div>
+      </div>
+      <div class="next"><a href="javascript:;"><img src="source/modules/cyd/template/images/nextBtn.png" width="100%"></a></div>
+      <div class="prev unselectable"><a href="javascript:;"><img src="source/modules/cyd/template/images/prevBtn.png" width="100%"></a></div>
+    </div>
+
+    <div class="eggsHdZha none">
+      <ul>
+        <li><img src="source/modules/cyd/template/images/eggsPic_04_zha.png" width="100%"></li>
+        <li><img src="source/modules/cyd/template/images/eggsPic_02_zha.png" width="100%"></li>
+        <li><img src="source/modules/cyd/template/images/eggsPic_03_zha.png" width="100%"></li>
+        <li><img src="source/modules/cyd/template/images/eggsPic_01_zha.png" width="100%"></li>
+      </ul>
+    </div>
+   
+    <div class="eggsHammer"><img src="source/modules/cyd/template/images/eggsHammer.png" width="100%"></div>
+    <div class="eggsHammerCur none"><img src="source/modules/cyd/template/images/eggsHammerCur.png" width="100%"></div>
+    <div class="eggsTextBot">
+      <ul>
+        <li class="animated" style="display:block;"><img src="source/modules/cyd/template/images/eggsPic_04_textBot.png" width="100%"></li>
+        <li class="animated"><img src="source/modules/cyd/template/images/eggsPic_02_textBot.png" width="100%"></li>
+        <li class="animated"><img src="source/modules/cyd/template/images/eggsPic_03_textBot.png" width="100%"></li>
+        <li class="animated"><img src="source/modules/cyd/template/images/eggsPic_01_textBot.png" width="100%"></li>
+      </ul>
+    </div>
+   
+    
+    <footer>
+	 <div id="footer1" class="Arial">请把您的手机往桌面上一砸，蛋就破了...</div>
+	<div id="footer" class="Arial">POWERED BY <a target="_blank" href="http://www.weixiamen.cn/">{$_W['account']['name']}</a></div>
+</footer>
+ 
+  </div>
+  
+</section>
+ 
+<script src="source/modules/cyd/template/scripts/jquery-1.8.3.min.js"></script>
+<script src="source/modules/cyd/template/scripts/jquery.easing.1.3.js"></script>
+<script src="source/modules/cyd/template/scripts/jquery.iosslider.js"></script>
+<script src="source/modules/cyd/template/scripts/alert.js"></script>
+<script>
+//alerts('bbbb');
+
+$(document).ready(function() {
+				
+				$('.iosSlider').iosSlider({
+					snapToChildren: true,
+					desktopClickDrag: true,
+					keyboardControls: true,
+					onSliderLoaded: sliderTest,
+					onSlideStart: sliderTest,
+                    onSlideChange:SlideChange,
+					onSlideComplete: slideComplete,
+					navNextSelector: $('.next'),
+				    navPrevSelector: $('.prev'),
+				});
+				
+			});
+
+function SlideChange(args) {
+    i = args.currentSlideNumber;
+
+    $('.eggsTextTop li').removeClass("fadeInUpBig").hide().eq(i-1).show().addClass("fadeInUpBig");
+	$('.eggsTextBot li').removeClass("fadeInUpBig02").hide().eq(i-1).show().addClass("fadeInUpBig02");
+    
+}
+			
+			
+function sliderTest(args) {
+				try {
+					console.log(args);
+				} catch(err) {
+				}
+			}
+function slideComplete(args) {
+				
+				$('.next, .prev').removeClass('unselectable');
+
+			    if(args.currentSlideNumber == 1) {
+			
+			        $('.prev').addClass('unselectable');
+			
+			    } else if(args.currentSliderOffset == args.data.sliderMax) {
+			
+			        $('.next').addClass('unselectable');
+			
+			    }
+			
+			}		
+			
+var i=1;
+
+//微信分享
+var _Conf = {
+	appid	:	"",
+	img		:	"{$_W['siteroot']}source/modules/{$_GPC['name']}/icon.jpg",
+	w		: 	"120",
+	h		: 	"120",
+	url		: 	"{$_W['siteroot']}{php echo $this->createMobileUrl('lottery', array('id' => $id))}",
+	desc	: 	"茶叶蛋可以增强粉丝与公众号的互动、提升公众号的黏性，让你在短时间内迅速引爆人气。",
+	title	: 	"一起砸蛋吧！！！"
+};
+
+function _ShareFriend() {
+    WeixinJSBridge.invoke('sendAppMessage',{
+          'appid': _Conf.appid,
+          'img_url': _Conf.img,
+          'img_width': _Conf.w,
+          'img_height': _Conf.h,
+          'link': _Conf.url,
+          'desc': _Conf.desc,
+          'title': _Conf.title
+          }, function(res){
+            _report('send_msg', res.err_msg);
+      })
+}
+function _ShareTL() {
+    WeixinJSBridge.invoke('shareTimeline',{
+          'img_url': _Conf.img,
+          'img_width': _Conf.w,
+          'img_height': _Conf.h,
+          'link': _Conf.url,
+          'desc': _Conf.desc,
+          'title': _Conf.title
+          }, function(res) {
+          _report('timeline', res.err_msg);
+          });
+}
+function _ShareWB() {
+    WeixinJSBridge.invoke('shareWeibo',{
+          'content': _Conf.desc,
+          'url': _Conf.url,
+          }, function(res) {
+          _report('weibo', res.err_msg);
+          });
+}
+// 当微信内置浏览器初始化后会触发WeixinJSBridgeReady事件。
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 发送给好友
+		WeixinJSBridge.call('hideToolbar');
+        WeixinJSBridge.on('menu:share:appmessage', function(argv){
+            _ShareFriend();
+      });
+
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function(argv){
+            _ShareTL();
+            });
+
+        // 分享到微博
+        WeixinJSBridge.on('menu:share:weibo', function(argv){
+            _ShareWB();
+       });
+}, false);			
+			
+			
+			
+</script>
+
+
+<script>
+$(function() {
+	
+//图片预加载
+function loadImages(sources, callback) {
+	var count = 0,
+	images = {},
+	imgNum = 0;
+	for (src in sources) {
+		imgNum++;
+	}
+	for (src in sources) {
+		images[src] = new Image();
+		images[src].onload = function() {
+			if (++count >= imgNum) {
+				callback(images);
+			}
+		}
+		images[src].src = sources[src];
+	}
+}
+
+loadImages(['source/modules/cyd/template/images/Bg.gif','source/modules/cyd/template/images/shareBg.jpg'],
+function() {
+	$('.indexBanner,.shareBanner').show().addClass('fadeInUpBig');
+	
+});
+	
+	
+	
+	function shiying() {
+		var win_W = $(window).width();
+        var win_H = $(document).height();
+		
+		$('#shadow').css({
+            "width": win_W,
+            "height": win_H,
+			"opacity":"0.8"
+        });
+		}
+	
+	$(window).resize(function() {
+		shiying();
+		});
+	
+	$('.shareBtn a').click(function() {
+		shiying();
+		$('.shareJt').show();
+		});
+	
+	
+	
+	
+	});
+
+$(document).ready(function () {
+	if (window.DeviceMotionEvent) {
+		var speed = 20;
+		var x = y = z = lastX = lastY = lastZ = 0;
+		window.addEventListener('devicemotion', function () {
+			var acceleration = event.accelerationIncludingGravity;
+			x = acceleration.x;
+			y = acceleration.y;
+			if (Math.abs(y - lastY) > speed) {
+				/*document.getElementById("a4").innerHTML="恭喜您！在摇摇返回";*/
+				
+				eggs();
+				
+			}
+			lastX = x;
+			lastY = y;
+		}, false);
+	}
+
+	
+});
+function warn(){
+	alert('请摇动您的手机砸蛋！！！');
+}
+function eggs() {
+	
+	$('.eggsHd,.eggsHammer').hide();
+	$('.eggsHdZha').show();
+	$('.eggsHdZha li').hide().eq(i-1).show();
+	$('.eggsHammerCur').show().addClass('animateShake');
+
+//	$.getJSON("{php echo $this->createMobileUrl('getaward', array('id' => $id))}&r="+new Date().getTime(),function(res){
+
+		setTimeout(function(){
+			window.location = "{php echo $this->createMobileUrl('prompt', array('id' => $id))}&r="+new Date().getTime();
+			}, 3000)
+//		});
+	
+}
+
+function AutoScroll(obj){
+        $(obj).find("ul:first").animate({
+                marginTop:"-26px"
+        },500,function(){
+                $(this).css({marginTop:"0px"}).find("li:first").appendTo(this);
+        });
+}
+
+</script>
+</body>
+</html>

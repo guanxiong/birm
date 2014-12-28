@@ -1,0 +1,26 @@
+<div class="alert alert-info reply-market-list">
+    <table class="tb reply-news-edit">
+        <tr>
+            <th></th>
+            <td id="award-inkind">
+                <span class="pull-right"><a href="javascript:;"  onclick="$(this).parents('div .alert').remove(); return false;">删除</a></span>
+            </td>
+        </tr>
+        <tr>
+            <th>奖品名称：</th>
+            <td>
+                <input type="text" value="{$item['title']}" style="width:250px;" name="new_award_title[]" placeholder="请输入奖品名称">
+                <label style="display:inline-block;">
+                中奖率：<input type="text" value="{if !empty($item['probalilty'])}{$item['probalilty']}{else}10{/if}" name="new_award_probalilty[]" style="padding-right:30px;width:48px;"><em class="percentage">%</em></label>
+                <label style="display:inline-block;" class="num">数量：<input type="text" value="{if empty($item)}1{else}{$item['total']}{/if}" style="width:45px;" name="new_award_total[]" ></label>
+            </td>
+        </tr>
+        <tr>
+            <th>奖品级别：</th>
+            <td>
+                <input type="text" class="span2" name="new_award_level[{$item['id']}]" value="{if !empty($item['level'])}{$item['level']}{else}3{/if}" placeholder="请输入1~6的整数" />
+                <label style="display:inline-block;" class="num">级别名称：<input type="text" class="span4" name="new_award_levelname[{$item['id']}]" value="{if !empty($item['levelname'])}{$item['levelname']}{else}三等奖{/if}" placeholder="请输入奖品级别名称 例:三等奖" /></label>
+            </td>
+        </tr>
+    </table>
+</div>

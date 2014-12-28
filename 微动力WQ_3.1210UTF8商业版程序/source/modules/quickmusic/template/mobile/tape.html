@@ -1,0 +1,62 @@
+{template 'header'}
+	<link type="text/css" rel="stylesheet" href="./source/modules/quickmusic/style/base.css" />
+	<link type="text/css" rel="stylesheet" href="./source/modules/quickmusic/style/style.css?v=205" />
+	<script type="text/javascript" src="./source/modules/quickmusic/script/script.js?v=200"></script>
+	<script type="text/javascript" src="./source/modules/quickmusic/script/URI.js"></script>
+	<!--content-->
+	{if $preview }
+			<section class="button">
+				<a onclick="javascript:window.history.back();"><span>返回</span></a>
+			</section>
+      {/if}
+      helo
+		<section class="canvas">
+			<section class="card">
+				<section class="title">
+					{$tape['title']}
+				</section>
+				<section class="info">
+					{php echo htmlspecialchars_decode($tape['explain'])}
+				</section>
+			</section>
+			
+			<input type="hidden" name="op" value="post" />
+			{loop $list $item}
+			<section class="card">
+				<section class="title">
+				<p>{$item['title']}</p>
+				</section>
+				<audio src="{$item['url']}" controls="controls">
+				Your browser does not support the audio tag.
+				</audio>
+				<article class="info">
+					<div class="info">
+						{if 0 < strlen(htmlspecialchars_decode($item['explain']))}<span class="label label-warning">提示</span>{/if}
+						{php echo htmlspecialchars_decode($item['explain'])}
+					</div>
+                </article>
+            </section>
+			{/loop}
+			{if $preview}
+			<section class="button">
+				<a onclick="javascript:window.history.back();"><span>返回</span></a>
+			</section>
+			{else}
+			<section class="button">
+			<input type="hidden" name="tape_id" value="{$tape['tape_id']}" />
+			<input type="hidden" name="tape_title" value="{$tape['title']}" />
+				<a id="submit" href="#"><span>下一专辑</span></a>
+			</section>
+			{/if}
+		</form>
+		</section>
+        <!--content end-->
+
+	<script type="text/javascript">
+		$('#submit').click(function() {
+			return false;	
+		});
+
+	</script>
+
+{template 'footer'}

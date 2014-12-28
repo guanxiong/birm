@@ -1,0 +1,957 @@
+@charset "UTF-8";
+/*此CSS用sass编译而来的，如有需要，请务必修改.scss，不要直接修改.CSS。*/
+/*
+	Name:QQ2013 1.95 css
+	Author:michelou
+	Update time:2013-7-10
+*/
+/*css reset*/
+html, body {
+  color: #000;
+  height: 100%;
+  *height: auto;
+  _height: 100%; }
+
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+fieldset, img {
+  border: 0; }
+
+address, caption, cite, code, dfn, th, var, i, s {
+  font-style: normal;
+  font-weight: normal; }
+
+li {
+  list-style: none; }
+
+caption, th {
+  text-align: left; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal; }
+
+input[type=search] {
+  -webkit-appearance: none; }
+
+input[type=checkbox] {
+  vertical-align: middle;
+  margin-top: -1px; }
+
+a img, a span, a strong, a s {
+  #cursor: hand; }
+
+body, button, select, textarea, input {
+  font-family: Microsoft YaHei, Tahoma, SimSun, Verdana;
+  font-size: 12px;
+  line-height: 1.5; }
+
+body {
+  word-wrap: break-word; }
+
+button {
+  white-space: nowrap;
+  overflow: visible; }
+
+a {
+  text-decoration: none;
+  outline: none;
+  blr: expression(this.onFocus=this.blur()); }
+
+a:hover {
+  text-decoration: none; }
+
+a:active {
+  outline: none; }
+
+a:focus {
+  -moz-outline-style: none; }
+
+div[contenteditable=true] {
+  -webkit-line-break: after-white-space;
+  -webkit-nbsp-mode: space;
+  -webkit-user-modify: read-write;
+  word-wrap: break-word; }
+
+.clearfix:before, .clearfix:after {
+  content: '.';
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  font-size: 0;
+  line-height: 0;
+  width: 0;
+  height: 0; }
+
+.clearfix:after {
+  clear: both; }
+
+.hide {
+  display: none!important; }
+
+.l {
+  float: left; }
+
+.r {
+  float: right; }
+
+.lh24 {
+  line-height: 24px; }
+
+/*滚动条*/
+::-webkit-scrollbar {
+  height: 11px;
+  width: 10px;
+  background-color: #fff; }
+
+::-webkit-scrollbar-button {
+  height: 0;
+  width: 0; }
+
+::-webkit-scrollbar-button:start:decrement, ::-webkit-scrollbar-button:end:increment {
+  display: block; }
+
+::-webkit-scrollbar-button:vertical:start:increment, ::-webkit-scrollbar-button:vertical:end:decrement {
+  display: none; }
+
+::-webkit-scrollbar-track:vertical, ::-webkit-scrollbar-track:horizontal, ::-webkit-scrollbar-thumb:vertical, ::-webkit-scrollbar-thumb:horizontal, ::-webkit-scrollbar-track:vertical, ::-webkit-scrollbar-track:horizontal, ::-webkit-scrollbar-thumb:vertical, ::-webkit-scrollbar-thumb:horizontal {
+  border-style: solid;
+  border-color: transparent; }
+
+::-webkit-scrollbar-track:vertical::-webkit-scrollbar-track:horizontal {
+  background-clip: padding-box;
+  background-color: #fff; }
+
+::-webkit-scrollbar-thumb {
+  padding-top: 100px;
+  -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1), inset -1px -1px 0 rgba(0, 0, 0, 0.07);
+  background-clip: padding-box;
+  background-color: #dadada;
+  min-height: 28px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px; }
+
+::-webkit-scrollbar-thumb:hover {
+  -webkit-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.4); }
+
+::-webkit-scrollbar-thumb:active {
+  -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.35);
+  background-color: rgba(0, 0, 0, 0.5); }
+
+::-webkit-scrollbar-track:vertical, ::-webkit-scrollbar-track:horizontal, ::-webkit-scrollbar-thumb:vertical, ::-webkit-scrollbar-thumb:horizontal {
+  border-width: 0; }
+
+::-webkit-scrollbar-track:hover {
+  -webkit-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0); }
+
+::-webkit-scrollbar-track:active {
+  -webkit-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0), inset -1px -1px 0 rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0); }
+
+/*通用*/
+.logo {
+  width: 178px;
+  height: 45px;
+  display: block;
+  overflow: hidden;
+  
+  }
+
+.line-2 {
+  height: 18px;
+  background: url( line_02.jpg) no-repeat top center;
+  overflow: hidden; }
+
+.roundIcon {
+  padding-left: 24px;
+  background: url( roundIcon.png) no-repeat left center; }
+
+.link:hover {
+  text-decoration: underline; }
+
+.grayBg {
+  min-width: 730px;
+  _width: expression((documentElement.clientWidth<730)?'730px':'auto');
+  background: url( normalBg.jpg) repeat; }
+
+.txtLogo {
+  width: 214px;
+  height: 59px;
+  display: block;
+  overflow: hidden;
+ <!-- background: url(http://im-img.qq.com/qq/2013/img/QQ2013.png) no-repeat;-->
+  overflow: hidden; }
+
+.gotop {
+  width: 62px;
+  height: 63px;
+  display: block;
+  background: url( gotop.png) no-repeat;
+  overflow: hidden; }
+  .gotop:hover {
+    background-position: 0 -64px; }
+
+/*全屏*/
+#background-image .navList {
+  position: absolute;
+  bottom: -1px;
+  left: 0; }
+#background-image .bannerHover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block; }
+#background-image .bannerTool {
+  position: absolute;
+  z-index: 1; }
+#background-image .bannerMid {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1582px;
+  _width: expression((documentElement.clientWidth>1582)?'1582px':'auto');
+  display: block; }
+
+/*全屏的文案*/
+.toolBottom {
+  position: absolute;
+  bottom: 0px;
+  line-height: 24px;
+  font-size: 14px;
+  color: #fff; }
+  .toolBottom .txtLogo {
+    margin-bottom: 14px; }
+
+@media (min-width: 1200px) and (min-height: 811px) {
+  .bannerTool {
+    width: 623px;
+    height: 603x; }
+    .bannerTool .toolBottom {
+      left: 197px; }
+
+  .downBtn {
+    margin-top: 10px;
+    width: 384px;
+    height: 122px;
+    display: block;
+    background: url(downBtn.png) no-repeat 0 -123px;
+    overflow: hidden;
+    text-indent: -9999px;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden; }
+    .downBtn:hover {
+      background-position: 0 0; }
+
+  .textBanner {
+    width: 623px;
+    height: 411px;
+    display: block;
+    overflow: hidden;
+    text-indent: -9999px;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden; }
+
+  .show-1 .textBanner {
+    background: url(wenan-1-big.png) no-repeat; }
+
+  .show-2 .textBanner {
+    background: url( wenan-2-big.png) no-repeat; }
+
+  .show-3 .textBanner {
+    background: url( wenan-3-big.png) no-repeat; }
+
+  .show-4 .textBanner {
+    background: url( wenan-4-big.png) no-repeat; }
+
+  .show-5 .textBanner {
+    background: url(wenan-5-big.png) no-repeat; }
+
+  #background-image .bannerTool {
+    top: 60px;
+    right: 0; } }
+@media screen and (min-width: 850px) and (max-width: 1199px) and (min-height: 650px) and (max-height: 810px) and (max-width: 1199px), (min-width: 850px) and (min-height: 650px) and (max-height: 810px), (min-width: 850px) and (max-width: 1199px) {
+  .bannerTool {
+    width: 430px;
+    height: 438x; }
+    .bannerTool .toolBottom {
+      left: 84px; }
+
+  .downBtn {
+    margin-top: 10px;
+    width: 268px;
+    height: 85px;
+    display: block;
+    background: url(downBtn.png) no-repeat 0 -332px;
+    overflow: hidden;
+    text-indent: -9999px;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden; }
+    .downBtn:hover {
+      background-position: 0 -246px; }
+
+  .textBanner {
+    width: 450px;
+    height: 288px;
+    display: block;
+    overflow: hidden;
+    text-indent: -9999px;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden; }
+
+  .show-1 .textBanner {
+    background: url( wenan-1-mid.png) no-repeat; }
+
+  .show-2 .textBanner {
+    background: url( wenan-2-mid.png) no-repeat; }
+
+  .show-3 .textBanner {
+    background: url( wenan-3-mid.png) no-repeat; }
+
+  .show-4 .textBanner {
+    background: url( wenan-4-mid.png) no-repeat; }
+
+  .show-5 .textBanner {
+    background: url( wenan-5-mid.png) no-repeat; }
+
+  #background-image .bannerTool {
+    top: 60px;
+    right: 0; } }
+@media (min-width: 0px) and (max-width: 849px), (min-height: 452px) and (max-height: 649px) {
+  .bannerTool {
+    width: 255px;
+    height: 438x; }
+    .bannerTool .toolBottom {
+      left: 0; }
+
+  .downBtn {
+    margin-top: 5px;
+    width: 154px;
+    height: 48px;
+    display: block;
+    background: url(downBtn.png) no-repeat 0 -467px;
+    overflow: hidden;
+    text-indent: -9999px;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden; }
+    .downBtn:hover {
+      background-position: 0 -418px; }
+
+  .textBanner {
+    width: 237px;
+    height: 124px;
+    display: block;
+    overflow: hidden;
+    text-indent: -9999px;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden; }
+
+  .show-1 .textBanner {
+    background: url(wenan-1-sml.png) no-repeat; }
+
+  .show-2 .textBanner {
+    background: url( wenan-2-sml.png) no-repeat; }
+
+  .show-3 .textBanner {
+    background: url( wenan-3-sml.png) no-repeat; }
+
+  .show-4 .textBanner {
+    background: url( wenan-4-sml.png) no-repeat; }
+
+  .show-5 .textBanner {
+    background: url(wenan-5-sml.png) no-repeat; }
+
+  #background-image .bannerTool {
+    top: 60px;
+    right: 0; } }
+@media (min-height: 256px) and (max-height: 451px) {
+  .bannerTool {
+    width: 255px;
+    height: 438x; }
+    .bannerTool .toolBottom {
+      left: 0; }
+
+  .downBtn {
+    margin-top: 5px;
+    width: 154px;
+    height: 48px;
+    display: block;
+    background: url(downBtn.png) no-repeat 0 -418px;
+    overflow: hidden;
+    text-indent: -9999px;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden; }
+    .downBtn:hover {
+      background-position: 0 -467px; }
+
+  #background-image .bannerTool {
+    top: 70px;
+    right: 0; } }
+@media (max-height: 480px) {
+  #background-image .textBanner {
+    display: none; } }
+@media (max-height: 450px) {
+  #background-image .bannerTool {
+    display: none; } }
+/*头部*/
+.header {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 100%;
+  height: 42px;
+  *zoom: 1; }
+  .header .topNav {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -9px; }
+  .header .logo {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+
+	}
+	
+
+.topNav a {
+  color: #fff; }
+  .topNav a:hover {
+    color: #00b0f0;
+    text-decoration: underline; }
+
+@media (min-width: 256px) and (max-width: 630px) {
+  .topNav {
+    width: 265px; } }
+@media (max-width: 478px) {
+  .topNav {
+    display: none; } }
+.navList {
+  width: 100%;
+  height: 89x;
+  display: block;
+  background: url( nav-bg.png) repeat-x; }
+  .navList .nav {
+    margin: 0 auto; }
+
+.nav {
+  width: 100%;
+  max-width: 1582px;
+  _width: expression((documentElement.clientWidth < 1582)?'1582px':'auto');
+  height: 89px;
+  display: block;
+  overflow: hidden; }
+  .nav li {
+    float: left;
+    height: 100%;
+    background: url( nav-bg-line.png) no-repeat right center;
+    overflow: hidden; }
+    .nav li.n1 {
+      width: 16%; }
+      .nav li.n1 span {
+        margin-left: -32px;
+        width: 64px;
+        background-position: 0 0; }
+      .nav li.n1 a:hover span {
+        background-position: 0 -63px; }
+    .nav li.n2 {
+      width: 16%; }
+      .nav li.n2 span {
+        margin-left: -32px;
+        width: 64px;
+        background-position: -65px 0; }
+      .nav li.n2 a:hover span {
+        background-position: -65px -63px; }
+    .nav li.n3 {
+      width: 16%; }
+      .nav li.n3 span {
+        margin-left: -32px;
+        width: 65px;
+        background-position: -130px 0; }
+      .nav li.n3 a:hover span {
+        background-position: -130px -63px; }
+    .nav li.n4 {
+      width: 17%; }
+      .nav li.n4 span {
+        margin-left: -21px;
+        width: 43px;
+        background-position: -196px 0; }
+      .nav li.n4 a:hover span {
+        background-position: -196px -63px; }
+    .nav li.n5 {
+      width: 17%; }
+      .nav li.n5 span {
+        margin-left: -33px;
+        width: 65px;
+        background-position: -240px 0; }
+      .nav li.n5 a:hover span {
+        background-position: -240px -63px; }
+    .nav li.n6 {
+      width: 17.9%;
+      background-image: none; }
+      .nav li.n6 span {
+        margin-left: -43px;
+        width: 86px;
+        background-position: -306px 0; }
+      .nav li.n6 a:hover span {
+        background-position: -306px -63px; }
+  .nav a {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: hidden;
+    text-indent: -9999px;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+    background: url( nav-bg-hover.png) no-repeat -99999px -99999px; }
+    .nav a:hover {
+      background-position: center center; }
+    .nav a span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -31px;
+      height: 62px;
+      background: url(nav-wenzi2.png) no-repeat; }
+
+@media (max-width: 540px) {
+  .nav li a span {
+    margin-top: -17px;
+    height: 34px; } }
+.show-1 .nav .n1 a {
+  background-position: center center; }
+  .show-1 .nav .n1 a span {
+    background-position: 0 -63px; }
+.show-1 .logo {
+  background-position: 0 0; }
+.show-1 .topNav, .show-1 .toolBottom {
+  color: #fff; }
+  .show-1 .topNav a, .show-1 .toolBottom a {
+    color: #fff; }
+.show-1 .txtLogo {
+  background-position: 0 -60px; }
+
+.show-2 .nav .n2 a {
+  background-position: center center; }
+  .show-2 .nav .n2 a span {
+    background-position: -65px -63px; }
+.show-2 .logo {
+  background-position: 0 0; }
+.show-2 .topNav, .show-2 .toolBottom {
+  color: #fff; }
+  .show-2 .topNav a, .show-2 .toolBottom a {
+    color: #fff; }
+.show-2 .txtLogo {
+  background-position: 0 -60px; }
+
+.show-3 .nav .n3 a {
+  background-position: center center; }
+  .show-3 .nav .n3 a span {
+    background-position: -130px -63px; }
+.show-3 .logo {
+  background-position: 0 -45px; }
+.show-3 .topNav, .show-3 .toolBottom {
+  color: #000; }
+  .show-3 .topNav a, .show-3 .toolBottom a {
+    color: #000; }
+  .show-3 .topNav .roundIcon, .show-3 .toolBottom .roundIcon {
+    background: url( roundIconBlack.png) no-repeat left center; }
+.show-3 .txtLogo {
+  background-position: 0 0; }
+
+.show-4 .nav .n4 a {
+  background-position: center center; }
+  .show-4 .nav .n4 a span {
+    background-position: -196px -63px; }
+.show-4 .logo {
+  background-position: 0 -45px; }
+.show-4 .topNav, .show-4 .toolBottom {
+  color: #000; }
+  .show-4 .topNav a, .show-4 .toolBottom a {
+    color: #000; }
+  .show-4 .topNav .roundIcon, .show-4 .toolBottom .roundIcon {
+    background: url( roundIconBlack.png) no-repeat left center; }
+.show-4 .txtLogo {
+  background-position: 0 0; }
+
+.show-5 .nav .n5 a {
+  background-position: center center; }
+  .show-5 .nav .n5 a span {
+    background-position: -240px -63px; }
+.show-5 .logo {
+  background-position: 0 0; }
+.show-5 .topNav, .show-5 .toolBottom {
+  color: #fff; }
+  .show-5 .topNav a, .show-5 .toolBottom a {
+    color: #fff; }
+.show-5 .txtLogo {
+  background-position: 0 -60px; }
+
+/*内容模块*/
+.contentWrap {
+  min-width: 730px;
+  _width: expression((documentElement.clientWidth < 730)?'730px':'auto');
+  background: url( normalBg.jpg) repeat left top; }
+
+.line {
+  background: url( line.jpg) no-repeat center top; }
+
+.mod .modInner {
+  position: relative; }
+
+.modInfo {
+  line-height: 28px;
+  color: #7f7f7f;
+  font-size: 16px; }
+  .modInfo .modTitle {
+    margin-bottom: 27px;
+    color: #575656;
+    line-height: 36px;
+    font-size: 36px; }
+  .modInfo .modLink {
+    color: #00b0f0; }
+    .modInfo .modLink:hover {
+      text-decoration: underline; }
+
+@media (min-width: 970px) {
+  .autoM {
+    margin: 0 auto;
+    width: 970px; }
+
+  .mod .modInfo {
+    position: absolute;
+    width: 480px; }
+    .mod .modInfo .modTitle {
+      line-height: 48px; }
+  .mod .modPic {
+    position: absolute; }
+
+  .mod_01 {
+    padding-top: 40px; }
+    .mod_01 .modInner {
+      height: 297px; }
+    .mod_01 .modInfo {
+      top: 56px;
+      left: 0; }
+    .mod_01 .modPic {
+      bottom: 0;
+      right: -20px;
+      width: 595px;
+      height: 279px;
+      background: url(mod_01.jpg) no-repeat; }
+
+  .mod_02 .modInner {
+    height: 342px; }
+  .mod_02 .modInfo {
+    top: 111px;
+    right: 0; }
+  .mod_02 .modPic {
+    top: 40px;
+    left: 0;
+    width: 432px;
+    height: 282px;
+    background: url(mod_02.jpg) no-repeat; }
+
+  .mod_03 .modInner {
+    height: 342px; }
+  .mod_03 .modInfo {
+    top: 86px;
+    left: 0; }
+  .mod_03 .modPic {
+    top: 74px;
+    right: -64px;
+    width: 628px;
+    height: 268px;
+    background: url(mod_03.jpg) no-repeat; }
+
+  .mod_04 .modInner {
+    height: 341px; }
+  .mod_04 .modInfo {
+    top: 100px;
+    right: 0; }
+  .mod_04 .modPic {
+    top: 8px;
+    left: 0;
+    width: 432px;
+    height: 321px;
+    background: url(mod_04.jpg) no-repeat; }
+
+  .mod_05 .modInner {
+    height: 342px; }
+  .mod_05 .modInfo {
+    top: 80px;
+    left: 0; }
+  .mod_05 .modPic {
+    top: 34px;
+    right: 0;
+    width: 424px;
+    height: 290px;
+    background: url(mod_05.jpg) no-repeat; } }
+@media (max-width: 969px) {
+  .autoM {
+    margin: 0 auto;
+    width: 730px; }
+
+  .mod .modPic {
+    margin: 40px auto 0; }
+  .mod .modInfo {
+    margin: 30px 0; }
+  .mod .modTitle {
+    font-size: 26px; }
+
+  .mod_01 {
+    padding-top: 40px; }
+    .mod_01 .modPic {
+      width: 595px;
+      height: 279px;
+      background: url(mod_01.jpg) no-repeat; }
+
+  .mod_02 .modPic {
+    width: 407px;
+    height: 310px;
+    background: url( mod_02.jpg) no-repeat; }
+
+  .mod_03 .modPic {
+    width: 628px;
+    height: 268px;
+    background: url( mod_03.jpg) no-repeat; }
+
+  .mod_04 .modPic {
+    width: 432px;
+    height: 321px;
+    background: url( mod_04.jpg) no-repeat; }
+
+  .mod_05 .modPic {
+    width: 424px;
+    height: 290px;
+    background: url( mod_05.jpg) no-repeat; } }
+/*我们期望与你更近*/
+.moreWrap {
+  position: relative;
+  width: 100%;
+  background: url( bigBlueBg.jpg) repeat center center; }
+
+@media (min-width: 1230px) {
+  .moreWrap {
+    height: 963px; }
+
+  .moreInner {
+    position: relative;
+    margin: 0 auto;
+    width: 1230px;
+    height: 963px; }
+    .moreInner .peopleArea {
+      position: absolute;
+      top: 178px;
+      right: 0; }
+    .moreInner .letter {
+      position: absolute;
+      left: 0;
+      top: 90px; } }
+@media (max-width: 1229px) {
+  .moreWrap {
+    min-width: 730px; }
+
+  .moreInner {
+    position: relative;
+    margin: 0 auto;
+    width: 730px; }
+    .moreInner .peopleArea {
+      margin: 0 auto;
+      padding-top: 50px;
+      width: 676px; }
+    .moreInner .letter {
+      margin: 20px auto 0;
+      padding-bottom: 50px;
+      width: 457px; } }
+.peopleArea {
+  position: relative; }
+  .peopleArea .peopleTxt {
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    padding: 6px 10px;
+    background-color: #7eb2da;
+    color: #fff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3); }
+
+.peopleShow {
+  position: relative;
+  width: 676px;
+  height: 696px;
+  display: block;
+  background: url(people.png) no-repeat; }
+  .peopleShow a {
+    position: absolute;
+    display: block; }
+    .peopleShow a span {
+      position: absolute;
+      width: 150px;
+      height: 121px;
+      display: none;
+  <!--background: url( peopleName.png?t=20130731) no-repeat;-->
+      overflow: hidden; }
+    .peopleShow a:hover span {
+      display: block; }
+  .peopleShow .peopleShow-1 {
+    width: 136px;
+    height: 212px;
+    top: 287px;
+    left: 268px; }
+    .peopleShow .peopleShow-1 span {
+      top: -46px;
+      left: 94px;
+      background-position: 0 0; }
+  .peopleShow .peopleShow-2 {
+    width: 136px;
+    height: 212px;
+    top: 144px;
+    left: 498px; }
+    .peopleShow .peopleShow-2 span {
+      top: 0;
+      left: 94px;
+      background-position: 0 -122px; }
+  .peopleShow .peopleShow-3 {
+    width: 108px;
+    height: 212px;
+    top: 260px;
+    left: 402px; }
+    .peopleShow .peopleShow-3 span {
+      top: -25px;
+      left: 93px;
+      background-position: 0 -244px; }
+  .peopleShow .peopleShow-4 {
+    width: 87px;
+    height: 123px;
+    top: 144px;
+    left: 282px; }
+    .peopleShow .peopleShow-4 span {
+      top: -43px;
+      left: 78px;
+      background-position: 0 -366px; }
+  .peopleShow .peopleShow-5 {
+    width: 99px;
+    height: 120px;
+    top: 130px;
+    left: 372px; }
+    .peopleShow .peopleShow-5 span {
+      top: 0;
+      left: 59px;
+      background-position: 0 -488px; }
+  .peopleShow .peopleShow-6 {
+    width: 93px;
+    height: 149px;
+    top: 160px;
+    left: 187px; }
+    .peopleShow .peopleShow-6 span {
+      top: -29px;
+      left: 84px;
+      background-position: 0 -610px; }
+  .peopleShow .peopleShow-7 {
+    width: 136px;
+    height: 212px;
+    top: 295px;
+    left: 115px; }
+    .peopleShow .peopleShow-7 span {
+      top: 0;
+      left: 114px;
+      background-position: 0 -732px; }
+  .peopleShow .peopleShow-8 {
+    width: 104px;
+    height: 200px;
+    top: 142px;
+    left: 75px; }
+    .peopleShow .peopleShow-8 span {
+      top: 0;
+      left: 91px;
+      background-position: 0 -854px; }
+
+.letter {
+  position: relative;
+  width: 457px;
+  height: 778px;
+  display: block;
+  background: url(letter.png) no-repeat;
+  overflow: hidden; }
+  .letter a {
+    position: absolute;
+    right: -2px;
+    width: 224px;
+    height: 47px;
+    display: block;
+    background: url( shareBtn.png) no-repeat;
+    overflow: hidden;
+    text-indent: -9999px;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden; }
+  .letter .share-1 {
+    top: 632px;
+    background-position: 0 0; }
+    .letter .share-1:hover {
+      background-position: 0 -48px; }
+  .letter .share-2 {
+    top: 691px;
+    background-position: 0 -96px; }
+    .letter .share-2:hover {
+      background-position: 0 -144px; }
+
+/*footer*/
+.footer {
+  min-width: 730px;
+  _width: expression((documentElement.clientWidth<730)?'730px':'auto');
+  line-height: 24px;
+  background: url( blueBg.jpg) repeat top left;
+  color: #fff;
+  text-align: center; }
+  .footer .footerInner {
+    background: url( line_03.jpg) no-repeat top center; }
+    .footer .footerInner p {
+      padding: 28px 0 0 0;
+      height: 68px; }
+
+/*遮罩*/
+.whiteBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background-color: #fff; }
+
+/*回到顶部*/
+.gotopArea {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  z-index: 99;
+  _position: absolute;
+  _right: expression(eval(document.documentElement.scrollRight-20));
+  _bottom: expression(eval(document.documentElement.scrollBottom-100));
+  display: none; }

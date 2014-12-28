@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[猜拳]]></name>
+		<identifie><![CDATA[mora]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[富含趣味性的传统游戏，出现在微信中，让你的粉丝爱不释手！]]></ability>
+		<description><![CDATA[]]></description>
+		<author><![CDATA[微鼎]]></author>
+		<url><![CDATA[http://www.weidim.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="查看猜拳排行榜" do="moralist" state="" />			
+		</rule>
+    </bindings>
+	<install><![CDATA[
+
+CREATE TABLE `ims_mora_reply` (
+`id` int( 10 ) unsigned NOT NULL AUTO_INCREMENT ,
+`rid` int( 10 ) unsigned NOT NULL default 0 comment '规则id',
+`win` varchar( 255 ) NOT NULL comment '赢的提示语',
+`lose` varchar( 255 ) NOT NULL comment '输的提示语',
+`draw` varchar( 255 ) NOT NULL comment '平局提示语',
+`rule` varchar( 255 ) NOT NULL comment '规则说明',
+`start_time` int unsigned NOT NULL comment '开始时间',
+`end_time` int unsigned NOT NULL comment '结束时间',
+`status` tinyint unsigned NOT NULL default 1 comment '开关状态',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;
+
+	]]></install>
+	<uninstall><![CDATA[
+drop table `ims_mora_reply`;
+	]]></uninstall>	
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

@@ -1,0 +1,192 @@
+
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('adminlist', array('op' => 'new'))}">添加经纪人</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('adminlist', array('op' => 'display'))}">管理经纪人</a></li>
+</ul>
+{if $operation == 'new'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+	<input type="hidden" name="istype" value="1" />
+		<h4>添加经纪人</h4>
+		<table class="tb">
+
+			<tr>
+				<th><label for="">会员ID</label></th>
+				<td>
+					<input type="text" name="uid" class="span6" value="" />
+				</td>
+			</tr>
+
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript" src="./resource/script/colorpicker/spectrum.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/colorpicker/spectrum.css" />
+<script type="text/javascript">
+<!--
+	$(function(){
+		colorpicker();
+	});
+//-->
+</script>
+{elseif $operation == 'post'}
+<style>
+.red {color: red;}
+</style>
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+	<input type="hidden" name="parentid" value="{$item['id']}" />
+		<h4>员工信息编辑</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">员工名称</label></th>
+				<td>
+					<input type="text" name="realname" class="span6" value="{$item['realname']}" />
+				</td>
+			</tr>
+						<tr>
+				<th><label for="">员工部门</label></th>
+				<td>
+								<select class="span3" style="margin-right:15px;" name="type" >
+						<option value="0">请选择部门</option>
+							<option value="0" {if $item['type'] == 0} selected="selected"{/if}>普通员工</option>
+							<option value="2" {if $item['type'] == 2} selected="selected"{/if}>经理</option>
+							<option value="3" {if $item['type'] == 3} selected="selected"{/if}>管理员</option>
+	
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">公司</label></th>
+				<td>
+								<select class="span3" style="margin-right:15px;" name="did" >
+						<option value="0">请选择公司</option>
+								{loop $dukanlar $bo}
+							<option value="{$bo['id']}" {if $item['did'] == $bo['id']} selected="selected"{/if}>{$bo['title']}</option>
+		{/loop}
+	
+					</select>
+				</td>
+			</tr>
+
+		   <tr>
+				<th>用户类型:</th>
+				<td>
+	<label for="autoget_0" class="radio inline"><input type="radio" name="isadmin" id="autoget_1" value="0"  {if $item['isadmin']==0}checked="checked"{/if} class="rad"/>普通用户</label>
+	<label for="autoget_1" class="radio inline"><input type="radio" name="isadmin" id="autoget_1" value="1"  {if $item['isadmin']==1}checked="checked"{/if} class="rad"/>独立用户</label>
+                <span class="help-block">普通用户：</span>
+                <span class="help-block">独立用户：独立用户，自己发的信息，显示自己的电话，联系方式（分类接管无效）</span>
+				</td>
+			</tr>
+			   <tbody  id='trip'  style="{if $item['isadmin']==1}display:none{/if}">
+		 <tr>
+				<th><label for="">服务小区</label></th>
+				<td>
+	  	{loop $children[3] $val}
+           {$val['1']} <br>
+           
+           {if   empty($gullukchildren[$val['0']]) }
+           &nbsp;&nbsp;该地区没有任何小区
+           {/if}
+           
+						{loop $gullukchildren[$val['0']] $region}
+					&nbsp;&nbsp;<label for="ipt_region_{$region['id']}" class="checkbox inline {if $hg[$region['id']]['id']}red{/if}">
+						<input class="" name="region[]" value="{$region['id']}" id="ipt_region_{$region['id']}" type="checkbox" {if in_array($region['id'], $regionids)}checked='checked'{/if}   {if $hg[$region['id']]['id']}disabled="disabled"{/if} />{$region['title']}
+					</label>
+					{/loop}
+					<br>
+					   		{/loop}
+				</td>
+			</tr>
+			      </tbody>
+			<tr>
+				<th><label for="">电话号码</label></th>
+				<td>
+					<input type="text" name="mobile" class="span6" value="{$item['mobile']}" />
+				</td>
+			</tr>
+						<tr>
+				<th><label for="">备注</label></th>
+				<td>
+					<textarea name="remark" class="span6" cols="70">{$item['remark']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+
+<script language="javascript">
+$(function(){
+   $(".rad").click(function(){
+  if($(this).attr("value")=="1")
+   $("#trip").hide();
+  else
+   $("#trip").show();
+   });
+});
+</script> 
+<script type="text/javascript" src="./resource/script/colorpicker/spectrum.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/colorpicker/spectrum.css" />
+<script type="text/javascript">
+<!--
+	$(function(){
+		colorpicker();
+	});
+//-->
+</script>
+{elseif $operation == 'display'}
+<div class="main">
+	<div class="category">
+		<form action="" method="post" onsubmit="return formcheck(this)">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th style="width:10px;"></th>
+					<th>名字</th>
+					<th>用户类型</th>
+					<th>部门</th>
+					<th style="width:80px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			{loop $category $row}
+				<tr>
+					<td>{$row['id']}</td>
+					<td><div class="type-parent">{$row['realname']}&nbsp;&nbsp;</div></td>
+					<td><div class="type-parent">					{if $row['isadmin']==0}普通{/if}
+					{if $row['isadmin']==1}<font color="red">独立用户</font>{/if}
+					</div></td>
+					<td><div class="type-parent">
+					{if $row['type']==0}普通员工{/if}
+					{if $row['type']==2}经理{/if}
+					{if $row['type']==3}管理员{/if}&nbsp;&nbsp;</div></td>
+
+					<td><a href="{php echo $this->createWebUrl('adminlist', array('op' => 'post', 'id' => $row['id']))}">编辑</a>&nbsp;&nbsp;<a href="{php echo $this->createWebUrl('adminlist', array('op' => 'delete', 'id' => $row['id']))}" onclick="return confirm('确认删除吗？');return false;">删除</a></td>
+				</tr>
+
+			{/loop}
+	
+
+			</tbody>
+		</table>
+		</form>
+	</div>
+</div>
+{/if}
+{template 'common/footer'}

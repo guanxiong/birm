@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>QQ微博认证 - RippleTek</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" /><!--响应式网页设计需要-->
+		<link rel="stylesheet" type="text/css" href="Public/css/lg.css">
+		
+		<!--
+		下面一句js引用请勿修改，oAuth.js保留使用服务器的版本，以便于及时获取到更新的文件，如您将此js下载到本地，可能在后续平台升级过程中遇到问题。
+		-->
+		<script type="text/javascript" src="http://service.rippletek.com/ext/js/oAuth.js"></script>
+		<!--
+		上面一句js引用请勿修改，oAuth.js保留使用服务器的版本，以便于及时获取到更新的文件，如您将此js下载到本地，可能在后续平台升级过程中遇到问题。
+		-->
+		
+		<script type="text/javascript">
+		function clickTag(){
+			if (document.getElementById("weixinimg").style.display != "block")
+			{
+				document.getElementById("weixin").style.height="188px";
+				document.getElementById("weixin").style.padding="40px 0";
+				document.getElementById("weixinimg").style.display="block";
+			}else{
+				document.getElementById("weixin").style.height="0px";
+				document.getElementById("weixin").style.padding="0px 0";
+				document.getElementById("weixinimg").style.display="none";
+			}
+		}
+		function hideQr(){
+			document.getElementById("weixin").style.display="block";
+		}
+		</script>
+	</head>
+	<body>
+		<article>
+		<!-----------------------------表单开始-------------------------------->
+		<div id="content">
+			<!----标题和网站LOGO---->
+			<h1><a href="#" id="logo" title="Rippletek上网登录"></a></h1>
+			<h2 class="logintitle">爷，选择一个登录方式快捷上网</h2>
+			<!--其他登录方式---->
+			<div class="o-lg">
+				<a href="javascript:rptk_login('qq')" title="用QQ帐号登录">
+					<div class="qq"></div>
+					<p>用QQ帐号登录</p>
+				</a>
+				<a href="javascript:rptk_login('sina')" title="用新浪微博帐号登录">
+					<div class="sinaweibo"></div>
+					<p>用新浪微博帐号登录</p>
+				</a>
+			</div>
+		</div>
+		</article>
+		<footer>
+			<span>@RippleTek，无线，无限可能</span>
+		</footer>
+	</body>
+</html>

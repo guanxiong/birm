@@ -1,0 +1,242 @@
+{template wl_header} 
+<link href='{RES}css/detail.css' rel='stylesheet' type='text/css' />
+<link href='{RES}css/photoswipe.css' rel='stylesheet' type='text/css' />
+<script type='text/javascript' src='{RES}js/touchslider.min.js'></script>
+<script type='text/javascript' src='{RES}js/klass.min.js'></script>
+<script type='text/javascript' src='{RES}js/photoswipe.jquery-3.0.5.min.js'></script>
+<script language="javascript">$(document).ready(shop_obj.detail_init);</script>
+<style>
+    .quantity {
+        border: 1px solid #eaeaea;
+        vertical-align: middle;
+        height: 40px;
+        display: inline-block;
+        background-color: #FFF
+    }
+    .quantity input {
+        -webkit-appearance: none;
+        width: 44px;
+        height: 38px;
+        text-align: center;
+        background: transparent;
+        border: 0;
+        vertical-align: top;
+        font-size: 16px
+    }
+    .quantity .plus {
+        position: relative;
+        text-align: center;
+        display: inline-block;
+        width: 44px;
+        height: 40px;
+        border-left: 1px solid #eaeaea
+    }
+    .quantity .minus {
+        position: relative;
+        text-align: center;
+        display: inline-block;
+        width: 44px;
+        height: 40px;
+        border-right: 1px solid #eaeaea
+    }
+    .quantity .minus:after {
+        content: "";
+        position: absolute;
+        top: 18px;
+        left: 14px;
+        border-top: 2px solid #333;
+        width: 15px;
+    }
+    .quantity .plus:after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        border-top: 2px solid #333;
+        top: 19px;
+        left: 14px
+    }
+    .quantity .plus:before {
+        content: "";
+        position: absolute;
+        height: 16px;
+        border-left: 2px solid #333;
+        top: 12px;
+        left: 21px
+    }
+    .quantity .minus:active:after,.quantity .plus:active:after {
+        border-top: 2px solid #333
+    }
+    .quantity .plus:active:before {
+        border-left: 2px solid #333
+    }
+    .qb_icon {
+        display: inline-block;
+        background-repeat: no-repeat
+    }
+    .contents{
+        padding-bottom: 20px;
+    }
+    .contents img{
+        max-width: 100%;
+        height:auto;
+        width:expression(this.width > 320 ? "100%" : this.width);
+    }
+</style>
+<div id="shop_page_contents">
+<div id="cover_layer"></div>
+ 	{template wl_menu} 
+	<div id="detail">
+		<div class="pro_img">
+		<div class="touchslider">
+			<div class="img">
+				<div class="touchslider-prev"><span></span></div>
+				<div class="touchslider-viewport">
+					<div class="list">
+						{loop $goods['thumbArr'] $row}
+						<div class="touchslider-item"><a href="{$row}" rel="{$row}"><img src="{$row}" /></a></div>
+						{/loop}
+					</div>
+				</div>
+				<div class="touchslider-next"><span></span></div>
+			</div>
+			<div class="touchslider-nav">
+				{loop $goods['thumbArr'] $key $row}
+					{if $key==0}
+					<a class="touchslider-nav-item touchslider-nav-item-current"></a>
+					{else}
+					<a class="touchslider-nav-item "></a>
+					{/if}
+				{/loop}
+			</div>
+		</div>
+        <script language="javascript">var proimg_count=3;</script>
+	</div>
+	<ul class="info">
+		<li><strong>{$goods['title']}</strong></li>
+		<li class="price">现价:<span>￥{$goods['marketprice']}</span><del>￥{$goods['productprice']}</del></li>
+	</ul>
+	<form id="addtocart_form" action="{php echo $this->createMobileUrl('wlcart');}">
+		<ul class="info">
+			<li class="qty">数量:
+                <span class="quantity"><span class="minus" tag="sub" id="down_count"><i class="qb_icon icon_minus"></i></span>
+                    <input  type="text" name="nums" id="count" value="" class="input_text" value="1"><span tag="add" class="plus" id="up_count"><i class="qb_icon icon_plus"></i></span></span>
+                 件{if $goods['total']==-1}不限{else}(库存{$goods['total']}件){/if}
+            </li>
+		</ul>
+		<ul class="info">
+			<li class="cart">
+				<input type="button" class="add" value="加入购物车" />
+				<input type="button" class="buy" value="立即购买" />
+			</li>
+		</ul>
+		<input type="hidden" name="goodsid" value="{$goods['id']}" />
+		<input type="hidden" name="d" value="add" />
+	</form>
+	<div class="desc">
+		<h2><strong>简短介绍:</strong></h2>
+		<div class="txt">
+			{$goods['description']}
+			<div class="detail"><a href="javascript:show_detail();" style="text-decoration: none;">查看详细介绍</a>
+                <div id="description" style="display:none;">
+                    <div class="contents">{$goods['content']}</div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+	</div>
+	<div id="addtocart_tips">
+		<div class="close">X</div>
+		<div class="txt">
+			<strong>商品已成功加入到购物车！</strong><br />
+			购物车内共有<span class="qty">0</span>件商品，共计<span class="total">￥0</span><br />
+			<a href="{php echo $this->createMobileUrl('wlcart');}">现在去结算&gt;&gt;</a>
+		</div>
+	</div>
+    <script type="text/javascript">
+        function show_detail(){
+            $("#description").slideDown(500);
+        }
+    </script>
+    <script>
+        var j = "0123456789";
+        var l = 1;
+        $("#count").keypress(function(o){
+            if(o.which==null&&(o.charCode!=null||o.keyCode!=null)){
+                o.which=o.charCode!=null?o.charCode:o.keyCode
+            }
+            var m=o.which;
+            if(m===8||(m==46&&o.button==-1)||m===0){
+                return
+            }
+            var n=String.fromCharCode(m);
+            if(j.indexOf(n)===-1){
+                o.preventDefault()}
+        }).keydown(function(m){
+                    if(229===m.which){
+                        m.preventDefault()}
+                }).keyup(function(o){
+                    var n=$(this).val();
+                    if(o.which != 13 && o.which != 8){  //return键 delete
+                        "{if $goods['total']!= -1}";
+                        if(n > "{$goods['total']}"){
+                            //alert('已经超出库存数量');
+                            //$("#count").val("1");
+                            return;
+                        }
+                        "{/if}"
+                    }
+                    if(isNaN(n)){
+                        for(;n.length>0&&isNaN(n);){
+                            n=n.substring(0,n.length-1)}$(this).val(n)
+                    }
+                    if(n===""){n=0}
+                    var m=l*n;
+                }).bind("cut paste",function(m){return false});
+
+        $("#down_count").bind("click",function(){
+            var n=parseInt($("#count").val());
+            if(n>0){
+                if(n-1<=0){return}
+                var m=n-1;$("#count").val(m);
+            }
+        });
+
+        $("#up_count").bind("click",function(){
+            var n=parseInt($("#count").val());
+            if(n>=0){
+                "{if $goods['total']!= -1}";
+                if(n>="{$goods['total']}"){return}
+                "{/if}"
+                var m=n+1;
+                $("#count").val(m);
+        }});
+        $("#count").blur(function() {
+           if($("#count").val()==''){
+               $("#count").val(1);
+           }
+           "{if $goods['total']!= -1}";
+           if($("#count").val() > "{$goods['total']}"){
+               $("#count").val("1");
+               return;
+           }
+           "{/if}"
+        });
+        $("#count").val(1);
+    </script>
+    <script type="text/javascript">
+        $('.input_text').focus(function() {
+            $("#footer_points").css("display","none");
+            $("#footer").css("display","none");
+            $("#category").css("display","none");
+        });
+        $('.input_text').blur(function() {
+            $("#footer_points").css("display","");
+            $("#footer").css("display","");
+            $("#category").css("display","");
+        });
+    </script>
+</div>
+
+</div>
+
+{template wl_footer} 

@@ -1,0 +1,105 @@
+{template 'header'}
+<link href="./themes/mobile/style29/style/cate15_2.css" rel="stylesheet" type="text/css" />
+<link href="./themes/mobile/style29/style/iscroll.css" rel="stylesheet" type="text/css" />
+
+
+<style>
+
+body{
+font:{$_W['styles']['fontsize']} {$_W['styles']['fontfamily']};
+color:{$_W['styles']['fontcolor']};
+padding:0;
+margin:0;
+background-image:url('{if empty($_W['styles']['indexbgimg'])}./themes/mobile/style29/images/bg_index.jpg{else}{$_W['styles']['indexbgimg']}{/if}');
+background-size:cover;
+background-color:{if empty($_W['styles']['indexbgcolor'])}#fbf5df{else}{$_W['styles']['indexbgcolor']}{/if};
+{$_W['styles']['indexbgextra']}
+}
+a{color:{$_W['styles']['linkcolor']}; text-decoration:none;}
+{$_W['styles']['css']}
+.box{width:100%;overflow:hidden;margin-top:40%;}
+.box .box-item{display:block; text-decoration:none;outline:none; height:35px; line-height:35px; margin-bottom:5px; color:#FFF; }
+.box .box-item div{display:inline-block; background:rgba(13, 94, 97, 0.7); padding:0 20% 0 5px; width:auto; position:relative;}
+.box .box-item div i{position:absolute; right:10px; top:10px;}
+.box .box-item span{color:{$_W['styles']['fontnavcolor']}; display:inline-block; font-size:14px;}
+#footer{color:#FFF;}
+
+ #cate15 .mainmenu li:nth-child(10n+1) a{
+        background-color:rgba(255, 152, 0, 0.46);
+}
+#cate15 .mainmenu li:nth-child(10n+2) a{
+        background-color:rgba(255, 51, 0, 0.46);
+}
+#cate15 .mainmenu li:nth-child(10n+3) a{
+        background-color:rgba(255, 254, 0, 0.46);
+}
+#cate15 .mainmenu li:nth-child(10n+4) a{
+        background-color:rgba(121, 255, 0, 0.46);/*rgb颜色及透明度0.46，可以自行调整*/
+}
+#cate15 .mainmenu li:nth-child(10n+5) a{
+        background-color: rgba(0, 192, 255, 0.46);
+}
+#cate15 .mainmenu li:nth-child(10n+6) a{
+        background-color: rgba(206, 0, 255, 0.46);
+}
+#cate15 .mainmenu li:nth-child(10n+7) a{
+        background-color: rgba(113, 0, 255, 0.46);
+}
+#cate15 .mainmenu li:nth-child(10n+8) a{
+        background-color: rgba(255, 0, 211, 0.46);
+}
+#cate15 .mainmenu li:nth-child(10n+9) a{
+        background-color: rgba(255, 101, 0, 0.46);
+}
+#cate15 .mainmenu li:nth-child(10n+10) a{
+        background-color: rgba(255, 152, 0, 0.46);
+} 
+#cate15 .mainmenu {
+    bottom: 60px;  /*60px表示距离底部60个像素，可以自行调整*/
+}
+#ui-header .fixed { background: -webkit-gradient(linear,left top,left bottom,from(#318FEC),to(#0066cc)); box-
+
+shadow: 0 1px 5px rgba(0, 0, 0, 0.4); border-bottom: 1px solid #0558AA; } 
+.ui-title {text-shadow: 0 1px rgba(0, 0, 0, 0.2);color: #FFF;} 
+.ui-btn-right_home {background: url(index/images/themes/home2.png) no-repeat center center;background-size: 24px 
+
+auto;} 
+#popmenu:after {border-color: #ffffff transparent;} 
+.ui-btn-left_pre {background: url(index/images/themes/pre2.png) no-repeat center center;background-size: 24px 
+
+auto;}
+.ui-btn-right {background: url(index/images/themes/Refresh2.png) no-repeat center center; background-size: 28px 
+
+auto;}
+.themeStyle{ background-color:#1269FF !important; }  
+</style>
+</head>
+
+<body id="cate15">
+<div class="bannerr">
+
+    <div class="clr"></div>
+</div>
+
+<div class="mainmenu">
+<ul> <div id="insert1" ></div>
+ 	{loop $navs $nav}  
+<li>
+<div class="menubtn">
+<a href="{$nav['url']}">{$nav['name']}</a>
+</div>
+
+</li>
+ 	{/loop}
+
+ 	
+<div class="clr"></div>
+         <div id="insert2" ></div>
+        
+</ul>
+</div>
+
+{template 'footer'}
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.52">
+	<application setting="false">
+		<name><![CDATA[美洽客服接入]]></name>
+		<identifie><![CDATA[mechat]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[customer]]></type>
+		<ability><![CDATA[接入第三方在线客服美洽客服]]></ability>
+		<description><![CDATA[接入第三方在线客服美洽客服，处理服务号无法自动回复或者超出服务号流程的微信消息。]]></description>
+		<author><![CDATA[Yokit]]></author>
+		<url><![CDATA[http://bbs.we7.cc/forum.php?mod=forumdisplay&amp;fid=36&amp;filter=typeid&amp;typeid=1]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+			<message type="image" />
+			<message type="voice" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+			<message type="image" />
+			<message type="voice" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="美洽客服接入" do="display" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+	CREATE TABLE IF NOT EXISTS `ims_mechat` (
+	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	`weid` int(10) unsigned NOT NULL DEFAULT '0',
+	`name` varchar(50) NOT NULL DEFAULT '' COMMENT '美洽管理帐户',
+	`cdata` varchar(300) NOT NULL DEFAULT '' COMMENT '数据',
+	`access_token` varchar(300) NOT NULL DEFAULT '' COMMENT '票据口令',
+	`createtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '新增时间',
+	PRIMARY KEY (`id`)
+	) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

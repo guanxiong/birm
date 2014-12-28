@@ -1,0 +1,36 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: Microsoft YaHei,Helvitica,Verdana,Tohoma,Arial,san-serif;
+}
+.page-url {
+	margin-top: 10px;
+	border-top: 1px solid #E5E5E5;
+	text-align: center;
+}
+
+.page-url-link {
+	font-size: 14px;
+	line-height: 2.5;
+	text-decoration: none;
+	text-shadow: 0 1px white;
+	-webkit-text-shadow: 0 1px #fff;
+	-moz-text-shadow: 0 1px #fff;
+	color: #CACACA;
+}
+
+.fn-clear:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+
+.fn-clear {
+	zoom: 1;
+}

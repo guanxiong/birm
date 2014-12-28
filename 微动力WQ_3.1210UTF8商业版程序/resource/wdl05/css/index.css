@@ -1,0 +1,64 @@
+/*news_bar*/
+.news_bar{ width:370px; margin-left:20px}
+.news_bar h1{ padding:12px 0;}
+.news_bar li{ width:350px; height:38px; background:url(/resource/wdl05/images/green_icon.png) no-repeat 3px center; padding-left:20px; line-height:38px; border-bottom:1px dotted #838383}
+.news_bar .detail{ text-align:right; margin-top:8px}
+.news_bar .detail .icon_2{ background:url(/resource/wdl05/images/icon.png) left -35px no-repeat; padding-left:19px;}
+
+/*banner*/
+.banner{ background:url(/resource/wdl05/images/banner.jpg) center top no-repeat; height:366px; width:100%; overflow:hidden}
+.banner1{ background:url(/resource/wdl05/images/banner_7.jpg) center top no-repeat; height:334px; width:100%; overflow:hidden}
+
+#banner{width:100%; height:480px; overflow:hidden;/* background:url(/resource/wdl05/images/banner_bg.jpg) center top no-repeat;*/ position:relative; z-index:1; background:#b4c0ce;}
+/*#banner ul{ width:1000px; height:505px; overflow:hidden; margin:0 auto;}*/
+#banner .c{ width:1000px; height:480px; margin:0 auto; overflow:hidden; position:relative; z-index:1;}
+#banner li{width:1000px; height:480px; overflow:hidden; float:left; position:absolute; z-index:2; display:none;}
+#banner li.b1{background:url(/resource/wdl05/images/banner/01.jpg) center top no-repeat; }
+#banner li.b2{background:url(/resource/wdl05/images/banner/02.jpg) center top no-repeat;}
+#banner li.b3{background:url(/resource/wdl05/images/banner/03.jpg) center top no-repeat;display:block;}
+#banner li.b4{background:url(/resource/wdl05/images/banner/04.jpg) center top no-repeat;}
+#banner li.b5{background:url(/resource/wdl05/images/banner/05.jpg) center top no-repeat;}
+#banner li.b6{background:url(/resource/wdl05/images/banner/06.jpg) center top no-repeat;}
+#banner li.b7{background:url(/resource/wdl05/images/banner/07.jpg) center top no-repeat;}
+#banner li.b8{background:url(/resource/wdl05/images/banner/08.jpg) center top no-repeat;}
+#banner li.b9{background:url(/resource/wdl05/images/banner/09.jpg) center top no-repeat;}
+#banner li a{ display:block; height:480px; width:1000px}
+#banner .btn{width:100%; overflow:hidden; text-align:center; position:absolute; left:0px; bottom:15px; z-index:3;}
+#banner .btn img{vertical-align:middle; margin:0 2px;}
+
+
+
+/*intro*/
+.intro{ margin-top:20px; width:740px}
+.intro .video{width:316px; padding-right:35px;}
+.intro_oth{margin-top:20px; width:100%;}
+
+.intro_oth .items{width:275px;}
+.intro_oth .items h1{padding-bottom:21px; padding-top:8px;}
+.intro_oth .items .cont{ line-height:25px; font-size:14px; color:#6b6b6b; padding-bottom:15px;}
+.intro_oth .items .detail{ text-align:right;}
+.intro_oth .items .detail .icon_0{ background:url(/resource/wdl05/images/icon.png) no-repeat; padding-left:19px;}
+.intro_oth .items .detail .icon_1{ background:url(/resource/wdl05/images/icon.png) left -18px no-repeat; padding-left:19px;}
+.intro_oth .items .detail .icon_2{ background:url(/resource/wdl05/images/icon.png) left -35px no-repeat; padding-left:19px;}
+
+
+
+#function{width:1000px; margin:10px auto; background:#fafafa;}
+#function li{width:199px; height:182px; overflow:hidden; float:left; _display:inline;}
+#function li.list{background:url(/resource/wdl05/images/index/hover_bg.jpg) -200px 0px no-repeat;position:relative;}
+#function li.list a{display:block; width:199px; height:182px; text-decoration:none; overflow:hidden;}
+#function li.list a *{text-decoration:none;}
+#function li.list .img{width:100px; height:100px; text-align:center; overflow:hidden; position:relative; margin:0 auto;}
+#function li.list .img img{position:absolute; left:0px; top:0px; z-index:1}
+#function li.list .news{position:absolute; left:0px; top:0px; z-index:2; width:47px; height:30px; left:115px; top:15px}
+#function li.list h3{width:199px; height:32px; line-height:32px; text-align:center; overflow:hidden; font-size:16px; font-weight:bold;}
+#function li.list .info{width:199px; height:40px; line-height:20px; overflow:hidden; text-align:center;}
+#function li.hover{background:url(/resource/wdl05/images/index/hover_bg.jpg) 0px 0px no-repeat;}
+#function li.hover .img img{top:-100px;}
+#function li.hover h3{color:#69b127;}
+#function li.line0{width:1px; background:url(/resource/wdl05/images/index/fun_bg_1.jpg) left center no-repeat;}
+#function li.line1{width:1000px; height:1px; background:url(/resource/wdl05/images/index/fun_bg_0.jpg) center center no-repeat; float:none; clear:both; font-size:0px; line-height:0px; overflow:hidden;}
+
+#index_blank{width:100%; height:20px; overflow:hidden; background:url(/resource/wdl05/images/index/index_blank_bg.jpg) center top no-repeat; margin:5px auto;}
+
+

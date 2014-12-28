@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[万能分享卡]]></name>
+		<identifie><![CDATA[sharecards]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[送祝福，表白，道歉，祝福卡，分享利器，生成万能卡片分享给朋友等等。]]></ability>		<description><![CDATA[发送设置的关键词“如表白\祝福”即可生成一张暗恋表白卡、道歉表白卡，祝福卡等各种卡，分享到朋友圈之后，会带来大量回流。后台提供分享的详细分析报告，让您清晰明了的看到用户访问和分享情况！]]></description>
+		<author><![CDATA[石头鱼]]></author>
+		<url><![CDATA[http://www.00393.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="查看分享卡" do="sharecardslist" state="data" />
+		</rule>
+		<menu>
+            <entry title="预设关健词" do="sharecardscategory" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE `ims_sharecards_date` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`rid` int(10) unsigned NOT NULL COMMENT '规则id',
+`from_user` varchar(50) not null default '' COMMENT '用户openid',
+`to_name` varchar(20) NOT NULL COMMENT '收件人',
+`from_name` varchar(20) NOT NULL COMMENT '收件人',
+`content` varchar(100) NOT NULL COMMENT '万能卡内容',
+`viewnum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '访问量',
+`sharenum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分享量',
+`createtime` int unsigned NOT NULL COMMENT '创建时间',
+`status` tinyint unsigned NOT NULL default 1 comment '是否隐藏',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;	
+
+CREATE TABLE `ims_sharecards_reply` (
+`id` int( 10 ) unsigned NOT NULL AUTO_INCREMENT ,
+`rid` int( 10 ) unsigned NOT NULL default 0 comment '规则id',
+`cid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '预设分类',
+`title` varchar( 50 ) NOT NULL comment '规则标题',
+`description` varchar( 255 ) NOT NULL comment '描述',
+`picture` varchar( 100 ) NOT NULL comment '图片',
+`bgimage` varchar( 100 ) NOT NULL comment '万能卡背景图片',
+`start_time` int unsigned NOT NULL comment '开始时间',
+`end_time` int unsigned NOT NULL comment '结束时间',
+`status` tinyint unsigned NOT NULL default 1 comment '开关状态',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;	
+
+CREATE TABLE `ims_sharecards_category` (
+`id` int( 10 ) unsigned NOT NULL AUTO_INCREMENT ,
+`weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属帐号',
+`parentid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级分类ID,0为第一级',
+`title` varchar( 50 ) NOT NULL comment '标题',
+`description` varchar( 255 ) NOT NULL comment '描述',
+`displayorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;
+	]]></install>
+	<uninstall><![CDATA[
+drop table `ims_sharecards_date`;
+drop table `ims_sharecards_reply`;
+drop table `ims_sharecards_category`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

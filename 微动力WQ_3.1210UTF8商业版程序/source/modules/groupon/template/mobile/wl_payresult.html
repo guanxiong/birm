@@ -1,0 +1,34 @@
+{template wl_header} 
+<div>
+    <div id="container" class="container animate">
+        <header></header>
+        <div class="body">
+            <section class="section_pay pay_success">
+                <article>
+                    <header>
+                        <label>
+                            <span class="icons icons_success">&nbsp;</span>团购成功
+                        </label>
+                    </header>
+                    <div class="tip">
+                        团购券生成可能会有延迟，请耐心等待。<br/>
+                        请在有效期内使用团购券！
+                    </div>
+                </article>
+
+            </section>
+        </div>
+        <footer>
+            <section class="header_nav">
+                <ul class="tbox">
+                    <li><a href="javascript:history.go(-1);" class="icons icons_back">&nbsp;</a></li>
+                    <li><a href="{php echo $this->createMobileUrl('wleticket');}" class="btn">查看团购券</a></li>
+                </ul>
+            </section>
+        </footer>
+    </div>
+</div>
+
+</body>
+
+</html>

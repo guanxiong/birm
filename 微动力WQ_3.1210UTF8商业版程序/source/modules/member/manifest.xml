@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[微会员]]></name>
+		<identifie><![CDATA[member]]></identifie>
+		<version><![CDATA[1.2]]></version>
+		<type><![CDATA[customer]]></type>
+		<ability><![CDATA[会员管理]]></ability>
+		<description><![CDATA[会员管理]]></description>
+		<author><![CDATA[WeEngine Team]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+        <cover>
+			<entry title="会员卡入口设置" do="card" />
+			<entry title="优惠券入口设置" do="entrycoupon" />
+        </cover>
+		<menu>
+			<entry title="会员卡设置" do="card" />
+			<entry title="商家设置" do="store" />
+			<entry title="会员管理" do="member" />
+			<entry title="优惠券管理" do="coupon" />
+			<entry title="消费密码管理" do="password" />
+		</menu>
+		<profile>
+			<entry title="我的会员卡" do="mycard" />
+			<entry title="我的充值记录" do="mycredit" />
+			<entry title="我的优惠券" do="entrycoupon" />
+		</profile>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE IF NOT EXISTS `ims_card` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `color` varchar(255) NOT NULL DEFAULT '',
+  `background` varchar(255) NOT NULL DEFAULT '',
+  `logo` varchar(255) NOT NULL DEFAULT '',
+  `format` varchar(50) NOT NULL DEFAULT '',
+  `fields` varchar(1000) NOT NULL DEFAULT '',
+  `snpos` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_card_coupon` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `starttime` int(10) NOT NULL DEFAULT '0',
+  `endtime` int(10) NOT NULL DEFAULT '0',
+  `type` tinyint(1) NOT NULL,
+  `pretotal` int(11) NOT NULL DEFAULT '1',
+  `total` int(11) NOT NULL DEFAULT '1',
+  `content` text NOT NULL,
+  `displayorder` int(10) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL,
+  `createtime` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_card_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '1积分，2金额，3优惠券',
+  `content` varchar(255) NOT NULL DEFAULT '',
+  `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_card_members` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL DEFAULT '',
+  `cardsn` varchar(20) NOT NULL DEFAULT '',
+  `credit1` int(10) unsigned NOT NULL DEFAULT '0',
+  `credit2` double unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_card_members_coupon` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `couponid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `status` tinyint(1) NOT NULL COMMENT '1为正常状态，2为已使用',
+  `receiver` varchar(50) NOT NULL,
+  `consumetime` int(10) unsigned NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_card_password` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `password` varchar(200) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

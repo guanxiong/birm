@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="{RES}css/bootstrap_min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/bootstrap_responsive_min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/style.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/todc_bootstrap.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/themes.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/inside.css" media="all" />
+<script type="text/javascript" src="{RES}src/jQuery.js"></script>
+<script type="text/javascript" src="{RES}src/bootstrap_min.js"></script>
+<script type="text/javascript" src="{RES}src/plugins/validation/jquery_validate_min.js"></script>
+<script type="text/javascript" src="{RES}src/plugins/validation/jquery_validate_methods.js"></script>
+<script type="text/javascript" src="{RES}src/plugins/form/jquery_form_min.js"></script>
+<script type="text/javascript" src="{RES}src/inside.js"></script>
+<title>微生活—by 微动力</title>
+    <!--[if lte IE 9]><script src="{RES}src/watermark.js"></script><![endif]-->
+	<!--[if IE 7]><link href="{RES}css/font_awesome_ie7.css" rel="stylesheet" /><![endif]-->
+</head>
+<link href="/resource/script/kindeditor/themes/default/default.css" rel="stylesheet" />
+<script src="/resource/script/kindeditor/kindeditor-min.js"></script>
+<script src="/resource/script/kindeditor/lang/zh_CN.js"></script>
+<body>
+	<div id="main">
+    <div class="container-fluid">
+
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="box">
+                    <div class="box-title">
+                        <div class="span10">
+                            <h3><i class="icon-edit"></i>添加分类</h3>
+                        </div>
+                        <div class="span2"><a class="btn" href="Javascript:window.history.go(-1)">返回</a></div>
+                    </div>
+
+                    <div class="box-content">
+                        <form action="" method="post" class="form-horizontal form-validate">
+							<input type="hidden" name="action" value="update" />
+                            <input type="hidden" name="id" value="{$row['id']}" />
+                            <div class="control-group">
+                                <label for="name" class="control-label">名称：</label>
+                                <div class="controls">
+                                    <input type="text" name="classname" id="name" value="{$row['classname']}" class="input-medium" data-rule-required="true" data-rule-maxlength="20" />
+                                    <span class="maroon">*</span>
+                                </div>
+                            </div> 
+                            <div class="control-group">
+                                <label for="sort" class="control-label">显示顺序：</label>
+                                <div class="controls">
+                                    <input type="text" id="sort" name="sort" value="{$row['sort']}"   class="input-mini" data-rule-required="true" data-rule-integer="true" /><span class="maroon">*</span>
+                                </div>
+                            </div>
+							<div class="control-group">
+								<label class="control-label" for="picurl">分类图片</label>
+								<div class="controls">
+									{if !empty($row['picurl'])}<img class="thumb_img" src="{$row['picurl']}" style="max-height: 100px;">{else}
+								   <input  type="text" name="picurl" value="{$row['picurl']}">{/if}
+									<span class="help-inline">
+										<button class="btn select_img" type="button">选择封面</button>
+									</span>
+									<span class="help-inline">建议尺寸：宽200像素，高200像素</span>
+								</div>
+							</div>
+
+                            <div class="control-group">
+                                <label for="note" class="control-label">介绍 ：</label>
+                                <div class="controls">
+                                    <textarea name="infos" rows="5" id="note" class="input-xxlarge" data-rule-maxlength="200"  >{$row['infos']}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button id="bsubmit" type="submit" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+                                <button type="button" class="btn" onclick="Javascript:window.history.go(-1)">取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+KindEditor.ready(function (K) {
+    var editor = K.editor({
+        themeType: "simple",
+        allowFileManager: true,
+		uploadJson : "./index.php?act=attachment&do=upload",
+		fileManagerJson:"./index.php?act=attachment&do=manager",	
+    }); 
+    $('button.select_img').live("click",function (e) {
+        editor.loadPlugin('smimage', function () {
+            editor.plugin.imageDialog({
+                imageUrl: $(e.target).parent().prevAll("input[type=text]").val(),
+                clickFn: function (url, title, width, height, border, align) {
+                    var $input = $(e.target).parent().prevAll("input[type=text]")
+                    $input.val(url)
+                    $input.hide();
+                    var t_img = $(e.target).parent().prevAll(".thumb_img:first");
+                    if (t_img.length == 0) {
+                        var tmp = '<img class="thumb_img" src="{0}" style="max-height: 100px;">';
+                        $input.before(tmp.format(url))
+                    } else {
+                        t_img.attr("src", url);
+                    }
+
+                    editor.hideDialog();
+                }
+            });
+        });
+    });
+});
+</script>
+</body>
+</html>

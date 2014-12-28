@@ -1,0 +1,76 @@
+{template 'common/header'}
+ <ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('shopset')}">基本设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('mailset')}">邮件设置</a></li>		
+ 	<li class="active"><a href="{php echo $this->createWebUrl('printset')}">打印机设置</a></li>	
+	<li><a href="{php echo $this->createWebUrl('smsset')}">短信设置</a></li>	
+	<li><a href="{php echo $this->createWebUrl('orderset')}">订单限制</a></li>	
+
+</ul>
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+	<input type="hidden" name="parentid" value="{$set['id']}" />
+		<h4>GPRS打印机基本设置 <small>微动力的GPRS打印机才有效</small></h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">是否开启</label></th>
+				<td>
+					<label for="isshow1" class="radio inline"><input type="radio" name="print_status" value="1" id="isshow1" {if $set['print_status']==1}checked="true"{/if} /> 是</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for="isshow2" class="radio inline"><input type="radio" name="print_status" value="0" id="isshow2"  {if $set['print_status']==0}checked="true"{/if} /> 否</label>
+					<span class="help-block"></span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">打印方式</label></th>
+				<td>
+					<label for="print_type2" class="radio inline"><input type="radio" name="print_type" value="0" id="print_type2" {if $set['print_type']==0}checked="true"{/if}/>只打印确认订单</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for="print_type2" class="radio inline"><input type="radio" name="print_type" value="1" id="print_type2"  {if $set['print_type']==1}checked="true"{/if}/>只打印付款订单</label>
+					&nbsp;&nbsp;&nbsp;
+ 					
+					<span class="help-block"></span>
+				</td>
+			</tr>			
+			<tr>
+				<th><label for="">打印机机身号</label></th>
+				<td>
+					<input type="text" name="print_usr" class="span6" value="{$set['print_usr']}" />
+					<p class="help-block">打印机机身号</p>					
+				</td>
+			</tr>
+  			<tr>
+				<th><label for="">打印联数</label></th>
+				<td>
+					<input type="text" name="print_nums" class="span6" value="{$set['print_nums']}" />
+					<p class="help-block">默认1，如果您选择了打印机发送短信，旧版本的机器是一联发一条，新版机器一次发一条</p>					
+				</td>
+			</tr>
+  			<tr>
+				<th><label for="">头部自定义信息</label></th>
+				<td>
+					<input type="text" name="print_top" class="span6" value="{$set['print_top']}" />
+					<p class="help-block">建议少于20字</p>					
+				</td>
+			</tr>
+  			<tr>
+				<th><label for="">底部自定义信息</label></th>
+				<td>
+					<input type="text" name="print_bottom" class="span6" value="{$set['print_bottom']}" />
+					<p class="help-block">建议少于20字</p>					
+				</td>
+			</tr>			
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="id" value="{$set['id']}" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+ 
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

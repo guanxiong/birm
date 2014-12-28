@@ -1,0 +1,314 @@
+@charset "utf-8";
+/* CSS Document */
+*{font-family:"微软雅黑";}
+body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, br, p, blockquote, a, code, em, img, q, small, strong, dd, dl, dt, li, ol, ul, fieldset, form, label, table, tbody, tr, th, td, input { margin: 0; padding: 0; }
+body, button, input, select, textarea { font: 12px/1.5 tahoma, arial, \5b8b\4f53;font-family: "Microsoft YaHei";  }
+body{ overflow-x: hidden; }
+h1, h2, h3, h4, h5, h6 { font-size: 100%; }
+address, cite, dfn, em, var, i { font-style: normal; }
+code, kbd, pre, samp { font-family: courier new, courier, monospace; }
+small { font-size: 12px; }
+ul, ol { list-style: none; }
+a { blr:expression_r(this.onFocus=this.blur());}
+a, area { outline: none; blr:expression(this.onFocus=this.blur());}
+sup { vertical-align: text-top; }
+sub { vertical-align: text-bottom; }
+legend { color: #000; }
+fieldset, img { border: 0; }
+img { border: none; vertical-align: middle; }
+button, input, select, textarea { font-size: 100%; }
+table { border-collapse: collapse; border-spacing: 0; }
+.txt { height: 32px; padding: 0px 8px; width: 300px; line-height: 32px; font-size: 12px; background: none; border: 1px solid #d1d1d1; color: #606060; }
+.fl { float: left }
+.fr { float: right }
+.clear { clear: both; }
+.none { display: none }
+.mt5 { margin-top: 5px }
+.mt6 { margin-top: 6px }
+.mt8 { margin-top: 8px }
+.mt10 { margin-top: 10px }
+.mt15 { margin-top: 15px }
+.mt20 { margin-top: 20px }
+.mr5 { margin-right: 5px }
+.mr6 { margin-right: 6px }
+.mr8 { margin-right: 8px }
+.mr10 { margin-right: 10px }
+.mr15 { margin-right: 15px }
+.mr20 { margin-right: 20px }
+.md5 { margin-bottom: 5px }
+.md6 { margin-bottom: 6px }
+.md8 { margin-bottom: 8px }
+.md10 { margin-bottom: 10px }
+.md15 { margin-bottom: 15px }
+.md20 { margin-bottom: 20px }
+.ml5 { margin-left: 5px }
+.ml6 { margin-left: 6px }
+.ml8 { margin-left: 8px }
+.ml10 { margin-left: 10px }
+.ml12 { margin-left: 12px }
+.ml15 { margin-left: 15px }
+.ml20 { margin-left: 20px }
+.pt5 { padding-top: 5px }
+.pt6 { padding-top: 6px }
+.pt8 { padding-top: 8px }
+.pt10 { padding-top: 10px }
+.pt15 { padding-top: 15px }
+.pt20 { padding-top: 20px }
+.pt30 { padding-top: 30px }
+.pr5 { padding-right: 5px }
+.pr6 { padding-right: 6px }
+.pr8 { padding-right: 8px }
+.pr10 { padding-right: 10px }
+.pr15 { padding-right: 15px }
+.pr20 { padding-right: 20px }
+.pd5 { padding-bottom: 5px }
+.pd6 { padding-bottom: 6px }
+.pd8 { padding-bottom: 8px }
+.pd10 { padding-bottom: 10px }
+.pd15 { padding-bottom: 15px }
+.pd20 { padding-bottom: 20px }
+.pd30 { padding-bottom: 30px }
+.pl5 { padding-left: 5px }
+.pl6 { padding-left: 6px }
+.pl8 { padding-left: 8px }
+.pl10 { padding-left: 10px }
+.pl15 { padding-left: 15px }
+.pl17{ padding-left:17px}
+.pl24{ padding-left:24px}
+.pl20 { padding-left: 20px }
+.padding10 { padding: 10px }
+.margin10 { margin: 10px }
+a { text-decoration: none; color: #303030 }
+a:hover { text-decoration: none; color: #ee0000 }
+.white a:link, .white a:visited { color: #FFF }
+.white a:hover { color: #FFF; text-decoration: none }
+.blue { color: #066cad }
+.blue a:link, .blue a:visited { color: #066cad }
+.blue a:hover { color: #066cad; text-decoration: none }
+.green { color: #34b432 }
+.green a:link, .green a:visited { color: #34b432 }
+.green a:hover { color: #34b432; text-decoration: none }
+.red { color: #F00 }
+.red a:link, .red a:visited { color: #F00 }
+.red a:hover { color: #F00; text-decoration: none }
+.org{ color:#e77a32}
+.org a:link, .org a:visited { color: #e77a32; text-decoration:underline }
+.org a:hover { color: #e77a32; }
+.a50 { color: #505050 }
+.a50 a:link, .a50 a:visited { color: #505050 }
+.a50 a:hover { color: #505050; text-decoration: none }
+.box-1000 { margin: 0 auto; width: 1000px }
+.font-YH { font-family: "Microsoft YaHei"; }
+.font14{ font-size:14px}
+.font15{ font-size:15px}
+.font24{ font-size:24px;}
+.text{ width: 205px; padding: 6px 10px; line-height: 26px; height: 26px; border: 1px solid #d4d4d4; background: url("0")/*tpa=http://www.wifiguanjia.com/style/0*/; font-size: 14px; }
+
+
+/*--------------欢迎页-------------*/
+#head{ top:0; height:96px;/* overflow:hidden;*/ left:0; width:100%; z-index:9999;}
+#top { background: url("../images/head.jpg")/*tpa=http://www.wifiguanjia.com/images/head.jpg*/ repeat-x; height: 38px; min-width:1000px; }
+.top { margin: 0px auto; width: 1000px; height: 38px; overflow: hidden; }
+.top .trli { margin-top: 9px; font-family: "宋体"; line-height: 20px; height: 20px; text-align: right; float: right;width:100%; color:#FFF}
+.top .trli ul{}
+.top .trli ul span{ float:left; padding-right:30px; }
+.top .trli li { float: right; margin-right: 11px; display: inline; }
+#logo-nav{background: #FFF; height: 56px;border-bottom: 3px solid #CCCCCC;}
+.logo-nav { height: 56px; margin: 0px auto; width: 1000px;  }
+.logo-nav .logo { display: inline; float: left; margin-top: 1px; margin-left: 30px; }
+.logo-nav .nav { line-height: 40px; float: right; height: 46px; font-weight:bold; width: 690px; margin-top: 10px; overflow: hidden; font-size: 16px; }
+.logo-nav .nav li { float: left; margin-right: 15px; margin-left: 15px; display: inline; }
+.logo-nav .nav li a{ display:block; height:37px; color:#868688}
+.logo-nav .nav li a:hover{ border-bottom:4px solid #000000; color:#000000}
+.logo-nav .nav li .sel{ border-bottom:4px solid #cccccc;  -moz-border-radius: 5px;      /* Gecko browsers */
+    -webkit-border-radius: 5px;   /* Webkit browsers */
+    border-radius:5px;            /* W3C syntax */ color:#fff;  padding:3px 8px 0px 8px;background:url("../images/bd_nav_bg.png")}
+#Slider{ background: url("../images/bannerbg.jpg")/*tpa=http://www.wifiguanjia.com/images/bannerbg.jpg*/ repeat-x 0 357px; /*height:357px; position:relative; overflow:hidden; top:126px;*/ }
+#Slider #banner { margin: 0 auto;  position: relative; z-index: 2; height: 357px; }
+#Slider .banner {   position: absolute;top: 0; z-index: 1; height: 357px;}
+#Slider .slider { margin: 0px auto; height: 87px;  overflow: hidden; padding-top: 25px; background: url("../images/xt.jpg")/*tpa=http://www.wifiguanjia.com/images/xt.jpg*/ repeat-x left bottom; }
+#Slider .slider li { float: left; height: 66px; width: 300px; }
+#Slider .slider li a{ display:block; width:300px; height:66px}
+#Slider .slider .S1 a,#Slider .slider .S2 a,#Slider .slider .S3 a{ background: url("../images/sliderbg.jpg")/*tpa=http://www.wifiguanjia.com/images/sliderbg.jpg*/ no-repeat }
+#Slider .slider .S1 a{ background-position:0 0}
+#Slider .slider .S1 a:hover{ background-position:0 -66px}
+#Slider .slider .S2 a{ background-position:-300px 0}
+#Slider .slider .S2 a:hover{ background-position:-300px -66px}
+#Slider .slider .S3 a{ background-position:-600px 0}
+#Slider .slider .S3 a:hover{ background-position:-600px -66px}
+
+#Slider .slider #S1 a,#Slider .slider #S2 a,#Slider .slider #S3 a{ background: url("../images/sliderbg.jpg")/*tpa=http://www.wifiguanjia.com/images/sliderbg.jpg*/ no-repeat }
+#Slider .slider #S1 a{ background-position:0 0}
+#Slider .slider #S1 a.on,#Slider .slider #S1 a:hover{ background-position:0 -66px}
+#Slider .slider #S2 a{ background-position:-300px 0}
+#Slider .slider #S2 a.on,#Slider .slider #S2 a:hover{ background-position:-300px -66px}
+#Slider .slider #S3 a{ background-position:-600px 0}
+#Slider .slider #S3 a.on,#Slider .slider #S3 a:hover{ background-position:-600px -66px}
+
+.banner{ height:357px;}
+.slideBox{ width:1420; height:357px; overflow:hidden; position:relative;    } 
+.slideBox .bd{ position:relative; height:100%; z-index:0;  list-style:none;  }
+.bd li{ list-style:none; text-align:center;} 
+.slideBox .bd img{ width:1420; height:357px; } 
+.slider{ clear:both;} 
+#main { width:1000px;background:#fff; border-left:#FFF solid 2px;border-right:#FFF solid 2px; margin:0 auto}
+.info dl { background: url("../images/xt.jpg")/*tpa=http://www.wifiguanjia.com/images/xt.jpg*/ repeat-x left bottom; padding-top: 20px; padding-bottom: 20px; }
+.info .dl1 dt{ float:right}
+.info .dl1 dd{ width: 420px; float: left; padding-left: 30px }
+.info dd .tit { font-size: 38px; font-weight: bold; color: #34b432; line-height: 52px; height: 52px; margin-top: 20px; }
+.info dl .co{ font-size:16px; color:#737373; line-height:24px; font-weight:bold}
+.info .dl2 dt{ float:left}
+.info .dl2 dd{ float:right; width:400px; padding-right:20px;text-align:right}
+.info .dl3 dt{ float:right}
+.info .dl3 dd{ width: 380px; float: left; padding-left: 30px }
+.info .dl4 dt{ float:left}
+.info .dl4 dd{ float: right; width: 540px; padding-right: 20px; text-align: right }
+.info .dl4 dd .tit{ margin-top:40px;}
+.mycase{background: url("../images/xt.jpg")/*tpa=http://www.wifiguanjia.com/images/xt.jpg*/ repeat-x left bottom; padding-top: 30px; padding-bottom: 30px; }
+.mycase .mycase_t{font-size: 38px; font-weight: bold; color: #34b432; line-height: 52px; height: 52px; padding-left:30px}
+.mycase .mycase_d li { float: left; width: 165px; margin-left: 30px; display: inline; overflow: hidden; }
+.mycase .mycase_d li span { line-height: 20px; display: block; height: 20px; width: 100%; overflow: hidden; margin-top: 10px; }
+.message { width: 940px; margin-top: 15px; padding-right: 30px; padding-left: 30px; overflow: hidden; }
+.message .messageList{ width:440px; float:left}
+.message .messageList_t{ height: 52px; line-height: 52px; height: 52px; margin-bottom: 15px; }
+.message .messageList_t p{font-size: 38px; font-weight: bold; color: #34b432;}
+.message .messageList_d { color: #545454; line-height: 24px; font-family: "宋体"; height:240px; overflow:hidden; }
+.message .messageList_d dl{ width: 100%; padding: 15px 0px; border-top: 1px dashed #737373; }
+.messageCo { float: right; width: 470px; }
+.messageCos { float: left; width: 470px; }
+.messageCo .messageCo_t { height: 24px; line-height: 24px; font-weight: 700; }
+.messageCo .messageCo_d { width: 470px; margin-top: 5px; }
+.messageCo .messageCo_d textarea,.messageCo .messageCo_d input{ color:#a9a9a9;}
+#foot { background: #454545; margin-top: 30px; padding: 15px 0 0 0; }
+.foot { margin: 0px auto; width: 940px; }
+.foot .foot_l{ width: 235px; padding-left: 10px; background: url("../images/footxt.jpg")/*tpa=http://www.wifiguanjia.com/images/footxt.jpg*/ no-repeat right top; height: 190px; overflow: hidden; font-size: 14px; color: #adadad; padding-top: 10px; float: left; }
+.foot .foot_l span{ font-size: 26px; font-weight: bold; }
+.foot .foot_r { float: right; width: 690px; padding-top: 10px; font-family:"微软雅黑"; }
+.foot .foot_r dl { width: 150px; margin-left: 20px; display: inline; float: left }
+.foot .foot_r dt { font-size: 16px; font-weight: bold; color: #FFF; height:30px; line-height:30px }
+.foot .foot_r dd { font-size: 14px; height: 24px; line-height: 24px; overflow: hidden; }
+.foot .foot_r dd a:link,.foot .foot_r dd a:visited{ color:#adadad}
+.left { width: 215px; margin-right: 25px; display: inline; float: left; margin-left: 30px; }
+.listmenu ul{ border:3px solid #ccc; background:#eeeeee; padding-bottom:120px;}
+.listmenu ul li { font-size: 21px; border-bottom:#FFF solid 1px; color: #868688; text-align: center; width: 100%; }
+.listmenu ul li a { display:block; height:45px; line-height:45px; width:100%}
+.listmenu ul li a:hover{ background:#dddddd; color:#111111}
+.listmenu ul li .sel{ background:#dddddd; color:#000000}
+.right { width: 670px; margin-top: 30px; padding-bottom: 30px; padding-left: 25px; float: right; margin-right: 30px; }
+.listmenu ul .C1 a{ background:url("../images/c_a1.jpg")/*tpa=http://www.wifiguanjia.com/images/c_a1.jpg*/ no-repeat 15px 8px}
+.listmenu ul .C1 a:hover{ background:#34b432 url("../images/c_a2.jpg")/*tpa=http://www.wifiguanjia.com/images/c_a2.jpg*/ no-repeat 15px 8px; color:#f3f3f3}
+.listmenu ul .C1 .sel{ color:#f3f3f3;background:#34b432 url("../images/c_a2.jpg")/*tpa=http://www.wifiguanjia.com/images/c_a2.jpg*/ no-repeat 15px 8px}
+.listmenu ul .C2 a{ background:url("../images/c_b1.jpg")/*tpa=http://www.wifiguanjia.com/images/c_b1.jpg*/ no-repeat 15px 8px}
+.listmenu ul .C2 a:hover{ background:#34b432 url("../images/c_b2.jpg")/*tpa=http://www.wifiguanjia.com/images/c_b2.jpg*/ no-repeat 15px 8px; color:#f3f3f3}
+.listmenu ul .C2 .sel{ color:#f3f3f3;background:#34b432 url("../images/c_b2.jpg")/*tpa=http://www.wifiguanjia.com/images/c_b2.jpg*/ no-repeat 15px 8px}
+.listmenu ul .C3 a{ background:url("../images/c_c1.jpg")/*tpa=http://www.wifiguanjia.com/images/c_c1.jpg*/ no-repeat 15px 8px}
+.listmenu ul .C3 a:hover{ background:#34b432 url("../images/c_c2.jpg")/*tpa=http://www.wifiguanjia.com/images/c_c2.jpg*/ no-repeat 15px 8px; color:#f3f3f3}
+.listmenu ul .C3 .sel{ color:#f3f3f3;background:#34b432 url("../images/c_c2.jpg")/*tpa=http://www.wifiguanjia.com/images/c_c2.jpg*/ no-repeat 15px 8px}
+.listmenu ul .C4 a{ background:url("../images/c_d1.jpg")/*tpa=http://www.wifiguanjia.com/images/c_d1.jpg*/ no-repeat 15px 8px}
+.listmenu ul .C4 a:hover{ background:#34b432 url("../images/c_d2.jpg")/*tpa=http://www.wifiguanjia.com/images/c_d2.jpg*/ no-repeat 15px 8px; color:#f3f3f3}
+.listmenu ul .C4 .sel{ color:#f3f3f3;background:#34b432 url("../images/c_d2.jpg")/*tpa=http://www.wifiguanjia.com/images/c_d2.jpg*/ no-repeat 15px 8px}
+.listmenu ul .C5 a{ background:url("../images/c_e1.jpg")/*tpa=http://www.wifiguanjia.com/images/c_e1.jpg*/ no-repeat 15px 8px}
+.listmenu ul .C5 a:hover{ background:#34b432 url("../images/c_e2.jpg")/*tpa=http://www.wifiguanjia.com/images/c_e2.jpg*/ no-repeat 15px 8px; color:#f3f3f3}
+.listmenu ul .C5 .sel{ color:#f3f3f3;background:#34b432 url("../images/c_e2.jpg")/*tpa=http://www.wifiguanjia.com/images/c_e2.jpg*/ no-repeat 15px 8px}
+.listmenu h2{ font-size:14px; font-weight:bold}
+
+.newList dl { padding: 18px 0 10px; height: 90px; width: 100%; overflow: hidden; background: url("../images/xt.jpg")/*tpa=http://www.wifiguanjia.com/images/xt.jpg*/ repeat-x left bottom; }
+.newList dl dt { height: 77px; width: 77px; color: #FFF; float: left; text-align:center }
+.newList dl dt p,.newList dl dt span{ display:block}
+.newList dl dt p{ font-size: 36px; font-weight: 700; height: 32px; line-height: 32px; padding-top: 13px }
+.newList dl dt span{ font-size:14px}
+.newList dl dd { float: left; width: 570px; padding-left: 15px;  overflow:hidden }
+.newList dl .tit{ font-size:16px; height:26px; line-height:26px;}
+.newList dl .co{ height: 40px; line-height: 20px; margin-top: 3px; }
+.newList dl .more a{ display:block;  width:18px; height:18px; float:right}
+.newList .normal dt{ background:#bada3a}
+.newList .normal dd{ color:#737373;}
+.newList .normal dd a{ color:#737373}
+.newList .normal dd a:hover{ color:#289dc8}
+.newList .normal .more a{background:url("../images/moreN.jpg")/*tpa=http://www.wifiguanjia.com/images/moreN.jpg*/ no-repeat;}
+.newList .hover dt{ background:#289dc8}
+.newList .hover dd{ color:#289dc8;}
+.newList .hover dd a{ color:#289dc8}
+.newList .hover dd a:hover{ color:#289dc8}
+.newList .hover .more a{ background:url("../images/moreH.jpg")/*tpa=http://www.wifiguanjia.com/images/moreH.jpg*/ no-repeat;}
+
+.page { line-height: 22px; height: 22px; margin-top: 10px; padding-top: 10px; padding-bottom: 10px;}
+.page a { padding: 2px 6px; background: #848484; margin-right: 2px; margin-left: 2px; color: #FFF }
+.page a:hover { background: #34b432; color: #FFF }
+.page .sel { background: #34b432; color: #FFF }
+.wifi-info { background: url("../images/xt.jpg")/*tpa=http://www.wifiguanjia.com/images/xt.jpg*/ repeat-x left bottom; padding-bottom: 25px; font-size: 14px; color: #545454; }
+.wifi-tit { font-size: 24px; font-weight: bold; color: #34b432; line-height: 36px; height: 42px; }
+.sj{ background: url("../images/xt.jpg")/*tpa=http://www.wifiguanjia.com/images/xt.jpg*/ repeat-x left bottom; margin-top: 38px; padding-bottom: 25px;  }
+.sj_Co{float: left; width: 364px;}
+.sj_Co .sj_info { font-size: 14px; line-height: 24px; color: #5f5f5f; margin-top: 30px; }
+.sj_Co .sj_about { line-height: 24px; color: #696969; text-indent: 2em; height: 192px; overflow: hidden; margin-top: 36px; }
+
+.sj .sj_Img { float: right; width: 290px; }
+.sj_Img .sj_Img_pre,.sj_Img .sj_Img_next{ margin-top:197px}
+.sj_Img .sj_Img_M{ margin-left:15px; display:inline; width:220px; height:430px}
+.case{ width:670px; overflow:hidden}
+.case .case_d{ width:690px}
+.case_d li { float: left; width: 153px; margin-top: 10px; margin-right: 18px; overflow: hidden; margin-bottom: 10px; }
+.case_d li span{ color:#ffffff; background:#b3d334; height:28px; line-height:28px; overflow:hidden; padding:0 10px; display:block;}
+.mainl{ background:url("../images/bg.gif")/*tpa=http://www.wifiguanjia.com/images/bg.gif*/ repeat-y 273px 0;}
+
+
+.titles{ text-align:center; padding:0 0 25px 0; font-size:15px; font-family:"微软雅黑"; color:#34B432;}
+.titles h1{ padding:0 0 10px 0; border-bottom:1px dotted #ccc; font-size:1.6em;}
+.titles p{ font-weight:100; font-size:12px; color:#333;}
+
+.about{ font-size:14px;  line-height:230%; color:#333;}
+
+
+/*WIFI作用*/
+.txt12{color:#333; font-size:12px;}
+.txt18{font-size:16px;}
+.txt14{font-size:14px;}
+.height30{ height:30px; line-height:30px;}
+.clearfix { *zoom:1
+}
+.clearfix:before, .clearfix:after { display: table; content: "" }
+.clearfix:after { clear: both }
+.con_co .desc h3{ font-size:28px; color:#4cb514; font-weight:normal;}
+.con_co .desc-1-2{background:url("../images/description_1-2.jpg")/*tpa=http://www.wifiguanjia.com/images/description_1-2.jpg*/ right center no-repeat;width:668px; height:400px;}
+.con_co .desc-2{ background:url("../images/description_2.png")/*tpa=http://www.wifiguanjia.com/images/description_2.png*/ no-repeat; width:668px; height:430px; padding-left:100px; padding-top:40px;}
+.con_co .desc-3 { background: url("../images/description_3.png")/*tpa=http://www.wifiguanjia.com/images/description_3.png*/ 0 0 no-repeat; height:387px;width:668px;padding-left:100px;padding-top:40px;}
+.con_co .desc-4 { background: url("../images/description_4.png")/*tpa=http://www.wifiguanjia.com/images/description_4.png*/ 0 0 no-repeat; height:366px;width:668px;padding-left:100px;padding-top:40px;}
+.con_co .desc-5 { background: url("../images/description_5.png")/*tpa=http://www.wifiguanjia.com/images/description_5.png*/ 0 0 no-repeat;width:668px; height:391px; padding-left:100px;padding-top:40px;}
+.con_co .desc-6 { background: url("../images/description_5-5.png")/*tpa=http://www.wifiguanjia.com/images/description_5-5.png*/ 0 0 no-repeat;width:668px; height:391px; padding-left:100px;padding-top:40px;}
+.con_co .desc-2 .head p{font-size:16px; line-height:30px;}
+.desc-2 .head{ width:350px; left: 138px; float:left;}
+.title-en{ font-size:20px; color:#C0E8B5;}
+.desc .ol1 li {line-height:35px; height:35px; font-size: }
+.desc .ol2 li { float: left; width: 140px; line-height:30px; height:30px; }
+.desc  ol i { font-style: normal; background: url("../images/icon.png")/*tpa=http://www.wifiguanjia.com/images/icon.png*/ 0 0 no-repeat; display: inline-block; width: 21px; height: 21px; line-height: 21px; text-align: center; font-size: 14px; color: #FFF; vertical-align: 2px; margin-right: 10px; }
+.con_co .text-box { width: 350px; float:left;}
+.con_co .text-box ol{ margin:5px auto;}
+.desc .hd { color: #4EBF21; font-size: 20px; margin: 20px 0; }
+.desc .hd2 { font-size: 20px; margin: 40px 0 5px; }
+.desc .hd3 {color: #4EBF21; font-size: 20px; margin: 20px 0 5px; background:url("../images/icon.png")/*tpa=http://www.wifiguanjia.com/images/icon.png*/ 0 -78px no-repeat; padding-left:30px; }
+.desc .share { margin: 20px 0; }
+.desc .share a { display: inline-block; background:url("../images/icon.png")/*tpa=http://www.wifiguanjia.com/images/icon.png*/ 0 -240px no-repeat; padding-left: 50px; height: 37px; line-height: 37px; color: #3E3E3E; margin-right: 20px; }
+.desc .share a:hover { text-decoration: none; }
+.desc .share .sina { }
+.desc .share .tencent { background-position: -145px -240px; }
+.mdesc .share .wechat { background-position: -293px -240px; }
+
+/*为什么选择我们*/
+#why_chose li{ font-size:12px; color:#090; height:25px; line-height:25px;}
+
+.agent{clear:both;}
+.agent span{ display:inline-block; float:left;}
+.agent p{background:#f3f3f3; padding:5px 10px; width:75%; float:right; }
+
+#site{ margin-bottom:20px; font-size:14px; color:#666;}
+#site a{color: #666}
+.pgbreak{ margin-top:20px;}
+
+#scroll{position:fixed; top:200px; right:0; z-index:999; max-width:250px;_width:250px;}
+#scroll #l{ float:left; width:206px;background:#333333; display:none;}
+#scroll #l ul li{ line-height:25px; height:25px; overflow:hidden;}
+#scroll #l ul{ width:90%; margin:5px auto;}
+#scroll #l ul li a{ color:#CCC}
+#scroll #r{ width:44px; float:left; padding-top:0px;}
+

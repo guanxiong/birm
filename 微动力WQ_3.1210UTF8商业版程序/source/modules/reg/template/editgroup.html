@@ -1,0 +1,64 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('rule/post', array('id' => $id))}">返回规则模块</a></li>
+					<li><a target="_blank" href="{php echo create_url('site/module/group', array('name' => 'reg', 'id' => $id))}">群组管理</a></li>
+					<li class="current"><a href="{php echo create_url('site/module/manage', array('name' => 'reg', 'id' => $id))}">管理用户</a></li>
+					<li><a href="{php echo create_url('site/module/blacklist', array('name' => 'reg', 'id' => $id))}">黑名单</a></li>
+</ul>
+
+<div class="main">
+	<div class="stat">
+		<div class="stat-div">
+			<div class="navbar navbar-static-top">
+				<div class="navbar-inner">
+					<span class="brand">添加群组</span>
+				</div>
+			</div>
+           
+            <form class="form-horizontal form"  action="{$_W['siteroot']}{php echo create_url('site/module/editgroup', array('name' => 'reg','id'=>$_GPC['id'],'gid'=>$_GPC['gid']))}" method="post" enctype="multipart/form-data" data-ajax="false"> 
+            
+           
+<table class="tb" style="margin-top:10px;">
+				
+				<tr>
+					<th style="width:90px;"><label for="name">群组名</label></th>
+					<td>
+						<input type="hidden" name="gid" value="{$gid}" />
+                       <input type="text"  name="groupname" value="{$list['groupname']}" class="span6"  />
+						<span class="help-block">群组名</span>
+                        
+					</td>
+				</tr>
+                <tr>
+					<th style="width:90px;"><label for="credit">积分：</label></th>
+					<td>
+						<input type="text"  name="credit" value="{$list['credit']}" class="span6" />
+                       
+						<span class="help-block">达到该群组需要的积分</span>
+                        
+					</td>
+				</tr>
+                
+				<tr>
+					<th><label for="info">备注：</label></th>
+					<td>
+						<input type="text"  name="info" value="{$list['info']}" class="span6" />
+						<span class="help-block">请填写群组介绍说明</span>
+					</td>
+				</tr>
+				
+				<tr>
+					<td colspan="2">
+						<input type="submit" class="btn btn-primary span3" name="edit"  value="提交" /><input type="hidden" name="token" value="{$_W['token']}" />
+					</td>
+				</tr>
+			</table>
+            
+			</form>
+            
+		</div>
+    	
+</div>
+
+{template 'common/footer'}

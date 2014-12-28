@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[微团购]]></name>
+		<identifie><![CDATA[groupon]]></identifie>
+		<version><![CDATA[1.5]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[微团购]]></ability>
+		<description><![CDATA[微团购]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="微团购入口" do="wlindex" />
+		</cover>	
+		<menu>
+			<entry title="支付方式设置" do="payset" state="" direct="false" />			
+			<entry title="团购管理" do="goods" state="" direct="false" />
+			<entry title="消费验证" do="verification" state="" direct="false" />			
+			<entry title="订单管理" do="order" state="" direct="false" />
+			<entry title="会员管理" do="user" state="" direct="false" />
+			<entry title="退款管理" do="refund" state="" direct="false" />
+			<entry title="团购券管理" do="eticket" state="" direct="false" />
+		</menu>
+		<home>
+			<entry title="微团购" do="wlindex" />
+		</home>		
+	</bindings>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_groupon_fans` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `totalnum` tinyint(4) NOT NULL,
+  `totalprice` varchar(10) NOT NULL,
+  `last_time` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_groupon_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `rid` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `starttime` int(10) NOT NULL,
+  `endtime` int(10) NOT NULL,
+  `listorder` int(11) NOT NULL,
+  `warning_stock` int(11) NOT NULL,
+  `price` varchar(10) NOT NULL,
+  `market_price` varchar(10) NOT NULL,
+  `stock` int(11) NOT NULL,
+  `limit_num` int(11) NOT NULL,
+  `sell_nums` int(11) NOT NULL,
+  `virtual_sales` int(11) NOT NULL,
+  `summary` varchar(500) NOT NULL,
+  `thumb_list` varchar(500) NOT NULL,
+  `info` text NOT NULL,
+  `tips` varchar(500) NOT NULL,
+  `random_refund` tinyint(1) NOT NULL,
+  `expired_refund` tinyint(1) NOT NULL,
+  `valid_starttime` int(10) NOT NULL,
+  `valid_endtime` int(10) NOT NULL,
+  `is_view` tinyint(1) NOT NULL,
+  `store_key` varchar(20) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `hits` int(11) NOT NULL,
+  `create_time` int(10) NOT NULL,
+  `notice` varchar(1000) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_groupon_order` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `tid` int(11) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `ordersn` varchar(30) NOT NULL COMMENT '订单编号',
+  `secretsn` varchar(10) NOT NULL,
+  `totalnum` tinyint(4) NOT NULL,
+  `totalprice` varchar(10) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '-1取消状态，0普通状态，1为已确认(付款自动确认)，2为成功',
+  `used` tinyint(1) NOT NULL COMMENT '是否使用',
+  `ispay` tinyint(1) NOT NULL COMMENT '是否付款',
+  `sendtype` tinyint(1) unsigned NOT NULL COMMENT '1为快递，2为自提',
+  `paytype` tinyint(1) unsigned NOT NULL COMMENT '1为余额，2为在线，3为到付',
+  `remark` varchar(1000) NOT NULL DEFAULT '',
+  `createtime` int(10) unsigned NOT NULL,
+  `paytime` int(10) NOT NULL,
+  `usedtime` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_groupon_set` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `payset1` tinyint(1) NOT NULL,
+  `payset2` tinyint(1) NOT NULL,
+  `payset3` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

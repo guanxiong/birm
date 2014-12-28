@@ -1,0 +1,105 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0;}
+body{font:12px "宋体","Arial Narrow",HELVETICA; -webkit-text-size-adjust:100%; line-height:25px; background-color:#eef3ef; color:#8d9695;}
+a{color:#8d9695;text-decoration:none}
+ul,li{list-style:none; margin:0px; padding:0px;}
+img{border:0;vertical-align:middle;}
+
+A:link,
+A:visited,
+A:hover ,
+A:active{
+ color: #8d9695;
+ TEXT-DECORATION: none
+}
+.center{ padding:0 10px; overflow: hidden;height: 100%;max-width:640px; margin:0 auto;}
+.top{ overflow: hidden; font-size: 16px; line-height: 40px; padding: 5px 0px;}
+.top span{ color: #f12500;}
+.top a{ float: right; background:url(../images/p5.png) 10px center no-repeat #fe7160; margin-top: 5px; background-size: 15px auto; line-height: 30px; height: 30px; padding: 0 15px 0px 30px; font-weight: bold; border-radius: 5px; color: #fff;}
+.product{ border:1px solid #cfd4d0; padding:5px 0px; overflow: hidden;}
+.product li{ width: 21%; float: left; padding:0 2%;}
+.product li dl{ overflow: hidden;}
+.product li dt{ overflow: hidden; position: relative; margin-bottom: 5px;}
+.product li dt span{ width: 100%; position: absolute; left: 0px; top: 0px;}
+.product li dt img{ float: left; width: 100%;}
+.product li dt span img{ width: 100%; float: left; border:none;}
+.product li dd{line-height: 18px; color: #6a7475; font-size: 14px;overflow: hidden;white-space :nowrap }
+.product li dd span{ color: #f12500;}
+.cunber_title{ overflow: hidden; padding-top: 10px;}
+.cunber_title span{ float: right;}
+.cunber_title b{ font-weight: normal; color: #f12500; padding:0 5px;}
+.cunber_title u{ text-decoration: none; color: #23cba8; padding:0 5px;}
+.usr{ overflow: hidden; border:1px solid #cfd4d0; border-bottom: none;}
+.usr_list{ overflow: hidden; border-bottom:1px solid #cfd4d0; padding:5px;}
+.usr_list p{ width: 50px; float: left;}
+.usr_list p img{ width: 100%; float: left;}
+.usr_list dl{ overflow: hidden; padding-left: 8px;}
+.usr_list dt{ font-size: 14px;}
+.usr_list dt span{ float: right; font-size: 12px; color: #23cba8;}
+.usr_list dt span.curr{ width: 25px; height: 25px; font-size: 14px; text-align: center; background:#f12500; border-radius: 50%; color: #fff;}
+.usr_list dd{ overflow: hidden; font-size: 12px;}
+.usr_list dd span{ float: right; color: #8d9695;}
+.usr_list dd b{ font-weight: normal; background:url(../images/a3.png) left center no-repeat; background-size: 16px auto; padding-left: 20px; color: #23cba8}
+.usr_more{ width: 100%;overflow: hidden; border:1px solid #c4d4d0; line-height: 35px; text-align: center; font-size: 14px; margin-top: 10px;color:#8d9695;}
+.sub_b{ overflow: hidden; padding: 5px 0; box-shadow: 0px -2px 10px #e3e3e3;  background-color: #fff; position: fixed; left:0px; bottom: 0px; width: 100%;}
+.sub_b dl{ padding:0 10px;}
+.sub_b dd{ text-align: center; line-height: 30px; height: 30px; overflow: hidden; border-radius: 5px; color: #fff; font-size: 14px; background: #23cba8;}
+.sub_b dd a{ display: block; color: #fff;}
+.sub_b dt{height: 30px; width: 30px; float: right; background:#23cba8; position: relative; margin-left: 10px; text-align: center; border-radius: 5px; padding: 0 5px;}
+.sub_b dt img{ width: 23px; height: 25px; margin-top: 3px;}
+.sub_b dt span{ width: 5px; height: 5px; border-radius: 50%; background:#ff0000; position: absolute; right: 3px; top: 3px;}
+.wenz{ overflow: hidden; padding-bottom: 45px;}
+.wenz h3{ font-size: 14px; font-weight: normal; color: #23cba8; padding-top: 10px;}
+
+.jind{ position: relative; height: 40px; overflow: hidden;}
+.ca{ width: 24px; background: url(../images/ss_05.png) left top no-repeat; background-size: 24px auto; text-align: center; line-height: 30px; color: #788389; font-weight: bold; position: absolute; top: 12px; left: 100%; z-index: 9;}
+.current{ background: url(../images/ss_03.png) left top no-repeat; background-size: 24px auto; color: #fff;}
+.cab{ width: 100%; height: 8px; overflow: hidden; background-color: #d2d5da; position: relative; margin-top:22px;}
+.cab span{ height: 8px; background: #f77b23; float: left; border-radius: 0 5px 5px 0px;}
+
+.share-layer{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background-color: rgba(0,0,0,0.9);
+	background-size: 320px 256px;
+	background-repeat: no-repeat;
+	background-position: right top;
+	background-image: url(../images/share.png);
+	z-index:999;
+}
+.share-layer.show{
+	display: block;
+}
+input,select,textarea{background:transparent; border:none; padding:0; margin:0;}
+.con{ padding:0 5%; }
+.con img { width:100%;}
+.getbtn{color:#fff;margin: 5px auto 5px;border:0px;width:100%;line-height:30px;font-size:14px;background-color:#0f9dda;}
+.paihang{color:#fff;margin: 5px auto 5px;border:0px;width:100%;line-height:30px;font-size:14px;background-color:#0f9dda;}
+.getbtnshangjia{color:#fff;margin: 5px auto 5px;border:0px;width:100%;line-height:30px;font-size:14px;background-color:#ff0000;}
+.getedbtn{color:#fff;margin: 5px auto 5px;border:0px;width:100%;line-height:26px;font-size:14px;background-color:gray;}
+.pri {padding:10px ; margin:0px; position:relative; z-index:3; background: url(../images/longbg.png) repeat; background-size:contain;}
+.pri h4{ text-align:center; color:#f00; margin:0 0 10px;}
+.pri .pricebg{border:8px solid #ddd; border-radius:10px; background-color:#0f9dda;/*background: url(../images/hongbao/pbg.jpg) repeat;*/height:120px; display:table; width:100%;  position:relative; box-sizing:border-box;  }
+.pri .ptxt{ width:100%;position: absolute; left:0; top:0; z-index:2;}
+.pri p{vertical-align:middle;display:table-cell; color:#fff; padding:10px; overflow:hidden;  position: relative; z-index:1; text-align:center;}
+.wrinfor{}
+.wrinfor li{ height:50px; margin:5px 0;}
+.wrinfor li.nam{ background:url(../images/pname.png) no-repeat; background-size:100%  50px;}
+.wrinfor li.tel{ background:url(../images/ptel.png) no-repeat; background-size:100%  50px;}
+.wrinfor li.weixin{ background:url(../images/pweixin.png) no-repeat; background-size:100%  50px;}
+.wrinfor li.qqhao{ background:url(../images/pqq.png) no-repeat; background-size:100%  50px;}
+.wrinfor li.email{ background:url(../images/pemail.png) no-repeat; background-size:100%  50px;}
+.wrinfor li.address{ background:url(../images/paddr.png) no-repeat; background-size:100%  50px;}
+
+.wrinfor li.pass{ background:url(../images/ppass.png) no-repeat; background-size:100%  50px;}
+.wrinfor li .pad{ padding:18px 3% 18px 20%; }
+.wrinfor li input{ width:100%;}
+.btn input{ padding:10px 0; color:#fff;background-color:#0f9dda;}
+
+.copyright{padding:0 auto; width:90%; height:40px; line-height:40px; text-align:center; color:#666; position:absolute; bottom: auto;font-size:12px; padding-bottom:40px;}
+.copyright a:link{color:#666;}

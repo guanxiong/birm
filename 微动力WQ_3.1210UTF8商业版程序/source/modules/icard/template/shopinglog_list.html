@@ -1,0 +1,39 @@
+﻿{template 'common/header'}
+{php echo $this -> set_tabbar($action);}
+<div class="main">
+    <form action="" method="post" class="form-horizontal form" onsubmit="return formcheck(this)">
+        <h4>会员卡{$title}消费日志</h4>
+        <a class="btn btn-primary" href="{php echo create_url('site/module', array('do' => 'shopinglogexcel', 'name' => 'icard', 'cardid'=>$cardid))}">导出消费日志</a>
+        <div style="padding-top: 15px;"></div>
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+            <tr>
+                <th>编号</th>
+                <th>名称</th>
+                <th>消费类型</th>
+                <th style="width:60px;">付款方式</th>
+                <th style="width:30px;">金额</th>
+                <th style="width:60px;">奖励积分</th>
+                <th style="width:100px;">操作门店</th>
+                <th style="width:150px;">消费时间</th>
+            </tr>
+            </thead>
+            <tbody id="level-list">
+            {loop $list $item}
+            <tr>
+                <td>{$item['id']}</td>
+                <td>{if $item['type'] == 3}{$privilege_arr[$item['giftid']]}{else if $item['type'] == 4}{$gifts_arr[$item['giftid']]}{else if $item['type'] == 5}商城消费{else if $item['type'] == 2}{$coupon_arr[$item['giftid']]}{else if $item['type'] == 6}微点餐消费{/if}
+                </td>
+                <td><span class="label" style="background:#e63a3a;">{if $item['type'] == 3}特权{else if $item['type'] == 5}商城{else if $item['type'] == 4}礼品券{else if $item['type'] == 2}优惠券{else if $item['type'] == 6}微点餐{/if}</span></td>
+                <td><span class="label" style="background:#4169e1;">{if $item['payment']==0}现金消费{else if $item['payment']==1}余额消费{else}在线支付{/if}</span></td>
+                <td>{$item['money']}</td>
+                <td>{$item['score']}</td>
+                <td><font color="green">{if $item['type'] == 5}微商城{else}{if empty($outlet[$item['outletid']])}后台{else}{$outlet[$item['outletid']]}{/if}{/if}</font></td>
+                <td>{php echo date('Y-m-d H:i:s', $item['dateline'])}</td>
+            </tr>
+            {/loop}
+            </tbody>
+        </table>
+    </form>
+    {$pager}
+</div>

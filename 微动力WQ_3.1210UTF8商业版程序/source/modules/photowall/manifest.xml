@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[新照片墙]]></name>
+		<identifie><![CDATA[photowall]]></identifie>
+		<version><![CDATA[0.2]]></version>
+		<type><![CDATA[wdlshow]]></type>
+		<ability><![CDATA[照片墙]]></ability>
+		<description><![CDATA[照片墙]]></description>
+		<author><![CDATA[]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="image" />
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="照片墙管理" do="list" state="" direct="false" />
+		</menu>
+		<home>
+			<entry title="照片墙列表" do="list" state="" direct="false" />
+		</home>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_photowall_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `start_picurl` varchar(200) NOT NULL,
+  `ticket_information` varchar(200) NOT NULL,
+  `starttime` int(10) unsigned NOT NULL,
+  `endtime` int(10) unsigned NOT NULL,
+  `end_theme` varchar(50) NOT NULL,
+  `end_instruction` varchar(500) NOT NULL,
+  `end_picurl` varchar(200) NOT NULL,
+  `votenum` varchar(200) NOT NULL,
+  `sendtimes` int(10) unsigned NOT NULL,
+  `daysendtimes` int(10) unsigned NOT NULL,
+  `copyright` varchar(20) NOT NULL,
+  `isshow` tinyint(1) unsigned NOT NULL,
+  `isdes` tinyint(1) unsigned NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_photowall_data` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `url` varchar(200) NOT NULL,
+  `description` varchar(200) NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
+  `votenum` int(10) unsigned NOT NULL,
+  `commontnum` int(10) unsigned NOT NULL,
+  `time` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_photowall_comment` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int(10) unsigned NOT NULL,
+  `rid` int(10) unsigned NOT NULL,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `type` tinyint(1) unsigned NOT NULL,
+  `content` varchar(500) NOT NULL,
+  `time` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+]]></install>
+	<uninstall><![CDATA[
+	drop table if exists `ims_photowall_reply`,`ims_photowall_data`,`ims_photowall_comment`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

@@ -1,0 +1,46 @@
+.message-tip{
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	z-index: 300;
+	overflow: hidden;
+	width: 270px;
+	background: #FFF;	
+	border: 1px solid #CDCDCD;
+}
+.message-tip .header{
+	padding: 0 10px;
+	height: 31px;
+	border-top: 1px solid #FFF;
+	border-bottom: 1px solid #C2D5E3;
+	background: #F2F2F2;
+	line-height: 31px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.message-tip h2{
+	font-size: 1em;
+	line-height: 1em;
+}
+.message-tip .c{
+	float:right;
+	font-size: 14px;
+	color: #333;
+}
+.message-tip .content{
+	padding: 10px;
+}
+.message-tip dt{
+	padding: 8px 0 5px;
+	font-weight: 700;
+}
+.message-tip dt a{
+	color: #336699;
+	font-size: 14px;
+	text-decoration: none;
+	cursor: default;
+}
+.message-tip dd a{
+	cursor: pointer;
+	color: blue;
+}

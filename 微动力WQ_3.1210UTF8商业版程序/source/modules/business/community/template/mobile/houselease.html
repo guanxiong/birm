@@ -1,0 +1,95 @@
+{template 'header'}
+{if $op == 'display'}
+{if empty($list)}
+<div class="list img-rounded">没有房屋租赁信息</div>
+{/if}
+{loop $list $item}
+<div class="list img-rounded">
+	<div class="hd">
+		<span class="title">{if intval($item['status'])==0}<p class="text-danger">未解决</p>{elseif intval($item['status'])==1}<p class="text-success">已解决</p>{else}<p class="text-warning">已取消</p>{/if}</span>
+		<span class="date">{php echo date('Y-m-d H:i:s', $item['createtime']);}</span>
+	</div>
+	<div class="content">
+		<p><span class="label label-info">{$categories[$item['servicesmallcategory']]['name']}</span></p>
+		<p><span class="label alert-info">说明:</span>{$item['requirement']}</p>
+		<p><span class="label alert-info">备注:</span>{$item['remark']}</p>
+		<div class="author">
+		{if $item['status'] == '0'}
+			<a href="{php echo $this->createMobileUrl('houselease', array('id'=>$item['id'],'op'=>'post'));}" ><i class="icon-edit"></i> 编辑</a>
+			&nbsp;&nbsp; 
+			<a href="{php echo $this->createMobileUrl('houselease', array('id'=>$item['id'],'op'=>'resolve'));}" onclick="return confirm('您的家政服务是否已经完成了，确定完成吗？')"><i class="icon-ok-sign"></i> 完成</a>
+			&nbsp;&nbsp; 
+			<a href="{php echo $this->createMobileUrl('houselease', array('id'=>$item['id'],'op'=>'cancel'));}" onclick="return confirm('是否确认取消该条申请？')"><i class="icon-trash"></i> 取消</a>
+		{/if}
+		</div>
+	</div>
+</div>
+{/loop}
+<div class="list img-rounded" style="padding-top: 0; padding-bottom: 0;">
+{$pager}
+</div>
+{/if}
+{if $op == 'post'}
+<form class="form-horizontal img-rounded" role="form" method="post">
+	<input type="hidden" name="id" value="{$item['id']}">
+	<div class="form-group">
+		<label for="servicesmallcategory" class="col-xs-3 control-label">房屋租赁类型</label>
+		<div class="col-xs-9">
+			<select class="form-control" id="cate_2" name="servicesmallcategory" autocomplete="off">
+				{loop $categories $key $category}
+				<option value="{$key}" {if $key == $item['servicesmallcategory']} selected="selected"{/if}>{$category['name']}</option>
+				{/loop}
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="status" class="col-xs-3 control-label">联系方式</label>
+		<div class="col-xs-9">
+			<label for="contacttype1" class="radio">
+				<input type="radio" name="contacttype" id="contacttype1" value="1" checked='checked'/>随时联系
+				<input type="hidden" name="contactdesc[1]" value="随时联系"/>
+			</label>
+			<label for="contacttype2" class="radio">
+				<input type="radio" name="contacttype" id="contacttype2" value="2" {if $item['contacttype']==2}checked='checked'{/if}/>白天联系
+				<input type="hidden" name="contactdesc[2]" value="白天联系"/>
+			</label>
+			<label for="contacttype3" class="radio">
+				<input type="radio" name="contacttype" id="contacttype3" value="3" {if $item['contacttype']==3}checked='checked'{/if}/>晚上联系
+				<input type="hidden" name="contactdesc[3]" value="晚上联系"/>
+			</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="requirement" class="col-xs-3 control-label">说明</label>
+		<div class="col-xs-9">
+			<textarea style="height:150px;" class="form-control" name="requirement" cols="70">{$item['requirement']}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="remark" class="col-xs-3 control-label">备注</label>
+		<div class="col-xs-9">
+			<textarea id="remark" style="height:150px;" class="form-control" name="remark" cols="70">{$item['remark']}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="status" class="col-xs-3 control-label">服务状态</label>
+		<div class="col-xs-9">
+			<label class="control-label">
+			{php echo $this->getServiceStatusTitle($item['status']);}
+			</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-xs-offset-3 col-xs-9">
+			<button type="submit" name="submit" value="yes" class="btn btn-primary" style="width:100%;">提交</button>
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</div>
+</form>
+{/if}
+<div class="navbar-fixed-bottom">
+	<a href="{php echo $this->createMobileUrl('houselease');}" class="pull-left"><i class="icon-chevron-left"></i></a>
+	<a href="{php echo $this->createMobileUrl('houselease',array('op'=>'post'));}"><i class="icon-pencil"></i>房屋租赁</a>
+	<a href="{php echo $this->createMobileUrl('home')}" class="pull-right"><i class="icon-home"></i></a>
+</div>
+{template 'footer'}

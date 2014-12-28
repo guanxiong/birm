@@ -1,0 +1,36 @@
+{template 'header'}
+<link type="text/css" rel="stylesheet" href="./source/modules/quickmusic/style/base.css" />
+<link type="text/css" rel="stylesheet" href="./source/modules/quickmusic/style/style.css?v=072403" />
+<script type="text/javascript" src="./source/modules/{$modulename}/script/script.js"></script>
+<title>专辑</title>
+<div style="text-align:center;padding:10px 0px;margin:0 auto;width:100%;color:#fff;background-color:rgba(0,0,0,0.3);">法国香颂</div>
+<section class="canvas">
+
+		<!--section class="card">
+            <section class="title">
+			<aside>我的积分：{$profile['credit1']}</aside>
+			</section>
+        </section-->
+
+
+		{loop $tape_list $tape}
+		<a href='{php echo $this->createMobileUrl("tape", array("tape_id"=>$tape["tape_id"]))}'>
+		<section class="card">
+			<section class="title">
+			<p>{$tape['title']}</p>
+			</section>
+			<section class="logo">
+			<p><img src='{php echo $tape['logo']}' /></p>
+			</section>
+			<section class="info">
+				<p>{$tape['explain']}</p>
+			</section>	
+			<hr>
+			<section class="func">
+				<p>进入欣赏</p>
+			</section>	
+		</section>
+		</a>
+		{/loop}
+</section>
+{template 'footer'}

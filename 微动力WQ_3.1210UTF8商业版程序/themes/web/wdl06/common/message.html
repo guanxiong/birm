@@ -1,0 +1,31 @@
+{template 'common/header'}
+<style type="text/css">
+body{background:#fff;margin:0px;}
+#showbox{background:#fff; width:400px; height:150px; border:1px solid #c6c6c6; box-shadow:2px 2px 2px #e6e6e6; overflow:hidden; margin:0 auto; margin-top:40px;}
+#showbox h4{ font-size:12px; margin-top:30px;line-height:16px; text-align:center;}
+#showbox p{ width:400px;text-align:center;}
+#title{height:30px; overflow:hidden; text-align: center; font: bold 14px/30px '微软雅黑'; color:#333;background:#f8f8f8; border-bottom:1px solid #c6c6c6;}
+#main{width: 400px; height: 200px; overflow: hidden;text-align: center; font: 12px/20px 微软雅黑; color: #be0000;}.text{font: 12px/20px 微软雅黑; color: #be0000;}
+</style>
+    <div id="showbox"><div id="title">提示信息</div>
+	<div id="main">
+				{if $type == 'sql'}
+			<h4>MYSQL 错误：</h4>
+			<p>{php echo cutstr($msg['sql'], 300, 1);}</p>
+			<p><b>{$msg['error'][0]} {$msg['error'][1]}：</b>{$msg['error'][2]}</p>
+		{else}
+		<h4>{$msg}</h4>
+        {if $redirect}
+		<p><a href="{$redirect}">如果你的浏览器没有自动跳转，请点击此链接</a></p>
+		<script type="text/javascript">
+			setTimeout(function () {
+				location.href = "{$redirect}";
+			}, 3000);
+		</script>
+		{else}
+				<p>[<a href="javascript:history.go(-1);">点击这里返回上一页</a>] &nbsp; [<a href="./index.php?act=welcome">首页</a>]</p>
+                {/if}
+		{/if}
+					</div></div>
+
+{template 'common/footer'}

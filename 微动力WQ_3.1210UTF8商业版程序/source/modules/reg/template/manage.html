@@ -1,0 +1,225 @@
+{template 'common/header'}
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#date-range').daterangepicker({
+        format: 'YYYY-MM-DD',
+        startDate: $(':hidden[name=start]').val(),
+        endDate: $(':hidden[name=end]').val(),
+        locale: {
+            applyLabel: '确定',
+            cancelLabel: '取消',
+            fromLabel: '从',
+            toLabel: '至',
+            weekLabel: '周',
+            customRangeLabel: '日期范围',
+            daysOfWeek: moment()._lang._weekdaysMin.slice(),
+            monthNames: moment()._lang._monthsShort.slice(),
+            firstDay: 0
+        }
+    }, function(start, end){
+        $('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+        $(':hidden[name=start]').val(start.format('YYYY-MM-DD'));
+        $(':hidden[name=end]').val(end.format('YYYY-MM-DD'));
+        $('form[method=get]')[0].submit();
+    });
+});
+function range(days) {
+    var start = moment().add('days', 0 - days).format('YYYY-MM-DD');
+    var end = moment().format('YYYY-MM-DD');
+    $('#date-range .date-title').html(start + ' 至 ' + end);
+    $(':hidden[name=start]').val(start);
+    $(':hidden[name=end]').val(end);
+    $('form[method=get]')[0].submit();
+}
+</script>
+<style>
+.avatar {float:left; text-align:left; vertical-align:top; width:45px; height:45px; border:#CCC 1px solid;}
+</style>
+    <div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="pull-right" style="color:red; padding:10px 10px 0 0;">当前会员数：{$totalmember}</span>
+						<span class="brand">用户管理</span>
+						<div class="pull-left">
+							<ul class="nav">
+								<li {if $_GPC['isshow'] == 0} class="active"{/if}><a href="{php echo create_url('site/module/manage', array('name' => 'reg', 'id' => $id, 'isshow' => 0))}">已审核</a></li>
+								<li {if $_GPC['isshow'] == 1} class="active"{/if}><a href="{php echo create_url('site/module/manage', array('name' => 'reg', 'id' => $id, 'isshow' => 1))}">待审核</a></li>
+                                <li {if $_GPC['isfollow'] == 1} class="active"{/if}><a href="{php echo create_url('site/module/manage', array('name' => 'reg', 'id' => $id, 'isfollow' => 1))}">取消关注</a></li>
+                                <li><a href="{php echo create_url('site/module/blacklist', array('name' => 'reg', 'id' => $id))}">黑名单</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+                <form action="" method="get">
+			
+				
+				<div class="sub-item">
+                    <input name="act" type="hidden" value="{$_GPC['act']}" />
+                    <input name="do" type="hidden" value="{$_GPC['do']}" />
+                    <input type="hidden" name="eid" value="{$_GPC['eid']}" />
+					<input name="name" type="hidden" value="{$_GPC['name']}" />
+					<input name="id" type="hidden" value="{$_GPC['id']}" />
+					<div class="pull-left">
+                    	<input type="text" class="span2 kw" name="keyword" value="{$_GPC['keyword']}" placeholder="请输入关键字">
+                        <input name="start" type="hidden" value="{php echo date('Y-m-d', $starttime)}" />
+                        <input name="end" type="hidden" value="{php echo date('Y-m-d', $endtime)}" />
+                        <button class="btn" id="date-range" class="date" type="button"><span class="date-title">{php echo date('Y-m-d', $starttime)} 至 {php echo date('Y-m-d', $endtime)}</span> <i class="icon-caret-down"></i></button>
+                        <span class="date-section"><a href="javascript:;" onclick="range(7);">7天</a><a href="javascript:;" onclick="range(30);">30天</a><a href="javascript:;" onclick="range(60);">60天</a>  | <a href="{php echo  create_url('site/module/manage', array('name' => 'reg', 'id' => $id, 'group'=>$_GPC['group']?$_GPC['group']:'all',   'sex'=>'1', 'page' => $_GPC['page']))}">男</a><a href="{php echo  create_url('site/module/manage', array('name' => 'reg', 'id' => $id,  'group'=>$_GPC['group']?$_GPC['group']:'all',  'sex'=>'2', 'page' => $_GPC['page']))}">女</a>
+						<a href="{php echo  create_url('site/module/manage', array('name' => 'reg', 'id' => $id,  'group'=>$_GPC['group']?$_GPC['group']:'all',  'sex'=>'0', 'page' => $_GPC['page']))}">保密</a>
+                        |
+                        <a href="{php echo  create_url('site/module/manage', array('name' => 'reg', 'id' => $id, 'group'=>'all', 'page' => $_GPC['page']))}">全部</a>
+                        
+                         <a href="{php echo  create_url('site/module/manage', array('name' => 'reg', 'id' => $id, 'group'=>0, 'page' => $_GPC['page']))}">未分组</a>
+                         {loop $grouplist $group} <a href="{php echo  create_url('site/module/manage', array('name' => 'reg', 'id' => $id, 'group'=>$group['id'], 'page' => $_GPC['page']))}">{$group['groupname']}</a>{/loop}
+                        </span>
+					</div>
+                    <div class="pull-right">
+						<input class="btn btn-primary" type="submit" value="搜索">
+					</div>
+				</div>
+				</form> 	
+			</div>
+             
+            <div class="stat-div">   
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">详细数据</h4>
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</th>
+                                    <th style="width:45px;">昵称<i></i></th>
+									<th class="row-hover">资料<i></i></th>
+									<th style="width:100px;">时间<i></i></th>
+									<th style="width:110px;">操作</th>
+								</tr>
+                                <tr><th style="width:100%" colspan="5">注：同步微信，导入微信，以及发送消息，设为客服操作（安装了我的客服模块有效）需要高级权限号。如果您不是高级权限号，请勿点击。</th></tr>
+							</thead>
+							<tbody>
+								{loop $list $k $row}
+								<tr>
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+									<td>
+										<img src="{if $member[$row['from_user']]['avatar']}{if strexists($member[$row['from_user']]['avatar'], 'avatar_')}{$_W['siteroot']}resource/image/avatar/{else}{$_W['attachurl']}{/if}{$member[$row['from_user']]['avatar']}{else}/resource/image/noavatar_middle.gif{/if}" class="avatar" />
+                                        <div class="nickname" style="float:none; clear:both;">{$member[$row['from_user']]['nickname']}{if $member[$row['from_user']]['isblacklist']}<font color="red">（黑名单）</font>{/if}</div>
+                                     </td>
+                                     <td class="row-hover">   
+										<div class="mainContent">
+											
+											{$usrinfo[$k]}
+										</div>
+									</td>
+									<td style="font-size:12px;  color:#666;">
+										<div style="margin-bottom:10px;">{php echo date('Y-m-d', $row['createtime']);}</div>
+										<div>{php echo date('H:i:s', $row['createtime']);}</div>
+									</td>
+									<td>{if !$member[$row['from_user']]['isblacklist']}<a href="{php echo create_url('site/module/blacklist', array('name' => 'reg', 'id' => $id, 'from_user' => $row['from_user'], 'switch' => 1))}">添加黑名单</a>{else}<a href="{php echo create_url('site/module/blacklist', array('name' => 'reg', 'id' => $id, 'from_user' => $row['from_user'], 'switch' => 0))}">移除黑名单</a>{/if}
+                                    <br />
+                    <a href="{php echo create_url('site/module/editusr', array('name' => 'reg', 'id' => $id, 'from' => $row['from_user']))}">修改用户资料</a>
+                    
+                                  <br />
+                                   <a href="{php echo create_url('site/module/jdchat', array('name'=>'kf','fakeid' => $row['id']))}" title="{$member[$row['from_user']]['nickname']}">发送消息</a><br />
+                                   {if $kfusr[$k]['uid']==$row['id']}
+                                    <a href="#" style="font-size:12px;  color:#666;">客服人员</a>
+                                   {else}
+                                   <a href="{php echo create_url('site/module/addkf', array('name'=>'kf','uid' => $row['id']))}" title="{$member[$row['from_user']]['nickname']}">设为客服</a>
+                                  
+                                   {/if}
+                                   
+                                   
+                                    </td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr style="width:40px;" class="row-first">
+								<td><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+                                
+								
+                                 <td>
+                                 <span class="help-inline">只导新用户</span>
+                                 <label class="checkbox inline">
+									<input type="checkbox" id="inlineCheckbox1" name="dr" value="1"> 是
+								</label>
+								<label class="checkbox inline">
+									<input type="checkbox" id="inlineCheckbox2" name="dr" value="0"> 否
+								</label>
+								 <div class="input-append">
+								 <span class="help-inline">批导入数</span>
+								 <input  class="span2" type="text" id="appendedInputButton num"  name="num" value="20">
+                                 
+								 <input type="submit" name="getuser" value="导入用户" class="btn btn-inverse" />
+ 
+								</div>
+                                 	
+      							</td>
+								
+								<td>
+                                	<select  name="gid" class="span2">
+     						 	<option value="0">未分组</option>
+                                {loop $grouplist $group} 
+      							<option value="{$group['id']}">{$group['groupname']}</option>
+     					 		{/loop}
+                                </select>
+                                	<input type="submit" name="editgroup" value="重分组" class="btn btn-primary" />
+                                    <input type="submit" name="tongbu" value="同步微信表资料" class="btn btn-primary" />
+                                    {if $_GPC['chongfu']}<input type="submit" name="lookcf" value="查看重复" class="btn btn-primary" />{else}<input type="submit" name="chongfu" value="去重复" class="btn btn-primary" />{/if}
+									{if $_GPC['isshow'] == 1} <input type="submit" name="verify" value="审核" class="btn btn-primary" />{/if}
+									<input type="submit" name="delete" value="删除" class="btn btn-primary" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					</form>
+					{$pager}
+				</div>
+			</div>
+		</div>
+    </div>
+
+<script>
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+});
+</script>
+{template 'common/footer'}

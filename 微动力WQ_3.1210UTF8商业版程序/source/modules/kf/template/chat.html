@@ -1,0 +1,790 @@
+{template 'common/header'}
+<style type="text/css">
+.panel-left {
+	margin-right: 250px;
+}
+.panel-right {
+	width: 249px;
+	background-color: #f2f2f2;
+	border-left: 1px solid #dddddd;
+	position: absolute;
+	right: 0;
+	top: 37px;
+	height: 2500px;
+}
+.panel-right .panel-title {
+	width: 100%;
+	background-color: #ececec;
+	border-bottom: 1px solid #dddddd;
+}
+.panel-right .panel-title h5 {
+	font-size: 12px;
+	color: #777777;
+	text-shadow: 0 1px 0 #ffffff;
+	padding: 6px 10px 5px;
+    margin: 0;
+}
+.panel-right .panel-content {
+	padding: 10px;
+}
+
+.chat-content {
+	height: 470px;
+	padding: 15px;
+}
+.chat-messages {
+    background: none repeat scroll 0 0 #FDFDFD;
+    border: 1px solid #DDDDDD;
+    height: 425px;
+    overflow: auto;
+    position: relative;
+}
+.chat-message {
+	padding: 7px 15px;
+	margin: 7px 0 0;
+}
+.chat-message input[type=text] {
+	margin-bottom: 0 !important;
+	width: 99%;
+	float:left;
+}
+.chat-message .input-box {
+    display: block;
+    margin-right: 90px;
+}
+.chat-message a {
+	float: right;
+}
+
+#chat-messages-inner p {
+    padding: 10px;
+    margin: 10px 0;
+}
+#chat-messages-inner p img {
+    display: inline-block;
+    float: left;
+    vertical-align: middle;
+    width: 28px;
+    height: 28px;
+    margin-top: 6px;
+}
+#chat-messages-inner p.kf img {
+    display: inline-block;
+    float: right;
+    vertical-align: middle;
+    width: 28px;
+    height: 28px;
+    margin-top: 6px;
+}
+#chat-messages-inner .msg-block, #chat-messages-inner p.offline span {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #cccccc;
+    box-shadow: 1px 1px 0 1px rgba(0, 0, 0, 0.05);
+    display: block;
+    margin-left: 40px;
+    padding: 10px;
+    position: relative;
+}
+#chat-messages-inner .msg-blockkf, #chat-messages-inner p.kfoffline span {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #cccccc;
+    box-shadow: 1px 1px 0 1px rgba(0, 0, 0, 0.05);
+    display: block;
+    margin-right: 40px;
+    padding: 10px;
+    position: relative;
+	text-align:right;
+}
+
+#chat-messages-inner p.offline span {
+    background: none repeat scroll  0 0 #FFF5F5;
+}
+#chat-messages-inner .msg-block, #chat-messages-inner p.inline span {
+    background: none repeat scroll 0 0 #ffffFF;
+    border: 1px solid #cccccc;
+    box-shadow: 1px 1px 0 1px rgba(0, 0, 0, 0.08);
+    display: block;
+    margin-left: 40px;
+    padding: 10px;
+    position: relative;
+}
+#chat-messages-inner .msg-blockkf, #chat-messages-inner p.kfinline span {
+    background: none repeat scroll 0 0 #ffffFF;
+    border: 1px solid #cccccc;
+    box-shadow: 1px 1px 0 1px rgba(0, 0, 0, 0.08);
+    display: block;
+    margin-right: 40px;
+    padding: 10px;
+    position: relative;
+	text-align:right;
+}
+
+#chat-messages-inner p.inline span {
+    background: none repeat scroll  0 0 #3ff;
+}
+
+
+#chat-messages-inner .time {
+    color: #999999;
+    font-size: 11px;
+    font-style: italic;
+}
+#chat-messages-inner .msg {
+    display: block;
+    margin-top: 10px;
+}
+#chat-messages-inner .msg-block:before {
+	border-right: 7px solid rgba(0,0,0,0.1);
+	border-top: 7px solid transparent;
+	border-bottom: 7px solid transparent;
+	content: "";
+	display: inline-block;
+	left: -7px;
+	position: absolute;
+	top: 11px;
+}
+#chat-messages-inner .msg-block:after {
+	border-right: 6px solid #ffffff;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	content: "";
+	display: inline-block;
+	left: -6px;
+	position: absolute;
+	top: 12px;
+}
+#chat-messages-inner .msg-blockkf:before {
+	border-left: 7px solid rgba(0,0,0,0.1);
+	border-top: 7px solid transparent;
+	border-bottom: 7px solid transparent;
+	content: "";
+	display: inline-block;
+	right: -7px;
+	position: absolute;
+	top: 11px;
+}
+#chat-messages-inner .msg-blockkf:after {
+	border-left: 6px solid #ffffff;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	content: "";
+	display: inline-block;
+	right: -6px;
+	position: absolute;
+	top: 12px;
+}
+
+
+.chat-users {
+	padding: 0 0 30px;
+}
+.chat-users .contact-list {
+    line-height: 21px;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    font-size: 10px;
+}
+/*做遮罩效果*/
+.thumbnail-control{
+    width: 100%; height: 30px;
+    background: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 0px; left: 0px;
+    display: table;
+    
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    
+    /*Hover effect - default state*/
+    opacity: 0;
+    transition: all 0.5s;
+}
+.thumbnail-control .controls{
+    color: #FFFFFF;
+    background: rgba(0, 0, 0, 0.5);
+    font-size: 20px;
+    text-align: center;
+    
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    
+    /*Vertical center align*/
+    display: table-cell;
+    vertical-align: middle;
+    /*Hover effect - default state*/
+    transform: scale(0.2);
+    transition: all 0.25s;
+    cursor: pointer;
+}
+.thumbnail-control .controls > .description{
+    font-size: .6em;
+}
+
+.chat-users .contact-list li:hover .thumbnail-control {
+    opacity: 1;
+}
+.chat-users .contact-list li:hover .controls{
+    transform: scale(1);
+}
+.chat-users .contact-list li .active{
+    background: rgba(0, 0, 0, 0.5);
+}
+.chat-users .contact-list li .active img{
+    -webkit-filter: grayscale(100%);
+}
+.chat-users .contact-list li .selecter{
+    display: none;
+}
+/* end zhezhao */
+.chat-users .contact-list li {
+    border-color: #dddddd;
+    border-style: none none solid none;
+    border-width: 0 0 1px 0;
+    padding: 1px;
+    position: relative ;
+	heigth:32px;
+}
+/*.chat-users .contact-list li img{width:30px; height:30px; boder:none; float:left;}*/
+.chat-users .contact-list li:hover {
+	background-color: #efefef;
+}
+.chat-users .contact-list li a.an {
+    color: #fff;
+    display: block;
+    padding: 8px 5px;
+	width:30px;
+	float:left;
+	
+}
+.chat-users .contact-list li a {
+    color: #666;
+    display: block;
+    padding: 8px 5px;
+	width:100%;
+}
+.chat-users .contact-list li.online a {
+	font-weight: bold;
+}
+.chat-users .contact-list li.new {
+	background-color: #eaeaea;
+}
+.chat-users .contact-list li.offline {
+	background-color: #EDE0E0;
+}
+
+.chat-users .contact-list li a img {
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+    width: 28px;
+    height: 28px;
+    border-radius: 3px;
+}
+.chat-users .contact-list li .msg-count {
+	padding: 3px 5px;
+    position: absolute;
+    right: 10px;
+    top: 12px;
+}
+
+#tooltip {
+	position: absolute;
+	display:none;
+	border: none;
+	padding: 3px 8px;
+	border-radius: 3px;
+	font-size: 10px;
+	background-color: #222222;
+	color: #ffffff;
+	z-index: 25;
+}
+
+/* Widgets */
+.widget-box {
+    background: none repeat scroll 0 0 #F9F9F9;
+    border-top: 1px solid #CDCDCD;
+    border-left: 1px solid #CDCDCD;
+    border-right: 1px solid #CDCDCD;
+    clear: both;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    position: relative;
+}
+.widget-box.widget-calendar, .widget-box.widget-chat {
+    overflow:hidden !important;
+}
+.accordion .widget-box {
+	margin-top: -2px;
+	margin-bottom: 0;
+	border-radius: 0;
+}
+.widget-box.widget-plain {
+	background: transparent;
+	border: none;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.widget-title, .modal-header, .table th, div.dataTables_wrapper .ui-widget-header {
+	background-color: #efefef;
+	background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#fdfdfd), to(#eaeaea));
+	background-image: -webkit-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    background-image: -moz-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    background-image: -ms-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    background-image: -o-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    background-image: -linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', endColorstr='#eaeaea',GradientType=0 ); /* IE6-9 */
+    border-bottom: 1px solid #CDCDCD;
+    height: 36px;
+}
+.widget-title .nav-tabs {
+    border-bottom: 0 none;
+}
+.widget-title .nav-tabs li a {
+    border-bottom: medium none !important;
+    border-left: 1px solid #DDDDDD;
+    border-radius: 0 0 0 0;
+    border-right: 1px solid #DDDDDD;
+    border-top: medium none;
+    color: #999999;
+    margin: 0;
+    outline: medium none;
+    padding: 9px 10px 8px;
+    font-weight: bold;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.widget-title .nav-tabs li:first-child a{
+    border-left: medium none !important;
+}
+.widget-title .nav-tabs li a:hover {
+    background-color: transparent !important;
+    border-color: #D6D6D6;
+    border-width: 0 1px;
+    color: #666666;
+}
+.widget-title .nav-tabs li.active a {
+    background-color: #F9F9F9 !important;
+    color: #444444;
+}
+.widget-title span.icon {
+	border-right: 1px solid #cdcdcd;
+	padding: 9px 10px 7px 11px;
+	float: left;
+	opacity: .7;
+}
+.widget-title h5 {
+    color: #666666;
+	text-shadow: 0 1px 0 #ffffff;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px;
+    line-height: 12px;
+    margin: 0;
+}
+.widget-title .buttons {
+	float: right;
+	margin: 8px 10px 0 0;
+}
+.widget-title .label {
+	padding: 3px 5px 2px;
+	float: right;
+	margin: 9px 15px 0 0;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.3) inset, 0 1px 0 #ffffff;
+}
+.widget-calendar .widget-title .label {
+	margin-right: 190px;
+}
+
+.widget-content {
+	padding: 12px 15px;
+    border-bottom: 1px solid #cdcdcd;
+}
+.widget-box.widget-plain .widget-content {
+	padding: 12px 0 0;
+}
+.widget-box.collapsible .collapse.in .widget-content {
+    border-bottom: 1px solid #CDCDCD;
+}
+</style>
+<ul class="nav nav-tabs">
+	
+					<li><a target="_blank" href="{php echo create_url('site/module/kfset', array('type' => '3', 'name' => 'kf', 'set' => 1))}">客服列表</a></li>
+					<li class="current"><a href="{php echo create_url('site/module/manage', array('name' => 'reg'))}">设置客服</a></li>
+                    <li class="current"><a href="{php echo create_url('site/module/manage', array('type' => '3', 'name' => 'kf', 'id' => $id))}">所有记录</a></li>
+					
+</ul>
+     <div class="main" style="margin-top:15px">
+        
+        <div class="container-fluid">
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="alert alert-success">欢迎进入在线客服系统. 请认真回答客户的问题。所有记录都将记录在案<a href="#" class="close" data-dismiss="alert">×</a></div>
+						<div class="widget-box widget-chat">
+							<div class="widget-title">
+								<span class="icon">
+									<a href="javascript:;" onclick="getmessage(0,0)" title='返回所有用户'><i class="icon-comment"></i></a>
+								</span>
+								<h5>在线客服交流</h5>
+								<span id="re" class="pull-right">
+									开启自动刷新消息和用户状态： 
+									<div class="make-switch" data-on-label="开启" data-off-label="关闭" >
+										<input type="checkbox"  value="1" />
+									</div>
+								</span>
+							</div>
+                            
+							<div class="widget-content nopadding">
+								<div class="chat-content panel-left">                   
+								   <div class="chat-messages" id="chat-messages">
+										<div id="chat-messages-inner"></div>
+								   </div>									
+								   <div class="chat-message well">
+										<a class="btn btn-success"><span class="iconEmotion" style="margin-right:8px" href="javascript:;" inputid="msg-box"><i class="icon-github-alt"></i></span> 发送</a>
+											
+										<span class="input-box">
+											<input type="text" name="msg-box" id="msg-box" />
+											
+										</span>										                  
+								   </div>                   
+								</div>
+								<div class="chat-users panel-right">
+									<div class="panel-title"><h5>在线用户</h5></div>
+									<div class="panel-content nopadding">
+										<ul class="contact-list">
+                                        
+											
+										
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+            
+    </div>
+<script>
+			var time = new Date();
+			var hours = time.getHours();
+			var minutes = time.getMinutes();
+			if(hours < 10) hours = '0' + hours;
+			if(minutes < 10) minutes = '0' + minutes;
+			var messagetime=hours+':'+minutes;
+			var i = 0;
+			var maxid={$maxid};
+			var newtime={$newtime};
+			//添加消息
+	function add_message(id,name,img,msg,createtime,clear,newmessage) {
+		i = i + 1;
+		var  inner = $('#chat-messages-inner');
+		var aname="'"+name+"'";
+		
+       // var idname = name.replace(' ','-').toLowerCase();
+		if(clear) {
+			$('.chat-message input').val('').focus();
+			inner.append('<p id="'+id+'" class="user-'+name+' kf"><img src="'+img+'" alt="" />'
+										+'<span class="msg-blockkf"> <span class="time"> '+createtime+'</span>-<strong>'+name+'</strong>'
+										+'<span class="msg">'+msg+'</span></span></p>');
+		}
+		else if(newmessage){
+		inner.append('<p id="'+id+'" class="user-'+name+'" ><a href="javascript:;" onclick="showhistory('+id+');"><img src="'+img+'" alt="" /></a>'
+										+'<span class="msg-block" style="background:#f7f7f7;"><strong>'+name+'</strong> <span class="time">- '+createtime+'</span>'
+										+'<span class="msg">'+msg+'</span></span></p>');
+		}
+		else{
+		inner.prepend('<p id="'+id+'" class="user-'+name+'" ><a href="javascript:;" onclick="showhistory('+id+');"><img src="'+img+'" alt="" /></a>'
+										+'<span class="msg-block"><strong>'+name+'</strong> <span class="time">- '+createtime+'</span>'
+										+'<span class="msg">'+msg+'</span></span></p>');
+		}
+		
+		$('#'+id).hide().fadeIn(800);
+		
+		$('#chat-messages').animate({ scrollTop: inner.height() },1000);
+		
+	}
+	//显示历史消息
+	function showhistory(userid){
+			var userid=userid;
+            pIndex = 20;
+            ajaxshow('', '历史消息记录', {width: 800, height: 600}, {shown: loadhistory(userid,pIndex)});
+			
+        }
+	function loadhistory(userid,psize) {
+        var pIndex = psize;
+		
+        if($('#modal-message .modal-body').html() == '') {
+            setTimeout(function(){loadhistory(userid)}, 100);
+            return;
+        }
+        $.get('{$_W['siteroot']}{php echo create_url('site/module/jdchat', array('name' => 'kf', 'type' => '3', 'id'=>$rid))}&fakeid='+ userid + '&page=1', {psize: pIndex, fakeid: userid}, function(dat){
+			
+			var message=$(dat).find('div #table-list').html();
+			//alert(message);
+			$('#modal-message .modal-body').html(message);
+			return;
+        });
+    }
+	//移除不在线用户操作
+    function remove_user(userid,name) {
+        i = i + 1;
+        $('.contact-list li#user-'+userid).addClass('offline').delay(1000).slideUp(800,function(){
+            $(this).remove();
+        });
+        var  inner = $('#chat-messages-inner');
+        var id = 'msg-'+i;
+        inner.append('<p class="offline" id="'+id+'"><span>用户： '+name+' 已经离线了</span></p>');
+        $('#'+id).hide().fadeIn(800);
+    }
+	//不在线用户处理函数
+	function deluser(userid,name,i){
+	$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('site/module/outuser', array('name' => 'kf', 'type' => '3'))}&randtime="+Math.random(),
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				userid:userid,
+				id:{$rid},
+				newtime:newtime,
+				},
+			  success: function(data){
+				 if(!data.message || data.message== 'undefined' ||  data.message=='UNDEFINED' || data.message=='Undefined'  ||  data.message==''){
+								alert('亲,网络出错了!请重试');
+							}
+				if (data.message.status!='-1') {
+					var user=data.message;
+					if(!userid){
+						//add_user(user['fakeid'],user['nickname'],user['avatar'],true);
+						//如果要判断公号权限类型如果是模拟就user[key]['fakeid']是,权限号：user[key]['id'] 备注
+												
+						$.each(user, function(key){remove_user(user[key]['id'],name?name:user[key]['nickname'])}); 
+						$newtime=user[0][lastmessage];
+						}
+					else{	
+						remove_user(user['uid'],name); 
+						}
+					
+				}
+				//判断新增在线用户递归回调自身
+				if(!userid && i){
+						setTimeout(function(){
+							deluser();
+						},800);
+						}
+						
+			}
+	});
+	}
+	
+	
+	 function add_user(userid,name,avatar,total,newuser) {
+        
+		var  inner = $('#chat-messages-inner');
+		var aname="'"+name+"'";
+        var id = userid;
+        $('.contact-list').fadeIn(800,function(){
+			if(newuser){
+			 $(this).prepend('<li id="user-'+id+'" class="online new"><a href="{$_W['siteroot']}{php echo create_url('site/module/chat', array('name' => 'kf', 'type' => '3','id'=>$rid))}&userid='+id+'" title="与他聊天"> <img alt="" src="'+avatar+'" /> <span>'+name+'</span></a><span class="msg-count badge badge-info">'+total+'</span><div class="thumbnail-control"><div class="controls"><a class="an"></a><a class="an"></a><a href="javascript:;" onclick="showhistory('+userid+');"  title="查看历史消息" class="an"><i class="icon-search"></i></a><a href="{$_W['siteroot']}{php echo create_url('site/module/chat', array('name' => 'kf', 'type' => '3','id'=>$rid))}&userid='+id+'" title="与他聊天" class="an"><i class="icon-comment"></i></a><a href="javascript:;" onclick="deluser('+id+','+aname+');" title="移除用户" class="an"><i class="icon-move"></i></a></div></div></li>');
+			}
+			else{
+            $(this).prepend('<li id="user-'+id+'"><a href="{$_W['siteroot']}{php echo create_url('site/module/chat', array('name' => 'kf', 'type' => '3','id'=>$rid))}&userid='+userid+'" title="与他聊天">  <img alt="" src="'+avatar+'" /> <span>'+name+'</span></a><span class="msg-count badge badge-info">'+total+'</span><div class="thumbnail-control"><div class="controls"><a class="an"></a><a class="an"></a><a href="javascript:;" onclick="showhistory('+id+');"  title="查看历史消息" class="an"><i class="icon-search"></i></a><a href="{$_W['siteroot']}{php echo create_url('site/module/chat', array('name' => 'kf', 'type' => '3','id'=>$rid))}&userid='+id+'" title="与他聊天" class="an"><i class="icon-comment"></i></a><a href="javascript:;" onclick="deluser('+id+','+aname+');" title="移除用户" class="an"><i class="icon-move"></i></a></div></div></li>');
+			}
+        });
+       
+        inner.append('<p class="inline" id="'+id+'" ><a href="javascript:;" onclick="deluser('+id+','+aname+');"><span>用户: '+name+' 进入客服系统</span></a></p>');
+        $('#'+id).hide().fadeIn(800);
+		
+    }
+			
+	
+	
+	//在线用户处理函数
+	function onuser(newonline){
+	$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('site/module/userlist', array('name' => 'kf', 'type' => '3'))}&randtime="+Math.random(),
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				newonline:newonline,
+				id:{$rid},
+				newtime:newtime,
+				},
+			  success: function(data){
+				  if(!data.message || data.message== 'undefined' ||  data.message=='UNDEFINED' || data.message=='Undefined'  ||  data.message==''){
+								alert('亲,网络出错了!请重试');
+							}
+				if (data.message.status!=-1) {
+					var user=data.message;
+					if(newonline){
+						//add_user(user['fakeid'],user['nickname'],user['avatar'],true);
+						//如果要判断公号权限类型如果是模拟就user[key]['fakeid']是,权限号：user[key]['id'] 备注
+						
+						$.each(user, function(key){
+								if(user[key]['id']){//判断读到用户ID数据才添加上去
+								add_user(user[key]['id'],user[key]['nickname'],user[key]['avatar'],user[key]['total'],true)
+								}
+							}); 
+						$newtime=user[0][lastmessage];
+						}
+					else{
+						//如果要判断公号权限类型如果是模拟就user[key]['fakeid']是,权限号：user[key]['id'] 备注	
+						$.each(user, function(key){
+							if(user[key]['id']){//判断读到用户ID数据才添加上去
+							add_user(user[key]['id'],user[key]['nickname'],user[key]['avatar'],user[key]['total'])
+							}
+							});
+						$newtime=user[0][lastmessage];
+						}	
+					
+
+					//return;
+				}
+				//判断新增在线用户递归回调自身
+				if(newonline){
+						setTimeout(function(){
+							onuser(newonline);
+						},800);
+						}
+			}
+	});
+	}
+	//获取消息
+	function getmessage(userid,newmessage){
+			$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('site/module/messagelist', array('name' => 'kf', 'type' => '3'))}&randtime="+new Date().getTime(),
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				userid:userid,
+				newmessage:newmessage,
+				id:{$rid},
+				maxid:maxid
+				},
+			  success: function(data){
+				 if(!data.message || data.message== 'undefined' ||  data.message=='UNDEFINED' || data.message=='Undefined'  ||  data.message==''){
+								alert('亲,网络出错了!请重试');
+							} 
+				if (data.message.status!=0) {
+					var message=data.message;
+					if(newmessage){
+						//add_message(message['fakeid'],message['nickname'],message['avatar'],message['message'],message['createtime']);
+						$.each(message, function(key){add_message(message[key]['fakeid'],message[key]['nickname'],message[key]['avatar'],message[key]['content'],message[key]['ctime'],0,1);
+						messageid=message[key]['id'];
+						//增加判断用户退出指令来移出在线用户
+							if(message[key]['content']=='退出' || message[key]['content']=='再见'){remove_user(message[key]['fakeid'],message[key]['nickname']);}
+						
+						});
+						
+						}
+					else{
+						$.each(message, function(key){add_message(message[key]['fakeid'],message[key]['nickname'],message[key]['avatar'],message[key]['content'],message[key]['ctime'])}); 
+						messageid=message[key]['id'];
+						}
+					maxid=messageid;
+					//return;
+				}
+				else{
+					//add_message('{$_W['weid']}','管理员','./resource/image/noavatar_middle.gif',data.message.message,messagetime);
+					//return;
+				}
+				//判断新增消息递归回调自身
+				if(newmessage){
+						setTimeout(getmessage(userid,newmessage),10000);
+						}
+				}
+			});
+			
+		}
+
+//发送消息			
+function sendmessage(userid,sendmessage,code){
+	//开始将数据提交给后台程序,发送给用户
+		$.ajax({
+			  url: "{$_W['siteroot']}{php echo create_url('site/module/send', array('name' => 'kf', 'type' => '3'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				fakeid:userid,
+				message:sendmessage,
+				id:{$rid},
+				},
+			  success: function(data){
+				 if(!data.message || data.message== 'undefined' ||  data.message=='UNDEFINED' || data.message=='Undefined'  ||  data.message==''){
+								alert('亲,网络出错了!请重试');
+							} 
+				if (data.message.stauts) {
+					
+					add_message('{$_W['weid']}','{$_W['username']}','{$_W[attachurl]}/qrcode_{$_W['weid']}.jpg?weid={$_W['account']['account']}',sendmessage+data.message.message,messagetime,true);
+					return;
+				}
+				else{
+					 message(data.message.message, '{$_W['siteroot']}{php echo create_url('site/module/send', array('name' => 'kf', 'type' => '3'))}&fakeid='+userid, 'error');
+			   			return;
+				}
+				
+			}
+		});
+}
+			
+$(document).ready(function(){
+	var renew;	
+		//调整工单状态
+	$('div.make-switch').on('switch-change', function (e, data) {
+		
+		renew=$(this).find(':checkbox:checked').val() ? 1 : 0;
+		setTimeout(newmessage({$userid},0,renew),'1000');
+	});
+			
+			var msg_template = '<p><span class="msg-block"><strong></strong><span class="time"></span><span class="msg"></span></span></p>';
+	//消息发送对话框控制
+	$('.chat-message a').click(function(){
+		var input = $(this).siblings('span').children('input[type=text]');		
+		if(input.val() != ''){
+			sendmessage({if $userid}{$userid},{/if}input.val(),0);
+		
+		}		
+	});
+	
+	$('.chat-message input').keypress(function(e){
+		if(e.which == 13) {	
+			if($(this).val() != ''){
+				//add_message('{$_W['weid']}','{$_W['username']}','{$_W[attachurl]}/qrcode_{$_W['weid']}.jpg?weid={$_W['account']['account']}',$(this).val(),messagetime,true);
+				sendmessage({if $userid}{$userid},{/if}$(this).val(),0);
+			}		
+		}
+	});
+	//消息发送END
+	
+	function newmessage(userid,newmessage,renew){	
+		//自动根据有无触发用户来刷新最新消息
+		//alert(renew);
+		setTimeout(getmessage(userid,renew),'4000');
+		
+		//setTimeout(getmessage(userid),'5000');
+		//处理新增在线用户数据
+		setTimeout(onuser(renew),'3000');
+		//处理不在线用户
+		setTimeout(deluser(0,0,renew),'8000');
+		
+		
+	
+	}
+	//初始在线用户
+	//初始化当前所有用户当天发过来的消息,和刷新所有用户的新消息
+	setTimeout(newmessage({$userid},0,0),'1000');
+	
+	
+	// === Tooltips === //
+	$('.tip').tooltip();	
+	$('.tip-left').tooltip({ placement: 'left' });	
+	$('.tip-right').tooltip({ placement: 'right' });	
+	$('.tip-top').tooltip({ placement: 'top' });	
+	$('.tip-bottom').tooltip({ placement: 'bottom' });
+	$('#usertip').tooltip({ placement: 'right',html:true });
+	
+});
+        </script>  
+{template 'common/footer'}

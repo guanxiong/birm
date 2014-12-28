@@ -1,0 +1,439 @@
+@charset "utf-8";
+/* CSS Document */
+body, article, section, h1, h2, hgroup, p, a, ul, li, em, div, small, span, footer, canvas, figure, h1, h2, h3, h4, h5, h6, dl, dt, dd, figcaption, input{
+    margin: 0;
+    padding: 0;
+}
+a {
+    color:#333;
+    cursor: pointer;
+    text-decoration: none;
+}
+ul, li {
+    list-style:none;
+    margin:0;
+    padding:0;
+    list-style-type: none;
+}
+.clr {
+    clear:both;
+}
+input{ margin:0; padding:0;}
+body {
+    background-color: #ECECEC;
+    font-family: Microsoft YaHei, Helvitica, Verdana, Tohoma, Arial, san-serif;
+    margin: 0;
+    overflow-x: hidden;
+    padding: 0;
+    color: #666666;
+}
+
+.Reservation_img{box-shadow: 0 0px 6px #666; margin-bottom:10px;}
+.Reservation_img img{ margin:0; padding:0; vertical-align:middle;}
+
+/*预约项目*/
+.project{
+    border:1px solid #cccccc;
+    background-color:rgba(255, 255, 255, 0.9);
+    text-align:left;
+    font-size:14px;
+    line-height:24px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+
+    border-radius:5px 5px 0px 0px;
+    /*-moz-box-shadow:0 1px 1px #f6f6f6;
+    -webkit-box-shadow:0 1px 1px #f6f6f6;
+    box-shadow:0 1px 1px #f6f6f6;*/
+    margin-bottom:11px;
+    display:block;
+    margin:7px;
+}
+.project h3{
+    background-color:#E1E1E1;
+    background-image: -moz-linear-gradient(top, #757575, #292929);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #757575), color-stop(1, #292929));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#757575', endColorstr='#292929', GradientType='0');
+
+    -webkit-box-shadow: 0 1px 0 #7d7d7d inset, 0 1px 0 #EEEEEE;
+    -moz-box-shadow: 0 1px 0 #7d7d7d inset, 0 1px 0 #EEEEEE;
+    box-shadow: 0 1px 0 #7d7d7d inset, 0 1px 0 #EEEEEE;
+
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -o-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+    line-height:35px; text-indent:15px; text-shadow:none; color:#FFF;}
+
+.project ul{/* background:#ff8809;
+-webkit-border-radius:0 0 4px 4px;
+         -moz-border-radius:0 0 4px 4px;
+         -o-border-radius:0 0 4px 4px;
+         border-radius:0 0 4px 4px;*/ }
+
+.project ul li {
+    border:solid #d2d2d2;
+    border-width:1px 0 0 0;
+    padding:0px 10px 0 10px; 
+
+    background-color:#fff3e7;
+    /*background-image: -moz-linear-gradient(top, #ffd6aa, #ffc17f);
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffd6aa), color-stop(1, #ffc17f));
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd6aa', endColorstr='#ffc17f', GradientType='0');
+
+    -webkit-border-radius:0 0 10px 4px;
+     -moz-border-radius:0 0 10px 4px;
+     -o-border-radius:0 0 10px 4px;
+     border-radius:0 0 10px 4px;*/
+    border-left:3px solid #ff8809;
+}
+
+
+
+
+
+
+.project_top td {
+    color:#999;
+    font-size: 12px;
+}
+.project_top td.addItem {
+    color:#999;
+    font-size: 12px;
+    text-align: left;
+    width:60px;
+}
+.project_top td.addItem {
+    color:#999;
+    font-size: 12px;
+    text-align:left;
+    width:60px;
+}
+
+.project_xm td.addItem {
+    color:#999;
+    font-size: 16px;
+    text-shadow: 0 1px #FFFFFF;
+    /*text-decoration: line-through;*/
+    text-align:left;
+    width:60px; font-weight:normal;
+}
+
+
+
+
+/*预约列表*/
+.project ul li a span{background:url(/wxplat/wxcore/assets/business/order/images/jt.png) no-repeat scroll right center; background-size:10px;
+                      display: block;
+                      font-size: 15px;
+                      min-height: 22px;
+                      padding: 10px 20px 9px 0;
+                      font-weight:bold; color:#ff8809; position:relative; text-shadow:none;}
+.project ul li a span p{font-family:"宋体"; font-size:12px; line-height:20px; color:#666; font-weight:normal; text-shadow:none;}
+
+
+.address{background:url(/wxplat/wxcore/assets/business/order/images/jt.png) no-repeat scroll right center; background-size:10px;
+                      display: block;
+                      padding: 10px 20px 9px 0;
+                      color:#ff8809; position:relative; text-shadow:none;}
+
+
+.project_Explanation{
+    border:1px solid #C6C6C6;
+    background-color:rgba(255, 255, 255, 0.9);
+    text-align:left;
+    font-size:14px;
+    line-height:24px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    /*-moz-box-shadow:0 1px 1px #f6f6f6;
+    -webkit-box-shadow:0 1px 1px #f6f6f6;
+    box-shadow:0 1px 1px #f6f6f6;*/
+    margin-bottom:11px;
+    display:block;
+    margin:7px;}
+
+.project_Explanation h3{
+    background-color:#E1E1E1;
+    background-image: -moz-linear-gradient(top, #f6f6f6, #e2e2e2); /* Firefox */
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f6f6f6), color-stop(1, #e2e2e2)); /* Saf4+, Chrome */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#e2e2e2', GradientType='0'); /* IE*/
+
+    -webkit-box-shadow: 0 1px 0 #ffffff inset, 0 1px 0 #EEEEEE;
+    -moz-box-shadow: 0 1px 0 #ffffff inset, 0 1px 0 #EEEEEE;
+    box-shadow: 0 1px 0 #ffffff inset, 0 1px 0 #EEEEEE;
+
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -o-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+    line-height:35px; text-indent:15px; text-shadow:none; color:#535353; font-size:14px; position:relative;}
+.project_shuoming{ padding:10px; font-size:12px; color:#666; right:10px; top:5px;}
+
+/*预约结果列表*/
+.project_Explanation h3 span{ position:absolute; right:10px; top:5px;  border-radius:15px; background:#ff8502; color:#FFF; text-indent:0; text-align:center; line-height:24px; text-align:center; padding:0px 8px 0px 8px; font-weight:normal;}
+.project_Explanation h3 b{position:absolute; right:10px; top:5px;  border-radius:15px; background:#d2d2d2; color:#FFF; text-indent:0; text-align:center; line-height:24px; text-align:center; padding:0px 8px 0px 8px; font-weight:normal; }
+.project_Content{ padding:10px; font-size:14px; color:#666; right:10px; top:5px;}
+
+
+/*首页我的预约数量*/
+.My_bookings{
+    border:1px solid #C6C6C6;
+    background-color:rgba(255, 255, 255, 0.9);
+    text-align:left;
+    font-size:14px;
+    line-height:24px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    /*-moz-box-shadow:0 1px 1px #f6f6f6;
+    -webkit-box-shadow:0 1px 1px #f6f6f6;
+    box-shadow:0 1px 1px #f6f6f6;*/
+    margin-bottom:11px;
+    display:block;
+    margin:7px;}
+
+.My_bookings h3{ background:#f9f9f9;
+                 background-image: -moz-linear-gradient(top, #f6f6f6, #e2e2e2); /* Firefox */
+                 background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f6f6f6), color-stop(1, #e2e2e2)); /* Saf4+, Chrome */
+                 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#e2e2e2', GradientType='0'); /* IE*/
+                 -webkit-border-radius: 5px 5px 5px 5px;
+                 -moz-border-radius: 5px 5px 5px 5px;
+                 -o-border-radius: 5px 5px 5px 5px;
+                 border-radius: 5px 5px 5px 5px;
+                 line-height:35px; text-indent:30px; text-shadow:none; color:#535353; font-size:14px;}
+.My_bookings h3 a{ color:#535353; font-size:14px; display:block; background:url(/wxplat/wxcore/assets/business/order/images/user.png) no-repeat left; background-position:5px 7px; background-size:20px; position:relative; }
+.My_bookings h3 a.bookingsa{color:#535353; font-size:14px;}
+.My_bookings h3 a img{vertical-align:middle; margin-right:3px;}
+.My_bookings h3 a span{ position:absolute; right:10px; top:5px;  border-radius:15px; background:#ff8502; color:#FFF; text-indent:0; text-align:center; line-height:24px; text-align:center; padding:0px 8px 0px 8px;}
+
+
+
+
+/*预约首页联系信息*/
+.project_Contact{border:1px solid #C6C6C6;
+                 background-color:rgba(255, 255, 255, 0.9);
+                 text-align:left;
+                 font-size:14px;
+                 line-height:24px;
+                 border-radius:5px;
+                 -webkit-border-radius:5px;
+                 -moz-border-radius:5px;
+                 /*-moz-box-shadow:0 1px 1px #f6f6f6;
+                 -webkit-box-shadow:0 1px 1px #f6f6f6;
+                 box-shadow:0 1px 1px #f6f6f6;*/
+                 margin-bottom:11px;
+                 display:block;
+                 margin:7px;}
+.project_Contact h3{background-color:#E1E1E1;
+                    background-image: -moz-linear-gradient(top, #f6f6f6, #e2e2e2); /* Firefox */
+                    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f6f6f6), color-stop(1, #e2e2e2)); /* Saf4+, Chrome */
+                    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#e2e2e2', GradientType='0'); /* IE*/
+
+                    -webkit-box-shadow: 0 1px 0 #ffffff inset, 0 1px 0 #EEEEEE;
+                    -moz-box-shadow: 0 1px 0 #ffffff inset, 0 1px 0 #EEEEEE;
+                    box-shadow: 0 1px 0 #ffffff inset, 0 1px 0 #EEEEEE;
+
+                    -webkit-border-radius: 5px 5px 0 0;
+                    -moz-border-radius: 5px 5px 0 0;
+                    -o-border-radius: 5px 5px 0 0;
+                    border-radius: 5px 5px 0 0;
+                    line-height:35px; text-indent:5px; text-shadow:none; color:#535353; font-size:14px;}
+
+.project_Contact ul{}
+.project_Contact ul li{min-height:30px; padding-left:10px; padding-right:10px;}
+.project_Contact ul li.addr{ border-bottom:1px solid #e4e4e4; font-weight:normal;}
+.project_Contact ul li.addr span{line-height:30px; color:#8d8d8d; font-weight:normal;}
+
+.project_Contact ul li.tel{/*background:url(/wxplat/wxcore/assets/business/order/images/tel.png) no-repeat scroll left top; background-size:20px; background-position:5px 5px; text-indent:20px;*/ }
+.project_Contact ul li.tel span{line-height:30px; color:#8d8d8d; font-weight:normal;}
+.project_Contact ul li.detail{}
+
+
+
+/*预约详细页面*/
+.project_det{
+    border:1px solid #C6C6C6;
+    background-color:rgba(255, 255, 255, 0.9);
+    text-align:left;
+    font-size:14px;
+    line-height:24px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    /*-moz-box-shadow:0 1px 1px #f6f6f6;
+    -webkit-box-shadow:0 1px 1px #f6f6f6;
+    box-shadow:0 1px 1px #f6f6f6;*/
+    margin-bottom:11px;
+    display:block;
+    margin:7px;}
+
+.project_det h3{
+    background-color:#E1E1E1;
+    background-image: -moz-linear-gradient(top, #f6f6f6, #e2e2e2); /* Firefox */
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f6f6f6), color-stop(1, #e2e2e2)); /* Saf4+, Chrome */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#e2e2e2', GradientType='0'); /* IE*/
+
+    -webkit-box-shadow: 0 1px 0 #ffffff inset, 0 1px 0 #EEEEEE;
+    -moz-box-shadow: 0 1px 0 #ffffff inset, 0 1px 0 #EEEEEE;
+    box-shadow: 0 1px 0 #ffffff inset, 0 1px 0 #EEEEEE;
+
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -o-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+    line-height:35px; text-indent:10px; text-shadow:none; color:#535353; font-size:14px;}
+.project_det_box{ padding:10px; font-size:14px; color:#525252;}
+.project_det_box h4{ border-bottom:1px dashed #CCC; line-height:30px; font-size:14px; color:#ff7200;}
+.project_det_box h5{  line-height:30px; font-size:14px; font-weight:normal; color:#525252;}
+
+
+.project_Date{
+    border:1px solid #C6C6C6;
+    background-color:rgba(255, 255, 255, 0.9);
+    text-align:left;
+    font-size:14px;
+    line-height:24px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    /*-moz-box-shadow:0 1px 1px #f6f6f6;
+    -webkit-box-shadow:0 1px 1px #f6f6f6;
+    box-shadow:0 1px 1px #f6f6f6;*/
+    border-radius: 5px 5px 0 0;
+    display:block;
+    margin:7px; margin-bottom:0; /*background:url(/wxplat/wxcore/assets/business/order/images/riqibg-1_03.jpg) repeat-x;*/}
+
+.project_Date h3{
+    background-color:#E1E1E1;
+    background-image: -moz-linear-gradient(top, #f6f6f6, #e2e2e2); /* Firefox */
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f6f6f6), color-stop(1, #e2e2e2)); /* Saf4+, Chrome */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#e2e2e2', GradientType='0'); /* IE*/
+
+    -webkit-box-shadow: 0 1px 0 #ffffff inset, 0 1px 0 #EEEEEE;
+    -moz-box-shadow: 0 1px 0 #ffffff inset, 0 1px 0 #EEEEEE;
+    box-shadow: 0 1px 0 #ffffff inset, 0 1px 0 #EEEEEE;
+
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -o-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+    line-height:35px; text-indent:10px; text-shadow:none; color:#535353; font-size:14px;}
+
+
+.project_Date_box{ margin:0 auto; padding:0;/*padding-left:5px;*/}
+.project_Date_box table{ border:1px solid #CCC; border-right:none; border-bottom:none;}
+.project_Date_box table tr{}
+.project_Date_box table tr td{border:1px solid #CCC; border-left:none;border-top:none; background:#FFF;}
+/*预约未满*/
+.project_Date_box table tr td.zc{ position:relative;}
+.project_Date_box table tr td.zc span{ position:absolute; bottom:2px; font-size:12px; text-shadow:none; text-align:center; color:#a8a8a8; display:block; width:100%;}
+.project_Date_box table tr td.zc a{ display:block; color:#666; text-shadow:none; font-weight:normal;}
+.project_Date_box table tr td.zc a:hover{ color:#666;}
+.project_Date_box table tr td.zc:hover{  text-shadow:none;}
+
+/*预约已满*/
+.project_Date_box table tr td.end{ background:#ebebeb; position:relative;}
+.project_Date_box table tr td.end span{ position:absolute; bottom:2px; font-size:12px; text-shadow:none; text-align:center; color:#a6a6a6; display:block; width:100%;}
+.project_Date_box table tr td.end a{color:#bbbbbb; text-shadow:none;font-weight:normal; }
+.project_Date_box table tr td.end a:hover{color:#bbbbbb;}
+
+/*选择日期*/
+.project_Date_box table tr td.selected{position:relative; background:#ff8502;}
+.project_Date_box table tr td.selected a{ text-shadow:none;color:#fff; font-weight:normal;}
+.project_Date_box table tr td.selected a:hover{color:#fff;}
+.project_Date_box table tr td.selected span{position:absolute; bottom:2px; font-size:12px; text-shadow:none; text-align:center; color:#fff; display:block; width:100%;}
+.project_Date_box table tr td.selected b{position:absolute; top:2px; font-size:12px; text-shadow:none; text-align:center; color:#fff; display:block; width:100%;}
+
+.Date_line{ border:1px solid #dcdcdc;  border-right:none; border-bottom:none; float:left; width:100%; padding-bottom:0px;}
+.Date{ width:19%; height:50px; background:#f7f7f7; float:left; border:1px solid #dcdcdc; border-left:none; border-top:none; text-align:center; line-height:50px;}
+
+
+
+
+/*预约表单*/
+.project_det_box tr td{padding:3px 0px 3px 0px;}
+.project_det_box dl{ width:100%; float:left;  min-height:40px; border-bottom:1px dashed #e3e3e3; padding-bottom:5px; padding-top:5px; }
+.project_det_box dl dt{ width:100px; float:left; text-align:right;  min-height:40px; line-height:40px;}
+.project_det_box dl dd{ float:left; min-height:40px; width:200px;}
+.project_det_box dl dd input{margin:0; padding:0; width:100%;}
+
+.project_text{ margin:0; padding:0; box-shadow:none; height:34px; line-height:34px; text-shadow:none;width:100%; border:1px solid #e5e5e5; color:#888888; font-weight:normal; border-radius:5px;color:#999; text-indent:5px; 
+  font-size:14px; 
+	background-color: transparent;
+	display: block;
+	margin:0 auto;
+	font-family:Arial, Helvetica, sans-serif;/*去掉特殊阴影*/
+	-webkit-appearance:none;
+	-moz-box-shadow:-1px -2px 1px #f7f7f7 inset;             /* For Firefox3.6+ */
+-webkit-box-shadow:-1px -2px 1px #f7f7f7 inset;          /* For Chrome5+, Safari5+ */
+box-shadow:-1px -2px 1px #f7f7f7 inset;  
+}
+
+.dropdown_select{ -webkit-appearance: button; -webkit-user-select:none; overflow:visible; text-overflow:ellipsis; white-space:nowrap; display:inline; position:relative; margin: 0px 1px 0px 1px; width: 100%; height:34px; outline: none; border:0;background-color: transparent;border:1px solid #e5e5e5; font-size:14px; color:#999; background:url(/source/modules/weidim/template/images/xiala1.png) no-repeat right; background-size:17px 15px; padding-left:5px; line-height:34px;}
+
+.project_textarea{ width:98%; margin:0; padding:0; padding-top:10px; padding-left:5px; height:100px; overflow-y:visible; border-radius:5px; color:#999;border:1px solid #e5e5e5; font-size:14px;
+box-shadow:none;
+	background-color: transparent;
+	display: block;
+	margin:0 auto;
+	font-family:Arial, Helvetica, sans-serif;/*去掉特殊阴影*/
+	-webkit-appearance:none;
+-moz-box-shadow:-1px -2px 1px #f7f7f7 inset;             /* For Firefox3.6+ */
+-webkit-box-shadow:-1px -2px 1px #f7f7f7 inset;          /* For Chrome5+, Safari5+ */
+box-shadow:-1px -2px 1px #f7f7f7 inset;  
+}
+
+/*时间*/
+.project_sj_box{ padding:5px 0px 10px 0px; font-size:14px; color:#525252;}
+/*.project_sj_box h5{line-height:30px; font-size:14px; font-weight:normal; color:#525252;}*/
+.project_sj_box a{ text-shadow:none;
+}
+.project_sj_box a.Time{font-weight:normal; width:30%; text-align:center; display:block; color:#666666; font-weight:normal; background:#fff; border:1px solid #CCC; display:block; float:left; margin-left:5px; border-radius:5px; margin-top:5px;}
+.project_sj_box a.TimeClick{font-weight:normal; width:30%; text-align:center; display:block; color:#666666; font-weight:normal; border:1px solid #CCC; display:block; float:left; margin-left:5px; border-radius:5px; margin-top:5px; background:#ff8502; color:#FFF; text-shadow:none;}
+.project_sj_box a:hover.TimeClick{background:#ff8502; color:#FFF; text-shadow:none;}
+
+.project_sj_box a.Time_End{font-weight:normal; width:30%; text-align:center; display:block; font-weight:normal; border:1px solid #CCC; display:block; float:left; margin-left:5px; border-radius:5px; margin-top:5px; background:#e8e8e8; color:#c3c3c3; text-shadow:none;}
+.project_sj_box a:hover.Time_End{ background:#e8e8e8; color:#c3c3c3; text-shadow:none;}
+
+.project_sj_box a:hover.Time{color:#666; text-shadow:none;}
+
+/*预约按钮*/
+.project_btn{
+    font-size:14px;
+    line-height:24px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    margin-bottom:11px;
+    display:block;
+    margin:7px;font-weight:normal;}
+.submit{
+    background-color:#E1E1E1;
+    background-image: -moz-linear-gradient(top, #5ECE06, #1E820E);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #5ECE06), color-stop(1, #1E820E));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#5ECE06', endColorstr='#1E820E', GradientType='0');
+
+    border: 1px solid #2D7F00;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px;
+    display: block;
+    font-size: 16px;
+    padding:5px 0px 5px 0px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 1px 0 #7DEA2D inset, 0 1px 2px #2D7F00;
+    text-shadow:none; color:#FFF; font-weight:normal;}
+
+
+
+.copyright{ width:100%; margin-top:10px; line-height:30px; color:#878787; text-align:center; float:left; height:30px; font-size:12px; border-top:1px dashed #CCC;}
+.Floatingwindow{background:none; border:none; position:fixed; z-index:99999; right:3px; bottom:0px;}
+.Floatingwindow a{ background: url(/source/modules/weidim/template/images/back.png) no-repeat; background-size:60px 50px; width:60px; height:50px; text-indent:22px; text-shadow:none; color:#fff; font-size:14px; font-weight:normal; line-height:50px; display:block;}
+.My_bookings h3:hover{background:#f6f6f6;
+                      background-image: -moz-linear-gradient(top, #d1d1d1, #f6f6f6); /* Firefox */
+                      background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d1d1d1), color-stop(1, #f6f6f6)); /* Saf4+, Chrome */
+                      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d1d1d1', endColorstr='#f6f6f6', GradientType='0'); /* IE*/}
+.project ul li:hover{background-color:#ffe5ca;}

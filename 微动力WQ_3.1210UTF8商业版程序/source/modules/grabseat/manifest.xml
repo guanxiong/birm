@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	
+	<application setting="true">
+		
+		<name><![CDATA[凑一对]]></name>
+		
+		<identifie><![CDATA[grabseat]]></identifie>
+		
+		<version><![CDATA[1.0]]></version>
+
+		<type><![CDATA[activity]]></type>
+		
+		<ability><![CDATA[我要和你凑一对]]></ability>
+		
+		<description><![CDATA[通过粉丝凑对的形式，实现线上互动，同时也可结合线下商户开展活动。]]></description>
+		
+		<author><![CDATA[艮随]]></author>
+		
+		<url><![CDATA[]]></url>
+	
+	</application>
+	
+	<platform>
+		
+		<subscribes>
+		
+		</subscribes>
+		
+	
+		<handles>
+		
+		    <message type="text" />
+	
+		</handles>
+	
+		<rule embed="true" />
+
+    </platform>
+	
+	<bindings>
+
+		<rule>
+		
+			<entry title="凑对记录" do="list" />
+
+		</rule>
+
+	</bindings>
+
+	<install><![CDATA[
+
+		CREATE TABLE IF NOT EXISTS `ims_grabseat_record` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `weid` int(11) NOT NULL,
+		  `rid` int(11) NOT NULL,
+		  `graberopenid` text NOT NULL,
+		  `grabername` text NOT NULL,
+		  `grabermobile` text NOT NULL,
+		  `grabtime` int(11) NOT NULL,
+		  `fiteropenid` text,
+		  `fitername` text,
+		  `fitermobile` text,
+		  `fittime` int(11) DEFAULT NULL,
+		  `status` int(11) NOT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+		CREATE TABLE IF NOT EXISTS `ims_grabseat_reply` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `rid` int(11) NOT NULL,
+		  `title` text NOT NULL,
+		  `picture` varchar(100) NOT NULL,
+		  `description` text NOT NULL,
+		  `content` text NOT NULL,
+		  `showcontent` text NOT NULL,
+		  `fitcontent` text NOT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+	  ]]></install>
+	  
+<uninstall><![CDATA[
+
+		DROP TABLE IF EXISTS `ims_grabseat_record`;
+		DROP TABLE IF EXISTS `ims_grabseat_reply`;
+
+		]]></uninstall>
+
+<upgrade><![CDATA[]]></upgrade>
+
+</manifest>

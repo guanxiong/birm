@@ -1,0 +1,72 @@
+{template 'common/header'}
+<div class="main">
+	<ul class="nav nav-tabs">
+ <li {if $_GPC['do'] == 'wzpindex'} class="active"{/if}><a href="{php echo  $this->createWebUrl('wzpindex');}">企业招聘信息</a>
+  </li>
+<li {if $_GPC['do'] == 'wzplist'} class="active"{/if}><a href="{php echo  $this->createWebUrl('wzplist',array('hid'=>$hid));}">招聘职位列表</a></li>
+<li {if $_GPC['do'] == 'wzpadd'} class="active"{/if}><a href="{php echo  $this->createWebUrl('wzpadd',array('id'=>$id,'hid'=>$hid));}">招聘职位设置</a></li>
+	</ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="{$item['id']}">
+    <input type="hidden" name="hid" value="{$hid}">
+  <h4>招聘岗位</h4>
+  <table class="tb">
+     <tr>
+<th>招聘岗位：</th>
+<td width="441" ><input type="text" name="title" value="{$item['title']}" class="span5" ></td>
+
+</tr>
+<tr>
+<th>招聘人数：</th>
+<td ><input type="text" name="number" value="{$item['number']}" class="span5" > </td>
+</tr>
+<tr>
+<th>招聘类型：</th>
+<td ><label for="select"></label>
+  <select name="zptype" id="zptype">
+    <option value="全职">全职</option>
+    <option value="兼职">兼职</option>
+    <option value="全兼皆可">全兼皆可</option>
+  </select></td>
+</tr>
+<tr>
+     <th valign="top">岗位要求：</th>
+<td valign="top" colspan="5"><textarea id="info" name="info" class="span5" >{$item['info']}</textarea></td>
+</tr>
+
+<tr>
+<th>工作地址：</th>
+<td width="441" ><input type="text" name="addr" value="{php echo empty($item['addr'])?$addr:$item['addr']}" class="span6" ></td>
+
+</tr>
+<tr>
+<th>联系人：</th>
+<td width="441" ><input type="text" name="contactperson" value="{$item['contactperson']}" class="span3" ></td>
+
+</tr>
+<tr>
+<th>联系电话：</th>
+<td width="441" ><input type="text" name="contacttel" value="{$item['contacttel']}" class="span4" ></td>
+
+</tr>
+        <tr>
+		  <th width="85">显示顺序</th>
+			<td><input type="text" id="displayorder" name="displayorder" value="{$item['displayorder']}"  class="span2" />
+			数值越大越靠前</td>
+	  </tr>      
+                
+    <tbody>
+		<tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span5" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+        </tbody>
+	</table>
+</form>
+<script type="text/javascript">
+kindeditor($('#info'));
+</script>
+{template 'common/footer'}

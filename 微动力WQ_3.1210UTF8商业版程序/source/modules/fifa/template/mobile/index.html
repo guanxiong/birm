@@ -1,0 +1,95 @@
+{template 'header'}
+    <section class="content ">
+        
+            <div class="banner">
+                <div class="banner-content off">
+                    <ul class="clearfix">
+                        <li>
+                            <div class="circle"><img src="./source/modules/fifa/template/images/2014fifa.png"/></div>
+                            
+                        </li>
+                        <li>
+                            <p>2014 FIFA</p>
+                        </li>
+                        <li class="text-left">
+                            <p>积分: <span>{$myscore['myscore']}</span> 分</p>
+                           
+                            <p>猜中: <span>{$myscore['mywin']}</span> 场</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="vs-box-container text-center clearfix">
+			{php $num=1}
+			{loop $list $item}	
+                <div class="vs-box"  onclick="goUrl('{php echo $this->createMobileUrl('detail', array('id' => $item['id']))}');">
+                    <div class="vs-box-head">{if $num==1}本场比赛{else}下场比赛{/if}</div>
+                    <div class="vs-box-body">
+                        <ul class="clearfix">
+                            <li>
+                               <img src="./source/modules/fifa/template/images/{$item['groupa']}.png"  />
+                                <h4>{$item['teama']}</h4>
+                            </li>
+                            <li><span>{$item['score']}</span></li>
+                            <li>
+                                 <img src="./source/modules/fifa/template/images/{$item['groupb']}.png"  />
+                                <h4>{$item['teamb']}</h4>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="vs-box-foot">时间 {php echo date('m-d H:i',$item['racetime'])}</div>
+                </div>
+				{php $num++}
+			{/loop}
+               
+            </div>
+        <nav class="nav nav-main">
+            <ul class="clearfix">
+                <li class="column fifth">
+                    <a href="{php echo $this->createMobileUrl('list')}">
+                        <span class="icon icon-vs"></span>
+                        <h4>比赛列表</h4>
+                    </a>
+                </li>
+				<!--li class="column fifth">
+                    <a href="{php echo $this->createMobileUrl('champion')}">
+                        <span class="icon icon-question"></span>
+                        <h4>谁是冠军</h4>
+                    </a>
+                </li-->
+				
+                
+                
+               <li class="column fifth">
+                    <a href="{php echo $this->createMobileUrl('rule')}" >
+                        <span class="icon icon-bullhorn"></span>
+                        <h4>竞猜规则</h4>
+                    </a>
+                </li>
+
+                
+                <li class="column fifth">
+                    <a href="{php echo $this->createMobileUrl('description')}">
+                        <span class="icon icon-bullhorn"></span>
+                        <h4>活动说明</h4>
+                    </a>
+                </li>
+                <li class="column fifth">
+                    <a href="{$reply['huodong']}">
+                        <span class="icon icon-bullhorn"></span>
+                        <h4>球迷活动</h4>
+                    </a>
+                </li>
+				<li class="column fifth">
+                    <a href="{$reply['digger']}">
+                        <span class="icon icon-g"></span>
+                        <h4>赞助商</h4>
+                    </a>
+                </li>
+               
+            </ul>
+        </nav>
+	<section>@ {$_W['account']['name']}	</section>	
+    </section>
+
+{template 'footer'}

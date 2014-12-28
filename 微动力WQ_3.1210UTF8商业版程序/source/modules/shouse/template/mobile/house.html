@@ -1,0 +1,181 @@
+{template 'header'}
+<div class="head navbar-fixed-top">
+    <a href="javascript:;" onclick="return $('.head .order').toggleClass('hide');" class="bn pull-left">分类</a>
+    <span class="title text-center">房屋信息</span>
+    <a href="{php echo $this->createMobileUrl('houseadd')}" class="bn pull-right">发布</a>
+    <ul class="unstyled order hide">
+        <li >
+            <a href="#" onclick="weibaza('1');">出租房屋</a>
+        </li>
+        <li >
+            <a href="#" onclick="weibaza('2');">租赁服务</a>
+        </li>
+        <li >
+            <a href="#" onclick="weibaza('3');">出租商铺</a>
+        </li>
+        <li >
+            <a href="#" onclick="weibaza('4');">新房出售</a>
+        </li>
+        <li >
+            <a href="#" onclick="weibaza('5');">二手出售</a>
+        </li>
+        <li >
+            <a href="#" onclick="weibaza('6');">出售商铺</a>
+        </li>
+        <li >
+            <a href="#" onclick="weibaza('7');">求租房屋</a>
+        </li>
+        <li>
+            <a href="{php echo $this->createMobileUrl('house')}" data-dist="">全部</a>
+        </li>
+
+    </ul>
+</div>
+
+<div class="container mt30">
+    <div class="status_count mt15">
+        共
+        <span id="house_count">{$count}</span>
+        个信息
+    </div>
+
+   {if $list}
+   <div class="list house_list">
+     {loop $list $item}
+        <div class="media">
+           
+            <a class="pull-left" href="{php echo $this->createMobileUrl('hdetail',array('hsid' => $item['hsid']))}">
+                <img class="media-object" src="{$_W['attachurl']}{$item['thumb']}"  width="100" height="62" alt="{$item['title']}">
+            </a>
+            <div class="media-body">
+                <a href="{php echo $this->createMobileUrl('hdetail',array('hsid' => $item['hsid']))}">
+                    <h5 class="media-heading">{$item['title']}</h5>
+                    <p>{$item['region_name']}&nbsp;{$item['house_zx']}</p>
+                    <p>
+                        {$item['hrs_lan']} &nbsp;{$item['mianji']}平米
+                        <small class="pull-right" data-price="{$item['price_pre']}">
+            
+                            <span class="red">
+                                
+                                {if $item['jiage']==0 }  面议{else}
+                
+                                    {$item['jiage']}
+                                    {if ($item['cate_id']==1||$item['cate_id']==2||$item['cate_id']==7)}元/月{else}万
+                                    {/if}
+                                {/if}
+                            </span>
+                
+                        </small>
+                    </p>
+                </a>
+            </div>
+        </div>
+     {/loop}
+    </div>
+    {/if}
+
+    <script type="text/html" id="listTpl">
+    <!-- {each list as value index}
+        <div class="media">
+            <a class="pull-left" href="mobile.php?act=module&name=hewer&do=hdetail&weid=1&hsid={ value.hsid }">
+                <img class="media-object" src="./source/modules/hewer/img/loadimg.gif" data-src="{ value.thumb }" width="100" height="62" alt="{value.title}"></a>
+            <div class="media-body">
+                <a href="mobile.php?act=module&name=hewer&do=hdetail&weid=1&hsid={ value.hsid }">
+                <h5 class="media-heading">{ value.title } </h5>
+                <p>{ value.city }&nbsp;{ value.gulluk }&nbsp;{ value.house_zx }</p>
+                <p>{ value.hrs_lan } &nbsp;{ value.mianji }平米<small class="pull-right" data-price="{value.price_value}">{value.price_pre} <span class="red">{value.jiage}</span> {value.price_nuit}</small></p>
+                </a>
+            </div>
+        </div>
+    {/each} -->
+    </script>
+    <script type="text/javascript">
+    
+        // 赶进度，暂做成跳转
+        function weibaza(value){
+            window.location.href = 'mobile.php?act=module&name=shouse&do=house&weid=1&cate='+value;
+        }
+
+        // var page = 1;
+        // // 列表数据返回处理 回填html
+        // var getUqurContentOnlyOutput = function(data) {
+        //         page += 1;
+        //         if (data.list) {
+                
+
+        //             // 用来改价格
+        //             for (var i = 0; i < data.list.length; i++) {
+        //                     data.list[i].price_pre = '';
+        //                  if(data.list[i].cate_id==1||data.list[i].cate_id==2||data.list[i].cate_id==7){
+        //                     data.list[i].price_nuit = '元/月';
+        //                     }else{
+        //                     data.list[i].price_nuit = '万';
+        //                     }
+        //                 if(data.list[i].jiage==0){
+        //                     data.list[i].jiage = '面议';
+        //                     data.list[i].price_nuit = '';
+        //                                   }
+
+        //                 if(data.list[i].thumb!=null){
+        //                         data.list[i].thumb = './resource/attachment/'+data.list[i].thumb;
+        //                 }
+         
+        //             }
+        //             if (page < 10) {
+        //                 $(".more").show();
+        //             } 
+        //             else {
+        //                 $(".more").hide();
+        //             };
+        //             $('.list').append(template("listTpl", data)).find('img').lazyload();
+        //             $('.more').html('<span class="gomore">点击查看更多</span>');
+        //         }
+        //         else{
+        //             $('.more').hide();
+        //         };
+        //         $('#house_count').text(data.total);
+        // };
+        // require(['jquery','bootstrap','base','lazyLoad','template'],function($){
+        //     var json_url = $('.more').attr('data-ajax');
+        //     M.getlist(json_url,page);
+        //     $('.more').click(function() {
+        //         $(this).html('加载中...');
+        //         M.getlist(json_url,page);
+        //     });
+        //     $('#city_dist li').on('click', function() {
+        //         var dist = $(this).attr('dist');
+        //         $(this).parent('.btn-group').text(dist);
+        //     });
+        // });
+
+    </script>
+    <script type="text/javascript">
+        var wxData = {
+            "appId": "",
+            "imgUrl" : './source/modules/hewer/icon.png',
+            "link" : 'mobile.php?act=module&name=shouse&do=house&weid=1&wxref=mp.weixin.qq.com',
+            "desc" : '',
+            "title" : "房屋信息"
+        };
+        require(['WeixinApi'], function(){
+            WeixinApi.ready(function(Api) {
+                Api.shareToFriend(wxData);
+                Api.shareToTimeline(wxData);
+                Api.shareToWeibo(wxData);
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        document.onclick = function (e){
+            e = window.event || e;
+            var srcElement = e.srcElement || e.target;
+            if (srcElement.tagName == 'A' || srcElement.tagName == 'H5') {
+                document.getElementById('loading').style.display = "block";
+            }
+        }
+        window.onload=function(){
+            document.getElementById('loading').style.display = "none";
+        }
+    </script>
+</body>
+</html>

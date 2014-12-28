@@ -1,0 +1,71 @@
+{template 'common/header'}
+<link href="./source/modules/commform/template/style/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+$(function() {
+     $("#checkAll").click(function() {
+         $('input[name="select[]"]').attr("checked",this.checked); 
+     });
+     var $subBox = $("input[name='select[]']");
+     $subBox.click(function(){
+		$("#checkAll").attr("checked",$subBox.length == $("input[name='select[]']:checked").length ? true : false);
+     });
+});
+</script>
+<body>
+{template 'menu'}
+{php global $_GPC,$_W}
+<div id="wp" widht="80%">
+ <!--中间内容-->  
+	<div class="msgWrap"  widht="80%">
+		<form method="post" action="{php echo create_url('site/module', array('do' => 'showforms', 'name' => 'commform'))}" id="info">
+			<div class="searchbar right" >				
+					<input type="text" id="msgSearchInput" class="txt left" placeholder="输入关键词搜索" name="searchkey" value="">
+					<button type="submit" class="btn btn-primary span1" name="search" value="搜索">搜索</button>&nbsp;
+					<button type="submit" class="btn btn-primary" name="del" value="批删">批删</button>	
+					<input type="hidden" name="token" value="{$_W['token']}">				
+			</div>		
+			<table class="ListProduct" border="0" cellspacing="0" cellpadding="0" >
+				<thead>
+				<tr>
+				<th class="select" width="6%"><input type="checkbox" id="checkAll" name="checkAll"></th>
+				<th width="5%">序号</th>
+				<th width="15%">名称</th>
+				<th width="10%">关键词</th>
+				<th width="10%">成功提示</th>
+				<th width="10%">失败提示</th>
+				<th width="10%">创建时间</th>
+				<th width="10%">截至时间</th>	 
+				<th width="20%" class="norightborder">操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				{loop $list $row}
+					<tr>	
+						<td align="center"><input type="checkbox" name="select[]" id="select" value="{$row['id']}" class="checkitem"></td>
+						<td align="center">{$row['id']}</td>
+						<td align="center">{$row['name']}</td>
+						<td align="center">{$row['keyword']}</td>
+						<td align="center">{$row['successtip']}</td>
+						<td align="center">{$row['failtip']}</td>
+						<td align="center">{php echo date('Y-m-d',$row['time'])}</td> 
+						<td align="center">{php echo date('Y-m-d',$row['endtime'])}</td> 
+						<td align="center" class="norightborder">
+							<a href="{php echo create_url('site/module', array('do' => 'modiforms', 'name' => 'commform',fid=>$row['id'],fn=>$row['name']))}">修改</a>&nbsp;&nbsp;
+							<a href="{php echo create_url('site/module', array('do' => 'showformfields', 'name' => 'commform',fid=>$row['id'],fn=>$row['name']))}">字段维护</a>&nbsp;&nbsp;
+							<a href="{php echo create_url('site/module', array('do' => 'createOrAlterForm', 'name' => 'commform',fid=>$row['id'],fn=>$row['name']))}"  onclick="if(!confirm('该操作将会抹除之前已存在的表单及提交数据，\n若是在运行功能，请慎重操作！\确定要执行吗？')){javascript:void(0);return false;}" title="在修改表单名称和字段名称的情况下，需要重新执行后生效！">
+							{if $row['status']==0 }<font color="red">生成表单</font>{else}生成表单{/if}</a>
+							<a href="{php echo create_url('mobile/module', array('do' => 'showform','weid'=>$_GPC['__weid'],'name' => 'commform',fid=>$row['id'],fn=>$row['name']))}" >预览</a>
+							<a href="{php echo create_url('site/module', array('do' => 'view','weid'=>$_GPC['__weid'],'name' => 'commform',fid=>$row['id'],fn=>$row['name']))}" >查看</a>
+						</td>
+					</tr>
+				{/loop}
+				</tbody>
+			</table>
+		</form>
+	</div>
+	<div class="cLine">
+	<div class="pageNavigator right">
+		<div class="pages">{$pager}</div>
+	</div>
+{template 'common/footer'}
+

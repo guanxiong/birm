@@ -1,0 +1,55 @@
+<input type="hidden" name="reply_id" value="{$repinf['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">水果老虎机</h4>
+	<table>
+		<tbody>
+            <tr>
+                <th>标题</th>
+                <td>
+                    <input class="span7" name="reptitle" type="text" value="{$repinf['reptitle']}">
+                </td>
+            </tr>
+			<tr>
+                <th>封面</th>
+                <td>
+                    <div id="" class="uneditable-input reply-edit-cover">
+                        <div class="detail">
+                            <span class="pull-right">大图片建议尺寸：700像素 * 300像素</span>
+                            <input class="btn btn-mini reply-edit-cover-upload" type="button" id="slot-picture" fieldname="picture{$namesuffix}" value="<i class='icon-upload-alt'></i> 上传"/>
+                            <button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'slot-picture-value')" style="{if empty($repinf['repimg'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+                        </div>
+                        {if !empty($repinf['repimg'])}
+                        <input type="hidden" name="picture-old" value="{$repinf['repimg']}">
+                        <div id="upload-file-view" class="upload-view">
+                            <input type="hidden" id="slot-picture-value" value="{$repinf['repimg']}">
+                            <img width="100" src="{$_W['attachurl']}{$repinf['repimg']}">&nbsp;&nbsp;
+                        </div>
+                        {else}
+                        <div id="upload-file-view"></div>
+                        {/if}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>描述</th>
+                <td>
+                    <textarea class="span7" name="repinfo" cols="30" rows="3" type="text">{$repinf['repinfo']}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>选择活动</th>
+                <td>
+                    <select class="span7" name="repactive" id="" value="{$repinf['repactive']}">
+                    {loop $slotlists $slot}
+                        <option value="{$slot['id']}">{$slot['name']}</option>
+                    {/loop}
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+kindeditorUploadBtn($('#slot-picture'));
+</script>

@@ -1,0 +1,40 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta content="marksense" name="author"> 
+<meta name="viewport" content="width=device-width,initial-scale=1.33,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=yes" name="format-detection" />
+<title>查看招聘信息</title>
+<link rel="stylesheet" type="text/css" href="./source/modules/lxyecowzp/template/css/global.css">
+<link rel="stylesheet" type="text/css" href="./source/modules/lxyecowzp/template/css/recruitment.css">
+<script language="javascript" src="./resource/script/jquery-1.7.2.min.js"></script>
+
+</head>
+<body>
+  <header class="header">
+    <a class="back-list" href="javascript:history.back(-1);"><img src="./source/modules/lxyecowzp/template/images/menu.png" /></a>
+    <h1>微招聘</h1>
+    <a class="back-home" href="{php echo $this->createMobileUrl('showallzwlist')}"><img src="./source/modules/lxyecowzp/template/images/back_home.png" /></a>
+  </header>
+  <article class="view">
+    <p><strong>招聘单位：</strong><em>{$item['copname']}</em></p>
+    <p><strong>招聘职位：</strong><em>{$item['title']}</em></p>
+    <p><strong>招聘类型：</strong><em>{$item['zptype']}</em></p>
+    <p><strong>招聘人数：</strong><em>{$item['number']}</em></p>
+    <p><strong>工作地址：</strong><em>{$item['addr']}</em></p>
+    
+    <p><strong>招聘内容：</strong></p>
+    
+    <pre>{$item['info']}</pre>
+    <p><strong>联系电话：</strong><em><a href="tel:{$item['contacttel']}"> {$item['contacttel']}</a></em></p>
+    <p><strong>联系人：</strong><em>{$item['contactperson']}</em></p>
+    <p><strong>发布时间：</strong><em>{php echo date('Y-m-d H:i:s',$item['createtime'])}</em></p>
+    <p><strong>查看次数：</strong><em>{$item['hitnumber']}</em></p>
+  </article>
+  <img src="./source/modules/lxyecowzp/template/images/hm.gif" class="baiduStats" />
+</body>
+</html>

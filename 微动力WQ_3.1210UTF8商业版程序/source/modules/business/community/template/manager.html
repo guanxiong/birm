@@ -1,0 +1,105 @@
+{template 'common/header'}
+
+{if $op == 'post'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('manager',array('op'=>'display'));}">用户列表</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('manager', array('op'=>'post','uid' => $_GPC['uid']));}">编辑用户</a></li>
+</ul>
+<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+<div class="main">
+	<input type="hidden" name="act" value="module" />
+	<input type="hidden" name="op" value="post" />
+	<input type="hidden" name="do" value="manager" />
+	<input type="hidden" name="name" value="community" />
+	<input type="hidden" name="uid" value="{$member['uid']}" />
+	<h4>用户管理</h4>
+	<table class="tb">
+		<tr>
+			<th><label for="">管理员名称</label></th>
+			<td>
+				<input type="text" class="span4" id="name" value="{$member['username']}" readonly="readonly"/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">权限设置</h4>
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</th>
+									<th>导航标题</th>
+									<th>链接地址</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $allmenus $menu}
+								<tr>
+									<td class="row-first">
+										<input class="modules" type="checkbox" value="{$menu['do']},{$menu['state']}" name="menu[]" {if in_array($menu['do'].'&'.$menu['state'], $menukeys)}checked{/if} />
+									</td>
+									<td>{$menu['title']}</td>
+									<td><a href="{$menu['url']}">{php echo str_replace('&','&amp;', $menu['url']);}</a></td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>
+				<input name="token" type="hidden" value="{$_W['token']}" />
+				<input type="submit" class="btn btn-primary span3" name="submit" value="提交" />
+			</td>
+		</tr>
+	</table>
+</div>
+</form>
+{elseif $op == 'display'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo $this->createWebUrl('manager',array('op'=>'display'));}">用户列表</a></li>
+</ul>
+<div class="search">
+	<form action="site.php" method="get">
+	<input type="hidden" name="act" value="module" />
+	<input type="hidden" name="op" value="display" />
+	<input type="hidden" name="do" value="manager" />
+	<input type="hidden" name="name" value="community" />
+	<table class="table table-bordered tb">
+		<tr>
+			<th>用户名</th>
+			<td><input class="span6" name="username" id="" type="text" value="{$_GPC['username']}"></td>
+		</tr>
+		 <tr class="search-submit">
+			<td colspan="2"><button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button></td>
+		 </tr>
+	</table>
+	</form>
+</div>
+<div class="rule">
+	<table class="table table-hover">
+		<thead class="navbar-inner">
+			<tr>
+				<th class="col-xm-2">用户名</th>
+				<th style="text-align:right;">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{loop $members $m}
+			<tr>
+				<td>{$m['username']}</td>
+				<td style="text-align:right;">
+					<a href="{php echo $this->createWebUrl('manager', array('uid' => $m['uid'],'op'=>'post'))}">编辑</a>
+				</td>
+			</tr>
+			{/loop}
+		</tbody>
+	</table>
+	{$pager}
+</div>
+{/if}
+{template 'common/footer'}

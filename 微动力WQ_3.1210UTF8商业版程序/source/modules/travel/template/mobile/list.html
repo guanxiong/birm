@@ -1,0 +1,22 @@
+{template 'header'}
+{php $result = site_article_search($cid);}
+<style>
+ul{}
+ul li a{display:block; height:60px; padding:5px; border-bottom:1px #CCC solid; color:#333; overflow:hidden; text-decoration:none !important; position:relative;}
+ul li a .thumb{width:80px; height:60px;}
+ul li a .title{font-size:16px;}
+ul li a .createtime{font-size:12px; color:#999; position:absolute; bottom:0;}
+</style>
+<ul class="unstyled">
+	{loop $result['list'] $row}
+	<li>
+		<a href="{php echo $this->createMobileUrl('detail', array('name' => 'detail', 'id' => $row['id'], 'weid' => $_W['weid']))}">
+			{if $row['thumb']}<img src="{$_W['attachurl']}{$row['thumb']}" class="pull-right thumb" />{/if}
+			<div class="title">{$row['title']}</div>
+			<div class="createtime">{php echo date('Y-m-d H:i:s', $row['createtime'])}</div>
+		</a>
+	</li>
+	{/loop}
+</ul>
+{$result['pager']}
+{template 'footer'}

@@ -1,0 +1,119 @@
+﻿@charset "utf-8";
+/* CSS Document */
+* { margin:0; padding:0; border:0;}
+a { text-decoration:none; color:#fff; -webkit-tap-highlight-color:rgba(0,0,0,0);}
+a:hover { text-decoration:none; } 
+input,button,select,textarea,div{outline:none;-webkit-tap-highlight-color:rgba(255,0,0,0);}
+h1,h2,h3,h4,h5,h6,font,label,span,p{ font-size:62.5%; font-weight:normal; font-family:"黑体"; }
+ul li,ol li{ list-style-type:none; text-decoration:none; list-style:none; }
+body { font-family:"黑体"; font-size:62.5%; font-weight:normal; color:#666;background:url(./bg.jpg) repeat top right;}
+.left{ float:left;}
+.right{ float:right;}
+.bgcolor_e65e3e{background-color:#e65e3e;}
+.bgcolor_3aabbc{background-color:#3aabbc;}
+.myArmoryList{-webkit-transition-property: -webkit-transform;-webkit-transition-duration: 1s;-webkit-animation: rotateX .3s linear;}
+@-webkit-keyframes rotate{from{-webkit-transform: rotate(0deg)}
+to{-webkit-transform: rotate(360deg)}
+}
+@-webkit-keyframes rotateX{from{-webkit-transform: rotateX(290deg)}
+to{-webkit-transform: rotateX(360deg)}
+}
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper{background-color:transparent;text-shadow:none;font-weight:normal;}
+
+
+.TheArmory{ display:block; margin:10px;}
+.TheArmory .TheArmoryList{ margin-top:10px; background-color:#fff; border-radius:3px; overflow:hidden;}
+.TheArmory dl{ display:block; padding:12px; background-color:#edf1f2; border-bottom:1px solid #e1e5e6; min-height:54px;}
+.TheArmory dl.Thefirst{ background-color:#EDF1F2;}
+.TheArmory dl.Thesecond{ background-color:#ff7d3f;}
+.TheArmory dl.Thethird{ background-color:#ffbd3f;}
+.TheArmory dl.Theranking dd span,.TheArmory dl.Theranking dd label{ color:#fff;}
+.TheArmory dt{ float:left; width:54px; height:54px; border-radius:27px; overflow:hidden;}
+.TheArmory dd{ display:block; padding-left:70px;}
+.TheArmory dd span{  line-height:25px; font-size:1.0em; color:#fff;}
+.TheArmory dd a:link{  line-height:25px; font-size:1.6em; color:#fff;}
+.TheArmory dd a:hover { text-decoration:none;color:#fff; } 
+.TheArmory dd label{ display:block; line-height:25px; margin-top:4px; font-size:1.2em; color:#666;}
+.TheArmory ul{ display:block; height:45px;}
+.TheArmory li{ float:left; width:50%; text-align:center; line-height:45px; font-size:1.2em; color:#666;}
+.TheArmory li img{ margin:2px 7px 0 0;}
+
+
+.pagination {
+  margin: 20px 0;
+}
+
+.pagination ul {
+  display: inline-block;
+  *display: inline;
+  margin-bottom: 0;
+  margin-left: 0;
+  -webkit-border-radius: 4px;
+	 -moz-border-radius: 4px;
+		  border-radius: 4px;
+  *zoom: 1;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	 -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+		  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.pagination ul > li {
+  display: inline;
+}
+
+.pagination ul > li > a,
+.pagination ul > li > span {
+  float: left;
+  padding: 4px 12px;
+  line-height: 20px;
+  text-decoration: none;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-left-width: 0;
+}
+
+.pagination ul > li > a:hover,
+.pagination ul > li > a:focus,
+.pagination ul > .active > a,
+.pagination ul > .active > span {
+  background-color: #f5f5f5;
+}
+
+.pagination ul > .active > a,
+.pagination ul > .active > span {
+  color: #999999;
+  cursor: default;
+}
+
+.pagination ul > .disabled > span,
+.pagination ul > .disabled > a,
+.pagination ul > .disabled > a:hover,
+.pagination ul > .disabled > a:focus {
+  color: #999999;
+  cursor: default;
+  background-color: transparent;
+}
+
+.pagination ul > li:first-child > a,
+.pagination ul > li:first-child > span {
+  border-left-width: 1px;
+  -webkit-border-bottom-left-radius: 4px;
+		  border-bottom-left-radius: 4px;
+  -webkit-border-top-left-radius: 4px;
+		  border-top-left-radius: 4px;
+  -moz-border-radius-bottomleft: 4px;
+  -moz-border-radius-topleft: 4px;
+}
+
+.pagination ul > li:last-child > a,
+.pagination ul > li:last-child > span {
+  -webkit-border-top-right-radius: 4px;
+		  border-top-right-radius: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+		  border-bottom-right-radius: 4px;
+  -moz-border-radius-topright: 4px;
+  -moz-border-radius-bottomright: 4px;
+}
+
+.pagination-centered {
+  text-align: center;
+}

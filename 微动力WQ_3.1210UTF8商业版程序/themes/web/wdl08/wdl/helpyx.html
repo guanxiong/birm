@@ -1,0 +1,225 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, user-scalable=no">
+<meta content="微动力,微信,微信公众平台" name="Keywords">
+<meta content="{if empty($_W['setting']['copyright']['description'])}微信公众平台自助引擎，简称微动力，微动力是一款免费开源的微信公众平台管理系统。{else}{$_W['setting']['copyright']['description']}{/if}" name="Description">
+<title>微动力-微信公众平台互动营销专家</title>
+<link rel="stylesheet" type="text/css" href="/themes/web/wdl08/common/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="/themes/web/wdl08/common/css/auth.css"/>
+<link rel="stylesheet" type="text/css" href="/themes/web/wdl08/common/css/style-price.css"/>
+<link rel="shortcut icon" href="/favicon.ico" />
+<script type="text/javascript" src="/themes/web/wdl08/common/js/jQuery.js"></script>
+<script type="text/javascript" src="/themes/web/wdl08/common/new/js/sea.js"></script>
+<script type="text/javascript">seajs.use("/themes/web/wdl08/common/new/js/base_common.js")</script>
+</head>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?24b3e272281688608a11b26fa534ced6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<body>
+<div class="header">
+    <div class="site-nav header-background">
+    	<div class="animated-color-line">
+            <div class="colors ">
+                <div class="color-part light-gray-bg show-color-part"></div>
+                <div class="color-part blue-bg show-color-part"></div>
+                <div class="color-part pink-bg show-color-part"></div>
+                <div class="color-part orange-bg show-color-part"></div>
+                <div class="color-part light-orange-bg show-color-part"></div>
+                <div class="color-part yellow-bg show-color-part"></div>
+                <div class="color-part green-bg show-color-part"></div>
+            </div>
+        </div>
+        <div class="wPage">
+        	<div class="header-nav">
+                <div id="logo">
+                    <a href="/" class="logocover"></a>
+                    <a href="/" title="" hidefocus="true" class="logo-ornament logo-animation" id="logo_ornament"></a>
+                </div>
+                <ul>
+                    <li><a href="/" class="hover" title="首页">首页</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/about.html">关于微动力</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/service.html">功能介绍</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/case.html">案例展示</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/home.html">微路由</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/join.html">招商代理</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/help.html">帮助中心</a></li>
+                 
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/price.html">资费说明</a></li>
+                    <li class="divider"></li>
+					<li><a href="/themes/web/wdl08/wdl/contact.html">联系我们</a></li>
+                  
+                    <li class="divider"></li>
+                    <li><a href="/">管理中心</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/price.html">资费说明</a></li>
+                    <li class="divider"></li>
+                 
+                       <li><a href="/member.php?act=login" class="btn">登录</a></li>
+                                    </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+<!--
+.main{float: left;}
+
+#table {width:100%;background:#ffffff; overflow:auto;}
+.menubg{
+/*background: url(index/images/current-.gif) repeat-y 170px top;*/
+/*background: url(touyuanmadequanjiasiguang by:weiwo) repeat-y 170px top;*/
+overflow-x: hidden;
+overflow-y: auto;
+border-top:1px solid #EEEEEE;
+border-left:1px solid #EEEEEE;
+}
+.menu0 div{
+display:block;
+float:left;
+padding:2px 0px;
+width:165px;
+text-align: left;
+text-indent: 10px;
+cursor:pointer;
+color:  #000000;
+border-right: 1px solid #EEEEEE;
+border-bottom: 1px solid #EEEEEE;
+font-size:12px;position: relative;
+}
+.menu0 div.hover{
+color: #FFFFFF;
+text-shadow: 0 1px 1px #467809;
+
+background-color:#08a006;
+/*background:#fff url(index/images/current.gif) no-repeat right center;*/
+}
+.menu0 div a{
+display:block
+}
+.menu0 div.hover a{
+color: #FFFFFF; display:block
+}
+.menu0 div span{
+ background: url(index/images/icon_new.gif) no-repeat scroll 0 0 transparent;
+    border: 0 none;
+    display: block;
+    height: 11px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 23px;
+    z-index: 10;
+right: 5px;
+    top: 6px;
+}
+#main0 div{margin:15px 10px;text-decoration: none; word-wrap: break-word;
+}
+#main0 div.block{margin:15px;
+display: block;text-decoration: none;word-wrap: break-word;
+}
+h3{ font-size: 16px; color:#08a006}
+.marginb{ margin-bottom:15px;display: block;}
+#mediaplayer {
+    background-color: #000000;
+    color: #FFFFFF;
+    height: 615px;
+    position: relative;
+    width: 820px;
+top:0;
+right:0;
+}
+.section { border:0; margin:0; padding:0}
+.section p{padding-top:0;margin-top:0; font-size:14px;/*text-indent: 2em;*/}
+.normalContent {
+    padding: 20px;
+}
+-->
+.banner{height:200px; text-align:center; border-bottom:2px solid #ddd;}
+.hbanner{ background: url(/themes/web/wdl08/common/images/banner/help.jpg) center no-repeat #E2EAD5;}
+</style>
+<!--中间内容-->
+<div class="qtcontent">
+        <div class="intro">
+            <div class="normalTitle"><h2>如何为易信公众号配置接口？</h2></div>
+            <div class="normalContent">
+                				
+<div class="section">
+                    <div id="table">
+                    <div class="main" id="main0"><if condition="$_GET['token'] neq ''"><strong><span style="font-size:24px;">易信接口URL是：<font color="red">{weiwin::C('site_url')}/index.php/api/<php>echo $_GET['token'];</php></font><br>您的易信token是：<font color="red"><php>echo $_GET['token'];</php></font></span></strong></if><div>
+                                <span class="marginb">
+                                <h3>请务必认真阅读以下2步内容，才能更有效的完成配置工作，有疑问的请联系 Crow. 提问。</h3>
+                                </span>
+								<div class="CollapsiblePanelTab STYLE1">第一步、在微动力绑定你的易信公众号。<span></span></div>
+                                <span class="marginb">
+                                <p>1、注册并登录<a href="{weiwin::U('Index/login')}">微动力接口平台</a></p>
+                                <p>2、添加公众号 → 功能管理 → 勾选要开启的功能</p>	
+                                </span>
+								<p><img src="/themes/web/wdl08/common/help/help0_yx.jpg" width="100%"></p>
+								<p><img src="/themes/web/wdl08/common/help/help01_yx.jpg" width="100%"></p>
+								<div class="CollapsiblePanelTab STYLE1">第二步、到易信公众平台设置接口。<span></span></div>
+								<p>1、登录 <a href="http://plus.yixin.im/">易信公众平台</a>（<a href="http://plus.yixin.im/">http://plus.yixin.im/</a>），进行身份认证，填写信息，提交身份证。</p>
+                                    <p>2、认证后，点击高级功能 → 进入开发模式</p>
+									<p><img src="/themes/web/wdl08/common/help/help002_yx.jpg" width="100%"></p><br>
+									<p>2、点击"成为开发者"按钮</p>
+									<p><img src="/themes/web/wdl08/common/help/help003_yx.jpg" width="100%"></p><br>
+									<p>3、填写接口配置信息</p>
+									<if condition="$_GET['token'] eq ''">
+									<p>比如你微动力平台上的地址是{weiwin::C('site_url')}/index.php/api/demo</p>
+									<p>那么URL就是{weiwin::C('site_url')}/INDEX.PHP/api/demo</p>
+									<else/>
+									<p>你的URL是 <font color="red">{weiwin::C('site_url')}/index.php/api/<php>echo $_GET['token'];</php></font></p>
+									</if>
+									<p>Token填写 <font color="red"><php>echo $_GET['token'];</php></font></p>
+									<p><img src="/themes/web/wdl08/common/help/help004_yx.jpg" width="100%"></p><br>
+									<p>4、确认开启</p>
+									<p>5、在手机上用易信给你的公众号输入"帮助"，测试你的接口是否配置正常！</p><br>
+                            </div>
+                                                                                                                                                                </div>
+                    </div>
+                	<p class="clr"></p>
+            	</div>
+                
+                
+        	</div>
+    	</div>
+    </div>
+
+<!--底部-->
+<!--主要功能介绍结束-->
+<div class="footer">
+	<div class="divider-panel"></div>
+	<div class="wPage">
+        <div class="about">
+        	<div class="copyright">微动力-微信智能公众平台 版权所有</div>
+        </div>
+        <div class="glink">
+        	<ul>
+            	<li><a href="/" class="hover" title="首页">网站首页</a></li>
+                <li><a href="/themes/web/wdl08/wdl/about.html" target="_blank">关于微动力</a></li>
+                <li><a href="/themes/web/wdl08/wdl/service.html" target="_blank">功能介绍</a></li>
+                <li><a href="/themes/web/wdl08/wdl/case.html" target="_blank">案例展示</a></li>
+                <li><a href="/themes/web/wdl08/wdl/help.html" target="_blank">帮助教程</a></li>
+                <li><a href="/themes/web/wdl08/wdl/contact.html" target="_blank">联系我们</a></li>
+                <li><a href="/themes/web/wdl08/wdl/update.html" target="_blank">更新记录</a></li>
+            </ul>
+            <div class="beian"><a href="#" target="_blank">备案号：{weiwin::C('ipc')}</a></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

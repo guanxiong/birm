@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+    <application setting="false">
+        <name><![CDATA[翻牌抽奖]]></name>
+        <identifie><![CDATA[iflop]]></identifie>
+        <version><![CDATA[1.3]]></version>
+        <type><![CDATA[wdlgame]]></type>
+        <ability><![CDATA[翻牌抽奖]]></ability>
+        <description><![CDATA[翻牌抽奖]]></description>
+        <author><![CDATA[微动力]]></author>
+        <url><![CDATA[]]></url>
+    </application>
+    <platform>
+        <handles>
+            <message type="text" />
+        </handles>
+        <rule embed="true" />
+    </platform>
+    <bindings>
+       <home call="getItemTiles"></home>
+	    <menu>
+	      <entry title="翻牌抽奖管理" do="manage" state="" direct="false" />
+	    </menu>
+    </bindings>
+    <install><![CDATA[
+    CREATE TABLE `ims_iflop_reply` (
+	   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	   `weid` int(11) default 0 ,
+	   `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+	   `picture` varchar(200) NOT NULL COMMENT '活动图片',
+	   `title` varchar(255) NOT NULL COMMENT '标题',
+	   `c_type_one` varchar(20) DEFAULT '',
+	   `c_rate_one`  int(11) DEFAULT 0 COMMENT '概率',
+	   `c_name_one` varchar(50) DEFAULT '',
+	   `c_num_one` int(11) DEFAULT 0,
+	   `c_draw_one` int(11) DEFAULT 0,
+	   `c_type_two` varchar(20) DEFAULT '',
+	   `c_name_two` varchar(50) DEFAULT '',
+	   `c_num_two` int(11) DEFAULT 0,
+	   `c_type_three` varchar(20) DEFAULT '',
+	   `c_name_three` varchar(50) DEFAULT '',
+	   `c_num_three` int(11) DEFAULT '0',
+	   `c_type_four` varchar(20) DEFAULT '',
+	   `c_name_four` varchar(50) DEFAULT '',
+	   `c_num_four` int(11) DEFAULT '0',
+	   `c_type_five` varchar(20) DEFAULT '',
+	   `c_name_five` varchar(50) DEFAULT '',
+	   `c_num_five` int(11) DEFAULT '50',
+	   `c_type_six` varchar(20) DEFAULT '特别奖',
+	   `c_name_six` varchar(50) DEFAULT '继续努力',
+	   `c_num_six` int(11) DEFAULT '70',
+	   `viewnum` int(11) DEFAULT '0',
+  	   `fansnum` int(11) DEFAULT '0',
+	   `share_times` int(11) DEFAULT '0' COMMENT '领奖分享次数',
+	   `number_times` int(11) DEFAULT '0' COMMENT '每人翻牌次数',
+	   `most_num_times` int(11) DEFAULT '0' COMMENT '每人每天翻牌次数',
+	   `description` varchar(1000) NOT NULL COMMENT '活动描述',
+	   `dateline` int(10) unsigned NOT NULL COMMENT '发布时间',
+	   `share_title` varchar(300) DEFAULT '',
+	   `share_desc` varchar(300) DEFAULT '',
+	   `share_url` varchar(100) DEFAULT '',
+	   `share_txt` varchar(500) DEFAULT '',
+    PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_iflop_winner` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `description` varchar(500) NOT NULL DEFAULT '' COMMENT '中奖信息描述',
+  `fansID` int(11) DEFAULT 0 ,
+  `from_user` varchar(50) NOT NULL COMMENT '用户唯一身份ID',
+  `share_times` int(11) DEFAULT '0' COMMENT '分享次数',
+  `tel` varchar(20) DEFAULT '' COMMENT '登记信息(手机等)',
+  `todaynum` int(11) DEFAULT '0',
+  `IPaddress` varchar(100) NOT NULL,
+  `totalnum` int(11)DEFAULT '0' ,
+  `last_time` int(10) DEFAULT '0',
+  `createtime` int(10) unsigned NOT NULL COMMENT '获奖日期',
+  PRIMARY KEY (`id`),
+  KEY `idx_from_user` (`from_user`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_iflop_award` (
+  `id` int(11)  AUTO_INCREMENT,
+  `weid` int(11) default 0 ,
+  `rid` int(11) default 0 ,
+  `fansID` int(11) DEFAULT 0 ,
+  `from_user` varchar(50) default 0 COMMENT '用户ID',
+  `name` varchar(50) DEFAULT '' COMMENT '名称',
+  `description` varchar(200) DEFAULT '' COMMENT '描述',
+  `createtime` int(10) DEFAULT 0 ,
+  `consumetime` int(10) DEFAULT 0 ,
+  `status` tinyint(4) DEFAULT 0 ,
+  PRIMARY KEY (`id`),KEY `indx_rid` (`rid`),KEY `indx_weid` (`weid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+    ]]></install>
+    <uninstall><![CDATA[
+    drop table if exists ims_iflop_reply;
+    drop table if exists ims_iflop_winner;
+    drop table if exists ims_iflop_award;
+    ]]></uninstall>
+    <upgrade><![CDATA[]]></upgrade>
+</manifest>

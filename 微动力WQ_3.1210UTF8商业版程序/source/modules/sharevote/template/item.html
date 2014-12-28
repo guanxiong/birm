@@ -1,0 +1,62 @@
+{if empty($news)}
+	{php $namesuffix = '-new[(wrapitemid)][]';}
+	{php $itemid = '(itemid)';}
+	{php $wrapitemid = '(wrapitemid)';}
+{else}
+	{php $namesuffix = '[news-wrap-item-'.$key.']['.$news['id'].']'}
+	{php $itemid = 'news-item-' . $news['id'];}
+	{php $wrapitemid = 'news-wrap-item-'.$key;}
+{/if}
+{if !empty($news)}
+	<div class="item" id="news-item-{$news['id']}">
+{/if}
+<div id="show" class="alert alert-info reply-news-list {if !empty($key) && !empty($news['id']) && $key == $news['id']}reply-news-list-first{/if} {if empty($news)}hide{/if}">
+	<div class="reply-news-list-cover"><img src="{$_W['attachurl']}{$news[thumb]}" alt=""></div>
+	<div class="reply-news-list-detail">
+		<div class="title">{$news['title']}</div>
+		<div class="content">{$news['description']}</div>
+		<span class="pull-right">{if !empty($news)}<a href="{php echo create_url('index/module/delete', array('name' => 'news', 'id' => $news[id]))}" onclick="return doDeleteItem('news-item-{$news['id']}', this.href)" style="margin-right:5px;">删除</a>{else}
+            <a onclick="doDeleteItem('{$itemid}')" href="javascript:;" style="margin-right:5px;">删除</a>{/if}
+            <a onclick="newsHandler.doEditItem('{$itemid}', '{$wrapitemid}')" href="javascript:;">编辑</a>
+          <a  href="{php echo create_url('index/module', array('do' => 'managevote', 'name' => 'sharevote'))}" >管理投票</a>
+        </span>
+	</div>
+</div>
+<table id="form" class="tb reply-news-edit {if !empty($news)}hide{/if}">
+	<tr>
+		<th>标题{$_GPC['title']}</th>
+		<td>
+			<input type="text" id="" class="span7" placeholder="" name="news-title{$namesuffix}" value="{$news['title']}">
+		</td>
+	</tr>
+	<tr>
+		<th>封面</th>
+		<td>
+			<!-- 此处增加class="reply-news-edit-cover-1"为编辑状态，反之则不显示封面图片，隐藏删除按钮 -->
+			<div id="" class="uneditable-input reply-edit-cover">
+				<div class="detail">
+					<span class="pull-right">大图片建议尺寸：700像素 * 300像素</span>
+					<input type="button" id="news-picture" fieldname="news-picture{$namesuffix}" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+					<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'news-picture-value')" style="{if empty($news[thumb])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+				</div>
+				{if !empty($news)}
+				<input type="hidden" name="news-picture-old{$namesuffix}" value="{$news[thumb]}">
+				<div id="upload-file-view" class="upload-view">
+					<img width="100" src="{$_W['attachurl']}{$news[thumb]}">&nbsp;&nbsp;
+				</div>
+				{else}
+				<div id="upload-file-view"></div>
+				{/if}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>描述</th>
+		<td>
+			<textarea style="height:80px;" class="span7" cols="70" name="news-description{$namesuffix}">{$news['description']}</textarea>
+		</td>
+	</tr>
+</table>
+{if !empty($news)}
+	</div>
+{/if}

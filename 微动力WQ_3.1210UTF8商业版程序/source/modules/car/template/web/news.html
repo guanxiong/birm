@@ -1,0 +1,204 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('news', array('op' => 'post'))}">添加分类</a></li>
+	<li {if $op == 'list'}class="active"{/if}><a href="{php echo $this->createWebUrl('news', array('op' => 'list'))}">管理分类</a></li>
+	<li {if $op == 'add_news'}class="active"{/if}><a href="{php echo $this->createWebUrl('news', array('op' => 'add_news'))}">添加文章</a></li>
+	<li {if $op == 'news_list'}class="active"{/if}><a href="{php echo $this->createWebUrl('news', array('op' => 'news_list'))}">文章列表</a></li>
+</ul>
+<style>
+.table td span{display:inline-block;margin-top:4px;}
+.table td input{margin-bottom:0;}
+</style>
+{if $op == 'news_list'}
+<div class="main">
+	<div class="search">
+		<form action="site.php" method="get">
+		<input type="hidden" name="act" value="module" />
+		<input type="hidden" name="do" value="news" />
+		<input type="hidden" name="name" value="car" />
+		<input type="hidden" name="op" value="news_list" />
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th>关键字</th>
+					<td>
+						<input class="span6" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+					</td>
+				</tr>
+				<tr>
+					<th>文章分类</th>
+					<td>
+						<select class="span3" style="margin-right:15px;" name="category_id" >
+							<option value="0">请选择文章分类</option>
+							{loop $categorys $row}
+							<option value="{$row['id']}" {if $row['id'] == $_GPC['category_id']} selected="selected"{/if}>{$row['title']}</option>
+							{/loop}
+						</select>
+					</td>
+				</tr>
+				<tr>
+				 <tr class="search-submit">
+					<td colspan="2"><button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button></td>
+				 </tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<table class="table table-hover table-striped">
+			<thead class="navbar-inner">
+				<tr>
+					<th>标题</th>
+					<th>所属分类</th>
+					<th style="width:180px;">属性</th>
+					<th style="width:85px; text-align:right;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{if $list}
+				{loop $list $newsone}
+				<tr>
+					<td>
+						<span class="cate">{if !empty($newsone['pcate'])}<span class="text-error">[{$category[$newsone['pcate']]['name']}]</span>{/if}{if !empty($newsone['ccate'])}<span class="text-info">[{$category[$newsone['ccate']]['name']}]</span>{/if}</span>
+						<a href="{php echo $this->createWebUrl('news', array('op' => 'add_news', 'id' => $newsone['id']))}" style="color:#333;">{$newsone['title']}</a>
+					</td>
+					<td>
+						<a href="{php echo $this->createWebUrl('news', array('op' => 'post', 'id' => $newsone['category_id']))}" style="color:#333;">{$newsone['category_title']}</a>
+					</td>
+					<td>
+						{if $newsone['ishot']}<span class="label label-success">头条</span>{/if}
+						{if $newsone['iscommend']}<span class="label label-success">推荐</span>{/if}
+					</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('news', array('op' => 'add_news', 'id' => $newsone['id']))}" title="编辑" class="btn btn-mini"><i class="icon-edit"></i></a>
+						<a onclick="return confirm('此操作不可恢复，确认吗？'); return false;" href="{php echo $this->createWebUrl('news', array('op' => 'del_news', 'id' => $newsone['id']))}" title="删除" class="btn btn-mini"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				{/loop}
+				{/if}
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+</div>
+
+{elseif $op == 'add_news'}
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data" onsubmit="return formcheck(this)">
+		<input type="hidden" name="id" value="{$newsone[id]}">
+		<h4>文章管理</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">标题</label></th>
+				<td>
+					<input type="text" class="span6" placeholder="" name="title" value="{$newsone['title']}">
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">自定义属性</label></th>
+				<td>
+					<label class="checkbox inline"><input type="checkbox" name="option[hot]" value="1" {if $newsone['ishot']} checked{/if}> 头条[h]</label>
+					<label class="checkbox inline"><input type="checkbox" name="option[commend]" value="1" {if $newsone['iscommend']} checked{/if}> 推荐[c]</label>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">文章来源</label></th>
+				<td>
+					<input type="text" class="span3" placeholder="" name="source" value="{$newsone['source']}">
+					<label for="writer" class="checkbox inline" style="margin-right:15px;">文章作者</label>
+					<input type="text" class="span2" id="writer" name="author" value="{$newsone['author']}">
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">缩略图</label></th>
+				<td>
+					<div class="fileupload fileupload-new" data-provides="fileupload">
+						<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;">{if $newsone['thumb']}<img src="{$_W['attachurl']}{$newsone['thumb']}" width="200" />{/if}</div>
+						<div>
+							<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="thumb" type="file" /></span>
+							<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+							{if $newsone['thumb']}<button type="submit" name="fileupload-delete" value="{$newsone['thumb']}" class="btn fileupload-new">删除</button>{/if}
+						</div>
+					</div>
+					<span class="help-block"></span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">所属分类</label></th>
+				<td>
+					<select class="span3" style="margin-right:15px;" name="category_id">
+						<option value="0">请选择所属分类</option>
+						{loop $categorys $row}
+							<option value="{$row['id']}"  {if $row['id'] == $newsone['category_id'] || $cateid ==  $row['id']} selected="selected"{/if}>{$row['title']}</option>
+						{/loop}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">选择内容模板</label></th>
+				<td>
+					<select name="template" class="span6">
+						<option value="">使用默认设置</option>
+						{loop $template $v}
+						<option value="{$v['title']}"{if $newsone['template'] == $v['title']} selected="selected"{/if}>{$v['title']}</option>
+						{/loop}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>简介</th>
+				<td>
+					<textarea style="height:200px;" class="span7" name="description" cols="70">{$newsone['description']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td><label class="checkbox inline"><input type="checkbox" name="autolitpic" value="1"{if empty($newsone['thumb'])} checked="true"{/if}>提取内容的第一个图片为缩略图</label></td>
+			</tr>
+			<tr>
+				<th>内容</th>
+				<td>
+					<textarea style="height:400px; width:100%;" class="span7 richtext-clone" name="content" cols="70" id="reply-add-text">{$newsone['content']}</textarea>
+				</td>
+			</tr>
+		</table>
+
+		<table class="tb">
+			<tr>
+				<th></th>
+				<td>
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+function formcheck(obj){
+	if($.trim($(":text[name='title']").val()) == ''){
+		message('必须填写文章标题.', '', 'error');
+		return false;
+	}
+	if($("select[name='category_id']").val() == '' || $("select[name='category_id']").val() == '0'){
+		message('请选择文章分类.', '', 'error');
+		return false;
+	}
+	if($.trim($("textarea[name='description']").val()) == ''){
+		message('必须填写文章简介.', '', 'error');
+		return false;
+	}
+	if($.trim($("textarea[name='content']").val()) == ''){
+		message('必须填写文章内容.', '', 'error');
+		return false;
+	}
+	return true;
+}
+
+<!--
+	var category = {php echo json_encode($children)};
+	kindeditor($('.richtext-clone'));
+//-->
+</script>
+{/if}
+{template 'common/footer'}

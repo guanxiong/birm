@@ -1,0 +1,45 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+	<li class="active"><a href="#">帮助</a></li>
+</ul>
+<div class="main">
+	<div style="padding:15px;">
+		<h3 class="title">操作步骤</h3>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="max-width:10px;">步骤</th>
+					<th style="min-width:200px">说明</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>第一步：新建单曲</td>
+					<td>在"单曲管理"中录入单曲。<a href="{php echo $this->createWebUrl('music')}">前往&gt;&gt;</a></td>
+				</tr>
+				<tr>
+					<td>第二步：组建专辑</td>
+					<td>在"专辑管理"菜单下建立专辑，选择第一步中录入的单曲。 <a href="{php echo $this->createWebUrl('tape')}">前往&gt;&gt;</a><td>
+				</tr>
+				<tr>
+					<td>第三步：发布专辑</td>
+					<td>在"关键字触发列表"菜单下建立关键字，每个关键字可对应一张专辑。 <a href="{php echo create_url('rule/display', array('module'=>'quickmusic'))}">前往&gt;&gt;</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3 class="title">FAQ</h3>
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<td>问：能增加一级导航，让用户看到所有专辑吗？</td>
+				</tr>
+				<tr>
+					<td>答：支持。请在"专辑中心"增加一条规则即可。</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+{template 'common/footer'}

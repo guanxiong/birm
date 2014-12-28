@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>团购首页</title>
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link href="http://stc.weimob.com/css/tg/main.css?v=2014-02-24-1" rel="stylesheet" />
+    <link href="http://stc.weimob.com/css/tg/dialog.css?v=2014-02-24-1" rel="stylesheet" />
+
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+});
+</script>
+
+    <script src="http://stc.weimob.com/src/jquery.min.js?v=2014-02-24-1"></script>
+    <script src="http://stc.weimob.com/src/tg/swipe.js?v=2014-02-24-1"></script>
+    <script src="http://stc.weimob.com/src/tg/dialog_min.js?v=2014-02-24-1"></script>
+    <script src="http://stc.weimob.com/src/tg/global.js?v=2014-02-24-1"></script>
+</head>
+<body onselectstart="return true;" ondragstart="return false;" class="">
+
+<div>
+    <div id="container" class="container animate">
+        <header>
+            <div class="nav_coupon">
+                <ul class="box">
+                    <li><a href="/tg/eticket/index/pid/72997/bid/150263/wechatid/fromuse666/type/unused/"class="on">未使用</a></li>
+                    <li><a href="/tg/eticket/index/pid/72997/bid/150263/wechatid/fromuse666/type/used/" >已使用</a></li>
+                    <li><a href="/tg/eticket/index/pid/72997/bid/150263/wechatid/fromuse666/type/expired/" >已过期</a></li>
+                </ul>
+            </div>
+        </header>
+        <div class="body">
+                            <ul class="list_coupon">
+                                                            <li>
+                        <a href="/tg/eticket/detail/pid/72997/bid/150263/wechatid/fromuse666/eticket_id/46/type/" class="tbox">
+                            <div>
+                                <span>
+                                    <div>
+                                        <label>
+                                                                                            剩余<br/>
+                                                <y>35</y>天                                            
+                                        </label>
+                                    </div>
+                                </span>
+                            </div>
+                            <div>
+                                <h3>下订单</h3>
+                                                                <p class="sn">SN码：424974785</p>
+                                                                <p>2014-03-31 09:47:00过期</p>
+                            </div>
+                        </a>
+                    </li>
+                                                        </ul>
+                    </div>
+        <footer>
+    <section class="nav_footer">
+        <ul class="box">
+            <li>
+                <a href="/tg/goods/index/pid/72997/bid/150263/wechatid/fromuse666/" class="">
+                    <span class="nav_tg">&nbsp;</span>
+                    <label>团 购</label>
+                </a>
+            </li>
+            <li>
+                <a href="/tg/eticket/index/pid/72997/bid/150263/wechatid/fromuse666/" class="on">
+                    <span class="nav_tgq">&nbsp;</span>
+                    <label>团购券</label>
+                </a>
+            </li>
+            <li>
+                <a href="/tg/user/orderPage/pid/72997/bid/150263/wechatid/fromuse666/" class="">
+                    <span class="nav_dd">&nbsp;</span>
+                    <label>订 单</label>
+                </a>
+            </li>
+            <!--
+            <li>
+                <a href="javascript:;" class="">
+                    <span class="nav_shc">&nbsp;</span>
+                    <label>收 藏</label>
+                </a>
+            </li>
+            -->
+<!--            <li>-->
+<!--                <a href="/tg/goods/index/pid/--><!--/bid/--><!--/wechatid/--><!--/" class="--><!--">-->
+<!--                    <span class="nav_shzh">&nbsp;</span>-->
+<!--                    <label>设 置</label>-->
+<!--                </a>-->
+<!--            </li>-->
+        </ul>
+    </section>
+</footer>
+    </div>
+</div>
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideOptionMenu');
+});
+</script>
+
+</body>
+
+</html>

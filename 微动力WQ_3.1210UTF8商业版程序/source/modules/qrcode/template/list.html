@@ -1,0 +1,153 @@
+{template 'common/header'}
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#date-range').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=start]').val(),
+		endDate: $(':hidden[name=end]').val(),
+		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=start]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=end]').val(end.format('YYYY-MM-DD'));
+	});
+});
+function range(days) {
+	var start = moment().add('days', 0 - days).format('YYYY-MM-DD');
+	var end = moment().format('YYYY-MM-DD');
+	$('#date-range .date-title').html(start + ' 至 ' + end);
+	$(':hidden[name=start]').val(start);
+	$(':hidden[name=end]').val(end);
+	$('form[method=get]')[0].submit();
+}
+</script>
+	<ul class="nav nav-tabs">
+		<li><a href="{php echo create_url('site/module/post', array('name' => 'qrcode'));}">生成二维码</a></li>
+		<li class="active"><a href="{php echo create_url('site/module/list', array('name' => 'qrcode'));}">管理二维码</a></li>
+		<li><a href="{php echo create_url('site/module/display', array('name' => 'qrcode'));}">扫描统计</a></li>
+	</ul>
+	<div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="brand">二维码列表</span>
+						<div class="pull-left"></div>
+					</div>
+				</div>
+				<div class="sub-item">
+					<form action="" method="get">
+					<div class="pull-right">
+						<input class="btn btn-primary" type="submit" value="搜索">
+					</div>
+					<div class="pull-left">
+						<input name="eid" type="hidden" value="{$_GPC['eid']}" />
+						<input name="act" type="hidden" value="{$_GPC['act']}" />
+						<input name="do" type="hidden" value="list" />
+						<input name="name" type="hidden" value="qrcode" />
+						<input type="text" class="span2 kw" name="keyword" value="{$_GPC['keyword']}" placeholder="请输入关键字">
+					</div>
+					</form>
+				</div>
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">详细数据</h4>
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:100px;">场景名称</th>
+									<th style="width:100px;">关联关键字</th>
+									<th style="width:100px;">二维码类型</th>
+									<th style="width:110px;">过期时间</th>
+									<th style="width:80px;">场景ID<i></i></th>
+									<th style="width:80px;">二维码</th>
+									<th style="width:150px;">生成时间</th>
+									<th style="width:150px">到期时间</th>
+									<th style="width:110px;">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $row}
+								<tr>
+									<td style="text-align: center"><a href="#" title="{$row['name']}">{php echo cutstr($row['name'], 8)}</a></td>
+									<td style="text-align: center"><a href="#" title="{$row['name']}">{php echo cutstr($row['keyword'], 8)}</a></td>
+									<td style="text-align: center">{$row['modellabel']}</td>
+									<td style="text-align: center">{$row['expire']}</td>
+									<td style="text-align: center">{$row['qrcid']}</td>
+									<td style="text-align: center"><a href="{$row['showurl']}" target="_blank">查看</a></td>
+									<td style="font-size:12px; color:#666;text-align: center">
+									{php echo date('Y-m-d <br /> h:i:s', $row[createtime]);}
+									</td>
+									<td style="font-size:12px; color:#666;text-align: center">
+									{$row[endtime]}
+									</td>
+									<td style="text-align: center">
+									{if $row['model'] == 1}<a href="{php echo create_url('site/module/extend', array('name' => 'qrcode','id'=> $row['id']))}">延时</a>&nbsp;|&nbsp;{/if}
+									<a href="{php echo create_url('site/module/post', array('name' => 'qrcode','id'=> $row['id']))}">编辑</a>
+									</td>
+								</tr>
+								{/loop}
+								<tr class="search-submit">
+									<td colspan="9">
+										<a href="{php echo create_url('site/module/del', array('name' => 'qrcode','scgq'=> '1'))}" onclick="javascript:return confirm('您确定要删除吗？\n将删除所有过期二维码以及其统计数据！！！')" class="btn btn-primary">删除全部已过期二维码</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						{$pager}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+});
+</script>
+{template 'common/footer'}

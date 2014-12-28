@@ -1,0 +1,31 @@
+{template 'header'}
+<!-- content -->
+<section class="content">
+    <div class="panel-user panel">
+	<div class="news-heading"><h3>积分排行</h3>
+	</div>
+        <div><table class="table" width="100%">
+		<tr>
+			<th class="more">排名</th><th class="more">姓名</th>
+			<th class="more">积分</th>
+			
+		</tr>
+		{php $num=1}
+		{loop $list $item}
+		<tr>
+			<td>{$num}</td><td>{$item['nickname']}</td>
+			<td>{$item['v']}</td>
+			
+			{php $num++}
+		</tr>
+		{/loop}
+		
+		
+	</table></div>
+    </div>
+	
+
+	
+</section>
+
+{template 'footer'}

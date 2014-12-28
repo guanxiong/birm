@@ -1,0 +1,29 @@
+﻿body{ margin:0 auto; width:100%; background:#fff; color:#4d4f4e; -webkit-text-size-adjust:none; }
+a:link,a:visited{ text-decoration:none; color:#4d4f4e; }
+ul,li,form,h1,h2,h3,h4,h5,h6,pre,p,figure,pre,button{ margin:0; padding:0; }
+ul{ overflow:hidden; list-style:none; }
+pre{ white-space:pre-wrap; word-wrap:break-word; }
+::-webkit-input-placeholder { color:#bababa; }
+::-moz-placeholder { color:#bababa; }
+:-ms-input-placeholder { color:#bababa; }
+.clearfix:after{ clear: both; content: ' '; display: block; height: 0px; visibility: hidden; }
+.baiduStats{ display:none; width:0; height:0; }
+.black{ position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0, 0, 0, 0.7); display:none; z-index:5; }
+.black .img-box{ width:96%; padding:2%; text-align:center; background:#fff; }
+.black .img-box figure img{ max-width:100%; }
+.black .img-box aside{ width:100%; height:45px; background:#fff; }
+.black .img-box aside a{ width:30%; margin:5px 4px; height:35px; padding:0; text-align:center; font-size:14px; color:green; line-height:35px; background:-webkit-linear-gradient(top,#ffffff,#f3f3f3); border-radius:3px; border:1px solid #d2d2d2; float:left; }
+.black .img-box dialog{ height:30px; line-height:30px; text-align:center; top:5%; left:40%; font-size:14px; background:rgba(0, 0, 0, 0.7); color:#fff; padding:0 10px; border-radius:3px; display:none; position:absolute; }
+.globalAd{ width:100%; }
+.globalAd span{ width:100%; height:32px; line-height:32px; display:block; border-radius:4px; text-align:center; background:#fef7e0; }
+.globalAd span a{ font-size:14px; color:#db560d; display:block; width:100%; height:100%; }
+.globalAd img{ max-width:100%; border-radius:4px; display:block; }
+.share-after{ height:55px; line-height:55px; font-size:14px; background:rgba(0,0,0,.8); color:#fff; position:fixed; top:0; left:0; width:100%; text-align:center; z-index:2; }
+.dialog-wrap{ position:fixed; top:0; left:0; top:0; background:rgba(0,0,0,.6); width:100%; height:100%; display:none; }
+.dialog-wrap .dialog{ width:70%; margin:80px auto 0 auto; background:#fff; border-radius:8px; padding:10px; -webkit-box-sizing:border-box; }
+.dialog-wrap .dialog header h2{ width:100%; padding:5px 0 15px 0; margin-bottom:8px; text-align:center; border-bottom:1px dashed #cdcdcd; }
+.dialog-wrap .dialog p{ font-size:14px; padding-bottom:5px; text-indent:2em; line-height:24px; }
+.dialog-wrap .dialog footer a{ display:block; height:40px; line-height:40px; background:#d43015; text-align:center; font-size:16px; margin-top:8px; border-radius:4px; color:#fff; }
+.dialog-wrap .dialog footer a.one{ margin:8px auto 0 auto; width:45%; }
+.dialog-wrap .dialog footer a.ok{ width:49%; float:left; }
+.dialog-wrap .dialog footer a.cancel{ width:49%; float:right; background:gray; }

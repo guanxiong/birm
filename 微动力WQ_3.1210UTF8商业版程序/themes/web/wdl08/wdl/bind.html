@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="/themes/web/wdl08/common/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="/themes/web/wdl08/common/css/auth.css"/>
+<link rel="stylesheet" href="/themes/web/wdl08/common/css/bind.css" />
+<title>一键智能绑定微信</title>
+<script type="text/javascript">
+var ROOT_PATH = '/index/index.php';
+//var PUBLIC_PATH = '/public';
+var ONE_KEY_BIND_PATH = "{weiwin::U('Index/oneKeyBind')}";
+var INSERT_URL = "{weiwin::U('User/Index/insert')}";
+var BIND_URL = "{weiwin::U('Index/bind')}";
+var token = "{weiwin:$token}";
+</script>
+</head>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?24b3e272281688608a11b26fa534ced6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<body>
+<div class="header">
+    <div class="site-nav header-background">
+    	<div class="animated-color-line">
+            <div class="colors ">
+                <div class="color-part light-gray-bg show-color-part"></div>
+                <div class="color-part blue-bg show-color-part"></div>
+                <div class="color-part pink-bg show-color-part"></div>
+                <div class="color-part orange-bg show-color-part"></div>
+                <div class="color-part light-orange-bg show-color-part"></div>
+                <div class="color-part yellow-bg show-color-part"></div>
+                <div class="color-part green-bg show-color-part"></div>
+            </div>
+        </div>
+        <div class="wPage">
+        	<div class="header-nav">
+                <div id="logo">
+                    <a href="/" class="logocover"></a>
+                    <a href="/" title="" hidefocus="true" class="logo-ornament logo-animation" id="logo_ornament"></a>
+                </div>
+                <ul>
+                    <li><a href="/" class="hover" title="首页">首页</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/about.html">关于微动力</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/service.html">功能介绍</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/case.html">案例展示</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/home.html">微路由</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/join.html">招商代理</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/help.html">帮助中心</a></li>
+                 
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/price.html">资费说明</a></li>
+                    <li class="divider"></li>
+					<li><a href="/themes/web/wdl08/wdl/contact.html">联系我们</a></li>
+                  
+                    <li class="divider"></li>
+                    <li><a href="/">管理中心</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/themes/web/wdl08/wdl/price.html">资费说明</a></li>
+                    <li class="divider"></li>
+                 
+                       <li><a href="/member.php?act=login" class="btn">登录</a></li>
+                                    </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<body>
+
+	<div id="wrapper">
+		<div class="box" style="display:none">
+			<div class="main ui-shadow ui-corner-all">
+				<div class="header ui-corner-top">
+					<h1 id="main-title"></h1>
+					<div class="indicator"></div>
+				</div>
+				<div class="content ui-corner-bottom">
+					<div class="first-step">
+						<div>
+							<h2>填写您的公众账号信息：</h2>
+							<form id="account_form" action="#">
+								<input type="hidden" name="uid" id="uid" value="743" /> 
+								<table cellspacing=0>
+									<tr class="t-row">
+										<td class="desc" colspan="2"></td>
+									</tr>
+									<tr>
+										<td class="desc">公众号名称：</td>
+										<td><input type="text" name=wx_username id="wx_username" data-empty="如 微动力"/><span class="error-text" style="display:none">必须填写！</span><br/><span class="t">请输入微信公众号的名称，如 微动力</span></td>
+									</tr>
+									<tr>
+										<td class="desc">地区：</td>
+										<td><input type="text" name="province" id="province" class="area" /> 省 <input type="text" name="city" id="city" class="area" /> 市 <span class="error-text" style="display:none">必须填写！</span><br/><span class="t">此处关联公交等本地化查询</span></td>
+									</tr>
+									<tr>
+										<td class="desc">类型：</td>
+										<td>
+											<select id="type" name="type">
+												<option value="1,情感">情感</option>
+												<option value="2,数码">数码</option>
+												<option value="3,娱乐">娱乐</option>
+												<option value="4,IT">IT</option>
+												<option value="5,数码">数码</option>
+												<option value="6,购物">购物</option>
+												<option value="7,生活">生活</option>
+												<option value="8,服务">服务</option>
+											</select>
+										</td>
+									</tr>
+								</table>
+								<input type="submit" id="account_btn" style="display:none"/>
+							</form>
+						</div>
+					</div>
+					
+          
+          <!---->
+          <div class="second-step" style="display:none">
+            <div class="content ui-corner-bottom">
+              <div class="left">
+                <div class="login-desc">
+                  欢迎来到“微动力”的智能世界，在这里我们将帮助您实现微信公众号的智能蜕变。整个过程异常的简单，只需输入你的公众号账号和密码，系统便能帮助您实现一键智能升级，数十种智能服务瞬间开启。（<span class="mind-info">重要提示：我们确保每个公众号的信息安全，公众号账号及密码系统不会做记录，您可放心填写。</span>）
+                </div>
+                
+                <div class="rebind" style="display:none">
+                  <img src="/themes/web/wdl08/common/images/rebind.png" />
+                  <a href="javascript:void(0)" class="rebind-btn" data-id=""></a>
+                </div>
+              </div>
+              <div class="right">
+                <div class="login-form">
+                  <div id="login_form" >
+                  <table>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td><span class="error-text"></span></td>
+                    </tr>
+                    <tr>
+                      <td class="text-col">微信公众平台帐号:</td>
+                      <td>
+                        <input type="text" name="username" id="username" class="long" value=""/>
+                        <input type="hidden" name="uid"  id="uid" value="1046"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-col">密码:</td>
+                      <td><input type="password" name="password" id="password" class="long"/></td>
+                    </tr>
+                    <tr class="verify-row" style="display:none">
+                      <td class="text-col">验证码:</td>
+                      <td class="verify-col">
+                        <input type="text" name="imgcode" id="imgcode"/>
+                        <img src="" id="verify_img"/>
+                        <input type="text" name="sig" id="sig" style="display:none"/>
+                      </td>
+                    </tr>
+                    <tr class="apply_tip">
+                      <td colspan="2"><span style="font-size:14px; color:#666">提示：此处为微信公众平台的账号(非微动力账号)，尚未申请的请点击<a href="http://mp.weixin.qq.com/" target="_blank">>>申请<<</a></span></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>
+                      <input type="submit" value="" id="upgrade_btn"/>
+                      <img id="submit_wait" src="/themes/web/wdl08/common/images/submit_wait.gif" style="display:none"/>
+                      <div class="manual-bind" style="font-size:14px; color:#666;line-height:30px;">不想输入账号和密码? 点击进入&gt;&gt;<a href="javascript:qiehua()">手动绑定</a>&lt;&lt;</div>
+                      </td>
+                    </tr>
+                  </table>
+                  </div>
+                </div>
+                <div class="slider" style="display:none">
+                  <img class="loading"/>
+                </div>
+                <div class="bind-validate" style="display:none">
+                  <div>
+                  用个人帐号往公众帐号发送一条消息“<span>为爱升级</span>”，如收到回复“<span>升级成功</span>”，说明您已经升级成功。
+                  </div>
+                  <span class="count-back"><span class="counter">5s</span>后启航</span>
+                  <a href="javascript:showDone()" class="done-btn"></a>
+                </div>
+              </div>
+            </div>          
+          </div>
+          <!---->
+          
+          
+          
+					<div class="second-step_1" style="display:none">
+						<div>
+							<h2 style="position: absolute;top: 150px;left: 70px;color: #00B0F0;">在微信公众平台填入配置信息：</h2>
+							<form id="bind_form" action="#">
+								<table>
+									<tr>
+										<td class="desc">公众号配置url：</td>
+										<td><span id="wx_api">{weiwin:$apiPath}</span></td>
+									</tr>
+									<tr>
+										<td class="desc">Token：</td>
+										<td><span id="wx_token">{weiwin:$token}</span></td>
+									</tr>
+								</table>
+							</form>
+						</div>
+						<div class="helper_link">
+							<span class="wx_plat"><a href="http://mp.weixin.qq.com/" target="_blank">前往微信公众平台</a></span>
+							<span class="wx_opendevp">开启公众平台开发模式，填入配置信息：</span>
+						</div>
+						<div class="separator" style="height: 2px;background-color: #C3C4C3;width: 920px;margin: 5px auto 10px auto;"></div>
+						<div class="oper-tip">
+							<div class="item">
+								<img class="step_2_1" src="/themes/web/wdl08/common/images/bind_step_2_1.png" height="168" />
+								<p class="step_2_1_t">1、开启智能模式需要进入高级功能，如下图：先点击高级功能进入。</p>
+							</div>
+							<div class="item">
+								<img class="step_2_2" src="/themes/web/wdl08/common/images/bind_step_2_2.png" height="168"/>
+								<p>2、选择完毕之后，点击右上角的开启按钮，还要记得点击修改按钮才能修改URL和token。</p>
+							</div>
+						
+								<div class="item">
+								<img class="step_2_4" src="/themes/web/wdl08/common/images/bind_step_2_4.png" height="168"/>
+								<p>3、将微动力平台提供的URL和token 复制粘贴之后，点击提交。就可以咯！</p>
+							</div>
+							<div class="fixed"></div>
+						</div>
+					</div>
+					
+					<div class="third-step" style="display:none">
+						<div>
+							<h2>设置智能客服名称和欢迎语：</h2>
+							<form id="extra_form" action="#">
+								<table cellspacing=0>
+									<tr class="t-row">
+										<td class="desc" colspan="2">公众号名称：<span class="wx-name"></span></td>
+									</tr>
+									<tr>
+										<td class="desc">我的智能客服名称：</td>
+										<td><input type="text" name="wx_botname" id="wx_botname"/><span class="error-text" style="display:none">必须填写！</span></td>
+									</tr>
+									<tr>
+										<td class="desc">粉丝添加欢迎语：</td>
+										<td><textarea name="wx_welcome" id="wx_welcome"></textarea><span class="error-text" style="display:none">必须填写！</span></td>
+									</tr>
+								</table>
+								<input type="button" id="extra_btn" style="display:none"/>
+							</form>
+						</div>
+					</div>
+					
+					<div class="left" style="display:none">
+						<div class="rebind">
+							<img src="/themes/web/wdl08/common/images/rebind.png" />
+							<a href="javascript:void(0)" class="rebind-btn" data-id=""></a>
+						</div>
+					</div>
+					<div class="right" style="display:none">
+						<div class="bind-validate">
+							<div>
+							用个人微信账号往您的公众号发送一条消息“<span>为爱升级</span>”，如收到回复“<span>升级成功</span>”，说明您已经升级成功。
+							</div>
+							<span class="count-back"><span class="counter">5s</span>后启航</span>
+							<a href="javascript:showDone()" class="done-btn"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="toolbar">
+				<a class="prev-step" href="javascript:void(0)" style="display:none"></a>
+				<a class="next-step" href="javascript:void(0)"></a>
+				<img id="step_wait" style="display:none" src="./tpl/Home/wdl08/common/images/submit_wait.gif">
+			</div>
+			<img src="/themes/web/wdl08/common/images/logo3.png" class="huaer" style="height:45px;margin-top:-10px;"/>
+		</div>
+		<div class="tip" style="display:none">
+			<div class="tip1">
+				<img id="pre_1" src="" />
+				<img id="pre_2" src="" />
+				<div class="progress">
+					<div class="loader"></div>
+					<div class="circle"></div>
+					<div class="p">0%</div>
+				</div>
+			</div>
+			<div class="tip2" style="display:none">
+				<img src="" id="pre_3"/>
+				<img src="" id="pre_4"/>
+				<div id="text_3">在微信里，你好奇地打量着这个世界</div>
+				<div id="text_4">你在想着，哪一天我也要像它们一样强大</div>
+			</div>
+		</div>
+		<div class="done" style="display:none">
+			<img src="/themes/web/wdl08/common/images/done.png" />
+			<a href="/"></a>
+		</div>
+	</div>
+	<div class="direct-text">公众号智能升级中</div>
+	<img src="" class="preload" style="display:none"/>
+	<input type="text" id="rebind" value="" style="display:none"/>
+	<div id="text_5">每个人都有优雅的权利<br/>因为，再小的个体，在这里都有自己的品牌
+	</div>
+	<!-- <audio src="/public/front/res/bind.mp3" preload="auto" autoplay loop/> -->
+	<script type="text/javascript" src="/themes/web/wdl08/common/js/jQuery.js"></script>
+	<script type="text/javascript" src="/themes/web/wdl08/common/js/operamasks-ui.min.js"></script>
+	<script type="text/javascript" src="/themes/web/wdl08/common/js/jquery.tipInput.js"></script>
+	<script type="text/javascript" src="/themes/web/wdl08/common/js/config.js"></script>
+	<script type="text/javascript" src="/themes/web/wdl08/common/js/bind.js"></script>
+</body>
+</html>

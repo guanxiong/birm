@@ -1,0 +1,176 @@
+
+{template 'common/header'}
+
+<style>
+.field label{float:left;margin:0 !important; width:140px;}
+.table th,
+.table td {
+	padding: 8px;
+	line-height: 20px;
+	text-align: center;
+	vertical-align: middle;
+	border-top: 1px solid #dddddd;
+}
+
+
+</style>
+<ul class="nav nav-tabs">
+  <li class="active"><a href="">设置客服</a>
+  </li>
+</ul>
+<div class="main">
+	<div class="stat">
+		<div class="stat-div">
+			<div class="navbar navbar-static-top">
+				<div class="navbar-inner">
+					<span class="brand">关键指标详解</span>
+				</div>
+				<div class="sub-item">
+					<h4 class="sub-title">搜索</h4>
+					<form action="{php echo $this->createWeburl('display')}" method="post">
+					<table class="table sub-search">
+					<tbody>
+						
+						<tr>
+							<th>关注时间</th>
+							<td>
+								<button style="margin:0;" class="btn span5" id="date-range" type="button"><span class="date-title">{php echo date('Y-m-d', $starttime)} 至 {php echo date('Y-m-d', $endtime)}</span> <i class="icon-caret-down"></i></button>
+								<input name="start" type="hidden" value="{php echo date('Y-m-d', $starttime)}" />
+								<input name="end" type="hidden" value="{php echo date('Y-m-d', $endtime)}" />
+							</td>
+						</tr>
+						<tr>
+							<th></th>
+							<td><input type="submit" name="" value="搜索" class="btn btn-primary"></td>
+						</tr>
+					</tbody>
+					</table>
+					</form>
+				</div>
+			</div>
+			<div class="sub-item" id="table-list">公众号用户列表
+			  <h4 class="sub-title">列表</h4>
+				<form action="" method="post" onsubmit="">
+				<div class="sub-content">
+					<table class="table table-hover">
+						<thead class="navbar-inner">
+							<tr>
+								
+							  
+							  
+								<th >昵称</th>
+
+<th class="row-hover" >用户OPENID<i></i></th>
+							  <th >关注时间<i></i></th>
+							  <th >是否客服</th>
+								<th width="100"></th>
+							</tr>
+						</thead>
+						<tbody>
+							{loop $list $row}
+							<tr>
+								
+							  <th>{$row['nickname']}</th>
+								<th><a href="#" title="{$row['from_user']}">{$row['from_user']}</a></th>
+							  <td style="font-size:12px; color:#666;">
+								{php echo date('Y-m-d <br /> H:i:s', $row[createtime]);}
+								</td>
+							  <td >{if !empty($row['cstid'])}<i class="icon-user"></i>{/if}</td>
+								<td>
+                                <a href="{php echo $this->createWebUrl('setascs', array('id' => $row['id']))}" class="btn btn-small" title="{if empty($row['cstid'])}设为客服{else}取消客服{/if}"><i class="{if empty($row['cstid'])}icon-star-empty{else}icon-star{/if} " ></i></a> 
+                             {if !empty($row['cstid'])}   <a href="{php echo $this->createWebUrl('csedit', array('id' => $row['cstid']))}" class="btn btn-small" title="设置状态"><i class="icon-edit"></i></a>{/if}                                              
+                                
+                               </td>
+							</tr>
+							{/loop}
+						</tbody>
+					</table>
+					<table class="table">
+						<tr>
+							<td class="row-first"></td>
+							<td>
+								<input type="hidden" name="token" value="{$_W['token']}" />
+							</td>
+						</tr>
+					</table>
+				</div>
+				</form>
+				{$pager}
+			</div>
+		</div>
+	</div>
+</div>
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script>
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+	$('#date-range').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=start]').val(),
+		endDate: $(':hidden[name=end]').val(),
+		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=start]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=end]').val(end.format('YYYY-MM-DD'));
+	});
+	//全选
+	$('#field-all input[type="checkbox"]').change(function() {
+		var a = $(this).is(':checked');
+		if(a) {
+			$('.field input[type="checkbox"]').each(function() {
+				$(this).attr("checked", true);
+			});
+		} else {
+			$('.field input[type="checkbox"]').each(function() {
+				$(this).attr("checked", false);
+			});
+		}
+	});
+});
+</script>
+{template 'common/footer'}

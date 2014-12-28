@@ -1,0 +1,70 @@
+{template 'common/header'}
+<link href="./source/modules/commform/template/style/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+$(function() {
+     $("#checkAll").click(function() {
+         $('input[name="select[]"]').attr("checked",this.checked); 
+     });
+     var $subBox = $("input[name='select[]']");
+     $subBox.click(function(){
+		$("#checkAll").attr("checked",$subBox.length == $("input[name='select[]']:checked").length ? true : false);
+     });
+});
+</script>
+<body>
+{template 'menu'}
+{php global $_W,$_GPC;}
+<div id="wp" >
+ <!--中间内容-->  
+	<div class="msgWrap"  widht="80%">
+		<form method="post" action="{php echo create_url('site/module', array('do' => 'showformfields', 'name' => 'commform','fid'=>$_GET['fid'],'fn'=>$fn))}" id="info">
+			<div align="center"><h4>{$fn}</h4></div>
+			<div class="searchbar right" >				
+					<input type="button" class="btn btn-primary " name="goback" value="添加" onclick="location='{php echo create_url('site/module', array('do' => 'addformfields', 'name' => 'commform','fid'=>$_GET['fid'],'fn'=>$fn))}';"/>&nbsp;	
+					<button type="submit" class="btn btn-primary" name="del" value="删除">删除</button>&nbsp;	
+					<input type="button" class="btn btn-primary " name="goback" value="返回" onclick="location='{php echo create_url('site/module', array('do' => 'showforms', 'name' => 'commform','fid'=>$_GET['fid'],'fn'=>$fn))}';"/>
+					
+					<input type="hidden" name="token" value="{$_W['token']}">				
+			</div>		
+			<table class="ListProduct" border="0" cellspacing="0" cellpadding="0" >
+				<thead>
+				<tr>
+				<th class="select" width="6%"><input type="checkbox" id="checkAll" name="checkAll"></th>
+				<th width="10%">序号</th>
+				<th width="10%">显示名称</th>
+				<th width="10%">字段名称</th>
+				<th width="10%">输入类型</th>
+				<th width="8%">是否必填</th>
+				<th width="8%">是否显示</th>
+				<th width="10%">错误提示</th>
+				<th width="12%">维护时间</th>
+				<th class="norightborder">操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				{loop $list $row}
+					<tr>	
+						<td align="center"><input type="checkbox" name="select[]" id="select" value="{$row['id']}" class="checkitem"></td>
+						<td align="center">{$row['zindex']}</td>
+						<td align="center">{$row['displayname']}</td>
+						<td align="center">{$row['fieldname']}</td>
+						<td align="center">{$row['inputtype']}</td>
+						<td align="center">{php echo $row['require']=='0'?'非必填':'必填'}</td>
+						<td align="center">{php echo $row['display']=='0'?'隐藏':'显示'}</td>
+						<td align="center">{$row['errortip']}</td>
+						<td align="center">{php echo date('Y-m-d G:i:s',$row['time'])}</td> 
+						<td align="center" class="norightborder">
+							<a href="{php echo create_url('site/module', array('do' => 'modiformfields', 'name' => 'commform',fid=>$_GPC['fid'],fieldid=>$row['id'],'fn'=>$_GPC['fn']))}">修改</a>&nbsp;&nbsp;
+						</td>
+					</tr>
+				{/loop}
+				</tbody>
+			</table>
+		</form>
+	</div>
+	<div class="cLine">
+	<div class="pageNavigator right">
+		<div class="pages">{$pager}</div>
+	</div>
+{template 'common/footer'}
+

@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="{RES}css/bootstrap_min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/bootstrap_responsive_min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/style.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/todc_bootstrap.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/themes.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/plugins/uploadify/uploadify_t.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/inside.css" media="all" />
+<script type="text/javascript" src="{RES}src/jQuery.js"></script>
+<script type="text/javascript" src="{RES}src/bootstrap_min.js"></script>
+<script type="text/javascript" src="{RES}src/plugins/validation/jquery_validate_min.js"></script>
+<script type="text/javascript" src="{RES}src/plugins/validation/jquery_validate_methods.js"></script>
+<script type="text/javascript" src="{RES}src/plugins/form/jquery_form_min.js"></script>
+<script type="text/javascript" src="{RES}src/inside.js"></script>
+<title>商户基础设置,微生活—by 微动力</title>
+    <!--[if lte IE 9]><script src="{RES}src/watermark.js"></script><![endif]-->
+	<!--[if IE 7]><link href="{RES}css/font_awesome_ie7.css" rel="stylesheet" /><![endif]-->
+</head>
+<body>
+	<link href="./resource/script/kindeditor/themes/default/default.css" rel="stylesheet" />
+<script src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+
+<div id="main">
+    <div class="container-fluid">
+
+        <div class="row-fluid">
+
+            <div class="box">
+                <div class="box-title">
+                    <div class="span10">
+                        <h3><i class="icon-edit"></i>添加商户</h3>
+                    </div>
+                    <div class="span2"><a class="btn" href="Javascript:window.history.go(-1)">返回</a></div>
+                </div>
+
+                <div class="box-content">
+                    <ul class="nav nav-tabs">
+                        <li class="active">  <a href="javascript:;">基础设置</a></li>
+                        <li><a href="{php echo create_url('site/module/businessEd2', array('name' => 'market','classid'=>$row['classid'],'id'=>$row['id']));}">商户信息</a></li>
+                        <li><a href="{php echo create_url('site/module/businessEd3', array('name' => 'market','classid'=>$row['classid'],'id'=>$row['id']));}">会员设置</a></li>
+                        <li><a href="{php echo create_url('site/module/businessEd4', array('name' => 'market','classid'=>$row['classid'],'id'=>$row['id']));}">优惠设置</a></li>
+                    </ul>
+                    <div class="tab-content">
+
+                      <form action="" method="post" class="form-horizontal form-validate">
+								<input type="hidden" name="action" value="save" />
+								<input type="hidden" name="id" value="{$row['id']}" />
+								<input type="hidden" name="rid" value="{$row['rid']}" />								
+								<input type="hidden" name="classid" value="{$row['classid']}" />
+                                <div class="control-group">
+                                    <label class="control-label" for="keyword">触发官网关键词:</label>
+                                    <div class="controls">
+										{if $id==0}
+										<input type="text" name="keyword" id="keyword" value="{$row['keyword']}" class="input-large" data-rule-required="true" data-rule-maxlength="60">
+										{else}
+										<input type="text" name="keyword"  id="keyword" value="{$row['keyword']}" class="input-large" data-rule-required="true" readonly />
+                                        <span class="help-inline">
+											<button class="btn edit-key" type="button">编辑</button>
+										</span> 
+										{/if}
+                                        <span class="help-inline">多个关键字请用空格分开</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="title" class="control-label">标题：</label>
+                                    <div class="controls">
+                                        <input type="text" name="title" id="title" value="{$row['title']}" class="input-large" data-rule-required="true" data-rule-maxlength="20" />
+                                        <span class="maroon">*</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="picurl">图文消息封面</label>
+                                    <div class="controls">
+										{if !empty($row['picurl'])}<img class="thumb_img" src="{$row['picurl']}" style="max-height: 100px;">{/if}
+                                      <input  type="text" name="picurl" value="{$row['picurl']}">
+                                        <span class="help-inline">
+                                            <button class="btn select_img" type="button">选择封面</button>
+                                        </span>
+                                        
+                                        <span class="help-inline">建议尺寸：宽720像素，高400像素</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="infos" class="control-label">图文消息简介 ：</label>
+                                    <div class="controls">
+                                        <textarea name="infos" rows="5" id="infos" class="input-xxlarge" data-rule-required="true" data-rule-maxlength="150">{$row['infos']}</textarea><span class="maroon">*</span><span class="help-inline">150字内</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="outlink" class="control-label">外链地址：</label>
+                                    <div class="controls">
+                                        <input type="text" name="outlink" id="outlink" data-rule-url="true" value="{$row['outlink']}" class="input-large"/>
+                                        <span class="help-inline"><span class="maroon">此项可设空，</span>如填写链接，会跳转到链接页面，请填写正确的URL</span>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button id="bsubmit" type="submit" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+                                    <button type="button" class="btn" onclick="Javascript:window.history.go(-1)">取消</button>
+                                </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+KindEditor.ready(function (K) {
+    var editor = K.editor({
+        themeType: "simple",
+        allowFileManager: true,
+		uploadJson : "./index.php?act=attachment&do=upload",
+		fileManagerJson:"./index.php?act=attachment&do=manager",	
+    }); 
+    $('button.select_img').live("click",function (e) {
+        editor.loadPlugin('image', function () {
+            editor.plugin.imageDialog({
+                imageUrl: $(e.target).parent().prevAll("input[type=text]").val(),
+                clickFn: function (url, title, width, height, border, align) {
+                    var $input = $(e.target).parent().prevAll("input[type=text]")
+                    $input.val(url)
+                    $input.hide();
+                    var t_img = $(e.target).parent().prevAll(".thumb_img:first");
+                    if (t_img.length == 0) {
+                        var tmp = '<img class="thumb_img" src="{0}" style="max-height: 100px;">';
+                        $input.before(tmp.format(url))
+                    } else {
+                        t_img.attr("src", url);
+                    }
+
+                    editor.hideDialog();
+                }
+            });
+        });
+    });
+});
+{if $id!=0}
+$(".edit-key").click( function () { 
+        window.location = '{php echo create_url('rule/post', array('id' => $row['rid']))}';
+});
+{/if}
+</script>
+</body>
+</html>

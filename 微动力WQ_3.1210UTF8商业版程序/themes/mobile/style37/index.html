@@ -1,0 +1,48 @@
+{template 'header'}
+{template 'slide'}
+
+<link type="text/css" rel="stylesheet" href="./themes/mobile/style37/css/vweisiteV01.css"/>
+<link type="text/css" rel="stylesheet" href="./themes/mobile/style37/css/font-awesome.css"/>
+<link href="./themes/mobile/style37/css/index3.css" media="screen" rel="stylesheet" type="text/css" />
+
+<script src="./themes/mobile/style37/js/vweisiteV01-
+63578aafc76546d753caab81d632976e.js" type="text/javascript"></script>
+
+
+<div class="index">
+  {loop $navs $nav}
+
+  <a href="{$nav['url']}" class="box mod-index">
+   {if !empty($nav['icon'])}
+
+    <i style="background:url({$_W['attachurl']}{$nav['icon']}) no-repeat;background-size:cover;" class=""></i>
+
+    {else}
+
+    <i class="{$nav['css']['icon']['icon']}" style="{$nav['css']['icon']['style']}"></i>
+
+  {/if}
+
+    <span style="{$nav['css']['name']}">{$nav['name']}</span>
+
+  </a>
+  {/loop}
+  <div class="clr"></div>
+
+
+<footer>
+  <div class="shouye-copyright">
+  <center><a href="http://bbs.b2ctui.com">&copy;深圳零壹贰科技网络</a></center>
+    </div>
+</footer>
+<div mark="stat_code" style="width:0px; height:0px; display:none;">
+</div>
+<div style="display:none;"><script src="http://bbs.b2ctui.com" language="JavaScript"></script></div>
+
+</div>
+
+
+
+
+
+{template 'footer'}

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="true">
+		<name><![CDATA[一刻钟签到]]></name>
+		<identifie><![CDATA[lxyykzsignin]]></identifie>
+		<version><![CDATA[1.4]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[可用于签到、打卡、起床排名等活动中]]></ability>
+		<description><![CDATA[可自由设置签到时间、签到次数、奖励积分等]]></description>
+		<author><![CDATA[大路货QQ:792454007]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="签到记录" do="list" state="" />
+			<entry title="中奖名单" do="awardlist" state="" />
+		</rule>
+
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE `ims_lxy_ykz_signin_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `weid` int(11) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `time` int(11) NOT NULL COMMENT '签到时间',
+  `rank` int(11) NOT NULL COMMENT '排名',
+  `continuedays` int(11) NOT NULL DEFAULT '0',
+  `sumdays` int(11) NOT NULL DEFAULT '0',
+  `sumfirst` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=169 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_lxy_ykz_signin_reply` (
+  `id` int(123) NOT NULL AUTO_INCREMENT,
+  `rid` int(123) NOT NULL COMMENT '规则ID',
+  `s_date` varchar(50) DEFAULT NULL,
+  `e_date` varchar(50) DEFAULT NULL,
+  `title` varchar(100) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `picture` varchar(255) DEFAULT NULL,
+  `overtime` text NOT NULL COMMENT '超出时间段提示',
+  `overnum` varchar(255) DEFAULT NULL,
+  `awardrules` varchar(255) DEFAULT NULL,
+  `awardinfo` varchar(255) DEFAULT NULL,
+  `continuedays` int(11) NOT NULL DEFAULT '0',
+  `continuedaystip` varchar(255) DEFAULT NULL,
+  `sumdays` int(11) NOT NULL DEFAULT '0',
+  `sumdaystip` varchar(255) DEFAULT NULL,
+  `sumfirst` int(11) NOT NULL DEFAULT '0',
+  `sumfirsttip` varchar(255) DEFAULT NULL,
+  `ggtext11` varchar(255) DEFAULT NULL,
+  `ggtext12` varchar(255) DEFAULT NULL,
+  `ggtext13` varchar(255) DEFAULT NULL,
+  `ggtext14` varchar(255) DEFAULT NULL,
+  `ggtext15` varchar(255) DEFAULT NULL,
+  `ggtext21` varchar(255) DEFAULT NULL,
+  `ggtext22` varchar(255) DEFAULT NULL,
+  `ggtext23` varchar(255) DEFAULT NULL,
+  `ggtext24` varchar(255) DEFAULT NULL,
+  `ggtext25` varchar(255) DEFAULT NULL,
+  `ggtext31` varchar(255) DEFAULT NULL,
+  `ggtext32` varchar(255) DEFAULT NULL,
+  `ggtext33` varchar(255) DEFAULT NULL,
+  `ggtext34` varchar(255) DEFAULT NULL,
+  `ggtext35` varchar(255) DEFAULT NULL,
+  `gglink11` varchar(255) DEFAULT NULL,
+  `gglink12` varchar(255) DEFAULT NULL,
+  `gglink13` varchar(255) DEFAULT NULL,
+  `gglink14` varchar(255) DEFAULT NULL,
+  `gglink15` varchar(255) DEFAULT NULL,
+  `gglink21` varchar(255) DEFAULT NULL,
+  `gglink22` varchar(255) DEFAULT NULL,
+  `gglink23` varchar(255) DEFAULT NULL,
+  `gglink24` varchar(255) DEFAULT NULL,
+  `gglink25` varchar(255) DEFAULT NULL,
+  `gglink31` varchar(255) DEFAULT NULL,
+  `gglink32` varchar(255) DEFAULT NULL,
+  `gglink33` varchar(255) DEFAULT NULL,
+  `gglink34` varchar(255) DEFAULT NULL,
+  `gglink35` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_lxy_ykz_signin_winner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `weid` int(11) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `wcontinuedays` int(11) NOT NULL DEFAULT '0',
+  `sendwcontinuedays` int(11) DEFAULT NULL,
+  `wsumdays` int(11) NOT NULL DEFAULT '0',
+  `sendwsumdays` int(11) DEFAULT NULL,
+  `wsumfirst` int(11) NOT NULL DEFAULT '0',
+  `sendwsumfirst` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `weid` (`weid`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+
+		]]></install>
+	<uninstall><![CDATA[
+
+		]]></uninstall>
+	<upgrade><![CDATA[
+	]]></upgrade>
+</manifest>

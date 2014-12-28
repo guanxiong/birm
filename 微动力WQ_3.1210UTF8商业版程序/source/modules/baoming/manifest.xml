@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.52">
+	<application setting="false">
+		<name><![CDATA[在线报名]]></name>
+		<identifie><![CDATA[baoming]]></identifie>
+		<version><![CDATA[1.2]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[微动力报名系统]]></ability>
+		<description><![CDATA[微动力报名系统]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[CREATE TABLE `ims_baoming_reply` (
+`id` int( 10 ) unsigned NOT NULL AUTO_INCREMENT comment 'id',
+`rid` int( 10 ) unsigned NOT NULL default 0 comment '规则id',
+`title` varchar( 50 ) NOT NULL comment '规则标题',
+`qi` varchar ( 20 ) not null default '' comment '第几期',
+`description` varchar( 255 ) NOT NULL comment '描述',
+`thumb` varchar( 100 ) NOT NULL comment '图片',
+`bgimage` varchar( 100 ) NOT NULL comment '头部背景图片',
+`start_time` int unsigned NOT NULL comment '开始时间',
+`end_time` int unsigned NOT NULL comment '结束时间',
+`status` tinyint unsigned NOT NULL default 1 comment '开关状态',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;
+
+CREATE TABLE `ims_baoming_list` (
+`id` int( 10 ) unsigned NOT NULL AUTO_INCREMENT ,
+`rid` int( 10 ) unsigned NOT NULL ,
+`from_user` varchar(50) not null default '',
+`name` varchar( 20 ) NOT NULL DEFAULT '',
+`qq` int unsigned NOT NULL ,
+`tel` varchar(11) NOT NULL default '',
+`mail` varchar( 50 ) NOT NULL DEFAULT '',
+`ip` varchar( 15 ) NOT NULL DEFAULT '',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;]]></install>
+	<uninstall><![CDATA[drop table `ims_baoming_reply`;
+drop table `ims_baoming_list`;]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

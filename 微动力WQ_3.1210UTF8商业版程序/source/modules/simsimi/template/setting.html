@@ -1,0 +1,37 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>聊天机器人管理选项</h4>
+		<table class="tb">
+			<tr>
+				<th>小九平台用户名</th>
+				<td>
+					<input type="text" name="xjdb" value="{$settings['xjdb']}" />
+					<div class="help-block">小九后台地址：http://wx.xiaojo.com/</div>
+				</td>
+			</tr>
+			<tr>
+				<th>小九平台密码</th>
+				<td>
+					<input type="password" name="xjpw" value="{$settings['xjpw']}" />
+					<div class="help-block">小九后台地址：http://wx.xiaojo.com/</div>
+				</td>
+			</tr>
+			<tr>
+				<th>接口失效时默认回复</th>
+				<td>
+					<input type="text" name="xjmrhh" value="{$settings['xjmrhh']}" />
+					<div class="help-block">接口失效时默认回复</div>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span2" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

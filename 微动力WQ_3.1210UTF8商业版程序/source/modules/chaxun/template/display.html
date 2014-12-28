@@ -1,0 +1,154 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'display'}class="active"{/if}>
+		<a href="{php echo $this->createWebUrl('display',array('op' => 'display'))}">工具管理</a>
+	</li>
+	<li {if $op == 'post'}class="active"{/if}>
+		<a href="{php echo $this->createWebUrl('display',array('op' => 'post'))}">添加工具</a>
+	</li>
+</ul>
+
+{if $op == 'display'}
+<div class="main">
+	<div class="search">
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th>引用地址</th>
+					<td>
+						<input class="span6"   type="text" value="
+{php echo create_url('mobile/module/detail', array('name'=>'chaxun','weid'=>$_W['weid']))}
+						">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th class="span1">服务名称</th>
+					<th class="span2">状态</th>
+					<th class="span2">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $row $val}
+				<tr>
+					<td><p>{$val['title']}</p></td>
+		            <td>
+		            	<a class="btn btn-primary" href="{php echo $this->createWebUrl('display',array('op' => 'edit', 'id' => $val['id'],'status' => $val['status']))}">{if $val['status'] == 1}启用{else}禁用{/if}</a>
+		            </td>
+		            <td>
+		            	<a href="{php echo $this->createWebUrl('display',array('op' => 'delete','id' => $val['id']))}" >删除</a>&nbsp;|
+		            	<a href="{php echo $this->createWebUrl('display',array('op' => 'post','id' => $val['id']))}">编辑</a>
+		            </td>
+				</tr>
+				{/loop}
+			</tbody>
+	
+		            
+		
+		</table>
+	</div>
+
+</div>
+{else if $op == 'post'}
+ <form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+ 	<div class="main">
+ 		<input type="hidden" name="id" value="{$item['id']}" /> 
+ 			<br><br>
+
+ 		<table class="tb">
+ 			
+ 			<tr>
+ 				<th>
+ 					<label for="">名称</label>
+ 				</th>
+ 				<td>
+ 					<input type="text" class="span4" name="title" id="name" value="{$item['title']}" /> 
+ 				</td>
+ 			</tr>
+ 			<!-- <tr>
+ 				<th>描述</th>
+ 				<td>
+ 					<textarea style="height:100px;" class="span4" name="description" cols="70">{$item['description']}</textarea>
+ 				</td>
+ 			</tr> -->
+ 			<tr>
+ 				<th>
+ 					<label for="">链接</label>
+ 				</th>
+ 				<td>
+ 					<input class="span5" type="text" name="url" id="url" value="{$item['url']}" /> 
+ 					<span class="help-block">指定这个工具的链接目标</span>
+ 				</div>
+ 			</td>
+ 		</tr>
+ 		 <tr> 
+ 		<th>
+ 			<label for="">状态</label>
+ 		</th>
+ 		<td>
+ 			<label for="status_1" class="radio inline">
+ 				<input autocomplete="off" type="radio" name="status" id="status_1" value="1" {if $item['status'] == 1 || empty($item)} checked="checked"{/if} /> 
+ 				显示
+ 			</label>
+ 			<label for="status_0" class="radio inline">
+ 				<input autocomplete="off" type="radio" name="status" id="status_0" value="0" {if !empty($item) && $item['status'] == 0} checked="checked"{/if} /> 
+ 				隐藏
+ 			</label>
+ 			<span class="help-block">设置工具菜单的显示状态</span>
+ 		</td>
+ 	</tr>
+ 	
+ 	<tr>
+ 		<th>
+ 			<label for="">排序</label>
+ 		</th>
+ 		<td>
+ 			<input type="text" class="span2" name="displayorder" value="{$item['displayorder']}" /> 
+ 			<span class="help-block">工具排序，越大越靠前</span>
+ 		</td>
+ 	</tr>
+
+ 	<tr>
+ 		<th>
+ 			<label for="">上传图标</label>
+ 		</th>
+ 		<td>
+ 			<div class="fileupload fileupload-new" data-provides="fileupload">
+ 				<div class="fileupload-preview thumbnail" style="width: 50px; height: 50px;">
+ 					{if $item['fileicon']}
+ 					<input  type="hidden" name="fileicon-old" value="{$item['fileicon']}"  />
+ 					<img src="{$_W['attachurl']}{$item['fileicon']}" width="50" /> 
+ 					{/if}
+ 				</div>
+ 				<div>
+ 					<span class="btn btn-file">
+ 						<span class="fileupload-new">选择图片</span>
+ 						<span class="fileupload-exists">更改</span>
+ 						<input name="fileicon" type="file" /> 
+ 					</span>
+ 					{if $item['fileicon']}
+ 					<button type="submit" name="fileupload-delete" value="{$item['fileicon']}" class="btn fileupload-new">删除</button>
+ 					{/if}
+ 					<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+ 				</div>
+ 			</div>
+
+ 		</td>
+ 	</tr>
+ 	<tr>
+ 		<th></th>
+ 		<td>
+ 			<input name="token" type="hidden" value="{$_W['token']}" /> 
+ 			<input type="submit" class="btn btn-primary" name="submit" value="提交" /> 
+ 		</td>
+ 	</tr>
+ </table>
+ </form>
+{/if}
+{template 'common/footer'}

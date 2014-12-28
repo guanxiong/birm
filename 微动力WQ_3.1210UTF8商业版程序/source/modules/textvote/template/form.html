@@ -1,0 +1,61 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	
+	<h4 class="alert-heading">文本投票设置</h4>
+	<table>
+		<tbody>
+				{if $reply['status']}
+					<a id="jinyong" href="{php echo create_url('site/module/status', array('name' => 'share','rid' => $reply['rid'], 'status' => 0))}" onclick="return ajaxopen(this.href)" class="btn btn-primary module-button-switch">禁用</a>
+				{else}
+					<a id="qiyong" href="{php echo create_url('site/module/status', array('name' => 'share','rid' => $reply['rid'], 'status' => 1))}" onclick="return ajaxopen(this.href);" class="btn btn-danger module-button-switch">启用</a>
+				{/if}
+			<tr>
+				<th>投票选项</th>
+				<td><textarea style="height:50px;" name="config" class="span7" cols="60" id="config">{loop $reply['config'] $key $item} {$item}&#13
+{/loop}</textarea>
+				<div class="help-block">每行一个投票选项<a class="iconEmotion" href="javascript:;" inputid="config"><i class="icon-github-alt"></i> 表情</a></div>
+				</td>
+			</tr>
+			<tr>
+				<th>活动时间</th>
+				<th><button style="margin:0;" class="btn span5" id="date-range" type="button"><span class="date-title">从{php echo date('Y-m-d', $reply['start_time'])} 至 {php echo date('Y-m-d', $reply['end_time'])}</span> <i class="icon-caret-down"></i></button>
+				<input name="start_time" type="hidden" value="{php echo date('Y-m-d', $reply['start_time'])}"/>
+				<input name="end_time" type="hidden" value="{php echo date('Y-m-d', $reply['end_time'])}"/></th>
+			</tr>
+
+			
+		
+		</tbody>
+	</table>	
+</div>
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script type="text/javascript">
+	$('#qiyong, #jinyong').click(function () {
+	setTimeout("history.go(0)",500);	
+	});	
+kindeditor($('.richtext-clone'));
+kindeditorUploadBtn($('#share-picture'));
+
+	$('#date-range').daterangepicker({
+        format: 'YYYY-MM-DD',
+        startDate: $(':hidden[name=start_time]').val(),
+        endDate: $(':hidden[name=end_time]').val(),
+        locale: {
+            applyLabel: '确定',
+            cancelLabel: '取消',
+            fromLabel: '从',
+            toLabel: '至',
+            weekLabel: '周',
+            customRangeLabel: '日期范围',
+            daysOfWeek: moment()._lang._weekdaysMin.slice(),
+            monthNames: moment()._lang._monthsShort.slice(),
+            firstDay: 0
+        }
+    }, function(start_time, end_time){
+        $('#date-range .date-title').html(start_time.format('YYYY-MM-DD') + ' 至 ' + end_time.format('YYYY-MM-DD'));
+        $(':hidden[name=start_time]').val(start_time.format('YYYY-MM-DD'));
+        $(':hidden[name=end_time]').val(end_time.format('YYYY-MM-DD'));
+    });
+
+</script>

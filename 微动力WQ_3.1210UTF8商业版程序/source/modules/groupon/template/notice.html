@@ -1,0 +1,45 @@
+{template 'header'}
+  <div id="main">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="box">
+                        <div class="box-title">
+                            <div class="span10">
+                                <h3><i class="icon-bullhorn"></i>添加通知</h3>
+                            </div>
+                            <div class="span2"><a class="btn" href="Javascript:window.history.go(-1)">返回</a></div>
+                        </div>
+
+                        <div class="box-content">
+
+
+                            <form action="" method="post" class="form-horizontal form-validate">
+                                <input type="hidden" name="action" value="save" />
+                                <div class="control-group">
+                                    <label for="name" class="control-label">团购编号：</label>
+                                    <div class="controls">{if strlen($row['id'])<6 }{php echo sprintf('%05d',$row['id']);}{/if}</div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="sort" class="control-label">团购名称：</label>
+                                    <div class="controls">{$row['title']}</div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="note" class="control-label">最新通知 ：</label>
+                                    <div class="controls">
+                                        <textarea name="notice" rows="5" id="note" class="input-xxlarge" data-rule-maxlength="900" >{$row['notice']}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button id="bsubmit" type="submit" data-loading-text="提交中..." class="btn btn-primary">保存</button>
+                                    <button type="button" class="btn" onclick="window.location='tuan_list.html'">取消</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>

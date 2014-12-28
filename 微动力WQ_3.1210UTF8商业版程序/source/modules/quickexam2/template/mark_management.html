@@ -1,0 +1,119 @@
+{template 'common/header'}
+<script src="./source/modules/quickexam2/script/Chart.js?v=16"></script>
+<link type="text/css" rel="stylesheet" href="./source/modules/quickexam2/style/style.css?v=413" />
+<link type="text/css" rel="stylesheet" href="./source/modules/quickexam2/style/base.css?v=414" />
+<ul class="nav nav-tabs">
+	<li {if $operation == 'paper_list'}class="active"{/if}><a href="{php echo $this->createWebUrl('MarkManagement', array('op' => 'paper_list'));}">试卷记录</a></li>
+	{if !empty($paper)}<li {if $operation == 'user_view'}class="active"{/if}><a href="{php echo $this->createWebUrl('MarkManagement', array('op' => 'user_view', 'paper_id' => $paper['paper_id']));}">试卷参与者</a></li>{/if}
+	{if !empty($paper)}<li {if $operation == 'paper_view'}class="active"{/if}><a href="{php echo $this->createWebUrl('MarkManagement', array('op' => 'paper_view', 'paper_id' => $paper['paper_id']));}">结果统计</a></li>{/if}
+</ul>
+
+{if $operation == 'user_view'}
+<div class="main">
+	<div style="padding:15px;">
+		<h4>试卷：{$paper['title']}</h4>
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="max-width:10px;">姓名</th>
+					<th style="min-width:200px">成绩</th>
+					<th style="min-width:20">手机号码</th>
+					<th style="min-width:20">答题时间</th>
+					<th style="text-align:right; min-width:60px;">详情/删除</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $records $record_item_iter}
+				<tr>
+					<td>{$record_item_iter['realname']}</td>
+					<td>{$record_item_iter['usermark']}</td>
+					<td> {$record_item_iter['mobile']}</td>
+					<td> {php echo date('Y-m-d H:i:s',$record_item_iter['createtime'])}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->CreateMobileUrl('paper', array('from_user' => $record_item_iter['from_user'], 'record_id' => $record_item_iter['record_id'], 'paper_id' => $paper['paper_id'], 'preview'=>true))}" title="查看答题细节" class="btn btn-small"><i class="icon-eye-open"></i></a>
+						<a href="{php echo $this->CreateWebUrl('MarkManagement', array('record_id' => $record_item_iter['record_id'], 'paper_id' => $paper['paper_id'], 'op' => 'user_delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除" class="btn btn-small"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+		<br>
+
+		<section class="button">
+		<a href="{php echo $this->CreateWebUrl('MarkExport', array( 'op' => 'export', 'paper_id'=> $paper['paper_id']))}">导出成绩</a>
+		</section>
+	</div>
+</div>
+{/if}
+{if $operation == 'paper_list'}
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="max-width:10px;">卷号</th>
+					<th style="min-width:200px">卷题</th>
+					<th style="min-width:20">完成度</th>
+					<th style="text-align:right; min-width:60px;">导出/参与者/统计</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $paper_list $item}
+				<tr>
+					<td>{$item['paper_id']}</td>
+					<td><a href="{php echo $this->CreateMobileUrl('paper', array('paper_id' => $item['paper_id'], 'op' => 'display', 'preview'=> 1))}" title="预览试卷">{$item['title']}</a></td>
+					<td>{$item['done']} / {$item['max_user_cnt']}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->CreateWebUrl('MarkExport', array('paper_id' => $item['paper_id'], 'op' => 'display', 'preview'=> 1))}" title="导出用户答题" class="btn btn-small"><i class="icon-cloud-download"></i></a>
+						<a href="{php echo $this->CreateWebUrl('MarkManagement', array('paper_id' => $item['paper_id'], 'op' => 'user_view', 'preview'=> 1))}" title="用户" class="btn btn-small"><i class="icon-user"></i></a>
+						<a href="{php echo $this->CreateWebUrl('MarkManagement', array('paper_id' => $item['paper_id'], 'op' => 'paper_view'))}" title="答题情况分布" class="btn btn-small"><i class="icon-signal"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+{/if}
+{if $operation == 'paper_view'}
+	{loop $choice_list $item}
+			<section class="card">
+				<article class="info left">
+					<section class="title">
+					<p>{$item['title']}</p>
+					</section>
+					{loop $item['options'] $option}
+					{if false != strstr($item['answer'], $option['seq'])}
+					<section class="green check-list-item">
+					{else}
+					<section class="check-list-item">
+					{/if}
+						<input class="ck" type="hidden" name="choice[]" value="{$item['choice_id']}_{$option['seq']}" />
+							<span>{php echo htmlspecialchars_decode($option['body'])}</span>
+					</section>
+					{/loop}
+					<input type="hidden" name="answer[]" value="{$item['choice_id']}_{$item['answer']}" />
+				</article>
+				<aside class="right"><canvas id="canvas_{$item['choice_id']}" height="200" width="200"></canvas></aside>
+			</section>
+
+			<script>
+				var plattee = ["#F38630", "#E0E4CC", "#69D2E7", "#BEE358", 
+				"#CBF6E0", "#2D9DAB", "#FFB9D5", "#EE3AB4",
+				"#004C75", "#FFFFFF", "#7ABAFF", "#5F91C7", "#FFFEAB"];
+				var pieData_{$item['choice_id']} = [
+						{php $stat = $choice_stat[$item['choice_id']]; }
+						{loop $stat $choice $count}
+						{
+							label: '{$choice}',
+							value: {$count},
+							color: plattee[{php echo ord($choice)-ord('A')}],
+						},
+						{/loop}
+				];
+				var myPie = new Chart(document.getElementById("canvas_{$item['choice_id']}").getContext("2d")).Pie(pieData_{$item['choice_id']});
+			</script>
+					{/loop}
+
+{/if}
+{template 'common/footer'}

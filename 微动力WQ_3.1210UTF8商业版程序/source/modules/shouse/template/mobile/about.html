@@ -1,0 +1,17 @@
+
+{php $header_off=0;}
+{template 'header'}
+    <div class="container">
+        <div class="panel panel-default mt15">
+            <div class="panel-heading"><span class="glyphicon glyphicon-star"></span> 关于我们</div>
+            <!-- List group -->
+            <div class="list-group">
+
+{php echo $this->module['config']['cname'];}
+{php echo $this->module['config']['tel'];}
+        </div>
+    </div>
+
+
+
+{php $footer_off=1;} {php $stat_off=1;} {template 'footer'}

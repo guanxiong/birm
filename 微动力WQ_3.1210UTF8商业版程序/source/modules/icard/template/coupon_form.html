@@ -1,0 +1,153 @@
+{template 'common/header'}
+{php echo $this -> set_tabbar($action);}
+<div class="main">
+        <form action="" method="post" onsubmit="return check();" class="form-horizontal form" enctype="multipart/form-data">
+        <h4>{$title} - <a href="{php echo create_url('site/module', array('do' => 'SetRule', 'name' => 'icard'));}" style="font-size:0.8em">入口设置</a></h4>
+        <input type="hidden" id="id" name="id" value="{$reply['id']}"/>
+		<table class="tb">
+			<tr>
+				<th><label for="">优惠券名称</label></th>
+				<td>
+                    <input type="text" name="title" value="{$reply['title']}" id="title" class="span4" placeholder="请输入优惠券名称"/>
+                    <div class="help-block">不超过30个字符</div>
+				</td>
+			</tr>
+            <tr>
+                <th><label for="">选择人群</label></th>
+                <td>
+                    <label class="radio inline">
+                        <input type="radio" name="levelid" value="0" {if empty($reply)}checked="checked"{elseif $reply['levelid']==0}checked="checked"{/if} />所有会员
+                    </label>
+                    {loop $levels $level}
+                    <label class="radio inline">
+                        <input type="radio" name="levelid" value="{$level['id']}" {if $reply['levelid']==$level['id']}checked="checked"{/if} >{$level['levelname']}
+                    </label>
+                    {/loop}
+                        <div class="inline margin-top10">
+                            <label class="radio inline">
+                                <input type="radio" name="levelid" value="-2" {if $reply['levelid']==-2}checked="checked"{/if} >开卡从未消费的会员　
+                            </label>
+                            <label class="radio inline">
+                                <input type="radio" name="levelid" value="-3" {if $reply['levelid']==-3}checked="checked"{/if} >一个月未消费的会员
+                            </label>
+                        </div>
+                        <div class="inline margin-top10">
+                            <label class="radio inline">
+                                <input type="radio" name="levelid" value="-4" class="dmoney" {if $reply['levelid']==-4}checked="checked"{/if} >单次消费满X元的会员
+                            </label>
+                            <span id="ckone" {if $reply['levelid']!=-4}style="display: none;"{/if}>（金额 <input type="text" name="permoney" value="{$reply['permoney']}" class="input-mini"> 元）</span>
+
+                        </div>
+                        <div class="inline margin-top10">
+                            <label class="radio inline">
+                                <input type="radio" name="levelid" value="-5" class="mmoney" {if $reply['levelid']==-5}checked="checked"{/if} >累计消费满X元的会员
+                            </label>
+                            <span id="cktwo" {if $reply['levelid']!=-5}style="display: none;"{/if}>（金额 <input type="text" name="allmoney" value="{$reply['allmoney']}" class="input-mini"> 元）</span>
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $("input[name='levelid']").click(function () {
+                                    var $ckone = $("#ckone"), cktwo = $("#cktwo");
+                                    if ($(this).hasClass("dmoney")) {
+                                        $ckone.show(); cktwo.hide();
+                                    }
+                                    else if ($(this).hasClass("mmoney")) {
+                                        $ckone.hide(); cktwo.show();
+                                    } else {
+                                        $ckone.hide(); cktwo.hide();
+                                    };
+                                });
+                            })
+                        </script>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="">有效期</label></th>
+                <td>
+                    <link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css?v={TIMESTAMP}" />
+                    <script type="text/javascript" src="./resource/script/daterangepicker.js?v={TIMESTAMP}"></script>
+                    <input name="starttime" type="hidden" value="{php echo date('Y-m-d H:i', $starttime)}" />
+                    <input name="endtime" type="hidden" value="{php echo date('Y-m-d H:i', $endtime)}" />
+                    <button class="btn" id="date-range" class="date" type="button"><span class="date-title">{php echo date('Y-m-d H:i:s', $starttime)} 至 {php echo date('Y-m-d  H:i:s', $endtime)}</span> <i class="icon-caret-down"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="">数量</label></th>
+                <td>
+                    每个用户可以获得：<input type="text" name="count" value="{$reply['count']}" id="count" class="span1" />张券
+                </td>
+            </tr>
+			<tr>
+				<th><label for="">使用说明</label></th>
+				<td>
+                    <textarea style="height:200px; width:600px;" class="richtext-clone" name="content" id="content">{$reply['content']}</textarea>
+                    在此说明券的使用方式，如最低消费金额，优惠券打折信息，不与其他优惠同时使用、节假日不可使用等。
+                </td>
+			</tr>
+            <!--<tr>-->
+                <!--<th><label for="">排序</label></th>-->
+                <!--<td>-->
+                    <!--<input type="text" name="displayorder" value="{if empty($reply)}0{else}{$reply['displayorder']}{/if}" id="displayorder" class="span1" />-->
+                <!--</td>-->
+            <!--</tr>-->
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+        function check() {
+            if($.trim($('#title').val()) == '') {
+                message('没有输入标题.', '', 'error');
+                return false;
+            }
+            if($.trim($('#title').val()).length > 30) {
+                message('标题不能多于30个字.', '', 'error');
+                return false;
+            }
+            var count = $.trim($('#count').val());
+            if(count == '') {
+                message('没有输入优惠券张数.', '', 'error');
+                return false;
+            }
+            if(isNaN(count)){
+                message('优惠券张数必须为数字.', '', 'error');
+                return false;
+            }
+            return true;
+        }
+        </script>
+<script type="text/javascript">
+    kindeditor($('.richtext-clone'));
+    kindeditorUploadBtn($('#btnpicture'));
+</script>
+<script type="text/javascript">
+    $('#date-range').daterangepicker({
+        format: 'YYYY-MM-DD H:m',
+        startDate: $(':hidden[name=starttime]').val(),
+        endDate: $(':hidden[name=endtime]').val(),
+        startTime:$(':hidden[name=starttime]').val(),
+        endTime:$(':hidden[name=endtime]').val(),
+        locale: {
+            applyLabel: '确定',
+            cancelLabel: '取消',
+            fromLabel: '从',
+            toLabel: '至',
+            weekLabel: '周',
+            customRangeLabel: '日期范围',
+            daysOfWeek: moment()._lang._weekdaysMin.slice(),
+            monthNames: moment()._lang._monthsShort.slice(),
+            firstDay: 0
+        }
+    }, function(start, end){
+        $('#date-range .date-title').html(start.format('YYYY-MM-DD H:m') + ' 至 ' + end.format('YYYY-MM-DD H:m'));
+        $(':hidden[name=starttime]').val(start.format('YYYY-MM-DD H:m'));
+        $(':hidden[name=endtime]').val(end.format('YYYY-MM-DD H:m'));
+    });
+</script>
+{template 'common/footer'}

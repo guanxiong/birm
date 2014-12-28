@@ -1,0 +1,121 @@
+{template wl_header}
+<link href='{RES}css/member.css' rel='stylesheet' type='text/css' />
+<div id="shop_page_contents">
+<div id="cover_layer"></div>
+	{template wl_menu}
+ 	<ul id="member_nav">
+		<li {if $_GPC['status']==0}class="cur"{/if}><a href="{php echo $this->createMobileUrl('wlmember',array('d'=>'list','status'=>0));}">待下单</a></li>
+		<li {if $_GPC['status']==1}class="cur"{/if}><a href="{php echo $this->createMobileUrl('wlmember',array('d'=>'list','status'=>1));}">待确认</a></li>
+		<li {if $_GPC['status']==2&&$_GPC['ispay']==1}class="cur"{/if}><a href="{php echo $this->createMobileUrl('wlmember',array('d'=>'list','status'=>2));}">已确认</a></li>
+		<li {if $_GPC['status']==3}class="cur"{/if}><a href="{php echo $this->createMobileUrl('wlmember',array('d'=>'list','status'=>3));}">已完成</a></li>		
+	</ul>
+	{if $_GPC['d']=='list'||empty($_GPC['d'])}
+	<div id="order_list">
+		{loop $list $row}
+		<div class="item">
+			<h1>
+				订单号：<a href="{php echo $this->createMobileUrl('wlmember',array('d'=>'detail','status'=>$row['status'],'orderid'=>$row['id']));}">{$row['ordersn']}</a>
+				（<strong class="fc_red">￥{$row['totalprice']}</strong>）
+			</h1>
+			{loop $row['goods'] $row2}
+			<div class="pro">
+				<div class="img">
+				<a href="{php echo $this->createMobileUrl('wldetail', array('goodsid' => $row2['goodsid']));}"><img src="{$row2['thumb']}"></a></div>
+				<dl class="info">
+					<dd class="name"><a href="{php echo $this->createMobileUrl('wldetail', array('goodsid' => $row2['goodsid']));}">{$row2['title']}</a></dd>
+					<dd>价格:￥{$row2['marketprice']}</dd>
+					<dd>数量:{$row2['total']}</dd>
+ 				</dl>
+				<div class="clear"></div>
+			</div>
+			{/loop}
+		</div>
+		{/loop}
+		{if count($list)>4}
+		 <a class="more"  href="javascript:;" readonly>加载更多</a>
+		{/if}
+	</div>
+	<script type="text/javascript">
+	
+	</script>
+	{/if}
+	{if $_GPC['d']=='detail'}	
+	<div id="order_detail">
+			<div class="item">
+			<ul>
+				<li>订单号：{$order['ordersn']}</li>
+				<li>订单时间: {php echo date('Y-m-d H:i:s',$order['createtime'])}</li>
+				<li>订单状态: {if $order['status']==0}待确认{elseif $order['status']==1}已确认{elseif $order['status']==3}已完成{elseif $order['status']==-1}订单失效{/if}</li>
+				<li>订单数量:<strong class="fc_red">{$order['totalnum']}</strong></li>
+				<li>订单总价:<strong class="fc_red">￥{$order['totalprice']}</strong></li>
+				<li>付款方式: {if $order['paytype']==1}余额支付{elseif $order['paytype']==2}在线支付{elseif $order['paytype']==3}现金支付{else}未知方式{/if}{if $order['ispay']==1}<strong class="fc_red">【已付款】</strong>{else}【未支付】{/if}</li>				
+				<li>就餐类型: {if $order['order_type']==2}店内就餐【桌号:{$order['desk']}】{else}外卖外送{/if}</li>
+				{if  $order['order_type']!=2}<li>就餐类型: {if $order['sendstatus']==1}<strong class="fc_red">已经配送</strong>{else}未配送{/if} </li>{/if}
+ 				<li>订单备注: {$order['remark']}</li>
+			</ul>
+		</div>
+		<div class="item">
+			<ul>
+				<li>姓名: {$order['guest_name']}</li>
+				<li>手机：{$order['tel']}</li>
+				{if !empty($order['guest_address'])}<li>地址：{$order['guest_address']}</li>{/if}
+			</ul>
+		</div>
+
+		<div class="item">
+			{loop $row $row2}
+			<div class="pro">
+				<div class="img">
+				<a href="{php echo $this->createMobileUrl('wldetail', array('goodsid' => $row2['id']));}"><img src="{$row2['thumb']}"></a></div>
+				<dl class="info">
+					<dd class="name"><a href="{php echo $this->createMobileUrl('wldetail', array('goodsid' => $row2['id']));}">{$row2['title']}</a></dd>
+					<dd>价格:￥{$row2['marketprice']}</dd>
+					<dd>数量:{$row2['total']}</dd>
+ 				</dl>
+				<div class="clear"></div>
+			</div>
+			{/loop}
+			<div class="total_price">产品总价:<span>￥{$order['totalprice']}</span></div>			
+		</div>
+		{if $status==0&&$order['paytype']!=3}<div class="payment"><a href="{php echo $this->createMobileUrl('wlorder', array('d' => payment,'OrderId'=>$order['id']));}">付款</a></div>{/if}
+	</div>
+	{/if}
+	
+</div>
+<link rel="stylesheet" type="text/css" href="{RES}css/wei_canyin.css?2014-02-26-2" media="all" />
+<div class="center">
+ <div id="footer_menu" class="footer footer_menu">
+            <ul class="clear">
+                <li><a href="{php echo  $this->createMobileUrl('wlhome')}"    {if $_GPC['do']=='wlhome'}class="onactive"{/if}><span class="icons icons_1"></span><label>店铺详情</label></a></li>
+				 {if ($_GPC['do']!='wlmember' && $_GPC['do']!='wlorder'&& $_GPC['do']!='wlmylike' && $_GPC['do']!='wlhome' )}
+                 <li><a href="javascript:;" class="onactive" ><span class="icons icons_2"></span><label>点菜</label></a></li>
+				{else}
+				<li><a  href="{php echo  $this->createMobileUrl('wlindex')}" ><span class="icons icons_2"></span><label>点菜</label></a></li>
+				{/if}
+                {if $_GPC['do']=='wlmember'}
+				<li><a href="javascript:;" class="onactive" ><span class="icons icons_3"></span><label>我的订单</label></a></li>
+				{else}
+				<li><a href="{php echo  $this->createMobileUrl('wlmember')}" ><span class="icons icons_3"></span><label>我的订单</label></a></li>
+				{/if}
+                {if $_GPC['do']=='wlmylike'}				
+                <li><a href="javascript:;" class="onactive" ><span class="icons icons_4"></span><label>我喜欢</label></a></li>
+				{else}
+                <li><a href="{php echo  $this->createMobileUrl('wlmylike')}" ><span class="icons icons_4"></span><label>我喜欢</label></a></li>
+				{/if}				
+                <li><a href="{php echo  $this->createMobileUrl('wlcart')}" id="my_menu"><span class="icons icons_5"><label id="num" class="num">{$totalnum}</label></span></a></li>
+            </ul>
+        </div>
+        <script>
+            var footer = document.getElementById("footer_menu");
+            var evtObj = {
+                handleEvent: function(evt){
+                    if("A" == evt.target.tagName){
+                        evt.target.classList.toggle("on");
+                    }
+                }
+            }
+            footer.addEventListener("touchstart", evtObj, false);
+            footer.addEventListener("touchend", evtObj, false);
+        </script>
+    </div>
+

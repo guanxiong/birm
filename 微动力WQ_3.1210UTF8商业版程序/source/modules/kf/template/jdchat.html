@@ -1,0 +1,162 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	
+					<li><a target="_blank" href="{php echo create_url('site/module/kfset', array('type' => '3', 'name' => 'kf', 'set' => 1))}">客服列表</a></li>
+					<li class="current"><a href="{php echo create_url('site/module/manage', array('name' => 'reg'))}">设置客服</a></li>
+                    <li class="current"><a href="{php echo create_url('site/module/manage', array('type' => '3', 'name' => 'kf', 'id' => $id))}">所有记录</a></li>
+					
+</ul>
+     <div class="main">
+        <h4 style="margin-left:8px">在线聊天系统</h4>
+        
+                <form class="form-horizontal form" action="{php echo create_url('site/module/jdsend', array('name' => 'kf', 'type' => '3','fakeid' => $uid, 'id'=>$rid))}" method="post">
+				<div class="notice" style="-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px;color:#556652;line-height:20px; margin:8px; padding:5px;background:#D5FFCE;border:1px #9ADF8F solid;">在线聊天！</div> 				
+                 <table class="tb">
+                 {if empty($uid)}
+                 <tr>
+						<th>两日内来访问用户：</th>
+						<td>
+							
+                <select id="select01" name="oid">
+                <option>请选择</option>
+                {loop $wxlist $key $rowwx}
+                <option value="{$rowwx['id']}">{$rowwx['nickname']}</option>
+                {/loop}
+              </select>
+              
+							<div class="help-block">选择用户发送消息</div>
+						</td>
+					</tr>
+                    {else}
+                    <input type="hidden" name="fakeid" value="{$uid}" />
+                    {/if}
+                    
+					<tr>
+						<th>输入消息：</th>
+						<td>
+							<textarea name="message" id="send_message" cols="55" class="span7" style="height:200px;"></textarea>
+							<div  class="help-block">需要群发的内容，目前只支持文字 <a class="iconEmotion" href="javascript:;" inputId="send_message">表情</a></div>
+						</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>
+							<input name="submit" type="submit" value="提交" class="mt10 btn grid-2 alpha" />
+							<input type="hidden" name="token" value="{$_W['token']}" />
+						</td>
+					</tr>
+				</table>
+                </form>
+         
+         <div class="stat">
+             <div class="sub-item" id="table-list">
+        			<h4 class="sub-title">聊天详情</h4>
+            		 <div class="sub-content">
+           					 <table class="table table-hover">
+								<thead class="navbar-inner">
+								<tr>
+                                <th style="width:40px;" class="row-first">选择</th>
+                                <th style="width:50px;">头像<i></i></th>
+            					<th style="width:60px;">昵称<i></i></th>
+                                <th class="row-hover">聊天内容<i></i></th>
+                                
+								<th style="width:100px;">发送时间<i></i></th>
+								<th style="width:110px;">操作</th>
+                                </tr>
+							</thead>
+							<tbody id='intxt'>
+							{php $i=11;}
+            				{loop $list $key $row}
+								{php $i--;}
+                            {if $row['type']=='wxlkf'}
+                            	<tr id="tr_{$i}">
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+               						<td>{$_W['account']['name']}</td>
+                                    <td style="color:red; font:bold;">{$row['module']}</td>
+                                    <td align="left" class="row-hover" style="text-align:left; color:red; font:bold; background:#FF9">{$row['message']}
+                                    
+                    				</td>
+                                    
+                                    <td style="font-size:12px; color:#666;">
+									{php echo date('Y-m-d <br /> H:i:s', $row['createtime']);}
+									</td>
+                                    <td>
+									<a href="#">此段为客服人员发送内容</a>
+                                   
+                                    
+									</td>
+                                    </tr>
+                                    {else}
+               					<tr id="tr_{$i}">
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+               						<td>{if $uid}<a href="{$_W['siteroot']}{php echo create_url('site/module/chat', array('name' => 'kf', 'type' => '3','id'=>$rid,'userid'=>$wx['id']))}"><img width="45px" height="45px" src="{$_W['attachurl']}{$wx['avatar']}" /></a></td>
+                                    <td>{$wx['nickname']}</td>{else}<a href="{$_W['siteroot']}{php echo create_url('site/module/chat', array('name' => 'kf', 'type' => '3','id'=>$rid,'userid'=>$wxlist[$key]['id']))}"><img width="45px" height="45px" src="{$_W['attachurl']}{$wxlist[$key]['avatar']}" /></a></td>
+                                    <td>{$wxlist[$key]['nickname']}</td>{/if}
+                                    <td align="left" class="row-hover">{$row['message']}
+                                    
+                    				</td>
+                                    
+                                    <td style="font-size:12px; color:#666;">
+									{php echo date('Y-m-d <br /> H:i:s', $row['createtime']);}
+									</td>
+                                    <td>
+									<a href="#">群组ID：{$wx['groupid']}</a>
+                                   
+                                    
+									</td>
+                                    </tr>
+                                    {/if}
+                                    
+                                    {/loop}
+                                    </tbody>
+                                    </table>
+									
+            	</div>
+            	{$pager}
+				
+            </div>
+			<script type="text/javascript">
+											<!--
+											function ajaxpager(html) {
+											$('div #table-list').html(html);
+											}
+											//-->
+									</script>
+            </div>
+            
+    </div>
+<script>
+maxid={$maxid};
+currentid=10;
+minid={$i};
+
+$(document).ready(function () {
+     setInterval("startRequest()",8000);
+	//setInterval这个函数会根据后面定义的1000既每隔1秒执行一次前面那个函数
+    //如果你用局部刷新，要用AJAX技术
+});
+            
+function startRequest()
+{
+	$.post("{php echo create_url('site/module/jdajax', array('name' => 'kf', 'type' => '3', 'id'=>$rid))}", {"from_user":"{$wx['from_user']}","maxid":maxid},
+	function(data){
+		if(data.status==1){
+			var myDate = new Date();
+			json = eval(data.data)  
+			for(var i=0; i<json.length; i++)  
+			{  	
+				currentid++;
+				$str='<tr id="tr_'+currentid+'"><td class="row-first"><input type="checkbox" name="select[]" value="'+json[i].id+'" /></td><td><a href="#"><img width="45px" height="45px" src="{$_W['attachurl']}{$wx['avatar']}" /></a></td> <td>{$wx['nickname']}</td><td align="left" class="row-hover">'+json[i].message+' </td> <td>'+myDate.toLocaleString( )+'</td><td></td> </tr>';
+				$('#intxt').prepend($str);
+				if(currentid-minid>10){
+					$('#tr_'+minid).remove();
+					minid++;
+				}
+				maxid=json[i].id;
+			}  
+			
+		}
+  }, "json");
+}
+</script>
+{template 'common/footer'}

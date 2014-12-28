@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[留言板]]></name>
+		<identifie><![CDATA[msg]]></identifie>
+		<version><![CDATA[0.1]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[直接在微信界面输入的留言板，方便快捷！]]></ability>
+		<description><![CDATA[将留言功能融入到微信界面，方便快捷收集用户反馈、意见及建议。]]></description>
+		<author><![CDATA[daduing]]></author>
+		<url><![CDATA[http://www.we7.cc]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[
+	CREATE TABLE IF NOT EXISTS `ims_msg` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `weid` int(11) NOT NULL,
+  `msg` text NOT NULL,
+  `msg_succ` text NOT NULL,
+  `msg_fail` text NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_msg_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+  `fid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '粉丝id',
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'weid',
+  `msg` varchar(200) NOT NULL COMMENT '消息',
+  `create_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

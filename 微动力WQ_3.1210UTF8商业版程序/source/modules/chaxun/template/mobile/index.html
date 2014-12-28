@@ -1,0 +1,30 @@
+
+ {template 'header'}
+<!--  <link rel="stylesheet" type="text/css" href="./source/modules/chaxun/template/mobile/weiba.ui.css" />  -->
+ <link rel="stylesheet" type="text/css" href="./source/modules/chaxun/template/mobile/css/tpl.css" /> 
+ 
+
+     <div class="weiba-content tpl-list clearfix"style='font-size:8px;'>
+         <!--  -->
+        <!--  <div class="clearfix"></div> -->
+         {loop $navs $nav}
+         <div class="tpl-list-item">
+             <a class="tpl-link" href="{$nav['url']}">
+                 <div class="tpl-title">{$nav['title']}</div>
+                 <div class="tpl-desc">{$nav['title']}</div>
+                <!--  <div>
+                     <img class="tpl-bigImg" src="{$_W['attachurl']}{$nav['fileicon']}">
+                 </div> 
+                -->
+                 <div class="smallImg">
+                     <img class="tpl-smallImg" src="{$_W['attachurl']}{$nav['fileicon']}">
+                 </div>
+             </a>
+         </div>
+        {/loop}
+        
+       
+     </div>
+  
+
+<!-- {template 'footer'} -->

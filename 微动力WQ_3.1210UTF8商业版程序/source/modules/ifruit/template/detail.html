@@ -1,0 +1,121 @@
+{template 'common/header'}
+{php echo $this -> set_tabbar($action, $rid);}
+
+<link href="./source/modules/ifruit/template/css/bootstrap-switch.css?v={TIMESTAMP}" rel="stylesheet"  type="text/css"/>
+<div class="main">
+    <div class="tb-list" style="display: block;padding: 10px 15px 0px 15px;">
+        <div class="alert alert-danger" style="margin-bottom: 0px;">
+            <p><span class="bold">
+                注意:如果用户使用的是苹果手机,本模块只支持版本6.1以上的,请做好相关提示.
+            </span></p>
+        </div>
+    </div>
+	<form action="" method="post" onsubmit="return check();" class="form-horizontal form" enctype="multipart/form-data">
+		<h4>{$title} - <a href="{php echo create_url('rule/post', array('id' => $rid));}" style="font-size:0.8em">入口设置</a></h4>
+		<table class="tb">
+            <tr>
+                <th>兑奖信息</th>
+                <td>
+                    <input type="text" value="{if $reply['ticket_information']==''}兑奖请联系我们，电话18950099999{else}{$reply['ticket_information']}{/if}" class="span7" name="ticket_information">
+                    <div class="help-block">请不要多于100字! 这个设定提示用户输入兑奖时候的显示信息!</div>
+                </td>
+            </tr>
+            <tr>
+                <th>活动说明</th>
+                <td>
+                    <textarea id="rule" style="height:150px;" name="rule" class="span7" cols="60">{if empty($reply['rule'])}亲，欢迎进入水果达人活动页面，祝您好运哦！{else}{$reply['rule']}{/if}</textarea>
+                    <div class="help-block">活动的相关说明和活动奖品介绍。</div>
+                </td>
+            </tr>
+            <tr>
+                <th>抽奖后的回复</th>
+                <td>
+                    <input type="text" value="{if $reply['repeat_lottery_reply']==''}亲，继续努力哦！{else}{$reply['repeat_lottery_reply']}{/if}" class="span7" name="repeat_lottery_reply">
+                    <div class="help-block">如果设置只允许抽一次奖的，请写：你已经玩过了，下次再来。 如果设置可多次抽奖，请写：亲，继续努力哦！</div>
+                </td>
+            </tr>
+            <tr>
+                <th>每人允许抽奖总次数</th>
+                <td>
+                    <input type="text" value="{if $reply['lottery_times']=='' || empty($reply) }1{else}{$reply['lottery_times']}{/if}" class="span7" name="lottery_times">
+                    <div class="help-block">必须大于0小于30 推荐只设置1次!</div>
+                </td>
+            </tr>
+            <tr>
+                <th>每天抽奖次数</th>
+                <td>
+                    <input type="text" value="{if $reply['max_lottery']=='' || empty($reply)}0{else}{$reply['max_lottery']}{/if}" class="span7" name="max_lottery">
+                    <div class="help-block"> 0 为不限制 抽完总数就不能抽了! 可以抽奖天数 = 总数/每天抽奖次数!</div>
+                </td>
+            </tr>
+            <tr>
+                <th>兑奖密码</th>
+                <td>
+                    <input type="text" value="{$reply['pwd']}" class="span7" name="pwd">
+                    <div class="help-block"> 消费确认密码长度小于15位 不设置密码,兑奖页面的密码输入框则不出现</div>
+                </td>
+            </tr>
+            <tr>
+                <th>是否显示奖品数量</th>
+                <td>
+                    <div class="make-switch switch-small" data-on="danger" data-off="default">
+                        <input type="checkbox" id="show_award_num" name="show_award_num" value=1 {if $reply['show_award_num']==1 || empty($reply) }checked{/if}/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>是否允许重复中奖</th>
+                <td>
+                    <div class="make-switch switch-small" data-on="danger" data-off="default">
+                        <input type="checkbox" id="is_repeat_lottery" name="is_repeat_lottery" value=1 {if $reply['is_repeat_lottery']==1 || empty($reply)}checked{/if}/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>是否启用会员卡积分兑换次数</th>
+                <td>
+                    <div class="make-switch switch-small" data-on="danger" data-off="default">
+                        <input type="checkbox" id="is_card_score" name="is_card_score" value=1 {if $reply['is_card_score']==1}checked{/if}/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>兑换次数所需积分</th>
+                <td>
+                    <input type="text" value="{if $reply['card_score']=='' || empty($reply) }1{else}{$reply['card_score']}{/if}" class="span7" name="card_score">
+                    <div class="help-block">如果启用积分兑换，那么所需积分必须大于0</div>
+                </td>
+            </tr>
+            <tr>
+                <th>版权信息</th>
+                <td>
+                    <input type="text" value="{if $reply['copyright']=='' || empty($reply) }微SRC团队{else}{$reply['copyright']}{/if}" class="span7" name="copyright">
+                    <div class="help-block">页面尾部的版权信息</div>
+                </td>
+            </tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+<script type="text/javascript">
+    kindeditor($('#rule'));
+    function check() {
+//        if($.trim($('#cardname').val()) == '') {
+//            message('没有输入会员卡名称.', '', 'error');
+//            return false;
+//        }
+//        if($.trim($('#cardname').val()).length > 20) {
+//            message('会员卡名称不能多于20个字.', '', 'error');
+//            return false;
+//        }
+//        return true;
+    }
+</script>
+{template 'common/footer'}

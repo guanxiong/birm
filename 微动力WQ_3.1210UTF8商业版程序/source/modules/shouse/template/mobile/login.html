@@ -1,0 +1,79 @@
+
+
+{php $header_off=1;}
+{template 'header'}
+    <div class="container">
+        <form role="form" method="post">
+            <div class="help-block">请填写您的手机号登录/注册</div>
+            <div class="form-group">
+                <input type="tel" name="mobile" value="" class="form-control" id="mlmobile" placeholder="请填输入手机号">
+            </div>
+            <span class="btn btn-danger btn-block" id="login_form_submit" data-loading-text="Loading...">下一步</span>
+        </form>
+    </div>
+    <script type="text/javascript">
+    require(['jquery', 'bootstrap','base'], function($) {
+        var _Login = {
+            init: function() {
+                var _Iframe = window.parent["Iframe"];
+                _Iframe.height(document.body.offsetHeight);
+                var mobile = cookie.get("mlmobile");
+                $("#mlmobile").val(mobile);
+                $("#login_form_submit").on("click", function() {
+                    var _this = $(this);
+                    _this.button('loading');
+                    var mobile = $("#mlmobile").val();
+                    if (!mobile) {
+                        M.message("请输入手机号");
+                        _this.button('reset');
+                        return;
+                    }
+                    if (isNaN(mobile)) {
+                        M.message("手机号应是数字");
+                        _this.button('reset');
+                        return;
+                    }
+                    if (Number(mobile.length != 11)) {
+                        M.message("请正确填写手机号");
+                        _this.button('reset');
+                        return;
+                    }
+                    //发送请求
+                    $.ajax({
+                        url: "{php echo $this->createMobileUrl('RegistStatus')}",
+                        data: { mobile: mobile, token:'{$_W['token']}' },
+                        type: "post",
+                        dataType: "json",
+                        success: function(data) {
+                                 if (data.message.code == 0) {
+                                cookie.set("mlmobile",mobile);
+                                console.log("加载登录密码模块");
+                                if(data.message.registed && data.message.password){
+                                    console.log("已注册，已设置密码 直接去登录");
+                                    _Iframe.src("{php echo $this->createMobileUrl('login',array('foo'=>'pwd'))}");
+                                }
+                                else {
+                                    cookie.set("mlisregi",1);
+                                    console.log("还没注册 加载短信登录模块");
+                                    _Iframe.src("{php echo $this->createMobileUrl('login',array('foo'=>'sms'))}");
+                                }
+                            }
+                            else {
+                                M.message('请稍后重试');
+                                _this.button('reset');
+                            }
+                        },
+                        error: function() {
+                            M.message('非常抱歉，发生未知错误，请稍后重试');
+                            _this.button('reset');
+                        }
+                    });
+                })
+            }
+        }
+        _Login.init();
+    });
+    </script>
+{php $footer_off=1;}
+{php $stat_off=1;}
+{template 'footer'}

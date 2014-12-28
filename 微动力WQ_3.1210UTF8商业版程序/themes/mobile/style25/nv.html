@@ -1,0 +1,16 @@
+<ul class="slides">
+{php $num = 0;}
+		{loop $navs $nav}
+		{if $num%4 == 0 && $num != 0}</li>{/if}
+		{if $num%4 == 0 || $num == 0}<li>{/if}
+            <a href="{$nav['url']}" class="icon">
+            {if !empty($nav['icon'])}
+			<img src="{$_W['attachurl']}{$nav['icon']}" alt="" title="" border="0" />
+			{else}
+			<i class="{$nav['css']['icon']['icon']}" style="{$nav['css']['icon']['style']}"></i>
+			{/if}
+            <span>{$nav['name']}</span></a>
+                  {php $num++;}
+	{/loop}
+                     </li>
+                        </ul>

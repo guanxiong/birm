@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="true">
+		<name><![CDATA[美女报时]]></name>
+		<identifie><![CDATA[mm]]></identifie>
+		<version><![CDATA[1.0.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[每分钟显示一张美图,包括图片的介绍等,可以做美女报时,也可做美图欣赏等,还能在照片打分]]></ability>
+		<description><![CDATA[这是一个通用模块,可以做美女报时,美图欣赏,照片打分等多种功能的吸粉应用.]]></description>
+		<author><![CDATA[Yoby]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="照片管理" do="mmphoto"/>
+		</menu>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE `ims_mm` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `paddress` varchar(255) DEFAULT NULL,
+  `age` int(3) unsigned DEFAULT NULL,
+  `work` varchar(50) DEFAULT '' COMMENT '工作',
+  `zan` int(10) DEFAULT '0' COMMENT '被赞次数',
+  `tops` varchar(20) DEFAULT NULL COMMENT '排名',
+  `txt` text COMMENT '附加信息',
+  `tou` varchar(255) DEFAULT NULL COMMENT '头像',
+  `img` varchar(255) DEFAULT NULL,
+  `createtime` int(10) DEFAULT NULL,
+  `weid` smallint(4) DEFAULT NULL,
+  `qq` varchar(20) DEFAULT NULL,
+  `weixin` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_mm_tou` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `mid` int(11) DEFAULT NULL COMMENT '图片id',
+  `fromuser` varchar(255) DEFAULT NULL COMMENT '用户',
+  `weid` int(5) DEFAULT NULL,
+  `createtime` datetime DEFAULT NULL,
+  `ip` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_mm_jiange` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `form` varchar(200) DEFAULT NULL,
+  `createtime` datetime DEFAULT NULL,
+  `weid` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

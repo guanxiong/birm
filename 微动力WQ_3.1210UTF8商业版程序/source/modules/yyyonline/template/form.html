@@ -1,0 +1,106 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加摇一摇活动</h4>
+	<table>
+		<tbody>
+			<tr>
+				<th>查看内容</th>
+				<td><a href="{php echo create_url('site/module/awardlist', array('name' => 'yyyonline', 'id' => $reply['rid']))}" target="_blank">查看中奖名单</a> 
+				</td>
+			</tr>
+			<tr>
+				<th>活动图片</th>
+				<td>{php echo tpl_form_field_image('picture', $reply['picture']);}
+					<div class="help-block">用于单图文回复的显示</div>
+				</td>
+			</tr>
+			<tr>
+				<th>活动简介</th>
+				<td>
+					<textarea style="height:150px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于图文显示的简介</div>
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<th>客户端顶部图</th>
+				<td>{php echo tpl_form_field_image('clientpic', $reply['clientpic']);}
+					<div class="help-block">客户端顶部广告 320*60 背景色:#282c2d;</div>
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<th>活动时间</th>
+				<td>
+					<input name="starttime"  value="{php echo date('Y-m-d H:i:s', $reply['starttime'])}" onfocus="WdatePicker({dateFmt:'yyyy-M-d H:mm:ss'})">-
+					<input name="endtime"  value="{php echo date('Y-m-d H:i:s', $reply['endtime'])}" onfocus="WdatePicker({dateFmt:'yyyy-M-d H:mm:ss'})">
+					
+				</td>
+			</tr>
+			
+
+			
+			<tr>
+				<th>活动规则</th>
+				<td>
+					<textarea id="rule" style="height:150px;" name="rule" class="span7" cols="60">{$reply['rule']}</textarea>
+					<div class="help-block">活动的相关说明和活动奖品介绍。</div>
+				</td>
+			</tr>
+			<tr>
+				<th>活动模式</th>
+				<td>
+				<input type="hidden" name="ruletype" value="0"><input type="text" value="{$reply['shaketimes']}" style="width:60px" name="shaketimes" > <label class="radio inline">秒或次</label>
+				<div class="help-block">
+				总次数为总次数时结束,最短时间摇到此数字者胜,单位次</div>
+				</td>
+			</tr>
+			<tr>
+				<th>摇动模式</th>
+				<td>
+					<label class="radio inline"><input type="radio" name="shaketype" value="0" {if $reply['shaketype']=='0'} checked="checked"{/if} /> 全方向</label>
+					<label class="radio inline"><input type="radio" name="shaketype" value="1" {if $reply['shaketype']=='1'} checked="checked"{/if} /> 左右摇</label>
+					<label class="radio inline"><input type="radio" name="shaketype" value="2" {if $reply['shaketype']=='2'} checked="checked"{/if} /> 撸动作</label>
+				
+				<div class="help-block">撸动作：上下撸;摇动作：左右摇；全方向：上下左右前后都算，建议撸动作和全方向</div>
+				</td>
+			</tr>
+			<tr>
+				<th>客户端传输时间</th>
+				<td>
+					<input type="text" value="{$reply['clienttime']}" style="width:20px" name="clienttime" > <label class="radio inline">秒</label>
+					<div class="help-block">数字越大服务器负担越小，服务端更新越慢。2-10秒即可，非现场活动可以设置长些，现场活动建议2-4秒!</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>摇动间隔</th>
+				<td>
+					<input type="text" value="{$reply['shakespace']}" style="width:60px" name="shakespace" > 毫秒
+					<div class="help-block">单位毫秒,摇动时间间隔,计算两次摇动的时间间隔,此值越大摇的时间越长</div>
+				</td>
+			</tr>
+			<tr>
+				<th>摇动强度</th>
+				<td>
+					<input type="text" value="{$reply['shakestrong']}" style="width:60px" name="shakestrong" >
+					<div class="help-block">摇动有效强度,此值越大就要越用力摇,不够用力就不算</div>
+				</td>
+			</tr>
+			
+		</tbody>
+	</table>
+	
+</div>
+
+<script type="text/javascript" src="http://www.my97.net/DP/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+kindeditor($('#rule'));
+//kindeditorUploadBtn($('#yyyonline-picture'));
+//kindeditorUploadBtn($('#yyyonline-qrcode'));
+//kindeditorUploadBtn($('#yyyonline-screenpic'));
+</script>

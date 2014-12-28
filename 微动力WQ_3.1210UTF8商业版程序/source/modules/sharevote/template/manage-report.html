@@ -1,0 +1,33 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li><a href="{php echo create_url('index/module', array('do' => 'managevote', 'name' => 'sharevote'))}">投票列表</a></li>
+    <li class="active"><a href="{php echo create_url('index/module', array('do' => 'managereport', 'name' => 'sharevote'))}">举报列表</a></li>
+</ul>
+<div class="main">
+    <div class="sub-item" id="table-list">
+        <div class="sub-content">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                <tr>
+                    <th style="width:80px;text-align: center;">被举报标题<i></i></th>
+                    <th style="width:80px;text-align: center;">举报理由<i></i></th>
+                    <th style="width:80px;text-align: center;">举报时间<i></i></th>
+                    <th style="width:80px;text-align: center;">操作<i></i></th>
+                </tr>
+                </thead>
+                <tbody>
+                {php for($i=0;$i<count($list);$i++){ }
+                <tr>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">{$list[$i]['title']}<i></i></th>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">{$list[$i]['content']}<i></i></th>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">{php echo date('Y-m-d H:i',$list[$i]['time'])}<i></i></th>
+                    <th style="width:80px;text-align: center;vertical-align: middle;">
+                        <a onclick="return confirm('确认删除该投票？');return false;" href="{php echo create_url('index/module', array('do' => 'managereport', 'name' => 'sharevote','id'=>$list[$i]['id'],'itemid'=>$list[$i]['item_id']))}">删除</a></th><i></i></th>
+                </tr>
+                {php } }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{template 'common/footer'}

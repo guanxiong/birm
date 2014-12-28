@@ -1,0 +1,177 @@
+{template 'header'}
+<script type="text/javascript" src="./resource/script/common.js?v={TIMESTAMP}"></script>
+<link type="text/css" rel="stylesheet" href="source/modules/sns/template/images/mobile.css" />
+<div class="navbar navbar-fixed-top">
+        	 <div class="navbar-inner">
+             	<div class="container">
+                 <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+           		 <span class="icon-bar"></span>
+           		 <span class="icon-bar"></span>
+            	 <span class="icon-bar"></span>
+          		</button>
+                <a class="brand" href="{php echo $this->createMobileUrl('list',array('id'=>intval($_GPC['rid'])))}"><i class="icon-chevron-left"></i></a>
+                <a class="brand" href="">吧主管理中心</a>
+                <a class="brand" href="#huifu"><i class="icon-edit"></i></a>
+                <div class="nav-collapse collapse">
+                	<ul class="nav">
+					
+                 	<li><a tabindex="-1" href="{php echo $this->createMobileUrl('list',array('id'=>intval($_GPC['rid'])))}"><i class="icon-home"></i>回首页</a></li>
+    				<li><a tabindex="-1" href="#"><i class="icon-user"></i>我的信息</a></li>
+    				<li><a tabindex="-1" href="#"><i class="icon-picture"></i>我的相册</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">以上内容敬待开放</a></li>
+                    {if $pmem['status']==1}
+                     <li><a tabindex="-1" href="#"><i class="icon-list-alt"></i>吧主中心</a></li>
+                    {/if}
+  					</ul>
+           		  </div>
+              </div> 	
+          </div>
+</div>
+<div class="container-fluid">
+
+	
+	<div class="row-fluid" >
+    	<div class="span12">
+    		<div class="btn-group">
+ 			<a class="btn btn-primary" href="{php echo $this->createMobileUrl('bzshow',array('rid'=>intval($_GPC['rid']),'admin'=>1))}">贴子管理</a>
+  			<a class="btn btn-primary" href="{php echo $this->createMobileUrl('bzshow',array('rid'=>intval($_GPC['rid']),'admin'=>0))}">黑名单用户</a>
+            <a class="btn btn-primary" href="{php echo $this->createMobileUrl('bzshow',array('rid'=>intval($_GPC['rid']),'admin'=>2))}">评论管理</a>
+  			</div>
+    	</div>
+        <div id="gg">
+     	{loop $list $row}
+        <div class="widget-box">
+          <div class="widget-title">
+           <a href="#" {if $admin==1} id="admintie" data-pid="{$row['post_id']}"{elseif $admin==2 } id="adminreply" data-rid="{$row['reply_id']}" {else} id="adminuser" data-uid="{$row['id']}"{/if} class="btn btn-success" data-toggle="dropdown">恢复 </a>
+          <h5 >{$row['nickname']}&nbsp;&nbsp;{$row['title']} {$row['uid']}</h5> 
+          
+          </div>
+          <div class="widget-content">
+          {if $admin==1} 
+          {php echo htmlspecialchars($row['content'])} 
+          {elseif $admin==2 }
+          {php echo htmlspecialchars($row['content'])} 
+          {else}
+         昵称：{$row['nickname']}&nbsp;&nbsp;性别：{$row['sex']}&nbsp;&nbsp; 积分：{$post['credit']}<br />
+         地址：{$row['city']}
+         {/if}
+          
+          </div>
+          
+     	</div>
+      {/loop}
+      </div>
+      {$pager}
+    </div>
+
+
+
+
+<script type="text/javascript">
+
+jQuery(function($) {
+	//愎贴
+	$('#gg').delegate('#admintie', 'click', function(){
+			
+				 
+				 var postid=$(this).attr('data-pid');
+				 var is_del=0;					
+				
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo $this->createMobileUrl('bzadmin',array('name'=>'sns'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$fromuser}',
+			  	'is_del': is_del,
+				'admin':3,
+				'id':postid,
+				'rid':{$_GPC['rid']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						message(data.message.message, '{php echo $this->createMobileUrl('list',array('id'=>intval($_GPC['id'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo $this->createMobileUrl('list',array('id'=>intval($_GPC['id'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			
+			//评论贴
+			$('#gg').delegate('#adminreply', 'click', function(){
+			
+				 
+				 var rid=$(this).attr('data-rid');
+				 var is_del=0;					
+				
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo $this->createMobileUrl('bzadmin',array('name'=>'sns'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$fromuser}',
+			  	'is_del': is_del,
+				'admin':6,
+				'id':rid,
+				'rid':{$_GPC['rid']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						message(data.message.message, '{php echo $this->createMobileUrl('list',array('id'=>intval($_GPC['id'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo $this->createMobileUrl('list',array('id'=>intval($_GPC['id'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+			//关小黑屋
+			$('#gg').delegate('#adminuser', 'click', function(){
+			
+				 var from_user=$(this).attr('data-uid');
+				 var black=0;					
+				
+				//操作
+				$.ajax({
+			  url: "{$_W['siteroot']}{php echo $this->createMobileUrl('bzadmin',array('name'=>'sns'))}",
+			  type: "post",
+			  dataType: "json",
+			  data: {
+				'from_user' : '{$fromuser}',  
+				'blackid' : from_user,
+			  	'black': black,
+				'admin':4,
+				'rid':{$_GPC['rid']},
+			  },
+			  success:function(data){
+            		if(data.message.status==1) {
+						message(data.message.message, '{php echo $this->createMobileUrl('list',array('id'=>intval($_GPC['id'])))}', 'success');
+					return;
+              
+            } else {
+               message(data.message.message, '{php echo $this->createMobileUrl('list',array('id'=>intval($_GPC['id'])))}', 'error');
+			   return;
+            }
+			  }
+				
+			});	
+				
+			});
+		
+});
+
+</script>
+{template 'footer'}

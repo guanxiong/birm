@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>我的预约</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+        <meta charset="utf-8">
+       	<link href="/wxplat/wxcore/assets/business/order/css/style.css" rel="stylesheet" type="text/css">
+        <script src="/wxplat/wxcore/assets/business/order/js/jquery-1.8.2.js"></script>
+        <link href="/wxplat/wxcore/assets/business/order/css/reservation.css" rel="stylesheet" type="text/css"> 
+    </head>
+    <body>
+        <section data-role="page" data-theme="c" data-title="">
+            <article data-role="">
+                <style>
+                    .pagination_box{
+                        background-color:rgba(255, 255, 255, 0.9);
+                        text-align:left;
+                        font-size:14px;
+                        line-height:24px;
+                        border-radius:0px;
+                        margin-bottom:11px;
+                        display:block;
+                        margin:7px;}
+                    .pagination{ height:30px; margin-top:0px; margin:0px; padding:0; width:100%;}
+                    .pagination ul{ display:block; width:100%; float:left; border:1px solid #CCC; border-left:none; }
+                    .pagination ul li{ float:left; width:25%; text-align:center; height:30px; }
+                    .pagination ul li a{background:#ffffff;  font-weight:normal; height:30px; line-height:30px; display:block; padding-right:1px; border-left:1px solid #CCC; color:#666; font-weight:normal;}
+                    .pagination ul li a:hover{background:#fff; color:#666666; text-shadow:none;}
+                    .pagination ul li a.ziyane{ color:#666; font-weight:normal; font-size:14px;}
+                    .pagination ul li a:hover.ziyane{ color:#666; font-weight:normal;}
+                </style>
+                <div class="Floatingwindow">
+                    <a href="index.php?oid=39&wxid=ohM-KuPOMyp12wjqbZyJrzJ3QzPs" style=" color:#FFF;">返回</a>
+                </div>
+                <div class="Reservation_img">
+                    <img src="/wxplat/public/front/image/shoper/order/cover.jpg" width="100%">
+                </div>
+                <div class="My_bookings">
+                    <h3><a href="javascript:void(0);" data-transition="slide" style="color:#666;">我的预约</a></h3>
+                </div>
+                <div class="project_Explanation"><h3>Y1386917099<span>待处理</span></h3><div class="project_Content">预约待处理：123<br />联系人：微动力<br />联系电话：13923333333<br />预约人数：22<br />性别：男<br />留言：222222222<h6 style="text-align:right;font-size:14px;font-weight:normal;color:#999;">2013-12-13 14:44:59</h6></div></div>               
+                {if empty($footer_off)}<div class="copyright">	{if $_W['account']['siteinfo']['footer']}{php echo htmlspecialchars_decode($_W['account']['siteinfo']['footer'])}{else}&copy;{if empty($_W['account']['name'])}微动力团队{else}{$_W['account']['name']}{/if}&nbsp;&nbsp;{/if}{$_W['setting']['copyright']['statcode']}</div>{/if}
+            </article>
+        </section>
+    </body>
+</html>

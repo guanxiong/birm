@@ -1,0 +1,183 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $operation== 'edit'}class="active"{/if}><a
+		href="{php echo create_url('site/module/brand', array('name' => 'brand', 'op' => 'edit'));}">添加</a></li>
+	<li {if $operation== 'display'}class="active"{/if}><a
+		href="{php echo create_url('site/module/brand', array('name' => 'brand', 'op' => 'display'));}">管理</a></li>
+
+</ul>
+{if $operation == 'edit'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form"
+		enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}" />
+		<h4>名称</h4>
+		<table class="tb">
+
+			<tr>
+				<th><label for="">品牌名称</label></th>
+				<td><input type="text" name="bname" class="span5"
+					value="{$item['bname']}" /></td>
+			</tr>
+			
+			
+			<tr>
+				<th><label for="">是否收集用户留言</label></th>
+				<td><input type="radio" name="showMsg" value="1" {if $item['showMsg'] == 1}checked="checked"{/if}> 是&nbsp;&nbsp;&nbsp; <input type="radio" name="showMsg" value="0" {if $item['showMsg'] == 0}checked="checked"{/if}>否</td>
+			</tr>
+			
+			
+			<tr>
+				<th><label for="">自定义按钮名称</label></th>
+				<td><input type="text" name="btnName" class="span5"
+					value="{$item['btnName']}" /></td>
+			</tr>
+			
+			
+			<tr>
+				<th><label for="">自定义按钮链接URL</label></th>
+				<td><input type="text" name="btnUrl" class="span5"
+					value="{$item['btnUrl']}" /></td>
+			</tr>
+			
+
+
+			<tr>
+				<th><label for="">宣传背景</label></th>
+				<td>{php echo tpl_form_field_image('pic', $item['pic']);}</td>
+			</tr>
+
+			<!-- <tr>
+			<th>音频链接</th>
+			<td>
+				{if !empty($item)}
+				<input type="hidden" name="music-url-old{$namesuffix}" value="{$item['url']}">
+				{/if}
+				<div class="input-append">
+					<input id="item-url" class="span6" type="text" name="music-url{$namesuffix}" value="{$item['video_url']}" placeholder="">
+					<input type="button" id="music-attach-btn" fieldname="music-attach{$namesuffix}" class="btn" value="<i class='icon-upload-alt'></i>" style="font-size:14px;width:55px;margin-left:-1px;">
+				</div>
+				<span class="help-block">选择上传的音频文件或直接输入URL地址，常用格式：mp3</span>
+			</td>
+		</tr>
+ -->
+
+
+
+			<tr>
+				<th><label for="">幻灯片标题</label></th>
+				<td><input type="text" name="pptname" class="span5"
+					value="{$item['pptname']}" /></td>
+			</tr>
+
+			<tr>
+				<th><label for="">第一张幻灯片</label></th>
+				<td>{php echo tpl_form_field_image('ppt1', $item['ppt1']);}</td>
+			</tr>
+
+
+			<tr>
+				<th><label for="">第二张幻灯片</label></th>
+				<td>{php echo tpl_form_field_image('ppt2', $item['ppt2']);}</td>
+			</tr>
+
+			<tr>
+				<th><label for="">第三张幻灯片</label></th>
+				<td>{php echo tpl_form_field_image('ppt3', $item['ppt3']);}</td>
+			</tr>
+
+
+
+
+
+			<tr>
+				<th><label for="">联系电话</label></th>
+				<td><input type="text" name="tel" class="span5"
+					value="{$item['tel']}" /></td>
+			</tr>
+
+
+
+
+
+
+
+
+
+
+			<tr>
+				<th>品牌介绍</th>
+				<td><textarea style="height: 400px; width: 100%;"
+						class="span7 richtext-clone" name="intro" cols="70">{$item['intro']}</textarea>
+				</td>
+			</tr>
+
+
+			<tr>
+				<th></th>
+				<td><input name="submit" type="submit" value="提交"
+					class="btn btn-primary span3"> <input type="hidden"
+					name="token" value="{$_W['token']}" /></td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	kindeditor($('.richtext-clone'));
+//-->
+</script>
+{elseif $operation == 'display'}
+<div class="main">
+
+	<div style="padding: 15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="min-width: 100px;">品牌名称</th>
+				
+					<th style="width: 180px;">联系电话</th>
+					<th style="width: 80px;">浏览次数</th>
+
+					<th style="text-align: right; min-width: 300px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td><a href='{php echo $this->createMobileUrl('brand',array("bid"=>$item['id']))}' target='_blank' >{$item['bname']}</a></td>
+					
+					<td>{$item['tel']}</td>
+					<td>{$item['visitsCount']}</td>
+
+					<td style="text-align: right; width: 400px">
+					
+					<a
+						href="{php echo create_url('site/module/userMsg', array('name' => 'brand', 'bid' => $item['id']))}"
+						title="说明项" class="btn btn-small">用户留言<i class="icon-heart"></i></a>
+					
+					<a
+						href="{php echo create_url('site/module/note', array('name' => 'brand', 'bid' => $item['id']))}"
+						title="说明项" class="btn btn-small">说明项<i class="icon-book"></i></a>
+						<a
+						href="{php echo create_url('site/module/image', array('name' => 'brand', 'bid' => $item['id']))}"
+						title="图片" class="btn btn-small">图片<i class="icon-picture"></i></a>
+						<a
+						href="{php echo create_url('site/module/product', array('name' => 'brand', 'bid' => $item['id']))}"
+						title="产品" class="btn btn-small">产品<i class="icon-folder-close"></i></a>
+						
+						<a
+						href="{php echo create_url('site/module/brand', array('name' => 'brand', 'id' => $item['id'], 'op' => 'edit'))}"
+						title="编辑" class="btn btn-small"><i class="icon-edit"></i></a> <a
+						href="{php echo create_url('site/module/brand', array('name' => 'brand', 'id' => $item['id'], 'op' => 'delete'))}"
+						onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除"
+						class="btn btn-small"><i class="icon-remove"></i></a></td>
+				</tr>
+				{/loop}
+			</tbody>
+
+		</table>
+		{$pager}
+	</div>
+</div>
+{/if} {template 'common/footer'}

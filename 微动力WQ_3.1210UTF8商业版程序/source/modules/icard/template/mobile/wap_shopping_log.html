@@ -1,0 +1,161 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="./source/modules/icard/template/css/card.css" media="all">
+    <script type="text/javascript" src="./source/modules/icard/template/js/jQuery.js"></script>
+    <script type="text/javascript" src="./source/modules/icard/template/js/accordian_pack.js"></script>
+    <title>消费记录</title>
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+</head>
+<body id="cardshopping" ondragstart="return false;" onselectstart="return false;">
+    {php include $this->template('wap_header');}
+    <section class="body">
+		<div class="qiandaobanner">
+			<a href="javascript:history.go(-1);">
+                <img src="./source/modules/icard/template/themes/2/shopping.jpg">
+			</a>
+		</div>
+
+		<div class="cardexplain">
+			<div class="jifen-box" style="margin-top:13px;">
+				<ul class="zongjifen">
+					<li>
+						<div class="fengexian">
+							<p>剩余金额</p>
+							<span>{$card['coin']}</span>
+						</div>
+					</li>
+					<li>
+						<div class="fengexian">
+							<p>消费总额</p>
+							<span>{$card['money']}</span>
+						</div>
+					</li>
+					<li>
+                        <div class="fengexian">
+							<p>消费奖励积分</p>
+							<span>{$card['spend_score']}</span>
+						</div>
+					</li>
+				</ul>
+				<div class="clr"></div>
+			</div>
+
+			<div class="jifen-box header_highlight">
+				<div class="tab month_sel">
+					<span class="title">查看每月积分获取已消费记录
+						<p>点击这里选择其他月份</p>
+					</span>
+				</div>
+				<select onchange="dourl(this.value)" class="month" id="month2" style="cursor: hand;">
+					<option value="1">1月</option>
+					<option value="2">2月</option>
+					<option value="3">3月</option>
+					<option value="4">4月</option>
+					<option value="5"> 5月</option>
+					<option value="6">6月</option>
+					<option value="7">7月</option>
+					<option value="8">8月</option>
+					<option value="9">9月</option>
+					<option value="10">10月</option>
+					<option value="11">11月</option>
+					<option value="12">12月</option>
+				</select>
+				<div class="accordion_child" style=" padding:0">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="integral_table">
+						<thead>
+							<tr>
+								<th>日期</th>
+								<th>消费金额</th>
+								<th>积分</th>
+							</tr>
+                            {php $totalmoney = 0;$totalscore = 0;}
+                            {loop $list $item}
+                            <tr>
+								<td>{$item['date']}</td>
+								<td>{$item['totalmoney']}</td>
+                                {php $totalmoney = $totalmoney + intval($item['totalmoney']);$totalscore = $totalscore + intval($item['totalscore']);}
+								<td>{$item['totalscore']}</td>
+							</tr>
+                            {/loop}
+                        </thead>
+						<tfoot>
+							<tr>
+								<td class="right">本月</td>
+								<td><span class="heji">{$totalmoney}元</span></td>
+								<td><span class="heji">{$totalscore}</span></td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+        {if count($date_arr)!=0}
+		<div id="basic-accordian">
+			<h2>消费详情</h2>
+            {php $isfirst = 0; $floor = 1;}
+            {loop $date_arr $date}
+            {php $totalprice = 0;$totalscore = 0;}
+            <div id="test{$floor}-header" class="accordion_headings {if $isfirst == 0}header_highlight{/if}">
+                <div class="tab">
+                    {loop $data_arr[$date] $item}
+                    {php $totalprice = $totalprice + $item['money'];}
+                    {php $totalscore = $totalscore + $item['score'];}
+                    {/loop}
+                    <span class="title">{$date}消费详情<p>消费{$totalprice}元 获得积分{$totalscore}分</p></span>
+                </div>
+                <div id="test{$floor}-content" style=" display: block; overflow: hidden; opacity: 1; ">
+                    <div class="accordion_child">
+                        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="integral_table">
+                            <thead>
+                                <tr><th>消费详情</th><th>消费金额</th><th>积分</th></tr>
+                            </thead>
+                            <tbody>
+                            {loop $data_arr[$date] $item}
+                            <tr>
+                                <td>{if $item['type'] == 3}{$privilege_arr[$item['giftid']]}{else if $item['type'] == 3}{$gifts_arr[$item['giftid']]}{else if $item['type'] == 2}{$coupon_arr[$item['giftid']]}{/if}</td><td>{$item['money']}</td><td>{$item['score']}</td>
+                            </tr>
+                            {/loop}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td class="right">合计</td>
+                                <td><span class="heji">{$totalprice}元 </span></td>
+                                <td><span class="heji">{$totalscore}积分 </span></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {php $isfirst = 1;$floor++;}
+            {/loop}
+
+		</div
+                >
+        {/if}
+		<div class="plugback">
+			<a href="javascript:history.back(-1)">
+				<div class="plugbg themeStyle">
+					<span class="plugback"></span>
+				</div>
+			</a>
+		</div>
+        {php include $this->template('footer');}
+<script>
+window.onload = function(){
+	new Accordian('basic-accordian',5,'header_highlight');
+}
+</script>
+<script>
+function dourl(m) {
+    location.href= "{php echo create_url('mobile/module', array('do' => 'wapshoppinglog', 'name' => 'icard', 'weid' => $weid, 'from_user' => $page_from_user))}"+'&m='+m;
+}
+
+$(document).ready(function () {
+    $('#month2').val("2");
+});
+</script>
+</section>
+
+</body></html>

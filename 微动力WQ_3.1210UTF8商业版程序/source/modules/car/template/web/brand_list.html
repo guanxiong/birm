@@ -1,0 +1,57 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('brand',array('op'=>'post'));}">添加汽车品牌</a></li>	
+	<li  class="active"><a href="{php echo $this->createWebUrl('brand', array('op'=>'list'))}">汽车品牌管理</a></li>	
+</ul>
+	
+	<div class="main">
+		<div class="category">
+		<form action="" method="post">
+ 			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th style="width:10px;"></th>
+						<th style="width:60px;">显示顺序</th>
+						<th>品牌名称</th>
+						<th>官网地址</th>
+						<th>添加时间</th>
+						<th>是否显示</th>
+						<th style="width:150px;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+				{loop $list $v} 
+                  <tr>
+						<td></td>
+						<td><input type="text" class="span1" name="listorder[{$v['id']}]" value="{$v['listorder']}"></td>
+	                    <td>{$v['title']}</td>
+	                    <td><a href="{$v['officialweb']}" target="_blank">{$v['officialweb']}</a></td>
+	                    <td>{php echo date('Y-m-d H:i',$v['createtime'])}</td>
+						<td>{if $v['status']=='1'}<span class="label label-success">显示</span>{else}<span class="label label-important">不显示</span>{/if}</td>
+						<td style="text-align:left;">
+						<a href="{php echo $this->createWebUrl('brand',array('id' => $v['id'],'op'=>'post'))}">编辑</a>
+						<a href="{php echo $this->createWebUrl('brand', array('op'=>'del','id' => $v['id']))}" onclick="return confirm('删除品牌将删除该品牌下的车系和车型，确认吗？');return false;" >删除</a>
+						</td>
+					</tr>
+				{/loop} 
+					<tr>
+						<td></td>
+						<td colspan="7">
+							<a href="{php echo $this->createWebUrl('Brand', array('op' => 'post','id'=>0))}"><i class="icon-plus-sign-alt"></i> 添加汽车品牌</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table>
+				<tr>
+					<th style="width:30px"></th>
+					<td>
+						<button type="submit" class="btn btn-primary" name="submit" value="提交">提交</button>
+						<input type="hidden" name="token" value="{$_W['token']}" />
+					</td>
+				</tr>
+			</table>
+		</form>
+ 		</div>
+    </div>
+{template 'common/footer'}

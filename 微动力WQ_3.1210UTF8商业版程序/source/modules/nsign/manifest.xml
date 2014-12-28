@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51,0.52">
+	
+	<application setting="true">
+		
+		<name><![CDATA[签到高级版]]></name>
+		
+		<identifie><![CDATA[nsign]]></identifie>
+		
+		<version><![CDATA[1.5]]></version>
+
+		<type><![CDATA[business]]></type>
+		
+		<ability><![CDATA[签到]]></ability>
+		
+		<description><![CDATA[签到]]></description>
+		
+		<author><![CDATA[微动力]]></author>
+		
+		<url><![CDATA[]]></url>
+	
+	</application>
+	
+	<platform>
+		
+		<subscribes>
+		
+		</subscribes>
+		
+	
+		<handles>
+		
+		    <message type="text" />
+	
+		</handles>
+	
+		<rule embed="true" />
+
+    </platform>
+	
+	<bindings>
+
+		<rule>
+		
+			<entry title="签到统计" do="record"  />
+			
+			<entry title="中奖名单" do="winners" />
+			
+			<entry title="广告管理" do="mngadd"  />
+
+		</rule>
+		
+		<home call="gethometiles"></home>
+
+	</bindings>
+
+	<install><![CDATA[
+
+		CREATE TABLE IF NOT EXISTS `ims_nsign_add` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `rid` int(11) NOT NULL,
+		  `shop` text NOT NULL,
+		  `title` text NOT NULL,
+		  `description` text NOT NULL,
+		  `thumb` text NOT NULL,
+		  `content` text NOT NULL,
+		  `type` text NOT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+
+		CREATE TABLE IF NOT EXISTS `ims_nsign_prize` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `rid` int(11) NOT NULL,
+		  `fromuser` text NOT NULL,
+		  `name` text NOT NULL,
+		  `type` text NOT NULL,
+		  `award` text NOT NULL,
+		  `time` int(11) NOT NULL,
+		  `num` int(11) NOT NULL,
+		  `status` int(11) NOT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+
+
+		CREATE TABLE IF NOT EXISTS `ims_nsign_record` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `rid` int(11) NOT NULL,
+		  `fromuser` text NOT NULL,
+		  `username` text NOT NULL,
+		  `today_rank` int(11) NOT NULL,
+		  `sign_time` int(11) NOT NULL,
+		  `last_sign_time` int(11) NOT NULL,
+		  `continue_sign_days` int(11) NOT NULL,
+		  `maxcontinue_sign_days` int(11) NOT NULL,
+		  `total_sign_num` int(11) NOT NULL,
+		  `maxtotal_sign_num` int(11) NOT NULL,
+		  `first_sign_days` int(11) NOT NULL,
+		  `maxfirst_sign_days` int(11) NOT NULL,
+		  `credit` int(11) NOT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+
+		CREATE TABLE IF NOT EXISTS `ims_nsign_reply` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `rid` int(11) NOT NULL,
+		  `title` text NOT NULL,
+		  `picture` text NOT NULL,
+		  `description` text NOT NULL,
+		  `content` text NOT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+	  ]]></install>
+	  
+<uninstall><![CDATA[
+
+
+
+		]]></uninstall>
+
+<upgrade><![CDATA[upgrade.php]]></upgrade>
+
+</manifest>

@@ -1,0 +1,97 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $operation == 'edit'}class="active"{/if}><a href="{php echo create_url('site/module/image', array('name' => 'brand', 'op' => 'edit','bid'=>$bid));}">添加</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo create_url('site/module/image', array('name' => 'brand', 'op' => 'display','bid'=>$bid));}">管理</a></li>
+	
+</ul>
+<h4>&nbsp;&nbsp;&nbsp;{$brand['bname']} 图片项设置</h4>
+{if $operation == 'edit'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}" />
+		<input type="hidden" name="aid" value="{php echo $aid}" />
+		<h4>图片</h4>
+		<table class="tb">
+			
+			<tr>
+				<th><label for="">图片标题</label></th>
+				<td>
+					<input type="text" name="title" class="span5" value="{$item['title']}" />
+					
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<th><label for="">图片</label></th>
+				<td>
+				
+				{php echo tpl_form_field_image('url', $item['url']);}
+				
+					
+				</td>
+			</tr>
+			
+			
+			
+			
+		
+			
+			
+			
+		<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	kindeditor($('.richtext-clone'));
+//-->
+</script>
+{elseif $operation == 'display'}
+<div class="main">
+	
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="min-width:150px;">说明标题</th>
+					<th style="width:200px;">图片</th>
+					
+					
+					
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			 {loop $list $item}
+				<tr>
+					<td>{$item['title']}</td>
+					<td>
+						<img src="{$_W['attachurl']}{$item['url']}" style="width: 100px;height: 100px">
+						
+					</td>
+					
+				
+					
+					<td style="text-align:right;width:300px">
+				
+						<a href="{php echo create_url('site/module/image', array('name' => 'brand', 'id' => $item['id'], 'op' => 'edit','bid'=>$bid))}" title="编辑" class="btn btn-small"><i class="icon-edit"></i></a>
+						<a href="{php echo create_url('site/module/image', array('name' => 'brand', 'id' => $item['id'], 'op' => 'delete','bid'=>$bid))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除" class="btn btn-small"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				{/loop} 
+			</tbody>
+			
+		</table>
+		
+	</div>
+</div>
+{/if}
+{template 'common/footer'}

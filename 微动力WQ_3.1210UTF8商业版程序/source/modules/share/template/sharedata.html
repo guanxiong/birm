@@ -1,0 +1,101 @@
+{template 'common/header'}
+<style>
+.sub-search input,.sub-search select{margin-bottom:0;}
+</style>
+    <div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="brand"><a href="site.php?act=module&do=sharelist&name=share&state=&id={$id}">分享达人管理</a></span>
+						<span class="brand"><a href="site.php?act=module&do=sharedata&name=share&state=&id={$id}">分享点击数据管理</a></span>
+					</div>
+				</div>
+	
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">分享点击详细数据  |  总数:{$total}</h4>
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</td>
+									<th style="width:100px;" class="row-hover">ID<i></i></th>
+									<th style="width:200px;">用户openid<i></i></th>
+									<th style="width:200px;">分享达人IP<i></i></th>
+									<th style="width:200px;">分享点击时间<i></i></th>
+									<th style="width:60px;">操作</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list_sharedata $row}
+								<tr>
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+									<td class="row-hover">{$row['id']}</td>	
+									<td>{$row['from_user']}</td>
+									<td>{$row['shareip']}</td>
+									<td>{php echo date('Y-m-d h:i:s', $row[sharetime]);}</td>
+									<td style="width:40px;font-size:12px; color:#666;">	
+					<a href="{php echo create_url('site/module/deldata', array('name' => 'share','rid' => $row['rid'], 'id' => $row['id'], 'status' => 0))}" class="">删除</a>
+									</td><td></td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr>
+								<td style="width:40px;" class="row-first"><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+								<td>
+									<input type="submit" name="delete" value="删除" class="btn btn-primary" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+				{$pager}
+				</div>
+			</div>
+		</div>
+    </div>
+
+<script>
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+});
+</script>
+{template 'common/footer'}

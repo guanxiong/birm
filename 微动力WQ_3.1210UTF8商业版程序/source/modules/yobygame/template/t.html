@@ -1,0 +1,74 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('gamet', array('op' => 'post'));}">添加分类</a></li>
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('gamet', array('op' => 'display'));}">分类列表</a></li>
+</ul>
+<style>
+.table td span{display:inline-block;margin-top:4px;}
+.table td input{margin-bottom:0;}
+.red{color:red;font-weight:bold}
+</style>
+{if $op == 'display'}
+<div class="main">
+	
+	<div style="padding:15px;">
+		<table class="table table-hover table-striped">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:40px">ID</th>
+					<th style="width:40px">分类名称</th>
+					<th style="width:200px;text-align:right;">修改/删除</th>
+				</tr>
+			</thead>
+			<tbody>
+					{loop $list $item}
+				<tr>
+<td>{$item['id']}</td>
+<td>{$item['title']}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('gamet', array('op' => 'post', 'id' => $item['id']))}" title="编辑" class="btn btn-mini btn-primary"><i class="icon-edit"></i></a>
+						<a onclick="return confirm('此操作不可恢复，确认吗？'); return false;" href="{php echo $this->createWebUrl('gamet', array('op' => 'del','id' => $item['id']))}" title="删除" class="btn btn-mini btn-danger"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				
+				{/loop}
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+</div>
+
+{elseif $op == 'post'}
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item[id]}">
+		<h4>添加分类</h4>
+		<table class="tb">
+			<tr>
+				<th><label for=""><span class='red'>*</span> 分类名称</label></th>
+				<td>
+					<input type="text" class="span4" placeholder="" name="title" value="{$item['title']}">
+					<span class="help-block">填写分类名称</span>
+				</td>
+			</tr>
+			
+		</table>
+
+		<table class="tb">
+			<tr>
+				<th></th>
+				<td>
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">保存</button>
+
+				
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+	kindeditor($('.richtext-clone'));
+</script>
+{/if}
+{template 'common/footer'}

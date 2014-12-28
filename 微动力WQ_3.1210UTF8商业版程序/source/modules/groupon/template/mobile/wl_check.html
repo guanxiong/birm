@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>团购首页</title>
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link href="/source/modules/groupon/style/css/main.css" rel="stylesheet" />
+    <link href="/source/modules/groupon/style/css/dialog.css" rel="stylesheet" />
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+});
+</script>
+    <script src="/source/modules/groupon/style/js/jquery.min.js"></script>
+    <script src="/source/modules/groupon/style/js/swipe.js"></script>
+    <script src="/source/modules/groupon/style/js/dialog_min.js"></script>
+    <script src="/source/modules/groupon/style/js/global.js"></script>
+</head>
+<body onselectstart="return true;" ondragstart="return false;" class="gbuy_order">
+
+<div>
+    <div id="container" class="container animate">
+        <header>
+            <section>
+                <ul class="header_nav tbox">
+                    <li><a href="javascript:history.go(-1);" class="icons icons_back">&nbsp;</a></li>
+                    <li><a href="javascript:;" >订单提交 </a></li>
+                    <li><a href="javascript:;" class="vhidden" >&nbsp;</a></li>
+                </ul>
+            </section>
+        </header>
+        <div claes="body">
+            <ul class="ul_order">
+                <header>
+                    <h3>{$groupon['title']}</h3>
+                </header>
+                <section>
+                    <li class="tbox">
+                        <div>
+                            <label>单价：</label>
+                        </div>
+                        <div>
+                            <label>￥{$groupon['price']}</label>
+                        </div>
+                    </li>
+                    <li class="tbox">
+                        <div>
+                            <label>数量：</label>
+                        </div>
+                        <div>
+                            <table id="table_count" class="count">
+                                <tr>
+                                    <td><input type="button" class="op" value="-" disabled="disabled" /></td>
+                                    <td><input type="text" class="goods_number val" readonly="true" value="1" /></td>
+                                    <td><input type="button" class="op" value="+" /></td>
+                                </tr>
+                            </table>
+                            <script>
+                                $("#table_count .op").click(function(){
+                                    var val = $("#table_count .val").val();
+
+                                    if("+" == this.value){
+										{if $groupon['limit_num']!=0}
+										if(val>={$groupon['limit_num']} ){
+											wlalert('团购产品每人只能限购{$groupon['limit_num']}件');
+											return '';
+										}
+										{/if}									
+                                        $("#table_count .val").val(++val);
+                                    }else{
+                                        $("#table_count .val").val(--val);
+                                    }
+                                    if(1 == val){
+                                        $("#table_count .op").eq(0).attr("disabled", "disabled");
+                                    }else{
+                                        $("#table_count .op").eq(0).removeAttr("disabled");
+                                    }
+                                });
+                            </script>
+                        </div>
+                    </li>
+                    <li class="box" style="border:0;">
+						 {if $groupon['random_refund']==1}<div><label>√ 支持随时退订</label></div>{/if}
+                         {if $groupon['expired_refund']==1}<div><label>√ 支持过期退订</label></div>{/if}						 
+                    </li>
+                </section>
+				{if empty($users['mobile'])}
+				<section>
+                    <li class="tbox">
+                        <div>
+                            <label>您的手机号码</label>
+                        </div>
+						<div>
+                            <label>
+                                <a href="{php echo $this->createMobileUrl('wlsetuser',array('tid'=>$_GPC['tid']));}">绑定手机号</a>
+                            </label>
+                        </div>
+					</li>
+				</section>
+				{else}
+                <section>
+                    <li class="tbox">
+                        <div>
+                            <label>您的手机号码</label>
+                        </div>
+                    </li>
+                    <ol class="tbox">
+                        <div class="user_mobile" data-user-mobile="{$users['mobile']}">
+                            <label>{$users['mobile']}</label>
+                        </div>
+                        <div>
+                            <label><a href="{php echo $this->createMobileUrl('wlsetuser',array('tid'=>$_GPC['tid']));}">更改</a></label>
+                        </div>
+                    </ol>
+                </section>
+				{/if}
+				
+				
+            </ul>
+        </div>
+        <footer>
+
+            <section class="header_nav">
+
+                <ul class="tbox">
+
+                    <li><a href="javascript:history.go(-1);" class="icons icons_back">&nbsp;</a></li>
+
+                    <li><a href='javascript:void(0);' onclick="orderConfirm();" class="btn">订单提交 </a></li>
+
+                </ul>
+
+            </section>
+
+        </footer>
+    </div>
+</div>
+<script>
+$(function() {
+    var err = '';
+    if('' != err) {
+        var d = new iDialog();
+        d.open({
+            classList: "waiting",
+            title:"提示",
+            close:"<span class='close'>×</span>",
+            content:'<p class="article">'+err+'</p>',
+            btns:[
+                {id:"", name:"确认", onclick:"fn.call();", fn: function(self){
+                    self.die();
+                }}
+            ]
+        });
+    }
+})
+function orderConfirm() {
+    var mobile = $('.user_mobile').data('user-mobile');
+    if(!mobile) {
+       var d = new iDialog();
+        d.open({
+            classList: "waiting",
+            title:"提示",
+            close:"<span class='close'>×</span>",
+            content:'<p class="article">请绑定手机号</p>',
+            btns:[
+                {id:"", name:"确认", onclick:"fn.call();", fn: function(self){
+                    self.die();
+                }}
+            ]
+        }); 
+        return false;
+    }
+
+    var num = $('.goods_number').val();
+	location.href = "{php echo $this->createMobileUrl('wlconfirm',array('tid'=>$groupon['id']));}&num="+num;
+}
+function wlalert(msg){
+  var d = new iDialog();
+	d.open({
+		classList: "waiting",
+		title:"提示",
+		close:"<span class='close'>×</span>",
+		content:'<p class="article">'+msg+'</p>',
+		btns:[
+			{id:"", name:"确认", onclick:"fn.call();", fn: function(self){
+				self.die();
+			}}
+		]
+	});
+	
+}
+</script>
+
+</body>
+
+</html>
+ 	

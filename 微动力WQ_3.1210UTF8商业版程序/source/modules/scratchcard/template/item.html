@@ -1,0 +1,46 @@
+{if empty($item)}
+{php $namesuffix = '-new[(wrapitemid)]';}
+{php $itemid = '(itemid)';}
+{else}
+{php $namesuffix = '['.$item['id'].']';}
+{php $itemid = 'scratchcard-item-' . $item['id'];}
+{/if}
+<div class="alert alert-info reply-market-list">
+	<table class="tb reply-news-edit">
+		<tr>
+			<th>抽奖类型：</th>
+			<td id="award-inkind">
+				<span class="pull-right">{if empty($item)}<a href="javascript:;" onclick="doDeleteItem('{$itemid}')">删除</a>{else}<a href="{php echo $this->createWebUrl('delete', array('id' => $item['id']))}" onclick="doDeleteItem('{$itemid}', this.href)">删除</a>{/if}</span>
+				<label for="radio_1_{$itemid}" class="radio inline" data-placement="bottom" data-toggle="popover" data-content="领奖需后台确认，适用于O2O" data-original-title="" style="width:50px;"><input type="radio" name="award-inkind{$namesuffix}" id="radio_1_{$itemid}" value="1" {if $item['inkind'] == 1} checked="checked"{/if}{if !empty($item)} disabled=true{/if} /> O2O</label><label for="radio_0_{$itemid}" class="radio inline" data-placement="bottom" data-toggle="popover" data-content="粉丝自主领奖无需后台确认，适用于普通卡密发放" data-original-title="" style="margin-left:0; width:70px;"><input type="radio" name="award-inkind{$namesuffix}" id="radio_0_{$itemid}" value="0" {if $item['inkind'] == 0} checked="checked"{/if}{if !empty($item)} disabled=true{/if} /> 卡密</label>
+			</td>
+		</tr>
+		<tr>
+			<th>奖品名称：</th>
+			<td>
+				<input type="text" value="{$item['title']}" style="width:275px;" name="award-title{$namesuffix}" placeholder="填写奖品名称">
+				<label style="display:inline-block;">中奖率：<input type="text" value="{$item['probalilty']}" name="award-probalilty{$namesuffix}" style="padding-right:30px;width:48px;"><em class="percentage">%</em></label>
+				<label {if $item['inkind'] == 0}style="display:none;"{else}style="display:inline-block;"{/if} class="num">数量：<input type="text" value="{$item['total']}" style="width:45px;" name="award-total{$namesuffix}"></label>
+			</td>
+		</tr>
+		<tr>
+			<th>奖品描述：</th>
+			<td>
+				<textarea style="height:80px;" name="award-description{$namesuffix}" class="span7" cols="70" id="" placeholder="填写奖品描述，颜色、类型、规格等">{$item['description']}</textarea>
+			</td>
+		</tr>
+		{if $item['inkind'] == 0}
+		<tr>
+			<th>兑 换 码：</th>
+			<td>
+				<textarea style="height:80px;" class="span7" cols="70" id="" name="award-activation-code{$namesuffix}" placeholder="填写兑换码或者其他密文类SN码，一行一个">{$item['activation_code']}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<th>兑换方式：</th>
+			<td>
+				<input type="text" id="" class="span7" value="{$item['activation_url']}" name="award-activation-url{$namesuffix}" placeholder="填写激活地址或者其他领奖方法">
+			</td>
+		</tr>
+		{/if}
+	</table>
+</div>

@@ -1,0 +1,4 @@
+<ul class="nav nav-tabs">
+    <li {if $_GPC['do'] == 'showforms' || $_GPC['do'] == 'setting'} class="active"{/if}><a href="{php echo create_url('site/module', array('do' => 'showforms', 'name' => 'commform'))}">表单管理</a></li>
+    <li {if $_GPC['do'] == 'addforms'} class="active"{/if}><a href="{php echo create_url('site/module', array('do' => 'addforms', 'name' => 'commform'))}">添加表单</a></li>
+</ul>

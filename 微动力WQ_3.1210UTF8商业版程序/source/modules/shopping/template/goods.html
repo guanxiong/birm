@@ -1,0 +1,278 @@
+{template 'common/header'}
+{template 'common'}
+<script type="text/javascript" src="./resource/script/jquery-ui-1.10.3.min.js"></script>
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('goods', array('op' => 'post'))}">添加商品</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('goods', array('op' => 'display'))}">管理商品</a></li>
+</ul>
+{if $operation == 'post'}
+
+<link type="text/css" rel="stylesheet" href="./source/modules/shopping/images/uploadify_t.css" />
+<style type='text/css'>
+    .tab-pane { padding:20px 0 20px 0;}
+    
+</style>
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return formcheck();">
+        <input type="hidden" name="id" value="{$item['id']}" />
+        <h4>添加商品</h4>
+    <ul class="nav nav-tabs" id="myTab"> 
+          <li class="active"><a href="#tab_basic">基本信息</a></li>
+          <li><a href="#tab_des">商品描述</a></li>
+          <li><a href="#tab_param">自定义属性</a></li>
+         <li><a href="#tab_option">商品规格</a></li>
+          
+          <li><a href="#tab_other">其他设置</a></li>
+        </ul>
+           
+        <div class="tab-content">
+          <div class="tab-pane  active" id="tab_basic">{template 'goods_basic'}</div>
+          <div class="tab-pane" id="tab_des">{template 'goods_des'}</div>
+          <div class="tab-pane" id="tab_param">{template 'goods_param'}</div>
+          <div class="tab-pane" id="tab_option">{template 'goods_option'}</div>
+          <div class="tab-pane" id="tab_other">{template 'goods_other'}</div>
+        </div>
+     <table class="tb">
+      <tr>
+                <th></th>
+                <td>
+                    <input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </td>
+            </tr>
+</table>
+    </form>
+</div>
+<div id="specWin" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<table class="table table-hover">
+		<thead class="navbar-inner">
+			<tr>
+				<th style="width:100px;" class="row-hover">名称<i></i></th>
+				<th style="text-align:right;">操作</th>
+			</tr>
+		</thead>
+		<tbody id="spec-items">
+		{loop $specs $field}
+			{php $json = json_encode($field);}
+			<tr>
+				<td><input  name="spec[]" type="text" value="{$field['title']}"></td>
+				<td style="text-align:right;">
+					{loop $field['content'] $item}
+					<span class="label label-info">{$item}</span>
+					{/loop}
+				</td>
+				<td><a href="javascript:;" onclick='addSpec({$json})'>添加</a></td>
+			</tr>
+		{/loop}
+		</tbody>
+	</table>
+</div>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+
+<script type="text/javascript">
+<!--
+	var category = {php echo json_encode($children)};
+	kindeditor($('.richtext-clone'));
+ 
+          $(function () {
+              
+              window.optionchanged = false;
+            $('#myTab a').click(function (e) {
+              e.preventDefault();//阻止a链接的跳转行为
+              $(this).tab('show');//显示当前选中的链接及关联的content
+            })
+          });
+          
+              
+        
+    function formcheck(){
+        if($("#pcate").val()=='0'){
+            Tip.focus("pcate","请选择商品分类!","right");
+            return false;
+        }
+        if($("#goodsname").isEmpty()) {
+            $('#myTab a[href="#tab_basic"]').tab('show');
+            Tip.focus("goodsname","请输入商品名称!","right");
+            return false;
+        }
+        {if empty($id)}
+           if ($.trim($(':file[name="thumb"]').val()) == '') {
+            $('#myTab a[href="#tab_basic"]').tab('show');
+                         $('#myTab a[href="#tab_basic"]').tab('show');
+                        Tip.focus('thumb_div', '请上传缩略图.', 'right');
+                        return false;
+          }
+        {/if}
+                                    
+        if($("#goodsname").isEmpty()) {
+            $('#myTab a[href="#tab_basic"]').tab('show');
+            Tip.focus("goodsname","请输入商品名称!","right");
+            return false;
+        }
+       var full =  checkoption();
+       if(!full){return false;}
+       if(optionchanged){
+             $('#myTab a[href="#tab_option"]').tab('show');
+             message('规格数据有变动，请重新点击 [刷新规格项目表] 按钮!','','error');
+             return false;
+       }
+       return true;
+     
+    }
+    
+    function checkoption(){
+        
+         var full = true;
+         if( $("#hasoption").get(0).checked){
+               $(".spec_title").each(function(i){
+                    if( $(this).isEmpty()) {
+                        $('#myTab a[href="#tab_option"]').tab('show');
+                        Tip.focus(".spec_title:eq(" + i + ")","请输入规格名称!","top");
+                        full =false;
+                        return false;
+                    }
+
+                });
+                $(".spec_item_title").each(function(i){
+                    if( $(this).isEmpty()) {
+                        $('#myTab a[href="#tab_option"]').tab('show');
+                        Tip.focus(".spec_item_title:eq(" + i + ")","请输入规格项名称!","top");
+                        full =false;
+                        return false;
+                    }
+
+                });
+                
+         }
+            if(!full) { return false; }
+           return full;
+           
+    }
+    
+    
+//-->
+</script>
+{elseif $operation == 'display'}
+<div class="main">
+	<div class="search">
+		<form action="site.php" method="get">
+		<input type="hidden" name="act" value="module" />
+		<input type="hidden" name="do" value="goods" />
+		<input type="hidden" name="op" value="display" />
+		<input type="hidden" name="name" value="shopping" />
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th>关键字</th>
+					<td>
+						<input class="span6" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+					</td>
+				</tr>
+				<tr>
+					<th>状态</th>
+					<td>
+						<select name="status">
+							<option value="1" {if !empty($_GPC['status'])} selected{/if}>上架</option>
+							<option value="0" {if empty($_GPC['status'])} selected{/if}>下架</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>分类</th>
+					<td>
+						<select class="span3" style="margin-right:15px;" name="cate_1" onchange="fetchChildCategory(this.options[this.selectedIndex].value)">
+							<option value="0">请选择一级分类</option>
+							{loop $category $row}
+							{if $row['parentid'] == 0}
+							<option value="{$row['id']}" {if $row['id'] == $_GPC['cate_1']} selected="selected"{/if}>{$row['name']}</option>
+							{/if}
+							{/loop}
+						</select>
+						<select class="span3" id="cate_2" name="cate_2">
+							<option value="0">请选择二级分类</option>
+							{if !empty($_GPC['cate_1']) && !empty($children[$_GPC['cate_1']])}
+							{loop $children[$_GPC['cate_1']] $row}
+							<option value="{$row[0]}" {if $row[0] == $_GPC['cate_2']} selected="selected"{/if}>{$row[1]}</option>
+							{/loop}
+							{/if}
+						</select>
+					</td>
+				</tr>
+				<tr>
+				 <tr class="search-submit">
+					<td colspan="2"><button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button></td>
+				 </tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:30px;">ID</th>
+					<th style="min-width:150px;">商品标题</th>
+                                        <th>商品属性(点击可修改)</th>
+					<th style="width:100px;">商品编号</th>
+					<th style="width:100px;">商品条码</th>
+					<th style="width:100px;">状态</th>
+                                        
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['id']}</td>
+					<td>{if !empty($category[$item['pcate']])}<span class="text-error">[{$category[$item['pcate']]['name']}] </span>{/if}{if !empty($children[$item['pcate']])}<span class="text-info">[{$children[$item['pcate']][$item['ccate']][1]}] </span>{/if}{$item['title']}
+                                        
+                                        
+                                        </td>
+                                        <td>
+                                        <label data='{$item['isnew']}' class='label {if $item['isnew']==1}label-info{/if}' onclick="setProperty(this,{$item['id']},'new')">新品</label>
+                                        <label data='{$item['ishot']}' class='label {if $item['ishot']==1}label-info{/if}' onclick="setProperty(this,{$item['id']},'hot')">热卖</label>
+                                        <label data='{$item['isrecommand']}' class='label {if $item['isrecommand']==1}label-info{/if}' onclick="setProperty(this,{$item['id']},'recommand')">首页</label>
+                                        <label data='{$item['isdiscount']}' class='label {if $item['isdiscount']==1}label-info{/if}' onclick="setProperty(this,{$item['id']},'discount')">折扣</label></td>
+					<td>{$item['goodssn']}</td>
+					<td>{$item['productsn']}</td>
+					<td>{if $item['status']}<span class="label label-success">上架</span>{else}<span class="label label-error">下架</span>{/if}&nbsp;<span class="label label-info">{if $item['type'] == 1}实体商品{else}虚拟商品{/if}</span></td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('goods', array('id' => $item['id'], 'op' => 'post'))}">编辑</a>&nbsp;&nbsp;<a href="{php echo $this->createWebUrl('goods', array('id' => $item['id'], 'op' => 'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;">删除</a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+			<tr>
+				<td></td>
+				<td colspan="6">
+					<input name="token" type="hidden" value="{$_W['token']}" />
+					<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+				</td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</div>
+<script type="text/javascript">
+<!--
+	var category = {php echo json_encode($children)};
+    function setProperty(obj,id,type){
+        
+       $(obj).html($(obj).html() + "...");
+        $.post("{php echo $this->createWebUrl('setgoodsproperty')}"
+            ,{id:id,type:type, data: obj.getAttribute("data")}
+            ,function(d){
+                  $(obj).html($(obj).html().replace("...",""));
+                  $(obj).attr("data",d.data)
+                  if(d.result==1){
+                        $(obj).toggleClass("label-info");
+                  }
+            },"json");
+    }
+//-->
+</script>
+{/if}
+{template 'common/footer'}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[2048游戏]]></name>
+		<identifie><![CDATA[game2048]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[超酷的2048游戏，打开即玩]]></ability>
+		<description><![CDATA[基于github上发布的https://github.com/gabrielecirulli/2048  2048HTMl5版本封包
+分享出去的页面（调用的微动力自带的验证页面，如有个性需求请自行修改）会要求收听公众号，增加粉丝]]></description>
+		<author><![CDATA[Libi]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE `ims_game2048_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `cover` varchar(255) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+	
+]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_game2048_reply`;]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

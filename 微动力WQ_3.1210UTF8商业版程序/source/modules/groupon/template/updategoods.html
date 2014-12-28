@@ -1,0 +1,354 @@
+{template 'header'}
+    <script src="/resource/script/kindeditor/kindeditor-min.js"></script>
+    <div id="main">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="box">
+                        <div class="box-title">
+                            <div class="span10">
+                                <h3><i class="icon-edit"></i>团购设置</h3>
+                            </div>
+                            <div class="span2"><a class="btn" href="Javascript:window.history.go(-1)">返回</a></div>
+                        </div>
+                        <div class="box-content">
+                            <form action="" method="post" class='form-horizontal form-wizard'>
+                                <input type="hidden" name="id" value="{$groupon['id']}" />
+                                <input type="hidden" name="action" value="save" />
+
+                                <div class="step" id="firstStep">
+                                    <ul class="wizard-steps steps-3">
+                                        <li class='active'>
+                                            <div class="single-step">
+                                                <span class="title">1</span>
+                                                <span class="circle">
+                                                    <span class="active"></span>
+                                                </span>
+                                                <span class="description">团购基本信息设置
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="single-step">
+                                                <span class="title">2</span>
+                                                <span class="circle"></span>
+                                                <span class="description">团购详情设置
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="single-step">
+                                                <span class="title">3</span>
+                                                <span class="circle"></span>
+                                                <span class="description">团购劵信息设置
+                                                </span>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                    <div class="step-forms">
+                                        <div class="span6">
+                                            <div class="control-group">
+                                                <label for="title" class="control-label">团购名称：</label>
+                                                <div class="controls">
+                                                    <input type="text" name="title" id="title"  value="{$groupon['title']}" class="input-medium" data-rule-required="true" data-rule-maxlength="20" /><span class="maroon">*</span><span class="help-inline">请不要多于20字!</span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="txt" class="control-label">团购类型：</label>
+                                                <div class="controls">
+                                                    <label class="radio">
+                                                        <input type="radio"  checked="checked" />券/实物（买家自提）
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="time" class="control-label">团购时间：</label>
+                                                <div class="controls">
+                                                    <div class="input-prepend">
+                                                        <span class="add-on"><i class="icon-calendar"></i></span>
+                                                        <input type="text" name="datetime" id="time" class="daterangepick input-xlarge" value="{$groupon['datetime']}" data-rule-required="true" readonly />
+                                                        <span class="maroon">*</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="listorder" class="control-label">显示顺序：</label>
+                                                <div class="controls">
+                                                    <input type="text" id="listorder" name="listorder" value="{$groupon['listorder']}" class="input-mini" data-rule-required="true" data-rule-number="true" />
+                                                    <span class="maroon">*</span>
+                                                    <span class="help-inline">数值越大，展示越靠前</span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="level" class="control-label">团购警戒值：</label>
+                                                <div class="controls">
+                                                    <input type="text" name="warning_stock" id="level" value="{$groupon['warning_stock']}" class="input-mini" data-rule-required="true" data-rule-number="true" />
+                                                    <span class="maroon">*</span><span class="help-inline">当团购成交量达到警戒值时，将以订单提交量修改库存</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="span6">
+                                            <div class="control-group">
+                                                <label for="price" class="control-label">团购单价：</label>
+                                                <div class="controls">
+                                                    <div class="input-append">
+                                                        <input type="text" placeholder="金额" name="price" id="price" value="{$groupon['price']}"class="input-small" data-rule-required="true" data-rule-number="true" data-rule-positive="true" />
+                                                        <span class="add-on"><i class="icon-cny"></i></span>
+                                                    </div>
+                                                    <span class="maroon">*</span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="original_price" class="control-label">团购原价：</label>
+
+                                                <div class="controls">
+                                                    <div class="input-append">
+                                                        <input type="text" placeholder="金额" name="market_price" id="original_price" value="{$groupon['market_price']}" class="input-small" data-rule-required="true" data-rule-number="true" data-rule-positive="true" />
+                                                        <span class="add-on"><i class="icon-cny"></i></span>
+                                                    </div>
+                                                    <span class="maroon">*</span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="nums" class="control-label">团购数量：</label>
+                                                <div class="controls">
+                                                    <input type="text" name="stock" id="nums" class="input-mini"  value="{$groupon['stock']}" data-rule-required="true" data-rule-digits="true" />
+                                                    <span class="maroon">*</span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="buy_nums" class="control-label">用户最大购买量数量：</label>
+                                                <div class="controls">
+                                                    <input type="text" name="limit_num" id="buy_nums" class="input-mini"  value="{$groupon['limit_num']}" data-rule-required="true" data-rule-digits="true" />
+                                                    <span class="maroon">*</span><span class="help-inline">0为不限制</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label for="jion_nums" class="control-label">虚拟参团数量：</label>
+                                                <div class="controls">
+                                                    <input type="text" name="virtual_sales" id="jion_nums" class="input-mini" value="{$groupon['virtual_sales']}" data-rule-digits="true" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="step" id="secondStep">
+                                    <ul class="wizard-steps steps-3">
+                                        <li>
+                                            <div class="single-step">
+                                                <span class="title">1</span>
+                                                <span class="circle"></span>
+                                                <span class="description">活动开始内容
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li class='active'>
+                                            <div class="single-step">
+                                                <span class="title">2</span>
+                                                <span class="circle">
+                                                    <span class="active"></span>
+                                                </span>
+                                                <span class="description">活动结束内容
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="single-step">
+                                                <span class="title">3</span>
+                                                <span class="circle"></span>
+                                                <span class="description">活动设置
+                                                </span>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                    <div class="control-group">
+                                        <label for="introduction" class="control-label">团购简介：</label>
+                                        <div class="controls">
+                                            <textarea class="input-xxlarge" id="introduction" name="summary" rows="4" data-rule-maxlength="500" data-rule-required="true">{$groupon['summary']}</textarea>
+                                            <span class="maroon">*</span>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="introduction" class="control-label">团购图片：</label>
+                                        <div class="controls">
+                                            <div id="upimg_main">
+                                                <input id="file_upload" type="file" />
+                                                <ul class="ipost-list ui-sortable" id="fileList">
+													{loop $groupon['phout_url'] $row1}
+													{php if (empty($row1)) continue;}
+													<li data-url="{$row1}" data-post-id="0" class="imgbox">
+														<a title="删除" href="javascript:void(0)" class="item_close"></a>  <input type="hidden" name="phout_list[]" value="0">
+														<input type="hidden" name="phout_url[0][]" value="{$row1}">
+														<span class="item_box">
+															<img src="{$_W['attachurl']}{$row1}">
+														</span>
+														<span class="item_input">
+															<textarea placeholder="图片描述..." data-rule-maxlength="150" style="resize: none" rows="4" cols="3" class="bewrite" name="imagestexts[0][]"></textarea>
+															<i class="shadow hc"></i>
+														</span>
+													 {/loop}
+                                                </ul>
+                                                <div id="file_upload_queue" class="uploadifyQueue">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="detail" class="control-label">团购详情：</label>
+                                        <div class="controls">
+                                            <textarea id="detail" name="info" data-rule-required="true" data-msg-required="请输入团购详情">{$groupon['info']}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="instruction" class="control-label">参团须知：</label>
+                                        <div class="controls">
+                                            <textarea class="input-xxlarge" id="instruction" name="tips" rows="4" data-rule-maxlength="500"  data-rule-required="true">{$groupon['tips']}</textarea>
+                                            <span class="maroon">*</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="step" id="thirdStep">
+                                    <ul class="wizard-steps steps-3">
+                                        <li>
+                                            <div class="single-step">
+                                                <span class="title">1</span>
+                                                <span class="circle"></span>
+                                                <span class="description">活动开始内容
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="single-step">
+                                                <span class="title">2</span>
+                                                <span class="circle"></span>
+                                                <span class="description">活动结束内容
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li class='active'>
+                                            <div class="single-step">
+                                                <span class="title">3</span>
+                                                <span class="circle"></span>
+                                                <span class="active"></span>
+                                                <span class="description">活动设置
+                                                </span>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                    <div class="control-group">
+                                        <label for="third" class="control-label">退款设置：</label>
+                                        <div class="controls">
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="random_refund" value="1" {if $groupon['random_refund']==1}checked{/if} />
+                                                支持随时退款
+                                            </label>
+                                            <label class="checkbox inline ">
+                                                <input type="checkbox" name="expired_refund" value="1" {if $groupon['expired_refund']==1}checked{/if}/>
+                                                支持过期退款
+                                            </label>
+
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="validity" class="control-label">团购券有效期：</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                <span class="add-on"><i class="icon-calendar"></i></span>
+                                                <input type="text" name="valid_datetime" id="validity" class="daterangepick input-xlarge" value="{$groupon['valid_datetime']}" data-rule-required="true" readonly />
+                                                <span class="maroon">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+									<div class="control-group">
+                                         <label for="email" class="control-label">邮件通知：</label>
+										<div class="controls">
+											<input type="text" name="email" id="email"  value="{$groupon['email']}" class="input-medium" data-rule="required;email;" />
+											<span class="help-inline">邮件地址为空，则不发送!</span>
+										</div>																																							
+                                    </div>																											    <div class="control-group">                                        <label for="password" class="control-label"> 商家验证密码：</label>										<div class="controls">											<input type="text" name="password" id="password"  value="{$groupon['password']}" class="input-medium"                                                data-rule-required="true" />																				</div>                                    </div>																		  
+
+
+                                    <div class="control-group hide">
+                                        <label for="third" class="control-label">适用门店：</label>
+                                        <div class="controls">
+                                            <select name="store[]" class="input-xlarge chosen-select" multiple="multiple" data-rule-required="true" data-placeholder="选择门店 不选默认全部门店">
+                                                <option value=""></option>
+                                                                                                <option value="8454">
+                                                    3333                                                </option>
+                                                                                                <option value="8452">
+                                                    222                                                </option>
+                                                                                                <option value="8451">
+                                                    111                                                </option>
+                                                                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="control-group hide">
+                                        <label for="third" class="control-label">是否允许适用门店查看全部订单信息：</label>
+                                        <div class="controls">
+                                            <label class="radio inline">
+                                                <input type="radio" name="is_view" class="__checked" value="1" />
+                                                是  
+                                            </label>
+                                            <label class="radio inline">
+                                                <input type="radio" name="is_view" value="0" checked="checked" />
+                                                否
+                                            </label>
+                                            <label class="radio inline spassword hide">
+                                                查询密码：<input name="store_key" type="text" class="input-small" data-rule-required="true" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="span12">
+                                    <div class="form-actions">
+                                        <input type="reset" class="btn" value="Back" id="back" />
+                                        <input type="submit" class="btn btn-primary" value="submit" id="next" />
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        <script>
+                            $(":radio[name='is_view']").click(function () {
+                                var $this = $(this);
+                                $("label.spassword").toggleClass("hide", (!($this.hasClass("__checked"))))
+                            }); 
+                            KindEditor.ready(function (K) {
+                                K.create('#detail', G.set.KindEditor_seting);
+
+                            });
+                            var op = {
+                                el: $("#file_upload"),
+                                count: 10,
+                                //maxlength:"2MB",
+                                data: {
+									'weid':{$_W['weid']},
+                                },
+                                url: "{$_W['siteroot']}index.php?act=attachment&do=uploadify",
+                                del_url: "{$_W['siteroot']}index.php?act=attachment&do=deleteify",
+                                swf: "{RES}swf/uploadify.swf"
+                            }
+                            G.logic.uploadify.init(op);
+                            $("#file_upload").append('<span class="maroon">*</span><span class="help-inline">图片大小640*320，图片大小不超过300K</span>'); 
+                            var is_test_image = "请上传团购图片"; 
+                        </script>						
+                         
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

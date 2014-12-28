@@ -1,0 +1,27 @@
+{template 'common/header'}
+{template 'extension/theme-tabs'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>管理后台风格设置</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">模板风格</label></th>
+				<td>
+					<select name="template">
+						{loop $template $path}
+						<option value="{$path}" {if $_W['setting']['basic']['template'] == $path} selected{/if}>{$path}</option>
+						{/loop}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

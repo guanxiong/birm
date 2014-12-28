@@ -1,0 +1,125 @@
+{template 'common/header'}
+
+<div class="main">
+
+<ul class="nav nav-tabs">
+
+	<li{if $_GPC['do'] == 'newadd'} class="active"{/if}><a href="{php echo $this->createWebUrl('newadd', array('rid' => $_GPC['id']));}">添加优惠内容</a></li>
+</ul>
+
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+
+	<input type="hidden" name="id" value="{$item['id']}">
+
+	<h4>优惠信息</h4>
+
+	<table class="tb">
+
+		<tr>
+
+			<th>商户名称</th>
+
+			<td><input type="text" name="shop" value="{$item['shop']}" class="span5"></td>
+
+		</tr>
+        
+		<tr>
+
+			<th>所属分类</th>
+
+			<td><input type="text" name="type" value="{$item['type']}" class="span5"></td>
+
+		</tr>
+		
+		
+		<tr>
+
+			<th>活动标题</th>
+
+			<td><input type="text" name="title" value="{$item['title']}" class="span5"></td>
+
+		</tr>
+		
+		
+		<tr>
+
+			<th><label for="">宣传图</label></th>
+
+			<td>
+
+				<div class="fileupload fileupload-new" data-provides="fileupload">
+
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;">{if $item['thumb']}<img src="{$_W['attachurl']}{$item['thumb']}" width="200" />{/if}</div>
+
+					<div>
+
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="thumb" type="file" /></span>
+
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+
+						{if $item['thumb']}<button type="submit" name="fileupload-delete" value="{$item['thumb']}" class="btn fileupload-new">删除</button>{/if}
+
+					</div>
+
+				</div>
+
+				<span class="help-block"></span>
+
+			</td>
+
+		</tr>
+
+
+		<tr>
+
+			<th>简介</th>
+
+			<td>
+
+				<textarea style="height:100px;" class="span7 richtext-clone" name="description" cols="60" id="reply-add-text">{$item['description']}</textarea>
+
+			</td>
+
+		</tr>
+
+		<tr>
+			
+			<th>活动详情</th>
+			
+			<td>
+				
+				<textarea style="height:100px;" id="content" name="content" class="span7 richtext-clone" cols="60">{$item['content']}</textarea>
+			
+			</td>
+			
+		</tr>
+			
+		<tr>
+
+			<th></th>
+
+			<td>
+
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+			</td>
+
+		</tr>
+
+
+	</table>
+
+</form>
+
+
+<script type="text/javascript">
+
+kindeditor($('#content'));
+
+</script>
+
+</div>
+
+{template 'common/footer'}

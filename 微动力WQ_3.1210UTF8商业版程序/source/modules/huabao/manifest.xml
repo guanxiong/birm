@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[微画报]]></name>
+		<identifie><![CDATA[huabao]]></identifie>
+		<version><![CDATA[1.6]]></version>
+		<type><![CDATA[wdlshow]]></type>
+		<ability><![CDATA[用一系列场景图片展示产品和服务]]></ability>
+		<description><![CDATA[用一系列场景图片展示产品和服务]]></description>
+		<author><![CDATA[Easydo]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="画报列表入口设置" do="list" />
+        </cover>
+		<menu>
+			<entry title="画报列表" do="list" direct="false" />
+		</menu>
+		<home call="getHuabaoTiles">
+			<entry title="画报首页" do="list" />
+		</home>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_huabao` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL DEFAULT '',
+  `icon` varchar(100) NOT NULL DEFAULT '',
+  `share` varchar(250) NOT NULL DEFAULT '',
+  `open` varchar(100) NOT NULL DEFAULT '',
+  `ostyle` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `music` varchar(100) NOT NULL DEFAULT '',
+  `mauto` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `mloop` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `thumb` varchar(100) NOT NULL DEFAULT '',
+  `num` varchar(255) NOT NULL DEFAULT '',
+  `content` varchar(1000) NOT NULL DEFAULT '',
+  `displayorder` int(10) unsigned NOT NULL DEFAULT '0',
+  `isloop` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `isview` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_huabao_photo` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `huabaoid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL DEFAULT '',
+  `url` varchar(250) NOT NULL DEFAULT '',
+  `attachment` varchar(100) NOT NULL DEFAULT '',
+  `ispreview` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `displayorder` int(10) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(10) unsigned NOT NULL,
+  KEY `idx_huabaoid` (`huabaoid`),
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_huabao_item` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `huabaoid` int(10) unsigned NOT NULL,
+  `photoid` int(10) unsigned NOT NULL,
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `item` varchar(1000) NOT NULL DEFAULT '',
+  `url` varchar(250) NOT NULL DEFAULT '',
+  `x` int(3) NOT NULL DEFAULT '0',
+  `y` int(3) NOT NULL DEFAULT '0',
+  `animation` varchar(20) NOT NULL DEFAULT '',
+  `createtime` int(10) unsigned NOT NULL,
+  KEY `idx_photoid` (`photoid`),
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_huabao_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `huabaoid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[
+	drop table if exists `ims_huabao`,`ims_huabao_photo`,`ims_huabao_item`,`ims_huabao_reply`;
+	]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

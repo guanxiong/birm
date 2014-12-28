@@ -1,0 +1,202 @@
+{template 'header'}
+<script src="./source/modules/scratchcard/template/images/wScratchPad.js" type="text/javascript"></script>
+<style>
+    body{background:#F9F9F9;}
+    .cover{
+        width: 310px;
+        max-width: 480px;
+        margin: 0 auto;
+        position: relative;
+        margin-top:10px;
+    }
+    .cover img{
+        width: 310px;
+    }
+    #scratchpad, #prize {
+        font-size: 20px;
+        font-weight: bold;
+        height: 43px;
+        line-height: 43px;
+        position: absolute;
+        right: 53px;
+        text-align: center;
+        top: 130px;
+        width: 196px;
+    }
+    .myaward {
+        max-height: 178px;
+        overflow-y: scroll;
+    }
+</style>
+{if $scratchcard['maxlottery'] && $total < $scratchcard['maxlottery']}
+<div class="cover">
+    <img src="{if !empty($scratchcard['background'])}{$_W['attachurl']}{$scratchcard['background']}{else}./source/modules/scratchcard/template/images/bg.png{/if}">
+    <div id="prize"></div>
+    <div id="scratchpad"></div>
+</div>
+{else}
+<div class="alert-error alert mobile-alert">
+    <h4>{$message}</h4>
+</div>
+{/if}
+<div class="mobile-div img-rounded" id="myaward">
+    <div class="mobile-hd"><i class="icon-sort pull-right"></i>我的奖品</div>
+    <div class="myaward">
+        {if !empty($myaward) || ($mycredit > 0)}
+        <div class="mobile-li alert-error"><span class="pull-right">{$mycredit}</span><span class="text-error">奖励积分</span></div>
+        {loop $myaward $v}
+        <div class="mobile-li" id="{$v['id']}" data-toggle="collapse" data-target="#myaward-{$v['id']}"><i class="icon-hand-up pull-right"></i>
+            <span class="pull-right myaward-status {if $v['status']==0}text-success" inkind="{$v['inkind']}">
+                {if $v['inkind']==0}点击领取{else}未领取{/if}
+                {else}text-error">已领取{/if}</span>{$v['award']}</div>  
+                {if ($v['inkind']==0 && $v['status']==2) || ($v['inkind']==1)}
+            
+               <div class="collapse" id="myaward-{$v['id']}"><div class="mobile-content">{$v['description']}</div></div>
+               {/if}
+        {/loop}
+        {else}
+        <div class="mobile-li alert-error"><span class="text-error">暂未中奖</span></div>
+        {/if}
+    </div>
+</div>
+<div class="mobile-div img-rounded">
+    <div class="mobile-hd">活动说明</div>
+    <div class="mobile-content">
+        {$scratchcard['rule']}
+    </div>
+</div>
+<div class="mobile-div img-rounded">
+    <div class="mobile-hd" style="border-bottom:0;">奖项设置</div>
+    {if !empty($allaward)}
+    {loop $allaward $v}
+    <span class="mobile-li" data-toggle="collapse" data-target="#content-{$v['id']}">
+        <i class="icon-hand-up pull-right"></i>
+        {$v['title']}
+    </span>
+    <div class="collapse" id="content-{$v['id']}">
+        <div class="mobile-content">
+            <p>奖品名：{$v['title']}</p>
+            <p>{$v['description']}</p>
+        </div>
+    </div>
+    {/loop}
+    {/if}
+    {if !empty($scratchcard['hitcredit'])}
+    <span class="mobile-li" data-toggle="collapse" data-target="#content-hitcredit">
+        <i class="icon-hand-up pull-right"></i>
+        中奖积分：{$scratchcard['hitcredit']}
+    </span>
+    <div class="collapse" id="content-hitcredit">
+        <div class="mobile-content">
+            <p>当用户未中奖时给予的积分</p>
+        </div>
+    </div>
+    {/if}
+    {if !empty($scratchcard['misscredit'])}
+    <span class="mobile-li" data-toggle="collapse" data-target="#content-misscredit">
+        <i class="icon-hand-up pull-right"></i>
+        未中奖积分：{$scratchcard['misscredit']}
+    </span>
+    <div class="collapse" id="content-misscredit">
+        <div class="mobile-content">
+            <p>当用户未中奖时给予的积分</p>
+        </div>
+    </div>
+    {/if}
+</div>
+{if $scratchcard['maxlottery'] && $total < $scratchcard['maxlottery']}
+<script type="text/javascript">
+    var zjl = true;
+    var num = 0;
+    var goon = true;
+    $(function() {
+        var useragent = window.navigator.userAgent.toLowerCase();
+        var statu = "enable";
+        $("#scratchpad").wScratchPad({
+            width: 187,
+            height: 43,
+            color: "#a9a9a7",
+            scratchMove: function() {
+                if (statu == "enable") {
+                    statu = "diaable";
+                }
+
+                if (useragent.indexOf("android 4") > 0) {
+                    if ($("#scratchpad").css("color").indexOf("51") > 0) {
+                        $("#scratchpad").css("color", "rgb(50,50,50)");
+                    } else if ($("#scratchpad").css("color").indexOf("50") > 0) {
+                        $("#scratchpad").css("color", "rgb(51,51,51)");
+                    }
+                }
+
+                num++;
+                if (num == 2) {
+                    $.getJSON("{php echo $this->createMobileUrl('getaward', array('id' => $id))}&r=" + new Date().getTime(), function(res) {
+                        if (res.message.status == 0) {
+                            $("#prize").html('<span style="color:red;">中奖了</span>');
+                        }
+                        if (res.message.status == -1) {
+                            $("#prize").html('<span style="">未中奖</span>');
+                        }
+                        var myaward = '';
+                        for (i = 0; i < res.message.myaward.length; i++) {
+                            var a = '';
+                            if (res.message.myaward[i].status == 0) {
+                                a = '<span class="pull-right text-success myaward-status" inkind="' + res.message.myaward[i].inkind + '">';
+                                
+                                if (res.message.myaward[i].inkind == 0)
+                                {
+                                    a += '点击领取';
+                                }
+                                else {
+                                    a += "未领取";
+                                }
+                                a += '</span>';
+
+                            } else {
+                                a = '<span class="pull-right text-error myaward-status" inkind="' + res.message.myaward[i].inkind + '">已领取</span>';
+                            }
+                            myaward += '<div id="' + res.message.myaward[i].id + '" class="mobile-li" data-toggle="collapse" data-target="#myaward-' + res.message.myaward[i].id + '"><i class="icon-hand-up pull-right"></i>' + a + res.message.myaward[i].award + '</div>';
+                            if(res.message.myaward[i].inkind==1 || (res.message.myaward[i].inkind==0 && res.message.myaward[i].status==2)){
+                                myaward += '<div class="collapse" id="myaward-' + res.message.myaward[i].id + '"><div class="mobile-content">' + res.message.myaward[i].description + '</div></div>';     
+                            }
+                           
+                        }
+                        $("#myaward .myaward").html(myaward);
+                        $("#myaward .myaward").prepend('<div class="mobile-li alert-error"><span class="pull-right">' + res.message.credit + '</span><span class="text-error">奖励积分</span></div>');
+                    });
+                }
+                if (zjl && num > 100 && goon) {
+                    //alert('刮完了！');
+                }
+            }
+        });
+        $("#myaward").delegate(".mobile-li", "click", function() {
+            var a = $(this).find('.myaward-status');
+            var b = $(this).attr('id');
+            if (a.length > 0 && a.html() != '已领取' ) {
+                if(a.attr("inkind") == '0'){
+                    if (confirm('是否确定领取使用？')) {
+                        $.getJSON("{php echo $this->createMobileUrl('setstatus', array('id' => $id))}&awardid=" + b + "&r=" + new Date().getTime(), function(res) {
+                            a.removeClass('text-success').addClass('text-error');
+                            a.html('已领取');
+                            //a.parent().append('<div class="collapse" id="content-js' + i + '"><div class="mobile-content">' + res.description + '</div></div>');
+                            a.parent().after('<div class="in collapse" id="myaward-' + b + '"><div class="mobile-content">' + res.message.description + '</div></div>');
+                        });
+                        return true;
+                    } else {
+                        return false;
+                    }
+              }
+              else{
+                  return true;
+              }
+            } else {
+                return true;
+            }
+            return false;
+        });
+    });
+</script>
+{/if}
+{template 'footer'}

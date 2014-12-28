@@ -1,0 +1,103 @@
+
+{template 'common/header'}
+
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="parentid" value="{$parent['id']}" />
+		<input type="hidden" name="p" value="{$p}" />
+		<h4>详细设置</h4>
+		<table class="tb">
+
+			<tr>
+				<th>分类名称</th>
+				<td>{$tur['title']}</td>
+			</tr>
+			<tr>
+				<th>别名</th>
+				<td>
+					<input type="text" name="newname" class="span6" value="{$hewer_weid['newname']}" />
+				</td>
+			</tr>
+			<tr>
+				<th>是否审核:</th>
+				<td>
+					<label for="status_0" class="radio inline">
+						<input type="radio" name="status" id="status_0" value="0"  {if $hewer_weid['status']==0}checked="checked"{/if} />
+						否
+					</label>
+					<label for="status_1" class="radio inline">
+						<input type="radio" name="status" id="status_1" value="1"  {if $hewer_weid['status']==1}checked="checked"{/if} />
+						是
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<th>信息自动接管:</th>
+				<td>
+					<label for="autoget_0" class="radio inline">
+						<input type="radio" name="isauto" id="autoget_0" value="0"  {if $hewer_weid['isauto']==0}checked="checked"{/if} />
+						否
+					</label>
+					<label for="autoget_1" class="radio inline">
+						<input type="radio" name="isauto" id="autoget_1" value="1"  {if $hewer_weid['isauto']==1}checked="checked"{/if} />
+						是
+					</label>
+					<span class="help-block">选择“是”情况下：信息页面联系电话显示贵公司的电话或者经纪人的电话</span>
+					<span class="help-block">选择“否”情况下：信息页面联系电话显示发布人的电话</span>
+				</td>
+			</tr>
+			<tr>
+				<tr>
+					<th></th>
+					<td>
+						<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+						<input type="hidden" name="token" value="{$_W['token']}" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	{elseif $operation == 'index'}
+	<style>.red {color: red;}</style>
+	<div class="main">
+		<div class="Dukan">
+			<form action="" method="post" onsubmit="return formcheck(this)">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th style="width:10px;"></th>
+							<th>名称</th>
+							<th>审核</th>
+							<th>自动接管</th>
+							<th>别名</th>
+							<th style="width:80px;">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						{loop $category $row}
+						<tr>
+							<td>{$row['id']}</td>
+							<td>{$row['title']}</td>
+							<td>
+								{if  empty($hewer_weid[$row['id']])}否{else}{if  $hewer_weid[$row['id']]['status']==1 } <font color=red>是</font>
+								{else}否{/if}{/if}
+							</td>
+							<td>
+								{if  empty($hewer_weid[$row['id']])}否{else}{if  $hewer_weid[$row['id']]['isauto']==1 } <font color=red>是</font>
+								{else}否{/if}{/if}
+							</td>
+							<td>{$hewer_weid[$row['id']]['newname']}</td>
+							<td>
+								<a href="{php echo $this->createWebUrl('turlar', array('op' => 'post','id' => $row['id']))}">编辑
+								</a>
+							</td>
+						</tr>
+						{/loop}
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	{/if}
+{template 'common/footer'}

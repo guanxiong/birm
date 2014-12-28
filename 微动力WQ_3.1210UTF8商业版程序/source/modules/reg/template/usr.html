@@ -1,0 +1,340 @@
+{template 'common/header'}
+<script type="text/javascript" src="./resource/script/cascade.js"></script>
+<style type="text/css">
+.profile{}
+	.profile .nav-tabs{background:#EEE;}
+	.profile .nav-tabs a{color:#333;}
+	.profile .nav-tabs .active{border-top:2px #ed2f2f solid;position:relative;margin-top:-2px;}
+	.profile .nav-tabs .active a{webkit-border-radius:0;-moz-border-radius:0;border-radius:0;margin-right:0;border-right:0;border-left:0;border-top:1px #FFF solid;}
+	.profile .tab-content{padding:0 10px;}
+	.form-table{width:100%;}
+	.form-table th{width:80px; padding-right:20px; text-align:right; color:#666;}
+	.form-table .submit{width:100%;}
+	.form-item{border-left:3px #ED2F2F solid; padding-left:10px; height:30px; line-height:30px; background:#F7F7F7; margin-bottom:10px;}
+	</style>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('rule/post', array('id' => $id))}">返回规则模块</a></li>
+					<li><a target="_blank" href="{php echo create_url('site/module/group', array('name' => 'reg', 'id' => $id))}">群组管理</a></li>
+					<li class="current"><a href="{php echo create_url('site/module/manage', array('name' => 'reg', 'id' => $id))}">管理用户</a></li>
+					<li><a href="{php echo create_url('site/module/blacklist', array('name' => 'reg', 'id' => $id))}">黑名单</a></li>
+</ul>
+
+<div class="main">
+	<div class="stat">
+		<div class="stat-div">
+			<div class="navbar navbar-static-top">
+				<div class="navbar-inner">
+					<span class="brand">编辑用户资料</span>
+				</div>
+			</div>
+            
+            <div class="profile">
+	<div class="tabbable"> <!-- Only required for left/right tabs -->
+		<ul class="nav nav-tabs ">
+			<li class="active"><a href="#tab1" data-toggle="tab">基本资料</a></li>
+			<li><a href="#tab2" data-toggle="tab">更多资料</a></li>
+		</ul>
+		<form action="" method="post" enctype="multipart/form-data">
+		
+        <input type="hidden" name="id" value="{$_GPC['id']}" />
+            <input type="hidden" name="from" value="{$_GPC['from']}" />
+		<div class="tab-content">
+			<div class="tab-pane active" id="tab1">
+				<table class="form-table">
+					<tr>
+						<th><label for="">头像</label></th>
+						<td>
+							<div id="" class="uneditable-input reply-edit-cover">
+						<div class="detail">
+                    	<input type="button" id="avatar-picture" fieldname="picture" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传"  />
+						<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'avatar-picture-value')" style="{if empty($member['avatar'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+                           
+						</div>
+						{if !empty($profile['avatar'])}
+						<input type="hidden" name="avatar-old" value="{$profile['avatar']}">
+                        
+						<div id="upload-file-view" class="upload-view">
+							<img  class="avatar" style="width:100px; height:100px" src="{$profile['avatar']}">&nbsp;&nbsp;
+						</div>
+						{else}
+						<div id="upload-file-view"></div>
+						{/if}
+                        </div>
+                            
+							
+						</td>
+					</tr>
+                   
+                    
+					<tr>
+						<th><label for="">用户名</label></th>
+						<td><input type="text" name="" value="{$_GPC['from']}" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<th><label for="">昵称</label></th>
+						<td><input type="text" name="nickname" value="{$profile['nickname']}"></td>
+					</tr>
+					<tr>
+						<th><label for="">真实姓名</label></th>
+						<td><input type="text" id="" name="realname" value="{$profile['realname']}"></td>
+					</tr>
+					<tr>
+						<th><label for="">性别</label></th>
+						<td><select name="gender"><option value="0" {if $profile['gender'] == '0'} selected{/if}>保密</option><option value="1" {if $profile['gender'] == '1'} selected{/if}>男</option><option value="2" {if $profile['gender'] == '2'} selected{/if}>女</option></select></td>
+					</tr>
+					<tr>
+						<th><label for="">生日</label></th>
+						<td>
+							<select name="birthyear" style="width:70px;">
+								<option value="0">年</option>
+								<?php
+									for ($i = $form['birthday']['year'][0]; $i >= $form['birthday']['year'][1]; $i--) {
+								?>
+								<option value="{$i}" {if $profile['birthyear'] == $i} selected{/if}>{$i}</option>
+								<?php
+									}
+								?>
+							</select>
+							<select name="birthmonth" style="width:70px;">
+								<option value="0">月</option>
+								<?php
+									for ($i = 1; $i <= 12; $i++) {
+								?>
+								<option value="{$i}" {if $profile['birthmonth'] == $i} selected{/if}>{$i}</option>
+								<?php
+									}
+								?>
+							</select>
+							<select name="birthday" style="width:70px;">
+								<option value="">日</option>
+								<?php
+									for ($i = 1; $i <= 31; $i++) {
+								?>
+								<option value="{$i}" {if $profile['birthday'] == $i} selected{/if}>{$i}</option>
+								<?php
+									}
+								?>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th><label for="">地区</label></th>
+						<td>
+							<select name="resideprovince" id="sel-provance" onChange="selectCity();" style="width:70px;">
+								<option value="" selected="true">省/直辖市</option>
+							</select>
+							<select name="residecity" id="sel-city" onChange="selectcounty()" style="width:70px;">
+								<option value="" selected="true">请选择</option>
+							</select>
+							<select name="residedist" id="sel-area" style="width:70px;">
+								<option value="" selected="true">请选择</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th><label for="">详细地址</label></th>
+						<td><input type="text" id="" name="address" value="{$profile['address']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">手机</label></th>
+						<td><input type="text" id="" name="mobile" value="{$profile['mobile']}" /></td>
+					</tr>
+                    
+                    <tr>
+						<th><label for="">微信号</label></th>
+						<td><input type="text" id="" name="wxusr" value="{$profile['wxusr']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">QQ</label></th>
+						<td><input type="text" id="" name="qq" value="{$profile['qq']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">Email</label></th>
+						<td><input type="text" id="" name="email" value="{$profile['email']}" /></td>
+					</tr>
+                    <tr>
+					<th><label for="name">群组ID：</label></th>
+					<td>
+						
+                        <select class="input-xlarge" name="groupid">
+                        		<option>{$groupname}</option>
+     						 	<option value="0">未分组</option>
+                                {loop $grouplist $group} 
+      							<option value="{$group['id']}">{$group['groupname']}</option>
+     					 		{/loop}
+                         </select>
+                        
+					</td>
+				</tr>
+				</table>
+			</div>
+			<div class="tab-pane" id="tab2">
+				<div class="form-item">联系方式</div>
+				<table class="form-table">
+					<tr>
+						<th><label for="">固定电话</label></th>
+						<td><input type="text" id="" name="telephone" value="{$profile['telephone']}"/ ></td>
+					</tr>
+					<tr>
+						<th><label for="">MSN</label></th>
+						<td><input type="text" id="" name="msn" value="{$profile['msn']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">阿里旺旺</label></th>
+						<td><input type="text" id="" name="taobao" value="{$profile['taobao']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">支付宝帐号</label></th>
+						<td><input type="text" id="" name="alipay" value="{$profile['alipay']}" /></td>
+					</tr>
+				</table>
+				<div class="form-item">教育情况</div>
+				<table class="form-table">
+					<tr>
+						<th><label for="">学号</label></th>
+						<td><input type="text" id="" name="studentid" value="{$profile['studentid']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">班级</label></th>
+						<td><input type="text" id="" name="grade" value="{$profile['grade']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">毕业学校</label></th>
+						<td><input type="text" id="" name="graduateschool" value="{$profile['graduateschool']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">学历</label></th>
+						<td>
+							<select name="education">
+							{loop $form['education'] $item}
+							<option value="{$item}" {if $profile['education'] == $item} selected{/if}>{$item}</option>
+							{/loop}
+							</select>
+						</td>
+					</tr>
+				</table>
+				<div class="form-item">工作情况</div>
+				<table class="form-table">
+					<tr>
+						<th><label for="">公司</label></th>
+						<td><input type="text" id="" name="company" value="{$profile['company']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">职业</label></th>
+						<td><input type="text" id="" name="occupation" value="{$profile['occupation']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">职位</label></th>
+						<td><input type="text" id="" name="position" value="{$profile['position']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">年收入</label></th>
+						<td><input type="text" id="" name="revenue" value="{$profile['revenue']}" /></td>
+					</tr>
+				</table>
+				<div class="form-item">个人情况</div>
+				<table class="form-table">
+					<tr>
+						<th><label for="">星座</label></th>
+						<td>
+							<select name="constellation">
+							{loop $form['constellation'] $item}
+							<option value="{$item}" {if $profile['constellation'] == $item} selected{/if}>{$item}</option>
+							{/loop}
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th><label for="">生肖</label></th>
+						<td>
+							<select name="zodiac">
+							{loop $form['zodiac'] $item}
+							<option value="{$item}" {if $profile['zodiac'] == $item} selected{/if}>{$item}</option>
+							{/loop}
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th><label for="">国籍</label></th>
+						<td><input type="text" id="" name="nationality" value="{$profile['nationality']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">身高</label></th>
+						<td><input type="text" id="" name="height" value="{$profile['height']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">体重</label></th>
+						<td><input type="text" id="" name="weight" value="{$profile['weight']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">血型</label></th>
+						<td>
+						<select name="bloodtype">
+							{loop $form['bloodtype'] $item}
+							<option value="{$item}" {if $profile['bloodtype'] == $item} selected{/if}>{$item}</option>
+							{/loop}
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<th><label for="">身份证号</label></th>
+						<td><input type="text" id="" name="idcard" value="{$profile['idcard']}" /></td>
+					</tr>
+					<tr>
+
+						<th><label for="">邮编</label></th>
+						<td><input type="text" id="" name="zipcode" value="{$profile['zipcode']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">个人主页</label></th>
+						<td><input type="text" id="" name="site" value="{$profile['site']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">情感状态</label></th>
+						<td><input type="text" id="" name="affectivestatus" value="{$profile['affectivestatus']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">交友目的</label></th>
+						<td><input type="text" id="" name="lookingfor" value="{$profile['lookingfor']}" /></td>
+					</tr>
+					<tr>
+						<th><label for="">自我介绍</label></th>
+						<td><textarea name="bio">{$profile['bio']}</textarea></td>
+					</tr>
+					<tr>
+						<th><label for="">兴趣爱好</label></th>
+						<td><textarea name="interest">{$profile['interest']}</textarea></td>
+					</tr>
+				</table>
+			</div>
+			<table class="form-table">
+				<tr>
+					<td colspan="2" align="left"><div class="btn-group"><select class="pull-left" name="gxtou" class="span2">
+     						 	<option value="0">不同步头像</option>
+                               
+      							<option value="1" checked="true">同步头像</option>
+     					 		
+                                </select><input type="hidden" name="token" value="{$_W['token']}" /><input type="submit" class="btn btn-large btn-primary submit" value="提交" name="submit"><input type="submit" class="btn btn-large  btn-info submit" value="同步微信" name="tb"></div></td>
+				</tr>
+			</table>
+		</div>
+	</form>
+	</div>
+</div>
+
+            
+           
+            
+		</div>
+	</div>
+
+    <script>
+kindeditor($('#rule'));
+
+kindeditorUploadBtn($("#avatar-picture"));
+
+cascdeInit('{$profile['resideprovince']}','{$profile['residecity']}','{$profile['residedist']}'); //开启地区三级联动
+</script>
+
+    
+{template 'common/footer'}

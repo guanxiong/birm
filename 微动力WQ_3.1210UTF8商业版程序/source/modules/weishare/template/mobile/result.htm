@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title></title>
+	<meta name="format-detection" content="telephone=no, address=no">
+	<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+	<meta name="apple-touch-fullscreen" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="./resource/css/bootstrap.min.css" rel="stylesheet">
+	<link href="./resource/css/font-awesome.min.css" rel="stylesheet">
+	<link href="./resource/css/animate.css" rel="stylesheet">
+	<link href="./resource/css/common.css" rel="stylesheet">
+	<link href="./index.php?i=1&c=utility&a=style&" rel="stylesheet">
+	<script src="./resource/js/require.js"></script>
+	<script src="./resource/js/app/config.js"></script>
+	<script type="text/javascript" src="./resource/js/lib/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript">
+		window.sharedata = {
+			'appId': '', // 服务号可以填写appId
+			'imgUrl' : '', // 缩略图
+			'link': '', // 内容链接
+			'title': '', // 内容标题
+			'desc': '' // 内容简介
+		};
+		window.onshared = ''; 
+	</script>
+	
+</head>
+<body>
+<div class="container container-fill">
+	
+		<div class="jumbotron clearfix alert alert-success" style="width:80%;margin:0 auto;margin-top:100px;">
+			<div class="row">
+				<div class="col-xs-12 col-sm-3 col-lg-2">
+					<i class="fa fa-5x fa-check-circle"></i>
+				</div>
+				<div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
+										<h2></h2>
+					<p>只能在微信中助力哦!</p>
+															<p><a href="./index.php?i=1&c=entry&id=9&uid=38996&do=share&m=share&wxref=mp.weixin.qq.com#wechat_redirect">如果你的浏览器没有自动跳转，请点击此链接</a></p>
+					<script type="text/javascript">
+						setTimeout(function () {
+							location.href = "./index.php?i=1&c=entry&id=9&uid=38996&do=share&m=share&wxref=mp.weixin.qq.com#wechat_redirect";
+						}, 3000);
+					</script>
+									</div>
+			</div>
+		</div>
+					<div class="text-center footer" style="margin-top:10px; width:100%; text-align:center; word-break:break-all;">
+				&nbsp;&nbsp;			</div>
+						<script>require(['bootstrap']);</script>
+	</div>
+	<style>
+		h5{color:#555;}
+		a{color:#555;}
+	</style>
+	<script type="text/javascript">
+		//对分享时的数据处理
+		function _removeHTMLTag(str) {
+			str = str.replace(/<script[^>]*?>[\s\S]*?<\/script>/g,'');
+			str = str.replace(/<style[^>]*?>[\s\S]*?<\/style>/g,'');
+			str = str.replace(/<\/?[^>]*>/g,'');
+			str = str.replace(/\s+/g,'');
+			str = str.replace(/&nbsp;/ig,'');
+			return str;
+		}
+				
+		require(['WeixinApi','jquery'], function(WeixinApi, $){
+						//图片地址
+							var _share_img = $('body img:eq(0)').attr("src");
+				if(typeof(_share_img) == "undefined") _share_img = "";
+				if(_share_img.indexOf("http://") == -1 && _share_img.indexOf("https://") == -1 ) _share_img = "http://123.57.35.95/attachment/" + _share_img;
+						//分享内容
+							var _share_content = _removeHTMLTag($('body').html()).replace("洛阳微社区", '');
+			
+			WeixinApi.ready(function(Api) {
+				// 微信分享的数据
+				var wxData = {
+					"appId": "", // 服务号可以填写appId
+					"imgUrl" : _share_img,
+					"link" : "http://123.57.35.95/app/index.php?i=1&c=entry&id=9&uid=38996&do=give&m=share&wxref=mp.weixin.qq.com&u=&wxref=mp.weixin.qq.com",
+					"desc" : _share_content,
+					"title" : "洛阳微社区"
+				};
+				if(window.sharedata && window.sharedata['link']){
+					wxData['appId'] = window.sharedata['appId'];
+					wxData['imgUrl'] = window.sharedata['imgUrl'];
+					wxData['link'] = window.sharedata['link'];
+					wxData['desc'] = window.sharedata['desc'];
+					wxData['title'] = window.sharedata['title'];
+				}
+				var wxCallbacks = {
+					confirm : function(resp) {
+						// todo: 
+						if(window['onshared'] && typeof(window['onshared']) == 'function'){
+							window['onshared']();
+						}
+					}
+				};
+				Api.shareToFriend(wxData, wxCallbacks);
+				Api.shareToTimeline(wxData, wxCallbacks);
+				Api.shareToWeibo(wxData, wxCallbacks);
+				Api.generalShare(wxData,wxCallbacks);
+			});
+		});
+	</script>
+</body>
+</html>

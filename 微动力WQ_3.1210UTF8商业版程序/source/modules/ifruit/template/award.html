@@ -1,0 +1,71 @@
+{template 'common/header'}
+{php echo $this -> set_tabbar($action, $rid);}
+<script type="text/html" id="award-form-html">
+    {php include $this->template('ifruit/_award_item');}
+</script>
+<script>
+$(function(){
+    $('#add-award').click(function(){
+        $('#award-list').append($('#award-form-html').html());
+    });
+})
+</script>
+<div class="main">
+    <div class="tb-list" style="display: block;padding: 10px 15px 0px 15px;">
+        <div class="alert alert-danger" style="margin-bottom: 0px;">
+            <p><span class="bold">
+                a.请认真填写奖品数量,提交后数量不能修改,只能通过增加兑换码的方式来增加奖品数量.<br/>
+                b.抽奖首页奖品以奖品级别级升序排序,数字最小排第一位,以此类推.
+            </span></p>
+        </div>
+    </div>
+    <form action="" method="post" class="form-horizontal form" onsubmit="return formcheck(this)">
+        <h4>{$title} - <a href="{php echo create_url('rule/post', array('id' => $rid));}" style="font-size:0.8em">入口设置</a></h4>
+        <div id="award-list">
+            {loop $awards $item}
+            <div class="alert alert-info reply-market-list">
+                <table class="tb reply-news-edit">
+                    <tr>
+                        <th></th>
+                        <td>
+                            <span class="pull-right"><a onclick="return confirm('确认删除吗？删除后数据将不能恢复,并且奖品相关的sn码也会一并删除.');return false;" href="{php echo create_url('site/module', array('do' => 'awarddelete', 'name' => 'ifruit', 'id' => $item['id'], 'rid' => $rid))}">删除</a></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>奖品名称：</th>
+                        <td>
+                            <input type="text" value="{$item['title']}" style="width:250px;"  name="award_title[{$item['id']}]">
+                            <label style="display:inline-block;">
+                                中奖率：<input type="text" value="{if !empty($item['probalilty'])}{$item['probalilty']}{else}10{/if}" name="award_probalilty[{$item['id']}]" style="padding-right:30px;width:48px;"><em class="percentage">%</em></label>
+                            <label style="display:inline-block;" class="num">数量：<input type="text" value="{if empty($item)}三等奖{else}{$item['total']}{/if}" style="width:45px;" name="award_total[{$item['id']}]" {if !empty($item)}readonly = "readonly"{/if} ></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>奖品级别：</th>
+                        <td>
+                            <input type="text" class="span2" name="award_level[{$item['id']}]" value="{if !empty($item['level'])}{$item['level']}{else}3{/if}" placeholder="请输入1~6的整数" />
+                            <label style="display:inline-block;" class="num">级别名称：<input type="text" class="span4" name="award_levelname[{$item['id']}]" value="{if !empty($item['levelname'])}{$item['levelname']}{else}三等奖{/if}" placeholder="请输入奖品级别名称 例:三等奖" /></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            {/loop}
+        </div>
+        <table class="table table-hover">
+            <tfoot>
+            <tr>
+                <td>
+                    <a href="javascript:;" id="add-award"><i class="icon-plus-sign-alt"></i> 添加奖品</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input name="submit" type="submit" class="btn btn-primary" value="提交">
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+{template 'common/footer'}

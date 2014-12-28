@@ -1,0 +1,14 @@
+.card{margin: 0 auto;position: relative;height: 159px;text-align: left;width: 267px;float: left;}
+    #cardbg{height: 159px;width: 267px;position:absolute;border-radius: 8px;-webkit-border-radius:8px;-moz-border-radius:8px;box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);-moz-box-shadow:0 0 4px rgba(0, 0, 0, 0.6);-webkit-box-shadow:0 0 8px rgba(0, 0, 0, 0.6);top:0;left:0;z-index:1;}
+    .card .cardlogo {max-height:70px;position:absolute;top:8px;left:5px;z-index:2;}
+    .card .verify {display:inline-block;height:40px;top:105px;right:12px;text-align:right;line-height:24px;color:#000;font-size:20px;text-shadow:0 1px rgba(255, 255, 255, 0.2);z-index:2;}
+    .card h1 {position:absolute;right:10px;top:7px;text-shadow:0 1px rgba(255, 255, 255, 0.2);color:#000;font-size:11px;line-height:25px;text-align:right;font-weight: normal;z-index:2;}
+    .card .verify span {display:inline-block;text-align:left;}
+    .card .verify em {display:block;line-height:13px;font-size:10px;font-weight:normal;font-style:normal;}
+    .pdo {position:absolute;top:0;left:0;display:inline-block;}
+    .userinfoArea td {padding: 8px 0 0px 15px;}
+    .banner{display:block; width:213px;height: 278px;overflow: hidden;}
+    .banner img{display:block; width:213px; border:0;}
+    .bannerbtn{ position:relative; display:block}
+    .bannerbtn .qiaodaobtn{ position: absolute; display:block;  bottom:0}
+    .cardbg{float: left;padding-left: 20px;}

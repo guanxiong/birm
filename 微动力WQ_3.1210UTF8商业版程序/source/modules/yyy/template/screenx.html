@@ -1,0 +1,145 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>摇一摇 摇一摇</title>
+<meta name="keywords" content="jquery.flip" /> 
+<meta name="description" content="jquery.flip case" /> 
+<style type="text/css">
+
+.content{
+
+width:800px; 
+margin:0 auto;
+
+}
+
+.lbox{
+width:450px; 
+background:#ccc;
+float:left;
+}
+.rbox{
+
+width:330px; 
+float:right;
+
+}
+
+.flipbox {
+width:330px; 
+height:45px; 
+line-height:50px; 
+font-size:24px; 
+text-align:center; color:#fff; 
+background:#ccc;
+margin:0 auto;
+margin-top:15px;
+border-radius: 5px;
+
+}
+
+
+</style>
+
+
+<script type="text/javascript" src="source/modules/yyy/template/js/jquery.min.js"></script>
+<script type="text/javascript" src="source/modules/yyy/template/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="source/modules/yyy/template/js/jquery.flip.min.js"></script>
+<script type="text/javascript">
+var lefttime={$reply['lefttime']};
+//第几轮刷统计
+var count=1;
+//刷多少次
+var allcount=20;
+//间隔多长刷一次，不能少于5000毫秒
+var flashtime=2500;
+
+
+function flipdata(i,name,sec){
+//只显示10条数据，0起
+	if (i>9){
+		
+		return;
+	}else{
+	
+		$('#fp'+i).flip({
+			speed:100,
+			color: '#f90',
+			//content:(i+1) +'.'+ name
+			content:'<div class="uname">'+(i+1) +'.'+ name +'</div><div class="Percentage"><div class="tage" style="width:'+sec+'%"></div></div>',
+		});
+	};
+
+}
+
+function flippage(){
+	if (count> allcount){
+		count=1;
+		return;
+	}
+	
+	$.getJSON("{php echo create_url('site/module/screenjson', array('name' => 'yyy', 'id' => $reply['rid']))}&rnd="+new Date().getTime(),function(result){
+			$.each(result, function(i, field){
+				setTimeout('flipdata('+i+',"'+field['realname']+'",'+field['count']+')',200*i);
+			});
+	});
+	count++;
+	setTimeout('flippage()',flashtime);
+}
+
+
+
+</script>
+<style>
+.uname{
+	text-align:left;
+	float: left;
+	width: 165px;
+	height: 18px;
+	padding-left:5px;
+}
+.Percentage{
+	width: 150px;
+	height: 18px;
+	margin-top:15px;
+	margin-right:5px;
+	float: right;
+	border-radius: 5px;
+	
+}
+.tage {
+	height: 18px;
+	background: #86ae2c;
+	border-radius: 5px;
+}
+#fp0 .tage,#fp1 .tage,#fp2 .tage{background: #f00;}
+</style>
+
+</head>
+
+<body>
+
+<div class="content">
+	<div class="lbox" id="star"><img src="{$_W['attachurl']}{$reply['screenpic']}" width="450" height="600" onclick="count=1;flippage();"></div>
+	<div class="rbox">
+		<div class="flipbox" id="fp0">NO.1</div>
+		<div class="flipbox" id="fp1">NO.2 </div>
+		<div class="flipbox" id="fp2">NO.3 </div>
+		<div class="flipbox" id="fp3"></div>
+		<div class="flipbox" id="fp4"></div>
+		<div class="flipbox" id="fp5"></div>
+		<div class="flipbox" id="fp6"></div>
+		<div class="flipbox" id="fp7"></div>
+		<div class="flipbox" id="fp8"></div>
+		<div class="flipbox" id="fp9"></div>
+		
+	
+	</div>
+
+</div>
+
+
+</body>
+</html>

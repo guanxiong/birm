@@ -1,0 +1,44 @@
+{template 'common/header'}
+<div class="main">
+	<div class="rule">
+		{if empty($list)}<li>暂时没有相关数据</li>{/if}
+		{loop $list $row}
+		<table class="tb table table-bordered">
+			<tr class="control-group">
+				<td class="rule-content">
+					<h4>
+						<span class="pull-right">
+						<a href="{php echo  create_url('site/module/list', array('name' => 'message','rid' =>  $row['id']))}">留言管理</a>&nbsp;&nbsp;
+ 						<a href="{php echo create_url('rule/post', array('id' => $row['id']))}">规则编辑</a>
+						</span>
+						{$row['name']} <small>（{$_W['modules'][$row['module']]['title']}）</small>
+					</h4>
+				</td>
+			</tr>
+			<tr class="control-group">
+				<td class="rule-kw">
+					<div>
+						{loop $row['keywords'] $kw}
+						<span>{$kw['content']}</span>
+						{/loop}
+					</div>
+				</td>
+			</tr>		 
+			<tr class="control-group">
+				<td class="rule-manage">
+					<div>
+ 						<a target="main" href="{php echo create_url('site/module/trend', array('name' => 'stat', 'id' => $row['id']))}">使用率走势</a>
+						{if $row['options']}
+						{loop $row['options'] $opt}
+						<a href="{$opt['link']}" target="_blank">{$opt['title']}</a>
+						{/loop}
+						{/if}
+					</div>
+				</td>
+			</tr>			
+		</table>
+		{/loop}
+	</div>
+	{$pager}
+</div>
+{template 'common/footer'}

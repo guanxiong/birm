@@ -1,0 +1,159 @@
+{template 'header'}
+<script type="text/javascript" src="./resource/script/PCASClass.js"></script>
+{if $operation == 'display'}
+{if empty($list)}
+<div class="list img-rounded">没有任何快递记录</div>
+{/if}
+{loop $list $item}
+<div class="list img-rounded">
+	<div class="hd">
+		<span class="title">
+			{if $item['status'] == 0}<p class="text-danger">预约</p>{/if}
+			{if $item['status'] == 1}<p class="text-success">揽收</p>{/if}
+			{if $item['status'] == 2}<p class="text-success">签收</p>{/if}
+			{if $item['status'] == 3}取消{/if}
+		</span>
+		<span class="date">{php echo date('Y-m-d H:i:s', $item['createtime']);}</span>
+	</div>
+	<div class="content">
+		<p><span class="label label-warning">{php echo $this->getExpressType($item['type']);}</span> {$item['detail']}</p>
+		{if $item['status'] == 0}
+		<div class="author">
+		{if $item['status'] == '0'}
+		<a href="javascript:;" data-toggle="modal" data-target="#reply_{$item['id']}"><i class="icon-edit"></i> 补充</a>
+		&nbsp;&nbsp; 
+		<a href="{php echo $this->createMobileUrl('repair', array('id'=>$item['id'],'op'=>'resolve'));}" onclick="return confirm('是否已经完成了维修工作，确定完成吗？')"><i class="icon-ok-sign"></i> 完成</a>
+		&nbsp;&nbsp;
+		<a href="{php echo $this->createMobileUrl('repair', array('id'=>$item['id'], 'op'=>'cancel'));}" onclick="return confirm('是否确认取消该条申请？')"><i class="icon-trash"></i> 取消</a>
+		{/if}
+		&nbsp;&nbsp;
+		<a href="{php echo $this->createMobileUrl('repair', array('id'=>$item['id'],'op'=>'delete'));}" onclick="return confirm('是否确认删除该条投诉建议？')"><i class="icon-remove"></i> 删除</a>
+		</div>
+	</div>
+</div>
+<div id="reply_{$item['id']}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:30%;">
+	<form class="form-horizontal img-rounded" role="form" method="post" action="{php echo $this->createMobileUrl('reply')}">
+		<div class="form-group">
+			<div class="col-xs-12">
+				<textarea name="content" class="form-control" rows="3"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-12">
+				<button type="submit" name="submit" value="yes" class="btn btn-primary" style="width:100%;">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+				<input type="hidden" name="type" value="1" />
+				<input type="hidden" name="id" value="{$item['id']}" />
+				<input type="hidden" name="page" value="{$_GPC['page']}" />
+			</div>
+		</div>
+	</form>
+</div>
+{/loop}
+<div class="list img-rounded" style="padding-top: 0; padding-bottom: 0;">
+{$pager}
+</div>
+
+<script>
+$(function() {
+	$(".reply-more-btn").click(function() {
+		var a = $(this).parent(".reply");
+		a.find(".reply-more").toggle();
+		$(this).hide();
+	});
+});
+</script>
+{/if}
+{if $operation == 'post'}
+
+<form class="form-horizontal img-rounded" role="form" method="post">
+	<div class="form-group">
+		<label for="category" class="col-xs-3 control-label">快递物品类型</label>
+		<div class="col-xs-9">
+			<select name="type" class="form-control">
+				{loop $this->getExpressTypes() $key $type}
+					{if $key!=0}
+					<option value="{$type}"{if $type==$item['type']} selected{/if}>{$type}</option>
+					{/if}
+				{/loop}
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="" class="col-xs-3 control-label">快递物品品名</label>
+		<div class="col-xs-9">
+			<textarea name="detail" class="form-control" rows="3">{$item['detail']}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="detail" class="col-xs-3 control-label">目的地</label>
+		<div class="col-xs-9">
+			<select name="province"></select><br>
+			<select name="city"></select><br>
+			<select name="area"></select>
+		</div>
+	</div>
+	<script>
+	new PCAS("province","city","area","{$item['province']}","{$item['city']}","{$item['district']}")
+	</script>
+	<div class="form-group">
+		<div class="col-xs-offset-3 col-xs-9">
+			<button type="submit" name="submit" value="yes" class="btn btn-primary" style="width:100%;">提交</button>
+			<input type="hidden" name="id" value="{$item['id']}" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</div>
+</form>
+
+{/if}
+{if $$operation == 'resolve'}
+<form class="form-horizontal img-rounded" role="form" method="post">
+	<div class="form-group">
+		<label class="col-xs-3 control-label">类型</label>
+		<div class="col-xs-9">
+			<p class="form-control-static">{$item['category']}</p>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-3 control-label">内容</label>
+		<div class="col-xs-9">
+			<p class="form-control-static">{$item['content']}</p>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-3 control-label">要求</label>
+		<div class="col-xs-9">
+			<p class="form-control-static">{$item['requirement']}</p>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-xs-3 control-label">提交时间</label>
+		<div class="col-xs-9">
+			<p class="form-control-static">{php echo date('Y-m-d H:i:s', $item['createtime']);}</p>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="rank" class="col-xs-3 control-label">评价</label>
+		<div class="col-xs-9">
+			<select name="rank" class="form-control">
+				<option value="1">满意</option>
+				<option value="2">一般</option>
+				<option value="3">差劲</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="comment" class="col-xs-3 control-label">评价</label>
+		<div class="col-xs-9">
+			<textarea name="comment" class="form-control" rows="3"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-xs-offset-3 col-xs-9">
+			<button type="submit" name="submit" value="yes" class="btn btn-primary" style="width:100%;">提交</button>
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</div>
+</form>
+{/if}
+{template 'footer'}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[跳蚤市场]]></name>
+		<identifie><![CDATA[tsmark]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[交换闲置物品平台]]></ability>
+		<description><![CDATA[交换闲置物品平台]]></description>
+		<author><![CDATA[yuexiage]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+	</bindings>
+	<install>
+<![CDATA[CREATE TABLE IF NOT EXISTS `ims_tsmark` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) NOT NULL,
+  `weid` int(11) NOT NULL,
+  `img` text COMMENT '图片地址',
+  `info` varchar(200) DEFAULT NULL,
+  `fid` int(11) DEFAULT '0',
+  `isshow` tinyint(1) DEFAULT '0',
+  `create_time` int(11) DEFAULT NULL,
+  `fromuser` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_tsmark_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `parentid` int(10) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(50) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `thumb` varchar(60) NOT NULL,
+  `isshow` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+]]>
+</install>
+	<uninstall><![CDATA[
+	drop table ims_tsmark;
+    drop table ims_tsmark_reply;]]>
+    </uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>
