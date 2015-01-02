@@ -2,7 +2,7 @@
 /**
  * 购物车
  *
- * @author 微动力
+ * @author 微新星
  * @url
  */
 	if($_GPC['subcp']=='ajax'&&$_GPC['d']=='add'){

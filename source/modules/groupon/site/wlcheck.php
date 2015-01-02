@@ -2,7 +2,7 @@
 /**
  * 首页
  *
- * @author 微动力
+ * @author 微新星
  * @url
  */
 	$tid = intval($_GPC['tid']);

@@ -19,7 +19,7 @@ if(!file_exists($configfile)) {
 		require IA_ROOT . '/source/version.inc.php';
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 		echo "·如果你还没安装本程序，请运行<a href='install.php'> install.php 进入安装&gt;&gt; </a><br/><br/>";
-		echo "&nbsp;&nbsp;<a href='http://bbs.we7.cc' style='font-size:12px' target='_blank'>Power by WDL " . IMS_VERSION . " &nbsp;微动力微信公众平台自助开源引擎</a>";
+		echo "&nbsp;&nbsp;<a href='http://bbs.we7.cc' style='font-size:12px' target='_blank'>Power by WDL " . IMS_VERSION . " &nbsp;微新星微信公众平台自助开源引擎</a>";
 		exit();
 	} else {
 		header('Content-Type: text/html; charset=utf-8');

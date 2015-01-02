@@ -1,8 +1,8 @@
 <?php
 /**
- * 微动力微拍模块处理程序
+ * 微新星微拍模块处理程序
  *
- * @author 微动力团队
+ * @author 微新星团队
  * @url 
  */
 defined('IN_IA') or exit('Access Denied');

@@ -2,7 +2,7 @@
 /**
  * 微生活模块定义
  *
- * @author 微动力
+ * @author 微新星
  * @url 
  */
 defined('IN_IA') or exit('Access Denied');

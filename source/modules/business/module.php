@@ -2,7 +2,7 @@
 /**
  * 商户管理模块定义
  *
- * @author 微动力团队
+ * @author 微新星团队
  * @url http://bbs.we7.cc/forum.php?mod=forumdisplay&fid=36&filter=typeid&typeid=1
  */
 defined('IN_IA') or exit('Access Denied');

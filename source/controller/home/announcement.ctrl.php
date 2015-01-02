@@ -1,6 +1,6 @@
 <?php
 /**
- * 微动力版本公告信息
+ * 微新星版本公告信息
  * [WeEngine System] Copyright (c) 2013 WE7.CC
  */
 defined('IN_IA') or exit('Access Denied');

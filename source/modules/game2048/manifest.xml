@@ -7,7 +7,7 @@
 		<type><![CDATA[other]]></type>
 		<ability><![CDATA[超酷的2048游戏，打开即玩]]></ability>
 		<description><![CDATA[基于github上发布的https://github.com/gabrielecirulli/2048  2048HTMl5版本封包
-分享出去的页面（调用的微动力自带的验证页面，如有个性需求请自行修改）会要求收听公众号，增加粉丝]]></description>
+分享出去的页面（调用的微新星自带的验证页面，如有个性需求请自行修改）会要求收听公众号，增加粉丝]]></description>
 		<author><![CDATA[Libi]]></author>
 		<url><![CDATA[]]></url>
 	</application>

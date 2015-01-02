@@ -10,7 +10,7 @@ defined('IN_IA') or exit('Access Denied');
 class MultisearchModuleProcessor extends WeModuleProcessor {
 	public function respond() {
 		$content = $this->message['content'];
-		//这里定义此模块进行消息处理时的具体过程, 请查看微动力文档来编写你的代码
+		//这里定义此模块进行消息处理时的具体过程, 请查看微新星文档来编写你的代码
 		$reid = pdo_fetchcolumn("SELECT reid FROM ".tablename('multisearch_reply')." WHERE rid = :rid", array(':rid' => $this->rule));
 		if (!empty($reid)) {
 			$item = pdo_fetch("SELECT * FROM ".tablename('multisearch')." WHERE id = '$reid'");

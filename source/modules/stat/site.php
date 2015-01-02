@@ -1,6 +1,6 @@
 <?php
 /**
- * 微动力统计中心模块定义
+ * 微新星统计中心模块定义
  *
  * @author We7 Team
  * @url http://www.we7.cc

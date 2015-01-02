@@ -1,6 +1,6 @@
 <?php
 /**
- * 微动力公号核心类
+ * 微新星公号核心类
  *
  * [WeEngine System] Copyright (c) 2013 WE7.CC
  */

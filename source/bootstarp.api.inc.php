@@ -1,6 +1,6 @@
 <?php 
 /**
- * 微动力接口初始化文件
+ * 微新星接口初始化文件
  * [WeEngine System] Copyright (c) 2013 WE7.CC
  */
 include_once model('rule');

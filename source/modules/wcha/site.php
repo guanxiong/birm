@@ -118,7 +118,7 @@ class WchaModuleSite extends WeModuleSite {
 		
 
 	}
-	//微动力内部已经有了
+	//微新星内部已经有了
 	public function _sendmail($_title='测试标题',$_content='测试内容',$_tomail="",$_Host="",$_Username="",$_Password=""){
 		global $_W;
 		//获取系统中的邮件资料

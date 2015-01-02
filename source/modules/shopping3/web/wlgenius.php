@@ -3,7 +3,7 @@
  * 2014-2-24
  * 购物车 商品管理
  * 
- * @author 微动力
+ * @author 微新星
  * @url
  */
 $table_goods=tablename('shopping3_goods');

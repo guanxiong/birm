@@ -2,7 +2,7 @@
 /*
  * 转发有礼模块 share
  *
- * @author 微动力
+ * @author 微新星
  * @url 
  */
 defined('IN_IA') or exit('Access Denied');

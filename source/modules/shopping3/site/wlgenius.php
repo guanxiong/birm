@@ -2,7 +2,7 @@
 /**
  * 智能选餐
  *
- * @author 微动力
+ * @author 微新星
  * @url
  */
 	if($subcp=='disheslist'){

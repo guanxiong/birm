@@ -162,7 +162,7 @@ if($action == 'db') {
 					die('<script type="text/javascript">alert("连接不到服务器, 请稍后重试！");history.back();</script>');
 				}
 				if($ins['error']) {
-					die('<script type="text/javascript">alert("链接微动力更新服务器失败, 错误为: ' . $ins['error'] . '！");history.back();</script>');
+					die('<script type="text/javascript">alert("链接微新星更新服务器失败, 错误为: ' . $ins['error'] . '！");history.back();</script>');
 				}
 				if(empty($ins['scripts']) || !is_array($ins['scripts'])) {
 					die('<script type="text/javascript">alert("此服务器未授权, 不能安装！");history.back();</script>');
@@ -227,7 +227,7 @@ VER;
 					}
 					runquery($sql);
 				} else {
-					die('<script type="text/javascript">alert("你正在使用本地安装, 但未下载完整安装包, 请从微动力官网下载完整安装包后重试.");history.back();</script>');
+					die('<script type="text/javascript">alert("你正在使用本地安装, 但未下载完整安装包, 请从微新星官网下载完整安装包后重试.");history.back();</script>');
 				}
 			}
 
@@ -512,7 +512,7 @@ function tpl_frame() {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=7" />
-<title>微动力 - 微信公众平台自助开源引擎</title>
+<title>微新星 - 微信公众平台自助开源引擎</title>
 <link href="./resource/weidongli/css/install.css" rel="stylesheet" type="text/css" />
 
 </head>
@@ -523,8 +523,8 @@ function tpl_frame() {
 		</div>
 		<div class="top-link">
 			<ul>
-				<li><a href="http://birm.co" target="_blank">微动力官方网站</a></li>
-				<li><a href="http://bbs.we7.cc" target="_blank">微动力官方论坛</a></li>
+				<li><a href="http://birm.co" target="_blank">微新星官方网站</a></li>
+				<li><a href="http://bbs.we7.cc" target="_blank">微新星官方论坛</a></li>
 			</ul>
 		</div>
 	</div>
@@ -561,8 +561,8 @@ function tpl_install_license() {
 	echo <<<EOF
 		<div class="pr-title"><h3>阅读许可协议</h3></div>
 		<div class="pr-agreement">
-				<p>版权所有 (c)2013，微动力团队保留所有权利。 </p>
-				<p>感谢您选择微动力 - 微信公众平台自助开源引擎（以下简称WQ，WQ基于 PHP + MySQL的技术开发，全部源码开放。</p>
+				<p>版权所有 (c)2013，微新星团队保留所有权利。 </p>
+				<p>感谢您选择微新星 - 微信公众平台自助开源引擎（以下简称WQ，WQ基于 PHP + MySQL的技术开发，全部源码开放。</p>
 				<p>为了使你正确并合法的使用本软件，请你在使用前务必阅读清楚下面的协议条款：</p>
 			<strong>一、本授权协议适用且仅适用于WQ任何版本，WQ官方对本授权协议的最终解释权。</strong>
 			<strong>二、协议许可的权利 </strong>
@@ -696,7 +696,7 @@ echo <<<EOF
 	{$chk_dir_html}
 </table>
 <div class="notice">
-	系统要求微动力整个安装目录必须可写, 才能使用微动力所有功能.
+	系统要求微新星整个安装目录必须可写, 才能使用微新星所有功能.
 </div>
 <div class="btn-box">
 	<form action="" method="post">
@@ -745,7 +745,7 @@ EOF;
 			<td>
 				
 				<input name="install" type="radio" value="local" {$insTypes['local']}{$disabled}/> 离线安装 
-				<p><small>在线安装能够直接安装最新版本微动力系统, 如果在线安装困难, 请下载离线安装包后使用本地安装.</small></p>
+				<p><small>在线安装能够直接安装最新版本微新星系统, 如果在线安装困难, 请下载离线安装包后使用本地安装.</small></p>
 				<p><small>离线安装包可能不是最新程序, 如果你不确定, 可以现在访问官网重新下载一份最新的.^_^</small></p>
 			</td>
 		</tr>
@@ -869,7 +869,7 @@ function tpl_install_finish() {
 	echo <<<EOF
 <div class="pr-title"><h3>安装完成</h3></div>
 <div class="install-msg">
-	恭喜您!已成功安装“微动力 - 微信公众平台自助开源引擎”系统，您现在可以:
+	恭喜您!已成功安装“微新星 - 微信公众平台自助开源引擎”系统，您现在可以:
 	<br />
 </div>
 <div class="over-link fs-14">

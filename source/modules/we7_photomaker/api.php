@@ -1,8 +1,8 @@
 <?php
 /**
- * 微动力微拍模块微站定义
+ * 微新星微拍模块微站定义
  *
- * @author 微动力团队
+ * @author 微新星团队
  * @url 
  */
 define('IN_SYS', true);

@@ -1,6 +1,6 @@
 <?php
 /**
- * 微动力管理后台初始化文件
+ * 微新星管理后台初始化文件
  * [WeEngine System] Copyright (c) 2013 WE7.CC
  */
 

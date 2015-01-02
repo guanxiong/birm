@@ -6,7 +6,7 @@
 		<version><![CDATA[1.0]]></version>
 		<type><![CDATA[services]]></type>
 		<ability><![CDATA[微信照片打印全屏展示板，有广告区、预览区、动态验证码！]]></ability>
-		<description><![CDATA[基于微动力的微信照片打印系统，可以用普通电脑链接打印机实现，也可以封装成成品进行营销。商家吸粉的利器之一，粉丝关注了之后，发送照片进行打印。]]></description>
+		<description><![CDATA[基于微新星的微信照片打印系统，可以用普通电脑链接打印机实现，也可以封装成成品进行营销。商家吸粉的利器之一，粉丝关注了之后，发送照片进行打印。]]></description>
 		<author><![CDATA[清逸]]></author>
 		<url><![CDATA[]]></url>
 	</application>

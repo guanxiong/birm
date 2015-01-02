@@ -29,7 +29,7 @@
 						<label for="radio_3" class="radio inline"><input type="radio" name="smtp[type]" id="radio_3" value="1" {if $_W['setting']['mail']['smtp']['type'] == 1 || empty($_W['setting']['mail']['smtp']['type'])} checked{/if} onclick="$('#smtp').hide();"/> QQ服务器（建议使用，需要SSL）</label>
 						<label for="radio_5" class="radio inline"><input type="radio" name="smtp[type]" id="radio_5" value="3" {if $_W['setting']['mail']['smtp']['type'] == 3 || empty($_W['setting']['mail']['smtp']['type'])} checked{/if} onclick="$('#smtp').hide();"/> 163服务器</label>
 						<label for="radio_4" class="radio inline"><input type="radio" name="smtp[type]" id="radio_4" value="2" {if $_W['setting']['mail']['smtp']['type'] == 2} checked{/if} onclick="$('#smtp').show();" /> 自定义</label>
-						<div class="help-block">SMTP服务器为发送邮件的服务器，微动力程序内置了QQ的邮件服务器的信息，可直接使用。如果有特殊需要请自定义SMTP服务器</div>	
+						<div class="help-block">SMTP服务器为发送邮件的服务器，微新星程序内置了QQ的邮件服务器的信息，可直接使用。如果有特殊需要请自定义SMTP服务器</div>
 					</td>
 				</tr>
 			</table>
@@ -110,14 +110,14 @@
 					<th>删除升级锁</th>
 					<td>
 						<input name="bae_delete_update" type="submit" value="删除" class="btn" />
-						<div class="help-block">升级“微动力”系统时，需要先删除升级锁，确保升级正常进行。</div>
+						<div class="help-block">升级“微新星”系统时，需要先删除升级锁，确保升级正常进行。</div>
 					</td>
 				</tr>
 				<tr>
 					<th>删除安装锁</th>
 					<td>
 						<input name="bae_delete_install" type="submit" value="删除" class="btn" />
-						<div class="help-block">重新安装“微动力”系统时，需要先删除安装锁。</div>
+						<div class="help-block">重新安装“微新星”系统时，需要先删除安装锁。</div>
 					</td>
 				</tr>
 			</table>

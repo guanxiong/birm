@@ -2,7 +2,7 @@
 /**
  * 我的订单
  *
- * @author 微动力
+ * @author 微新星
  * @url
  */
 if($_GPC['d']=='checkout'){
@@ -28,7 +28,7 @@ if($_GPC['d']=='checkout'){
 	}
 	//修改库存
 	foreach ($paramsArr as $v){
-		//这里可以优化，不需要多次查询 by微动力 20140310
+		//这里可以优化，不需要多次查询 by微新星 20140310
 		$_goods=pdo_fetch("SELECT title,total FROM ".tablename('shopping3_goods')." WHERE id = {$v['dishes_id']}");
 		if($v['total']>$_goods['total']){
 			//更改订单
@@ -108,7 +108,7 @@ if($_GPC['d']=='checkout'){
 	//message('提交订单成功，现在跳转至付款页面...', $this->createMobileUrl('pay', array('orderid' => $orderid)), 'success');
  
 }elseif($_GPC['d']=='payment'){
-	//考虑库存 by 微动力 2014-2-14
+	//考虑库存 by 微新星 2014-2-14
 	$orderid = intval($_GPC['OrderId']);
 	$order = pdo_fetch("SELECT * FROM ".tablename('shopping3_order')." WHERE id = :id", array(':id' => $orderid));
 	//获取地址

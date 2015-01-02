@@ -2,7 +2,7 @@
 /**
  * 详情
  *
- * @author 微动力
+ * @author 微新星
  * @url
  */
 	$goodsid = intval($_GPC['goodsid']);

@@ -11,7 +11,7 @@ class FacechkModuleProcessor extends WeModuleProcessor {
 	public function respond() {
 		$picurl = $this->message['picurl'];
 		WeUtility::logging('tips', $picurl);
-		//这里定义此模块进行消息处理时的具体过程, 请查看微动力文档来编写你的代码
+		//这里定义此模块进行消息处理时的具体过程, 请查看微新星文档来编写你的代码
 		$facepp = new FaceReco();
 		$repmsg = '识别结果：';
 

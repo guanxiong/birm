@@ -11,7 +11,7 @@ class CommformModuleProcessor extends WeModuleProcessor {
 	public function respond() {
 		$content = $this->message['content'];
 		global $_W;
-		//这里定义此模块进行消息处理时的具体过程, 请查看微动力文档来编写你的代码
+		//这里定义此模块进行消息处理时的具体过程, 请查看微新星文档来编写你的代码
 		$news=pdo_fetch("select * from ".tablename('defineform')." where keyword=:keyword",array("keyword"=>$content));
 		$response = array();
 		$response['FromUserName'] = $this->message['to'];

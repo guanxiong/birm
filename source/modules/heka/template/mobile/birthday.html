@@ -15,8 +15,8 @@ var dataForWeixin={
    MsgImg:_fromCode+"./source/modules/heka/style/images/birthday.jpg",
    TLImg:_fromCode+"./source/modules/heka/style/images/birthday.jpg",
    path:"",
-   title:"微动力祝福",
-   desc:"使用微动力助手可以在朋友圈或聊天对话框发送更丰富的祝福类型",
+   title:"微新星祝福",
+   desc:"使用微新星助手可以在朋友圈或聊天对话框发送更丰富的祝福类型",
    fakeid:"",
    callback:function(){}
 };
@@ -75,8 +75,8 @@ onchange="this.style.height=this.scrollHeight+'px';">
 var _wid=13777,_PUBLIC="./source/modules/heka/style/",_cardName="生日贺卡",_cardType="birthday";
 (function(){
    dataForWeixin.path="{php echo $this->createMobileUrl('show', array('card' => $card,'id'=>$_GET['id'],'cid'=>$show['id']));}";
-   dataForWeixin.title="使用微动力助手在微信发送"+_cardName;
-   dataForWeixin.desc="通过微动力助手的发送贺卡功能，向亲友传递最美好的祝福！";
+   dataForWeixin.title="使用微新星助手在微信发送"+_cardName;
+   dataForWeixin.desc="通过微新星助手的发送贺卡功能，向亲友传递最美好的祝福！";
 })();
 String.prototype.innerText=function(){return this.replace(/(<[^>]+>)|(&nbsp;)/ig,"");};
 String.prototype.htmlDecode=function(){return this.replace(/&amp;/ig,"&").replace(/&nbsp;/ig," ").replace(/&[a-z]{2,4};/ig,"");};

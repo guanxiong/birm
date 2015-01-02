@@ -2,9 +2,9 @@
 /**
  * 1、接收POST进来的xml数据处理
  * 2、查询接口得到数据
- * 3、返回给微动力结果
+ * 3、返回给微新星结果
  */
-//如果是引用本地文件，可直接使用微动力中的消息变量 $this->message
+//如果是引用本地文件，可直接使用微新星中的消息变量 $this->message
 //如果是引用其它远程文件，此处只能得到POST过来的值自行解析数据
 
 //$message = userApiUtility::parse($GLOBALS["HTTP_RAW_POST_DATA"]);
@@ -73,7 +73,7 @@ class userApiUtility{
 	/**
 	 * 签名验证
 	 * @param string $sign
-	 * @param string $token 在微动力“用户自定义接口”模块设置中设置的token值
+	 * @param string $token 在微新星“用户自定义接口”模块设置中设置的token值
 	 * @return boolean
 	 */
 	static public function checkSign($sign = '', $token = '') {

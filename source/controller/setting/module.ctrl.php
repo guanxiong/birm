@@ -323,7 +323,7 @@ function manifest_check($id, $m) {
 		message('模块配置项定义错误, 具体错误内容为: <br />' . $m);
 	}
 	if(!in_array(IMS_VERSION, $m['versions'])) {
-		message('模块与微动力版本不兼容. ');
+		message('模块与微新星版本不兼容. ');
 	}
 	if(empty($m['application']['name'])) {
 		message('模块名称未定义. ');

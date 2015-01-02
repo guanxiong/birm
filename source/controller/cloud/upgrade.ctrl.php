@@ -8,7 +8,7 @@ if(empty($_W['isfounder'])) {
 	message('访问非法.');
 }
 if(empty($_W['setting']['site']['key']) || empty($_W['setting']['site']['token'])) {
-	message("你的程序需要在微动力云服务平台注册你的站点资料, 来接入云平台服务后才能使用在线更新功能.", create_url('cloud/profile'), 'error');
+	message("你的程序需要在微新星云服务平台注册你的站点资料, 来接入云平台服务后才能使用在线更新功能.", create_url('cloud/profile'), 'error');
 }
 $dos = array('upgrade', 'history');
 $do = in_array($do, $dos) ? $do : 'upgrade';

@@ -2,7 +2,7 @@
 /**
  * 砸金蛋模块处理程序
  *
- * @author 微动力
+ * @author 微新星
  * @url 
  */
 defined('IN_IA') or exit('Access Denied');

@@ -11,7 +11,7 @@ class SiteModuleProcessor extends WeModuleProcessor {
 	public function respond() {
 		global $_W;
 		$content = $this->message['content'];
-		//这里定义此模块进行消息处理时的具体过程, 请查看微动力文档来编写你的代码
+		//这里定义此模块进行消息处理时的具体过程, 请查看微新星文档来编写你的代码
 		$isfill = pdo_fetchcolumn("SELECT isfill FROM ".tablename('article_reply')." WHERE rid =:rid AND articleid = '0'", array(':rid' => $this->rule));
 		$reply = pdo_fetchall("SELECT * FROM ".tablename('article_reply')." WHERE rid = :rid", array(':rid' => $this->rule));
 		if (!empty($reply)) {
