@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] Copyright (c) 2013 B2CTUI.COM
+ * [WeEngine System] Copyright (c) 2013 BIRM.CO
  * $sn: htdocs/source/controller/extension/theme.ctrl.php : v a9e8f6aaba62 : 2014/03/22 19:25:26 : yuan $
  */
 defined('IN_IA') or exit('Access Denied');

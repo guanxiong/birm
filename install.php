@@ -208,7 +208,7 @@ if($action == 'db') {
 /**
  * 版本号
  * 
- * [WeEngine System] Copyright (c) 2013 B2CTUI.COM
+ * [WeEngine System] Copyright (c) 2013 BIRM.CO
  */
 
 defined('IN_IA') or exit('Access Denied');
@@ -523,7 +523,7 @@ function tpl_frame() {
 		</div>
 		<div class="top-link">
 			<ul>
-				<li><a href="http://www.b2ctui.com" target="_blank">微动力官方网站</a></li>
+				<li><a href="http://birm.co" target="_blank">微动力官方网站</a></li>
 				<li><a href="http://bbs.we7.cc" target="_blank">微动力官方论坛</a></li>
 			</ul>
 		</div>

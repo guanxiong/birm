@@ -1,7 +1,7 @@
 <?php
 /**
  * 版权设置
- * [WeEngine System] Copyright (c) 2013 B2CTUI.COM
+ * [WeEngine System] Copyright (c) 2013 BIRM.CO
  */
 defined('IN_IA') or exit('Access Denied');
 include model('setting');

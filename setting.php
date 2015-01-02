@@ -1,6 +1,6 @@
 <?php 
 /**
- * [WeEngine System] Copyright (c) 2013 B2CTUI.COM
+ * [WeEngine System] Copyright (c) 2013 BIRM.CO
  * $sn: htdocs/setting.php : v 1ced5ce4bed8 : 2014/03/19 08:35:31 : veryinf $
  */
 define('IN_SYS', true);

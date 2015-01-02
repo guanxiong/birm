@@ -1,7 +1,7 @@
 <?php 
 /**
  * 云服务诊断
- * [WeEngine System] Copyright (c) 2013 B2CTUI.COM
+ * [WeEngine System] Copyright (c) 2013 BIRM.CO
  */
 
 if(empty($_W['isfounder'])) {
