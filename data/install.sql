@@ -525,10 +525,10 @@ INSERT INTO `ims_news_reply` (`id`, `rid`, `parentid`, `title`, `description`, `
 INSERT INTO `ims_news_reply` (`id`, `rid`, `parentid`, `title`, `description`, `thumb`, `content`, `url`) VALUES(2, 2, 1, '这里是默认图文回复内容', '', 'images/2013/01/112487e19d03eaecc5a9ac87537595.jpg', '这里是默认图文回复原文这里是默认图文回复原文<br />', '');
 
 INSERT INTO `ims_modules` (`mid`, `name`, `type`, `title`, `version`, `ability`, `description`, `author`, `url`, `settings`, `subscribes`, `handles`, `isrulefields`, `issystem`) VALUES
-(1, 'basic', '', '基本文字回复', '1.0', '和您进行简单对话', '一问一答得简单对话. 当访客的对话语句中包含指定关键字, 或对话语句完全等于特定关键字, 或符合某些特定的格式时. 系统自动应答设定好的回复内容.', 'WeEngine Team', 'http://bbs.b2ctui.com/', 0, '', '', 1, 1),
-(2, 'news', '', '基本混合图文回复', '1.0', '为你提供生动的图文资讯', '一问一答得简单对话, 但是回复内容包括图片文字等更生动的媒体内容. 当访客的对话语句中包含指定关键字, 或对话语句完全等于特定关键字, 或符合某些特定的格式时. 系统自动应答设定好的图文回复内容.', 'WeEngine Team', 'http://bbs.b2ctui.com/', 0, '', '', 1, 1),
-(3, 'music', '', '基本语音回复', '1.0', '提供语音、音乐等音频类回复', '在回复规则中可选择具有语音、音乐等音频类的回复内容，并根据用户所设置的特定关键字精准的返回给粉丝，实现一问一答得简单对话。', 'WeEngine Team', 'http://bbs.b2ctui.com/', 0, '', '', 1, 1),
-(4, 'userapi', '', '自定义接口回复', '1.1', '更方便的第三方接口设置', '自定义接口又称第三方接口，可以让开发者更方便的接入微动力系统，高效的与微信公众平台进行对接整合。', 'WeEngine Team', 'http://bbs.b2ctui.com/', 0, '', '', 1, 1),
+(1, 'basic', '', '基本文字回复', '1.0', '和您进行简单对话', '一问一答得简单对话. 当访客的对话语句中包含指定关键字, 或对话语句完全等于特定关键字, 或符合某些特定的格式时. 系统自动应答设定好的回复内容.', 'WeEngine Team', 'http://bbs.we7.cc/', 0, '', '', 1, 1),
+(2, 'news', '', '基本混合图文回复', '1.0', '为你提供生动的图文资讯', '一问一答得简单对话, 但是回复内容包括图片文字等更生动的媒体内容. 当访客的对话语句中包含指定关键字, 或对话语句完全等于特定关键字, 或符合某些特定的格式时. 系统自动应答设定好的图文回复内容.', 'WeEngine Team', 'http://bbs.we7.cc/', 0, '', '', 1, 1),
+(3, 'music', '', '基本语音回复', '1.0', '提供语音、音乐等音频类回复', '在回复规则中可选择具有语音、音乐等音频类的回复内容，并根据用户所设置的特定关键字精准的返回给粉丝，实现一问一答得简单对话。', 'WeEngine Team', 'http://bbs.we7.cc/', 0, '', '', 1, 1),
+(4, 'userapi', '', '自定义接口回复', '1.1', '更方便的第三方接口设置', '自定义接口又称第三方接口，可以让开发者更方便的接入微动力系统，高效的与微信公众平台进行对接整合。', 'WeEngine Team', 'http://bbs.we7.cc/', 0, '', '', 1, 1),
 (5, 'fans', 'customer', '粉丝管理', '1.1', '关注的粉丝管理', '', 'WeEngine Team', 'http://bbs.we7.cc/forum.php?mod=forumdisplay&fid=36&filter=typeid&typeid=1', 0, 'a:8:{i:0;s:4:"text";i:1;s:5:"image";i:2;s:5:"voice";i:3;s:5:"video";i:4;s:8:"location";i:5;s:4:"link";i:6;s:9:"subscribe";i:7;s:11:"unsubscribe";}', 'a:0:{}', 0, 1),
 (6, 'member', 'customer', '微会员', '1.2', '会员管理', '会员管理', 'WeEngine Team', '', 0, 'a:0:{}', '', 0, 1);
 

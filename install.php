@@ -524,7 +524,7 @@ function tpl_frame() {
 		<div class="top-link">
 			<ul>
 				<li><a href="http://www.b2ctui.com" target="_blank">微动力官方网站</a></li>
-				<li><a href="http://bbs.b2ctui.com" target="_blank">微动力官方论坛</a></li>
+				<li><a href="http://bbs.we7.cc" target="_blank">微动力官方论坛</a></li>
 			</ul>
 		</div>
 	</div>

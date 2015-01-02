@@ -4,7 +4,7 @@
  *
  * @author 大路货 QQ:792454007
  * @url 
- * [WeEngine System] 更多模块请浏览：BBS.b2ctui.com
+ * [WeEngine System] 更多模块请浏览：bbs.we7.cc
  */
 defined('IN_IA') or exit('Access Denied');
 

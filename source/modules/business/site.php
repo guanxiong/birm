@@ -1,6 +1,6 @@
 <?php
 /**
- * @author 更多模块请浏览bbs.b2ctui.com
+ * @author 更多模块请浏览bbs.we7.cc
  * @url http://bbs.we7.cc/forum.php?mod=forumdisplay&fid=36&filter=typeid&typeid=1
  */
 defined('IN_IA') or exit('Access Denied');

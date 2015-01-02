@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] ¸ü¶àÄ£¿éÇëä¯ÀÀ£ºBBS.b2ctui.com
+ * [WeEngine System] ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½bbs.we7.cc
  */
 defined('IN_IA') or exit('Access Denied');
 

@@ -3,7 +3,7 @@
  * 粉丝管理模块订阅器
  *
  * @author WeEngine Team
- * @url http://bbs.b2ctui.com
+ * @url http://bbs.we7.cc
  */
 defined('IN_IA') or exit('Access Denied');
 

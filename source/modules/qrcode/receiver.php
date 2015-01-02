@@ -3,7 +3,7 @@
  * 粉丝管理模块订阅器
  *
  * @author WeEngine Team
- * @url http://bbs.b2ctui.com/forum.php?mod=forumdisplay&fid=36&filter=typeid&typeid=1
+ * @url http://bbs.we7.cc/forum.php?mod=forumdisplay&fid=36&filter=typeid&typeid=1
  */
 defined('IN_IA') or exit('Access Denied');
 
