@@ -342,6 +342,7 @@ defined('IN_IA') or exit('Access Denied');
 \$config['setting']['founder'] = '1';
 \$config['setting']['development'] = 0;
 \$config['setting']['referrer'] = 0;
+\$confi['setting']['copyright']['sitename'] = "微新星";
 
 
 // --------------------------  CONFIG UPLOAD  --------------------------- //
