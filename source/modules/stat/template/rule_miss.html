@@ -18,7 +18,7 @@
 							<tbody>
 								{loop $list $row}
 								<tr>
-									<td class="row-hover row-first"><a target="main" href="{php echo create_url('rule/post', array('id' => $row['id']))}">{$row['name']}</a></td>
+									<td class="row-hover row-first">{$row['name']}</td>
 									<td>{$row['module']}</td>
 									<td>
 										<a target="main" href="{php echo $this->createWebUrl('trend', array('id' => $row['rid']))}" class="btn btn-small" title="使用率走势"><i class="icon-bar-chart"></i></a>

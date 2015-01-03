@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  * $sn: origins/source/controller/home/frame.ctrl.php : v 79463ca277ed : 2014/06/13 00:48:48 : RenChao $
  */
 

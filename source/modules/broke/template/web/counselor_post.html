@@ -1,0 +1,76 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li ><a href="{php echo $this->createWebUrl('counselors', array())}">销售员管理</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('counselor',array('op'=>'post'));}">添加邀请码</a></li>
+	<li><a href="{php echo $this->createWebUrl('counselor',array('op'=>'list'));}">邀请码管理</a></li>
+
+</ul>
+	<div class="main">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return validate(this);">
+			<h4>修改销售员设置</h4>
+			<table class="tb">
+				<tr>
+					<th><label for="">排序</label></th>
+					<td>
+						<input type="text" name="listorder" class="span6" value="{$theone['listorder']}" />
+					</td>
+				</tr>
+				<tr>
+					<th><label for="">邀请码</label></th>
+					<td>
+						<input type="text" name="code" class="span6" placeholder="邀请码为销售员认证凭据，请认真填写！" value="{$theone['code']}" {if $theone['status']==0}readonly="true"{/if}/>
+						<input type="hidden" name="code1" class="span6" value="{$theone['code']}" />
+					</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td>
+						<input type="button" onclick="randomCode();" value='随机生成' {if $theone['status']==0}disabled="true"{/if}/>
+						<input type="text" name="num" placeholder="邀请码位数：默认9位"/>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="">说明</label></th>
+					<td>
+						<input type="text" name="content" class="span6" value="{$theone['content']}" />
+					</td>
+				</tr>
+				
+				<tr>
+					<th><label for="">状态</label></th>
+					<td>
+						<label for="isshow1" class="radio inline"><input type="radio" name="status" value="1" id="isshow1" {if $theone['status']=='1'}  checked="true" {/if}> 可用</label>&nbsp;&nbsp;&nbsp;
+						<label for="isshow0" class="radio inline"><input type="radio" name="status" value="0" id="isshow0"  {if $theone['status'] == '0'}  checked="true" {/if}> 已用</label>
+					</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td>
+						<input type="hidden"  name="id" value="{$theone['id']}" />
+						<input type="hidden" name="token" value="{$_W['token']}" />
+						<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					</td>
+				</tr>
+			</table>
+		</form>
+    </div>
+	<script text="text/javascript">
+		function validate() {
+			if($.trim($(':text[name="code"]').val()) == '') {
+				message('必须填写邀请码.', '', 'error');
+				return false;
+			}
+			return true;
+		}
+		
+		function randomCode(){
+			var num = $.trim($(':text[name="num"]').val());
+			$.getJSON("{php echo $this->createWebUrl('counselor', array('op'=>'randomcode'))}&num="+num+"&r="+new Date().getTime(),function(res){
+				$(':text[name="code"]').val(res['message']);
+			});
+			
+		}
+		
+	</script>
+{template 'common/footer'}
+

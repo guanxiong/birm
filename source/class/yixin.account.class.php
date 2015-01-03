@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  * $sn: origins/source/class/yixin.account.class.php : v 45ae3bc23184 : 2014/06/26 03:37:43 : RenChao $
  */
 defined('IN_IA') or exit('Access Denied');

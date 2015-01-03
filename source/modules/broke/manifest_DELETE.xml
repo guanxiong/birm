@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.52">
+	<application setting="true">
+		<name><![CDATA[全民经纪人]]></name>
+		<identifie><![CDATA[broke]]></identifie>
+		<version><![CDATA[3.8]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[全民经纪人]]></ability>
+		<description><![CDATA[全民经纪人]]></description>
+		<author><![CDATA[皓蓝 QQ2725191439]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+  			<entry title="全民经纪人入口设置" do="index" />
+  			<entry title="销售员入口设置" do="counselor" />
+  			<entry title="经理入口设置" do="acmanager" />
+		</cover>
+		<menu>
+			<entry title="佣金管理" do="commission" direct="false" />
+			<entry title="客户管理" do="customer" direct="false" />
+			<entry title="经纪人管理" do="member" direct="false" />
+			<entry title="销售人员管理" do="counselors" direct="false" />
+			<entry title="经理管理" do="acmanagers" direct="false" />
+			<entry title="产品管理" do="loupan" direct="false" />
+			<entry title="身份类型管理" do="identity" direct="false" />
+			<entry title="数据分析" do="stat" direct="false" />
+			<entry title="初始设置" do="rule" direct="false" />
+		</menu>
+	</bindings>
+<install><![CDATA[
+
+CREATE TABLE  IF NOT EXISTS `ims_broke_acmanager` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL,
+  `code` varchar(20) NOT NULL,
+  `listorder` int(5) NOT NULL DEFAULT '0',
+  `createtime` int(10) NOT NULL,
+  `content` text,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `loupan` int(10) NOT NULL,
+  `loupanid` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_broke_assistant` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `realname` varchar(50) NOT NULL,
+  `mobile` varchar(11) NOT NULL COMMENT '手机号码',
+  `company` varchar(50) DEFAULT NULL,
+  `code` varchar(20) NOT NULL,
+  `status` tinyint(1) DEFAULT '1',
+  `flag` tinyint(1) DEFAULT '0' COMMENT '0为销售员，1为经理',
+  `content` text,
+  `createtime` int(10) NOT NULL,
+  `loupan` int(10) NOT NULL DEFAULT '0',
+  `pwd` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_broke_commission` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `mid` int(10) unsigned NOT NULL COMMENT '经纪人ID',
+  `cid` int(10) unsigned DEFAULT NULL COMMENT '客户ID',
+  `commission` int(10) unsigned NOT NULL COMMENT '佣金',
+  `content` text,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `createtime` int(10) NOT NULL,
+  `flag` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_broke_counselor` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL,
+  `code` varchar(20) NOT NULL,
+  `loupan` int(10) unsigned NOT NULL DEFAULT '0',
+  `listorder` int(5) NOT NULL DEFAULT '0',
+  `createtime` int(10) NOT NULL,
+  `content` text,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_broke_customer` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `mobile` varchar(11) NOT NULL COMMENT '手机号码',
+  `realname` varchar(50) NOT NULL,
+  `loupan` int(10) unsigned NOT NULL,
+  `status` tinyint(3) NOT NULL DEFAULT '0',
+  `createtime` int(10) NOT NULL,
+  `updatetime` int(10) DEFAULT NULL,
+  `flag` tinyint(1) DEFAULT '0',
+  `cid` int(10) unsigned DEFAULT '0' COMMENT '该客户从属于某销售员',
+  `allottime` int(10) DEFAULT NULL COMMENT '分配时间',
+  `content` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS `ims_broke_identity` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL,
+  `identity_name` varchar(20) NOT NULL,
+  `iscompany` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否需要填写公司名称，1要，默认不要',
+  `listorder` int(5) NOT NULL DEFAULT '0',
+  `createtime` int(10) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE  IF NOT EXISTS `ims_broke_item` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `lpid` int(10) unsigned NOT NULL,
+  `photoid` int(10) unsigned NOT NULL,
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `item` varchar(1000) NOT NULL DEFAULT '',
+  `url` varchar(100) NOT NULL DEFAULT '',
+  `x` int(3) NOT NULL DEFAULT '0',
+  `y` int(3) NOT NULL DEFAULT '0',
+  `animation` varchar(20) NOT NULL DEFAULT '',
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_photoid` (`photoid`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE  IF NOT EXISTS `ims_broke_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `share_from_user` varchar(50) DEFAULT NULL,
+  `loupan` int(10) unsigned NOT NULL,
+  `browser` varchar(200) NOT NULL,
+  `ip` varchar(20) NOT NULL,
+  `createtime` int(10) NOT NULL COMMENT '时间戳格式',
+  `createtime1` varchar(20) NOT NULL COMMENT '日期格式',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=417 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE  IF NOT EXISTS `ims_broke_logloupan` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `lid` int(10) unsigned NOT NULL,
+  `createtime` int(10) NOT NULL COMMENT '时间戳格式',
+  `createtime1` varchar(20) NOT NULL COMMENT '日期格式',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_broke_loupan` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL DEFAULT '',
+  `icon` varchar(100) NOT NULL DEFAULT '',
+  `share` varchar(100) NOT NULL DEFAULT '',
+  `open` varchar(100) NOT NULL DEFAULT '',
+  `ostyle` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `music` varchar(100) NOT NULL DEFAULT '',
+  `mauto` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `mloop` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `thumb` varchar(100) NOT NULL DEFAULT '',
+  `content` varchar(1000) NOT NULL DEFAULT '',
+  `displayorder` int(10) unsigned NOT NULL DEFAULT '0',
+  `isloop` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `isview` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `dist` varchar(20) DEFAULT '',
+  `city` varchar(20) DEFAULT '',
+  `province` varchar(20) DEFAULT '',
+  `address` varchar(255) DEFAULT '',
+  `lng` varchar(12) DEFAULT '116.403694',
+  `lat` varchar(12) DEFAULT '39.916042',
+  `addr` varchar(255) DEFAULT NULL,
+  `commission` varchar(20) DEFAULT NULL,
+  `tel` varchar(50) DEFAULT NULL,
+  `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `jw_addr` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS `ims_broke_member` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `tjmid` int(10) NOT NULL DEFAULT '0',
+  `from_user` varchar(50) NOT NULL,
+  `realname` varchar(50) NOT NULL,
+  `mobile` varchar(11) NOT NULL COMMENT '手机号码',
+  `bankcard` varchar(20) DEFAULT NULL,
+  `banktype` varchar(20) DEFAULT NULL,
+  `identity` int(10) unsigned NOT NULL,
+  `company` varchar(50) DEFAULT NULL,
+  `createtime` int(10) NOT NULL,
+  `status` tinyint(1) DEFAULT '0',
+  `commission` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_broke_photo` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `lpid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL DEFAULT '',
+  `url` varchar(100) NOT NULL DEFAULT '',
+  `attachment` varchar(100) NOT NULL DEFAULT '',
+  `ispreview` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `displayorder` int(10) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `idx_lpid` (`lpid`)
+) ENGINE=MyISAM AUTO_INCREMENT=191 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_broke_rule` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT '',
+  `rule` text,
+  `terms` text,
+  `createtime` int(10) NOT NULL,
+  `gzurl` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+ALTER ims_fans CHANGE `avatar` `avatar` varchar(255) NOT NULL DEFAULT '';
+
+CREATE TABLE IF NOT EXISTS `ims_broke_protect` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `cname` varchar(50) NOT NULL DEFAULT '',
+  `mobile` varchar(50) NOT NULL,
+  `createtime` int(10) NOT NULL DEFAULT '0',
+  `weid` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+]]></install>
+	<uninstall><![CDATA[
+		
+		DROP TABLE IF EXISTS `ims_broke_acmanager`;
+		DROP TABLE IF EXISTS `ims_broke_assistant`;
+		DROP TABLE IF EXISTS `ims_broke_commission`;
+		DROP TABLE IF EXISTS `ims_broke_counselor`;
+		DROP TABLE IF EXISTS `ims_broke_customer`;
+		DROP TABLE IF EXISTS `ims_broke_identity`;
+		DROP TABLE IF EXISTS `ims_broke_items`;
+		DROP TABLE IF EXISTS `ims_broke_log`;
+		DROP TABLE IF EXISTS `ims_broke_loupan`;
+		DROP TABLE IF EXISTS `ims_broke_member`;
+		DROP TABLE IF EXISTS `ims_broke_rule`;
+		DROP TABLE IF EXISTS `ims_broke_yuyue`;
+		DROP TABLE IF EXISTS `ims_broke_photo`;
+		DROP TABLE IF EXISTS `ims_broke_item`;
+
+	]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

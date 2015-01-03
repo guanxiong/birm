@@ -1,0 +1,118 @@
+{template 'common/header'}
+<style type="text/css">
+table li{padding:5px 0;}
+small a{color:#999;}
+</style>
+<ul class="nav nav-tabs">
+	<li  class="active"><a href="">经纪人信息</a></li>
+	<li  ><a href="{php echo $this->createWebUrl('member',array('op'=>'showteam','id' => $_GPC['id']));}">经纪人团队</a></li>
+</ul>
+<div class="main">
+	<div class="form form-horizontal">
+		<h4>用户详细信息</h4>
+		<table class="tb">
+		<form action="">
+			<input type="hidden" name="id" value="{$user['id']}">
+			<input type="hidden" name="op" value="status">
+			<input type="hidden" name="act" value="module" />
+			<input type="hidden" name="name" value="broke" />
+			<input type="hidden" name="do" value="member" />
+			
+			<tr>
+				<th style="width:200px"><label>设置用户权限</label></th>
+				<td style="text-align: left;">
+					<label class="radio inline"><input type="radio" name="status" value="1" {if $user['status']==1}checked{/if}>可用</label>
+					<label class="radio inline" ><input type="radio" name="status" value="0" {if $user['status']==0}checked{/if}>禁用</label>
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">真实姓名</label></th>
+				<td>
+					{if $user['realname']!=""} {$user['realname']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">手机号码</label></th>
+				<td>
+					{if $user['mobile']!=""} {$user['mobile']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">注册时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $user['createtime']);}
+				</td>
+			</tr>			
+			<tr>
+				<th><label for="">银行卡号</label></th>
+				<td>
+					{if $user['banktype']!=""} {$user['banktype']}－<span id="bankcard">{$user['bankcard']}</span> {else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">身份类型</label></th>
+				<td>
+					{$identitys[$user['identity']]}
+				</td>
+			</tr>
+			{if $user['company']!=''}
+			<tr>
+				<th><label for="">所属公司</label></th>
+				<td>
+					{$user['company']}
+				</td>
+			</tr>
+			{/if}
+			<tr>
+				<th><label for="">客户数量</label></th>
+				<td>
+					{if $count==0}
+						{$count}
+					{else}
+						<a href="{php echo $this->createWebUrl('customer', array('op'=>'mycustomer', 'id'=>$user['id']))}">{$count}</a>
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">当前佣金</label></th>
+				<td>
+					{$user['commission']}
+				</td>
+			</tr>
+			<tr> 
+				<th style="width:200px"><label>用户状态</label></th>
+				<td style="text-align: left;">
+				{if $user['status']==0}
+					<span class="label label-important">未审核</span>
+				{else}
+					<span class="label label-success">已审核</span>
+				{/if}
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />
+					<input type="submit" class="btn btn-primary span3" name="submit"  value="提交" />
+				</td>
+			</tr>
+			</form>
+		</table>
+	</div>
+</div>
+<script type="text/javascript">
+window.onload = function(){
+	var bankcard = "{$user['bankcard']}";
+	//var bankcard = bankcard.toString();
+	if(bankcard != ''){
+		var card = '';
+		for(var i=0; i<5; i++){
+			card  = card + bankcard.substr(4*i,4) + ' ';
+		}
+		window.document.getElementById('bankcard').innerHTML = card;
+	}
+
+}
+
+</script>
+{template 'common/footer'}

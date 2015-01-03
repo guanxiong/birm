@@ -2,7 +2,7 @@
 /**
  * 规则管理
  * 
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  */
 define('IN_SYS', true);
 require 'source/bootstrap.inc.php';

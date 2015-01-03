@@ -2,10 +2,9 @@
 /**
  * 首页
  *
- * @author 微新星
+ * @author 超级无聊
  * @url
- */
- 
+ */ 
 	$oid=$_GPC['oid'];
 	
 	if($subcp=='refund'){

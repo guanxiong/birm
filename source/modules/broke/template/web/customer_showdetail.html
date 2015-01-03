@@ -1,0 +1,141 @@
+{template 'common/header'}
+<style type="text/css">
+table li{padding:5px 0;}
+small a{color:#999;}
+</style>
+<ul class="nav nav-tabs">
+	<li  class="active"><a href="">用户详细信息</a></li>
+</ul>
+<div class="main">
+	<div class="form form-horizontal">
+		<h4>用户详细信息</h4>
+		<table class="tb">
+		<form action="">
+			<input type="hidden" name="id" value="{$user['id']}">
+			<input type="hidden" name="flag" value="{$user['flag']}">
+			<input type="hidden" name="mid" value="{$mid}">
+			<input type="hidden" name="cid" value="{$cid}">
+			<input type="hidden" name="op" value="status">
+			<input type="hidden" name="act" value="module" />
+			<input type="hidden" name="name" value="broke" />
+			<input type="hidden" name="do" value="customer" />
+			
+			<tr>
+				<th style="width:200px"><label>设置客户状态</label></th>
+				<td style="text-align: left;">
+				{php $num = sizeof($status)-1;}
+					{loop $status $key $s}
+						<label class="radio inline"><input type="radio" name="status" value="{$key}" {if $user['status']==$key}checked{/if}>{if $user['status']==$key}<font color="red">{$s}</font>{else}{$s}{/if}{if $num!=$key}&nbsp;—>{/if}</label>
+					{/loop}
+				</td>
+		
+			</tr>
+			{if $user['flag']==1}
+			<tr>
+				<th style="width:200px"><label for="">推荐人</label></th>
+				<td>
+					{if $realname!=""} {$realname}{else}未完善{/if}
+				</td>
+			</tr>
+			{/if}
+			<tr>
+				<th style="width:200px"><label for="">真实姓名</label></th>
+				<td>
+					{if $user['realname']!=""} {$user['realname']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">手机号码</label></th>
+				<td>
+					{if $user['mobile']!=""} {$user['mobile']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">{if $user['flag']==1}预约{else}推荐{/if}</label></th>
+				<td>
+					{$loupans[$user['loupan']]}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">{if $user['flag']==1}预约时间{else}推荐时间{/if}</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $user['createtime']);}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">已发放佣金</label></th>
+				<td>
+					{if $comm==0}0{else}{$comm}{/if}
+				</td>
+			</tr>
+			{if $mid != 0}
+			{if $user['status']==7}
+			<tr>
+				<th><label for="">给{$realname}发放佣金</label></th>
+				<td>
+					<input type="text" placeholder="应充值:{$commission}" name="commission" />
+				</td>
+			</tr>
+			{else}
+			<tr>
+				<th><label for="">给{$realname}发放佣金</label></th>
+				<td>
+					<input type="text" placeholder="" name="commission" >
+				</td>
+			</tr>
+			{/if}
+			{/if}
+				<tr>
+					<th><label for="">备注</label></th>
+					<td>
+						<textarea type="text" name="content" ></textarea>
+					</td>
+				</tr>
+
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />
+					{if $user['status']==7}
+						<input type="submit" class="btn btn-primary span3" name="send"  value="发放" />
+					{else}
+						<input type="submit" class="btn btn-primary span3" name="submit"  value="提交" />
+					{/if}
+				</td>
+			</tr>
+			</form>
+		</table>
+			<table class="table table-hover">
+				<thead class="navbar-inner">
+					<tr>
+						<th class="row-hover" style="text-align: center;">状态</th>
+						<th class="row-hover" style="text-align: center;">支付佣金</th>
+						<th class="row-hover" style="text-align: center;">支付时间</th>
+						<th class="row-hover" style="text-align: center;">备注</th>
+						
+					</tr>
+				</thead>
+				<tbody>
+					{loop $list $v}
+					<tr>
+						<td style="text-align: center;">
+							{$status[$v['status']]}
+						</td>
+						<td style="text-align: center;">
+							{$v['commission']}
+						</td>
+						<td style="text-align: center;">
+							{php echo date('Y-m-d H:i:s',$v['createtime'])}
+						</td>
+						<td style="text-align: center;">
+							{if empty($v['content'])}无{else}{$v['content']}{/if}
+						</td>
+					</tr>
+					{/loop}
+				</tbody>
+			</table>
+							
+	</div>
+</div>
+
+{template 'common/footer'}

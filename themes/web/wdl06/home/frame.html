@@ -1,30 +1,4 @@
 {template 'common/sysheader'}
-<?php 
-if($do == 'global') {
-
-		if (!empty($_W['isfounder'])) {
-			$menuss[] = array(
-		'title' => '用户续费',
-		'items' => array(
-				array('财务明细', create_url('finance/log')),
-				array('用户充值', create_url('finance/userpay')),
-				array('用户编制', create_url('finance/useredit')),
-				array('用户明细', create_url('finance/userlist')),
-				array('到期用户', create_url('finance/status')),
-				array('用户组价格', create_url('finance/group')),
-
-		)
-	);
-
-
-	}
-
-	$mset[] = array(
-		'title' => '网站管理',
-		'menus' => $menuss
-	);
-}
-?>
 <div class="navbar navbar-default" id="navbar">
 <script type="text/javascript">
     try{ace.settings.check('navbar' , 'fixed')}catch(e){}

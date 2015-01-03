@@ -1,7 +1,7 @@
 <?php 
 /**
  * 微站风格管理
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  */
 defined('IN_IA') or exit('Access Denied');
 include model('rule');

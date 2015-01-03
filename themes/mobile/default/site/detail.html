@@ -10,20 +10,56 @@
 <link rel="stylesheet" type="text/css" href="./themes/mobile/default/site/css/share_and_recommond.css" />
 <script type="text/javascript" src="./themes/mobile/default/site/css/jQuery.js"></script>
 <link rel="stylesheet" type="text/css" href="./themes/mobile/default/site/css/font-awesome.css" media="all" />
-<div class="body" style="padding-bottom:60px;">
-  <section class="news_article">
-  <header>
-  <h3 style="font-size:16px;">{$detail['title']}</h3>
-  <small class="gray">作者:{$detail['author']}&nbsp;&nbsp;出处:{$detail['source']}</small>
-  </header>
-  <article>{$detail['content']}</article>
-  </section>
+<style>
+body {
+	background-color: #e7e8eb;
+	font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB",
+		"Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+h2 {
+	line-height: 24px;
+	font-weight: 700;
+	font-size: 20px;
+	word-wrap: break-word;
+	-webkit-hyphens: auto;
+	-ms-hyphens: auto;
+	hyphens: auto
+}
+	 
+</style>
+<div class="body" style="padding-bottom: 60px;">
+	<section class="news_article">
+		<header>
+			<h2 style="font-size:20px;">{$detail['title']}</h2>
+			<br>
+		<!--  <hr style="borber:1px blue solid;position: relative;" /> -->
+			<small class="gray"> &nbsp; {php echo date("Y-m-d", $detail['createtime']);} 
+				&nbsp;&nbsp;
+				<!--{if empty($detail['author'])} {$_W['account']['name']} {else} {$detail['author']} {/if} -->
+				&nbsp;&nbsp; 
+				{php $alink = $_W['account']['accountlink']}
+				<a href="{$alink}" target="_blank"> {if empty($detail['source'])}{$_W['account']['name']} {/if} </a>
+			</small>
+		</header>
+		
+		<img data-src="/themes/mobile/default/images/0.gif" data-ratio="0.1" data-w="500" style="width: auto !important; visibility: visible !important; height: auto !important;" src="/themes/mobile/default/images/0.gif">
+		
+		<article>{$detail['content']}</article>
+	</section>
+	
+		
 </div>
 
 <div id="mbutton">
-  <span class="img-rounded"><i class="icon-home"></i><a style="color:white" href="{php echo create_url('mobile/channel', array('name'=>'index', 'weid'=>$_W['weid']))}">首页</a></span>
-	<span class="img-rounded" onclick="$('#mcover').show()"><i class="icon-share-alt"></i> 转发</span>
-	<span class="img-rounded" onclick="$('#mcover').show()"><i class="icon-group"></i> 分享</span>
+	<a class="source"
+		href="{php echo $this->createMobileUrl('detail', array('id' => $detail['id'], 'weid' => $_W['weid']))}"
+		target="_blank"> 阅读原文</a> <!--<span class="img-rounded">
+		<i class="icon-home"></i>
+	 <a style="color: white" href="{php echo create_url('mobile/channel', array('name'=>'index', 'weid'=>$_W['weid']))}">首页</a>  
+	</span>-->
+	<span class="img-rounded" onclick="$('#mcover').show()"> <i class="icon-share-alt"></i> 转发</span> 
+	<span class="img-rounded" onclick="$('#mcover').show()"><i class="icon-group"></i> 分享 </span>
 </div>
 <div id="mcover" onclick="$(this).hide()"><img src="./source/modules/site/template/image/guide.png"></div>
 

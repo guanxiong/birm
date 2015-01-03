@@ -93,8 +93,8 @@
 					<div class="module" data-layout="25409" data-type="info">
 						<h4 class="module-title">{$image['title']}</h4>
 						<div class="module-content">
-							<a href="{php echo $this->createMobileUrl('imageDetail',array("bid"=>$brand['id'],'id'=>$image['id']))}"><img
-								src="{$_W['attachurl']}{$image['url']}" width="100%" /></a>
+							<a href="{php echo $this->createMobileUrl('imageDetail',array('bid' =>$brand['id'],'id'=>$image['id']))}">
+							<img src="{$_W['attachurl']}{$image['url']}" width="100%" /></a>
 						</div>
 					</div>
 					{/loop} {/if} {if !empty($products)}

@@ -25,7 +25,7 @@
 		{loop $templates $item}
 		<li>
 			<div class="template-style-pic"> <!--设为默认风格时class中加on-->
-				<div class="title"><a onclick="return confirm('确定卸载此模板吗？')" href="{php echo create_url('extension/theme/uninstall', array('templateid' => $item['name']))}" class="icon-remove" title="移除"></a><span class="pull-left">WeiDongLi({$item['name']})</span></div>
+				<div class="title"><a onclick="return confirm('确定卸载此模板吗？')" href="{php echo create_url('extension/theme/uninstall', array('templateid' => $item['name']))}" class="icon-remove" title="移除"></a><span class="pull-left">{$item['title']} ({$item['name']})</span></div>
 				<img src="./themes/mobile/{$item['name']}/preview.jpg" />
 				<span class="icon-ok"></span>
 				<a href="javascript:;" onclick="ajaxpreview('{$item['id']}');return false;" class="btn pull-right" style="position:absolute; bottom:5px; right:5px;">预览</a>
@@ -47,7 +47,7 @@
 		{loop $uninstallTemplates $item}
 		<li>
 			<div class="template-style-pic">
-				<div class="title"><span class="pull-left">WeiDongLi({$item['name']})</span></div>
+				<div class="title"><span class="pull-left">{$item['title']} ({$item['name']})</span></div>
 				<img src="./themes/mobile/{$item['name']}/preview.jpg" />
 				<span class="icon-ok"></span>
 				<a href="{php echo create_url('extension/theme/install', array('templateid' => $item['name']))}" class="btn btn-danger pull-right" style="position:absolute; bottom:5px; right:5px;">安装</a>

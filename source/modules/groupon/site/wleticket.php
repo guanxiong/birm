@@ -2,7 +2,7 @@
 /**
  * 首页
  *
- * @author 微新星
+ * @author 超级无聊
  * @url
  */
  	$type=$_GPC['type'];
@@ -66,5 +66,4 @@
 			$list[$k]['tip2']="已过期";
 		}
 	}
-	
-    include $this->template('wl_eticket');
+	    include $this->template('wl_eticket');

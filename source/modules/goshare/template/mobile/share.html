@@ -1,0 +1,842 @@
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<title>{$theme['headtitle']}</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="author" content="Joel">
+<meta name="keywords" content="{$theme['headtitle']}">
+<meta name="description" content="{$theme['headtitle']}">
+<!--viewport 等比 不缩放-->
+<meta http-equiv="cleartype" content="on">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<!--页面不缓存-->
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--Wap前端重置样式与字体样式-->
+<link rel="stylesheet" type="text/css"
+	href="./source/modules/goshare/template/css/Joel-basewap.css">
+<link rel="stylesheet" type="text/css"
+	href="./source/modules/goshare/template/css/iconfont.css">
+<!--Wap前端GMU样式-->
+<link rel="stylesheet" type="text/css"
+	href="./source/modules/goshare/template/css/gmu.css">
+<!--Wap前端GMU重置样式-->
+<link rel="stylesheet" type="text/css"
+	href="./source/modules/goshare/template/css/Joel-basegmu.css">
+<!--Wap前端Zepto函数库1.0-->
+<script type="text/javascript" charset="utf-8"
+	src="./source/modules/goshare/template/js/zepto.min.js"></script>
+<!--Wap前端Joel公共封装函数库-针对ZEPTO-->
+<script type="text/javascript" charset="utf-8"
+	src="./source/modules/goshare/template/js/Joel-basewap.js"></script>
+<!--Wap前端Joel-Gmu公共函数库-->
+<script type="text/javascript" charset="utf-8"
+	src="./source/modules/goshare/template/js/gmu.min.js"></script>
+<style>
+.gmu-media-detect {
+	-moz-transition: width 0.001ms;
+	width: 0;
+	position: absolute;
+	clip: rect(1px, 1px, 1px, 1px);
+}
+
+@media screen and (width: 1920px) {
+	#gmu-media-detect0 {
+		width: 1px;
+	}
+}
+</style>
+<!--Wap前端Joel-Gmu公共函数库-针对Gmu-->
+<script type="text/javascript" charset="utf-8"
+	src="./source/modules/goshare/template/js/Joel-basegmu.js"></script>
+<style>
+#J-loading {
+	width: 100%;
+	height: 100%;
+	background: #FFFFFF;
+	z-index: 999999;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: block;
+	min-height: 100%
+}
+
+#J-loading p {
+	width: 100%;
+	height: 2em;
+	line-height: 2em;
+	font-size: 1.2em;
+	font-weight: border;
+	position: relative;
+	top: 40%;
+	color: #333;
+	text-align: center
+}
+
+body {
+	background: none;
+	color:;
+	#333
+}
+
+h1 {
+	font-size: 1.2em;
+	line-height: 1.5em;
+}
+
+.pd10 {
+	padding: 10px;
+}
+
+.jfx-line {
+	border-bottom: solid 1px #d9d8dc;
+	height: 10px;
+	margin-bottom: 10px;
+	line-height: 10px;
+}
+
+.jfx-gre {
+	background-position: 10px 40px;
+	background-repeat: no-repeat;
+	background-position: 10px 10px;
+	background-size: 40px 40px;
+	width: 100%;
+	height: 60px;
+	background-color: #EBEBEB;
+	border-bottom: solid 1px #D9D8DC;
+	display: block;
+}
+
+.jfx-gre-ct {
+	padding: 10px 10px 0px 60px;
+}
+
+.jfx-gre .tt {
+	font-weight: bold;
+	line-height: 1.5em;
+}
+
+.jfx-gre-img1 {
+	background-image: url('./source/modules/goshare/template/images/1.png');
+}
+
+.jfx-gre-img2 {
+	background-image: url('./source/modules/goshare/template/images/2.png');
+}
+
+.jfx-gre-img3 {
+	background-image: url('./source/modules/goshare/template/images/3.gif');
+}
+
+.jfx-gre em.dt {
+	color: #909090;
+	font-size: 12px;
+	font-stretch: normal;
+}
+
+.jfx-down-tt {
+	background-image:
+		url('./source/modules/goshare/template/images/down.png');
+	background-repeat: no-repeat;
+	background-position: center right;
+	background-size: 19px 19px;
+	line-height: 38px;
+	height: 38px;
+}
+
+a.report,a.report:visited {
+	color: #B0B0B0;
+	text-decoration: underline;
+	font-size: 12px;
+}
+
+.jfx-downtab-down {
+	display: none;
+	border: solid 1px #D9D8DC;
+	border-top: none;
+	background-color: #FFF6E5;
+}
+
+.jfx-bb {
+	font-size: 1.2em;
+	line-height: 1.5em;
+}
+
+.jfx-jp-num {
+	font-weight: bold;
+	font-size: 20px;
+	margin-right: 10px;
+}
+
+a.jfx-tel,a.jfx-tel:visited {
+	padding: 5px 12px;
+	background: #F0F0F0;
+	border-radius: 4px;
+	border: solid 1px #D7D7D8;
+	color: #474747;
+}
+
+.share_timeline_button {
+	display: inline-block;
+	letter-spacing: 0;
+	font-size: 20px;
+	padding: 5px 0 0 45px;
+	height: 35px;
+	background: url(./source/modules/goshare/template/images/share.png)
+		no-repeat 15px 7px;
+	background-size: 24px 24px;
+	margin: 0;
+	font-weight: bold;
+}
+
+.share_timeline {
+	border-radius: 4px;
+	border: 0;
+	height: 50px;
+	color: #ffffff;
+	text-align: center;
+	background: #5ea831;
+	width: 100%;
+}
+/*奖品列表*/
+.visitor {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-radius: 4px;
+	background-color: #F8F8F8;
+	padding: 10px;
+	border: solid 1px #D9D8DC;
+}
+
+.v-share {
+	border-bottom: solid 1px #EEEEEE;
+	text-align: center;
+	font-size: 16px;
+}
+
+.v-share-count {
+	font-weight: bold;
+	font-size: 30px;
+	color: #347F0C;
+	margin: 0 10px;
+}
+
+.v-share-icon {
+	padding-top: 5px;
+	border-bottom: solid 1px #EEEEEE;
+}
+
+.v-share-icon-container {
+	margin-left: -5px;
+}
+
+.v-share-light-gray {
+	width: 22px;
+	height: 22px;
+	display: inline-block;
+	background: url(./source/modules/goshare/template/images/share-gray.png)
+		no-repeat;
+	background-size: 22px 22px;
+	margin: 5px 0 5px 5px;
+}
+
+.v-share-light-color {
+	width: 22px;
+	height: 22px;
+	display: inline-block;
+	background:
+		url(./source/modules/goshare/template/images/share-color.png)
+		no-repeat;
+	background-size: 22px 22px;
+	margin: 5px 0 5px 5px;
+}
+
+.v-share-surplus {
+	border-bottom: solid 1px #EEEEEE;
+	padding: 10px 0;
+	font-size: 14px;
+}
+
+.visitor_over_time {
+	font-weight: bold;
+	color: red;
+	font-size: 20px;
+	margin: 0 2px;
+}
+
+ul.v-prize li {
+	border: solid 1px #EEEEEE;
+	border-radius: 2px;
+	margin-bottom: 10px;
+	font-size: 16px;
+	background: #F2F2F2;
+	padding: 10px;
+}
+
+.v-prize-get-enable {
+	width: 100%;
+	display: block;
+	line-height: 46px;
+	font-size: 20px;
+	border-radius: 4px;
+	color: #fff;
+	letter-spacing: 4px;
+	background: #ff6046; /* Old browsers */
+	background: -moz-linear-gradient(top, #ff6046 0, #e84c32 63%, #d5462e 96%);
+	/* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ff6046),
+		color-stop(63%, #e84c32), color-stop(96%, #d5462e));
+	/* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ff6046 0, #e84c32 63%, #d5462e 96%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ff6046 0, #e84c32 63%, #d5462e 96%);
+	/* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #ff6046 0, #e84c32 63%, #d5462e 96%);
+	/* IE10+ */
+	background: linear-gradient(to bottom, #ff6046 0, #e84c32 63%, #d5462e 96%);
+	/* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(              startColorstr='#ff6046',
+		endColorstr='#d5462e', GradientType=0); /* IE6-9 */
+	border: 0;
+}
+
+#jplist {
+	display: none;
+}
+
+.J-foot {
+	text-align: center;
+}
+
+.J-content img {
+	width: 100%
+}
+/*表单样式*/
+.J-k {
+	border-radius: 10px;
+}
+
+.J-k-tt span {
+	padding: 0px 20px;
+	height: 2em;
+	line-height: 2em;
+	color: #FFFFFF;
+	background: #DA5431;
+	display: block;
+	border-radius: 10px 10px 0px 0px;
+}
+
+.J-k-ct {
+	padding: 10px;
+	border: 1px dashed #BDA46E;
+	border-top: none
+}
+
+.J-fm li {
+	line-height: 2em;
+	height: 2em;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	width: 100%;
+	color: #DA5431;
+}
+
+.J-fm li span {
+	width: 20%;
+	text-align: center;
+	display: block;
+	float: left;
+}
+
+.J-fm li input {
+	display: block;
+	float: left;
+	background: none;
+	border: none;
+	border-bottom: 1px solid #BDA46E;
+	width: 80%;
+	line-height: 2em;
+	height: 2em;
+	box-shadow: none;
+	outline: none;
+}
+
+.J-fm li select {
+	display: block;
+	float: left;
+	background: none;
+	border: none;
+	border-bottom: 1px solid #BDA46E;
+	width: 80%;
+	line-height: 2em;
+	height: 2em;
+	box-shadow: none;
+	outline: none;
+}
+/*全屏幕按钮*/
+button.J-btn {
+	width: 100%;
+	background: #DA5431;
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 2em;
+	height: 2em;
+	font-size: 1.2em;
+	box-shadow: none;
+	border: none;
+	border-radius: 10px;
+}
+
+button.J-btn50 {
+	width: 45%;
+	background: #DA5431;
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 2em;
+	height: 2em;
+	font-size: 1.2em;
+	box-shadow: none;
+	border: none;
+	border-radius: 10px;
+}
+
+a.J-btn,a.J-btn:visited {
+	display: block;
+	width: 100%;
+	background: #DA5431;
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 2em;
+	height: 2em;
+	font-size: 1.2em;
+	box-shadow: none;
+	border: none;
+	border-radius: 10px;
+}
+
+a.J-btn50,a.J-btn50:visited {
+	display: block;
+	width: 45%;
+	background: #DA5431;
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 2em;
+	height: 2em;
+	font-size: 1.2em;
+	box-shadow: none;
+	border: none;
+	border-radius: 10px;
+}
+</style>
+
+</head>
+<body style="">
+	<div style="display: none;" id="J-loading">
+		<p>努力加载中...</p>
+	</div>
+	<div id="J-wrap">
+
+		<div id="Joel-wrap-main">
+
+			<div class="pd2">
+				<h1>{$showtitle}</h1>
+				<p class="blank">&nbsp;</p>
+				<div class="J-toppic">
+					{if $theme['themelogo']}<img src="{$_W['attachurl']}{$theme['themelogo']}" width="100%" />{else}<img src="{php echo $this->geturl(1);}" width="100%" />{/if}	
+				</div>
+				<p class="blank">&nbsp;</p>
+				<div class="jfx-gre jfx-gre-img1">
+					<div class="jfx-gre-ct">
+						<p class="tt">{$theme['undertaker']}</p>
+						<div style="margin-top: 5px;">
+							<em class="dt fl">{$begintime}</em>
+							<div class="clear"></div>
+						</div>
+					</div>
+				</div>
+				<div class="jfx-gre jfx-gre-img2 jfx-downtab">
+					<div class="jfx-gre-ct">
+						<div class="jfx-down-tt">
+							<p class="tt" style="line-height: 38px;">活动规则公示</p>
+						</div>
+					</div>
+				</div>
+				<div style="display: none;" class="jfx-downtab-down">
+					<div class="pd10">
+						<p>
+							<b class="jfx-bb">活动规则</b>
+						</p>
+						<div>
+							<p></p>
+							<ul class="publicity-expand list-paddingleft-2"
+								style="box-sizing: border-box; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: rgb(217, 216, 220); padding: 10px; position: relative; color: rgb(51, 51, 51); font-family: 微软雅黑, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; white-space: normal; background-color: rgb(255, 246, 229);">
+								<li><p>奖品设置</p></li> {loop $giftlist $item}
+								<li><p>{$item[sort]}.
+										集满{$item[needscore]}个分享，送{$item[stdname]}{if !empty($item[desc])}({$item[desc]}){/if}一{$item[unit]}（共{$item[amount]}{$item[unit]}）。</p></li>
+								{/loop}
+								<li><p>活动时间</p></li>
+								<li><p>{$begintime} — {$endtime}</p></li>
+								<li><p>兑奖方法</p></li>
+								<li><p>{$theme[place]}</p></li>
+								<li><p>咨询电话</p></li>
+								<li><p>
+										{$theme[tel]}<a href="tel:{$theme[tel]}" target="_self"
+											textvalue="&nbsp;直接拨打"><span class="publicity-call-icon"
+											style="box-sizing: border-box; position: relative; top: 1px; display: inline-block; font-family: 'Glyphicons Halflings'; -webkit-font-smoothing: antialiased; line-height: 1;"></span>&nbsp;直接拨打</a>
+									</p></li>
+							</ul>
+							<p></p>
+						</div>
+						<p class="jfx-line">&nbsp;</p>
+					</div>
+				</div>
+				<div class="jfx-gre jfx-gre-img3 jfx-downtab">
+					<div class="jfx-gre-ct">
+						<div class="jfx-down-tt">
+							<p class="tt" style="line-height: 38px;">如何集分享</p>
+						</div>
+					</div>
+				</div>
+				<div style="display: none;" class="jfx-downtab-down">
+					<div class="pd10">
+						<p></p>
+						<p>
+							<span
+								style="font-size: 12px; font-family: 微软雅黑, 'Microsoft YaHei';"></span>
+						</p>
+						<fieldset
+							style="text-align: -webkit-auto; white-space: normal; padding: 5px 12px; margin: 0px; border: 1px solid rgb(118, 146, 60); color: rgb(51, 51, 51); font-family: 微软雅黑, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; max-width: 100%; orphans: 2; widows: 2; border-top-left-radius: 1em; border-top-right-radius: 1em; border-bottom-right-radius: 1em; border-bottom-left-radius: 1em; box-sizing: border-box !important; word-wrap: break-word !important; background-color: rgb(244, 249, 243);">
+							<legend
+								style="padding: 0px; border-width: 0px 0px 1px; border-bottom-style: solid; border-bottom-color: rgb(229, 229, 229); width: inherit; margin: 0px; font-size: 21px; line-height: inherit; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;">
+								<span
+									style="max-width: 100%; margin: 0px; padding: 0px; font-family: arial, helvetica, sans-serif; font-size: 14px; box-sizing: border-box !important; word-wrap: break-word !important;"><strong
+									style="max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"><span
+										style="max-width: 100%; margin: 0px; padding: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color: rgb(255, 251, 240); box-sizing: border-box !important; word-wrap: break-word !important; background-color: rgb(118, 146, 60);">参与方式</span></strong></span>
+							</legend>
+							<p
+								style="margin-top: 10px; margin-bottom: 10px; box-sizing: border-box; line-height: normal;">
+								<span style="box-sizing: border-box; font-size: 12px;">1.
+									分享本页到微信朋友圈</span>
+							</p>
+							<p
+								style="margin-top: 0px; margin-bottom: 10px; box-sizing: border-box; line-height: normal;">
+								<span style="box-sizing: border-box; font-size: 12px;">2.
+									页面被朋友圈的好友分享一次，计数+1</span>
+							</p>
+							<p
+								style="margin-top: 0px; margin-bottom: 10px; box-sizing: border-box; line-height: normal;">
+								<span style="box-sizing: border-box; font-size: 12px;">3.
+									满足活动集分享数，兑奖获取兑奖码</span>
+							</p>
+							<p
+								style="margin-top: 0px; margin-bottom: 10px; box-sizing: border-box; line-height: normal;">
+								<span style="box-sizing: border-box; font-size: 12px;">4.
+									凭兑奖码根据要求的兑奖方式换取相应奖品</span>
+							</p>
+							<p>
+								<span style="box-sizing: border-box; font-size: 12px;"><br></span>
+							</p>
+						</fieldset>
+						<p></p>
+					</div>
+				</div>
+				<p class="blank">&nbsp;</p>
+				<p class="blank">&nbsp;</p>
+				<div class="J-content">
+					<p></p>{if !empty($theme['ad1'])}
+					<fieldset
+						style="text-align: -webkit-auto; white-space: normal; padding: 5px 12px; margin: 0px; border: 1px solid rgb(118, 146, 60); color: rgb(51, 51, 51); font-family: 微软雅黑, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; max-width: 100%; orphans: 2; widows: 2; border-top-left-radius: 1em; border-top-right-radius: 1em; border-bottom-right-radius: 1em; border-bottom-left-radius: 1em; box-sizing: border-box !important; word-wrap: break-word !important; background-color: rgb(244, 249, 243);">
+						<legend
+							style="padding: 0px; border-width: 0px 0px 1px; border-bottom-style: solid; border-bottom-color: rgb(229, 229, 229); width: inherit; margin: 0px; font-size: 21px; line-height: inherit; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;">
+							<span
+								style="max-width: 100%; margin: 0px; padding: 0px; font-family: arial, helvetica, sans-serif; font-size: 14px; box-sizing: border-box !important; word-wrap: break-word !important;"><strong
+								style="max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"><span
+									style="max-width: 100%; margin: 0px; padding: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color: rgb(255, 251, 240); box-sizing: border-box !important; word-wrap: break-word !important; background-color: rgb(118, 146, 60);">{$theme['ad1']}</span></strong></span>
+						</legend>
+						<p
+							style="margin-top: 10px; margin-bottom: 10px; box-sizing: border-box; line-height: normal;">
+							<span style="box-sizing: border-box; font-size: 12px;"></span>
+						</p>
+						{loop $conten1 $item}
+						<p>
+							<span style="font-size: 12px; text-align: -webkit-auto;">&nbsp;&nbsp;{$item}</span><br>
+						</p>
+						{/loop}
+					</fieldset>{/if}
+					{if !empty($theme['ad2'])}
+					<fieldset
+						style="text-align: -webkit-auto; white-space: normal; padding: 5px 12px; margin: 0px; border: 1px solid rgb(118, 146, 60); color: rgb(51, 51, 51); font-family: 微软雅黑, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; max-width: 100%; orphans: 2; widows: 2; border-top-left-radius: 1em; border-top-right-radius: 1em; border-bottom-right-radius: 1em; border-bottom-left-radius: 1em; box-sizing: border-box !important; word-wrap: break-word !important; background-color: rgb(244, 249, 243);">
+						<legend
+							style="padding: 0px; border-width: 0px 0px 1px; border-bottom-style: solid; border-bottom-color: rgb(229, 229, 229); width: inherit; margin: 0px; font-size: 21px; line-height: inherit; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;">
+							<span
+								style="max-width: 100%; margin: 0px; padding: 0px; font-family: arial, helvetica, sans-serif; font-size: 14px; box-sizing: border-box !important; word-wrap: break-word !important;"><strong
+								style="max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"><span
+									style="max-width: 100%; margin: 0px; padding: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color: rgb(255, 251, 240); box-sizing: border-box !important; word-wrap: break-word !important; background-color: rgb(118, 146, 60);">{$theme['ad2']}</span></strong></span>
+						</legend>
+						{loop $conten2 $item}
+						<p style="margin-top: 10px; margin-bottom: 10px; box-sizing: border-box; line-height: normal;">
+							<span style="box-sizing: border-box; font-size: 12px;">{$item}</span>
+						</p>
+						{/loop}
+					</fieldset>{/if}
+					 {if !empty($theme['ad3'])} 
+					<fieldset style="padding: 5px 12px; margin: 0px; border: 1px solid rgb(118, 146, 60); color: rgb(51, 51, 51); font-family: 微软雅黑, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; text-align: -webkit-auto; white-space: normal; max-width: 100%; orphans: 2; widows: 2; border-top-left-radius: 1em; border-top-right-radius: 1em; border-bottom-right-radius: 1em; border-bottom-left-radius: 1em; box-sizing: border-box !important; word-wrap: break-word !important; background-color: rgb(244, 249, 243);">
+					<legend style="padding: 0px; border-width: 0px 0px 1px; border-bottom-style: solid; border-bottom-color: rgb(229, 229, 229); width: inherit; margin: 0px; font-size: 21px; line-height: inherit; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;">
+					<span style="box-sizing: border-box !important; max-width: 100%; margin: 0px; padding: 0px; font-family: arial, helvetica, sans-serif; font-size: 14px; word-wrap: break-word !important;"><strong style="max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;">
+					<span style="box-sizing: border-box !important; max-width: 100%; margin: 0px; padding: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color: rgb(255, 251, 240); word-wrap: break-word !important; background-color: rgb(118, 146, 60);">{$theme['ad3']}</span></strong></span></legend>
+					<p style="margin-top: 0px; max-width: 100%; word-wrap: normal; min-height: 1em; white-space: pre-wrap; padding: 0px; box-sizing: border-box !important;"><span style="box-sizing: border-box; font-size: 12px; font-family: 微软雅黑, 'Microsoft YaHei';"> &nbsp; {$theme['ad3content']}</span></p>
+					<img src="{$_W['attachurl']}{$theme['ad3pic']}" title="{$theme['stdcode']}" alt="" style="box-sizing: border-box; border: 0px; vertical-align: middle;" width="100%">
+					<p style="margin-top: 0px; max-width: 100%; word-wrap: normal; min-height: 1em; white-space: pre-wrap; padding: 0px; box-sizing: border-box !important;"></p></fieldset>{/if}
+					<fieldset
+						style="padding: 5px 12px; margin: 0px; border: 1px solid rgb(118, 146, 60); color: rgb(51, 51, 51); font-family: 微软雅黑, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; text-align: -webkit-auto; white-space: normal; max-width: 100%; orphans: 2; widows: 2; border-top-left-radius: 1em; border-top-right-radius: 1em; border-bottom-right-radius: 1em; border-bottom-left-radius: 1em; box-sizing: border-box !important; word-wrap: break-word !important; background-color: rgb(244, 249, 243);">
+						<legend
+							style="padding: 0px; border-width: 0px 0px 1px; border-bottom-style: solid; border-bottom-color: rgb(229, 229, 229); width: inherit; margin: 0px; font-size: 21px; line-height: inherit; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;">
+							<span
+								style="box-sizing: border-box !important; max-width: 100%; margin: 0px; padding: 0px; font-family: arial, helvetica, sans-serif; font-size: 14px; word-wrap: break-word !important;"><strong
+								style="max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"><span
+									style="box-sizing: border-box !important; max-width: 100%; margin: 0px; padding: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color: rgb(255, 251, 240); word-wrap: break-word !important; background-color: rgb(118, 146, 60);">参与方式</span></strong></span>
+						</legend>
+						<p
+							style="box-sizing: border-box; margin-top: 10px; margin-bottom: 10px; line-height: normal;">
+							<span style="box-sizing: border-box; font-size: 12px;">1.
+								分享本页到微信朋友圈</span>
+						</p>
+						<p
+							style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: normal;">
+							<span style="box-sizing: border-box; font-size: 12px;">2.
+								页面被朋友圈的好友分享一次，计数+1</span>
+						</p>
+						<p
+							style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: normal;">
+							<span style="box-sizing: border-box; font-size: 12px;">3.
+								满足活动集分享数，兑奖获取兑奖码</span>
+						</p>
+						<p
+							style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; line-height: normal;">
+							<span style="box-sizing: border-box; font-size: 12px;">4.
+								凭兑奖码根据要求的兑奖方式换取相应奖品</span>
+						</p>
+					</fieldset>
+					<p
+						style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; color: rgb(51, 51, 51); font-family: 微软雅黑, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; white-space: normal; background-color: rgb(244, 249, 243);">
+						<br style="box-sizing: border-box;">
+					</p>
+					<fieldset
+						style="padding: 5px 12px; margin: 0px; border: 1px solid rgb(118, 146, 60); color: rgb(51, 51, 51); font-family: 微软雅黑, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; text-align: -webkit-auto; white-space: normal; max-width: 100%; orphans: 2; widows: 2; border-top-left-radius: 1em; border-top-right-radius: 1em; border-bottom-right-radius: 1em; border-bottom-left-radius: 1em; box-sizing: border-box !important; word-wrap: break-word !important; background-color: rgb(244, 249, 243);">
+						<legend
+							style="padding: 0px; border-width: 0px 0px 1px; border-bottom-style: solid; border-bottom-color: rgb(229, 229, 229); width: inherit; margin: 0px; font-size: 21px; line-height: inherit; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;">
+							<span
+								style="box-sizing: border-box !important; max-width: 100%; margin: 0px; padding: 0px; font-family: arial, helvetica, sans-serif; font-size: 14px; word-wrap: break-word !important;"><strong
+								style="max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"><span
+									style="box-sizing: border-box !important; max-width: 100%; margin: 0px; padding: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color: rgb(255, 251, 240); word-wrap: break-word !important; background-color: rgb(118, 146, 60);">奖品设置</span></strong></span>
+						</legend>
+						{loop $giftlist $item}
+						<p>
+							<span style="font-size: 12px;">{$item[sort]}. 集满
+								{$item[needscore]}个分享，送{$item[stdname]} {if !empty($item[desc])}({$item[desc]}){/if}一{$item[unit]}（共{$item[amount]}{$item[unit]}）。</span>
+						</p>
+						{/loop}
+					</fieldset>
+					<p
+						style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; color: rgb(51, 51, 51); font-family: 微软雅黑, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; white-space: normal; background-color: rgb(244, 249, 243);">
+						<br style="box-sizing: border-box;">
+					</p>
+					<fieldset
+						style="padding: 5px 12px; margin: 0px; border: 1px solid rgb(118, 146, 60); color: rgb(51, 51, 51); font-family: 微软雅黑, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; text-align: -webkit-auto; white-space: normal; max-width: 100%; orphans: 2; widows: 2; border-top-left-radius: 1em; border-top-right-radius: 1em; border-bottom-right-radius: 1em; border-bottom-left-radius: 1em; box-sizing: border-box !important; word-wrap: break-word !important; background-color: rgb(244, 249, 243);">
+						<legend
+							style="padding: 0px; border-width: 0px 0px 1px; border-bottom-style: solid; border-bottom-color: rgb(229, 229, 229); width: inherit; margin: 0px; font-size: 21px; line-height: inherit; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;">
+							<span
+								style="box-sizing: border-box !important; max-width: 100%; margin: 0px; padding: 0px; font-family: arial, helvetica, sans-serif; font-size: 14px; word-wrap: break-word !important;"><strong
+								style="max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"><span
+									style="box-sizing: border-box !important; max-width: 100%; margin: 0px; padding: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color: rgb(255, 251, 240); word-wrap: break-word !important; background-color: rgb(118, 146, 60);">兑奖方式</span></strong></span>
+						</legend>
+						<p
+							style="box-sizing: border-box; margin-top: 10px; margin-bottom: 10px;">
+							<span style="box-sizing: border-box; font-size: 12px;">1.活动时间：<strong
+								style="box-sizing: border-box;"><span
+									style="box-sizing: border-box;">{$begintime} —
+										{$endtime}</span></strong></span>
+						</p>
+						<p
+							style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;">
+							<span style="box-sizing: border-box; font-size: 12px;">2.凭获得的兑奖码拨打电话&nbsp;<a
+								href="tel:{$theme[tel]}" target="_self">{$theme[tel]}</a>&nbsp;提前预约,兑奖地址：
+								{$theme[place]}
+							</span>
+						</p>
+						<p
+							style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;">
+							<span style="box-sizing: border-box; font-size: 12px;">3.兑奖码只在活动期间有效，过期作废</span>
+						</p>
+					</fieldset>
+				</div>
+				<!--预约开始-->
+				<form action="" method="post">
+					<input name="shopid" value="4" type="hidden"> <input
+						name="imgid" value="9" type="hidden"> <input name="vipid"
+						value="" type="hidden">
+					<i class="iconfont">
+						<p class="blank">&nbsp;</p>
+						<p class="blank">&nbsp;</p>
+						<div class="clear"></div> <!-- 分享提示向导-->
+						<div id="timelineGuid" onclick="this.style.display='none'"
+							style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 2000; display: none;">
+							<img src="./source/modules/goshare/template/images/guide.png"
+								style="position: fixed; right: 18px; top: 5px; width: 260px; height: 180px; z-index: 2001;">
+						</div>
+						<button class="share_timeline btn-block" id="btnShare" type="">
+							<span class="share_timeline_button"
+								onclick="document.getElementById('timelineGuid').style.display='block';return false;">点击右上角分享到朋友圈</span>
+						</button> <!--集分享开始-->
+						<div class="visitor" id="divVisitor">
+							<div class="v-share">
+								您已集<span class="v-share-count">{$member[score]}</span>个分享
+							</div>
+							<div class="v-share-icon">
+								<div class="v-share-icon-container">
+								<?php 
+								  for($i==0;$i <= $showflower;$i++){
+									echo '<span class="v-share-light-color"></span>';
+									}
+								
+								?>	
+								</div>
+							</div>
+							<div class="v-share-surplus">
+								活动剩余时间：<span class="visitor_over_time">{$leftdays}</span> 天 <span class="visitor_over_time">{$lefthour}</span> 小时 <span class="visitor_over_time">{$leftmm}</span> 分钟
+							</div>
+							<p class="blank">&nbsp;</p>
+							<div class="v-prize-get">
+								<span class="v-prize-get-tip">点击兑换礼品：</span>
+							</div>
+							<p class="blank">&nbsp;</p>
+							<ul class="v-prize">
+								{loop $giftlist $item}
+								<li data-jpid="{$item[id]}" data-jpfx="{$item[needscore]}" data-nowjf="{$member[score]}" 
+									data-jpname="{$item[stdname]}" data-imgid="{$member[score]}" class="zjstart"><span
+									class="fr">剩余{$item[left]}份</span>{$item[stdname]}
+									<div class="clear"></div></li> {/loop}
+							</ul>
+						</div>
+						<button type="button" class="v-prize-get-enable" id="myjp">我的奖品</button>
+						<div class="visitor" id="jplist">
+							<div class="v-prize-get">
+								<span class="v-prize-get-tip">我的奖品：</span>
+							</div>
+							<p class="blank">&nbsp;</p>
+							<ul class="v-prize">
+								<li><span class="fr">兑换码</span>奖品名称<div class="clear"></div></li>
+								{loop $memgiftlist $item}
+								<li ><span class="fr" style="font-size: 12px;">{$item[code]}+{$item[codetime]}</span>{$item[giftname]}<div class="clear"></div></li>
+								{/loop}
+							</ul>
+						</div>
+						<p class="blank">&nbsp;</p>
+						<p class="blank">&nbsp;</p> <!--正文结束-->
+					</i>
+				</form>
+			</div>
+			<i class="iconfont"> </i>
+		</div>
+		<i class="iconfont"> <!--底部开始-->
+			<div class="J-foot">
+				<p></p>
+				<p style="text-align: center;">
+					<img
+						src="{$_W['attachurl']}{$theme['footpic']}" title="商家联系信息" style="width: 210px; height: 24px;">
+				</p>
+				<p></p>
+			</div>
+			<p class="blank">&nbsp;</p>
+			<p class="blank">&nbsp;</p> <!--底部结束-->
+		</i>
+	</div>
+	{php $geturl = $this->createMobileUrl('convert',array('themeid'=>$theme[id]));}
+	<i class="iconfont"> <script>
+		//页面加载完后执行
+		Zepto(function($) {
+			//适配屏幕宽度		 
+			var rewidth = $('#J-wrap').width();
+			var reheight = $(window).height();
+
+			//下拉tab
+			var downtab = $('.jfx-downtab');
+			var downtabct = $('jfx-downtab-ct');
+			$(downtab).on('click', function() {
+				$(this).next().toggle();
+			});
+			//我的奖品
+			$('#myjp').on('click', function() {
+				$('#jplist').toggle();
+			});
+			//中奖特效
+			var jps = $('.zjstart');
+			$(jps).on('click', function() {
+				var jpid = $(this).data('jpid');
+				var jpname = $(this).data('jpname');
+				var jpfx = $(this).data('jpfx');
+				var imgid = $(this).data('imgid');
+				var nowjf = $(this).data('data-nowjf');
+				var msg = '您确认使用' + jpfx + '个分享来兑换[' + jpname + ']吗？';
+				if(Number(jpfx) > imgid){
+					var msg2 = '您的积分还不够哦，关注公众号转发朋友圈让小伙伴帮你赚积分吧';
+					alert(msg2);
+				}else{
+					var okfun = function() {
+						this.destroy();
+						window.location.href = '{php echo $geturl}'+'&giftid='+jpid;
+					}
+					Joel_gmuAlert('确认?', msg, false, okfun);
+				}
+			});
+
+			$("#J-loading").hide();
+		});
+	</script> <!-- 分享送积分开始 --> 
+	<script type="text/javascript" src="./source/modules/goshare/template/js/WeixinApi.js" ></script>
+	{php $shareurl = $_W['siteroot'].$this->createMobileUrl('index',array('whoshare'=>$whoshare,'whosharecookie'=>$cookid,'themeid'=>$theme[id]));}
+	{php $geturl = $this->createMobileUrl('sharecallback',array('addshare'=>$addshare,'addsharecookie'=>$addsharecookie,'themeid'=>$theme[id]));}
+	<script>
+		WeixinApi.ready(function(Api){
+		    // 微信分享的数据
+		    var wxData = {
+		        "imgUrl":'{$_W['attachurl']}{$theme['sharepic']}',
+		        "link":"{php echo $shareurl}",
+		        "desc":'{$theme['headtitle']}',
+		        "title":'{$theme['themetitle']}'
+		    };
+		    // 分享的回调
+		    var wxCallbacks = {
+		        // 分享成功
+		        confirm:function (resp) {
+		            $.get("{php echo $geturl}",function(responseData){
+		                alert(responseData);
+		            });
+		        },
+				// 整个分享过程结束
+				all : function(resp,shareTo) {
+				}
+		    };
+		    // 预留
+		    var wxCallbacks2 = {
+		        // 分享成功
+		        confirm:function (resp) {
+		        	alert('ceshi');
+		        },
+				// 整个分享过程结束
+				all : function(resp,shareTo) {
+				}
+		    };
+		    Api.shareToFriend(wxData, wxCallbacks);
+		    Api.shareToTimeline(wxData, wxCallbacks);
+		    Api.shareToWeibo(wxData, wxCallbacks);
+			// iOS上，可以直接调用这个API进行分享，一句话搞定
+			Api.generalShare(wxData,wxCallback);
+		});
+</script>
+	</i>
+	<div class="gmu-media-detect" id="gmu-media-detect0"></div>
+</body>
+</html>

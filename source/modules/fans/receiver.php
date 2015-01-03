@@ -2,8 +2,8 @@
 /**
  * 粉丝管理模块订阅器
  *
- * @author WeEngine Team
- * @url http://bbs.we7.cc
+ * @author WeNewstar Team
+ * @url http://bbs.birm.co
  */
 defined('IN_IA') or exit('Access Denied');
 

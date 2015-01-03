@@ -47,13 +47,13 @@ small a{color:#999;}
 			<tr>
 				<th><label for="">作者</label></th>
 				<td>
-					WeiDongLi
+					{$module['author']}
 				</td>
 			</tr>
 			<tr>
 				<th><label for="">发布页</label></th>
 				<td>
-					http://birm.co
+					{$module['url']}
 				</td>
 			</tr>
 			{if $module['settings']}
@@ -70,7 +70,7 @@ small a{color:#999;}
 				<th><label for="">版本不兼容</label></th>
 				<td>
 					当前模块与系统版本不兼容
-					<a href="{php echo create_url('setting/module/convert', array('id' => $module['name']))}">转换模块版本</a>
+					<a href="{php echo create_url('extension/module/convert', array('id' => $module['name']))}">转换模块版本</a>
 				</td>
 			</tr>
 			{else}
@@ -79,8 +79,8 @@ small a{color:#999;}
 				<th><label for="">卸载及更新</label></th>
 				<td>
 					当前模块已安装
-					{if $module['upgrade']}<a href="{php echo create_url('setting/module/upgrade', array('id' => $module['name']))}" style="color:red;">更新</a>{/if}
-					{if !$module['issystem']}<a href="{php echo create_url('setting/module/uninstall', array('id' => $module['name']))}">卸载此模块</a>{/if}
+					{if $module['upgrade']}<a href="{php echo create_url('extension/module/upgrade', array('id' => $module['name']))}" style="color:red;">更新</a>{/if}
+					{if !$module['issystem']}<a href="{php echo create_url('extension/module/uninstall', array('id' => $module['name']))}">卸载此模块</a>{/if}
 				</td>
 			</tr>
 			{else}
@@ -88,7 +88,7 @@ small a{color:#999;}
 				<th><label for="">安装模块</label></th>
 				<td>
 					当前模块还未安装
-					<a href="{php echo create_url('setting/module/install', array('id' => $module['name']))}">安装此模块</a>
+					<a href="{php echo create_url('extension/module/install', array('id' => $module['name']))}">安装此模块</a>
 				</td>
 			</tr>
 			{/if}
@@ -118,8 +118,8 @@ small a{color:#999;}
 					</label>
 					{/loop}
 					{/if}
-					<span class="help-block">订阅特定的消息类型后, 此消息类型的消息到达微新星微信系统后将会以通知的方式(消息数据只读, 并不能返回处理结果)调用模块的接受器, 用这样的方式可以实现全局的数据统计分析等功能. 请参阅 <a href="http://birm.co">微新星科技模块消息订阅</a></span>
-					<div class="alert-warning alert" style="width:auto;margin-top:5px;">注意: 订阅的消息信息是只读的, 只能用作分析统计, 不能更改, 也不能改变微新星微信处理主流程</div>
+					<span class="help-block">订阅特定的消息类型后, 此消息类型的消息到达微新星系统后将会以通知的方式(消息数据只读, 并不能返回处理结果)调用模块的接受器, 用这样的方式可以实现全局的数据统计分析等功能. 请参阅 <a href="http://www.we7.cc/docs/#flow-module-subscribe">模块消息订阅</a></span>
+					<div class="alert-warning alert" style="width:auto;margin-top:5px;">注意: 订阅的消息信息是只读的, 只能用作分析统计, 不能更改, 也不能改变微新星处理主流程</div>
 				</td>
 			</tr>
 			<tr>

@@ -2,7 +2,7 @@
 /**
  * 接口文件
  * 
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  */
 define('IN_API', true);
 require 'source/bootstrap.inc.php';

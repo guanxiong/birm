@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns="http://www.we7.cc" versionCode="0.52">
 	<application setting="false">
-		<name><![CDATA[预约与调查]]></name>
+		<name><![CDATA[预约表单]]></name>
 		<identifie><![CDATA[research]]></identifie>
-		<version><![CDATA[1.52]]></version>
-		<type><![CDATA[business]]></type>
+		<version><![CDATA[1.56]]></version>
+		<type><![CDATA[other]]></type>
 		<ability><![CDATA[可以快速生成调查表单或则预约记录]]></ability>
 		<description><![CDATA[]]></description>
 		<author><![CDATA[微新星]]></author>
-		<url><![CDATA[http://bbs.we7.cc]]></url>
+		<url><![CDATA[http://bbs.birm.co]]></url>
 	</application>
 	<platform>
 		<handles>

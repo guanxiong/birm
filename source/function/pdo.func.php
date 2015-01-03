@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  * $sn: origins/source/function/pdo.func.php : v 79bfcdb13bc9 : 2014/06/12 01:20:22 : RenChao $
  */
 defined('IN_IA') or exit('Access Denied');

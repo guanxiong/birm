@@ -2,10 +2,9 @@
 /**
  * 详情
  *
- * @author 微新星
+ * @author 超级无聊
  * @url
- */
-	$tid = intval($_GPC['tid']);
+ */	$tid = intval($_GPC['tid']);
 	$condition= " AND starttime<".time()." AND endtime>".time()." ";
 	$groupon = pdo_fetch("SELECT * FROM ".tablename('groupon_list')." WHERE id={$tid} AND weid = '{$_W['weid']}' AND status = '1' $condition ORDER BY listorder DESC, id DESC LIMIT 8");
 	 

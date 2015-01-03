@@ -2,10 +2,9 @@
 /**
  * 列表
  *
- * @author 微新星
+ * @author 超级无聊
  * @url
- */
-		
+ */		
 	$cateid=$_GPC['cateid'];
 	if($cateid==0){
 		//全部列表

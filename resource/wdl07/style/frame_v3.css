@@ -9,7 +9,7 @@ body.showmenu .left1{display:block;}
 body.showmenu .right1{left:249px;}
 body.hidemenu .left1{display:none;}
 body.hidemenu .right1{left:0;}
-.bg{position:absolute;width:100%;top:0;z-index:1;height:100%;}
+.bg{width:100%;top:0;z-index:1;height:100%;}
 .left1{
 	position:absolute;
 	top:0;
@@ -67,10 +67,29 @@ body.hidemenu .right1{left:0;}
 .header-right .user-level{text-align:right;color:#FFF;}
 .top-toolbar{text-align:center;margin-bottom:8px;}
 .top-toolbar .upgrade,.top-toolbar .qanda,.top-toolbar .tuiguang{cursor:pointer;float:right;margin-right:8px;font-size:15px;line-height:32px;color:#FFF;height:32px;width:102px;}
-.gongzhonghao{cursor:pointer;float:right;margin-right:8px;font-size:15px;line-height:32px;color:#FFF;height:32px;width:160px;background-color:#28aaca;}
+.gongzhonghao{
+	cursor: pointer;
+	float: right;
+	margin-right: 8px;
+	font-size: 15px;
+	line-height: 32px;
+	color: #FFF;
+	height: 32px;
+	width: 160px;
+	background-color: #339900;
+}
+.gongzhonghao a:hover{
+	color: #FFF;
+}
 .top-toolbar a{color:#FFF;font-size:15px;}
 .top-toolbar .upgrade{background-color:#E16B11;}
+.top-toolbar .upgrade a:hover{
+	color: #FFF;
+}
 .top-toolbar .tuiguang{background-color:#28aaca;}
+.top-toolbar .tuiguang a:hover{
+	color: #FFF;
+}
 .top-toolbar .qanda{background-color:#6EAB34;}
 .top-toolbar .backtomenu{float:right;width:12px;height:32px;background-color:#a6a6a6;}
 .main .frame-wrapper{position:absolute;top:90px;bottom:10px;width:100%;display:none;}
@@ -88,14 +107,42 @@ body.hidemenu .right1{left:0;}
 .main-menu-list .shenmi .bimg{width:120px;height:92px;}
 .main-menu-group{margin:0 5px 5px;}
 .main-menu-group .title,.main-help-group .title,.main-qanda-group .title{color:#FFF;font-size:20px;margin-bottom:13px;}
+
 .main-menu-group .title .icon,.main-help-group .title .icon,.main-qanda-group .title .icon{float:left;width:2px;height:16px;background-color:#FFF;margin:2px 8px 0 2px;}
-.main-menu-group .menu{float:left;cursor:pointer;width:120px;margin-left:10px;margin-bottom:15px;height:92px;background-color:#c6bf91;position:relative;}
+.main-menu-group .menu{float:left;cursor:pointer;width:120px;margin-left:10px;margin-bottom:15px;height:92px;background-color:#fb9a01;position:relative;}
 .group-yxtg .menu{background-color:#8ea89d;}
 .group-yw .menu{background-color:#574052;}
 .main-menu-group .menu-xsrw{background-color:#e16b11;}
 .main-menu-group .menu .name{color:#FFF;position:absolute;bottom:6px;right:10px;font-size:14px;}
 .main-menu-group .menu .bimg{position:absolute;left:8px;top:10px;}
 .right1 .menu ul{display:none;}
+
+
+.main-menu-group .menu2{
+	float: left;
+	cursor: pointer;
+	width: 113px;
+	margin-left: 10px;
+	margin-bottom: 15px;
+	height: 92px;
+	background-color: #c6bf91;
+	position: relative;
+}
+.group-yxtg .menu2{background-color:#8ea89d;}
+.group-yw .menu2{background-color:#574052;}
+.main-menu-group .menu2-xsrw{
+	background-color: #19a858;
+}
+.main-menu-group .menu2 .name{
+	color: #FFF;
+	position: absolute;
+	bottom: 6px;
+	right: 10px;
+	font-size: 12px;
+}
+.main-menu-group .menu2 .bimg{position:absolute;left:8px;top:10px;}
+.right1 .menu2 ul{display:none;}
+
 .showpage .main-menu-list,.showpage .main-help-list,.showpage .main-qanda-list{display:none;}
 .showpage .frame-wrapper{display:block;}.showhelp .main-help-list{display:block;}
 .showhelp .main-menu-list,.showhelp .main-qanda-list{display:none;}
@@ -173,7 +220,7 @@ body.hidemenu .right1{left:0;}
 .tipsy-e .tipsy-arrow{top:50%;margin-top:-4px;right:0;width:5px;height:9px;background-position:top right;}
 .tipsy-w .tipsy-arrow{top:50%;margin-top:-4px;left:0;width:5px;height:9px;}
 
-/*以下为修改后的微新星common.css*/
+/*以下为修改后的微擎common.css*/
 @charset "utf-8";
 
 #header {

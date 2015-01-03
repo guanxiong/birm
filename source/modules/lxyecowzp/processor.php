@@ -6,7 +6,7 @@
 
  *
 
- * @author WeEngine Team
+ * @author WeNewstar Team
 
  * @url http://www.we7.cc
 

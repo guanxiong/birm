@@ -1,0 +1,199 @@
+{template 'common/header'}
+<style>
+.theme_list{overflow:hidden; padding-top:15px;}
+.theme_list li{border:1px #DDD solid; width:320px; float:left; margin-left:15px; margin-bottom:10px;}
+.theme_list li .theme_pic{display:block; width:320px; height:160px; overflow:hidden;}
+.theme_list li .theme_pic img{width:320px;}
+.theme_list li .theme_main{padding:10px; overflow:hidden;}
+.theme_list li .theme_main .theme_title{font-size:16px; height:20px; width:217px; overflow:hidden;}
+.theme_list li .theme_main .pull-left{color:#999;}
+</style>
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('giftset', array('op' => 'post'));}">添加奖品</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('giftset', array('op' => 'display'));}">管理奖品</a></li>
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" onsubmit="return checkpost(this)" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="giftid" value="{$gift['id']}" />
+		<h4>奖品编辑</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">奖品名称<span class="red">*</span></label></th>
+				<td>
+					<input type="text" name="stdname" class="span5" value="{$gift['stdname']}" placeholder="奖品名称" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">奖品序号<span class="red">*</span></label></th>
+				<td>
+					<input type="text" id="sort" name="sort" class="span5" value="{$gift['sort']}" placeholder="奖品排列序号，为空默认排序" />
+				</td>
+			</tr>		
+			<tr>
+				<th><label for="">所属分组<span class="red">*</span></label></th>
+				<td><select name="groupid" id="groupid"
+					class="input-xlarge" style="float: left">
+					{loop $groups $group}
+						<option value="{$group['id']}" {if $group['id'] == $gift['groupid']} selected = "selected" {/if} >{$group['groupname']}</option>
+				    {/loop}
+				</select> 
+				<script>
+					if ("{$gift['groupname']" != "") {
+						document.getElementById("groupid").value = "{$gift['groupname']}";
+					}
+				</script></td>
+			</tr>
+			<tr>
+				<th><label for="">奖品单位<span class="red">*</span></label></th>
+				<td>
+					<input type="text" id="unit" name="unit" class="span5" value="{$gift['unit']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">所需积分<span class="red">*</span></label></th>
+				<td>
+					<input type="text" id="needscore" name="needscore" class="span5" value="{$gift['needscore']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">奖品数量<span class="red">*</span></label></th>
+				<td>
+					<input type="text" id="amount" name="amount" class="span5" value="{$gift['amount']}" placeholder="奖品数量" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">剩余数量<span class="red">*</span></label></th>
+				<td>
+					<input type="text" name="left" id="left" class="span5" value="{$gift['left']}" placeholder="剩余数量" />
+				</td>
+			</tr>	
+			<tr>
+				<th><label for="">奖品简介<span class="red">*</span></label></th>
+				<td>
+					<input type="text" name="desc" class="span5" value="{$gift['desc']}" placeholder="奖品简介" />
+				</td>
+			</tr>						
+		<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+	//kindeditor($('.richtext-clone'));
+</script>
+ 
+<script type="text/javascript">
+	function checkpost(form) {
+
+ 		if (!form['stdname'].value) {
+			$("input[name='stdname']").focus();
+			alert('主人，奖品名称不能为空');
+			return false;
+		}
+ 		
+ 		if (form['sort'].value) {
+		       var sort = $('#sort').val();
+		       if (sort.search(/^[0-9]*$/) == -1) {
+					alert('主人，请输入数字序号');
+					return false;
+				}
+		}
+ 		
+ 		
+ 		if (!form['groupid'].value) {
+			$("select[name='groupid']").focus();
+			alert('主人，先创建一个奖品分组吧');
+			return false;
+		}
+ 		if (!form['unit'].value) {
+			$("input[name='unit']").focus();
+			alert('主人，请输入奖品的单位，例如：份、个、斤');
+			return false;
+		}else{ 
+		       var mobile = $('#unit').val();
+		       if (mobile.search(/^[\u4e00-\u9fa5]{0,}$/) == -1) {
+					alert('主人，请输入正确的奖品单位，例如：份、个、斤');
+					return false;
+				}
+		}
+
+ 		if (!form['needscore'].value) {
+			$("input[name='needscore']").focus();
+			alert('主人，请输入兑换奖品所需要积分');
+			return false;
+		}else{ 
+		       var mobile = $('#needscore').val();
+		       if (mobile.search(/^\+?[1-9][0-9]*$/) == -1) {
+		    	   $("input[name='needscore']").focus();
+		    	   	alert('主人，请输入非零的正整数积分');
+					return false;
+				}
+		}		
+ 		if (!form['amount'].value) {
+			$("input[name='amount']").focus();
+			alert('主人，请输入奖品的数量');
+			return false;
+		}else{ 
+		       var mobile = $('#amount').val();
+		       if (mobile.search(/^\+?[1-9][0-9]*$/) == -1) {
+		    	   $("input[name='amount']").focus();
+		    	   	alert('主人，请输入非零的正整数数量');
+					return false;
+				}
+		}
+ 		if (!form['left'].value) {
+		}else{ 
+		       var left1 = $('#left').val();
+		       if (left1.search(/^\+?[1-9][0-9]*$/) == -1) {
+					alert('主人，请输入非零的正整数数量');
+					return false;
+				}
+		       var mobile = $('#amount').val();
+		       if(parseInt(left1)>parseInt(mobile)){ 
+		    	   alert('主人，剩余数量不能大于奖品总数');
+					return false;
+		       }
+		       
+		}
+ 		
+ 		
+		return true; 
+	}
+</script>
+ 
+{elseif $operation == 'display'}
+ <div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="min-width:100px;max-width:300px;">所属分组 </th>
+					<th style="min-width:100px;max-width:300px;">奖品序号 </th>
+					<th style="min-width:100px;max-width:300px;">奖品名称 </th>
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td style="min-width:100px;max-width:300px;">{$item['groupname']}</td>
+					<td style="max-width:10px;">{$item['sort']}</td>
+					<td style="max-width:10px;">{$item['stdname']}</td>
+					<td style="text-align:right; min-width:60px;">
+						<a href="{php echo $this->createWebUrl('giftset', array('op' => 'post','giftid' => $item['id']));}" title="编辑" class="btn btn-small"><i class="icon-edit"></i></a>
+						<a href="{php echo $this->CreateWebUrl('giftset', array('op' => 'delete','giftid' => $item['id']));}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除" class="btn btn-small"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+{/if}
+{template 'common/footer'}

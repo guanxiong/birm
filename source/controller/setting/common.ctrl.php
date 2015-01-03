@@ -1,7 +1,7 @@
 <?php 
 /**
  * BAE相关设置选项
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  */
 include model('setting');
 if (checksubmit('bae_delete_update') || checksubmit('bae_delete_install')) {

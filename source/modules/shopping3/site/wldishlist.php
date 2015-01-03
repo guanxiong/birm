@@ -68,7 +68,7 @@
         "sort"=>$v['displayorder'],
         "flag"=>"0",
 		);
-		$goods = pdo_fetchall("SELECT * FROM ".tablename('shopping3_goods')." WHERE weid = '{$weid}'  and pcate=".$v['id']."");
+		$goods = pdo_fetchall("SELECT * FROM ".tablename('shopping3_goods')." WHERE weid = '{$weid}' and status = '1' and pcate=".$v['id']."");
 		foreach($goods  as $k2=>$v2){
 			$cate['dishes'][]=array(
 				"id"=>$v2['id'],

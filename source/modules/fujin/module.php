@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] ���ģ���������bbs.we7.cc
+ * [WNS]���ģ���������BBS.birm.co
  */
 defined('IN_IA') or exit('Access Denied');
 

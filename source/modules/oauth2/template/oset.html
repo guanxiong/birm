@@ -1,0 +1,155 @@
+{template 'common/header'}
+<script type="text/javascript" src="./resource/script/jquery-ui-1.10.3.min.js"></script>
+<script type="text/javascript">
+function checkit(){
+	var type=$(':radio[name="type"]:checked').val();
+	if(type==1){
+		var appid = $('#appid_1').val();
+		var appsecret = $('#appsecret_1').val();
+		if(appid==''||appsecret==''){
+			alert('请填写appid或appsecret..');
+			return false;
+		}else{
+			return true;
+		}
+	}else{
+		return true;
+	}
+	alert('提交信息不完整..');
+	return false;
+}
+function trimit(o){
+	return o.replace(/^\s+|\s+$/g,"");
+}
+$(function(){
+	var type =$(':radio[name="type"]:checked').val();
+	if(type==1){
+			$("#oid_2").hide();
+		}else{
+			$("#oid_1").hide();
+		}
+		$(':radio[name="type"]').click(function(){
+			var type=$(':radio[name="type"]:checked').val();
+			if(type==1){
+				$("#oid_2").hide();
+				$("#oid_1").show();
+			}else{
+				$("#oid_1").hide();
+				$("#oid_2").show();
+			}
+		});
+		var host=$('#host').val();
+		var url = '{php echo $this->createWebUrl('Osetting',array('foo'=>'getit'));}';
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data:{id:host},
+			dataType: 'json',
+			error: function(){alert('系统正忙..稍后再试..');},
+			success: function(data){
+				$('#appid').val(data.key);
+				$('#appsecret').val(data.secret);
+			}
+		});
+});
+
+$('#host').ready(function(){
+	$(this).change(function(){
+		var host=$('#host').val();
+		var url = '{php echo $this->createWebUrl('Osetting',array('foo'=>'getit'));}';
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data:{id:host},
+			dataType: 'json',
+			error: function(){alert('系统正忙..稍后再试..');},
+			success: function(data){
+				$('#appid').val('');
+				$('#appsecret').val('');
+				$('#appid').val(data.key);
+				$('#appsecret').val(data.secret);
+			}
+		});
+	});
+
+});
+</script>
+<div class="main">
+{if $_W['isfounder']}
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data" onsubmit="return checkit()">
+
+	<h4>参数设置</h4>
+	<div style="float: left;margin-left: 50px;">
+	<table class="tb">
+	<tr>
+		<th>启用自定义</th>
+				<td><label for="type"></label>
+				<input type="radio" name="type" value="1" {if $host['type']==1}checked="true"{/if}id="type_1">是&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="type" value="2" {if $host['type']==2||empty($host)||$host['type']==0}checked="true"{/if} id="type_2">否
+				</td>
+	</tr>
+				<tbody id = "oid_2">
+					<tr>
+				<th>宿主高级服务号</th>
+				<td><label for="host"></label>
+				  <select name="host" id="host">
+				                  {loop $list $r}
+				    <option value="{$r['weid']}" {if $host['hostweid']==$r['weid']}selected="selected"{/if}>{$r['name']}</option>
+				                    {/loop}
+						          </select>
+							    <div class="help-block">设置宿主高级服务号</div></td>
+							</tr>
+							<tr>
+				<th>AppID(应用ID)</th>
+				<td><label for="appid"></label>
+				<input type="text" name="appid" id="appid" title="appid" value="" disabled="disabled" class="span6">
+							</tr>
+							<tr>
+				<th>AppSecret(应用密钥)</th>
+				<td><label for="appsecret"></label>
+				<input type="text" name="appsecret" id="appsecret" title="appsecret" value="" disabled="disabled" class="span6">
+				</td>
+							</tr>
+
+				</tbody>
+				<tbody id = "oid_1">
+				<tr>
+				<th>AppID(应用ID)</th>
+				<td><label for="appid_1"></label>
+				<input type="text" name="appid_1" id="appid_1" title="appid" value="{$host['key']}" class="span6">
+				</td>
+							</tr>
+							<tr>
+				<th>AppSecret(应用密钥)</th>
+				<td><label for="appsecret_1"></label>
+				<input type="text" name="appsecret_1" id="appsecret_1" title="appsecret" value="{$host['secret']}" class="span6">
+				</td>
+							</tr>
+				</tbody>
+
+				<tbody>
+				<tr>
+				<th>商品说明</th>
+				<td><label for=""></label>
+				<textarea style="height:400px; width:100%;" class="span7 richtext-clone" name="content" cols="70">{$host['content']}</textarea></td>
+							</tr>
+<script type="text/javascript">
+<!--
+	kindeditor($('.richtext-clone'));
+//-->
+</script>
+				</tbody>
+		<tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+	</table>
+	</div>
+</form>
+<div class="form-horizontal form"><h4><a href="{php echo $this->createWebUrl('osetter');}" target="_blank">管理员查看用户设置页面</a></h4></div>
+
+{/if}
+{template 'common/footer'}

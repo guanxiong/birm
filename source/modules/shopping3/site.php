@@ -2,7 +2,7 @@
 /**
  * 微商城模块微站定义
  *
- * @author WeEngine Team
+ * @author WeNewstar Team
  * @url
  */
 
@@ -369,10 +369,10 @@ class Shopping3ModuleSite extends WeModuleSite {
   
 
 	private function checkAuth() {
-		global $_W;
-		if (empty($_W['fans']['from_user'])) {
-			message('非法访问，请重新点击链接进入个人中心！');
-		}
+	     global $_W;
+		//if (empty($_W['fans']['from_user'])) {
+		//	message('非法访问，请重新点击链接进入个人中心！');
+		//}
 	}
 
 

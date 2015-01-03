@@ -518,6 +518,7 @@ class CarModuleSite extends WeModuleSite {
 			$sid = intval($_GPC['id']);
 			$pindex = max(1, intval($_GPC['page']));
 			$psize = 50;
+			$weid = $_W['weid'];
 			if(intval($_GPC['so']) == 1) {
 				$ystarttime = empty($_GPC['start']) ? strtotime('-1 month') : strtotime($_GPC['start']);
 				$yendtime = empty($_GPC['end']) ? TIMESTAMP : strtotime($_GPC['end']) + 86399;
@@ -525,11 +526,11 @@ class CarModuleSite extends WeModuleSite {
 				$endtime = empty($_GPC['end1']) ? TIMESTAMP : strtotime($_GPC['end1']) + 86399;
 				$total = pdo_fetchcolumn("SELECT COUNT(*) FROM ".tablename('we7car_order_list')." WHERE sid = :sid AND `dateline` > {$ystarttime} AND `dateline` <{$yendtime} AND `createtime` > {$starttime} AND `createtime` <{$endtime}", array(':sid' => $sid));
 				$pager = pagination($total, $pindex, $psize);
-				$list = pdo_fetchall("SELECT * FROM ".tablename('we7car_order_list')."  WHERE `sid` = :sid AND `dateline` > {$ystarttime} AND `dateline` <{$yendtime} AND `createtime` > {$starttime} AND `createtime` <{$endtime} ORDER BY `createtime` DESC LIMIT " . ($pindex - 1) * $psize . ',' . $psize,array(':sid' => $sid));
+				$list = pdo_fetchall("SELECT * FROM ".tablename('we7car_order_list')." as t1 JOIN (SELECT realname,mobile,from_user FROM ims_fans WHERE weid =$weid) as t2 on t1.from_user = t2.from_user WHERE `sid` = :sid AND `dateline` > {$ystarttime} AND `dateline` <{$yendtime} AND `createtime` > {$starttime} AND `createtime` <{$endtime} ORDER BY `createtime` DESC LIMIT " . ($pindex - 1) * $psize . ',' . $psize,array(':sid' => $sid));
 			} else {
 				$total = pdo_fetchcolumn("SELECT COUNT(*) FROM ".tablename('we7car_order_list')." WHERE sid = :sid", array(':sid' => $sid));
 				$pager = pagination($total, $pindex, $psize);
-				$list = pdo_fetchall("SELECT * FROM ".tablename('we7car_order_list')."  WHERE `sid` = :sid ORDER BY `createtime` DESC LIMIT " . ($pindex - 1) * $psize . ',' . $psize,array(':sid' => $sid));
+				$list = pdo_fetchall("SELECT * FROM ".tablename('we7car_order_list')." as t1 JOIN (SELECT realname,mobile,from_user FROM ims_fans WHERE weid =$weid) as t2 on t1.from_user = t2.from_user WHERE `sid` = :sid ORDER BY `createtime` DESC LIMIT " . ($pindex - 1) * $psize . ',' . $psize,array(':sid' => $sid));
 				$ystarttime = empty($_GPC['start']) ? strtotime('-1 month') : strtotime($_GPC['start']);
 				$yendtime = empty($_GPC['end']) ? TIMESTAMP : strtotime($_GPC['end']) + 86399;
 				$starttime = empty($_GPC['start1']) ? strtotime('-1 month') : strtotime($_GPC['start1']);
@@ -540,8 +541,8 @@ class CarModuleSite extends WeModuleSite {
 		
 		if($op == 'del') {
 			$id = intval($_GPC['id']);
-			$thumb = pdo_fetchcolumn("SELECT thumb FROM ".tablename('we7car_brand')." WHERE id = :id", array(':id' => $id));
-			file_delete($thumb);
+			/*$thumb = pdo_fetchcolumn("SELECT thumb FROM ".tablename('we7car_brand')." WHERE id = :id", array(':id' => $id));
+			file_delete($thumb);*/
 				
 			$temp = pdo_delete("we7car_order_list",array('id' => $id));
 			if($temp == false){
@@ -554,8 +555,8 @@ class CarModuleSite extends WeModuleSite {
 		
 		if($op == 'showdetail') {
 			$id = intval($_GPC['id']);
-			
-			$orderone = pdo_fetch("SELECT * FROM".tablename('we7car_order_list')." WHERE `id` = :id LIMIT 1",array(':id' => $id));
+			$weid = $_W['weid'];
+			$orderone = pdo_fetch("SELECT * FROM".tablename('we7car_order_list')." as t1 JOIN (SELECT realname,mobile,from_user FROM ims_fans WHERE weid =$weid) as t2 on t1.from_user = t2.from_user  WHERE `id` = :id LIMIT 1",array(':id' => $id));
 			//获取自定义字段
 			$fields  = pdo_fetchall("SELECT * FROM ".tablename('we7car_order_fields')." WHERE `sid` = :sid ORDER BY `fid` ASC",array(':sid' => $orderone['sid']));
 			

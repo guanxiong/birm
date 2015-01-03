@@ -2,8 +2,8 @@
 /**
  * 粉丝管理模块订阅器
  *
- * @author WeEngine Team
- * @url http://bbs.we7.cc/forum.php?mod=forumdisplay&fid=36&filter=typeid&typeid=1
+ * @author WeNewstar Team
+ * @url http://bbs.birm.co/forum.php?mod=forumdisplay&fid=36&filter=typeid&typeid=1
  */
 defined('IN_IA') or exit('Access Denied');
 

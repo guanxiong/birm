@@ -4,7 +4,7 @@
  * 更新模板缓存
  * 更新模块挂勾
  * ...
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  */
 
 include_once model('cache');

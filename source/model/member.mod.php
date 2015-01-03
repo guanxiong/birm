@@ -134,8 +134,45 @@ function member_update($member) {
 	if(empty($params)) {
 		return false;
 	}
+	
+	
+	member_group_set($member);
 
 	return pdo_update('members', $params, array('uid' => intval($member['uid'])));
+}
+
+function member_group_set($m){
+	$uid=$m['uid'];
+	$username=$m['username'];
+	if ($uid==1){
+	  return;
+	}
+	
+
+	$group = pdo_fetchall("SELECT * FROM ".tablename('members_group')."", array(), 'id');
+
+    $member=pdo_fetch("SELECT stattime,endtime  from ".tablename('members_status')."  WHERE status=0 and uid=".$uid);
+	$currenttime=time();
+
+	if (empty($member) ||  ($member['stattime']<$currenttime && $member['endtime']>$currenttime)){
+	   return;
+	}
+
+	$members_group = pdo_fetch("SELECT * FROM ".tablename('members_group')." order by price asc" );
+
+	$params = array();
+	$params['groupid'] =$members_group['id'];
+
+    $ret=pdo_update('members', $params, array('uid' => intval($uid)));
+    
+    pdo_insert('members_paylog', array(
+							'uid' => $uid,
+							'money' => 0,
+							'type' => 4,
+							'msg' => "到期系统自动降级到：".$members_group['name'],
+							'paytime' => TIMESTAMP,
+						));
+    
 }
 
 /**

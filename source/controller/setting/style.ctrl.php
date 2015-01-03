@@ -1,7 +1,7 @@
 <?php
 /**
  * 版权设置
- * [WeEngine System] Copyright (c) 2013 BIRM.CO
+ * [WNS]Copyright (c) 2013 BIRM.CO
  */
 defined('IN_IA') or exit('Access Denied');
 include model('setting');

@@ -1,0 +1,117 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('loupan', array('op' => 'post'));}">新增产品</a></li>
+	<li><a href="{php echo $this->createWebUrl('loupan', array('op' => 'list'));}">产品管理</a></li>
+	{if $op=='itemer'}
+		<li class="active"><a>产品图片上传</a></li>
+	{/if}
+</ul>
+<style>
+.album_list{overflow:hidden; padding-top:15px;}
+.album_list li{border:1px #DDD solid; width:237px; float:left; margin-left:15px; margin-bottom:10px;}
+.album_list li .album_pic{display:block; width:237px; height:130px; overflow:hidden;}
+.album_list li .album_pic img{width:237px;}
+.album_list li .album_main{padding:10px; overflow:hidden;}
+.album_list li .album_main .album_title{font-size:16px; height:20px; width:217px; overflow:hidden;}
+.album_list li .album_main .pull-left{color:#999;}
+.album_manage .table th{width:120px;}
+.album_manage #albums_head img{margin-right:10px; max-height:70px;}
+</style>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript">
+ 
+	$(function(){
+		var i = 0;
+		$('#selectimage').click(function() {
+			var editor = KindEditor.editor({
+				allowFileManager : false,
+				imageSizeLimit : '30MB',
+				uploadJson : './index.php?act=attachment&do=upload'
+			});
+			editor.loadPlugin('multiimage', function() {
+				editor.plugin.multiImageDialog({
+					clickFn : function(list) {
+						if (list && list.length > 0) {
+							for (i in list) {
+								if (list[i]) {
+									html = '<div class="alert alert-block alert-new">' +
+											'<input type="hidden" name="attachment-new[]" value="'+list[i]['filename']+'" />'+
+											'<span class="pull-right"><a href="javascript:;" onclick="var $this = this;if (confirm(\'删除操作不可恢复，确定码？\')){ajaxopen(\'site.php?act=module&name=izclightbox&do=itemer&weid={$_W['weid']}&foo=delete&attachment='+list[i]['filename']+'\', function(s) {$($this).parent().parent().remove();})}; return false;">删除</a></span>' +
+											'<div class="photo_preview pull-left"><label class="radio inline"><img src="'+list[i]['url']+'"></label></div>' +
+											'<table class="pull-left"><tr><th>排序</th><td><input type="text" name="index-new[]" value="0" class="span1"></td></tr></table></div>';
+									$('#listimage').append(html);
+									i++;
+								}
+							}
+							editor.hideDialog();
+						} else {
+							alert('请先选择要上传的图片！');
+						}
+					}
+				});
+			});
+		});
+	});
+</script>
+<style>
+ 
+.photo_list{padding:15px 0;}
+
+.photo_list .alert{width:auto; margin-top:10px; overflow:hidden;}
+
+.photo_list .photo_preview{width:130px;}
+
+.photo_list .photo_preview img{width:130px; margin-bottom:5px;}
+
+.photo_list .photo_preview label{padding:0;}
+
+.photo_list .photo_preview input[type="radio"]{margin-left:0; margin-right:10px;}
+
+.photo_list table{margin-left:40px;}
+
+.photo_list table th,.photo_list table td{padding-bottom:5px;}
+
+.photo_list table th{width:60px; font-size:14px;}
+
+.photo_list table input,.photo_list table select{margin-bottom:0;}
+
+ </style>
+<div class="main">
+	<div class="photo_list">
+	<form name="form1" method="post" class="form" action="">
+	<input name="token" type="hidden" value="{$_W['token']}" />
+	<input name="lid" type="hidden" value="{$list['id']}" />
+	<span id="selectimage" class="btn btn-primary"><i class="icon-plus"></i>上传照片</span>
+	<input type="submit" name="submit" class="btn" value="保存" /> <span style="color:red;">上传照片后，请保存照片数据！</span><br>
+	{if !empty($items)}
+		<div style="padding:10px 0;">场景访问地址：<a target="_blank" href="{php echo $_W['siteroot'].$this->createMobileUrl('loupan',array('lid'=>$list['id']))}">{php echo $_W['siteroot'].$this->createMobileUrl('loupan',array('lid'=>$list['id']))}</a></div>
+ 	{/if}
+	<div id="listimage"></div>
+	{loop $items $item}
+	<div class="alert alert-block alert-new">
+		<input type="hidden" value="{$item['picture']}" name="attachment[{$item['id']}]">
+		<span class="pull-right"><a class="delete" onclick="return confirm('删除操作不可恢复，确定码？'); return false;" href="{php echo $this->createWebUrl('loupan', array('op'=>'itemer', 'foo' => 'delete', 'id' => $item['id'],'attachment'=>$item['picture']))}">删除</a></span>
+		<div class="photo_preview pull-left">
+			<label class="radio inline">
+				<img src="{$_W['attachurl']}{$item['picture']}">
+			</label>
+		</div>
+		<table class="pull-left">
+			<tr>
+				<th>排序</th>
+				<td>
+				<input type="text" class="span1" value="{$item['listorder']}" name="index[{$item['id']}]">
+				</td>
+			</tr>
+		</table>
+
+	</div>
+	{/loop}
+	</form>
+
+	</div>
+
+</div>
+{template 'common/footer'}

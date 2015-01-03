@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -44,6 +44,7 @@ if (checksubmit('submit') || checksubmit('sync')) {
 		'uid' => $_W['uid'],
 		'name' => $_GPC['name'],
 		'account' => $_GPC['account'],
+		'accountlink' => $_GPC['accountlink'],
 		'original' => $_GPC['original'],
 		'token' => $_GPC['wetoken'],
 		'level' => intval($_GPC['level']),
@@ -87,6 +88,7 @@ if (checksubmit('submit') || checksubmit('sync')) {
 		$data['lastupdate'] = TIMESTAMP;
 		$data['name'] = $basicinfo['name'];
 		$data['account'] = $basicinfo['account'];
+		$data['accountlink'] = $_GPC['accountlink'];
 		$data['original'] = $basicinfo['original'];
 		$data['signature'] = $basicinfo['signature'];
 		$data['country'] = $basicinfo['country'];
@@ -103,6 +105,7 @@ if (checksubmit('submit') || checksubmit('sync')) {
 			'type' => intval($_GPC['type']),
 			'name' => $data['name'],
 			'account' => $data['account'],
+			'accountlink' => $data['accountlink'],
 			'original' => $data['original'],
 			'token' => $data['token'],
 			'level' => $data['level'],

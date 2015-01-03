@@ -1,0 +1,77 @@
+{template 'header'}
+<style>
+img{width:100%!important;}
+#gallery{
+	overflow:hidden;
+}
+#gallery li{
+	display:inline-block;
+	width:50%;
+	-webkit-box-sizing:border-box;
+	float:left;
+	border-radius:0;
+	background:none;
+	padding:5px;
+	border:0;
+	box-shadow:none;
+}
+#gallery li a{
+	display:block;
+	background-color: #ffffff;
+	border: 1px solid #ffffff;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	cursor: pointer;
+	padding: 4px;
+	box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+	height:120px;
+	overflow:hidden;
+	position:relative;
+}
+#gallery li a p{
+	position:absolute;
+	width:100%;
+	bottom:0;
+	background:#fff;
+	line-height:30px;
+	padding-right: 10px;
+	-webkit-box-sizing:border-box;
+}
+#gallery li a img{
+	width:100%;
+	min-height:100%;
+}
+.album li p>span, .album1 li p>span, .album2 li p>span {
+	float: right;
+	color: #aaa;
+	position: absolute;
+	right: 5px;
+	background: #fff;
+	padding-left: 5px;
+}
+#gallery li p {
+	display: inline-block;
+	max-width: 100%;
+	opacity:0.8;
+}
+</style>
+<div id="photo">
+	<div class="body">
+		<div id="main">
+			<ul id="gallery" class="gallery">
+				{loop $list $item}
+				<li style="">
+					<a href="{php echo $this->createMobileUrl('index', array('themeid' => $item['id'], 'weid' => $_W['weid'],'whoshare'=> $_W ['fans'] ['from_user']))}">
+						{if $item['themelogo']}<img src="{$_W['attachurl']}{$item['themelogo']}" alt="{$item['themetitle']}" />{else}<img src="{php echo $_W['siteroot'].$this->geturl(1);}" width="180" />{/if}
+						<p>{$item['themename']}<span></span></p>
+					</a>
+				</li>
+				{/loop}
+			</ul>
+		</div>
+	</div>
+</div>
+{template 'footer'}

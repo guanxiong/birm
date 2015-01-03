@@ -1,0 +1,511 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'create'}class="active"{/if}><a href="{php echo $this->createWebUrl('loupan', array('op' => 'create'));}">创建产品</a></li>
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('loupan', array('op' => 'display'));}">产品管理</a></li>
+	{if $op == 'photo'}<li class="active"><a href="{php echo $this->createWebUrl('loupan', array('op' => 'photo', 'lpid' => $id));}">添加照片</a></li>{/if}
+</ul>
+<link type="text/css" rel="stylesheet" href="./source/modules/broke/style/css/wanimation.css" />
+<style>
+.loupan_list{overflow:hidden; padding-top:15px;}
+.loupan_list li{border:1px #DDD solid; width:320px; float:left; margin-left:15px; margin-bottom:10px;}
+.loupan_list li .loupan_pic{display:block; width:320px; height:160px; overflow:hidden;}
+.loupan_list li .loupan_pic img{width:320px;}
+.loupan_list li .loupan_main{padding:10px; overflow:hidden;}
+.loupan_list li .loupan_main .loupan_title{font-size:16px; height:20px; width:217px; overflow:hidden;}
+.loupan_list li .loupan_main .pull-left{color:#999;}
+.loupan_manage .table th{width:120px;}
+.loupan_manage #loupans_head img{margin-right:10px; max-height:70px;}
+</style>
+{if $op == 'create'}
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data" onsubmit="return formcheck(this)">
+		<input type="hidden" name="id" value="{$item[id]}">
+		<h4>产品管理</h4>
+		<table class="tb">
+			{if !empty($item)}
+			<tr>
+				<th><label for="">访问地址</label></th>
+				<td>
+					<a href="{php echo $this->createMobileUrl('loupan', array('weid' => $_W['weid'], 'lid' => $item['id']))}" target="_blank">{php echo $this->createMobileUrl('loupan', array('weid' => $_W['weid'], 'id' => $item['id']))}</a>
+					<span class="help-block">您可以根据此地址，添加回复规则，设置访问。</span>
+				</td>
+			</tr>
+			{/if}
+			<tr>
+				<th><label for="">排序</label></th>
+				<td>
+					<input type="text" id="rule-name" class="span2" placeholder="" name="displayorder" value="{$item['displayorder']}">
+					<span class="help-block">产品优先级，越大则越靠前</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">名称</label></th>
+				<td>
+					<input type="text" class="span6" placeholder="" name="title" value="{$item['title']}">
+					<span class="help-block">请输入产品名称</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">封面</label></th>
+				<td>
+					<div class="fileupload fileupload-new" data-provides="fileupload">
+						<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;">{if $item['thumb']}<img src="{$_W['attachurl']}{$item['thumb']}" width="200" />{/if}</div>
+						<div>
+							<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="thumb" type="file" /></span>
+							<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+							{if $item['thumb']}<button type="submit" name="fileupload-delete" value="{$item['thumb']}" class="btn fileupload-new">删除</button>{/if}
+						</div>
+					</div>
+					<span class="help-block">关键词回复的封面图片，尺寸为640*320</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">佣金</label></th>
+				<td>
+					<input type="text" class="span6" placeholder="" name="commission" value="{$item['commission']}">
+					<span class="help-block">请输入佣金</span>
+				</td>
+			</tr>
+			<tr>
+				<th>简介</th>
+				<td>
+					<textarea style="height:200px;" class="span7" name="content" cols="70" id="reply-add-text">{$item['content']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>开场图片</th>
+				<td>
+					<div style="display:block; margin-top:5px;" class="input-append">
+					<input type="text" value="{$item['open']}" name="open" id="upload-image-url-open" class="span3">
+					<input type="hidden" value="" name="open_old" id="upload-image-url-open-old">
+					<button class="btn" type="button" id="upload-image-open">选择图片</button>
+					</div>
+					<span class="help-block">作为第一场景的遮罩图片，可以选择开场动画，尺寸为640*1008</span>
+					<div id="upload-image-preview-open" style="margin-top:10px;">{if $item['open']}<img src="{$_W['attachurl']}{$item['open']}" width="160" />{else}<img src="./resource/image/module-nopic-small.jpg" width="100" />{/if}</div>
+				</td>
+			</tr>
+			<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+			<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+			<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+			<script type="text/javascript">
+			var editor = KindEditor.editor({
+				allowFileManager : true,
+				uploadJson : "./index.php?act=attachment&do=upload",
+				fileManagerJson : "./index.php?act=attachment&do=manager",
+				afterUpload : function(url, data) {
+				}
+			});
+			$("#upload-image-open").click(function() {
+				editor.loadPlugin("image", function() {
+					editor.plugin.imageDialog({
+						tabIndex : 1,
+						imageUrl : $("#upload-image-url-open").val(),
+						clickFn : function(url) {
+							editor.hideDialog();
+							var val = url;
+							if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+								var filename = /images(.*)/.exec(url);
+								if(filename && filename[0]) {
+									val = filename[0];
+								}
+							}
+							$("#upload-image-url-open-old").val($("#upload-image-url-open").val());
+							$("#upload-image-url-open").val(val);
+							$("#upload-image-preview-open").html('<img src="'+url+'" width="160" />');
+						}
+					});
+				});
+			});
+			</script>
+			<tr>
+				<th><label for="">擦除模式</label></th>
+				<td>
+					<label for="radio_2" class="radio inline"><input type="radio" name="ostyle" id="radio_5" value="0" {if $item['ostyle'] == 0} checked{/if} /> 无擦除</label>
+					<label for="radio_3" class="radio inline"><input type="radio" name="ostyle" id="radio_6" value="1" {if $item['ostyle'] == 1} checked{/if} /> 滑动擦除</label>
+					<span class="help-block">请设置擦除模式,产品多时,为了体验,请不要使用滑动擦除</span>
+				</td>
+			</tr>
+			<tr>
+				<th>分享图标</th>
+				<td>
+					<div style="display:block; margin-top:5px;" class="input-append">
+					<input type="text" value="{$item['icon']}" name="icon" id="upload-image-url-icon" class="span3">
+					<input type="hidden" value="" name="icon_old" id="upload-image-url-icon-old">
+					<button class="btn" type="button" id="upload-image-icon">选择图片</button>
+					</div>
+					<span class="help-block">请上传分享时的图标，大小为100*100</span>
+					<div id="upload-image-preview-icon" style="margin-top:10px;">{if $item['icon']}<img src="{$_W['attachurl']}{$item['icon']}" width="100" />{else}<img src="./resource/image/module-nopic-small.jpg" width="100" />{/if}</div>
+				</td>
+			</tr>
+			<script type="text/javascript">
+			var editor = KindEditor.editor({
+				allowFileManager : true,
+				uploadJson : "./index.php?act=attachment&do=upload",
+				fileManagerJson : "./index.php?act=attachment&do=manager",
+				afterUpload : function(url, data) {
+				}
+			});
+			$("#upload-image-icon").click(function() {
+				editor.loadPlugin("image", function() {
+					editor.plugin.imageDialog({
+						tabIndex : 1,
+						imageUrl : $("#upload-image-url-icon").val(),
+						clickFn : function(url) {
+							editor.hideDialog();
+							var val = url;
+							if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+								var filename = /images(.*)/.exec(url);
+								if(filename && filename[0]) {
+									val = filename[0];
+								}
+							}
+							$("#upload-image-url-icon-old").val($("#upload-image-url-icon").val());
+							$("#upload-image-url-icon").val(val);
+							$("#upload-image-preview-icon").html('<img src="'+url+'" width="100" />');
+						}
+					});
+				});
+			});
+			</script>
+			<tr>
+				<th><label for="">背景音乐</label></th>
+				<td>
+					<div class="input-append form-inline">
+					<input class="span3" type="text" name="music" id="upload-music" value="{$item['music']}">
+					<input type="button" id="music-attach-btn" class="btn" value="上传音乐" style="font-size:14px;width:60px;margin-left:-1px;">
+					<label class="checkbox" style="margin-left:10px;">
+					<input type="checkbox" name="mset[0]" value="mauto" {if empty($item) || $item['mauto'] == 1} checked{/if}>自动播放
+					</label>
+					<label class="checkbox" style="margin-left:10px;">
+					<input type="checkbox" name="mset[1]" value="mloop" {if empty($item) || $item['mloop'] == 1} checked{/if}>自动循环
+					</label>
+					</div>
+					<span class="help-block">选择上传的音频文件或直接输入URL地址，常用格式：mp3</span>
+				</td>
+			</tr>
+			<script type="text/javascript">
+				KindEditor.ready(function(K) {
+					var uploadbutton = K.uploadbutton({
+						button : K('#music-attach-btn')[0],
+						fieldName : 'attachFile',
+						url : 'site.php?act=module&do=uploadmusic&name=music',
+						afterUpload : function(data) {
+							if (data.error === 0) {
+								var url = data.filename;
+								K('#upload-music').val(url);
+							} else {
+								alert(data.message);
+							}
+						},
+						afterError : function(str) {
+							alert('错误信息: ' + str);
+						}
+					});
+					uploadbutton.fileBox.change(function(e) {
+						uploadbutton.submit();
+					});
+				});
+			</script>
+			<tr>
+				<th><label for="">场景是否循环</label></th>
+				<td>
+					<label for="radio_2" class="radio inline"><input type="radio" name="isloop" id="radio_1" value="1" {if empty($item) || $item['isloop'] == 1} checked{/if} /> 允许</label>
+					<label for="radio_3" class="radio inline"><input type="radio" name="isloop" id="radio_4" value="0" {if !empty($item) && $item['isloop'] == 0} checked{/if} /> 禁止</label>
+					<span class="help-block">设置允许循环后，场景可以从最后一页翻到第一页</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">前台是否显示</label></th>
+				<td>
+					<label for="radio_2" class="radio inline"><input type="radio" name="isview" id="radio_2" value="1" {if empty($item) || $item['isview'] == 1} checked{/if} /> 显示</label>
+					<label for="radio_3" class="radio inline"><input type="radio" name="isview" id="radio_3" value="0" {if !empty($item) && $item['isview'] == 0} checked{/if} /> 隐藏</label>
+					<span class="help-block">设置隐藏后，此产品只可以通过关键字触发</span>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>联系电话</th>
+				<td><input type="text" id="tel" name="tel" value="{$item['tel']}"  class="span3" />
+				*该电话用于联系方式按钮 如不填,将不会出现预约界面</td>
+			</tr>
+			<tr>
+		  <th>地址</th>
+			<td><input type="text" id="addr" name="addr" value="{$item['addr']}"  class="span5" />
+			  *该地址将用于所有地图展示处具体位置描述展现</td>
+		</tr>
+			<tr>
+				<th>地区</th>
+				<td>
+					<select name="resideprovince" id="sel-provance" onChange="selectCity();bmap.searchMapByPCD();" style="width:100px;">
+						<option value="" selected="true">省/直辖市</option>
+					</select>
+					<select name="residecity" id="sel-city" onChange="selectcounty();bmap.searchMapByPCD();" style="width:100px;">
+						<option value="" selected="true">请选择</option>
+					</select>
+					<select name="residedist" id="sel-area" onchange="bmap.searchMapByPCD();" style="width:100px;">
+						<option value="" selected="true">请选择</option>
+					</select>
+					<span class="help-block">先选择地区，可以快速的定位地图位置。</span>
+				</td>
+			</tr>
+			<tr>
+			<th>地图标识</th>
+				<td><div class="input-append"><input type="text" id="jw_addr" name="jw_addr" value="{$item['jw_addr']}"  class="span5" /><button type="button" class="btn" name="mapsubmit" value="搜索" onclick="bmap.searchMapByAddress($('#jw_addr').val())">搜索</button></div>
+				注意：这个只是模糊定位，准确位置请地图上标注。</td>
+			</tr>
+			<tr>
+				<th><label for="">坐标：</label></th>
+				<td><input type="text" name="lng" id="lng" value="{$item['lng']}"  class="span3" /> - <input type="text" id="lat" name="lat" value="{$item['lat']}"  class="span3" /></td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td><div id="baidumap" style="width:600px; height:500px;"></div></td>
+			</tr>
+			
+			
+		</table>
+	</form>
+</div>
+<script type="text/javascript" src="./resource/script/cascade.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>  
+<script type="text/javascript">
+cascdeInit('{$item['province']}','{$item['city']}','{$item['dist']}'); //开启地区三级联动
+var bmap = {
+	'option' : {
+		'lock' : false,
+		'container' : 'baidumap',
+		'infoWindow' : {'width' : 250, 'height' : 100, 'title' : ''},
+		'point' : {'lng' : 116.403851, 'lat' : 39}
+	},
+	'init' : function(option) {
+		var $this = this;
+		$this.option = $.extend({},$this.option,option);
+		
+		$this.option.defaultPoint = new BMap.Point($this.option.point.lng, $this.option.point.lat);
+		$this.bgeo = new BMap.Geocoder();
+		$this.bmap = new BMap.Map($this.option.container);
+		$this.bmap.centerAndZoom($this.option.defaultPoint, 15);
+		$this.bmap.enableScrollWheelZoom();
+		$this.bmap.enableDragging();
+		$this.bmap.enableContinuousZoom();
+		$this.bmap.addControl(new BMap.NavigationControl());
+		$this.bmap.addControl(new BMap.OverviewMapControl());
+		//添加标注
+		$this.marker = new BMap.Marker($this.option.defaultPoint);
+		$this.marker.setLabel(new BMap.Label('请您移动此标记，选择您的坐标！', {'offset':new BMap.Size(10,-20)}));
+		$this.marker.enableDragging();
+		$this.bmap.addOverlay($this.marker);
+		//$this.marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+		$this.showPointValue($this.marker.getPosition());
+		//拖动地图事件
+		$this.bmap.addEventListener("dragging", function() {
+			$this.setMarkerCenter();
+			$this.option.lock = false;
+		});
+		//缩入地图事件
+		$this.bmap.addEventListener("zoomend", function() {
+			$this.setMarkerCenter();
+			$this.option.lock = false;
+		});
+		//拖动标记事件
+		$this.marker.addEventListener("dragend", function (e) {
+			$this.showPointValue();
+			$this.showAddress();
+			$this.bmap.panTo(new BMap.Point(e.point.lng, e.point.lat));
+			$this.option.lock = false;
+			$this.marker.setAnimation(null);
+		});
+	},
+	'searchMapByAddress' : function(address) {
+		var $this = this;
+		 $this.bgeo.getPoint(address, function (point) {
+			if (point) {
+				$this.showPointValue();
+				$this.showAddress();
+				$this.bmap.panTo(point);
+				$this.setMarkerCenter();
+			}
+		});
+	},
+	'searchMapByPCD' : function(address) {
+		var $this = this;
+		$this.option.lock = true;
+		$this.searchMapByAddress($('#sel-provance').val()+$('#sel-city').val()+$('#sel-area').val());
+	},
+	'setMarkerCenter' : function() {
+		var $this = this;
+		var center = $this.bmap.getCenter();
+		$this.marker.setPosition(new BMap.Point(center.lng, center.lat));
+		$this.showPointValue();
+		$this.showAddress();
+	},
+	'showPointValue' : function() {
+		var $this = this;
+		var point = $this.marker.getPosition();
+		$('#lng').val(point.lng);
+		$('#lat').val(point.lat);
+	},
+	'showAddress' : function() {
+		var $this = this;
+		var point = $this.marker.getPosition();
+		$this.bgeo.getLocation(point, function (s) {
+			if (s) {
+				$('#jw_addr').val(s.address);
+				if (!$this.option.lock) {
+					cascdeInit(s.addressComponents.province,s.addressComponents.city,s.addressComponents.district);
+				}
+			}
+		});
+	}
+};
+$(function(){
+	var option = {};
+	{if !empty($item['lng']) && !empty($item['lat'])}
+	option = {'point' : {'lng' : '{$item['lng']}', 'lat' : '{$item['lat']}'}}
+	{/if}
+	bmap.init(option);
+});
+</script>
+{elseif $op == 'display'}
+<ul class="unstyled loupan_list">
+	{loop $list $item}
+	<li>
+		<a href="{php echo $this->createWebUrl('loupan', array('op' => 'photo', 'lpid' => $item['id']))}" class="loupan_pic"><img src="{$_W['attachurl']}{$item[thumb]}" /></a>
+		<div class="loupan_main">
+			<p class="loupan_title">{$item['title']}</p>
+			<p>
+				<span class="pull-right"><a href="{php echo $this->createWebUrl('loupan', array('op' => 'photo', 'lpid' => $item['id']))}">上传照片</a> <a href="{php echo $this->createWebUrl('loupan', array('op' => 'create', 'id' => $item['id']))}">编辑</a> <a href="{php echo $this->createWebUrl('loupan', array('op' => 'delete', 'id' => $item['id'], 'type' => 'loupan'))}" onclick="return confirm('此操作不可恢复，确定删除码？'); return false;">删除</a></span>
+				<span class="pull-left">有{$item['total']}个场景</span>
+			</p>
+		</div>
+	</li>
+	{/loop}
+</ul>
+{elseif $op == 'photo'}
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript">
+$('#modal').on('hidden', function () {
+$('.modal-body').text(' ');
+})
+$(function(){
+	var i = 0;
+	$('#selectimage').click(function() {
+		var editor = KindEditor.editor({
+			allowFileManager : false,
+			imageSizeLimit : '30MB',
+			uploadJson : './index.php?act=attachment&do=upload'
+		});
+		editor.loadPlugin('multiimage', function() {
+			editor.plugin.multiImageDialog({
+				clickFn : function(list) {
+					if (list && list.length > 0) {
+						for (i in list) {
+							if (list[i]) {
+								html = '<div class="alert alert-block alert-new">' +
+										'<input type="hidden" name="attachment-new[]" value="'+list[i]['filename']+'" />'+
+										'<span class="pull-right"><a href="javascript:;" onclick="var $this = this;if (confirm(\'删除操作不可恢复，确定码？\')){ajaxopen(\'site.php?act=loupan&do=delete&type=photo&attachment='+list[i]['filename']+'\', function(s) {$($this).parent().parent().remove();})}; return false;">删除</a></span>' +
+										'<div class="photo_preview pull-left"><label class="radio inline"><img src="'+list[i]['url']+'"><div></div></label></div>' +
+										'<table class="pull-left">' +
+										'<tr><th>排序</th><td><input type="text" name="displayorder-new[]" value="" class="span1"></td></tr>' +
+										'<tr><th>标题</th><td><input type="text" name="title-new[]" value="" class="span5"></td></tr>' +
+										'<tr><th>链接</th><td><input type="text" name="url-new[]" value="" class="span5"></td></tr>' +
+										'</table></div>';
+								$('#listimage').append(html);
+								i++;
+							}
+						}
+						editor.hideDialog();
+					} else {
+						alert('请先选择要上传的图片！');
+					}
+				}
+			});
+		});
+	});
+});
+</script>				
+<style>
+.photo_list{padding:15px 0;}
+.photo_list .alert{width:auto; margin-top:10px; overflow:hidden;}
+.photo_list .photo_preview{width:130px;}
+.photo_list .photo_preview img{width:130px; margin-bottom:5px;}
+.photo_list .photo_preview label{padding:0;}
+.photo_list .photo_preview input[type="radio"]{margin-left:0; margin-right:10px;}
+.photo_list table{margin-left:40px;}
+.photo_list table th,.photo_list table td{padding-bottom:5px;}
+.photo_list table th{width:60px; font-size:14px;}
+.photo_list table input,.photo_list table select{margin-bottom:0;}
+</style>
+<div class="main">
+	<div class="photo_list">
+	<form method="post" class="form">
+	<input name="token" type="hidden" value="{$_W['token']}" />
+	<input name="lpid" type="hidden" value="{$loupan['id']}" />
+	<span id="selectimage" class="btn btn-primary"><i class="icon-plus"></i> 上传照片</span>
+	<input type="submit" name="submit" id="selectimage" class="btn" value="保存" /> <span style="color:red;">照片尺寸为640*1008，上传照片后，请保存照片数据！</span>
+	<div style="padding:10px 0;">产品访问地址：<a target="_blank" href="{php echo create_url('mobile/module', array('do' => 'loupan', 'weid' => $_W['weid'], 'lid' => $loupan['id'], 'name' => 'broke'))}">{php echo create_url('mobile/module', array('do' => 'loupan', 'weid' => $_W['weid'], 'lid' => $loupan['id'], 'name' => 'broke'))}</a></div>
+	{if $loupan['type'] == 0}<div id="listimage"></div>{/if}
+	{loop $photos $photo}
+	<div class="alert alert-block alert-new">
+		<input type="hidden" value="{$photo['attachment']}" name="attachment[{$photo['id']}]">
+		<span class="pull-right"><a class="delete" onclick="return confirm('删除操作不可恢复，确定码？'); return false;" href="{php echo $this->createWebUrl('loupan', array('op' => 'delete', 'type' => 'photo', 'id' => $photo['id']))}">删除</a></span>
+		<div class="photo_preview pull-left">
+			<label class="radio inline">
+				<img src="{$_W['attachurl']}{$photo['attachment']}">
+			</label>
+		</div>
+		<table class="pull-left">
+			<tr>
+				<th>排序</th>
+				<td>
+				<input type="text" class="span1" value="{$photo['displayorder']}" name="displayorder[{$photo['id']}]">
+				</td>
+			</tr>
+			<tr>
+				<th>标题</th>
+				<td><input type="text" class="span5" value="{$photo['title']}" name="title[{$photo['id']}]"></td>
+			</tr>
+			<tr>
+				<th>链接</th>
+				<td><input type="text" class="span5" value="{$photo['url']}" name="url[{$photo['id']}]"></td>
+			</tr>
+			<tr>
+				<th>元素</th>
+				<td>
+					{loop $photo['items'] $item}
+					<a  data-toggle="modal" href="{php echo $this->createWebUrl('item', array('lpid' => $id, 'photoid' => $photo['id'], 'id' => $item['id']));}" data-target="#modal" style="margin-right:10px;float:left;"><img src="./source/modules/broke/style/img/{if ($item['type']==0)}image.png{/if}"></a>
+					{/loop}
+					<a  data-toggle="modal" href="{php echo $this->createWebUrl('item', array('lpid' => $id, 'photoid' => $photo['id']));}" data-target="#modal" style="background:url(./source/modules/broke/style/img/addno.png) no-repeat;background-size:80px 80px;width:80px;height:80px;margin-right:10px;float:left;"><img src="./source/modules/broke/style/img/add.png"></a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	{/loop}
+	</form>
+	</div>
+</div>
+<div id="modal" class="modal hide fade" style="width:600px;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3 id="myModalLabel">设置动画元素</h3>
+  </div>
+  <div class="modal-body" style="max-height: 800px;">
+  </div>
+  </form>
+</div>
+<script type="text/javascript">
+$('#modal').on('hide', function () {
+ location.reload();
+})
+</script>
+{/if}
+{template 'common/footer'}

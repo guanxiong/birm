@@ -28,7 +28,6 @@
 			}
 		});
 		$('#dialog').modal({backdrop: 'static', keyboard: false, show: false});
-		$('#dialog').on('hide', saveMenuAction);
 		//模拟关键字搜索
 		$('#ipt-forward').keydown(function(event){
 			if(event.keyCode == 13){
@@ -68,7 +67,7 @@
 		if($('.mlist .hover').length >= 3) {
 			return;
 		}
-		var html = '<tr class="hover">'+
+		var html = '<tr class="hover" data-url="">'+
 						'<td>'+
 							'<div class="menu">'+
 								'<input type="text" class="span4" value=""> &nbsp; &nbsp; '+
@@ -89,7 +88,7 @@
 		}
 
 		var html = '' +
-                    '<div style="margin-top:20px;padding-left:80px;background:url(\'./resource/image/bg_repno.gif\') no-repeat -245px -545px;">'+
+                    '<div style="margin-top:20px;padding-left:80px;background:url(\'./resource/image/bg_repno.gif\') no-repeat -245px -545px;" data-url="">'+
                         '<input type="text" class="span3" value=""> &nbsp; &nbsp; '+
                         '<a href="javascript:;" class="icon-move" title="拖动调整此菜单位置"></a> &nbsp; '+
                         '<a href="javascript:;" onclick="selectEmoji($(this),\'submenu\')" class="icon-github-alt" title="表情"></a> &nbsp; '+
@@ -112,7 +111,6 @@
 			return;
 		}
 		currentEntity = o;
-		$('#ipt-url').val($(o).data('url'));
 		$('#ipt-forward').val($(o).data('forward'));
 		if ($(o).data('do') == 'click') {
 			$(':radio[value="forward"]').attr('checked', 'checked');
@@ -121,13 +119,18 @@
 		} else {
 			$(':radio[value="'+$(o).data('do')+'"]').attr('checked', 'checked');
 		}
+		var url = $(o).data('url');
+		if (url === '' || url === undefined) {
+			$('#ipt-url').val('http://');
+		} else {
+			$('#ipt-url').val($(o).data('url'));
+		}
 		$(':radio:checked').trigger('click');
 		$('#dialog').modal('show');
 	}
 	function saveMenuAction(e) {
 		var o = currentEntity;
 		var t = $(':radio:checked').val();
-
 		if (t == 'forward') {
 			t = 'click';
 		} else if (t == 'url') {
@@ -136,16 +139,17 @@
 		if(o == null) return;
 		if (t == 'view') {
 			if (!/^(http|https)(.*)/.test($('#ipt-url').val())) {
-				alert('由于公众平台限制，URL必须以http或是https开头。');
-				return false;
+				if (e == 'save') {
+					alert('由于公众平台限制，URL必须以http或是https开头。');
+					return false;
+				} else {
+					$(o).data('url', 'http://');
+				}
+			} else {
+				$(o).data('url', $('#ipt-url').val());
 			}
-			/*if ($('#ipt-url').val().indexOf('#') > -1) {
-				alert('由于公众平台限制，URL中不得包含#等字符。');
-				return false;
-			}*/
 		}
 		$(o).data('do', t);
-		$(o).data('url', $('#ipt-url').val());
 		$(o).data('forward', $('#ipt-forward').val());
 	}
 	function saveMenu() {
@@ -376,7 +380,7 @@
 </form>
 <div id="dialog" class="modal hide">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<button type="button" onClick="saveMenuAction('close')" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<h3>选择要执行的操作</h3>
 	</div>
 	<div id="url">
@@ -425,7 +429,7 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<a href="javascript:;" class="pull-right btn btn-primary span2" data-dismiss="modal" aria-hidden="true">保存</a>
+		<a href="javascript:;" onClick="saveMenuAction('save')" class="pull-right btn btn-primary span2" data-dismiss="modal" aria-hidden="true">保存</a>
 	</div>
 </div>
 {template 'common/footer'}

@@ -1,0 +1,25 @@
+{template 'common/header'}
+	<script type="text/javascript" src="./resource/script/jquery.zclip.min.js"></script>
+
+	<div class="main">
+		<div class="account">
+<p>
+<h4>我管理的账户:</h4>
+</p>
+			<div class="navbar-inner thead">
+				<h4>
+					<span class="pull-right">
+					<a href="{php echo create_url('site/module', array('do' => xufei,'name' => nuqut,'weid' => $row['weid']))}">续费</a></span>
+					<span class="pull-left">{$member[username]} <small>（公众号数量：{$accountnum}）</small></span>
+				</h4>
+   等级 :       {$member[groupid]}   		
+   {if  $member[groupid]==1 }	基础版本  {else}
+   开通日期：    {php echo date('Y-m-d H:i:s', $member[stattime]);}      				
+   到期日期：    {php echo date('Y-m-d H:i:s', $member[endtime]);}  
+   {/if}
+
+			</div>
+
+		</div>
+	</div>
+{template 'common/footer'}

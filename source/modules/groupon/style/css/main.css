@@ -604,7 +604,7 @@ section.header_nav{
 	right:0;
 	z-index:10;
 	
-}
+}.btnsj{	width:100px;	height:40px;	margin:6px 8px;	text-align: center;	border-radius: 5px;	background:#ff8808;	color:#ffffff;	font-size:17px;	line-height:40px;}
 .detail_price .header a{
 	display:block;
 	width:100px;

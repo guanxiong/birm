@@ -40,25 +40,26 @@ $(function() {
 function _removeHTMLTag(str) {
 	str = str.replace(/<script[^>]*?>[\s\S]*?<\/script>/g,'');
 	str = str.replace(/<style[^>]*?>[\s\S]*?<\/style>/g,'');
-    str = str.replace(/<\/?[^>]*>/g,'');
-    str = str.replace(/\s+/g,'');
-    str = str.replace(/&nbsp;/ig,'');
-    return str;
+	str = str.replace(/<\/?[^>]*>/g,'');
+	str = str.replace(/\s+/g,'');
+	str = str.replace(/&nbsp;/ig,'');
+	return str;
 }
 document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
 	<?php
 		$_share = array();
 		$_share['title'] = (empty($title)) ? $_W['account']['name'] : $title;
-		$_share['link'] = 'http://'.$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '&wxref=mp.weixin.qq.com';
+		$_share['link'] = 'http://' . $_SERVER['HTTP_HOST'] . $_W['script_name'] . '?' . $_SERVER['QUERY_STRING'] . '&wxref=mp.weixin.qq.com';
 		$_share['img'] = $_W['siteroot'] . 'source/modules/' . $_GPC['name'] . '/icon.jpg';
 		$_share['content'] = $_share_content;
 	?>
 	{if !empty($_share_img)}
 	var _share_img = "{$_share_img}";
+	if(_share_img.indexOf("http://") == -1 && _share_img.indexOf("https://") == -1) _share_img = "{$_W['attachurl']}" + _share_img;
 	{else}
 	var _share_img = $('body img:eq(0)').attr("src");
 	if(typeof(_share_img) == "undefined") _share_img = "{$_share['img']}";
-	if(_share_img.indexOf("http://") == -1 || _share_img.indexOf("https://") == -1 ) _share_img = "{$_W['siteroot']}" + _share_img;
+	if(_share_img.indexOf("http://") == -1 && _share_img.indexOf("https://") == -1 ) _share_img = "{$_W['attachurl']}" + _share_img;
 	{/if}
 	{if empty($_share['content'])}
 	var _share_content = _removeHTMLTag($('body').html()).replace("{$_share['title']}",'');

@@ -4,7 +4,7 @@
  *
  * @author 珊瑚海
  * @url 
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  */
 defined('IN_IA') or exit('Access Denied');
 

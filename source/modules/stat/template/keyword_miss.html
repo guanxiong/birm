@@ -22,7 +22,7 @@
 								<tr>
 									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
 									<td class="row-hover">{$row['content']}</td>
-									<td>{if empty($row['rid'])}N/A{else}<a target="main" href="{php echo create_url('rule/post', array('id' => $row['rid']))}">{$rules[$row['rid']]['name']}</a>{/if}</td>
+									<td>{if empty($row['rid'])}N/A{else}{$rules[$row['rid']]['name']}{/if}</td>
 									<td>{if $rules[$row['rid']]['module']}{$rules[$row['rid']]['module']}{else}default{/if}</td>
 									<td>
 										<a target="main" href="{php echo $this->createWebUrl('trend', array('id' => $row['rid']))}" class="btn btn-small" title="使用率走势"><i class="icon-bar-chart"></i></a>

@@ -100,7 +100,7 @@
 			<tr>
 				<th style="width:80px">字段类型</td>
 				<th style="width:120px">字段名称</td>
-				<th style="width:600px">初始内容</td>
+				<th style="width:120px">初始内容</td>
 				<td>操作</td>
 			</tr>
 		</thead>
@@ -108,9 +108,9 @@
 			<tr>
 				<td>单行文字：</td>
 				<td>
-					<input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="联系人" readonly="readonly"></td>
+					<input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="联系人" readonly></td>
 				<td>
-					<input name="add[order][]" type="text" style="width:600px" disabled="disabled" class="wizard-ignore" value="请输入您的名字" readonly="readonly"></td>
+					<input name="add[order][]" type="text"  disabled="disabled" class="wizard-ignore" value="请输入您的名字" readonly></td>
 
 				<td>
 					必填项(*)
@@ -119,9 +119,9 @@
 			<tr>
 				<td>单行文字：</td>
 				<td>
-					<input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="联系电话" readonly="readonly"></td>
+					<input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="联系电话" readonly></td>
 				<td>
-					<input name="add[order][]" type="text"  style="width:600px" disabled="disabled" class="wizard-ignore" value="请输入您的电话" readonly="readonly"></td>
+					<input name="add[order][]" type="text"   disabled="disabled" class="wizard-ignore" value="请输入您的电话" readonly></td>
 
 				<td>
 					必填项(*)
@@ -132,7 +132,7 @@
 				<td>
 					<input name=" " type="text" disabled="disabled" class="wizard-ignore" value="预约日期" onchange="$('odid').value='请输入'+this.value;"></td>
 				<td>
-					<input name="add[order][]" type="text" disabled="disabled"  style="width:600px" id="odid" class="wizard-ignore" value="请选择预约日期"></td>
+					<input name="add[order][]" type="text" disabled="disabled"  id="odid" class="wizard-ignore" value="请选择预约日期"></td>
 
 				<td>
 					必填项(*)
@@ -140,24 +140,24 @@
 			</tr>
 			<tr>
 				<td width="120">下拉框：</td>
-				<td><input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="品牌" readonly="readonly"></td>
-				<td><input name="keyword" type="text" style="width:600px" disabled="disabled" class="wizard-ignore" value="绑定品牌数据" readonly="readonly"></td>
+				<td><input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="品牌" readonly></td>
+				<td><input name="keyword" type="text"  disabled="disabled" class="wizard-ignore" value="绑定品牌数据" readonly></td>
 				<td>
 					必填项(*)
 				</td>
 			</tr>
 			<tr>
 				<td width="120">下拉框：</td>
-				<td><input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="车系" readonly="readonly"></td>
-				<td><input name="keyword" type="text" style="width:600px" disabled="disabled" class="wizard-ignore" value="绑定车系数据" readonly="readonly"></td>
+				<td><input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="车系" readonly></td>
+				<td><input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="绑定车系数据" readonly></td>
 				<td>
 					必填项(*)
 				</td>
 			</tr>
 			<tr>
 				<td width="120">下拉框：</td>
-				<td><input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="车型" readonly="readonly"></td>
-				<td><input name="keyword" type="text"style="width:600px" disabled="disabled" class="wizard-ignore" value="绑定车型数据" readonly="readonly"></td>
+				<td><input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="车型" readonly></td>
+				<td><input name="keyword" type="text" disabled="disabled" class="wizard-ignore" value="绑定车型数据" readonly></td>
 				<td>
 					必填项(*)
 				</td>
@@ -170,7 +170,7 @@
 					<input name="titles[{$field['fid']}]" type="text" value="{$field['title']}" class="wizard-ignore" ></td>
 					<input type="hidden" value="text" name="types[{$field['fid']}]">
 				<td>
-					<input name="values[{$field['fid']}]" type="text" style="width:600px"  value="{$field['value']}" class="wizard-ignore" ></td>
+					<input name="values[{$field['fid']}]" type="text"   value="{$field['value']}" class="wizard-ignore" ></td>
 				<td>
 					<a href="javascript:;" onclick="$(this).parent().parent().remove();">删除</a>
 				</td>
@@ -182,7 +182,7 @@
 					<input name="titles[{$field['fid']}]" type="text" value="{$field['title']}" class="wizard-ignore"></td>
 					<input type="hidden" value="select" name="types[{$field['fid']}]">
 				<td>
-					<input name="values[{$field['fid']}]" type="text" style="width:600px" class="wizard-ignore" value="{$field['value']}"></td>
+					<input name="values[{$field['fid']}]" type="text"  class="wizard-ignore" value="{$field['value']}"></td>
 				<td>
 					<a href="javascript:;" onclick="$(this).parent().parent().remove();">删除</a>
 				</td>
@@ -196,7 +196,7 @@
 				<td>
 					<input name="" type="text" value="备注" readonly></td>
 				<td>
-					<input name="note" type="text" style="width:600px" value="请添加备注" ></td>
+					<input name="note" type="text"  value="请添加备注" ></td>
 				<td>订单默认项</td>
 			</tr>
 			<tr>
@@ -227,7 +227,7 @@
 			'<td>文本框：</td>'+
 			'<td><input name="titles[]" type="text" class="span3" placeholder="请认真填写名称" /></td>' +
 			'<input name="types[]" type="hidden" value="text"/>' +
-			'<td><input type="text"  name="values[]" style="width:600px"/></td>' +
+			'<td><input type="text"  name="values[]"/></td>' +
 			'<td><a href="javascript:;" onclick="$(this).parent().parent().remove();">删除</a></td>'+
 		'</tr>'+
 		'</tr>';
@@ -239,7 +239,7 @@
 			'<td>下拉框：</td>'+
 			'<td><input name="titles[]" type="text" class="span3" placeholder="请认真填写名称" /></td>' +
 			'<input name="types[]" type="hidden" value="select"/>' +
-			'<td><input type="text" name="values[]" style="width:600px" placeholder="每个选项之间以“|”分割"/></td>' +
+			'<td><input type="text" name="values[]" placeholder="每个选项之间以“|”分割"/></td>' +
 			'<td><a href="javascript:;" onclick="$(this).parent().parent().remove();">删除</a></td>'+
 		'</tr>'+
 		'</tr>';

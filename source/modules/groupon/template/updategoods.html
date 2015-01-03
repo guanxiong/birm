@@ -1,4 +1,16 @@
 {template 'header'}
+<style>
+.photo_list{padding:15px 0;}
+.photo_list .alert{width:auto; margin-top:10px; overflow:hidden;}
+.photo_list .photo_preview{width:130px;}
+.photo_list .photo_preview img{width:130px; margin-bottom:5px;}
+.photo_list .photo_preview label{padding:0;}
+.photo_list .photo_preview input[type="radio"]{margin-left:0; margin-right:10px;}
+.photo_list table{margin-left:40px;}
+.photo_list table th,.photo_list table td{padding-bottom:5px;}
+.photo_list table th{width:60px; font-size:14px;}
+.photo_list table input,.photo_list table select{margin-bottom:0;}
+</style>
     <script src="/resource/script/kindeditor/kindeditor-min.js"></script>
     <div id="main">
         <div class="container-fluid">
@@ -137,6 +149,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                
                                 <div class="step" id="secondStep">
                                     <ul class="wizard-steps steps-3">
                                         <li>
@@ -178,13 +192,35 @@
                                     <div class="control-group">
                                         <label for="introduction" class="control-label">团购图片：</label>
                                         <div class="controls">
-                                            <div id="upimg_main">
-                                                <input id="file_upload" type="file" />
-                                                <ul class="ipost-list ui-sortable" id="fileList">
+                                           <div id="upimg_main">
+                                               <!--  <input id="file_upload" type="file" /> -->
+                                                <input name="token" type="hidden" value="{$_W['token']}" />
+                                              	<span id="selectimage" class="btn btn-primary"><i class="icon-plus"></i> 上传照片</span><span style="color:red;">
+												<input name="phout_list" type="hidden" value="{$groupon['thumb_list']}" />
+												*建议尺寸：宽720像素，高350像素 ,图片最多有25张</span>
+												<div id="file_upload-queue" class="uploadify-queue"></div>
+												<ul class="ipost-list ui-sortable" id="fileList">
+												{loop $hslists $v}
+												<li class="imgbox" style="list-type:none">
+													<a class="item_close" href="javascript:;" onclick="deletepic(this);" title="删除">
+													</a>
+													<span class="item_box">
+														<img src="{$_W['attachurl']}{$v['attachment']}" style="max-height:100%;">
+													</span>
+													<input type="hidden" value="{$v['attachment']}" name="attachment[{$v['id']}]">
+													<span class="item_input">
+														<textarea class="bewrite" cols="3" name="description[]" rows="4" style="resize: none" placeholder="图片描述..." onfocus="$(this).parent().addClass(&#39;on&#39;);" onblur="$(this).parent().removeClass(&#39;on&#39;);"> {$v['description']}   </textarea>
+														<i class="shadow hc">
+														</i>
+													</span>
+												</li>
+												{/loop}
+                                                <!-- <ul class="ipost-list ui-sortable" id="fileList">
 													{loop $groupon['phout_url'] $row1}
 													{php if (empty($row1)) continue;}
 													<li data-url="{$row1}" data-post-id="0" class="imgbox">
-														<a title="删除" href="javascript:void(0)" class="item_close"></a>  <input type="hidden" name="phout_list[]" value="0">
+														<a title="删除" href="javascript:void(0)" class="item_close"></a>  
+														<input type="hidden" name="phout_list[]" value="0">
 														<input type="hidden" name="phout_url[0][]" value="{$row1}">
 														<span class="item_box">
 															<img src="{$_W['attachurl']}{$row1}">
@@ -195,9 +231,10 @@
 														</span>
 													 {/loop}
                                                 </ul>
+                                                
                                                 <div id="file_upload_queue" class="uploadifyQueue">
-                                                </div>
-                                            </div>
+                                                </div>-->
+                                            </div> 
                                         </div>
                                     </div>
                                     <div class="control-group">
@@ -319,30 +356,67 @@
                                 
                             </form>
                         </div>
-                        <script>
-                            $(":radio[name='is_view']").click(function () {
-                                var $this = $(this);
-                                $("label.spassword").toggleClass("hide", (!($this.hasClass("__checked"))))
-                            }); 
-                            KindEditor.ready(function (K) {
-                                K.create('#detail', G.set.KindEditor_seting);
-
-                            });
-                            var op = {
-                                el: $("#file_upload"),
-                                count: 10,
-                                //maxlength:"2MB",
-                                data: {
-									'weid':{$_W['weid']},
-                                },
-                                url: "{$_W['siteroot']}index.php?act=attachment&do=uploadify",
-                                del_url: "{$_W['siteroot']}index.php?act=attachment&do=deleteify",
-                                swf: "{RES}swf/uploadify.swf"
-                            }
-                            G.logic.uploadify.init(op);
-                            $("#file_upload").append('<span class="maroon">*</span><span class="help-inline">图片大小640*320，图片大小不超过300K</span>'); 
-                            var is_test_image = "请上传团购图片"; 
-                        </script>						
+<script>
+  $(":radio[name='is_view']").click(function () {
+      var $this = $(this);
+      $("label.spassword").toggleClass("hide", (!($this.hasClass("__checked"))))
+  }); 
+  
+  
+  KindEditor.ready(function (K) {
+      K.create('#detail', G.set.KindEditor_seting);
+  });
+  
+ /*  var op = {
+      el: $("#file_upload"),
+      count: 10,
+      //maxlength:"2MB",
+      data: { 'weid':{$_W['weid']}, },
+        url: "{$_W['siteroot']}index.php?act=attachment&do=uploadify",
+        del_url: "{$_W['siteroot']}index.php?act=attachment&do=deleteify",
+        swf: "./source/modules/groupon/style/swf/uploadify.swf"
+    }
+    G.logic.uploadify.init(op);
+    $("#file_upload").append('<span class="maroon">*</span><span class="help-inline">图片大小640*320，图片大小不超过300K</span>'); 
+    var is_test_image = "请上传团购图片";  */
+                            
+ $(function(){
+ 	var i = 0;
+ 	$('#selectimage').click(function() {
+ 		var editor = KindEditor.editor({
+ 			allowFileManager : false,
+ 			imageSizeLimit : '3MB',
+ 			uploadJson : './index.php?act=attachment&do=upload'
+ 		});
+ 		editor.loadPlugin('multiimage', function() {
+ 			editor.plugin.multiImageDialog({
+ 				clickFn : function(list) {
+ 					if (list && list.length > 0) {
+ 						for (i in list) {
+ 							if (list[i]) {
+ 								html =	'<li class="imgbox" style="list-type:none">'+
+ 								'<a class="item_close" href="javascript:;" onclick="deletepic(this);" title="删除"></a>'+
+ 								'<span class="item_box"> <img src="'+list[i]['url']+'" style="max-height:100%;"></span>'+
+ 								'<input type="hidden" name="attachment-new[]" value="'+list[i]['filename']+'" />'+
+ 								'<span class="item_input"><textarea name="description-new[]" class="bewrite" cols="3" rows="4" style="resize: none" placeholder="图片描述..." '+
+ 								'onfocus="$(this).parent().addClass(&#39;on&#39;);" onblur="$(this).parent().removeClass(&#39;on&#39;);"></textarea><i class="shadow hc"></i></span>'+
+ 								'</li>';
+ 								$('#fileList').append(html);
+ 								i++;
+ 							}
+ 						}
+ 						editor.hideDialog();
+ 					} else {
+ 						alert('请先选择要上传的图片！');
+ 					}
+ 				}
+ 			});
+ 		});
+ 	});
+ });
+ 
+</script>
+                        						
                          
                     </div>
                 </div>

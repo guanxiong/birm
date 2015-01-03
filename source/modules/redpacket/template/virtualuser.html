@@ -1,0 +1,59 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+	<li{if $_GPC['do'] == 'manage'} class="active"{/if}><a href="{php echo $this->createWebUrl('packet',array('name'=>'redpacket'));}">活动管理</a></li>
+		<li{if $_GPC['do'] == 'virtualUser'} class="active"{/if}><a href="{php echo $this->createWebUrl('virtualUser',array('name'=>'redpacket', 'pid' => $pid));}">添加虚拟人数</a></li>
+		<li{if $_GPC['do'] == 'fanslist'} class="active"{/if}><a href="{php echo $this->createWebUrl('fanslist',array('name'=>'redpacket', 'pid' => $pid));}">参与用户</a></li>
+
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form"
+		enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}" />
+		<h4>{$packet['name']}</h4>
+
+		<table class="tb">
+
+
+
+			<tr>
+				<th><label for="">昵称</label></th>
+				<td><input type="text" name="nickname" class="span5"
+					value="{$item['nickname']}" /></td>
+			</tr>
+
+
+			<tr>
+				<th><label for="">电话</label></th>
+				<td><input type="text" name="tel" class="span5"
+					value="{$item['tel']}" /></td>
+			</tr>
+
+			<tr>
+				<th><label for="">头像</label></th>
+				<td>
+						
+						{php echo tpl_form_field_image('headimgurl',$item['headimgurl']);}
+				</td>
+			</tr>
+
+			<tr>
+				<th><label for="">金额</label></th>
+				<td><input type="text" name="income" class="span5"
+					value="{$item['income']}" /></td>
+			</tr>
+
+
+		
+			<tr>
+				<th></th>
+				<td><input name="submit" type="submit" value="提交"
+					class="btn btn-primary span3"> <input type="hidden"
+					name="token" value="{$_W['token']}" /></td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+{/if} {template 'common/footer'}

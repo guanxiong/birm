@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  * $sn: origins/source/model/fans.mod.php : v 866195d935cc : 2014/05/16 09:42:08 : veryinf $
  */
 function fans_update($user, $fields) {

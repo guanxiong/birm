@@ -2,10 +2,9 @@
 /**
  * 保存订单
  *
- * @author 微新星
+ * @author 超级无聊
  * @url
- */
-		
+ */		
 	$tid=intval($_GPC['tid']);
 	$num=intval($_GPC['num']);
 	if($num<1){

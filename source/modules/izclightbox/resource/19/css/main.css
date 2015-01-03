@@ -60,7 +60,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,body strong,body em {font-weight
 textarea:focus,input:focus { border: 1px solid #71b643; }
 
 /*sprite图片合并*/
-.css_sprite01 { background-image:url(../../19/img/css_sprite01.png)!important;  background-repeat: no-repeat!important; } 
+.css_sprite01 { background-image:url(../img/css_sprite01.png)!important;  background-repeat: no-repeat!important; } 
 
 /**
  * = function 功能样式
@@ -234,7 +234,7 @@ textarea:focus,input:focus { border: 1px solid #71b643; }
  * 箭头指示元件
  * -u-arrow
  */
-.u-arrow { position: fixed; bottom: 30px; left:50%; z-index: 150; width: 80px; height: 80px; margin-left: -20px; /*background: rgba(160,160,160,0.6); border-radius: 50%;*/ }
+.u-arrow { position: fixed; bottom: 30px; left:50%; z-index: 150; width: 80px; height: 80px; margin-left: -40px; /*background: rgba(160,160,160,0.6); border-radius: 50%;*/ }
 .u-arrow p { position: absolute; top: 50%; left: 50%; margin: -14px 0 0 -25px; width: 50px; height: 28px; background-position: 0 -82px;
 	-webkit-animation: start 1.5s infinite ease-in-out;
 	   -moz-animation: start 1.5s infinite ease-in-out;
@@ -311,7 +311,7 @@ textarea:focus,input:focus { border: 1px solid #71b643; }
  * -m-page
  */
 .m-page { position: absolute; top:0; left: 0; width:100%; z-index: 9; background: #ddd; }
-.m-page .page-con { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.m-page .page-con { position: relative; width: 100%; height: 101%; overflow: hidden; }
 .m-page.active { z-index:40; }
 .m-page.fixed { position: fixed; }
 .m-page.move {
@@ -482,7 +482,6 @@ textarea:focus,input:focus { border: 1px solid #71b643; }
 .video-title h3 { height: 48px; overflow: hidden; font-size: 48px; margin-bottom: 30px; line-height: 100%; }
 .video-title p { height: 30px; overflow: hidden; font-size: 30px; line-height: 150%; line-height: 100%; }
 .video-con { position: relative; width: 640px; height: 400px; background: #000; }
-.video-con video { position: absolute; top: 0; left: 0; z-index: 1; width: 100%; height: 100%; }
 .video-con .img { position: absolute; top: 0; left: 0; z-index: 10; width: 100%; height: 100%; }
 .video-con .img span { display: inline-block; position: absolute; top: 50%; left: 50%; width:77px; height: 77px; margin-left: -38px; margin-top: -38px; z-index: 11; background-position: 0 -233px; 
 	-webkit-animation: video_btnPlay 1s linear infinite; opacity: 1;
@@ -496,6 +495,18 @@ textarea:focus,input:focus { border: 1px solid #71b643; }
 	     -o-transform: scale(1);
 	        transform: scale(1);
 }
+
+.video-con .video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; background: rgba(0,0,0,0.9); opacity: 0;
+	-webkit-transition:all 0.5s;
+  	   -moz-transition:all 0.5s;
+	    -ms-transition:all 0.5s;
+	     -o-transition:all 0.5s;
+	        transition:all 0.5s;
+}
+.video-con .video .videoWrap { position: absolute; top: 50%; left: 50%; width: 640px; height: 480px; margin-left: -320px; margin-top: -240px; }
+.video-con .video .videoWrap video,
+.video-con .video .videoWrap iframe { width: 100%; height: 100%; }
+.video-con .video.z-show { opacity: 1; }
 
 /**
  * 预约模块
@@ -597,10 +608,11 @@ textarea:focus,input:focus { border: 1px solid #71b643; }
 	        transition:all 0.5s;
 }
 .book-form h3 { margin-bottom: 15px; color: #34495e; font-size: 36px; text-align: center; }
+.book-form .table { height: 650px; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
 .book-form th,
-.book-form td { padding: 20px 0; }
-.book-form th { font-size: 30px; color: #34495e; }
-.book-form td input { width: 350px; border: 1px solid #ccc; padding: 12px 0 12px 30px; font-size: 24px; color: #34495e; border-radius: 6px; }
+.book-form td { padding: 13px 0; }
+.book-form th { font-size: 30px; color: #34495e;white-space: nowrap }
+.book-form td input { width: 260px; border: 1px solid #ccc; padding: 12px 0 12px 30px; font-size: 24px; color: #34495e; border-radius: 6px; }
 .book-form td input.z-error { border-color: red; }
 .book-form td.btn p { width: 420px; height: 80px; margin:0 auto; line-height: 80px; text-align: center; color: #34495e; background: #e67e22; border-radius: 12px; font-size: 36px;  }
 .book-form td.btn p.z-fial { background: #aaa; }

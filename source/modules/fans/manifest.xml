@@ -7,8 +7,8 @@
 		<type><![CDATA[customer]]></type>
 		<ability><![CDATA[关注的粉丝管理]]></ability>
 		<description><![CDATA[]]></description>
-		<author><![CDATA[WeEngine Team]]></author>
-		<url><![CDATA[bbs.we7.cc]]></url>
+		<author><![CDATA[WeNewstar Team]]></author>
+		<url><![CDATA[http://bbs.we7.cc/forum.php?mod=forumdisplay&fid=36&filter=typeid&typeid=1]]></url>
 	</application>
 	<platform>
 		<subscribes>

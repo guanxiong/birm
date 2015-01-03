@@ -2,10 +2,9 @@
 /**
  * 首页
  *
- * @author 微新星
+ * @author 超级无聊
  * @url
- */
-	$tid = intval($_GPC['tid']);
+ */	$tid = intval($_GPC['tid']);
 	$groupon = pdo_fetch("SELECT * FROM ".tablename('groupon_list')." WHERE id={$tid} AND weid = '{$_W['weid']}' AND status = '1' ");
 	 
  	if (empty($groupon)) {

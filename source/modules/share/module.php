@@ -2,8 +2,8 @@
 /**
  * 分享达人模块定义
  *
- * @author 微鼎
- * @url http://www.weidim.com/
+ * @author 微新星
+ * @url bbs.birm.co/
  */
 defined('IN_IA') or exit('Access Denied');
 

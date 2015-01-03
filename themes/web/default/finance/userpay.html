@@ -1,0 +1,54 @@
+{template 'common/header'}
+<script type="text/javascript">
+	function check() {
+		if($.trim($(':text[name="username"]').val()) == '') {
+			message('没有输入用户名.', '', 'error');
+			return false;
+		}
+		if($('#money').val() == '') {
+			message('没有输入充值金额.', '', 'error');
+			return false;
+		}
+		if($('#money').val() != $('#remoney').val()) {
+			message('两次输入的金额不一致.', '', 'error');
+			return false;
+		}
+		return true;
+	}
+</script>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo create_url('finance/userpay');}">充值用户</a></li>
+	<li><a href="{php echo create_url('finance/userlist');}">用户列表</a></li>
+</ul>
+<div class="main">
+	<form action="" class="form-horizontal form" onsubmit="return check();" method="post">
+		<h4>充值用户</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">用户名</label></th>
+				<td>
+					<input id="" name="username" type="text" class="span6" value="{$member['username']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">充值金额</label></th>
+				<td>
+					<input id="money" name="money" type="text" class="span6" value="" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">确认充值金额</label></th>
+				<td>
+					<input id="remoney" type="text" class="span6" value="" />
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" class="btn btn-primary span2" name="submit" value="确认充值" /><input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<title>个人主页 - 全民经纪人</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="./source/modules/broke/style/css/style.css"/>
+<link rel="apple-touch-icon-precomposed" href="/img/ico-startup-57x57.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+</head>
+<body>
+<section class="main animated">
+<div class="main-box user-center">
+		<div class="regular hd">
+			<figure class="figure">
+				<img src="{$myheadimg}" alt="">
+			</figure>
+			<div class="user-infos">
+				<p class="u-name">{$profile['realname']}</p>
+				<p>{$profile['mobile']}</p>
+				<p>{$profile['company']}</p>
+			</div>
+			<!-- <a href="#" class="edit"><i class="icon-pencil"></i></a> -->
+		</div>
+		<div class="bd">
+			<p class="fn-clear"><a href="{php echo $this->createMobileUrl('recommend')}">推荐客户</a></p>
+			<p class="fn-clear"><a href="{php echo $this->createMobileUrl('commission')}">我的佣金</a></p>
+			
+			<p class="fn-clear"><a href="{php echo $this->createMobileUrl('bindbank')}" >我的银行卡</a></p>
+			<p class="fn-clear"><a href="{php echo $this->createMobileUrl('rule')}">活动细则</a></p>
+		</div>
+	</div>
+	<!--div class="main-box jjr-home">
+	
+		<div class="others-links">
+			<a href="#">我是经理</a><a href="#">我是销售员</a>
+		</div>
+	</div-->
+</section>
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+<nav class="nav fn-clear">
+	<a href="{php echo $this->createMobileUrl('index')}"><i class="icon-angle-left"></i>首页</a>
+	<a href="{php echo $this->createMobileUrl('customer')}"><i class="icon-users"></i>我的客户</a>
+	<a href="{php echo $this->createMobileUrl('my')}" class="active"><i class="icon-adult"></i>个人中心</a>
+</nav>
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="./source/modules/broke/style/js/com.js"></script>
+<script src="./source/modules/broke/style/js/wx.js"></script>
+<script type="text/javascript">
+
+WeixinApi.ready(function(Api) {
+        Api.showOptionMenu();
+        var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : '{$_W['siteroot']}/source/modules/broke/icon.jpg',
+            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('lpindex',array('id'=>$id))}',
+            "desc" : '看你能捞多少佣金',
+            "title" : '全民经纪人-{$_W['account']['name']}'
+        };
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享被用户自动取消
+            cancel : function(resp) {
+                TopBox.alert("分享后获得积分,还有可能得到佣金哦!不要错过发大财的机会!");
+            },
+            // 分享失败了
+            fail : function(resp) {
+                TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+            },
+            // 分享成功
+            confirm : function(resp) {
+             TopBox.alert("分享后成功,等着收佣金吧!");
+            },
+        };
+        Api.shareToFriend(wxData,wxCallbacks);
+        Api.shareToTimeline(wxData,wxCallbacks);
+        Api.shareToWeibo(wxData,wxCallbacks);
+    });
+
+</script>
+</body>
+</html>

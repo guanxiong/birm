@@ -51,6 +51,7 @@ if ($resp['code'] = 200 && $resp['content']) {
 				$reply .= "==================\n";
 			}
 			if($rs) {
+				$ds = preg_replace("/\s+/", "", $ds);
 				foreach($ds as $row) {
 					$reply .= "{$row}\n";
 				}

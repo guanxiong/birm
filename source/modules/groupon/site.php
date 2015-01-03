@@ -72,9 +72,9 @@ class GrouponModuleSite extends WeModuleSite {
 	 
 	private function checkAuth() {
 		global $_W;
-		if (empty($_W['fans']['from_user'])) {
+		/*if (empty($_W['fans']['from_user'])) {
 			message('非法访问，请重新点击链接进入个人中心！');
-		}
+		}*/
 	}
 	public function payResult($params) {
 	

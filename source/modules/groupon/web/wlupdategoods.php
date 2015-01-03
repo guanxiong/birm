@@ -32,9 +32,29 @@
 			);
 			if(empty($_GPC['random_refund'])){$_GPC['random_refund']=0;}
 			if(empty($_GPC['expired_refund'])){$_GPC['expired_refund']=0;}
-			if(!empty($_GPC['phout_url'][0])){
+			/*if(!empty($_GPC['phout_url'][0])){
 				$insert['thumb_list']=implode('|',$_GPC['phout_url'][0]);
+			}*/
+			
+			$cur_index = 0;
+			if (! empty ( $_GPC ['attachment-new'] )) {
+				foreach ( $_GPC ['attachment-new'] as $index => $row ) {
+					if (empty ( $row )) {
+						continue;
+					}
+					$hsdata [$index] = array ('description' => $_GPC ['description-new'] [$index], 'attachment' => $_GPC ['attachment-new'] [$index] );
+				}
+				$cur_index = $index + 1;
 			}
+			if (! empty ( $_GPC ['attachment'] )) {
+				foreach ( $_GPC ['attachment'] as $index => $row ) {
+					if (empty ( $row )) {
+						continue;
+					}
+					$hsdata [$cur_index + $index] = array ('description' => $_GPC ['description'] [$index], 'attachment' => $_GPC ['attachment'] [$index] );
+				}
+			}
+			$insert ['thumb_list'] = serialize ( $hsdata );
   			//处理时间
 			list($starttime,$endtime)=explode('-',$_GPC['datetime']);
 			$insert['starttime']=strtotime($starttime);
@@ -69,6 +89,6 @@
 		}else{
 			$groupon['datetime']=date('Y/m/d H:i',$groupon['starttime']).'-'.date('Y/m/d H:i',$groupon['endtime']);
 			$groupon['valid_datetime']=date('Y/m/d H:i',$groupon['valid_starttime']).'-'.date('Y/m/d H:i',$groupon['valid_endtime']);
-			$groupon['phout_url']=explode('|',$groupon['thumb_list']);
+			$hslists = unserialize ( $groupon['thumb_list'] );
 		}
 		include $this->template('updategoods');			

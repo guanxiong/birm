@@ -2,10 +2,9 @@
 /**
  * 首页
  *
- * @author 微新星
+ * @author 超级无聊
  * @url
- */
-	$tid = intval($_GPC['tid']);
+ */	$tid = intval($_GPC['tid']);
 	$id = intval($_GPC['id']);
 	
 	$groupon = pdo_fetch("SELECT * FROM ".tablename('groupon_list')." WHERE id={$tid} AND weid = '{$_W['weid']}' AND status = '1' ");
@@ -13,6 +12,8 @@
  	if (empty($groupon)) {
 		message('抱歉，商品不存在或是已经被删除！');
 	}
+	
+	$hslists = unserialize ( $groupon ['thumb_list'] );
 	
 	$order = pdo_fetch("SELECT * FROM ".tablename('groupon_order')." WHERE id={$id} AND weid = '{$_W['weid']}'  ");
  	if (empty($order)) {

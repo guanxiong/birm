@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<chart caption="客户状态" subCaption="2014-09" numberPrefix="" sformatNumberScale="1" sNumberPrefix="" syncAxisLimits="2" rotateValues="1" showSum="0">
+<!-- Data for single series chart -->
+	<set label="推荐" value="26"/>
+	<set label="跟进" value="3"/>
+	<set label="无意向" value="0"/>
+	<set label="到访" value="4"/>
+	<set label="认筹" value="1"/>
+	<set label="认购" value="0"/>
+	<set label="签约" value="1"/>
+	<set label="回款" value="3"/>
+<!-- Data for multi-series stacked and combination chart -->
+
+</chart>

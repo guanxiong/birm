@@ -1,28 +1,120 @@
-{template 'common/header'}
-
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>{if empty($_W['setting']['copyright']['sitename'])}微新星 - 微信公众平台自助引擎{else}{$_W['setting']['copyright']['sitename']}{/if}</title>
+<meta name="keywords" content="{if empty($_W['setting']['copyright']['keywords'])}微新星,微信,微信公众平台{else}{$_W['setting']['copyright']['keywords']}{/if}" />
+<meta name="description" content="{if empty($_W['setting']['copyright']['description'])}微信公众平台自助引擎，简称微新星，微新星是一款免费开源的微信公众平台管理系统。{else}{$_W['setting']['copyright']['description']}{/if}" />
+<!--新增-->
+<link type="text/css" rel="stylesheet" href="./resource/style/bootstrap.css" />
+<link type="text/css" rel="stylesheet" href="./resource/style/font-awesome.css" />
+<link type="text/css" rel="stylesheet" href="./resource/wdl07/style/frame_v3.css">
+<!--微新星自带-->
+<script type="text/javascript" src="./resource/script/bootstrap.js"></script>
+<script type="text/javascript" src="./resource/wdl071/style/jquery-1.7.2.min.js"></script> 
+<script type="text/javascript" src="./resource/wdl07/style/jquery.tipsy.js"></script> 
+<script type="text/javascript" src="./resource/script/common.js"></script>
+<script type="text/javascript" src="./resource/script/emotions.js"></script>
+{if $initNG}<script type="text/javascript" src="./resource/script/angular.min.js"></script> {/if}
+<script type="text/javascript" src="./resource/script/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript">
-jQuery.cookie=function(e,b,a){if(arguments.length>1&&String(b)!=="[object Object]"){a=jQuery.extend({},a);
-if(b===null||b===void 0)a.expires=-1;if(typeof a.expires==="number"){var d=a.expires,c=a.expires=new Date;c.setDate(c.getDate()+d);}b=String(b);
-return document.cookie=[encodeURIComponent(e),"=",a.raw?b:encodeURIComponent(b),a.expires?"; 
-expires="+a.expires.toUTCString():"",a.path?"; path="+a.path:"",a.domain?"; domain="+a.domain:"",a.secure?";
- secure":""].join("")}a=b||{};c=a.raw?function(a){return a}:decodeURIComponent;return(d=RegExp("(?:^|; )"+encodeURIComponent(e)+"=([^;]*)").exec(document.cookie))?c(d[1]):null};
- </script>
+cookie.prefix = '{$_W['config']['cookie']['pre']}';
+</script>
+
+<!--框架页样式--> 
+<!--[if IE 7]>
+<link rel="stylesheet" href="./resource/style/font-awesome-ie7.min.css">
+<![endif]-->
+<!--[if lte IE 6]>
+<link rel="stylesheet" type="text/css" href="./resource/style/bootstrap-ie6.min.css">
+<link rel="stylesheet" type="text/css" href="./resource/style/ie.css">
+<![endif]-->
+</head>
+<body {if $action == 'frame'} style="height:100%; overflow:hidden;" {/if} class="showmenu">
+
+<?php 
+if($do == 'global') {
+
+		if (!empty($_W['isfounder'])) {
+			$menuss[] = array(
+		'title' => '用户续费',
+		'items' => array(
+				array('财务明细', create_url('finance/log')),
+				array('用户充值', create_url('finance/userpay')),
+				array('用户编制', create_url('finance/useredit')),
+				array('用户明细', create_url('finance/userlist')),
+				array('到期用户', create_url('finance/status')),
+				array('用户组价格', create_url('finance/group')),
+
+		)
+	);
+
+
+	}
+
+	$mset[] = array(
+		'title' => '网站管理',
+		'menus' => $menuss
+	);
+}
+?>
+<script type="text/javascript">
+jQuery.cookie=function(e,b,a){if(arguments.length>1&&String(b)!=="[object Object]"){a=jQuery.extend({},a);if(b===null||b===void 0)a.expires=-1;if(typeof a.expires==="number"){var d=a.expires,c=a.expires=new Date;c.setDate(c.getDate()+d);}b=String(b);
+return document.cookie=[encodeURIComponent(e),"=",a.raw?b:encodeURIComponent(b),a.expires?"; expires="+a.expires.toUTCString():"",a.path?"; path="+a.path:"",a.domain?"; domain="+a.domain:"",a.secure?"; secure":""].join("")}a=b||{};c=a.raw?function(a){return a}:decodeURIComponent;return(d=RegExp("(?:^|; )"+encodeURIComponent(e)+"=([^;]*)").exec(document.cookie))?c(d[1]):null};
+
+</script>
+
 <div class="showmenu">
 	<img class="bg" src="./resource/wdl07/image/bg.jpg">
+<!-- 弹出框 却换公众号 -->
+<link rel="stylesheet" href="./resource/wdl071/style/bootstrap.min.css" />
+<script type="text/javascript" src="./resource/wdl071/style/bootstrap.min.js"></script> 
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>微新星欢迎您！！请切换你要管理的公共号！</h3>
+    </div>
+    <div class="modal-body">
+    	<div class="main-menu-group group-yj">
+	<div class="menu-cont fn-clear">
+	 {loop $wechats $account}
+   <a  href="{php echo create_url('account/switch', array('id' => $account['weid']))}"  target="main" onClick="return ajaxopen(this.href, function(s) {switchHandler(s)})">
+							<div class="menu2 menu2-xsrw" title="切换公共号{$account['name']}" data-mname="beginnertask">
+							<img class="bimg" src="./resource/wdl071/img/wdl.png"/>
+								<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" class="name">{$account['name']}</div>
+							</div>  </a>
+			{/loop}				
+																			
+					</div>
+                </div>
+                   
+    </div>
+
+</div>
+ <!-- 弹出框 却换公众号end -->
 	<div class="left1">
 		<a href="javascript:;" id="site-logo" class="backtomenu"></a>
     <br>
 		<div class="site-welcome backtomenu">
 			<p class="huanying">欢迎来到</p>
 			<h3>微新星自助式后台</h3>
-			<p class="site">wx.birm.co</p>
+			<p class="site">demo.birm.co</p>
 		   <div class="intro"><p style="margin-left:-20px;color:#FFFFFF;">简洁!方便！傻瓜化！<br/><br/></p>
+           <p><img class="qrcode" src="./resource/weidongli/images/ewm.jpg" width="166"/><br>
+             功能大多不会用？如何打造属于自己的华丽公众号呢？可以看看我们的操作手册或者咨询客服哦！</p>
+                <br/>
+                <br/>
+                <br/>
                 <br/>
                 <br/>
                 <br/>
 		  <div style="width:100%;">
+               <div style="margin-bottom:20px;">
+			      <span class="kf-img"><img src="./resource/wdl07/image/qq.png" style="margin-top: -20px; margin-right:5px;"></span> <a style="color:#FFF;font-size:15px;" target="ifra_qq" href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA4MzA3NV8yMTc1MThfODAwMDgzMDc1XzJf" title="点击这里联系我们">QQ：在线客服</a>
+			  </div>
 			  <div style="margin-bottom:20px;">
-			      <span class="kf-img"><img src="./resource/wdl07/image/qq.png" style="margin-top: -20px; margin-right:5px;"></span> <a style="color:#FFF;font-size:15px;" target="ifra_qq" href="http://wpa.qq.com/msgrd?v=3&uin=253076292&site=qq&menu=yes" title="点击这里联系我们">QQ：技术支持</a>
+			      <span class="kf-img"><img src="./resource/wdl07/image/qq.png" style="margin-top: -20px; margin-right:5px;"></span> <a style="color:#FFF;font-size:15px;" target="ifra_qq" href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA4MzA3NV8yMTc1MThfODAwMDgzMDc1XzJf" title="点击这里联系我们">QQ：技术支持</a>
 			  </div>
         <br>
 		</div>
@@ -48,7 +140,7 @@ expires="+a.expires.toUTCString():"",a.path?"; path="+a.path:"",a.domain?"; doma
 			<a target="main" href="setting.php?act=profile&" class="setting" original-title="设置">
 				<img src="./resource/wdl07/image/setting.png">
 			</a>
-			<a href="#" onclick="logout()" class="logout" style="width:20%;margin-right:0;" original-title="退出">
+			<a href="#" onClick="logout()" class="logout" style="width:20%;margin-right:0;" original-title="退出">
 				<img src="./resource/wdl07/image/logout.png"></a>
 			
 		</div>
@@ -70,20 +162,23 @@ expires="+a.expires.toUTCString():"",a.path?"; path="+a.path:"",a.domain?"; doma
 			
 					<div class="top-toolbar fn-clear">
 						<a title="回到首页" href="javascript:;" class="backtomenu"></a>
-						<div title="切换公众号" class="gongzhonghao menu">
+						<div  style="width:146px; overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="切换公众号" class="gongzhonghao menu">
 							
-						<a href="javascript:;"><span id="current-account">{if $_W['account']}{$_W['account']['name']}{else}选择公众号{/if}</span></a>
+						<a href="#myModal" role="button"  data-toggle="modal" ><span id="current-account">{if $_W['account']}{$_W['account']['name']}{else}选择公众号{/if}</span></a>
 							<ul>
 							 {loop $wechats $account}
 							 <li><a href="{php echo create_url('index/welcome/' .'profile');}" target="main"></a>
-							<li><a  href="{php echo create_url('account/switch', array('id' => $account['weid']))}" onclick="return ajaxopen(this.href, function(s) {switchHandler(s)})" target="main" ><span class="menu-arrow">&gt;</span>{$account['name']}</a></li>
+							<li><a  href="{php echo create_url('account/switch', array('id' => $account['weid']))}" onClick="return ajaxopen(this.href, function(s) {switchHandler(s)})" target="main" ><span class="menu-arrow">&gt;</span>{$account['name']}</a></li>
 						{/loop}
 							</ul>
 						</div>
-						<div title="帮助教程" class="menu upgrade">
-							<a href="http://bbs.we7.cc/thread-2296-1-1.html" target="_blank" ><img class="icon" src="./resource/wdl07/image/lightstore.png">帮助教程</a>
+						<div title="程序手册" class="menu upgrade">
+							<a href="http://bbs.birm.co/wiki/" target="_blank" ><img class="icon" src="./resource/wdl07/image/lightstore.png">程序手册</a>
 						</div>
-                        	<div title="公众平台" class="menu upgrade">
+                        	<div title="在线咨询" class="menu upgrade">
+							<a href="http://wpa.qq.com/msgrd?v=3&uin=2740380951&site=qq&menu=yes" target="_blank" ><img class="icon" src="./resource/wdl07/image/lightstore.png">在线咨询</a>
+						</div>
+                        	<div title="公众平台" class="tuiguang menu">
 							<a href="https://mp.weixin.qq.com/" target="_blank" ><img class="icon" src="./resource/wdl07/image/lightstore.png">公众平台</a>
 						</div>
 					  <div title="常用" class="menu upgrade">
@@ -108,7 +203,7 @@ expires="+a.expires.toUTCString():"",a.path?"; path="+a.path:"",a.domain?"; doma
 						</div>
 					</div>
 					<div class="user-level">{$_W['username']}, 
-					欢迎您&nbsp;&nbsp;
+					微新星WeiDongLi欢迎您&nbsp;&nbsp;
 										</div>
 				</div>
 			</div>
@@ -277,12 +372,14 @@ expires="+a.expires.toUTCString():"",a.path?"; path="+a.path:"",a.domain?"; doma
 						    case '防伪查询' : 
 							  $snav_icon = 'fwma';
 							  break;  
+                            case '我的服务' : 
+							  $snav_icon = 'wdfw';
+							  break; 
 							default:
 							  $snav_icon = 'jqgn';
 						}
 						?>
-						 
-							{if $g['title'] == '基本设置'}
+	{if $g['title'] == '基本设置'}
   <div class="menu menuid"  data-mname="hello2biz"  original-title="" style="background:#E16B11"> 
     {elseif $g['title'] == '我的服务'}
     <div class="menu menuid"  data-mname="hello2biz"  original-title="" style="background:#E16B11">
@@ -300,6 +397,7 @@ expires="+a.expires.toUTCString():"",a.path?"; path="+a.path:"",a.domain?"; doma
           <div class="menu menuid"  data-mname="hello2biz"  original-title="" style="background:#19a858"> 
           {else}
             <div class="menu menuid"  data-mname="hello2biz"  original-title=""  style="background:#fb9a01"> {/if} 
+					
 							<img class="bimg" src="./resource/wdl07/image/{$snav_icon}.png">
 							 {if is_array($menu['title'])}
 							   <div class="name" >{$menu['title'][0]}</div>
@@ -1018,22 +1116,67 @@ $(document).ready(function() {
 </script>
 
  
-
 <script type="text/javascript">
 /**判断改变中间块的颜色与title值**/
 $(document).ready(function() {
  $(".menuid:first").css("background-color","#E16B11");//第一个背景设为红色
- $(".name:first").css("color","#F2F4FF");//第一个字体设为红色
-
- 
+ $(".name:first").css("color","#FFFFFF");//第一个字体设为红色
  $(".bimg::first").attr("src","./resource/wdl07/image/3.png");//设定第一个栏目的图片（全局管理与基本设置同）
 
  $(":contains('自动回复')").attr("original-title","包括文字回复、图片回复、音乐回复、自定义接口回复、自定义菜单、特殊回复。");
+ $(":contains('用户中心')").attr("original-title","在这里可以查看平台会员的VIP等级，会员到期时间，会员充值记录等...");
+ $(":contains('独立商城')").attr("original-title","在这里可以设置独立的商城，多用户独立商城，同步账号，可以实现支付宝支付，不受微信影响...");
  //为设定弹出标题的文字介绍，
  $(":contains('基础功能')").attr("original-title","包括二维码推广、模块设置、当前公众号设置、支付参数设置。");
  $(":contains('微站功能')").attr("original-title","包括微网站风格设置、微站导航图标设置、微站访问入口。");
+ $(":contains('参数设置&其他')").attr("original-title","这里可以查看当前公众号信息，设置当前公众号的支付参数...");
  $(":contains('签到')").attr("original-title","签到记录、签到关键字触发、参数设置。");
  $(":contains('微CMS')").attr("original-title","包括微站导航设置、文章管理、文章分类管理。");
  $(":contains('跳蚤市场')").attr("original-title","增强了的留言墙，可以用于物品交换等的跳蚤市场，也可以用作留言墙，留言板。");
 });
+</script>
+
+
+
+
+<script>
+function ajaxopen(url, callback) {
+	$.getJSON(url+'&time='+new Date().getTime(), function(data){
+		if (data.type == 'error') {
+			message(data.message, data.redirect, data.type);
+		} else {
+			if (typeof callback == 'function') {
+				callback(data.message, data.redirect, data.type);
+			} else if(data.redirect) {
+				location.href = data.redirect;	
+			}
+		}
+	});	
+	return false;
+}
+function ajaxuqur() {
+		$("#myModal").modal('hide');
+}
+function ajaxapiopen(url,rid) {
+	$.getJSON(url+'&time='+new Date().getTime(), function(data){
+		if (data.type == 'error') {
+alert("服务器繁忙，请稍后重试");
+		} else {
+	alert(data.message.message);
+	if (data.message.type==1){
+    $("#menu_"+rid).attr("class", "menud");
+}else{
+    $("#menu_"+rid).attr("class", "");
+
+}
+		}
+	});	
+	return false;
+}
+function switchHandler(s) {
+	if (window.top.frames['main'].location.href.indexOf('global') > -1) {
+		window.top.location.href = 'index.php?do=profile';
+	}
+	window.top.location.href = 'index.php?do=profile';
+}
 </script>

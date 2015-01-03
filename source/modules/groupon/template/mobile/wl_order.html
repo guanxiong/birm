@@ -43,11 +43,10 @@ document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
                     <a href="{php echo $this->createMobileUrl('wlorderdetail', array('oid' => $row['id']));}" class="tbox">
                         <div>
                             <figure>
-                                {php $row['phout_url']=explode('|',$row['thumb_list']);}
-								{loop $row['phout_url'] $row2}
-									{php if (empty($row2)) continue;}
-									<img src="{$_W['attachurl']}{$row2}" />
-									{php break;}
+                                {php $hslists = unserialize( $row['thumb_list'] );}
+								{loop $hslists $v}
+									{php if (empty($v)) continue;}
+									<img src="{$_W['attachurl']}{$v['attachment']}" />
 								{/loop}
                             </figure>
                         </div>

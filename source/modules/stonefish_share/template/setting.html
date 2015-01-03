@@ -1,0 +1,30 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>分享显示设置<small>设定分享记录是否显示以及显示多少条记录，这个设置是针对当前公众号的</small></h4>
+		<table class="tb">
+			   <tr>
+					<th>显示方式</th>
+					<td>
+						<label for="share_show_1" class="radio inline"><input type="radio" name="share_show" value="1" {if $settings['share_show'] == '1'}checked="checked"{/if}> 公开显示</label>
+						<label for="share_show_0" class="radio inline"><input type="radio" name="share_show" value="0"  {if $settings['share_show'] == '0'}checked="checked"{/if}> 参与显示</label>
+						<div class="help-block">是否公开还是参与可查看积分排名。</div>
+					</td>
+				</tr>
+				<tr>
+				<th>显示记录数</th>
+				<td>
+					<input type="text" name="share_show_num" class="span1" value="{$settings['share_show_num']}" />
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

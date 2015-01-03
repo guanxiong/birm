@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<title>我的客户 - 经纪人中心 - 全民经纪人</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="./source/modules/broke/style/css/style.css"/>
+<link rel="apple-touch-icon-precomposed" href="/img/ico-startup-57x57.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+</head>
+<body>
+		<section class="main animated fadeInDown">
+			<div class="main-box">
+                <div class="client-info fn-clear">
+                    <h1>{$customer['realname']}</h1>
+                    <div class="client-tel">
+                        <p><i class="icon icon-phone"></i>电话号码<span>{$customer['mobile']}</span></p>
+                        <p><i class="icon icon-location"></i>意向产品<span>{$pan[$customer['loupan']]}</span></p>
+                        <p><i class="icon icon-phone"></i> 销 售 员 <span>{$tel[$customer['loupan']]}</span></p>
+					</div>
+                </div>
+				
+                <div class="call-to"><a href="tel:{$customer['mobile']}">呼叫Ta</a><a href="tel:{$tel[$customer['loupan']]}">呼叫销售员</a></div>
+				<div class="client-time border-box fn-clear" style="margin-bottom:10px;">
+                    <h1>说明备注</h1>
+                    <p>{$customer['content']}</p>
+                </div>				
+				<div class="client-time border-box fn-clear">
+					<div class="time-left">
+						{$time_node}
+					</div>
+					
+					<div class="time-right">
+						<ul>
+						{$time_detail}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+<nav class="nav fn-clear">
+	<a href="{php echo $this->createMobileUrl('index')}"><i class="icon-angle-left"></i>首页</a>
+	<a href="{php echo $this->createMobileUrl('customer')}" class="active"><i class="icon-users"></i>我的客户</a>
+	<a href="{php echo $this->createMobileUrl('my')}"><i class="icon-adult"></i>个人中心</a>
+</nav>
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="./source/modules/broke/style/js/com.js"></script>
+<script src="./source/modules/broke/style/js/wx.js"></script>
+<script type="text/javascript">
+
+WeixinApi.ready(function(Api) {
+        Api.showOptionMenu();
+        var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : '{$_W['siteroot']}/source/modules/broke/icon.jpg',
+            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('index',array('id'=>$id))}',
+            "desc" : '看你能捞多少佣金',
+            "title" : '全民经纪人-{$_W['account']['name']}'
+        };
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享被用户自动取消
+            cancel : function(resp) {
+                TopBox.alert("分享后获得积分,还有可能得到佣金哦!不要错过发大财的机会!");
+            },
+            // 分享失败了
+            fail : function(resp) {
+                TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+            },
+            // 分享成功
+            confirm : function(resp) {
+             TopBox.alert("分享后成功,等着收佣金吧!");
+            },
+        };
+        Api.shareToFriend(wxData,wxCallbacks);
+        Api.shareToTimeline(wxData,wxCallbacks);
+        Api.shareToWeibo(wxData,wxCallbacks);
+    });
+
+</script>
+</body>
+</html>

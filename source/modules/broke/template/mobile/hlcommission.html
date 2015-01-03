@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<title>我的佣金 - 经纪人中心 - 全民经纪人</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="./source/modules/broke/style/css/style.css"/>
+<link rel="apple-touch-icon-precomposed" href="/img/ico-startup-57x57.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+</head>
+<style>
+.pagination li{
+	margin-left:10px;
+	background-color: #fa614b;
+	display: inline-block;
+	padding: 0 4%;
+	border-radius: 5px;
+	
+}
+.pagination li .pager-nav{
+	color: #fff;
+}
+
+.commission-detail p span.commission-time {
+	width: 32%;
+	text-align: center;
+}
+.commission-detail p span.commission-event{
+	width: 39%;
+	text-align: center;
+}
+.commission-detail p span.commission-money {
+	width: 27%;
+	color: #c40a04;
+	margin-right: 0;
+	text-align: center;
+}
+{if $op=='more'}
+.commission-detail {
+	margin-top: 0;
+	opacity: 0.7;
+}
+{/if}
+</style>
+<body>
+		<section class="main animated fadeInDown">
+			<div class="main-box">
+				{if $op!='more'}
+				<div class="commission-header fn-clear">
+					<div class="commission-box border-box">
+						<p>可结佣</p>
+						<p class="commission-text">{$comm}<span>元</span></p>
+					</div>
+					<div class="commission-box border-box">
+						<p>已结佣</p>
+						<p class="commission-text">{$mycommission}<span>元</span></p>
+					</div>
+				</div>
+				<a href="{php echo $this->createMobileUrl('bindbank')}" class="rb-row bank-card fn-clear">
+					<i class="icon-credit-card"></i>
+					 <span>卡号:{$profile['bankcard']}</span><i class="icon-angle-right"></i>
+				</a>
+				{/if}
+				<div class="commission-detail">
+					<h6>账目明细</h6>
+					{if empty($list)}
+					暂无
+					{else}
+					<p>
+						<span class="commission-time">时间</span>
+						<span class="commission-event">姓名</span>
+						<span class="commission-money">佣金</span>
+					</p>
+					<p>
+						{loop $list $v}
+							<span class="commission-time">{php echo date('Y-m-d', $v['createtime'])}</span>
+							<span class="commission-event">{if empty($v['realname'])}已被删除{else}{$v['realname']}{/if}</span>
+							<span class="commission-money">{$v['commission']}</span>
+						{/loop}
+					</p>
+					{/if}
+                </div>
+				{if $op != 'more'}
+					{if $total > 10}
+						<a href="{php echo $this->createMobileUrl('commission', array('op'=>'more'));}"><span style="position:absolute; right:10%;">查看更多...</span></a>
+					{/if}
+				{/if}
+				{$pager}
+			</div>
+		</section>
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+<nav class="nav fn-clear">
+	<a href="{php echo $this->createMobileUrl('index')}"><i class="icon-angle-left"></i>首页</a>
+	<a href="{php echo $this->createMobileUrl('customer')}"><i class="icon-users"></i>我的客户</a>
+	<a href="{php echo $this->createMobileUrl('my')}" class="active"><i class="icon-adult"></i>个人中心</a>
+</nav>
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="./source/modules/broke/style/js/com.js"></script>
+<script src="./source/modules/broke/style/js/wx.js"></script>
+<script type="text/javascript">
+
+WeixinApi.ready(function(Api) {
+        Api.showOptionMenu();
+        var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : '{$_W['siteroot']}/source/modules/broke/icon.jpg',
+            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('index',array('id'=>$id))}',
+            "desc" : '看你能捞多少佣金',
+            "title" : '全民经纪人-{$_W['account']['name']}'
+        };
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享被用户自动取消
+            cancel : function(resp) {
+                TopBox.alert("分享后获得积分,还有可能得到佣金哦!不要错过发大财的机会!");
+            },
+            // 分享失败了
+            fail : function(resp) {
+                TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+            },
+            // 分享成功
+            confirm : function(resp) {
+             TopBox.alert("分享后成功,等着收佣金吧!");
+            },
+        };
+        Api.shareToFriend(wxData,wxCallbacks);
+        Api.shareToTimeline(wxData,wxCallbacks);
+        Api.shareToWeibo(wxData,wxCallbacks);
+    });
+
+</script>
+</body>
+</html>

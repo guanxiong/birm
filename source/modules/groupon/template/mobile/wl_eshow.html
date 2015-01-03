@@ -10,10 +10,9 @@
                         <a href="javascript:;" class="tbox">
                             <div>
                                 <figure>
-									{php $groupon['phout_url']=explode('|',$groupon['thumb_list']);}
-									{loop $groupon['phout_url'] $row2}
-										{php if (empty($row2)) continue;}
-										<img src="{$_W['attachurl']}{$row2}" />
+									 {loop $hslists $index $v}
+										{php if (empty($v)) continue;}
+										<img src="{$_W['attachurl']}{$v['attachment']}" />
 										{php break;}
 									{/loop}
                                 </figure>
@@ -68,18 +67,15 @@
                     <p>{$groupon['info']}</p>
                 </article>
             </section>
-			{if $groupon['random_refund']==1}
-            <div style="padding:20px 0;border-top:1px solid #c8c8c8;">
-               <a href="javascript:;" class="button">申请退款</a>
-            </div>
-			{/if}
+           <div style="display:none;padding:20px 0;border-top:1px solid #c8c8c8;">
+               <a href="javascript:;" onclick="sjyz();" class="button">商家验证</a>			   			   
+           </div>
         </div>
         <footer>
             <section class="header_nav">
                 <ul class="tbox">
-                    <li><a href="javascript:history.go(-1);" class="icons icons_back">&nbsp;</a></li>
-                                            <li><a href="javascript:;">未使用</a></li>
-                    
+                    <li><a href="javascript:history.go(-1);"  class="icons icons_return"> << </a></li>
+                    <li><a href="javascript:;">未使用</a></li>
                 </ul>
             </section>
         </footer>

@@ -1,7 +1,7 @@
 <?php 
 /**
  * 数据库相关操作
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  */
 $dos = array('bom');
 $do = in_array($do, $dos) ? $do : 'bom';

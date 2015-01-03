@@ -1,7 +1,7 @@
 <?php 
 /**
  * BAE兼容函数
- * [WeEngine System] Copyright (c) 2013 BIRM.CO
+ * [WNS]Copyright (c) 2013 BIRM.CO
  */
 include_once IA_ROOT . '/source/library/bcs/bcs.class.php';
 /**

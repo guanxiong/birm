@@ -2,7 +2,7 @@
 /**
  * 粉丝管理模块定义
  *
- * @author 更多模块请浏览bbs.we7.cc
+ * @author 更多模块请浏览bbs.birm.co
  */
 defined('IN_IA') or exit('Access Denied');
 

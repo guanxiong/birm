@@ -1,0 +1,66 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li  class="active"><a>佣金明细</a></li>
+</ul>
+    <div class="main">
+		<div class="stat">
+		
+			<div class="stat-div">
+			
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title" style="float:right;color:red;"><a href="">刷新</a></h4>
+					<h4 class="sub-title">佣金名单</h4>
+
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th class="row-hover">状态</th>
+									<th class="row-hover">支付佣金</th>
+									<th class="row-hover">支付时间</th>
+									<th class="row-hover">备注</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $v}
+								<tr>
+									<td style="text-align: center;">
+										{$status[$v['status']]}
+									</td>
+									<td style="text-align: center;">
+										{$v['commission']}
+									</td>
+									<td style="text-align: center;">
+										{php echo date('Y-m-d H:i:s',$v['createtime'])}
+									</td>
+									<td style="text-align: center;">
+										{if empty($v['content'])}无{else}{$v['content']}{/if}
+									</td>
+								</tr>
+								{/loop}
+								<tr>
+									<td style="text-align: center;">
+									</td>
+									<td style="text-align: center;">
+									</td>
+									<td style="text-align: center;">
+									</td>
+									<td style="text-align: center;">
+										<input type="button" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />
+									</td>
+								</tr>
+							</tbody>
+						</table>
+							
+					</div>
+				
+					</form>
+					{$pager}
+				</div>
+			</div>
+		</div>
+    </div>
+
+{template 'common/footer'}

@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `ims_fans` (
   `createtime` int(10) unsigned NOT NULL COMMENT '加入时间',
   `realname` varchar(10) NOT NULL DEFAULT '' COMMENT '真实姓名',
   `nickname` varchar(20) NOT NULL DEFAULT '' COMMENT '昵称',
-  `avatar` varchar(100) NOT NULL DEFAULT '' COMMENT '头像',
+  `avatar` varchar(200) NOT NULL DEFAULT '' COMMENT '头像',
   `qq` varchar(15) NOT NULL DEFAULT '' COMMENT 'QQ号',
   `mobile` varchar(11) NOT NULL DEFAULT '' COMMENT '手机号码',
   `fakeid` varchar(30) NOT NULL DEFAULT '',
@@ -166,7 +166,8 @@ CREATE TABLE IF NOT EXISTS `ims_fans` (
   `interest` text NOT NULL COMMENT '兴趣爱好',
   `groupid` int(20) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `weid` (`weid`)
+  KEY `weid` (`weid`),
+  KEY `idx_from_user` (`from_user`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ims_members` (
@@ -179,6 +180,10 @@ CREATE TABLE IF NOT EXISTS `ims_members` (
   `joindate` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '注册时间',
   `joinip` varchar(15) NOT NULL DEFAULT '',
   `lastvisit` int(10) unsigned NOT NULL DEFAULT '0',
+  `did` int(11) NOT NULL,
+  `usemoney` int(11) NOT NULL,
+  `money` int(11) NOT NULL,
+  `validtime` varchar(15)  NULL DEFAULT '',
   `lastip` varchar(15) NOT NULL DEFAULT '',
   `remark` varchar(500) NOT NULL DEFAULT '',
   PRIMARY KEY (`uid`),
@@ -188,10 +193,15 @@ CREATE TABLE IF NOT EXISTS `ims_members` (
 CREATE TABLE IF NOT EXISTS `ims_members_group` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
+  `did` int(11) NOT NULL,
+  `status` int(1) NOT NULL,
+  `dprice` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
   `modules` varchar(5000) NOT NULL DEFAULT '',
   `templates` varchar(5000) NOT NULL DEFAULT '',
   `maxaccount` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '0为不限制',
-  `maxsubaccount` INT( 10 ) UNSIGNED NOT NULL COMMENT '子公号最多添加数量，为0为不可以添加',
+  `maxsubaccount` int(10) unsigned NOT NULL COMMENT '子公号最多添加数量，为0为不可以添加',
+  `icon` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -205,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `ims_members_permission` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ims_modules` (
-  `mid` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `mid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL COMMENT '标识',
   `type` varchar(20) NOT NULL DEFAULT '' COMMENT '类型',
   `title` varchar(100) NOT NULL COMMENT '名称',
@@ -219,7 +229,8 @@ CREATE TABLE IF NOT EXISTS `ims_modules` (
   `handles` varchar(500) NOT NULL DEFAULT '' COMMENT '能够直接处理的消息类型',
   `isrulefields` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否有规则嵌入项',
   `issystem` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否是系统模块',
-  PRIMARY KEY (`mid`)
+  PRIMARY KEY (`mid`),
+  KEY `idx_name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ims_modules_bindings` (
@@ -231,7 +242,8 @@ CREATE TABLE IF NOT EXISTS `ims_modules_bindings` (
   `do` varchar(30) NOT NULL,
   `state` varchar(200) NOT NULL,
   `direct` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`eid`)
+  PRIMARY KEY (`eid`),
+  KEY `idx_module` (`module`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ims_music_reply` (
@@ -252,7 +264,7 @@ CREATE TABLE IF NOT EXISTS `ims_news_reply` (
   `description` varchar(255) NOT NULL,
   `thumb` varchar(60) NOT NULL,
   `content` text NOT NULL,
-  `url` varchar(255) NOT NULL,
+  `url` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -265,7 +277,11 @@ CREATE TABLE IF NOT EXISTS `ims_paylog` (
   `fee` decimal(10,2) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `module` varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`plid`)
+  `tag` varchar(2000) NOT NULL DEFAULT '',
+  PRIMARY KEY (`plid`),
+  KEY `idx_weid` (`weid`),
+  KEY `idx_openid` (`openid`),
+  KEY `idx_tid` (`tid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ims_profile_fields` (
@@ -427,7 +443,8 @@ CREATE TABLE IF NOT EXISTS `ims_wechats` (
   `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '公众号类型，1微信，2易信',
   `uid` int(10) unsigned NOT NULL COMMENT '关联的用户',
   `token` varchar(32) NOT NULL COMMENT '随机生成密钥',
-  `access_token` varchar(300) NOT NULL DEFAULT '' COMMENT '存取凭证结构',
+  `access_token` varchar(1000) NOT NULL DEFAULT '' COMMENT '存取凭证结构',
+  `level` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '接口权限级别, 0 普通订阅号, 1 认证订阅号|普通服务号, 2认证服务号',
   `name` varchar(30) NOT NULL COMMENT '公众号名称',
   `account` varchar(30) NOT NULL COMMENT '微信帐号',
   `original` varchar(50) NOT NULL,
@@ -445,17 +462,19 @@ CREATE TABLE IF NOT EXISTS `ims_wechats` (
   `key` varchar(50) NOT NULL,
   `secret` varchar(50) NOT NULL,
   `styleid` int(10) unsigned NOT NULL DEFAULT '1' COMMENT '风格ID',
-  `payment` varchar(1000) NOT NULL DEFAULT '',
+  `payment` varchar(5000) NOT NULL DEFAULT '',
   `shortcuts` varchar(2000) NOT NULL DEFAULT '',
   `quickmenu` varchar(2000) NOT NULL DEFAULT '',
-  `parentid` INT( 10 ) UNSIGNED NOT NULL DEFAULT '0', 
-  `subwechats` VARCHAR( 1000 ) NOT NULL DEFAULT '',
-  `level` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '接口权限级别, 0 普通订阅号, 1 认证订阅号|普通服务号, 2认证服务号',
+  `parentid` int(10) unsigned NOT NULL DEFAULT '0',
+  `subwechats` varchar(1000) NOT NULL DEFAULT '',
   `siteinfo` varchar(1000) NOT NULL DEFAULT '',
-  `groups` varchar(2000) NOT NULL COMMENT '粉丝分组',
   `menuset` text NOT NULL,
+  `groups` varchar(2000) NOT NULL COMMENT '粉丝分组',
+  `accountlink` varchar(500) DEFAULT NULL COMMENT '公众号引导关注',
   PRIMARY KEY (`weid`),
-  UNIQUE KEY `hash` (`hash`)
+  UNIQUE KEY `hash` (`hash`),
+  KEY `idx_parentid` (`parentid`),
+  KEY `idx_key` (`key`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ims_wechats_modules` (
@@ -515,6 +534,65 @@ CREATE TABLE IF NOT EXISTS `ims_members_profile` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `ims_nuqut_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `picture` varchar(100) NOT NULL COMMENT '会员图片',
+  `description` varchar(100) NOT NULL COMMENT '会员描述',
+  `gunzhu` varchar(255) NOT NULL COMMENT '会员描述',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_members_status` (
+  `id` int(10) unsigned NOT NULL auto_increment ,
+  `uid` int(11) NOT NULL,
+  `gid` int(11) NOT NULL,
+  `weid` int(11) NOT NULL,
+  `status` tinyint(1) DEFAULT '0' ,
+  `stattime` int(11) NOT NULL,
+  `endtime` int(11) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+		CREATE TABLE `ims_members_paylog` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `uid` int(11) NOT NULL,
+  `weid` int(11) NOT NULL,
+  `paytime` int(11) NOT NULL,
+  `money` int(11) NOT NULL,
+  `type` tinyint(1) DEFAULT '0' ,
+  `msg` varchar(100) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_ohost` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `type` TINYINT(3) unsigned NOT NULL,
+  `host` int(10) unsigned NOT NULL DEFAULT 0,
+  `key` varchar(100) NOT NULL DEFAULT '',
+  `secret` varchar(100) NOT NULL DEFAULT '',
+  `content` varchar(1000) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_oauther` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `type` TINYINT(3) unsigned NOT NULL,
+  `key` varchar(100) NOT NULL DEFAULT '',
+  `secret` varchar(100) NOT NULL DEFAULT '',
+  `createtime` varchar(100) NOT NULL,
+  `sum` int(10) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_oerrorlog` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `content` varchar(500) NOT NULL,
+  `createtime` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 INSERT INTO `ims_rule` (`id`, `weid`, `name`, `module`) VALUES(1, 1, '默认文字回复', 'basic');
 INSERT INTO `ims_rule` (`id`, `weid`, `name`, `module`) VALUES(2, 1, '默认图文回复', 'news');
 INSERT INTO `ims_rule_keyword` (`id`, `rid`, `weid`, `module`, `content`, `type`) VALUES
@@ -525,12 +603,14 @@ INSERT INTO `ims_news_reply` (`id`, `rid`, `parentid`, `title`, `description`, `
 INSERT INTO `ims_news_reply` (`id`, `rid`, `parentid`, `title`, `description`, `thumb`, `content`, `url`) VALUES(2, 2, 1, '这里是默认图文回复内容', '', 'images/2013/01/112487e19d03eaecc5a9ac87537595.jpg', '这里是默认图文回复原文这里是默认图文回复原文<br />', '');
 
 INSERT INTO `ims_modules` (`mid`, `name`, `type`, `title`, `version`, `ability`, `description`, `author`, `url`, `settings`, `subscribes`, `handles`, `isrulefields`, `issystem`) VALUES
-(1, 'basic', '', '基本文字回复', '1.0', '和您进行简单对话', '一问一答得简单对话. 当访客的对话语句中包含指定关键字, 或对话语句完全等于特定关键字, 或符合某些特定的格式时. 系统自动应答设定好的回复内容.', 'WeEngine Team', 'http://bbs.we7.cc/', 0, '', '', 1, 1),
-(2, 'news', '', '基本混合图文回复', '1.0', '为你提供生动的图文资讯', '一问一答得简单对话, 但是回复内容包括图片文字等更生动的媒体内容. 当访客的对话语句中包含指定关键字, 或对话语句完全等于特定关键字, 或符合某些特定的格式时. 系统自动应答设定好的图文回复内容.', 'WeEngine Team', 'http://bbs.we7.cc/', 0, '', '', 1, 1),
-(3, 'music', '', '基本语音回复', '1.0', '提供语音、音乐等音频类回复', '在回复规则中可选择具有语音、音乐等音频类的回复内容，并根据用户所设置的特定关键字精准的返回给粉丝，实现一问一答得简单对话。', 'WeEngine Team', 'http://bbs.we7.cc/', 0, '', '', 1, 1),
-(4, 'userapi', '', '自定义接口回复', '1.1', '更方便的第三方接口设置', '自定义接口又称第三方接口，可以让开发者更方便的接入微新星系统，高效的与微信公众平台进行对接整合。', 'WeEngine Team', 'http://bbs.we7.cc/', 0, '', '', 1, 1),
-(5, 'fans', 'customer', '粉丝管理', '1.1', '关注的粉丝管理', '', 'WeEngine Team', 'http://bbs.we7.cc/forum.php?mod=forumdisplay&fid=36&filter=typeid&typeid=1', 0, 'a:8:{i:0;s:4:"text";i:1;s:5:"image";i:2;s:5:"voice";i:3;s:5:"video";i:4;s:8:"location";i:5;s:4:"link";i:6;s:9:"subscribe";i:7;s:11:"unsubscribe";}', 'a:0:{}', 0, 1),
-(6, 'member', 'customer', '微会员', '1.2', '会员管理', '会员管理', 'WeEngine Team', '', 0, 'a:0:{}', '', 0, 1);
+(1, 'basic', '', '基本文字回复', '1.0', '和您进行简单对话', '一问一答得简单对话. 当访客的对话语句中包含指定关键字, 或对话语句完全等于特定关键字, 或符合某些特定的格式时. 系统自动应答设定好的回复内容.', 'wdl', 'http://bbs.birm.co/', 0, '', '', 1, 1),
+(2, 'news', '', '基本混合图文回复', '1.0', '为你提供生动的图文资讯', '一问一答得简单对话, 但是回复内容包括图片文字等更生动的媒体内容. 当访客的对话语句中包含指定关键字, 或对话语句完全等于特定关键字, 或符合某些特定的格式时. 系统自动应答设定好的图文回复内容.', 'WeNewstar Team', 'http://bbs.birm.co/', 0, '', '', 1, 1),
+(3, 'music', '', '基本语音回复', '1.0', '提供语音、音乐等音频类回复', '在回复规则中可选择具有语音、音乐等音频类的回复内容，并根据用户所设置的特定关键字精准的返回给粉丝，实现一问一答得简单对话。', 'Wdl', 'http://bbs.birm.co/', 0, '', '', 1, 1),
+(4, 'userapi', '', '自定义接口回复', '1.1', '更方便的第三方接口设置', '自定义接口又称第三方接口，可以让开发者更方便的接入微新星系统，高效的与微信公众平台进行对接整合。', 'Wdl', 'http://bbs.birm.co/', 0, '', '', 1, 1),
+(5, 'fans', 'customer', '粉丝管理', '1.1', '关注的粉丝管理', '', 'wdl', 'http://bbs.birm.co', 0, 'a:8:{i:0;s:4:"text";i:1;s:5:"image";i:2;s:5:"voice";i:3;s:5:"video";i:4;s:8:"location";i:5;s:4:"link";i:6;s:9:"subscribe";i:7;s:11:"unsubscribe";}', 'a:0:{}', 0, 1),
+(6, 'member', 'customer', '微会员', '1.2', '会员管理', '会员管理', 'wdl', '', 0, 'a:0:{}', '', 0, 1),
+(7, 'nuqut','server','用户中心','1.4','提供我的公众号的服务','提供我的公众号的服务','微新星','http://bbs.birm.co','0','a:7:{i:0;s:4:"text";i:1;s:5:"image";i:2;s:8:"location";i:3;s:4:"link";i:4;s:9:"subscribe";i:5;s:11:"unsubscribe";i:6;s:5:"click";}','a:1:{i:0;s:4:"text";}',0,1),
+(8, 'oauth2','server','oAuth2.0特权','0.3','oAuth2.0特权','oAuth2.0特权','微新星','',0,'a:0:{}','a:1:{i:0;s:4:"text";}',0,1);
 
 INSERT INTO `ims_site_templates` (`id`, `name`, `title`, `description`, `author`, `url`) VALUES
 (1, 'default', '微站默认模板', '由微新星提供默认微站模板套系', '微新星团队', 'http://we7.cc');
@@ -544,12 +624,6 @@ INSERT INTO `ims_site_styles` (`weid`, `templateid`, `variable`, `content`) VALU
 (1, 1, 'linkcolor', '#ffffff'),
 (1, 1, 'indexbgimg', 'bg_index.jpg');
 
-INSERT INTO `ims_modules_bindings` (`module`, `entry`, `call`, `title`, `do`, `state`, `direct`) VALUES
-('fans', 'menu', '', '粉丝管理选项', 'settings', '', 0),
-('fans', 'menu', '', '地理位置分布', 'location', '', 0),
-('fans', 'menu', '', '粉丝分组', 'group', '', 0),
-('fans', 'menu', '', '粉丝列表', 'display', '', 0),
-('fans', 'profile', '', '我的资料', 'profile', '', 0);
 
 INSERT INTO `ims_modules_bindings` (`module`, `entry`, `call`, `title`, `do`, `state`, `direct`) VALUES
 ('member', 'menu', '', '消费密码管理', 'password', '', 0),
@@ -562,6 +636,17 @@ INSERT INTO `ims_modules_bindings` (`module`, `entry`, `call`, `title`, `do`, `s
 ('member', 'cover', '', '会员卡入口设置', 'card', '', 0),
 ('member', 'profile', '', '我的充值记录', 'mycredit', '', 0),
 ('member', 'profile', '', '我的优惠券', 'entrycoupon', '', 0);
+
+INSERT INTO `ims_modules_bindings` (`module`, `entry`, `call`, `title`, `do`, `state`, `direct`) VALUES
+('nuqut','menu','','我的账号','kartam','',0),
+('nuqut','menu','','我的金额','money','',0),
+('nuqut','menu','','充值记录','history','',0);
+
+INSERT INTO `ims_modules_bindings` (`module`, `entry`, `call`, `title`, `do`, `state`, `direct`) VALUES
+('oauth2','cover','','测试入口','Entry','',0),
+('oauth2','menu','','特权设置','Osetting','',0),
+('oauth2','menu','','错误日志','Errorlog','',0),
+('oauth2','menu','','借用记录','Oautherlist','',0);
 
 INSERT INTO `ims_profile_fields` (`id`, `field`, `available`, `title`, `description`, `displayorder`, `required`, `unchangeable`, `showinregister`) VALUES
 (1, 'realname', 1, '真实姓名', '', 0, 1, 1, 1),

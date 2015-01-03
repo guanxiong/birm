@@ -85,10 +85,10 @@ function range(days) {
 								<tr>
 									<td><a href="#" title="{$row['from_user']}">{php echo cutstr($row['from_user'], 8)}</a></td>
 									<td align="left" class="row-hover"><div style="max-width:515px; overflow:hidden; word-break:break-all; word-wrap:break-word;">{$row['message']}</div></td>
-									<td>{if empty($row['rid'])}N/A{else}<a target="main" href="{php echo create_url('rule/post', array('id' => $row['rid']))}">{php echo cutstr($rules[$row['rid']]['name'], 6)}</a>{/if}</td>
+									<td>{if empty($row['rid'])}N/A{else}{php echo cutstr($rules[$row['rid']]['name'], 6)}{/if}</td>
 									<td>{$row['module']}</td>
 									<td style="font-size:12px; color:#666;">
-									{php echo date('Y-m-d <br /> h:i:s', $row[createtime]);}
+									{php echo date('Y-m-d <br /> H:i:s', $row[createtime]);}
 									</td>
 									<td>
 									<a href="#" title="删除" class="btn btn-small"><i class="icon-remove"></i></a>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+<title>置业顾问</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="./source/modules/broke/style/css/style.css?r={php echo time()}"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+<meta name="format-detection" content="telephone=no,address=no,email=no" />
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+</head>
+<style>
+.pagination li{
+	margin-left:10px;
+	background-color: #fa614b;
+	display: inline-block;
+	padding: 0 5px;
+	border-radius: 5px;
+	width:14%;
+}
+.pagination li .pager-nav{
+color: #fff;
+
+}
+.my-client-list ul li:first-child{
+	width:15%;
+}
+.my-client-list ul li{
+	width:20%;
+}
+.my-client-list ul li:nth-child(3){
+	width:20%;
+}
+.my-client-list ul li:last-child{
+	width:15%;
+}
+</style>
+<body>
+
+
+<section class="main animated fadeInDown">
+	<div class="main-box">
+		<div class="client my-client-title">
+			<ul class="rb-row fn-clear">
+				
+				<li style="width:25%;">姓名</li>
+				<li style="width:25%;">电话</li>
+				<li style="width:24%;">注册时间</li>
+				<li style="width:21%;">公司</li>
+			</ul>
+		</div>
+		<div class="client my-client-list">
+		{loop $customer $row}
+			<a {if empty($selected)}href="{php echo $this->createMobileUrl('counselor', array('opp'=>'visit', 'cid'=>$row['id']))}"{/if} class="rb-row my-client">
+						<ul class="fn-clear">
+							
+							<li style="{if !empty($selected)}text-align:left;{/if} width:25%;">
+								{if !empty($selected)}
+									<input type="radio" name="allot" value="{$row['id']}"/>
+								{/if}{$row['realname']}
+							</li>
+							<li style="width:25%;">{$row['mobile']}</li>
+							<li style="width:24%;">
+								{php echo date('Y-m-d',$row['createtime'])}
+							</li>
+							<li style="width:21%;">{$row['company']}</li>
+						</ul>
+			</a>
+		{/loop}	
+			{if !empty($selected)}
+			<input type="submit" onclick="allot();" value="分配" class="btn btn-primary"/>
+			{else}
+				<input type="submit" onclick="history.go(-1);" value="返回" class="btn btn-primary"/>
+			{/if}
+			<ul class="fn-clear">
+				{$pager}
+			</ul>
+			
+		</div>
+		
+	</div>
+</section>
+
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="./source/modules/broke/style/js/com.js"></script>
+<script src="./source/modules/broke/style/js/wx.js"></script>
+<script type="text/javascript">
+
+WeixinApi.ready(function(Api) {
+        Api.showOptionMenu();
+        var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : '{$_W['siteroot']}/source/modules/broke/icon.jpg',
+            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('index',array('id'=>$id))}',
+            "desc" : '看你能捞多少佣金',
+            "title" : '全民经纪人-{$_W['account']['name']}'
+        };
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享被用户自动取消
+            cancel : function(resp) {
+                TopBox.alert("分享后获得积分,还有可能得到佣金哦!不要错过发大财的机会!");
+            },
+            // 分享失败了
+            fail : function(resp) {
+                TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+            },
+            // 分享成功
+            confirm : function(resp) {
+             TopBox.alert("分享后成功,等着收佣金吧!");
+            },
+        };
+        Api.shareToFriend(wxData,wxCallbacks);
+        Api.shareToTimeline(wxData,wxCallbacks);
+        Api.shareToWeibo(wxData,wxCallbacks);
+    });
+	
+	function allot(){
+		var id = document.getElementsByName('allot');
+		var flag = false;
+		for (var i=0; i<id.length; i++){
+			if(id[i].checked == true){
+				id = id[i].value;
+				flag = true;
+				break;
+			}
+		}
+		if(flag){
+			
+		}else{
+			alert('您还未选择分配给谁！');
+			return;
+		}
+		if(confirm('确定分配给TA？')){
+			window.location.href = "{php echo $this->createMobileUrl('acmanager',array('op'=>'allot', 'selected'=>$selected))}&id="+id+";";
+		}
+	}
+	
+</script>
+</body>
+</html>

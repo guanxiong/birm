@@ -32,7 +32,9 @@
 			document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
 		}
 	</script>
-	<!--移动端版本兼容 end -->
+<!--移动端版本兼容 end -->
+<!--微信分享统计 -->
+<script type="text/javascript" src="./source/modules/izclightbox/style/src/WeixinApi.js" ></script>		
 </head>
 
 <body>
@@ -104,7 +106,7 @@
 						{if $tel!=''||$item['wechat']!=''}
 						<div class='bd-form'>
 							{if $tel!=''}<p class="tel"><span class='css_sprite01'></span><a href="tel:{$tel}">{$tel}</a></p>{/if}
-							{if $item['wechat']!=''}<p class="wx"><span class='css_sprite01'></span><a>{$item['wechat']}</a></p>{/if}
+							{if $item['wechat']!=''}<p class="wx"><span class='css_sprite01'></span><a {if $item['wurl']!=''}href="{$item['wurl']}"{/if}>{$item['wechat']}</a></p>{/if}
 							</div>{/if}
 					</div>
 									</div>
@@ -139,12 +141,16 @@
 									</div>
 				{if !empty($list['share_button'])}
 				<!-- 微信 分享 -->
+				{if $list['diyurl']!=''}
+				<div class="bigTxt-btn bigTxt-btn-wx lazy-img" data-src="{$list['share_button']}"><a href="{$list['diyurl']}"></a></div>
+				{else}
 				<div class="bigTxt-btn bigTxt-btn-wx lazy-img" data-src="{$list['share_button']}"><a href="javascript:void(0)"></a></div>
 					{if empty($list['share_tips'])}
 					<div class="bigTxt-weixin"><img src="./source/modules/izclightbox/resource/19/img/weixin-share-guide.png"></div>
 					{else}
 					<div class="bigTxt-weixin"><img src="{$list['share_tips']}"></div>
 					{/if}
+				{/if}
 				<!-- 微信 end-->
 				{/if}
 				</div>	

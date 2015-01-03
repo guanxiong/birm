@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[独立全民经纪人]]></name>
+		<identifie><![CDATA[wdl_broke]]></identifie>
+		<version><![CDATA[1.0.0]]></version>
+		<type><![CDATA[server]]></type>
+		<ability><![CDATA[独立全民经纪人]]></ability>
+		<description><![CDATA[独立全民经纪人]]></description>
+		<author><![CDATA[微新星]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+			
+	<menu>
+	<entry title="独立全民经纪人"  do="wdlbroke" state="" direct="false" />
+		</menu>
+			
+	</bindings>
+
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

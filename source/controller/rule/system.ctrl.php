@@ -2,7 +2,7 @@
 /**
  * 系统回复
  * 
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  */
 defined('IN_IA') or exit('Access Denied');
 $do = !empty($_GPC['do']) && in_array($_GPC['do'], array('display', 'set', 'cancel', 'message')) ? $_GPC['do'] : 'display';

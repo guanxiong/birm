@@ -1,7 +1,7 @@
 <?php 
 /**
  * 自动更新相关功能
- * [WeEngine System] Copyright (c) 2013 BIRM.CO
+ * [WNS] Copyright (c) 2013 BIRM.CO
  */
 require model('cloud');
 if(empty($_W['isfounder'])) {

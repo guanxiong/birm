@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[攒红包]]></name>
+		<identifie><![CDATA[redpacket]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[邀请好友红包活动！]]></ability>
+		<description><![CDATA[邀请好友红包活动！]]></description>
+		<author><![CDATA[微新星]]></author>
+		<url><![CDATA[bbs.birm.co]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="红包活动管理" do="packet" state="" />
+			<entry title="授权接口设置" do="setting" state="" />
+
+
+		</menu>
+	</bindings>
+
+	<install><![CDATA[
+	
+	
+CREATE TABLE IF NOT EXISTS ims_redpacket(
+	id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	weid INT(11) UNSIGNED DEFAULT NULL,
+	name VARCHAR(50) DEFAULT NULL,
+	banner_pic VARCHAR(100) NOT NULL,
+	begintime INT(11) UNSIGNED DEFAULT NULL,
+	endtime  INT(11) UNSIGNED DEFAULT NULL,
+	createtime INT(11) UNSIGNED DEFAULT NULL,
+	countlimit INT(5) NOT NULL,
+	visitsCount INT(11) DEFAULT 0,
+	incomelimit float(10,2) unsigned NOT NULL DEFAULT '0',
+	careurl VARCHAR(200) NOT NULL,
+	shareImg VARCHAR(200) NOT NULL,
+	shareTitle VARCHAR(200) NOT NULL,
+	shareContent VARCHAR(200) NOT NULL,
+	rule VARCHAR(1000) NOT NULL,
+ 	daylimit INT(5) DEFAULT 0,
+ 	totallimit INT(5) DEFAULT 0,
+ 	limitType INT(1) DEFAULT 0, 
+	`start` float(10,2) unsigned NOT NULL DEFAULT '0' COMMENT '初始分值',
+  	`step` float(10,2) unsigned NOT NULL DEFAULT '0' COMMENT '固定金额',
+  	`steprandom` float(10,2) unsigned NOT NULL DEFAULT '0' COMMENT '随机金额',
+  	`steptype` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '随机金额',
+	 `addp` int (5) NOT NULL DEFAULT 100,
+	 `packetsummary` VARCHAR(100) NOT NULL COMMENT '活动摘要',
+	 `sharetip` VARCHAR(100) NOT NULL,
+	 `fanpaitip` VARCHAR(100) NOT NULL,
+	 `carebtn` VARCHAR(100) NOT NULL,
+	 `awardtip`	VARCHAR(200) NOT NULL,
+	 `cardbg` VARCHAR(200) NOT NULL,
+	 `sortcount` INT(5) DEFAULT 10,
+	 `sharebtn`  VARCHAR(10) NOT NULL,
+	 `fsharebtn` VARCHAR(10) NOT NULL,
+	
+	PRIMARY KEY(id)
+
+) ENGINE=MYISAM  DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS `ims_redpacket_reply` (
+	  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	  `rid` int(10) unsigned NOT NULL DEFAULT '0',
+	  `pid` int(10) unsigned NOT NULL,
+	  new_title VARCHAR(100) NOT NULL,
+	  new_pic VARCHAR(200) NOT NULL,
+	  new_desc VARCHAR(500) NOT NULL,
+	  PRIMARY KEY (`id`),
+	  KEY `idx_rid` (`rid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS  `ims_redpacket_award` (
+  `id` int(11)  AUTO_INCREMENT,
+  `pid` int(11) DEFAULT 0 ,
+  `point` decimal(10,2) default 0,
+  `name` varchar(255) default '',
+  `num` int(11) default 0,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `ims_redpacket_user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int(10) NOT NULL DEFAULT '0',
+  `openid` varchar(50) NOT NULL COMMENT '用户唯一身份ID',
+  `tel` varchar(50) NOT NULL,
+  `name` varchar(100) NOT NULL COMMENT '姓名',
+  `nickname` varchar(100) NOT NULL COMMENT '昵称',
+  `sex` varchar(10) NOT NULL COMMENT '性别',
+  `headimgurl` varchar(500) NOT NULL COMMENT '头像',
+  `income` float(10,2) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(10) unsigned NOT NULL COMMENT '日期',
+  `helpcount` int(11) NULL DEFAULT '0' COMMENT '助力次数',
+  `status` int(10) DEFAULT '0',
+  `awardid` int(10) DEFAULT '0',
+  `awardtime` int(10) DEFAULT '0',
+  `virtual` int (1) DEFAULT '0',
+  
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+
+
+CREATE TABLE `ims_redpacket_firend` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(10) NOT NULL DEFAULT '0' COMMENT '分享用户的id',
+  `pid` int(10) NOT NULL DEFAULT '0',
+  `openid` varchar(50) NOT NULL COMMENT '用户唯一身份ID',
+   `nickname` varchar(100) NOT NULL COMMENT '昵称',
+  `sex` varchar(10) NOT NULL COMMENT '性别',
+  `headimgurl` varchar(500) NOT NULL COMMENT '头像',
+  `createtime` int(10) unsigned NOT NULL COMMENT '日期',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `ims_redpacket_setting` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `appid` varchar(200) NOT NULL COMMENT 'appid',
+ 	 weid INT(11) UNSIGNED DEFAULT NULL,
+  `secret` varchar(200) NOT NULL COMMENT 'secret',
+  	PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `ims_redpacket_token` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+   weid INT(11) UNSIGNED DEFAULT NULL,
+  `access_token` varchar(1000) NOT NULL ,
+ 	expires_in INT(11),
+ 	`createtime` int(10) unsigned NOT NULL COMMENT '日期',
+  	PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+
+	]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_redpacket`;
+	DROP TABLE IF EXISTS `ims_redpacket_reply`;
+	DROP TABLE IF EXISTS `ims_redpacket_user`;
+	DROP TABLE IF EXISTS `ims_redpacket_firend`;
+	DROP TABLE IF EXISTS `ims_redpacket_setting`;
+	DROP TABLE IF EXISTS `ims_redpacket_token`;
+	
+	
+	
+	]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

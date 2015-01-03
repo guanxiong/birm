@@ -1,0 +1,48 @@
+{template 'common/header'}
+<script type="text/javascript">
+	var u ={};
+	u.deny = function(uid, status){
+		var uid = parseInt(uid);
+		if(isNaN(uid)) {
+			return;
+		}
+		if(!confirm('确认要禁用/解禁此用户吗? ')) {
+			return;
+		}
+		$.post('{php echo create_url('agent/edit');}', {'do': 'deny', uid: uid, status: status}, function(dat){
+			if(dat == 'success') {
+				location.href = location.href;
+			} else {
+				message('操作失败, 请稍后重试. ' + dat);
+			}
+		});
+	};
+
+</script>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('finance/userpay');}">充值用户</a></li>
+	<li class="active"><a href="{php echo create_url('finance/log');}">财务明细</a></li>
+</ul>
+<div class="rule">
+	<table class="table table-hover">
+		<thead class="navbar-inner">
+			<tr>
+				<th style="max-width:150px;">用户名</th>
+				<th style="width:60px;">充值金额</th>
+				<th style="width:220px;">日期</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{loop $paylog $m}
+			<tr>
+				<td>{$m['username']}</td>
+				<td>{$m['money']}</td>
+				<td><?php echo date('Y-m-d <br /> h:i:s', $m['paytime']);?></td>
+				<td>{$m['msg']}</td>
+			</tr>
+			{/loop}
+		</tbody>
+	</table>
+</div>
+{template 'common/footer'}

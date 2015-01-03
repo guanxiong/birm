@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  * $sn: origins/source/controller/extension/service.ctrl.php : v 866195d935cc : 2014/05/16 09:42:08 : veryinf $
  */
 defined('IN_IA') or exit('Access Denied');

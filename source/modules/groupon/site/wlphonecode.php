@@ -2,10 +2,9 @@
 /**
  * 详情
  *
- * @author 微新星
+ * @author 超级无聊
  * @url
- */
-	WeSession::$expire = 600;	
+ */	WeSession::$expire = 600;	
 	WeSession::start();
 	if(isset($_SESSION['code'])){
 		$code=$_SESSION['code'];

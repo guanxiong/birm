@@ -1,0 +1,152 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li ><a href="{php echo $this->createWebUrl('acmanagers',array());}">经理管理</a></li>
+	
+	<li class="active"><a href="{php echo $this->createWebUrl('acmanager',array('op'=>'post'));}">添加邀请码</a></li>
+	<li ><a href="{php echo $this->createWebUrl('acmanager',array('op'=>'list'));}">邀请码管理</a></li>
+</ul>
+	<div class="main">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return validate(this);">
+			<h4>添加邀请码</h4>
+			<table class="tb">
+				<tr>
+					<th><label for="">排序</label></th>
+					<td>
+						<input type="text" name="listorder" class="span6" value="{$theone['listorder']}" />
+					</td>
+				</tr>
+				<tr>
+					<th><label for="">邀请码</label></th>
+					<td>
+						<input type="text" name="code" class="span6" placeholder="邀请码为经理认证凭据，请认真填写！" value="{$theone['code']}" {if $theone['status']==0}readonly="true"{/if}/>
+						<input type="hidden" name="code1" class="span6" value="{$theone['code']}"/>
+					</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td>
+						<input type="button" onclick="randomCode();" value='随机生成' {if $theone['status']==0}disabled="true"{/if}/>
+						<input type="text" name="num" placeholder="邀请码位数：默认9位"/>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="">说明</label></th>
+					<td>
+						<input type="text" name="content" class="span6" value="{$theone['content']}"/>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="" onclick="getTop(this)">楼盘</label></th>
+					<td>{php $islid = 0}
+						{loop $loupan $key $l}
+							{loop $theone['loupanid'] $lid}
+								{php if($lid == $l['id']) $islid = 1;}
+							{/loop}
+							<input type="hidden" name="loupan" value="{$l['id']}" />
+							<input type="button" onclick="getThis(this, {$key}, {$l['id']})" name="l" value="{$l['title']}" {if $islid}class="btn btn-primary"{else}class=""{/if}/>
+							{php $islid = 0;}
+						{/loop}
+						<input type="hidden" id="loupanid" name="loupanid" value="" />
+					</td>
+				</tr>
+				
+				<tr>
+					<th><label for="">状态</label></th>
+					<td>
+						<label for="isshow1" class="radio inline"><input type="radio" name="status" value="1" id="isshow1" {if $theone['status']=='1'}  checked="true" {/if}> 可用</label>&nbsp;&nbsp;&nbsp;
+						<label for="isshow0" class="radio inline"><input type="radio" name="status" value="0" id="isshow0"  {if $theone['status'] == '0'}  checked="true" {/if}> 已用</label>
+					</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td>
+						<input type="hidden"  name="id" value="{$theone['id']}" />
+						<input type="hidden" name="token" value="{$_W['token']}" />
+						<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					</td>
+				</tr>
+			</table>
+		</form>
+    </div>
+	<script text="text/javascript">
+		function validate() {
+			if($.trim($(':text[name="code"]').val()) == '') {
+				message('必须填写邀请码.', '', 'error');
+				return false;
+			}
+			return true;
+		}
+		
+		function randomCode(){
+			var num = $.trim($(':text[name="num"]').val());
+			$.getJSON("{php echo $this->createWebUrl('acmanager', array('op'=>'randomcode'))}&num="+num+"&r="+new Date().getTime(),function(res){
+				$(':text[name="code"]').val(res['message']);
+			});
+			
+		}
+		
+		function getTop(v){
+			var lid = document.getElementById("loupanid");
+			var xed = document.getElementsByName("loupan");
+			var x = document.getElementsByName("l");
+			var loupanid = new Array();
+			
+			if(v.value != '0'){
+				for (var i=0; i<x.length; i++){
+					loupanid[i] = xed[i].value;
+					x[i].className = 'btn btn-primary';
+					v.value = '0';
+				}
+			}else{
+				for (var i=0; i<x.length; i++){
+					loupanid[i] = '';
+					x[i].className = '';
+					v.value = '1';
+				}
+			}
+			lid.value = loupanid;
+		}
+		
+		function getThis(x, key, id){
+			var lid = document.getElementById("loupanid");
+			
+			var loupanid = lid.value.split(',');
+			if(x.className == ''){
+				loupanid[key] = id;
+				x.className = 'btn btn-primary';
+			}else{
+				loupanid[key] = '';
+				x.className = '';
+			}
+			lid.value = loupanid;
+		}
+		
+		init();
+		function init(){
+			var loupanid = new Array();
+			var xed = document.getElementsByName("loupan");
+			var x = document.getElementsByName("l");
+			for (var i=0; i<x.length; i++){
+				if(x[i].className == ''){
+					loupanid[i] = '';
+				}else{
+					loupanid[i] = xed[i].value;
+				}
+			}
+			document.getElementById("loupanid").value = loupanid;
+		}
+		
+	/*		$('input[name=l]').click(function(){
+				var loupanid, loupanObjs, index = $('input[name=l]').index($(this));;
+				$('input[name=l]').each(function(){
+					var index = 
+					if($(this).attr('class') == 'btn btn-primary') {
+						loupanid += ','+$(this).
+					}
+				});
+			});
+		
+		*/
+	</script>
+{template 'common/footer'}
+

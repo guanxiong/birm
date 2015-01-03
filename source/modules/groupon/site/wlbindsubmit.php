@@ -2,7 +2,7 @@
 /**
  * 详情
  *
- * @author 微新星
+ * @author 超级无聊
  * @url
  */	
 	WeSession::start();

@@ -2,7 +2,7 @@
 /**
  * 万能查询模块处理程序
  *
- * @author WeEngine Team
+ * @author WeNewstar Team
  * @url http://we7.cc
  */
 defined('IN_IA') or exit('Access Denied');

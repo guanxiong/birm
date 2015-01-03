@@ -6,8 +6,7 @@
  * @url 
  */
 defined('IN_IA') or exit('Access Denied');
-define('RES', "http://src.mmghome.com/");
-
+define('RES','./source/modules/groupon/style/');
 class GrouponModule extends WeModule {
 	public function fieldsFormDisplay($rid = 0) {
 		//要嵌入规则编辑页的自定义内容，这里 $rid 为对应的规则编号，新增时为 0

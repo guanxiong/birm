@@ -1,7 +1,7 @@
 <?php
 /**
  * 微新星管理后台初始化文件
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  */
 
 $session = json_decode(base64_decode($_GPC['__session']), true);

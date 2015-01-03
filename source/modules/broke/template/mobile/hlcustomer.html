@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<title>我的客户 - 经纪人中心 - 全民经纪人</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="./source/modules/broke/style/css/style.css?ver233"/>
+<link rel="apple-touch-icon-precomposed" href="/img/ico-startup-57x57.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+<style>
+.pagination li{
+	margin-left:10px;
+	background-color: #fa614b;
+	display: inline-block;
+	padding: 0 5px;
+	border-radius: 5px;
+	
+}
+.pagination li .pager-nav{
+color: #fff;
+
+}
+</style>
+</head>
+<body>
+		<section class="main animated fadeInDown">
+			<div class="main-box">
+				<div class="client my-client-title">
+					<ul class="rb-row fn-clear">
+						<li>姓名</li>
+						<li>意向产品</li>
+						<li>电话</li>
+						<li>状态</li>
+					</ul>
+				</div>
+				<div class="client my-client-list">
+				{loop $customer $row}
+				
+					<a href="{php echo $this->createMobileurl('customer',array('op'=>'detail','cid'=>$row['id']))}" class="rb-row my-client">
+								<ul class="fn-clear">
+									<li>{$row['realname']}</li>
+									<li class="texthidden">{$pan[$row['loupan']]}</li>
+									<li>{$row['mobile']}</li>
+									<li>
+										<span class="{if $row['status']==2}invalid{else}visit{/if}">{$status[$row['status']]}</span>
+									</li>
+								</ul>
+					</a>
+				{/loop}	
+					<ul class="fn-clear">
+						{$pager}
+					</ul>
+					
+				</div>
+				
+				<div class="recommend-tips">
+					<h6>提示</h6>
+					<p>具体判客规则以“活动细则”里的相关说明为准！</p>
+				</div>
+			</div>
+		</section>
+		<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+<nav class="nav fn-clear">
+	<a href="{php echo $this->createMobileUrl('index')}"><i class="icon-angle-left"></i>首页</a>
+	<a href="{php echo $this->createMobileUrl('customer')}" class="active"><i class="icon-users"></i>我的客户</a>
+	<a href="{php echo $this->createMobileUrl('my')}"><i class="icon-adult"></i>个人中心</a>
+</nav>
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="./source/modules/broke/style/js/com.js"></script>	
+<script src="./source/modules/broke/style/js/wx.js"></script>
+<script type="text/javascript">
+
+WeixinApi.ready(function(Api) {
+        Api.showOptionMenu();
+        var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : '{$_W['siteroot']}/source/modules/broke/icon.jpg',
+            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('index',array('id'=>$id))}',
+            "desc" : '看你能捞多少佣金',
+            "title" : '全民经纪人-{$_W['account']['name']}'
+        };
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享被用户自动取消
+            cancel : function(resp) {
+                TopBox.alert("分享后获得积分,还有可能得到佣金哦!不要错过发大财的机会!");
+            },
+            // 分享失败了
+            fail : function(resp) {
+                TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+            },
+            // 分享成功
+            confirm : function(resp) {
+             TopBox.alert("分享后成功,等着收佣金吧!");
+            },
+        };
+        Api.shareToFriend(wxData,wxCallbacks);
+        Api.shareToTimeline(wxData,wxCallbacks);
+        Api.shareToWeibo(wxData,wxCallbacks);
+    });
+
+</script>
+</body>
+</html>

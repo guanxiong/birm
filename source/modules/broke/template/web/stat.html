@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>s</title>
+<link type="text/css" rel="stylesheet" href="/resource/style/bootstrap.css" />
+<link type="text/css" rel="stylesheet" href="/resource/style/font-awesome.css" />
+<link type="text/css" rel="stylesheet" href="/resource/style/jquery.mCustomScrollbar.css" />
+<link type="text/css" rel="stylesheet" href="/resource/style/common.css?v=1408593687" />
+<script type="text/javascript" src="/resource/script/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/resource/script/bootstrap.js"></script> 
+<script type="text/javascript" src="/resource/script/jquery.mCustomScrollbar.concat.min.js"></script>
+<script type="text/javascript" src="/resource/script/common.js?v=1408593687"></script>
+<script type="text/javascript" src="/resource/script/emotions.js"></script>
+<script type="text/javascript">
+cookie.prefix = 'aa83_';
+window.UEDITOR_HOME_URL = 'http://t5.mmghome.com/';
+</script>
+<!--[if IE 7]>
+<link rel="stylesheet" href="./resource/style/font-awesome-ie7.min.css">
+<![endif]-->
+<!--[if lte IE 6]>
+<link rel="stylesheet" type="text/css" href="./resource/style/bootstrap-ie6.min.css">
+<link rel="stylesheet" type="text/css" href="./resource/style/ie.css">
+<![endif]-->
+</head>
+<body >
+
+<script type="text/javascript" src="./source/modules/broke/style/js/FusionCharts.js?2013-12-17-1"></script>
+   
+
+<div id="main">
+        <div class="container-fluid">
+
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="box">
+                        <div class="box-title">
+                            <div class="span8">
+                                <h3><i class="icon-table"></i>{$year}年{$month}月
+									{if $logtype==1}客户状态走势{/if}
+									{if $logtype==2}预约状态走势{/if}
+									{if $logtype==3}游客记录{/if}
+									{if $logtype==4}产品转发记录{/if}
+								</h3>
+                            </div>
+                            <div class="span4">
+                                <select class="input-small" name="year" id="year">
+                                    <option value="2013" {if $year==2013}selected{/if}>2013年</option>
+                                    <option value="2014" {if $year==2014}selected{/if}>2014年</option>
+                                    <option value="2015" {if $year==2015}selected{/if}>2015年</option>
+                                    <option value="2016" {if $year==2016}selected{/if}>2016年</option>
+                                    <option value="2017" {if $year==2017}selected{/if}>2017年</option>
+                                    <option value="2018" {if $year==2018}selected{/if}>2018年</option>
+                                    <option value="2019" {if $year==2019}selected{/if}>2019年</option>
+                                    <option value="2020" {if $year==2020}selected{/if}>2020年</option>
+                                    <option value="2021" {if $year==2021}selected{/if}>2021年</option>
+                                    <option value="2022" {if $year==2022}selected{/if}>2022年</option>
+                                </select>
+                                <select class="input-small" name="period" id="period">
+                                    <option value="01" {if $month==1}selected{/if}>1月</option>
+                                    <option value="02" {if $month==2}selected{/if}>2月</option>
+                                    <option value="03" {if $month==3}selected{/if}>3月</option>
+                                    <option value="04" {if $month==4}selected{/if}>4月</option>
+                                    <option value="05" {if $month==5}selected{/if}>5月</option>
+                                    <option value="06" {if $month==6}selected{/if}>6月</option>
+                                    <option value="07" {if $month==7}selected{/if}>7月</option>
+                                    <option value="08" {if $month==8}selected{/if}>8月</option>
+                                    <option value="09" {if $month==9}selected{/if}>9月</option>
+                                    <option value="10" {if $month==10}selected{/if}>10月</option>
+                                    <option value="11" {if $month==11}selected{/if}>11月</option>
+                                    <option value="12" {if $month==12}selected{/if}>12月</option>
+                                </select>
+                            </div>
+                        </div>
+						{if $logtype == 1}
+							<input type="hidden" id="op" name="customer" value=""/>
+							<div id="chartdiv" class="box-content">
+							</div>
+							<script type="text/javascript">
+                              var chart = new FusionCharts("./source/modules/broke/style/graph/Doughnut3D.swf", "ChartId", "100%", "400", "0", "0");
+                              chart.setXMLUrl("{php echo $this->createWebUrl('stat', $condition)}&pp=xml");
+                              chart.render("chartdiv");
+							</script>
+						{/if}
+						{if $logtype == 2}
+							<input type="hidden" id="op" name="yuyue" value=""/>
+							<div id="chartdiv" class="box-content">
+							</div>
+							<script type="text/javascript">
+                              var chart = new FusionCharts("./source/modules/broke/style/graph/Doughnut2D.swf", "ChartId", "100%", "400", "0", "0");
+                              chart.setXMLUrl("{php echo $this->createWebUrl('stat', $condition)}&pp=xml");
+                              chart.render("chartdiv");
+							</script>
+						{/if}
+						{if $logtype == 3}
+							<input type="hidden" id="op" name="display" value=""/>
+							<div id="chartdiv" class="box-content">
+							</div>
+							<script type="text/javascript">
+                              var chart = new FusionCharts("./source/modules/broke/style/graph/MSLine.swf", "ChartId", "100%", "400", "0", "0");
+                              chart.setXMLUrl("{php echo $this->createWebUrl('stat', $condition)}&pp=xml");
+                              chart.render("chartdiv");
+							</script>
+						{/if}
+						{if $logtype == 4}
+							<input type="hidden" id="op" name="logloupan" value=""/>
+							<div id="chartdiv" class="box-content">
+							</div>
+							<script type="text/javascript">
+                              var chart = new FusionCharts("./source/modules/broke/style/graph/Column3D.swf", "ChartId", "100%", "400", "0", "0");
+                              chart.setXMLUrl("{php echo $this->createWebUrl('stat', $condition)}&pp=xml");
+                              chart.render("chartdiv");
+							</script>
+						{/if}
+                        	<table>
+								<tr>
+									<td style="position:absolute;left:60px;">
+										{if ($logtype==1 || $logtype==2 || $logtype==4) && !empty($loupan)}
+											<input onclick="loupan('')" class="" type="submit" name="loupan" value="全部产品">
+										{/if}
+										{loop $loupan $key $l}
+											<input onclick="loupan(this.value)" type="submit" name="loupan" value="{$l['title']}">
+										{/loop}
+									</td>
+									<td style="position:absolute;right:60px;">
+										{if $logtype != 1}
+											<a href="{php echo $this->createWebUrl('stat')}&op=customer"><input type="submit" name="display" value="客户记录"></a>
+										{/if}
+										{if $logtype != 2}
+											<a href="{php echo $this->createWebUrl('stat')}&op=yuyue"><input type="submit" name="yuyue" value="预约记录"></a>
+										{/if}
+										{if $logtype != 3}
+											<a href="{php echo $this->createWebUrl('stat')}&op=display"><input type="submit" name="customer" value="游客记录"></a>
+										{/if}
+										{if $logtype != 4}
+											<a href="{php echo $this->createWebUrl('stat')}&op=logloupan"><input type="submit" name="logloupan" value="转发记录"></a>
+										{/if}
+									</td>
+								</tr>
+							</table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<script type="text/ecmascript">
+	var op = $('#op').attr('name');
+   $(function () {
+	   $("#period").change(function () {
+		   window.location = "{php echo $this->createWebUrl('stat')}&year="+$('#year').val()+"&month="+$(this).val()+"&op="+op;
+	   })
+	   $("#year").change(function () {
+		   window.location = "{php echo $this->createWebUrl('stat')}&year="+$(this).val()+"&month="+$('#period').val()+"&op="+op;
+	   })
+   })
+   
+   function loupan(l){
+		 window.location = "{php echo $this->createWebUrl('stat')}&year="+$("#year").val()+"&month="+$('#period').val()+"&loupan="+l+"&op="+op;
+   }
+
+</script> 

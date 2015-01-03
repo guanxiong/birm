@@ -71,7 +71,7 @@
 							{loop $list $row}
 							<tr>
 								<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
-								<td class="row-hover"><a href="{php echo $this->createWebUrl('profile', array('from_user' => $row['from_user']))}"  title="{$row['from_user']}"> <img class="avatar" style="width:45px; height:45px;" src="{if (empty($row['avatar']))}{$_W['siteroot']}/resource/image/noavatar_middle.gif{elseif (strexists($row['avatar'], 'avatar_'))}{$_W['siteroot']}'resource/image/avatar/'{$row['avatar']}{else}{$_W['attachurl']}{$row['avatar']}{/if}" /><br /><center>{$row['nickname']}</center></td>
+								<td class="row-hover"><a href="#" title="{$row['from_user']}">{php echo cutstr($row['from_user'], 8)}</a></td>
 								{loop $select $field}
 								<th>{$row[$field]}<i></i></th>
 								{/loop}

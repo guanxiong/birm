@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+<title>经纪人注册 - 全民经纪人</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="./source/modules/broke/style/css/style.css"/>
+<link rel="apple-touch-icon-precomposed" href="/img/ico-startup-57x57.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+</head>
+<body>
+	
+<section class="main animated fadeInDown">
+	<div class="main-box">
+		
+		<h1 class="jjr-register"></h1>
+		<p class="rb-row"><input type="text" id="realname" placeholder="姓名" class="input" /></p>
+		<p class="rb-row"><input type="tel" id="mobile" placeholder="手机" class="input" /></p>
+		<p class="rb-row rb-select">
+			<select id="identity" class="select">
+				<option value="">选择您的身份类型</option>
+				{loop $identity $row}
+					<option value="{$row['id']}">{$row['identity_name']}</option>
+				{/loop}
+			</select>
+			<i class="icon-down-open-big"></i>
+		</p>
+		<p class="rb-row "><input type="text" id="company" placeholder="公司名称" class="input" /></p>
+		<div class="rb-row registerRuleBox border-box">
+			<p class="rb-row registerRuleCheck"><input type="checkbox" checked id="agree"/>&nbsp;我同意以上注册协议</p>
+			<div class="recommend-tips">
+				<h6>提示</h6>
+				<p>请输入正确的姓名以及电话，否则可能无法结佣。</p>
+			</div>
+			<p class="rb-submit"><input type="button" value="注册" class="btn" id="J_submitReg"/></p>
+			<p class="register-tips">销售员、经理请勿注册为经纪人</p>
+			<hr>
+			<h1>注册条款</h1>
+			<div class="rule-text">
+					{$rule['terms']}		
+							
+			</div>
+			
+		</div>
+</section>
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="./source/modules/broke/style/js/com.js"></script>
+<script>
+//添加经纪人信息
+$("#J_submitReg").live("click", function () {
+	var reg = /^1[3458]\d{9}$/;
+	
+	if($("#agree").attr('checked')=='checked'){
+		
+	}else{
+		TopBox.alert("请同意注册协议!");
+		return;
+	}
+
+	n = $("#realname").val();
+	p = $("#mobile").val();
+	t = $("#identity").val();
+	
+   
+	c = $("#company").val();
+	if (t == "") {
+		TopBox.alert("请选择身份类型!");
+		return;
+	}
+	if (n == "") {
+		TopBox.alert("姓名不能为空!");
+		return;
+	} else if (!reg.test(p)) {
+		TopBox.alert("手机格式不正确!");
+		return;
+	}else {
+		
+		$.ajax({
+			type: "POST",
+			url: "{php echo $this->createMobileurl('register',array('op'=>'add'))}",
+			data: { realname: n, mobile: p, identity: t, company: c },
+			dataType: "text",
+			
+			success: function (d) {
+				if (d == "1") {
+					$("#realname").val("");
+					$("#mobile").val("");
+					$("#agree").hide();
+					TopBox.alert("经纪人申请成功.", function () { window.location.href = '{php echo $this->createMobileurl('index',array())}'; });
+					//TopBox.alert("经纪人申请成功.");
+				} else if (d == "0") {
+					
+					TopBox.alert("经纪人申请失败.");
+				} else if (d == "-2") {
+					$("#agree").hide();
+					TopBox.alert("请勿重复注册经纪人.");
+				} else {
+					
+					TopBox.alert("信息填写不正确.");
+				}
+			},
+			
+			error: function (xml, text, thrown) {
+				TopBox.alert("出错啦!");
+			}
+		});
+
+	}
+});
+
+</script>
+<script src="./source/modules/broke/style/js/wx.js"></script>
+<script type="text/javascript">
+
+WeixinApi.ready(function(Api) {
+        Api.showOptionMenu();
+        var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : '{$_W['siteroot']}/source/modules/broke/icon.jpg',
+            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('index',array('id'=>$id))}',
+            "desc" : '看你能捞多少佣金',
+            "title" : '全民经纪人-{$_W['account']['name']}'
+        };
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享被用户自动取消
+            cancel : function(resp) {
+                TopBox.alert("分享后获得积分,还有可能得到佣金哦!不要错过发大财的机会!");
+            },
+            // 分享失败了
+            fail : function(resp) {
+                TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+            },
+            // 分享成功
+            confirm : function(resp) {
+             TopBox.alert("分享后成功,等着收佣金吧!");
+            },
+        };
+        Api.shareToFriend(wxData,wxCallbacks);
+        Api.shareToTimeline(wxData,wxCallbacks);
+        Api.shareToWeibo(wxData,wxCallbacks);
+    });
+
+</script>
+</body>
+</html>

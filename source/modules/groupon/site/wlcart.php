@@ -2,10 +2,9 @@
 /**
  * 购物车
  *
- * @author 微新星
+ * @author 超级无聊
  * @url
- */
-	if($_GPC['subcp']=='ajax'&&$_GPC['d']=='add'){
+ */	if($_GPC['subcp']=='ajax'&&$_GPC['d']=='add'){
 			$goodsid = intval($_GPC['goodsid']);
 			$goods = pdo_fetch("SELECT id, type, total,marketprice FROM ".tablename('shopping1_goods')." WHERE id = :id", array(':id' => $goodsid));
 			if (empty($goods)) {

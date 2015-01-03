@@ -1,0 +1,87 @@
+{template 'common/header'}
+<style>
+.theme_list{overflow:hidden; padding-top:15px;}
+.theme_list li{border:1px #DDD solid; width:320px; float:left; margin-left:15px; margin-bottom:10px;}
+.theme_list li .theme_pic{display:block; width:320px; height:160px; overflow:hidden;}
+.theme_list li .theme_pic img{width:320px;}
+.theme_list li .theme_main{padding:10px; overflow:hidden;}
+.theme_list li .theme_main .theme_title{font-size:16px; height:20px; width:217px; overflow:hidden;}
+.theme_list li .theme_main .pull-left{color:#999;}
+</style>
+<ul class="nav nav-tabs">
+	<li {if $operation == 'untake'}class="active"{/if}><a href="{php echo $this->createWebUrl('membergift', array('op' => 'untake'));}">未领奖</a></li>
+	<li {if $operation == 'hastake'}class="active"{/if}><a href="{php echo $this->createWebUrl('membergift', array('op' => 'hastake'));}">已领奖</a></li>
+</ul>
+{if $operation == 'untake'}
+ <div class="main">
+ 		<p></p><p></p><p></p>
+        <form action="" method="post" class="form-horizontal form" onsubmit="return formcheck(this)">
+        <input type="text" id="keyword" name="keyword" value="{$keyword}" class="input-small-z" placeholder="请输入兑换码或者副码" data-rule-required="true">
+        <select name="type" class="input-small">
+            <option value="code">兑换码</option>
+            <option value="codetime">兑换副码</option>
+        </select>
+        <input type="hidden" name="token" value="{$_W['token']}" />
+        <input name="submit" type="submit" class="btn" value="查询">
+		</form>
+        <p></p>
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="min-width:100px;max-width:300px;">主题名称 </th>
+					<th style="min-width:100px;max-width:300px;">奖品名称 </th>
+					<th style="min-width:100px;max-width:300px;">兑换码 </th>
+					<th style="min-width:100px;max-width:300px;">兑换副码 </th>
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $membergifts $item}
+				<tr>
+					<td style="min-width:100px;max-width:300px;">{$item['themename']}</td>
+					<td style="max-width:10px;">{$item['giftname']}</td>
+					<td style="max-width:10px;">{$item['code']}</td>
+					<td style="max-width:10px;">{$item['codetime']}</td>
+					<td style="text-align:right; min-width:60px;">
+						<a href="{php echo $this->createWebUrl('membergift', array('op' => 'convert','membergiftid' => $item['id']));}" title="兑换" class="btn btn-small"><i class="icon-edit"></i></a>
+						<a href="{php echo $this->CreateWebUrl('membergift', array('op' => 'delete','membergiftid' => $item['id']));}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除" class="btn btn-small"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+ 
+{elseif $operation == 'hastake'}
+ <div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="min-width:100px;max-width:300px;">主题名称 </th>
+					<th style="min-width:100px;max-width:300px;">奖品名称 </th>
+					<th style="min-width:100px;max-width:300px;">兑换码 </th>
+					<th style="min-width:100px;max-width:300px;">兑换副码 </th>
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $membergifts $item}
+				<tr>
+					<td style="min-width:100px;max-width:300px;">{$item['themename']}</td>
+					<td style="max-width:10px;">{$item['giftname']}</td>
+					<td style="max-width:10px;">{$item['code']}</td>
+					<td style="max-width:10px;">{$item['codetime']}</td>
+					<td style="text-align:right; min-width:60px;">
+						<a href="{php echo $this->CreateWebUrl('membergift', array('op' => 'delete','membergiftid' => $item['id']));}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除" class="btn btn-small"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+{/if}
+{template 'common/footer'}

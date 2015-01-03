@@ -21,10 +21,10 @@
 								{loop $list $row}
 								<tr>
 									<td class="row-hover">{$keywords[$row['kid']]['content']}</td>
-									<td>{if empty($row['rid'])}N/A{else}<a target="main" href="{php echo create_url('rule/post', array('id' => $row['rid']))}">{$rules[$row['rid']]['name']}</a>{/if}</td>
+									<td>{if empty($row['rid'])}N/A{else}{$rules[$row['rid']]['name']}{/if}</td>
 									<td>{if $rules[$row['rid']]['module']}{$rules[$row['rid']]['module']}{else}default{/if}</td>
 									<td>{$row['hit']}</td>
-									<td style="font-size:12px; color:#666;">{php echo date('Y-m-d <br /> h:i:s', $row['lastupdate']);}</td>
+									<td style="font-size:12px; color:#666;">{php echo date('Y-m-d <br /> H:i:s', $row['lastupdate']);}</td>
 									<td>
 										<a target="main" href="{php echo $this->createWebUrl('trend', array('id' => $row['rid']))}" class="btn btn-small" title="使用率走势"><i class="icon-bar-chart"></i></a>
 									</td>

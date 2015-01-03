@@ -2,7 +2,7 @@
 /**
  * 摇一摇中奖模块处理程序
  *
- * @author 更多模块请浏览bbs.we7.cc
+ * @author 更多模块请浏览bbs.birm.co
  * @url http://we7.cc
  */
 defined('IN_IA') or exit('Access Denied');

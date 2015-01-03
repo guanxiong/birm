@@ -3,7 +3,7 @@
 	<application setting="false">
 		<name><![CDATA[微团购]]></name>
 		<identifie><![CDATA[groupon]]></identifie>
-		<version><![CDATA[1.5]]></version>
+		<version><![CDATA[1.6]]></version>
 		<type><![CDATA[business]]></type>
 		<ability><![CDATA[微团购]]></ability>
 		<description><![CDATA[微团购]]></description>
@@ -109,6 +109,11 @@ CREATE TABLE IF NOT EXISTS `ims_groupon_set` (
   `payset3` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></install>
-	<uninstall><![CDATA[]]></uninstall>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_groupon_set`;
+	DROP TABLE IF EXISTS `ims_groupon_order`;
+	DROP TABLE IF EXTSTS `ims_groupon_list`;
+	DROP TABLE IF EXTST  `ims_groupon_fans`;
+	]]></uninstall>
 	<upgrade><![CDATA[]]></upgrade>
 </manifest>

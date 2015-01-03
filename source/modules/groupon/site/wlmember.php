@@ -2,10 +2,9 @@
 /**
  * 我的订单
  *
- * @author 微新星
+ * @author 超级无聊
  * @url
- */
-	$status=intval($_GPC['status']);
+ */	$status=intval($_GPC['status']);
 	//搜索订单
  
 if($_GPC['d']=='detail'){

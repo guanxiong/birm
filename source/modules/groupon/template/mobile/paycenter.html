@@ -1,3 +1,4 @@
+{template 'header'}
 <style>
 body{background:#f2f2f2;}
 .pay-detail{background:#0d95eb; padding:20px 10px; font-size:20px; color:#FFF;}
@@ -6,7 +7,9 @@ body{background:#f2f2f2;}
 .pay-detail .ordernum{color:#fff44a;}
 
 .pay-way{padding:10px; margin-bottom:20px; overflow:hidden;}
-.pay-way > div{float:left; width:50%; padding:5px 0; border:1px #F2F2F2 solid; margin-bottom:10px; text-align:center; color:#999; cursor:pointer;}
+
+.pay-way > div{float:left; width:49%; padding:5px 0; border:1px #F2F2F2 solid; margin-bottom:10px; text-align:center; color:#999; cursor:pointer;}
+
 .pay-way > div i{display:block; font-size:30px;}
 .pay-way > div span{display:block; font-size:16px; margin-top:5px;}
 .pay-way > div.active{border-color:#0d95eb; color:#0079ff;}
@@ -27,7 +30,7 @@ body{background:#f2f2f2;}
 	</div>
 	<div>
 		<span class="pull-left">支付金额</span>
-		<span class="pull-right">{php echo sprintf('%.2f', $params['fee']);}<span class="muted"> 元</span></span>
+		<span class="pull-right">{php echo sprintf('%.2f', $params['fee']);} 元</span>
 	</div>
 </div>
 <div class="pay-way">
@@ -121,3 +124,4 @@ body{background:#f2f2f2;}
 	});
 //-->
 </script>
+{template 'footer'}

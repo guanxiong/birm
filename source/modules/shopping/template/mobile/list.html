@@ -103,7 +103,7 @@
                     var pager = $('#pager_' + pcate + "_" + ccate);
                     pager.html('正在加载数据...');
                     var url = "{php echo $this->createMobileUrl('listmore')}";
-                    $.get(url, {'page' : pindex, 'ccate':ccate, 'pcate':pcate}, function(html){
+                    $.get(url, {'page' : pindex, 'pcate':pcate, 'ccate':ccate}, function(html){
 
                     if (html.indexOf('list-item') > - 1) {
                     pager.html('浏览更多商品');

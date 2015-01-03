@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  * $sn: origins/source/controller/mobile/oauth.ctrl.php : v 8c3eea27b11e : 2014/05/16 09:42:29 : veryinf $
  */
 defined('IN_IA') or exit('Access Denied');

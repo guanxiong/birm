@@ -1,6 +1,6 @@
 <?php
 /**
- * @author WeEngine Team
+ * @author WeNewstar Team
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -118,7 +118,7 @@ class MemberModuleSite extends WeModuleSite {
 		}
 		$member = pdo_fetch("SELECT id, cardsn FROM ".tablename('card_members')." WHERE from_user = :from_user AND weid = '{$_W['weid']}'", array(':from_user' => $_W['fans']['from_user']));
 		if (!empty($member)) {
-			header('Location: '.$_W['siteroot'] . create_url('mobile/channel', array('name' => 'home', 'weid' => $_W['weid'])));
+			header('Location: '.$this->createMobileUrl('mycard'));
 			exit;
 		}
 		if (checksubmit('submit')) {
@@ -160,7 +160,7 @@ class MemberModuleSite extends WeModuleSite {
 				}
 			}
 			fans_update($_W['fans']['from_user'], $data);
-			message('会员卡领取成功！', create_url('mobile/channel', array('name' => 'home', 'weid' => $_W['weid'])), 'success');
+			message('会员卡领取成功！', $this->createMobileUrl('mycard'), 'success');
 		}
 		$card['background']['image'] = $card['background']['background'] == 'user' ? $_W['attachurl'] . $card['background']['image'] : $_W['siteroot'] . 'source/modules/member/images/card/'.$card['background']['image'].'.png';
 		include $this->template('card');
@@ -287,7 +287,8 @@ class MemberModuleSite extends WeModuleSite {
 			$params['user'] = $_W['fans']['from_user'];
 			$params['fee'] = $fee;
 			$params['title'] = $_W['account']['name'] . "用户充值{$fee}";
-			$this->pay($params);
+			include $this->template('pay');
+			exit;
 		}
 		include $this->template('charge');
 	}
@@ -305,22 +306,28 @@ class MemberModuleSite extends WeModuleSite {
 
 	public function payResult($params) {
 		global $_W;
-		$fee = floatval($params['fee']);
-		$sql = 'UPDATE ' . tablename('card_members') . " SET `credit2`=`credit2`+{$fee} WHERE `weid`=:weid AND `from_user`=:openid";
-		$pars = array();
-		$pars[':weid'] = $params['weid'];
-		$pars[':openid'] = $params['user'];
-		pdo_query($sql, $pars);
-		//写入充值日志
-		pdo_insert('card_log', array(
-			'weid' => $_W['weid'],
-			'from_user' => $params['user'],
-			'type' => 3,
-			'content' => '充值'.$fee.'元',
-			'createtime' => TIMESTAMP,
-		));
+		if ($params['result'] == 'success' && $params['from'] == 'notify') {
+			$fee = floatval($params['fee']);
+			$sql = 'UPDATE ' . tablename('card_members') . " SET `credit2`=`credit2`+{$fee} WHERE `weid`=:weid AND `from_user`=:openid";
+			$pars = array();
+			$pars[':weid'] = $params['weid'];
+			$pars[':openid'] = $params['user'];
+			pdo_query($sql, $pars);
+			//写入充值日志
+			pdo_insert('card_log', array(
+				'weid' => $_W['weid'],
+				'from_user' => $params['user'],
+				'type' => 3,
+				'content' => '充值'.$fee.'元',
+				'createtime' => TIMESTAMP,
+			));
+		}
 		if ($params['from'] == 'return') {
-			message('充值成功！', '../../' . create_url('mobile/channel', array('name' => 'home', 'weid' => $params['weid'])), 'success');
+			if ($params['result'] == 'success') {
+				message('充值成功！', '../../' . create_url('mobile/channel', array('name' => 'home', 'weid' => $params['weid'])), 'success');
+			} else {
+				message('支付失败！', '../../' . create_url('mobile/channel', array('name' => 'home', 'weid' => $params['weid'])), 'error');
+			}
 		}
 	}
 

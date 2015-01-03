@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  * $sn: origins/source/modules/engine.php : v e555ac6ee0e2 : 2014/10/21 09:03:55 : Gorden $
  */
 defined('IN_IA') or exit('Access Denied');
@@ -183,7 +183,7 @@ class WeEngine {
 	}
 	
 	private function matcherEventLocation() {
-		return $this->matcherEvent();
+		//return $this->matcherEvent();
 	}
 	
 	private function matcherEventScancode_waitmsg() {
@@ -579,6 +579,9 @@ class WeUtility {
 	 * @return string
 	 */
 	public static function response($packet) {
+		if (is_error($packet)) {
+			return '';
+		}
 		if (!is_array($packet)) {
 			return $packet;
 		}
@@ -787,6 +790,9 @@ abstract class WeModuleProcessor {
 	public $module;
 	abstract function respond();
 	protected function respText($content) {
+		if (empty($content)) {
+			return error(-1, 'Invaild value');
+		}
 		if(stripos($content,'http://') === false) {
 			preg_match_all("/(mobile\.php(?:.*?))['|\"]/", $content, $urls);
 			if (!empty($urls[1])) {
@@ -803,7 +809,10 @@ abstract class WeModuleProcessor {
 		$response['Content'] = htmlspecialchars_decode($content);
 		return $response;
 	}
-	protected function respImage($mid) { 
+	protected function respImage($mid) {
+		if (empty($mid)) {
+			return error(-1, 'Invaild value');
+		}
 		$response = array();
 		$response['FromUserName'] = $this->message['to'];
 		$response['ToUserName'] = $this->message['from'];
@@ -812,6 +821,9 @@ abstract class WeModuleProcessor {
 		return $response;
 	}
 	protected function respVoice($mid) {
+		if (empty($mid)) {
+			return error(-1, 'Invaild value');
+		}
 		$response = array();
 		$response['FromUserName'] = $this->message['to'];
 		$response['ToUserName'] = $this->message['from'];
@@ -820,6 +832,9 @@ abstract class WeModuleProcessor {
 		return $response;
 	}
 	protected function respVideo(array $video) {
+		if (empty($video)) {
+			return error(-1, 'Invaild value');
+		}
 		$response = array();
 		$response['FromUserName'] = $this->message['to'];
 		$response['ToUserName'] = $this->message['from'];
@@ -829,6 +844,9 @@ abstract class WeModuleProcessor {
 		return $response;
 	}
 	protected function respMusic(array $music) {
+		if (empty($music)) {
+			return error(-1, 'Invaild value');
+		}
 		global $_W;
 		$music = array_change_key_case($music);
 		$response = array();
@@ -851,6 +869,9 @@ abstract class WeModuleProcessor {
 		return $response;
 	}
 	protected function respNews(array $news) {
+		if (empty($news)) {
+			return error(-1, 'Invaild value');
+		}
 		$news = array_change_key_case($news);
 		if (!empty($news['title'])) {
 			$news = array($news);
@@ -949,7 +970,6 @@ abstract class WeModuleSite {
 			message('这个订单已经支付成功, 不需要重复支付.');
 		}
 		include $this->template('paycenter');
-		exit;
 	}
 
 	public function payResult($ret) {

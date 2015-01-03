@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<title>经理</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="./source/modules/broke/style/css/style.css"/>
+<link rel="apple-touch-icon-precomposed" href="/img/ico-startup-57x57.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+</head>
+<body>
+<section class="main animated fadeInDown">
+	<div class="main-box">
+		<p class="rb-row"><input type="text" id="realname" placeholder="姓名" class="input" value="" /></p>
+		<p class="rb-row"><input type="tel" id="mobile" placeholder="手机号码" class="input" value="" /></p>
+		<p class="rb-row"><input type="text" id="code" placeholder="请填写经理邀请码" class="input" value="" /></p>
+		
+		<input type="hidden" id="submit_url" value="addCustomer"/>
+		<div class="recommend-tips">
+			<h6>提示</h6>
+			<p>请务必提交真实的客户信息，若多次提交虚假信息，您的账号会被禁用。</p>
+		</div>
+		<p class="rb-submit"><input type="button" value="提交" class="btn" id="J_submitRec"/></p>
+	</div>
+</section>
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="./source/modules/broke/style/js/com.js"></script>
+<script>
+
+$("#J_submitRec").live("click", function () {
+	var reg = /^1[3458]\d{9}$/;
+	
+	l = $("#code").val();
+	n = $("#realname").val();
+	p = $("#mobile").val();
+	if (n == "") {
+		TopBox.alert("姓名不能为空!");
+	} else if (!reg.test(p)) {
+		TopBox.alert("手机格式不正确!");
+	} else if(l==""){
+		TopBox.alert("邀请码不能为空!");
+	}else {
+		$.ajax({
+			type: "POST",
+			url: "{php echo $this->createMobileurl('acmanager',array('op'=>'add'))}",
+			data: {realname:n, mobile:p, code:l},
+			dataType: "text",
+			//提交服务器成功
+			success: function (d) {
+				if (d == "1") {
+					$("#realname").val("");
+					$("#mobile").val("");
+					window.location.href = '{php echo $this->createMobileurl('acmanager',array())}';
+				} else if (d == "0") {
+					TopBox.alert("提交失败.");
+				} else if (d == "-1") {
+					TopBox.alert("无效邀请码！");
+				} else {
+					TopBox.alert("信息填写不正确.");
+				}
+			},
+			//提交服务器错误
+			error: function (xml, text, thrown) {
+			}
+		});
+
+	}
+});
+</script>
+<script src="./source/modules/broke/style/js/wx.js"></script>
+<script type="text/javascript">
+
+WeixinApi.ready(function(Api) {
+        Api.showOptionMenu();
+        var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : '{$_W['siteroot']}/source/modules/broke/icon.jpg',
+            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('index',array('id'=>$id))}',
+            "desc" : '看你能捞多少佣金',
+            "title" : '全民经纪人-{$_W['account']['name']}'
+        };
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享被用户自动取消
+            cancel : function(resp) {
+                TopBox.alert("分享后获得积分,还有可能得到佣金哦!不要错过发大财的机会!");
+            },
+            // 分享失败了
+            fail : function(resp) {
+                TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+            },
+            // 分享成功
+            confirm : function(resp) {
+             TopBox.alert("分享后成功,等着收佣金吧!");
+            },
+        };
+        Api.shareToFriend(wxData,wxCallbacks);
+        Api.shareToTimeline(wxData,wxCallbacks);
+        Api.shareToWeibo(wxData,wxCallbacks);
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+{template 'common/header'}
+   <script>
+function doit(){
+var vip = "{$vipname}";
+var enddate = {$list['endtime']};
+var myDate = new Date();
+var  freenums= 0;
+var bcjb =0;
+var disvip;
+var now = myDate.getTime(); 
+now = parseInt(now/1000);
+var price=new Array();
+
+<?php foreach($group as $k=>$v){?>
+<?php echo 'price['.$v['id'].'] ='.number_format(($v['price']/30), 2, '.', '').';';?>
+<?php }?>
+		
+
+var month =parseFloat(document.getElementById("period").value);
+if(month==0) alert('请选择要开通的月数');
+if(now>enddate){//接受时间小于当期时间
+nums = price[parseFloat(document.getElementById("vip").value)]*month;  
+nums = parseInt(nums);
+//alert(nums);
+document.getElementById("jbnums").innerHTML = "<p class='red'>确定购买将扣除您"+nums+"金币，折合RMB是"+nums/1000+"元。</p>";
+}else{
+var  ds = enddate - now;
+var day = parseInt(ds/(3600*24))+1;
+nums = price[parseFloat(document.getElementById("vip").value)]*month;  
+nums = parseInt(nums);
+document.getElementById("jbnums").innerHTML = "<p>您原VIP等级是"+vip+"，距离原到期时间<?php echo date('Y-m-d  h:i:s', $list['endtime']);?>还有"+day+"天</p><p class='red'>还需扣除:<h3>"+nums+"元</h3></p>";
+}
+}
+</script>
+
+<h4 style="padding-left:14px;">我要续费:</h4>
+
+	<div class="main">
+
+		<form action="" method="post" class="form-horizontal form">
+			<table class="tb">
+				<tr>
+					<th><label for="">当前用户</label></th>
+					<td>
+				{$money['username']}
+
+					</td>
+				</tr>
+
+				<tr>
+					<th><label for="">你的余额</label></th>
+					<td>
+				{$money['money']}
+
+					</td>
+				</tr>
+								<tr>
+					<th><label for="">当前的等级</label></th>
+					<td>
+				{$vipname}
+
+					</td>
+				</tr>
+				<tr>
+					<th><label for="">开通日期</label></th>
+					<td>
+			{if empty($list['stattime'])}{else}	<?php echo date('Y-m-d  H:i:s', $list['stattime']);?>{/if}
+
+					</td>
+				</tr>
+      	<tr>
+					<th><label for="">到期日期</label></th>
+					<td>{if empty($list['endtime'])}{else}	<?php echo date('Y-m-d  H:i:s', $list['endtime']);?>{/if}</td>
+				</tr>
+   	<tr>
+					<th><label for="">     请选择要购买的VIP等级
+				          </label></th>
+					<td>
+                <select     name="vip" id="vip" onchange="doit()" >
+                								{loop $group $row}
+
+			<option  value="{$row['id']}" {if $list[gid]==$row['id']}selected="selected"{/if}>{$row['name']}</option>
+			{/loop}
+			         </select>
+				</td>
+				</tr>
+      	<tr>
+					<th><label for="">选择购买月数</label></th>
+					<td>
+
+<select class="setting-period" name="period" id="period" onchange="doit()" >
+                  <option selected="selected" value="0">请选择</option>
+		<option value="30">1个月</option>
+			<option value="60">2个月</option>
+			<option value="90">3个月</option>
+			<option value="120">4个月</option>
+			<option value="150">5个月</option>
+			<option value="180">6个月</option>
+			<option value="210">7个月</option>
+			<option value="240">8个月</option>
+			<option value="270">9个月</option>
+			<option value="300">10个月</option>
+			<option value="330">11个月</option>
+			<option value="360">12个月</option>
+            </select>
+					
+					</td>
+				</tr>
+				<tr>
+				<th>费用</th>
+<td  >		
+              <div id="jbnums" ></div>
+               </td>
+ </tr>
+			<!--	<tr>
+				<th>支付方式</th>
+				<td>
+				<input type="radio" value="0" checked name="payment" style="height:20px;width:20px;">支付宝
+				</td>
+				</tr>
+				-->
+				<tr>
+					<th></th>
+					<td>
+						<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+						<input type="hidden" name="token" value="{$_W['token']}" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+{template 'common/footer'}

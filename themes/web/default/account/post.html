@@ -76,14 +76,14 @@
 							<tr>
 								<th style="color:red">接口地址</th>
 								<td>
-									<input type="text" class="span6" value="{$_W['siteroot']}api.php?hash={$wechat['hash']}" readonly autocomplete="off"/>
+									<input type="text" class="span6" value="{$_W['siteroot']}api.php?hash={$wechat['hash']}" readonly="readonly" autocomplete="off"/>
 									<div class="help-block">设置“微信公众平台接口”配置信息中的接口地址</div>
 								</td>
 							</tr>
 							<tr>
 								<th style="color:red">微信Token</th>
 								<td>
-									<input type="text" name="wetoken" class="span6" value="{$wechat['token']}" readonly /> <a href="javascript:;" onclick="tokenGen();">生成新的</a>
+									<input type="text" name="wetoken" class="span6" value="{$wechat['token']}" readonly="readonly" /> <a href="javascript:;" onclick="tokenGen();">生成新的</a>
 									<div class="help-block">与微信公众平台接入设置值一致，必须为英文或者数字，长度为3到32个字符. 请妥善保管, Token 泄露将可能被窃取或篡改微信平台的操作数据.</div>
 								</td>
 							</tr>
@@ -109,6 +109,15 @@
 									<span class="help-block">您的微信帐号或是易信帐号，本平台支持管理多个公众号</span>
 								</td>
 							</tr>
+							
+							<tr>
+								<th><label for="">公众帐号引导关注</label></th>
+								<td>
+									<input type="text" name="accountlink" class="span6" value="{$wechat['accountlink']}" autocomplete="off" />
+									<span class="help-block">您的微信帐号或是易信帐号，引导关注页面，直接点击到引导关注页面</span>
+								</td>
+							</tr>
+							
 							<tr>
 								<th><label for="">原始帐号</label></th>
 								<td>

@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] 更多模块请浏览：bbs.we7.cc
+ * [WNS]更多模块请浏览：BBS.birm.co
  */
 defined('IN_IA') or exit('Access Denied');
 define(EARTH_RADIUS, 6371);//地球半径，平均半径为6371km

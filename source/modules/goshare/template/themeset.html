@@ -1,0 +1,279 @@
+{template 'common/header'}
+<link href="./source/modules/goshare/template/css/lhgcalendar.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="./source/modules/goshare/template/js/lhgcore.min.js"></script>
+<script type="text/javascript" src="./source/modules/goshare/template/js/lhgcalendar.min.js"></script>
+<script type="text/javascript">
+J(function(){
+	J('#cal1').calendar({ format:'yyyy-MM-dd' });
+	J('#cal2').calendar({ format:'yyyy-MM-dd' });
+});
+</script>
+<style>
+.theme_list{overflow:hidden; padding-top:15px;}
+.theme_list li{border:1px #DDD solid; width:320px; float:left; margin-left:15px; margin-bottom:10px;}
+.theme_list li .theme_pic{display:block; width:320px; height:160px; overflow:hidden;}
+.theme_list li .theme_pic img{width:320px;}
+.theme_list li .theme_main{padding:10px; overflow:hidden;}
+.theme_list li .theme_main .theme_title{font-size:16px; height:20px; width:217px; overflow:hidden;}
+.theme_list li .theme_main .pull-left{color:#999;}
+</style>
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('themeset', array('op' => 'post'));}">添加主题</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('themeset', array('op' => 'display'));}">管理主题</a></li>
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" onsubmit="return check(this)" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="themeid" value="{$theme['id']}" />
+		<h4>主题编辑</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">活动主题名称<span class="red">*</span></label></th>
+				<td>
+					<input type="text" name="themename" class="span5" value="{$theme['themename']}" placeholder="活动主题名称" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">网页标题<span class="red">*</span></label></th>
+				<td>
+					<input type="text" name="headtitle" class="span5" value="{$theme['headtitle']}" placeholder="网页标题内容" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">主题名称<span class="red">*</span></label></th>
+				<td>
+					<textarea style="height:100px; width:600px;" class="span7 jq_watermark" name="themetitle" cols="70" placeholder="活动的主题">{$theme['themetitle']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">逾期主题名称<span class="red">*</span></label></th>
+				<td>
+					<textarea style="height:100px; width:600px;" class="span7 jq_watermark" name="overtitle" cols="70" placeholder="活动已经结束啦，下次早点来哟">{$theme['overtitle']}</textarea>
+				</td>
+			</tr>			
+			<tr>
+				<th><label for="">主题图片</label></th>
+				<td>
+					{php echo tpl_form_field_image('themelogo', $theme['themelogo']);}
+					<span class="help-block">建议图片像素：640*500</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">主办方名称<span class="red">*</span></label></th>
+				<td>
+					<input type="text" name="undertaker" class="span5" value="{$theme['undertaker']}" placeholder="主办方名称" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">起始日期<span class="red">*</span></label></th>
+				<td>
+					<input type="text" id="cal1" name="begintime" class="span5" value="{$theme['begintime']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">截止日期<span class="red">*</span></label></th>
+				<td>
+					<input type="text" id="cal2" name="endtime" class="span5" value="{$theme['endtime']}" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">奖品组设置<span class="red">*</span></label></th>
+				<td><select name="groupid" id="groupid"
+					class="input-xlarge" style="float: left">
+					{loop $groups $group}
+						<option value="{$group['id']}" {if $group['id'] == $theme['groupid']} selected = "selected" {/if} >{$group['groupname']}</option>
+				    {/loop}
+				</select> 
+				<script>
+					if ("{$theme['groupname']" != "") {
+						document.getElementById("groupid").value = "{$theme['groupname']}";
+					}
+				</script></td>
+			</tr>
+			
+			
+			
+			<tr>
+				<th><label for="">兑奖地址<span class="red">*</span></label></th>
+				<td>
+					<input type="text" name="place" class="span5" value="{$theme['place']}" placeholder="兑奖地址" />
+				</td>
+			</tr>	
+			<tr>
+				<th><label for="">兑奖电话<span class="red">*</span></label></th>
+				<td>
+					<input type="text" id="tel" name="tel" class="span5" value="{$theme['tel']}" placeholder="兑奖电话" />
+				</td>
+			</tr>	
+			<tr>
+				<th><label for="">广告一区标题<span class="red">*</span></label></th>
+				<td>
+					<input type="text" name="ad1" class="span5" value="{$theme['ad1']}" placeholder="标题" />
+				</td>
+			</tr>
+								
+			<tr>
+				<th><label for="">广告一区内容<span class="red">*</span></label></th>
+				<td>
+					<textarea style="height:200px; width:600px;" class="span7 jq_watermark" name="ad1content" cols="70" placeholder="广告内容">{$theme['ad1content']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">广告二区标题<span class="red">*</span></label></th>
+				<td>
+					<input type="text" name="ad2" class="span5" value="{$theme['ad2']}" placeholder="标题" />
+				</td>
+			</tr>
+								
+			<tr>
+				<th><label for="">广告二区内容<span class="red">*</span></label></th>
+				<td>
+					<textarea style="height:200px; width:600px;" class="span7 jq_watermark" name="ad2content" cols="70" placeholder="广告内容">{$theme['ad2content']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">广告三区标题<span class="red">*</span></label></th>
+				<td>
+					<input type="text" name="ad3" class="span5" value="{$theme['ad3']}" placeholder="标题" />
+				</td>
+			</tr>
+								
+			<tr>
+				<th><label for="">广告三区内容<span class="red">*</span></label></th>
+				<td>
+					<textarea style="height:200px; width:600px;" class="span7 jq_watermark" name="ad3content" cols="70" placeholder="广告内容">{$theme['ad3content']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">广告三区图片</label></th>
+				<td>
+					{php echo tpl_form_field_image('ad3pic', $theme['ad3pic']);}
+					<span class="help-block">建议图片像素：600*900</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">页面底部横幅图片</label></th>
+				<td>
+					{php echo tpl_form_field_image('footpic', $theme['footpic']);}
+					<span class="help-block">建议图片像素：300*30</span>
+				</td>
+			</tr>
+						<tr>
+				<th><label for="">分享图标</label></th>
+				<td>
+					{php echo tpl_form_field_image('sharepic', $theme['sharepic']);}
+					<span class="help-block">建议图片像素：100*100</span>
+				</td>
+			</tr>						
+		<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+	//kindeditor($('.richtext-clone'));
+</script>
+ 
+<script type="text/javascript">
+	function check(form) {
+
+		if (!form['themename'].value) {
+			$("input[name='themename']").focus();
+			alert('主人，请输入活动的主题名称');
+			return false;
+		}
+		if (!form['headtitle'].value) {
+			$("input[name='headtitle']").focus();
+			alert('主人，请输入网页标题');
+			return false;
+		}		
+		if (!form['themetitle'].value) {
+			$("input[name='themetitle']").focus();
+			alert('主人，请输入活动的主题内容');
+			return false;
+		}
+		if (!form['undertaker'].value) {
+			$("input[name='undertaker']").focus();
+			alert('主人，请输入主办方名称');
+			return false;
+		}	
+		
+		if (!form['begintime'].value) {
+			$("input[name='begintime']").focus();
+			alert('主人，请点击选择活动的开始日期');
+			return false;
+		}
+		if (!form['endtime'].value) {
+			$("input[name='endtime']").focus();
+			alert('主人，请点击选择活动的截止日期');
+			return false;
+		}
+		
+		var str1 = $('#cal1').val();
+		var str2 = $('#cal2').val();
+		var d1 = new Date(str1); 
+		var d2 = new Date(str2); 
+		if(Date.parse(d1) - Date.parse(d2) >= 0){   
+			$("input[name='endtime']").focus();
+			alert('主人，截止日期要比开始日期晚一些日子'); 
+			return false;
+		} 
+		
+		if (!form['place'].value) {
+			$("input[name='place']").focus();
+			alert('主人，请输入兑奖地址');
+			return false;
+		}
+		if (!form['tel'].value) {
+			$("input[name='tel']").focus();
+			alert('主人，请输入兑奖电话');
+			return false;
+		}else{
+			 var tel = $('#tel').val();
+		     if (tel.search(/^(13[0-9]|15[0|3|6|7|8|9]|18[8|9])\d{8}$/) == -1) {
+		    		$("input[name='tel']").focus();
+					alert('主人，请输入正确的手机号码');
+					return false;
+				}
+		}	
+		
+		if ((!form['ad1'].value && form['ad1content'].value.length > 0) || (form['ad1'].value && form['ad1content'].value.length <= 0)) {
+			$("input[name='ad1']").focus();
+			alert('请输入广告一区的标题和内容');
+			return false;
+		}
+		if ((!form['ad2'].value && form['ad2content'].value.length > 0) || (form['ad2'].value && form['ad2content'].value.length <= 0)) {
+			$("input[name='ad2']").focus();
+			alert('请输入广告二区的标题和内容');
+			return false;
+		}
+		if ((!form['ad3'].value && form['ad3content'].value.length > 0) || (form['ad3'].value && form['ad3content'].value.length <= 0)) {
+			$("input[name='ad3']").focus();
+			alert('请输入广告三区的标题和内容');
+			return false;
+		}
+		return true;
+	}
+</script>
+ 
+{elseif $operation == 'display'}
+<ul class="unstyled theme_list">
+	{loop $list $item}
+	<li>
+		<a href="{php echo $this->CreateWebUrl('themeset', array('themeid' => $item['id'], 'op' => 'post'))}" class="theme_pic">{if $item['themelogo']}<img src="{$_W['attachurl']}{$item['themelogo']}" width="180" />{else}<img src="{php echo $_W['siteroot'].$this->geturl(1);}" width="180" />{/if}</a>
+		<div class="theme_main">
+			<p>
+				<span class="pull-left">{$item['themename']}</span><span class="pull-right"><a href="{php echo $this->CreateWebUrl('themeset', array('themeid' => $item['id'], 'op' => 'post'))}">编辑</a> 
+				<a href="{php echo $this->CreateWebUrl('themeset', array('themeid' => $item['id'], 'op' => 'delete'))}" onclick="return confirm('此操作将删除主题和对应的兑奖记录，确定删除码？'); return false;">删除</a></span>
+			</p>
+		</div>
+	</li>
+	{/loop}
+</ul> 
+{/if}
+{template 'common/footer'}

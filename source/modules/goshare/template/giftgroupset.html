@@ -1,0 +1,184 @@
+{template 'common/header'}
+<style>
+.theme_list {
+	overflow: hidden;
+	padding-top: 15px;
+}
+
+.theme_list li {
+	border: 1px #DDD solid;
+	width: 320px;
+	float: left;
+	margin-left: 15px;
+	margin-bottom: 10px;
+}
+
+.theme_list li .theme_pic {
+	display: block;
+	width: 320px;
+	height: 160px;
+	overflow: hidden;
+}
+
+.theme_list li .theme_pic img {
+	width: 320px;
+}
+
+.theme_list li .theme_main {
+	padding: 10px;
+	overflow: hidden;
+}
+
+.theme_list li .theme_main .theme_title {
+	font-size: 16px;
+	height: 20px;
+	width: 217px;
+	overflow: hidden;
+}
+
+.theme_list li .theme_main .pull-left {
+	color: #999;
+}
+</style>
+<ul class="nav nav-tabs">
+	<li {if $operation== 'post'}class="active"{/if}><a
+		href="{php echo $this->createWebUrl('giftgroupset', array('op' => 'post'));}">添加分组</a></li>
+	<li {if $operation== 'display'}class="active"{/if}><a
+		href="{php echo $this->createWebUrl('giftgroupset', array('op' => 'display'));}">管理分组</a></li>
+	{if $operation == 'gifts'}<li class="active"><a href="{php echo $this->createWebUrl('giftgroupset', array('op' => 'gifts'));}">管理奖品</a></li>{/if}
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" onsubmit="return check(this)"
+		class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="giftgroupid" value="{$giftgroup['id']}" />
+		<h4>分组名称编辑</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">奖品分组名称<span class="red">*</span></label></th>
+				<td><input type="text" id="groupname" name="groupname" class="span5"
+					value="{$giftgroup['groupname']}" placeholder="分组名称" /></td>
+			</tr>
+			<tr>
+				<th><label for="">所属主题<span class="red">*</span></label></th>
+				<td><input type="text" id="themename" name="themename" class="span5" readonly="readonly"
+					value="{$giftgroup['themename']}"  /></td>
+			</tr>
+			<tr>
+				<th></th>
+				<td><input name="submit" type="submit" value="提交"
+					class="btn btn-primary span3"> <input type="hidden"
+					name="token" value="{$_W['token']}" /></td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+<script type="text/javascript">
+	function check(form) {
+
+		if (!form['groupname'].value) {
+			$("input[name='groupname']").focus();
+			alert('主人，起一个高大上的奖品分组名称吧！');
+			return false;
+		}
+		return true;
+	}
+</script>
+
+{elseif $operation == 'display'}
+<div class="main">
+	<div style="padding: 15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="min-width: 100px; max-width: 300px;">分组名称</th>
+					<th style="min-width: 100px; max-width: 300px;">所属主题</th>
+					<th style="min-width: 100px; max-width: 300px;">常用操作</th>
+					<th style="text-align: right; min-width: 60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td style="max-width: 10px;">{$item['groupname']}</td>
+					<td style="min-width: 200px; max-width: 300px;">{$item['themename']}</td>
+					<td style="min-width: 200px; max-width: 300px;">
+					<a href="{php echo $this->createWebUrl('giftgroupset', array('op' => 'gifts','giftgroupid' => $item['id']));}">奖品管理</a></td>
+					<td style="text-align: right; min-width: 60px;"><a
+						href="{php echo $this->createWebUrl('giftgroupset', array('op' => 'post','giftgroupid' => $item['id']));}"
+						title="编辑" class="btn btn-small"><i class="icon-edit"></i></a> <a
+						href="{php echo $this->CreateWebUrl('giftgroupset', array('op' => 'delete','giftgroupid' => $item['id']));}"
+						onclick="return confirm('此操作将连同分组下的奖品都删除，确认删除？');return false;" title="删除"
+						class="btn btn-small"><i class="icon-remove"></i></a></td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+{elseif $operation == 'gifts'}
+<style>
+.gift_list{padding:15px 0;}
+.gift_list .alert{width:auto; margin-top:10px; overflow:hidden;}
+.gift_list table{margin-left:40px;}
+.gift_list table th,.gift_list table td{padding-bottom:5px;}
+.gift_list table th{width:60px; font-size:14px;}
+.gift_list table input,.gift_list table select{margin-bottom:0;}
+</style>
+<div class="main">
+	<div class="gift_list">
+	<form method="post" class="form" action="{php echo $this->CreateWebUrl('batchgift');}">
+	<input name="token" type="hidden" value="{$_W['token']}" />
+	<input name="groupid" type="hidden" value="{$giftgroupid}" />
+	<input type="submit" name="submit" id="selectimage" class="btn" value="保存奖品信息" />
+	{loop $gifts $gift}
+	<div class="alert alert-block alert-new">
+		<input type="hidden" value="{$gift['id']}" name="giftarray[{$gift['id']}]">
+		<table class="pull-left">
+			<tr>
+				<th>排序</th>
+				<td>
+				<input type="text" class="span1" value="{$gift['sort']}" name="sort[{$gift['id']}]">
+				</td>
+			</tr>
+			<tr>
+				<th>奖品名称</th>
+				<td><input type="text" class="span5" value="{$gift['stdname']}" name="stdname[{$gift['id']}]"></td>
+			</tr>
+			<tr>
+				<th>所属分组</th>
+				<td><input type="text" readonly="readonly" class="span5" value="{$gift['groupname']}" name="groupname[{$gift['id']}]"></td>
+			</tr>
+			<tr>
+				<th>奖品单位</th>
+				<td><input type="text" class="span5" value="{$gift['unit']}" name="unit[{$gift['id']}]">
+				</td>
+			</tr>
+			<tr>
+				<th>所需积分</th>
+				<td><input type="text" class="span5" value="{$gift['needscore']}" name="needscore[{$gift['id']}]">
+				</td>
+			</tr>
+			<tr>
+				<th>奖品数量</th>
+				<td><input type="text" class="span5" value="{$gift['amount']}" name="amount[{$gift['id']}]">
+				</td>
+			</tr>
+			<tr>
+				<th>剩余数量</th>
+				<td><input type="text" class="span5" value="{$gift['left']}" name="left[{$gift['id']}]">
+				</td>
+			</tr>	
+			<tr>
+				<th>奖品描述</th>
+				<td><input type="text" class="span5" value="{$gift['desc']}" name="desc[{$gift['id']}]">
+				</td>
+			</tr>								
+		</table>
+	</div>
+	{/loop}
+	</form>
+	</div>
+</div>
+{/if} {template 'common/footer'}

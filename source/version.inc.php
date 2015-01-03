@@ -2,11 +2,11 @@
 /**
  * 版本号
  * 
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  */
 
 defined('IN_IA') or exit('Access Denied');
 
 define('IMS_FAMILY', 'v');
 define('IMS_VERSION', '0.52');
-define('IMS_RELEASE_DATE', '201410201800');
+define('IMS_RELEASE_DATE', '201412241800');

@@ -1,0 +1,49 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>借用高级认证设置<small>如果你的公众号不是微信认证服务号，可以借用别人的接口权限使用。</small></h4>
+		<table class="tb">
+		　　<tr>
+				<th>AppId：</th>
+				<td><input type="text" name="appid" class="span3" value="{$settings['appid']}" /></td>
+		　　</tr>
+			<tr>
+				<th>AppSecret：</th>
+				<td><input type="text" name="secret" class="span5" value="{$settings['secret']}" /></td>
+			</tr>			
+			<tr>
+				<th colspan="2">
+					<div style="color:#f00;">提交后请执行第二步才能取到头像</div>
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2">
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</th>
+			</tr>
+			
+			<tr>
+				<th colspan="2"><b>1.使用的AppId和AppSecret在 [开发者中心]，可以找到。</b>
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2">
+					<img src="./source/modules/broke/style/images/appkey.jpg" width="395">
+					
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2"><b>2.借用说明：必需设置借用高级认证号的OAuth2.0网页授权的回调域名为你公众号第三方平台的全域名。
+					如：你的域名为：wx.weixin.com ，你必需让借用高级认证号设置OAuth2.0网页授权的回调域名为:wx.weixin.com<br>
+					只是为了完善一下头像和呢称,性别,要不很多功能没法完成</b>
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2"><a href="./source/modules/broke/style/images/help.jpg" target='_blank'><img src="./source/modules/broke/style/images/help.jpg" width="500"></a>	
+				</th>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

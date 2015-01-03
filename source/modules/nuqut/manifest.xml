@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[用户中心]]></name>
+		<identifie><![CDATA[nuqut]]></identifie>
+		<version><![CDATA[1.4]]></version>
+		<type><![CDATA[server]]></type>
+		<ability><![CDATA[提供我的公众号的服务]]></ability>
+		<description><![CDATA[提供我的公众号的服务]]></description>
+		<author><![CDATA[微新星]]></author>
+		<url><![CDATA[http://bbs.birm.co]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+			<message type="image" />
+			<message type="location" />
+			<message type="link" />
+			<message type="subscribe" />
+			<message type="unsubscribe" />
+			<message type="click" />
+		</subscribes>
+		<handles>
+					<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+		<bindings>
+		<menu>
+		<entry title="充值记录" do="history" state="" />
+			<entry title="我的金额" do="money" state="" />
+			<entry title="我的账号" do="kartam" state="" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+	ALTER TABLE `ims_members` ADD `money` int(11)  NOT NULL   AFTER `lastvisit` ;
+	ALTER TABLE `ims_members` ADD `usemoney` int(11)  NOT NULL   AFTER `lastvisit` ;
+	ALTER TABLE `ims_members` ADD `did` int(11)  NOT NULL   AFTER `lastvisit` ;
+	ALTER TABLE `ims_members_group` ADD `price` int(11)  NOT NULL   AFTER `name` ;
+	ALTER TABLE `ims_members_group` ADD `dprice` int(11)  NOT NULL   AFTER `name` ;
+	ALTER TABLE `ims_members_group` ADD `status` int(1)  NOT NULL   AFTER `name` ;
+	ALTER TABLE `ims_members_group` ADD `icon` varchar(1000) NOT NULL  AFTER `name` ;
+	ALTER TABLE `ims_members_group` ADD `did` int(11)  NOT NULL   AFTER `name` ;
+	
+CREATE TABLE IF NOT EXISTS `ims_nuqut_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `picture` varchar(100) NOT NULL COMMENT '会员图片',
+  `description` varchar(100) NOT NULL COMMENT '会员描述',
+  `gunzhu` varchar(255) NOT NULL COMMENT '会员描述',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+	CREATE TABLE `ims_members_status` (
+  `id` int(10) unsigned NOT NULL auto_increment ,
+  `uid` int(11) NOT NULL,
+  `gid` int(11) NOT NULL,
+  `weid` int(11) NOT NULL,
+  `status` tinyint(1) DEFAULT '0' ,
+  `stattime` int(11) NOT NULL,
+  `endtime` int(11) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+		CREATE TABLE `ims_members_paylog` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `uid` int(11) NOT NULL,
+  `weid` int(11) NOT NULL,
+  `paytime` int(11) NOT NULL,
+  `money` int(11) NOT NULL,
+  `type` tinyint(1) DEFAULT '0' ,
+  `msg` varchar(100) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+	
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

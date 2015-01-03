@@ -2,10 +2,9 @@
 /**
  * 首页
  *
- * @author 微新星
+ * @author 超级无聊
  * @url
- */
- 
+ */ 
 	$pindex = max(1, intval($_GPC['page']));
 	$psize = 10;
 	$condition='';

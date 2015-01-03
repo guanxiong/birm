@@ -1,6 +1,6 @@
 <?php 
 /**
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  */
 defined('IN_IA') or exit('Access Denied');
 function rule_keywords_search($condition = '', $params = array(), $pindex = 0, $psize = 10, &$total = 0) {

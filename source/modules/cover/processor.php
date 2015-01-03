@@ -2,7 +2,7 @@
 /**
  * 扩展封面回复模块处理程序
  *
- * @author WeEngine Team
+ * @author WeNewstar Team
  * @url 
  */
 defined('IN_IA') or exit('Access Denied');

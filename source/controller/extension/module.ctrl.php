@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  * $sn: origins/source/controller/extension/module.ctrl.php : v 7851f7f37327 : 2014/09/17 06:35:28 : yanghf $
  */
 defined('IN_IA') or exit('Access Denied');

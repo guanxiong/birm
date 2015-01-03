@@ -1,0 +1,124 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li  ><a href="{php echo $this->createWebUrl('member',array('op'=>'showdetail','id' => $_GPC['id']));}">经纪人信息</a></li>
+	<li  class="active"><a href="">经纪人团队</a></li>
+</ul>
+    <div class="main">
+		<div class="stat">
+			
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="pull-right" style="color:red; padding:10px 10px 0 0;">总数：<?php echo $total;?></span>
+						<span class="brand">名单</span>
+					</div>
+				</div>
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title" style="float:right;color:red;"><a href="">刷新</a></h4>
+					<h4 class="sub-title">经纪人名单</h4>
+
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th class="row-hover">真实姓名</th>
+									<th class="row-hover">电话号码</th>
+									<th class="row-hover">身份类型</th>
+									<th class="row-hover">注册时间</th>
+									<th class="row-hover">贡献佣金</th>
+								    <th class="row-hover">状态</th>
+									<th class="row-hover">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $v}
+								<tr>
+									<td style="text-align: center;">
+										{$v['realname']}
+									</td>
+									<td style="text-align: center;">
+										{$v['mobile']}
+									</td>
+									<td style="text-align: center;">
+										{$identitys[$v['identity']]}
+									</td>
+									<td style="text-align: center;">
+										{php echo date('Y-m-d',$v['createtime'])}
+									</td>
+									<td style="text-align: center;">
+										{if empty($commissions[$v['id']])}0{else}{$commissions[$v['id']]}{/if}
+									</td>
+									<td style="text-align: center;">
+									{if $v['status']==0}
+										<span class="label label-important">未审核</span>
+									{else}
+										<span class="label label-success">已审核</span>
+									{/if}
+									</td>
+									<td style="text-align: center;">
+										<a href="{php echo $this->createWebUrl('member',array('op'=>'del','id' => $v['id']));}" onclick="return confirm('确定要删除该经济人吗？');">删除</a>
+										<a href="{php echo $this->createWebUrl('member',array('op'=>'showdetail','id' => $v['id']));}">详情</a>		
+										<a href="{php echo $this->createWebUrl('customer', array('op'=>'mycustomer', 'id'=>$v['id']));}">客户</a>		
+										<a href="{php echo $this->createWebUrl('commission', array('op'=>'mycommission', 'id'=>$v['id']));}">结佣</a>		
+									</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+					</div>
+					</form>
+					{$pager}
+				</div>
+			</div>
+		</div>
+    </div>
+
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script>
+$(function() {
+	$('#date-range').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=start]').val(),
+		endDate: $(':hidden[name=end]').val(),
+		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=start]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=end]').val(end.format('YYYY-MM-DD'));
+	});
+	$('#date-range1').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=start1]').val(),
+		endDate: $(':hidden[name=end1]').val(),
+		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range1 .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=start1]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=end1]').val(end.format('YYYY-MM-DD'));
+	});
+
+});
+</script>
+{template 'common/footer'}

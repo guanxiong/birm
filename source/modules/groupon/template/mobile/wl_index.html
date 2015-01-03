@@ -46,17 +46,16 @@ document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
                                 <div>
                                     <figure>
                                         <span class="span_img">
-											{php $row['phout_url']=explode('|',$row['thumb_list']);}
+											{php $row['phout_url']= unserialize($row['thumb_list'] );}
 											{loop $row['phout_url'] $row2}
-												{php if (empty($row2)) continue;}
-                                                <img src="{$_W['attachurl']}{$row2}" />
+                                                <img src="{$_W['attachurl']}{$row2['attachment']}" />
 												{php break;}
 											{/loop}
                                         </span>
                                         <figcaption class="box">
                                             <dd><label>{php $rangetime=$row['endtime']-time()}
 											{if ($rangetime<259200 )}
-											截止:{php echo(date('Y-m-d',$row['endtime']))}{else}进行中{/if}</label></dd>
+											截止:{php echo(date('Y-m-d H:i:s',$row['endtime']))}{else}进行中{/if}</label></dd>
                                             <dd><label>
 												已售<span>{php echo ($row['sell_nums']+$row['virtual_sales'])}</span>
                                             </label></dd>

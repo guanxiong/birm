@@ -1,0 +1,83 @@
+/*For Memory,For Joel
+Joel-Wap-前端CSS V1.0
+Auth:蒋金辰 Joel
+Mail:54006600@qq.com
+(c) Copyright 2014 Joel. All Rights Reserved.*/
+*{margin: 0px;padding: 0px;}
+body{font-size: 1em; background-image:url(../images/bg2.jpg); background-size:100% auto;}
+input,textarea {outline:none;}
+h3{ font-size: 2em; font-weight: bold;}
+h4{ font-size: 1.5em; font-weight: bold;}
+li{list-style:none;}
+.fl{float: left;}
+.fr{float: right;}
+a,a:visited{text-decoration: none;}
+.clear{clear: both;height: 0px;line-height: 0px;}
+.wp96{ width: 96%; margin: 0 auto;}
+.wp100{width: 100%;}
+.pd2{padding: 2%;}
+.lh5{line-height: 5px;}
+.blank{line-height: 10px; height: 10px;}
+#J-wrap{max-width: 720px; margin: 0 auto; overflow: hidden; position: relative;}
+/*#J-wrap-header{height: 3em; line-height: 3em; background:-webkit-linear-gradient(left top,#EA5D41,#E75033); color: #FBEFDF; position: fixed; border-bottom: 2px solid #9A9285; }*/
+#J-wrap-header{width:100%;height: 3em; line-height: 3em; background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#ea5d41), to(#e4522d));  color: #FBEFDF; position: fixed;top:0px;box-shadow: rgba(0,0,0,0.4) 0px 0px 1px 1px; z-index: 1100; }
+#J-wrap-header .iconfont{font-size: 1.8em; color: #FBEFDF;}
+.J-wrap-headerfix{height: 3em; line-height: 3em; display: block;}
+/*#Joel-wrap-main{ background: #FFF4E0;}*/
+
+/*navbar*/
+.J-wrap-footerfix{height: 50px;}
+#Joel-wrap-footer{width:100%; position:fixed; bottom:0px;z-index: 1100;}
+#Joel-navbar{ background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#575B64), to(#494A4F));padding: 5px 0px;}
+#Joel-navbar-ul li{ float: left; text-align: center;text-shadow: rgba(0,0,0,0.7) 0px 1px 1px;}
+#Joel-navbar-ul li i{ line-height: 1.4em; font-size:1.2em;}
+#Joel-navbar-ul li p{ font-size:0.8em;}
+#Joel-navbar-ul li a,#Joel-navbar-ul li a:visited{ color: #F7F1E1;}
+
+/*侧边导航*/
+#J-menu li {width: 100%;border-bottom: 1px solid #1a1a1a; border-top: 1px solid #3c3c3c;}
+#J-menu li a,#J-menu li a:visited {color: #a8a6a6;display: block;font-size: 0.92em;padding:0 8px;font-weight: 300; line-height: 40px;}
+#J-menu li a i{ padding-right: 8px;}
+#J-menu li a b{ font-weight: normal;}
+.J-menu-lv1 {border-bottom: 1px solid #3c3c3c;}
+#J-menu .J-menu-lv2 li {background-color: #1b1b1b; border-bottom: 1px solid #282828; border-top: none !important; font-weight: 100 !important;}
+#J-menu .J-menu-lv2 li:first-child{border-top: 1px solid #3c3c3c !important;}
+#J-menu .J-menu-lv2 li:last-child{border-bottom: none;}
+#J-menu .J-menu-lv2 a {padding-left: 10px; font-size: 0.85em;}
+#J-menu .J-menu-lv3 a {padding-left: 25px;font-size: 0.8em;}
+#J-menu .J-menu-lv3 li {background-color: #131313; border-bottom: 1px solid #1e1e1e; }
+#J-menu .J-menu-lv3 li:first-child{border-top: none !important;}
+#J-menu .J-menu-lv3 li:last-child{border-bottom: 1px solid #282828;}
+.ui-panel{background:#242424!important;}
+
+/*右侧个人中心*/
+.Zwj-user-info{ border-bottom: 7px solid #292929; padding-bottom: 10px;}
+.Zwj-user-info a{ overflow: hidden; display: block; text-align: center; line-height: 18px; font-size: 0.8em; color: #a8a6a6;}
+.Zwj-user-info a p em{ font-style: normal;}
+.Zwj-user-info a span{ display: block; width: 66px; height: 66px; border-radius: 33px; overflow: hidden; margin: 15px auto 8px;}
+.Zwj-user-info a span img{ width: 100%;}
+.Zwj-user-list li{border-bottom: 1px solid #1a1a1a; border-top: 1px solid #3c3c3c;}
+.Zwj-user-list li:first-child{ border-top: none;}
+.Zwj-user-list{border-bottom: 1px solid #3c3c3c;}
+.Zwj-user-list li a,.Zwj-user-list li a:visited{color: #a8a6a6;display: block;font-size: 0.92em;padding:0 8px;font-weight: 300; line-height: 40px;}
+.Zwj-user-list li a i{ color: #484848; font-size: 0.8em;}
+
+/*图文列表*/
+.J-imglist li{ padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px dotted #d7bd8a; position: relative;}
+.J-imglist li img{ width: 30%; float: left; padding: 0px 4% 0px 2%;}
+.J-imglist li div{ float: left; width:60%; overflow:hidden}
+.J-imglist li h4{ line-height: 1.4em; font-size: 1em; color: #9B7729; font-weight:600;}
+.J-imglist .score{ font-size: 0.8em; color: #AC8A4D;}
+.J-imglist i{position: absolute; right: 4%; top: 20%; font-size: 1.2em; color: #e74c36;}
+
+/*页码*/
+.Zwj-page{ overflow:hidden; padding:5px 3% 10px;}
+/*.Zwj-page span,.Zwj-page em{ float:left;}*/
+.Zwj-pp{ width: 100%;text-align:center; line-height:30px; color:#98732d;}
+.Zwj-page em{ width:40%; text-align:center; font-size:1em; font-style:normal; line-height:30px; color:#98732d;}
+/*.Zwj-page p{ text-align:center; font-size:1em; font-style:normal; line-height:30px; color:#98732d; width: 38%; margin: 0 auto;}*/
+.Zwj-page span{width: 30%;}
+.Zwj-page span img{ width:100%;}
+
+
+/*会员中心样式*/

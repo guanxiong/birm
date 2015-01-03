@@ -1,0 +1,24 @@
+{template 'common/header'}
+
+<div class="rule">
+<p>
+<h4>我的充值记录:</h4>
+</p>
+	<table class="table table-hover">
+		<thead class="navbar-inner">
+			<tr>
+				<th style="width:220px;">日期</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{loop $paylog $m}
+			<tr>
+				<td><?php echo date('Y-m-d <br /> h:i:s', $m['paytime']);?></td>
+				<td>{$m['msg']}</td>
+			</tr>
+			{/loop}
+		</tbody>
+	</table>
+</div>
+{template 'common/footer'}

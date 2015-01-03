@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+<head>
+<title>经纪人中心 - 全民经纪人</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="./source/modules/broke/style/css/style.css?vvv=123"/>
+<link rel="apple-touch-icon-precomposed" href="/img/ico-startup-57x57.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+</head>
+<style>
+.rank-list, .my-team {
+	width: 49%;
+	height: 65px;
+	line-height: 65px;
+	border: #00b4bf solid 2px;
+	position: relative;
+}
+.my-model p {
+	text-align: right;
+	font-size: 14px;
+	font-style: italic;
+	font-weight: bold;
+	color: #00b4bf;
+	margin-right: 13px;
+}
+</style>
+<body>
+<!--loading start-->
+<style id="loading-style">html,body{width:100%;height:100%; overflow: hidden;}</style>
+<section class="user-loader" style="background:url(./source/modules/broke/style/images/bg-loader.jpg);background-size: 100% 100%;">
+	<i class="icon-spin4 animate-spin"></i>
+</section>
+<!-- loading end-->
+<section class="main animated">
+	<div class="main-box">
+		{if empty($id)}
+		<div class="register-indexbox "><a href="{php echo $this->createMobileUrl('register')}"><img src="./source/modules/broke/style/images/register-index.png" alt=""></a></div>
+		{else}
+		<div class="home-info border-box fn-clear">
+			<figure class="figure-box">
+				<img src="{$myheadimg}" alt="">
+			</figure>
+			<h5>{$profile['realname']}</h5>
+			<div class="user-info">
+				<label>总佣金</label>
+				<p><i class="icon icon-money"></i><span>{$mycommission}</span></p>
+			</div>
+			<div class="info-border"></div>
+			<div class="user-info">
+				<label>推荐人数</label>
+				<p><i class="icon icon-users"></i><span>{$mycustomer}</span></p>
+			</div>
+			
+
+		</div>
+		{/if}		
+		<ul class="home-nav fn-clear">
+			<li class="nav-recommend"><a href="{php echo $this->createMobileUrl('recommend')}">我要推荐<label>hot</label><br /><span>Recommend</span></a></li>
+			<li class="nav-rule"><a href="{php echo $this->createMobileUrl('customer')}">我的客户<br /><span>Client</span></a></li>
+			<li class="nav-commission"><a href="{php echo $this->createMobileUrl('commission', array('id'=>$id))}"><p>我的佣金<br /><span>Commission</span></p></a></li>
+			<li class="nav-rule-detail"><a href="{php echo $this->createMobileUrl('rule')}">活动细则<br /><span>Rule</span></a></li>
+		</ul>
+		<a href="{php echo $this->createMobileUrl('term');}">
+			<div class="my-model my-model-alone fn-clear">
+				<div class="my-team border-box">
+					<i class="imgs icon-jjr"></i>
+					<p>我的团队</p>
+					<i class="icon-right-open-big"></i>
+				</div>
+			</div>
+		</a>
+		<div class="sale-box">
+		
+			
+			<div class="floor-box">
+			{if !empty($loupan)}
+			{loop $loupan $row}
+				<a href="{php echo $this->createMobileurl('loupan',array('lid'=>$row['id']))}" class="floor-detail">
+					<figure class="floor-img">
+						<img src="./resource/attachment/{$row['thumb']}" alt="">
+					</figure>
+					<div class="floor">
+						<h5>{$row['title']}</h5>
+							
+							<div class="award fn-clear">
+								<label class="award-title">佣金</label>
+								<div class="award-list">
+									<span>{$row['commission']}</span><br />
+								</div>
+							</div>
+							<!--激励部分-->
+							<div class="award fn-clear">
+								<div class="award-list"></div>
+							</div>
+					</div>
+				</a>
+			{/loop}
+			{else}暂无客户{/if}		
+			</div>
+		</div>
+	</div>
+</section>
+
+<nav class="nav fn-clear">
+	<a href="{php echo $this->createMobileUrl('index')}" class="active"><i class="icon-angle-left"></i>首页</a>
+	<a href="{php echo $this->createMobileUrl('customer')}"><i class="icon-users"></i>我的客户</a>
+	<a href="{php echo $this->createMobileUrl('my')}" ><i class="icon-adult"></i>个人中心</a>
+</nav>
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="./source/modules/broke/style/js/com.js"></script>		
+<script>
+function loadImages(sources, callback) {
+		var count = 0,
+				images = {},
+				imgNum = 0;
+		for (src in sources) {
+			imgNum++;
+		}
+		for (src in sources) {
+			images[src] = new Image();
+			images[src].onload = function() {
+				if (++count >= imgNum) {
+					callback(images);
+				}
+			}
+			images[src].src = sources[src];
+		}
+	}
+	loadImages(['./source/modules/broke/style/images/bg-loader.jpg'], function() {
+		setTimeout(function() {
+			$('.loader').addClass('fadeOut').hide();
+			$('.user-loader').addClass('fadeOut').hide();
+			$('.main-box').addClass('fadeIn');
+			$('#loading-style').remove();
+		}, 1000);
+	});
+</script>
+<script src="./source/modules/broke/style/js/wx.js"></script>
+<script type="text/javascript">
+
+WeixinApi.ready(function(Api) {
+        Api.showOptionMenu();
+        var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : '{$_W['siteroot']}/source/modules/broke/icon.jpg',
+            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('index',array('id'=>$id))}',
+            "desc" : '看你能捞多少佣金',
+            "title" : '全民经纪人-{$_W['account']['name']}'
+        };
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享被用户自动取消
+            cancel : function(resp) {
+                TopBox.alert("分享后获得积分,还有可能得到佣金哦!不要错过发大财的机会!");
+            },
+            // 分享失败了
+            fail : function(resp) {
+                TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+            },
+            // 分享成功
+            confirm : function(resp) {
+             TopBox.alert("分享后成功,等着收佣金吧!");
+            },
+        };
+        Api.shareToFriend(wxData,wxCallbacks);
+        Api.shareToTimeline(wxData,wxCallbacks);
+        Api.shareToWeibo(wxData,wxCallbacks);
+    });
+
+</script>
+	</body>
+</html>

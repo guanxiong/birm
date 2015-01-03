@@ -3,7 +3,7 @@
 /**
  * 微商城模块微站定义
  *
- * @author WeEngine Team
+ * @author WeNewstar Team
  * @url
  */
 defined('IN_IA') or exit('Access Denied');
@@ -918,7 +918,7 @@ class ShoppingModuleSite extends WeModuleSite {
             $cid = intval($_GPC['pcate']);
             $condition .= " AND pcate = '{$cid}'";
         }
-        $list = pdo_fetchall("SELECT * FROM " . tablename('shopping_goods') . " WHERE weid = '{$_W['weid']}' AND status = '1' AND deleted = '0' $condition ORDER BY displayorder DESC, sales DESC LIMIT " . ($pindex - 1) * $psize . ',' . $psize);
+        $list = pdo_fetchall("SELECT * FROM " . tablename('shopping_goods') . " WHERE weid = '{$_W['weid']}' AND status = '1' $condition ORDER BY displayorder DESC, sales DESC LIMIT " . ($pindex - 1) * $psize . ',' . $psize);
         include $this->template('list_more');
     }
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<chart caption="2014-09 转发产品总记录曲线" subCaption="2014-08" numberPrefix="" sformatNumberScale="1" sNumberPrefix="" syncAxisLimits="2" rotateValues="1" showSum="0" subcaption="">
+<!-- Data for single series chart -->
+	<set label="1日" value="0"/>
+	<set label="2日" value="0"/>
+	<set label="3日" value="0"/>
+	<set label="4日" value="0"/>
+	<set label="5日" value="0"/>
+	<set label="6日" value="0"/>
+	<set label="7日" value="0"/>
+	<set label="8日" value="0"/>
+	<set label="9日" value="0"/>
+	<set label="10日" value="1"/>
+	<set label="11日" value="0"/>
+	<set label="12日" value="1"/>
+	<set label="13日" value="0"/>
+	<set label="14日" value="0"/>
+	<set label="15日" value="0"/>
+	<set label="16日" value="0"/>
+	<set label="17日" value="0"/>
+	<set label="18日" value="0"/>
+	<set label="19日" value="0"/>
+	<set label="20日" value="0"/>
+	<set label="21日" value="0"/>
+	<set label="22日" value="0"/>
+	<set label="23日" value="0"/>
+	<set label="24日" value="0"/>
+	<set label="25日" value="0"/>
+	<set label="26日" value="0"/>
+	<set label="27日" value="0"/>
+	<set label="28日" value="0"/>
+	<set label="29日" value="0"/>
+	<set label="30日" value="0"/>
+	<set label="31日" value="0"/>
+<!-- Data for multi-series stacked and combination chart -->
+
+</chart>

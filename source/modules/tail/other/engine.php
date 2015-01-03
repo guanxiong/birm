@@ -1,6 +1,6 @@
 <?php
 /**
- * [WeEngine System] Copyright (c) 2013 WE7.CC
+ * [WNS] Copyright (c) 2013 BIRM.CO
  * $sn: htdocs/source/modules/engine.php : v c80e0abd3cde : 2014/03/26 09:56:12 : veryinf $
  */
 defined('IN_IA') or exit('Access Denied');

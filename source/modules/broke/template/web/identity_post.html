@@ -1,0 +1,59 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo $this->createWebUrl('identity',array('op'=>'post'));}">添加身份</a></li>	
+	<li><a href="{php echo $this->createWebUrl('identity', array('op'=>'display'));}">身份管理</a></li>	
+</ul>
+	<div class="main">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return validate(this);">
+			<h4>修改身份设置</h4>
+			<table class="tb">
+				<tr>
+					<th><label for="">排序</label></th>
+					<td>
+						<input type="text" name="listorder" class="span6" value="{$theone['listorder']}" />
+					</td>
+				</tr>
+				<tr>
+					<th><label for="">名称</label></th>
+					<td>
+						<input type="text" name="identity_name" class="span6" value="{$theone['identity_name']}" />
+					</td>
+				</tr>
+				
+				<tr>
+					<th><label for="">是否填写公司名称</label></th>
+					<td>
+						<label for="iscompany1" class="radio inline"><input type="radio" name="iscompany" value="1" id="iscompany1" {if $theone['iscompany']=='1'}  checked="true" {/if}> 是</label>&nbsp;&nbsp;&nbsp;
+						<label for="iscompany0" class="radio inline"><input type="radio" name="iscompany" value="0" id="iscompany0"  {if $theone['iscompany'] == '0'}  checked="true" {/if}> 否</label>
+					</td>
+				</tr>
+				
+				<tr>
+					<th><label for="">是否显示</label></th>
+					<td>
+						<label for="isshow1" class="radio inline"><input type="radio" name="status" value="1" id="isshow1" {if $theone['status']=='1'}  checked="true" {/if}> 是</label>&nbsp;&nbsp;&nbsp;
+						<label for="isshow0" class="radio inline"><input type="radio" name="status" value="0" id="isshow0"  {if $theone['status'] == '0'}  checked="true" {/if}> 否</label>
+					</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td>
+						<input type="hidden"  name="id" value="{$theone['id']}" />
+						<input type="hidden" name="token" value="{$_W['token']}" />
+						<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					</td>
+				</tr>
+			</table>
+		</form>
+    </div>
+	<script text="text/javascript">
+		function validate() {
+			if($.trim($(':text[name="identity_name"]').val()) == '') {
+				message('必须填写身份名称.', '', 'error');
+				return false;
+			}
+			return true;
+		}
+	</script>
+{template 'common/footer'}
+

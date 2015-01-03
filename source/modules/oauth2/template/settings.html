@@ -1,0 +1,24 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>参数设置</h4>
+		<table class="tb">
+			<tr>
+				<th>借用状态</th>
+				<td>
+					<input type="radio" name="ising" value="1" {if $settings['ising'] == '1'|| empty($settings['ising'])}checked{/if}/>开启
+					<input type="radio" name="ising" value="2" {if $settings['ising'] == '2'}checked{/if}/>关闭
+					<div class="help-block">借用状态默认开启</div>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

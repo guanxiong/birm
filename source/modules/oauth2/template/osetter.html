@@ -1,0 +1,130 @@
+{template 'common/header'}
+<script type="text/javascript" src="./resource/script/jquery-ui-1.10.3.min.js"></script>
+<script type="text/javascript">
+function checkit(){
+	var type=$(':radio[name="type"]:checked').val();
+	if(type==1){
+		var appid = $('#appid_1').val();
+		var appsecret = $('#appsecret_1').val();
+		if(appid==''||appsecret==''){
+			alert('请填写appid或appsecret..');
+			return false;
+		}else{
+			return true;
+		}
+	}else{
+		return true;
+	}
+	alert('提交信息不完整..');
+	return false;
+}
+function trimit(o){
+	return o.replace(/^\s+|\s+$/g,"");
+}
+$(function(){
+	var type =$(':radio[name="type"]:checked').val();
+	var poorer = $('#poorer').val();
+	if(type==1){
+			$("#oid_2").hide();
+		}else{
+			$("#oid_1").hide();
+		}
+		$(':radio[name="type"]').click(function(){
+			var type=$(':radio[name="type"]:checked').val();
+			if(type==1){
+				$("#oid_2").hide();
+				$("#oid_1").show();
+			}else{
+				if(poorer==1){
+					alert('没有权限..请升级您的用户组别...');
+					$('#on').prop('checked','checked');
+					return;
+				}
+				$("#oid_1").hide();
+				$("#oid_2").show();
+			}
+		});
+});
+</script>
+<style type="text/css">
+.on3{
+width:220px;height:auto;padding:5px;border:#909090 1px solid;background:#fff;color:#333;
+filter:progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=4);/*ie*/
+-moz-box-shadow: 2px 2px 10px #909090;/*firefox*/
+-webkit-box-shadow: 2px 2px 10px #909090;/*safari或chrome*/
+box-shadow:2px 2px 10px #909090;/*opera或ie9*/
+}
+</style>
+<div class="main">
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data" onsubmit="return checkit()">
+<input type="hidden" id="poorer" value="{$poorer}">
+	<h4>用户设置</h4>
+	<div style="float: left;margin-left: 50px;">
+	<table class="tb">
+	<tr>
+	<img src="http://www.jiaduiguo.net/resource/attachment/headimg_6.jpg?time={TIMESTAMP}" style="width: 40px; height: 40px" alt="">
+		<th>借用家对过高级接口</th>
+				<td><label for="type"></label>
+				<input id="on" type="radio" name="type" value="1" {if $oauther['type']==1||empty($oauther)||$oauther['type']==0}checked="true"{/if}id="type_1">否
+				<input type="radio" name="type" value="2" {if $oauther['type']==2}checked="true"{/if} id="type_2">是
+				</td>
+				</tr>
+				<tbody class="on3">
+				<tr>
+				<th></th>
+				<td><label for="appid"></label>
+				{php echo htmlspecialchars_decode($host['content'])}
+				</td>
+				</tr>
+				<tr>
+				<th>当前公众号名称</th>
+				<td><label for="appid"></label>
+				<input type="text"  value="{$_W['account']['name']}" disabled="disabled" class="span6">
+				</td>
+				</tr>
+				<tr>
+				<th>当前用户权限组别</th>
+				<td><label for="appid"></label>
+				<input type="text"  value="{$user['name']}" disabled="disabled" class="span6">
+				</td>
+				</tr>
+				</tbody>
+				<tbody id = "oid_2">
+				<tr>
+				<th>家对过AppID</th>
+				<td><label for="appid"></label>
+				<input type="text" name="appid" id="appid" title="appid" value="{$item['key']}" disabled="disabled" class="span6">
+				</tr>
+				<tr>
+				<th>家对过AppSecret</th>
+				<td><label for="appsecret"></label>
+				<input type="text" name="appsecret" id="appsecret" title="appsecret" value="{$item['secret']}" disabled="disabled" class="span6">
+				</td>
+				</tr>
+				</tbody>
+				<tbody id = "oid_1">
+				<tr>
+				<th>AppID(应用ID)</th>
+				<td><label for="appid_1"></label>
+				<input type="text" name="appid_1" id="appid_1" title="appid" value="{$oauther['key']}" class="span6">
+				</td>
+							</tr>
+							<tr>
+				<th>AppSecret(应用密钥)</th>
+				<td><label for="appsecret_1"></label>
+				<input type="text" name="appsecret_1" id="appsecret_1" title="appsecret" value="{$oauther['secret']}" class="span6">
+				</td>
+							</tr>
+				</tbody>
+		<tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+	</table>
+	</div>
+</form>
+
+{template 'common/footer'}

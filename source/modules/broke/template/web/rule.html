@@ -1,0 +1,59 @@
+{template 'common/header'}
+
+	<div class="main">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return validate(this);">
+			<h4>活动细规设置</h4>
+			<table class="tb">
+				<tr>
+					<th><label for="">状态设置</label></th>
+					<td>
+						<input type="input" name="status" class="span6" value="{$theone['status']}" />
+						<div class="help-block">[推荐,跟进,无意向]三项为内置状态 ,不可修改。新增状态请用英文逗号隔开。如 [ <font style="color:#f00"> 到访,认筹,认购,签约,回款 </font> ] </div>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="">团队抽成</label></th>
+					<td>
+						<input type="input" name="teamfy" class="span2" value="{$theone['teamfy']}" />%
+						<div class="help-block">1-100,百分比计算,</div>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="">关注引导页</label></th>
+					<td>
+						<input type="input" name="gzurl" class="span6" value="{$theone['gzurl']}" />
+						<div class="help-block">如果是认证服务号，此项无效</div>
+					</td>
+				</tr>
+				<tr>
+					<th>活动细则</th>
+					<td>
+						<textarea id="rule" style="height:150px;" name="rule" class="span7" cols="60">{$theone['rule']}</textarea>
+						<div class="help-block">活动的相关说明</div>
+					</td>
+				</tr>
+				<tr>
+					<th>注册条款</th>
+					<td>
+						<textarea id="terms" style="height:150px;" name="terms" class="span7" cols="60">{$theone['terms']}</textarea>
+						<div class="help-block">注册条款相关说明</div>
+					</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td>
+						<input type="hidden"  name="id" value="{$theone['id']}" />
+						<input type="hidden" name="token" value="{$_W['token']}" />
+						<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					</td>
+				</tr>
+			</table>
+		</form>
+    </div>
+<script>
+kindeditor($('#rule'));
+kindeditor($('#terms'));
+</script>
+	
+{template 'common/footer'}
+

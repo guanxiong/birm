@@ -1,7 +1,7 @@
 <?php
 /**
- * [WeEngine System] Copyright (c) 2013 WE7.CC
- * $sn: origins/source/bootstrap.inc.php : v 9a3b993ab950 : 2014/06/08 07:21:03 : RenChao $
+ * [WNS] Copyright (c) 2013 BIRM.CO
+ * $sn: origins/source/bootstrap.inc.php : v cd2e9794aeb3 : 2014/06/17 03:32:07 : yuan $
  */
 define('IN_IA', true);
 define('IA_ROOT', str_replace("\\",'/', dirname(dirname(__FILE__))));
@@ -19,7 +19,8 @@ if(!file_exists($configfile)) {
 		require IA_ROOT . '/source/version.inc.php';
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 		echo "·如果你还没安装本程序，请运行<a href='install.php'> install.php 进入安装&gt;&gt; </a><br/><br/>";
-		echo "&nbsp;&nbsp;<a href='http://bbs.we7.cc' style='font-size:12px' target='_blank'>Power by WNS " . IMS_VERSION . " &nbsp;微新星微信公众平台自助开源引擎</a>";
+		echo "&nbsp;&nbsp;<a href='http://bbs.birm.co' style='font-size:12px' target='_blank'>Power by WQ " . IMS_VERSION . " &nbsp;微新星微信公众平台自助开源引擎</a>";
+		echo "获取最新版本：<a target='_blank' href='http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA4MzA3NV8yMTc1MThfODAwMDgzMDc1XzJf'><img border='0' src='http://wpa.qq.com/pa?p=2:1797061558:51' alt='点击联系我们' title='点击联系我们'/></a>";
 		exit();
 	} else {
 		header('Content-Type: text/html; charset=utf-8');

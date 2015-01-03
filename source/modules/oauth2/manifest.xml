@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[oAuth2.0特权]]></name>
+		<identifie><![CDATA[oauth2]]></identifie>
+		<version><![CDATA[0.3]]></version>
+		<type><![CDATA[server]]></type>
+		<ability><![CDATA[oAuth2.0特权]]></ability>
+		<description><![CDATA[oAuth2.0特权]]></description>
+		<author><![CDATA[微新星]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="测试入口" do="Entry" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="特权设置" do="Osetting" state="" direct="false" />
+			<entry title="错误日志" do="Errorlog" state="" direct="false" />
+			<entry title="借用记录" do="Oautherlist" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_ohost` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `type` TINYINT(3) unsigned NOT NULL,
+  `host` int(10) unsigned NOT NULL DEFAULT 0,
+  `key` varchar(100) NOT NULL DEFAULT '',
+  `secret` varchar(100) NOT NULL DEFAULT '',
+  `content` varchar(1000) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_oauther` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `type` TINYINT(3) unsigned NOT NULL,
+  `key` varchar(100) NOT NULL DEFAULT '',
+  `secret` varchar(100) NOT NULL DEFAULT '',
+  `createtime` varchar(100) NOT NULL,
+  `sum` int(10) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_oerrorlog` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `content` varchar(500) NOT NULL,
+  `createtime` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[
+DROP TABLE IF EXISTS `ims_ohost`;
+DROP TABLE IF EXISTS `ims_oauther`;
+DROP TABLE IF EXISTS `ims_oerrorlog`;
+		]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

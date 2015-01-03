@@ -1,0 +1,28 @@
+{template 'common/header'}
+
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th>公众号</th>
+					<th>借用方式</th>
+					<th>借用时间</th>
+					<th>借用次数</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $row}
+					<tr>
+						<td>{if $_W['isfounder']}{$row['name']}{else}{$_W['account']['name']}{/if}</td>
+						<td>{if $row['t1.type']==1}自备家伙{else}借用微新星高级接口{/if}</td>
+						<td>{php echo date('Y-m-d H:i:s',$row['createtime'])}</td>
+						<td>{$row['sum']}</td>
+					</tr>
+					{/loop} 
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+</div>
+{template 'common/footer'}

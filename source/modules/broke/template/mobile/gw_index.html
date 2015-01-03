@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+<head>
+<title>{if $opp=='his'}案场经理{else}置业顾问{/if}-个人中心</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="./source/modules/broke/style/css/style.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+<meta name="format-detection" content="telephone=no,address=no,email=no" />
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+</head>
+<style>
+.pagination li{
+	margin-left:10px;
+	background-color: #fa614b;
+	display: inline-block;
+	padding: 0 5px;
+	border-radius: 5px;
+	
+}
+.pagination li .pager-nav{
+color: #fff;
+
+}
+.my-client-list ul li:first-child{
+	width:15%;
+}
+.my-client-list ul li{
+	width:20%;
+}
+.my-client-list ul li:nth-child(3){
+	width:20%;
+}
+.my-client-list ul li:last-child{
+	width:15%;
+}
+</style>
+<body>
+
+
+<section class="main animated ">
+	<div class="main-box">
+		<div class="topnav">
+			<ul class="rb-row fn-clear">
+				<a href="{if $opp=='his'}{php echo $this->createMobileUrl('counselor',array('opp'=>'visit', 'op'=>'statussort', 'oppp'=>'all'))}{else}{php echo $this->createMobileUrl('counselor',array('op'=>'statussort', 'oppp'=>'zyall'))}{/if}" ><li>全部</LI></a>
+			
+				{php $i=0;}
+				{loop $status $item}
+				<a href="{if $opp=='his'}{php echo $this->createMobileUrl('counselor',array('opp'=>'visit', 'op'=>'statussort','status'=>$i))}{else}{php echo $this->createMobileUrl('counselor',array('op'=>'statussort','status'=>$i))}{/if}" ><li>{$item}</LI></a>
+				{php $i++;}
+				{/loop}
+				
+			</ul>
+		</div>
+		
+		<div class="client my-client-title">
+			<ul class="rb-row fn-clear">
+				
+				<li style="{if $opp=='his'}text-align:left;{/if} width:26%;">{if $opp=='his'}
+					<input type="checkbox" name="selected" onclick="getTop()" />
+					{/if}姓名
+				</li>
+				<li style="width:27%;">意向</li>
+				<li style="width:22%;">电话</li>
+				<li style="width:20%;">状态</li>
+			</ul>
+		</div>
+		<div class="client my-client-list">
+		{loop $customer $row}
+			<a href="{if $opp=='his'}{php echo $this->createMobileurl('counselor',array('opp'=>'visit', 'op'=>'detail','cid'=>$row['id']))}{else}{php echo $this->createMobileurl('counselor',array('op'=>'detail','cid'=>$row['id']))}{/if}" class="rb-row my-client">
+						<ul class="fn-clear">
+							
+							<li style="{if $opp=='his'}text-align:left;{/if} width:26%;">{if $opp=='his'}
+								{if $row['cid']==0}
+								<input type="checkbox" name="select" value="{$row['id']}"/>
+								{else}
+								<font color="red">√</font>
+								{/if}
+								{/if}{$row['realname']}
+							</li>
+							<li style="width:26%;">{$pan[$row['loupan']]}</li>
+							<li style="width:23%;">{$row['mobile']}</li>
+							<li style="width:20%;">
+								<span class="{if $row['status']==2}invalid{else}visit{/if}">{$status[$row['status']]}</span>
+							</li>
+						</ul>
+			</a>
+		{/loop}	
+		{if $opp=='his'}
+			<input type="submit" onclick="allot();" value="分配" class="btn btn-primary" style="width:49%;"/>
+			<input type="submit" onclick="visit();" value="查看销售员" class="btn btn-primary" style="width:49%;"/>
+		{/if}
+			<br/>
+			<br/>
+			<ul class="fn-clear">
+				{$pager}
+			</ul>
+			
+		</div>
+		
+	</div>
+</section>
+
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+<!--
+<nav class="nav fn-clear">
+	<a {if $active==1}class="active"{/if} href="{php echo $this->createMobileUrl('counselor', array('op'=>'gwindex'));}"><i class="icon-spin4"></i>新客户</a>
+	<a {if $active==2}class="active"{/if} href="{php echo $this->createMobileUrl('counselor', array('op'=>'display'));}"><i class="icon-users"></i>所有客户</a>
+	<a href="{php echo $this->createMobileUrl('counselor', array('op'=>'gwstatus'));}"><i class="icon-eye-1"></i>总分类</a>
+	  gwstatus 如果不带参数status 则显示出所有的状态,如未联系 
+</nav>
+-->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="./source/modules/broke/style/js/com.js"></script>
+<script src="./source/modules/broke/style/js/wx.js"></script>
+<script type="text/javascript">
+
+WeixinApi.ready(function(Api) {
+        Api.showOptionMenu();
+        var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : '{$_W['siteroot']}/source/modules/broke/icon.jpg',
+            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('index',array('id'=>$id))}',
+            "desc" : '看你能捞多少佣金',
+            "title" : '全民经纪人-{$_W['account']['name']}'
+        };
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享被用户自动取消
+            cancel : function(resp) {
+                TopBox.alert("分享后获得积分,还有可能得到佣金哦!不要错过发大财的机会!");
+            },
+            // 分享失败了
+            fail : function(resp) {
+                TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+            },
+            // 分享成功
+            confirm : function(resp) {
+             TopBox.alert("分享后成功,等着收佣金吧!");
+            },
+        };
+        Api.shareToFriend(wxData,wxCallbacks);
+        Api.shareToTimeline(wxData,wxCallbacks);
+        Api.shareToWeibo(wxData,wxCallbacks);
+    });
+	
+	function getTop(){
+		var xed = document.getElementsByName("selected");
+		var x = document.getElementsByName("select");
+		
+		if(xed[0].checked == true){
+			for (var i=0; i<x.length; i++){
+				x[i].checked = true;
+			}
+		}else{
+			for (var i=0; i<x.length; i++){
+				x[i].checked = false;
+			}
+		}
+	}
+	
+	function allot(){
+		var x = document.getElementsByName("select");
+		var flag = false;
+		var j = 0;
+		
+		var selected = new Array();
+		for (var i=0; i<x.length; i++){
+			if(x[i].checked == true){
+				selected[j] = x[i].value;
+				flag = true;
+				j++;
+			}
+		}
+		if(flag){
+			
+		}else{
+			alert('您还未选择需要分配的人！');
+			return;
+		}
+		
+		window.location.href = "{php echo $this->createMobileUrl('acmanager', array('op'=>'allot'))}&selected="+selected;
+	}
+	
+	function visit(){
+		window.location.href = "{php echo $this->createMobileUrl('acmanager', array('op'=>'allot'))}";
+	}
+	
+</script>
+</body>
+</html>

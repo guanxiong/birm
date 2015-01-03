@@ -1,0 +1,180 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li  class="active"><a href="{php echo $this->createWebUrl('counselors', array())}">销售员管理</a></li>
+	<li><a href="{php echo $this->createWebUrl('counselor', array('op'=>'post'))}">添加邀请码</a></li>	
+	<li><a href="{php echo $this->createWebUrl('counselor', array('op'=>'list'))}">邀请码管理</a></li>
+</ul>
+    <div class="main">
+		<div class="stat">
+		
+			<form action="">
+				<input type="hidden" name="act" value="module" />
+				<input type="hidden" name="name" value="broke" />
+				<input type="hidden" name="do" value="counselors" />
+				<input type="hidden" name="op" value="sort" />
+				<table class="table sub-search">
+				<table class="table sub-search">
+					<tbody>
+						<tr>
+							<th style="width:100px;">真实姓名</th>
+							<td>
+								<input name="realname" type="text" value="{$sort['realname']}" />
+							</td>
+						</tr>
+						<tr>
+							<th style="width:100px;">手机号码</th>
+							<td>
+								<input name="mobile" type="text" value="{$sort['mobile']}" />
+							</td>
+						</tr>
+						<tr>
+							<th></th>
+							<td>
+								<input type="submit" name="" value="搜索" class="btn btn-primary">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+			
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="pull-right" style="color:red; padding:10px 10px 0 0;">总数：<?php echo $total;?></span>
+						<span class="brand">名单</span>
+					</div>
+				</div>
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title" style="float:right;color:red;"><a href="">刷新</a></h4>
+					<h4 class="sub-title">销售员名单</h4>
+
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									{if $op=="allot"}<th class="row-hover">选择</th>{/if}
+									<th class="row-hover">真实姓名</th>
+									<th class="row-hover">手机号码</th>
+									<th class="row-hover">公司名称</th>
+									<th class="row-hover">注册时间</th>
+								    <th class="row-hover">状态</th>
+									<th class="row-hover">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $v}
+								<tr>
+									{if $op=="allot"}
+										<td style="text-align: center;">
+											<input type="radio" name="allot" value="{$v['id']}"/>
+										</td>
+									{/if}
+									<td style="text-align: center;">
+										{$v['realname']}
+									</td>
+									<td style="text-align: center;">
+										{$v['mobile']}
+									</td>
+									<td style="text-align: center;">
+										{$v['company']}
+									</td>
+									<td style="text-align: center;">
+										{php echo date('Y-m-d',$v['createtime'])}
+									</td>
+									<td style="text-align: center;">
+									{if $v['status']==0}
+										<span class="label label-important">禁用</span>
+									{else}
+										<span class="label label-success">可用</span>
+									{/if}
+									</td>
+									<td style="text-align: center;">
+										<a href="{php echo $this->createWebUrl('counselors',array('op'=>'del','id' => $v['id']));}" onclick="return confirm('确定要删除该销售员吗？');">删除</a>
+										<a href="{php echo $this->createWebUrl('counselors',array('op'=>'showdetail','id' => $v['id']));}">详情</a>		
+										<a href="{php echo $this->createWebUrl('customer',array('op'=>'mycustomer','opp'=>'his', 'cid' => $v['id']));}">客户</a>		
+									</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+					</div>
+					</form>
+					{$pager}
+				</div>
+				{if $op=="allot"}
+					<input type="submit" onclick="allot();" value="分配" class="btn btn-primary" style="position:relative;left:50px;" />
+				{/if}
+			</div>
+		</div>
+    </div>
+
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script>
+$(function() {
+	$('#date-range').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=start]').val(),
+		endDate: $(':hidden[name=end]').val(),
+		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=start]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=end]').val(end.format('YYYY-MM-DD'));
+	});
+	$('#date-range1').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=start1]').val(),
+		endDate: $(':hidden[name=end1]').val(),
+		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range1 .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=start1]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=end1]').val(end.format('YYYY-MM-DD'));
+	});
+
+});
+	
+	function allot(){
+		var id = document.getElementsByName('allot');
+		var flag = false;
+		for (var i=0; i<id.length; i++){
+			if(id[i].checked == true){
+				id = id[i].value;
+				flag = true;
+				break;
+			}
+		}
+		if(flag){
+			
+		}else{
+			alert('您还未选择分配给谁！');
+			return;
+		}
+		if(confirm('确定分配给TA？')){
+			window.location.href = "{php echo $this->createWebUrl('counselors',array('op'=>'allot', 'selected'=>$selected))}&id="+id+";";
+		}
+	}
+</script>
+{template 'common/footer'}

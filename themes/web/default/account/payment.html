@@ -103,6 +103,25 @@
 				}
 			}
 		});
+		$(':radio[name="sms[sysnum]"]').click(function(){
+
+			if(this.checked) {
+
+				if($(this).val() == '1') {
+
+					$('#sms-params-sysnum-1').hide();
+
+				} else {
+
+
+					$('#sms-params-sysnum-1').show();
+
+				}
+
+			}
+
+		});
+
 	});
 </script>
 <ul class="nav nav-tabs">
@@ -112,6 +131,49 @@
 </ul>
 <div class="main">
 	<form id="payform" action="" method="post" class="form-horizontal form" onsubmit="return validate();">
+	<h4>设置短信提醒</h4>
+	{if !empty($sms['comid'])} {php $sms['sysnum'] = 2;} {else}{php $sms['sysnum'] = 1;}{/if}
+		<table class="tb">
+			<tr>
+				<th>短信平台类型</th>
+				<td>
+					<label class="radio inline">
+						<input type="radio" name="sms[sysnum]" value="1" {if $sms[ 'sysnum']==1 } checked="checked" {/if}/>smsbao平台</label>
+					<label class="radio inline">
+						<input type="radio" name="sms[sysnum]" value="2" {if $sms[ 'sysnum']==2 } checked="checked" {/if}/>我要发短信平台</label>
+				</td>
+				</tr>
+							<tr>
+				<th>短信账号</th>
+				<td>
+				<input type="text" name="sms[user]" value="{$sms['user']}"/>
+				</td>
+			</tr>
+			<tr>
+				<th>短信密码</th>
+				<td>
+				<input type="text" name="sms[password]" value="{$sms['password']}"/>
+				</td>				
+			</tr>
+			<tbody id="sms-params-sysnum-1" {if $sms[ 'sysnum']==1 || empty($sms[ 'sysnum'])} style="display:none;" {/if}>
+				<tr>
+					<th>
+						<label for="">短信类型ID</label>
+					</th>
+					<td>
+						<input type="text" name="sms[comid]" value="{$sms['comid']}" autocomplete="off" />	<span class="help-block">必须填写</span>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label for="">短信签名</label>
+					</th>
+					<td>
+						<input type="text" name="sms[signature]" value="{$sms['signature']}" autocomplete="off" />	<span class="help-block">必须填写</span>
+					</td>
+				</tr>				
+			</tbody>
+		</table>
 		<h4>设置线下汇款支付开关</h4>
 		<table class="tb">
 			<tr>
@@ -238,7 +300,9 @@
 						<p>微新星V3支持微信支付接口，注意你的微新星访问地址一定不要写错了，这里我们用访问地址代替下面说明中出现的链接，申请微信支付的接口说明如下：</p>
 						<br>
 						<h5>JS API网页支付参数</h5>
-						<p>支付授权目录: {$_W['siteroot']}payment/wechat/</p>
+
+						<p>支付授权目录: {$_W['siteroot']}payment/wechat/   (你的系统安装目录, 如果你的系统安装在二级目录, 请记得填写完整)</p>
+
 						<p>支付请求实例: {$_W['siteroot']}payment/wechat/pay.php</p>
 						<p>共享收货地址: 选择"是"</p>
 						<br>
@@ -280,14 +344,14 @@
 			<tr>
 				<th><label for="">身份标识<br />(appId)</label></th>
 				<td>
-					<input type="text" name="wechat[appid]" class="span6" value="{$_W['account']['key']}" readonly autocomplete="off">
+					<input type="text" name="wechat[appid]" class="span6" value="{$_W['account']['key']}" readonly="readonly" autocomplete="off">
 					<span class="help-block">公众号身份标识 <a href="{php echo create_url('account/post', array('id' => 'current'))}">请通过修改公众号信息来保存</a></span>
 				</td>
 			</tr>
 			<tr>
 				<th><label for="">身份密钥<br />(appSecret)</label></th>
 				<td>
-					<input type="text" name="wechat[secret]" class="span6" value="{$_W['account']['secret']}" readonly autocomplete="off"/>
+					<input type="text" name="wechat[secret]" class="span6" value="{$_W['account']['secret']}" readonly="readonly" autocomplete="off"/>
 					<span class="help-block">公众平台API(参考文档API 接口部分)的权限获取所需密钥Key <a href="{php echo create_url('account/post', array('id' => 'current'))}">请通过修改公众号信息来保存</a></span>
 				</td>
 			</tr>

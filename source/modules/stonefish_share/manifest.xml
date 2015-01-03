@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="true">
+		<name><![CDATA[新分享集赞]]></name>
+		<identifie><![CDATA[stonefish_share]]></identifie>
+		<version><![CDATA[1.5]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[分享集赞是您的微信公众号运营的利器，是您涨粉和宣传最好的工具。]]></ability>		
+		<description><![CDATA[你的粉丝将你要传播的图文分享到朋友圈或者好友，即可获得点击量，每个人均被鼓励去大量分享，而获得高点击量；公众号根据不同的点击量给予不同的礼品或者优惠奖励；赶紧启动分享集赞，让粉丝疯狂分享你的图文吧！]]></description>
+		<author><![CDATA[微新星]]></author>
+		<url><![CDATA[http://bbs.birm.co/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>			
+			<entry title="分享模块管理" do="eventlist" />
+			<entry title="分享集赞管理" do="sharelist" />
+			<entry title="分享积攒排名" do="sharedata" />
+		</menu>
+		<rule>
+			<entry title="查看排名情况" do="shareranklist" state="" />			
+		</rule>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE `ims_stonefish_share_data` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+`from_user` varchar(50) not null default '' COMMENT '用户openid',
+`rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+`uid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分享人UID',
+`shareip` varchar(15) NOT NULL DEFAULT '' COMMENT '分享集赞IP',
+`sharetime` int unsigned NOT NULL COMMENT '分享时间',
+`viewnum` int(10) unsigned NOT NULL DEFAULT '1' COMMENT '查看次数',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;	
+
+CREATE TABLE `ims_stonefish_share_list` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+`weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+`from_user` varchar(50) not null default '' COMMENT '用户openid',
+`sharenum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分享量',
+`sharetime` int unsigned NOT NULL COMMENT '最后分享时间',
+`status` tinyint unsigned NOT NULL default 1 comment '是否禁止',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;	
+
+CREATE TABLE `ims_stonefish_share_reply` (
+`id` int( 10 ) unsigned NOT NULL AUTO_INCREMENT ,
+`rid` int( 10 ) unsigned NOT NULL default 0 comment '规则id',
+`parentid` int(10) unsigned NOT NULL DEFAULT '0',
+`title` varchar( 50 ) NOT NULL comment '规则标题',
+`credit` int( 10 ) unsigned NOT NULL default '0' comment '奖励积分',
+`shareurl` varchar( 255 ) NOT NULL comment '活动网址',
+`picture` varchar( 100 ) NOT NULL comment '图片',
+`start_time` int unsigned NOT NULL comment '开始时间',
+`end_time` int unsigned NOT NULL comment '结束时间',
+`description` varchar( 255 ) NOT NULL comment '描述',
+`content` text NOT NULL comment '内容',
+`status` tinyint unsigned NOT NULL default 1 comment '开关状态',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;	
+
+CREATE TABLE IF NOT EXISTS `ims_credit_log` (
+`id` int( 10 ) unsigned NOT NULL AUTO_INCREMENT ,
+`weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+`from_user` varchar(50) NOT NULL default '' COMMENT '用户openid',
+`type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '1积分，2金额',
+`credit` int( 10 ) NOT NULL default '0' comment '分值或金额',
+`nametype` varchar(50) NOT NULL COMMENT '类型',
+`name` varchar(50) NOT NULL COMMENT '类型名称',
+`content` varchar(255) NOT NULL DEFAULT '' comment '备注',
+`createtime` int(10) unsigned NOT NULL,
+`ip` varchar(20) NOT NULL DEFAULT '' comment 'IP地址',
+PRIMARY KEY ( `id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;
+
+	]]></install>
+	<uninstall><![CDATA[
+drop table `ims_stonefish_share_data`;
+drop table `ims_stonefish_share_list`;
+drop table `ims_stonefish_share_reply`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>
