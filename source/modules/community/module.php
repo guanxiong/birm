@@ -2,7 +2,7 @@
 /**
  * 微社区模块定义
  *
- * @author WeEngine Team
+ * @author WeNewstar Team
  * @url 
  */
 defined('IN_IA') or exit('Access Denied');

@@ -2,7 +2,7 @@
 /**
  * 微酒店
  *
- * @author WeEngine Team & ewei
+ * @author WeNewstar Team & ewei
  * @url
  */
 defined('IN_IA') or exit('Access Denied');

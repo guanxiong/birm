@@ -2,7 +2,7 @@
 /**
  * 微商城模块定义
  *
- * @author WeEngine Team
+ * @author WeNewstar Team
  * @url
  */
 

@@ -2,7 +2,7 @@
 /**
  * 粉丝管理模块定义
  *
- * @author WeEngine Team
+ * @author WeNewstar Team
  */
 defined('IN_IA') or exit('Access Denied');
 

@@ -2,7 +2,7 @@
 /**
  * 预约与调查模块微站定义
  *
- * @author WeEngine Team
+ * @author WeNewstar Team
  * @url http://bbs.we7.cc
  */
 defined('IN_IA') or exit('Access Denied');

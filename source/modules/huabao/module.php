@@ -2,7 +2,7 @@
 /**
  * 微相册模块定义
  *
- * @author WeEngine Team
+ * @author WeNewstar Team
  * @url http://www.we7.cc
  */
 defined('IN_IA') or exit('Access Denied');

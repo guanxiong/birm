@@ -1,7 +1,7 @@
 <?php
 /**
  * 图文模块详细页面
- * @author WeEngine Team
+ * @author WeNewstar Team
  */
 defined('IN_IA') or exit('Access Denied');
 
