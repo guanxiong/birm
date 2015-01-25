@@ -1,0 +1,33 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>设置</h4>
+		<table class="tb">
+
+			<tr>
+				<th>平台电话</th>
+				<td>
+					<input type="text" name="tel" class="span3" value="{$settings['tel']}" />
+				</td>
+			</tr>
+			<tr>
+				<th>是否开启审核</th>
+				<td>
+					<label for="ipt_status" class="checkbox">
+						<input name="status" value='1'  type="checkbox" {if intval($settings['status'])==1}checked='checked'{/if} />启用
+					</label>
+				</td>
+			</tr>
+			
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" style="height:30px" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+{template 'common/footer'}

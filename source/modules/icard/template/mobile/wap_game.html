@@ -1,0 +1,131 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+        卡遛微企会员卡
+    </title>
+    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="./source/modules/icard/template/css/card.css" media="all">
+</head>
+<body id="card" class="mode_webapp">
+<div class="menu_header">
+    <div class="menu_topbar">
+        <strong class="head-title">
+            会员活动
+        </strong>
+        <span class="head_btn_left">
+            <a href="javascript:history.go(-1);">
+                <span>
+                    返回
+                </span>
+            </a>
+            <b>
+            </b>
+        </span>
+        <a class="head_btn_right" href="vip.shtml?id=124">
+            <span>
+                <i class="menu_header_home">
+                </i>
+            </span>
+            <b>
+            </b>
+        </a>
+    </div>
+</div>
+<div class="qiandaobanner">
+    <a href="javascript:history.go(-1);">
+        <img src="./source/modules/icard/template/themes/2/vippower.jpg">
+    </a>
+</div>
+<div class="cardexplain">
+    <!--会员积分信息-->
+    <div class="jifen-box">
+        <ul class="zongjifen">
+            <li>
+                <a href="vip_xf.shtml?id=124">
+                    <div class="fengexian">
+                        <p>
+                            消费记录
+                        </p>
+                        <span>
+                            0元
+                        </span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="vip_qd.shtml?id=124">
+                    <div class="fengexian">
+                        <p>
+                            剩余积分
+                        </p>
+                        <span>
+                            分
+                        </span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="vip_xf.shtml?id=124">
+                    <p>
+                        剩余金额
+                    </p>
+                            <span>
+                                元
+                            </span>
+                </a>
+            </li>
+        </ul>
+        <div class="clr">
+        </div>
+    </div>
+    <ul class="round" id="notice">
+        <li class="title">
+            <span class="none">会员活动</span>
+        </li>
+        <li class="dandanb">
+            <a href="/hd/zhuangpang.shtml?u=&amp;sid=193&amp;id=124">
+                <span>
+                    <img src="images/3.jpg">
+                    <h2>
+                        积分大转盘
+                    </h2>
+                    <p>
+                        亲，请点击进入欢乐大转盘活动页面，祝您好运哦！
+                    </p>
+                    <div class="clr">
+                    </div>
+                </span>
+            </a>
+        </li>
+        <li class="dandanb">
+            <a href="/hd/guaguaka.shtml?u=&amp;sid=192&amp;id=124">
+                <span>
+                    <img src="images/2.jpg">
+                    <h2>
+                        积分刮刮乐
+                    </h2>
+                    <p>
+                        亲，请点击进入刮刮乐活动页面，祝您好运哦！
+                    </p>
+                    <div class="clr">
+                    </div>
+                </span>
+            </a>
+        </li>
+    </ul>
+</div>
+{php include $this->template('footer');}
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady',
+    function onBridgeReady() {
+        WeixinJSBridge.call('hideToolbar');
+    });
+</script>
+</body>
+
+</html>

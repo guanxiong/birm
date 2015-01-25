@@ -1,0 +1,81 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+	<li{if $op == 'display'} class="active"{/if}><a href="{php echo $this->createWebUrl('category',array('op' => 'display'))}">类目管理</a></li>
+	<li{if $op == 'post'} class="active"{/if}><a href="{php echo $this->createWebUrl('category',array('op' => 'post') )}">添加类目</a></li>
+</ul>
+{if $op == 'post'}
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}">
+		<h4>类目关键字</h4>
+		<table class="tb">
+			<tr>
+				<th>标题</th>
+				<td><input type="text" name="cname" value="{$item['name']}" class="span5" placeHolder="请输入分类名称"/></td>
+			</tr>
+			<tr>
+				<th>是否开启</th>
+				<td>
+					<label for="ipt_status" class="checkbox">
+						<input class="" name="enabled" value='1' id="ipt_status" type="checkbox" {if intval($item['enabled'])==1}checked='checked'{/if}/>开启
+					</label>
+					 <span class="help-block"></span>
+				</td>
+			</tr>
+
+ 	
+			<tr>
+				<th></th>
+				<td>
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+{elseif $op == 'display'}
+<form action="" method="post" onsubmit="">
+<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:40px;" class="row-first">选择</th>
+					<th class="span1">分类名称</th>
+					<th class="span1">分类ID</th>
+					<th class="span2">是否开启</th>
+					<th class="span2">操作</th>
+				</tr>
+			</thead>
+			
+				{loop $row $item}
+				<tr>
+					<td class="row-first"><input type="checkbox" name="select[]" value="{$item['id']}" /></td>
+					<td class="span1"><p>{$item['name']}</p>
+					<td class="span1"><p>{$item['weid']}</p>
+		            <p></td>
+		            <td> {if intval($item['enabled'])==1}开启{else}未开启{/if}</td>
+					<td class="span1"><a  href="
+					{php echo $this->createWebUrl('category',array('op' => 'post','id' => $item['id']))}">编辑</a>
+					</td>
+				</tr>
+				{/loop}		
+		</table>
+		{if !empty($row)}
+		<table class="table">
+			<tr>
+				<td style="width:40px;" class="row-first">
+					<input type="checkbox" onclick="selectall(this, 'select');" />		
+				</td>
+				<td class="span1">
+					<input type="submit" name="delete" value="删除" class="btn btn-primary" />		
+					<input type="hidden" name="token" value="{$_W['token']}" />		
+
+				</td>
+			</tr>
+		</table>
+		{/if}
+		{$pager}
+	</div>
+</form>
+{/if}
+{template 'common/footer'}

@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="./source/modules/stonefish_chailihe/template/images/reset.css?2014-08-28" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/stonefish_chailihe/template/images/prize.css?2014-08-28" media="all" />
+<script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/common.js?2014-08-28"></script>
+<script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/zepto_min.js?2014-08-28"></script>
+<script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/WeixinApi.js?2014-08-28"></script>
+<title>{$reply['title']}</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<meta name="Description" content="{$reply['description']}" />
+<!-- Mobile Devices Support @begin -->
+<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<!-- Mobile Devices Support @end -->
+<style>
+    img{max-width:100%!important;}
+</style>
+<script type="text/javascript">  
+window.onload = function() {
+	var FormManager = {
+		dom: {
+			panel: ".panel-box",
+			btnClose: ".panel-close"
+		},
+		init: function() {
+			window.CMER.DomQuery(this.dom);
+
+			this.dom.btnClose.addEventListener("click", this.hidePanel.bind(this), false);
+		},
+		showPanel: function() {
+			this.dom.panel.classList.add("show");
+		},
+		hidePanel: function() {
+			this.dom.panel.classList.remove("show");
+		}
+	}
+
+	var MainManager = {
+		dom: {
+			{php $i=1;}
+			{loop $awarding $awardingrow}
+			{if $awardingrow['pass']!=''}btnExchange{$i}: ".btn-exchange{$i}",{/if}
+			{php $i++;}
+            {/loop}
+		},
+		init: function() {
+			window.CMER.DomQuery(this.dom);
+
+			{php $i=1;}
+			{loop $awarding $awardingrow}
+			{if $awardingrow['pass']!=''}this.dom.btnExchange{$i}.addEventListener("click", FormManager.showPanel.bind(FormManager), false);{/if}
+			{php $i++;}
+            {/loop}
+		}
+	}
+
+	MainManager.init();
+	FormManager.init();
+}
+</script>
+<style type="text/css"> 
+.selectedtypeid{
+	margin:10px;
+	background:{$text04color};height:50px;
+	color:{$text05color};
+	-moz-border-radius: 10px;      /* Gecko browsers */
+    -webkit-border-radius: 10px;   /* Webkit browsers */
+    border-radius:10px;            /* W3C syntax */
+}
+.selectedtypeid select {
+   background: transparent;
+   width: 100%;color:{$text05color};
+   padding: 5px;
+   font-size: 16px;
+   border: 0px;
+   height: 50px;
+   -webkit-appearance: none; /*for chrome*/
+}
+.con{
+	background:{$text04color};
+	color:{$text05color};
+}
+{if $isinfo}.con .title{text-align:center;padding:5px 10px;}{/if}
+.con .title a:link,.con .title a:focus,.con .title a:hover,.con .title a:active{
+    color:{$text05color};
+}
+.textdj a:link,.textdj  a:focus,.textdj  a:hover,.textdj  a:active{
+    color:{$text05color};
+}
+.con .end  a:link,.con .end  a:focus,.con .end  a:hover,.con .end  a:active{
+    color:{$text05color};
+}
+.btn-send{
+	border: none;
+	border-radius: 5px;
+	background: {$text05color};
+	color:{$text04color};
+	height: 45px;
+	text-align: center;
+	line-height: 45px;
+	font-size: 16px;
+	margin: 10px auto;
+	width: 85%;
+	display: block;
+	left: 25px;
+}
+.text label{
+	float: left;
+	width: 20%;
+	font-size: 17px;
+	color: {$text05color};
+	text-align: right;
+	height: 45px;
+	line-height: 70px;
+	position: relative;
+	white-space: nowrap;
+}
+.text input[type='email'],
+.text input[type='text'],
+.text input[type='tel']{
+	margin-top: 25px;
+	height: 20px;
+	line-height: 20px;
+	background-color: transparent;
+	color: {$text05color};
+	font-size: 17px;
+	width: 70%;
+	border: none;
+	border-bottom: 1px solid {$text05color};
+}
+.text { margin:20px;}
+</style> 
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+    <div class="shadow-prize"></div>
+    <div data-role="container" class="container">
+        <header data-role="header"><!----></header>
+        <section data-role="body" class="body">
+            
+            <div class="prize-title">{$lihegift['lihetitle']}</div>
+            
+			{if $zhongjiang==0}
+			<div class="shadow-nojiang"><img src="./source/modules/stonefish_chailihe/template/images/nojiang.png" /></div>
+			{else}
+			<img src="{$awardpic}" class="prize-img" />
+            <div class="shadow-cloud"></div>
+            <dl class="prize-ps">
+                <dt>奖品名称：</dt><dd>{$lihegift['title']}</dd>
+				<dt>奖品发放：</dt><dd>{$lihegift['description']}</<dt></dt><dd>{if $zhongjiang==2}{else}{if $zhongjiang==1}{else}{/if}{/if}</dd>奖品将在活动后15个工作日内发放。
+                
+            </dl>
+			{/if}
+            <div class="btn-layout">
+                 {if $zhongjiang==1}<a href="javascript:void(0);" class="btn-exchange" ></a>{else}<a href="{$mylihe}" class="btn-see"></a>{/if}
+                 {if $giftlihe!=0}<a href="{$againreglihe}" class="btn-again2"></a>{/if}
+            </div>
+        </section>
+        <footer data-role="footer">
+            {if $reply['iscopyright']==1}<a href="{$reply['copyrighturl']}" class="copyright">&copy;{$reply['copyright']}</a>{else}<a href="javascript:;" class="copyright">{if empty($footer_off)}&copy;{if empty($_W['account']['name'])}微动力团队{else}{$_W['account']['name']}{/if}&nbsp;&nbsp;{$_W['setting']['copyright']['statcode']}{/if}</a>{/if}
+        </footer>
+    </div>
+    <div class="panel-box">
+        <div class="panel-content">
+            <div class="panel-close"></div>
+            <span class="icon-prize-useless"></span><br/>有兑奖地点输入兑奖密码进行兑奖
+            <hr class="common-hr" />
+            <form action="{$liheduijiang}" method="post">
+                <label for="info-pass">兑换密码</label>
+                <input type="hidden" value="{$uid}" name="info-prize">                
+                <input type="text" name="info-pass" />
+                <div class="btn-layout">
+                    <input type="reset" class="btn-reset" value="重填"/>
+                    <input type="submit" class="btn-confirm" value="确定"/>
+                </div>
+            </form>
+        </div>
+    </div>
+<script type="text/javascript">
+// 需要分享的内容，请放到ready里
+WeixinApi.ready(function(Api) {
+    // 微信分享的数据
+    var wxData = {
+        "appId": "{$shareappid}", // 服务号可以填写appId
+        "imgUrl" : '{$picture}',
+        "link" : '{$shareurl}',
+        "desc" : "{$reply['sharecontent']}",
+        "title" : "{$reply['sharetitle']}"
+    };
+
+    // 分享的回调
+    var wxCallbacks = {
+        // 收藏操作是否触发回调，默认是开启的
+        favorite : false,
+
+        // 用async模式，表示每次分享之前，都需要更新分享内容
+        async:true,
+    };
+    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
+    Api.shareToFriend(wxData, wxCallbacks);
+
+    // 点击分享到朋友圈，会执行下面这个代码
+    Api.shareToTimeline(wxData, wxCallbacks);
+
+    // 点击分享到腾讯微博，会执行下面这个代码
+    Api.shareToWeibo(wxData, wxCallbacks);
+
+    // iOS上，可以直接调用这个API进行分享，一句话搞定
+    Api.generalShare(wxData,wxCallbacks);
+	
+	//显示分享链接
+	Api.showOptionMenu();
+});
+</script>
+
+</body>
+</html>

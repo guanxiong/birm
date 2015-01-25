@@ -1,0 +1,621 @@
+<style type="text/css">
+    .help-block1 { margin:0px 10px;color: #c09853;vertical-align: middle;}
+    .table .controls{
+        margin:0;
+    }
+	.lihelist td{width:20%;text-align:center;border:1px solid #ccc;padding:5px;}
+    .r-module{margin-left:-20px;}
+    .controls .span3 .control-group{padding: 0px;}
+    .js_append_div .js_res_block .nom-pad{padding: 0px;}
+    .js_append_div .js_res_block .js_article,.js_append_div .js_res_block .js_link,.js_append_div .js_res_block .js_car,.js_append_div .js_res_block .js_estate,.js_append_div .js_res_block .js_vshop{padding:0px;}
+    span.color-red{padding:7px 0px 0px 7px;}
+    .del-prize{margin-left: 15px;}
+    .player{height:30px;width:210px;margin:20px 0px 0px 140px;background: #5bc0de;position: relative;padding-bottom: 3px;line-height:30px;padding-top:6px;}
+    .player .opts{padding-left: 6px;position: absolute;left: 0;top: 50%;margin-top: -14.5px}
+    .player .ctrl{display: inline-block;vertical-align: middle;zoom: 1;-webkit-border-radius: 50%;-moz-border-radius: 50%;-ms-border-radius: 50%;-o-border-radius: 50%;border-radius: 50%;height: 25px;width: 25px;text-align: center;border: 2px solid white;line-height: 25px;margin-right: 5px;}
+    .player .opts .mode{margin:0px 12px}
+    .player .repeat{margin-left: 5px;vertical-align:middle;margin-right: 5px;}
+    .player .opts i{color: #fff;}
+    .player .opts > span{cursor: pointer}
+    .playlist-box select.input-medium{margin-left:20px;}
+    .js_music_div .mp3,.js_music_div .help-inline{margin-top: -10px;}
+</style>
+<link rel="stylesheet" type="text/css" href="./source/modules/stonefish_chailihe/template/images/times/daterangepicker.css?2014-08-28" media="all" />
+<script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/times/jQuery.js?2014-08-28"></script>
+<script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/times/daterangepicker.js?2014-08-28"></script>
+<script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/times/moment_min.js?2014-08-28"></script>
+<script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/times/inside.js?2014-08-28"></script>
+<script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/jquery_ui_widget_min.js?2014-08-28"></script>
+<script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/jquery_form_wizard_min.js?2014-08-28"></script>
+<script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/player_min.js?2014-08-28"></script>
+<script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/musicPlay.js?2014-08-28"></script>
+<!-- <script language="JavaScript" type="text/javascript" src="http://www.00393.com/we7_client/stonefish_chailihe/servervalidCode007.js"></script> -->
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">幸运拆礼盒活动设置</h4>
+	<table>
+		<tbody>	
+			<tr>
+				<th>活动状态</th>
+				<td>{if $reply['status']}
+					<a id="jinyong" href="{php echo create_url('site/module/status', array('name' => 'stonefish_chailihe','rid' => $reply['rid'], 'status' => 0))}" onclick="return ajaxopen(this.href)" class="btn btn-primary module-button-switch">活动行进中--点击关闭</a>
+				{else}
+					<a id="qiyong" href="{php echo create_url('site/module/status', array('name' => 'stonefish_chailihe','rid' => $reply['rid'], 'status' => 1))}" onclick="return ajaxopen(this.href);" class="btn btn-danger module-button-switch">活动关闭中--点击启动</a>
+				{/if}</td>
+			</tr>
+			<tr>
+				<th>活动标题</th>
+				<td><input type="text" name="title" value="{$reply['title']}" class="span7"> </td>
+			</tr>
+            <tr>
+				<th>活动时间</th>
+				<th><input type="text" name="activitytime" id="activity-time" value="{php echo date('Y-m-d H:i', $reply['start_time'])} - {php echo date('Y-m-d H:i', $reply['end_time'])}" class="daterangepick input-xlarge" data-rule-required="true" readonly="true" />
+                </th>
+			</tr>	
+			<tr>
+				<th>消息图片</th>
+				<td>
+						<div style="display:block; margin-top:5px;" class="input-append">
+						<input type="text" value="{$reply['picture']}" name="picture" id="upload-image-url-picture" class="span3" autocomplete="off">
+						<input type="hidden" value="{$picture}" name="picture_old" id="upload-image-url-picture-old">
+						<button class="btn" type="button" id="upload-image-picture">选择图片</button>
+						</div>
+						<div id="upload-image-preview-picture" style="margin-top:10px;"><img src="{$picture}" width="100%" /></div><div class="help-block">大图片建议尺寸：900像素 * 500像素</div>
+				</td>
+			</tr>
+			<tr>
+				<th>活动简介</th>
+				<td>
+					<textarea style="height:50px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于图文显示的简介</div>
+				</td>
+			</tr>
+			<tr>
+				<th>领奖说明</th>
+				<td>
+					<textarea style="height:50px;" name="activityinfo" class="span7" cols="60">{$reply['activityinfo']}</textarea>
+					<div class="help-block">领奖品时的说明文字</div>
+				</td>
+			</tr>
+			<tr>
+				<th>活动详情</th>
+				<td>
+					<textarea style="height:200px; width:535px;" class="span7 richtext-clone" name="content" cols="70" id="reply-add-text">{$reply['content']}</textarea>					
+					<div class="help-block">分享图文的详细内容（注意在内容最后加上分享示意图提示）</div>
+				</td>
+			</tr> 
+			<tr>
+				<th colspan="2"><h4 class="alert-heading">幸运拆礼盒分享设置</h4></th>
+			</tr>			
+			<tr>
+				<th>分享标题</th>
+				<td>
+					<input type="text" name="sharetitle" value="{$reply['sharetitle']}" class="span7"> 
+					<div class="help-block">此设置用于领取礼盒后让别人帮拆礼盒时的分享语，且分享到朋友圈时只显示标题</div>
+				</td>
+			</tr>
+			<tr>
+				<th>分享内容</th>
+				<td>
+					<textarea style="height:50px;" name="sharecontent" class="span7" cols="60">{$reply['sharecontent']}</textarea>
+					<div class="help-block">此设置用于领取礼盒后让别人帮拆礼盒时的分享语，且分享到朋友圈时只显示标题</div>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="2"><h4 class="alert-heading">幸运拆礼盒显示设置</h4></th>
+			</tr>
+			<tr>
+				<th>开始领取背景图</th>
+				<td>
+						<div style="display:block; margin-top:5px;" class="input-append">
+						<input type="text" value="{$reply['picbg01']}" name="picbg01" id="upload-image-url-picbg01" class="span3" autocomplete="off">
+						<input type="hidden" value="{$picbg01}" name="picbg01_old" id="upload-image-url-picbg01-old">
+						<button class="btn" type="button" id="upload-image-picbg01">选择图片</button>
+						</div>
+						<div id="upload-image-preview-picbg01" style="margin-top:10px;"><img src="{$picbg01}" width="100" /></div><div class="help-block">（关健词触发活动显示的背景图）大图片建议尺寸：820像素 * 1000像素</div>
+				</td>
+			</tr>
+			<tr>
+				<th>礼盒选择背景图</th>
+				<td>
+						<div style="display:block; margin-top:5px;" class="input-append">
+						<input type="text" value="{$reply['picbg02']}" name="picbg02" id="upload-image-url-picbg02" class="span3" autocomplete="off">
+						<input type="hidden" value="{$picbg02}" name="picbg02_old" id="upload-image-url-picbg02-old">
+						<input name="shouquan" type="hidden" value="{$shouquan}" ><button class="btn" type="button" id="upload-image-picbg02">选择图片</button>
+						</div>
+						<div id="upload-image-preview-picbg02" style="margin-top:10px;"><img src="{$picbg02}" width="100" /></div><div class="help-block">（领取或选择礼盒时的背景图）大图片建议尺寸：820像素 * 1000像素</div>
+				</td>
+			</tr>
+			<tr>
+				<th>分享礼盒背景图</th>
+				<td>
+						<div style="display:block; margin-top:5px;" class="input-append">
+						<input type="text" value="{$reply['picbg03']}" name="picbg03" id="upload-image-url-picbg03" class="span3" autocomplete="off">
+						<input type="hidden" value="{$picbg03}" name="picbg03_old" id="upload-image-url-picbg03-old">
+						<input name="we7_ValidCode_server" type="hidden" id="we7_ValidCode_server" ><button class="btn" type="button" id="upload-image-picbg03">选择图片</button>
+						</div>
+						<div id="upload-image-preview-picbg03" style="margin-top:10px;"><img src="{$picbg03}" width="100" /></div><div class="help-block">（分享出去的礼盒打开情况背景图）图片建议尺寸：820像素 * 1000像素</div>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="2"><h4 class="alert-heading">幸运拆礼盒辅助设置</h4></th>
+			</tr>			
+			<tr>
+				<th>领取是否关注</th>
+				<td><label for="subscribe_1" class="radio inline"><input id="subscribe_1" type="radio" name="subscribe" value="1" {if $reply['subscribe'] == 1}checked="checked"{/if}> 关注领取</label>
+					<label for="subscribe_0" class="radio inline"><input id="subscribe_0" type="radio" name="subscribe" value="0"  {if $reply['subscribe'] == 0}checked="checked"{/if}> 任意领取</label>
+				    <div class="help-block">是否强制用户关注公众号才能领取礼盒</div></td>
+			</tr>
+			<tr>
+				<th>引导关注网址</th>
+				<td>
+				<input type="text" name="shareurl" value="{$reply['shareurl']}" class="span7"> 
+				<div class="help-block">你可以在公众号平台素材库里新建图文，把网址填在上面。未关注用户即可通过此网址引导一键关注，也只有官方的公众号平台素材库才能做这个一键关注功能！</div>
+				</td>
+			</tr>			
+			<tr>
+				<th>折盒是否关注</th>
+				<td><label for="opensubscribe_1" class="radio inline"><input id="opensubscribe_1" type="radio" name="opensubscribe" value="1" {if $reply['opensubscribe'] == 1}checked="checked"{/if}> 关注才能拆礼盒</label>
+					<label for="opensubscribe_0" class="radio inline"><input id="opensubscribe_0" type="radio" name="opensubscribe" value="0"  {if $reply['opensubscribe'] == 0}checked="checked"{/if}> 任意拆礼盒</label>
+				    <div class="help-block">是否强制用户关注公众号才能帮朋友拆礼盒</div></td>
+			</tr>
+			<tr>
+				<th>拆盒引导关注</th>
+				<td>
+				<input type="text" name="openshare" value="{$reply['openshare']}" class="span7"> 
+				<div class="help-block">你可以在公众号平台素材库里新建图文，把网址填在上面。未关注用户拆礼盒时即可通过此网址引导一键关注，也只有官方的公众号平台素材库才能做这个一键关注功能！</div>
+				</td>
+			</tr>
+			<tr>
+				<th>拆开礼盒方式</th>
+				<td><label for="opentype_1" class="radio inline"><input id="opentype_1" type="radio" name="opentype" value="1" {if $reply['opentype'] == 1}checked="checked"{/if}> 点击拆开</label>
+					<label for="opentype_0" class="radio inline"><input id="opentype_0" type="radio" name="opentype" value="0"  {if $reply['opentype'] == 0}checked="checked"{/if}> 访问拆开</label>
+				    <div class="help-block">邀请的朋友拆开礼盒的方式,点击拆开需要被邀请的朋友点击按钮才算帮其拆开礼盒,访问拆开是只要被邀请的朋友访问页面即算拆开</div></td>
+			</tr>
+			<tr>
+				<th>显示中奖用户</th>
+				<td><div class="input-prepend input-append">
+                    <span class="add-on">首页显示</span>
+                    <input type="text" class="span1" name="share_shownum" id="share_shownum" value="{$reply['share_shownum']}" />
+                    <span class="add-on">位中奖用户</span>
+                </div></td>
+			</tr>
+			<tr>
+				<th>背景音乐</th>
+				<td>
+						<label for="music_show_1" class="radio inline"><input id="music_show_1" type="radio" name="music" value="1" {if $reply['music'] == 1}checked="checked"{/if}> 打开音乐</label>
+						<label for="music_show_0" class="radio inline"><input id="music_show_0" type="radio" name="music" value="0"  {if $reply['music'] == 0}checked="checked"{/if}> 隐藏音乐</label>
+				</td>
+            </tr>
+			<tr class="musicbg{if $reply['music'] == '0'} hide{/if}">
+				<th>音乐地址</th>
+				<td>
+						<input type="text" name="musicbg" value="{$reply['musicbg']}" class="span7"><div class="help-block">直接输入背景音乐地址</div>
+				</td>
+            </tr>			
+			<tr>
+				<th>每人领取总数</th>
+				<td><div class="input-prepend input-append">
+                    <span class="add-on">每人最多领取</span>
+                    <input type="text" class="span1" name="number_num" id="number_num" value="{$reply['number_num']}" />
+                    <span class="add-on">个礼盒</span>
+                </div><span class="help-block1">必需大于0</span></td>
+			</tr>
+			<tr>
+				<th>每人每天个数</th>
+				<td><div class="input-prepend input-append">
+                    <span class="add-on">每人每天最多领取</span>
+                    <input type="text" class="span1" name="number_num_day" id="number_num_day" value="{$reply['number_num_day']}" />
+                    <span class="add-on">个礼盒</span>
+                </div><span class="help-block1">必需大于0</span></td>
+			</tr>
+			<tr>
+				<th colspan="2"><h4 class="alert-heading">幸运拆礼盒幻灯片设置</h4></th>
+			</tr>			
+			<tr>
+				<th>幻灯片一</th>
+				<td>
+						<div style="display:block; margin-top:5px;" class="input-append">
+						<input type="text" value="{$reply['imgpic01']}" name="imgpic01" id="upload-image-url-imgpic01" class="span3" autocomplete="off">
+						<input type="hidden" value="{$imgpic01}" name="picture_old" id="upload-image-url-imgpic01-old">
+						<button class="btn" type="button" id="upload-image-imgpic01">选择图片</button>
+						</div>
+						<div id="upload-image-preview-imgpic01" style="margin-top:10px;"><img src="{$imgpic01}" width="180" /></div><div class="help-block">（幻灯片）图片建议尺寸：380像素 * 380像素</div>
+				</td>
+			</tr>
+			<tr>
+				<th>幻灯片二</th>
+				<td>
+						<div style="display:block; margin-top:5px;" class="input-append">
+						<input type="text" value="{$reply['imgpic02']}" name="imgpic02" id="upload-image-url-imgpic02" class="span3" autocomplete="off">
+						<input type="hidden" value="{$imgpic02}" name="picture_old" id="upload-image-url-imgpic02-old">
+						<button class="btn" type="button" id="upload-image-imgpic02">选择图片</button>
+						</div>
+						<div id="upload-image-preview-imgpic02" style="margin-top:10px;"><img src="{$imgpic02}" width="180" /></div><div class="help-block">（幻灯片）图片建议尺寸：380像素 * 380像素</div>
+				</td>
+			</tr>
+			<tr>
+				<th>幻灯片三</th>
+				<td>
+						<div style="display:block; margin-top:5px;" class="input-append">
+						<input type="text" value="{$reply['imgpic03']}" name="imgpic03" id="upload-image-url-imgpic03" class="span3" autocomplete="off">
+						<input type="hidden" value="{$imgpic03}" name="picture_old" id="upload-image-url-imgpic03-old">
+						<button class="btn" type="button" id="upload-image-imgpic03">选择图片</button>
+						</div>
+						<div id="upload-image-preview-imgpic03" style="margin-top:10px;"><img src="{$imgpic03}" width="180" /></div><div class="help-block">（幻灯片）图片建议尺寸：380像素 * 380像素</div>
+				</td>
+			</tr>
+			<tr>
+				<th>幻灯片四</th>
+				<td>
+						<div style="display:block; margin-top:5px;" class="input-append">
+						<input type="text" value="{$reply['imgpic04']}" name="imgpic04" id="upload-image-url-imgpic04" class="span3" autocomplete="off">
+						<input type="hidden" value="{$imgpic04}" name="picture_old" id="upload-image-url-imgpic04-old">
+						<button class="btn" type="button" id="upload-image-imgpic04">选择图片</button>
+						</div>
+						<div id="upload-image-preview-imgpic04" style="margin-top:10px;"><img src="{$imgpic04}" width="180" /></div><div class="help-block">（幻灯片）图片建议尺寸：380像素 * 380像素</div>
+				</td>
+			</tr>
+			<tr>
+				<th>幻灯片五</th>
+				<td>
+						<div style="display:block; margin-top:5px;" class="input-append">
+						<input type="text" value="{$reply['imgpic05']}" name="imgpic05" id="upload-image-url-imgpic05" class="span3" autocomplete="off">
+						<input type="hidden" value="{$imgpic05}" name="picture_old" id="upload-image-url-imgpic05-old">
+						<button class="btn" type="button" id="upload-image-imgpic05">选择图片</button>
+						</div>
+						<div id="upload-image-preview-imgpic05" style="margin-top:10px;"><img src="{$imgpic05}" width="180" /></div><div class="help-block">（幻灯片）图片建议尺寸：380像素 * 380像素</div>
+				</td>
+			</tr>
+            <tr>
+				<th colspan="2"><h4 class="alert-heading">礼盒设置</h4></th>
+		    </tr>
+			<tr>
+				<td colspan="2"><table width="100%" class="lihelist">
+				<tr>
+					<td><img src="./source/modules/stonefish_chailihe/template/images/lihepic/icon_prize1.png" width="100" /></td>
+					<td><img src="./source/modules/stonefish_chailihe/template/images/lihepic/icon_prize2.png" width="100" /></td>
+					<td><img src="./source/modules/stonefish_chailihe/template/images/lihepic/icon_prize3.png" width="100" /></td>
+					<td><img src="./source/modules/stonefish_chailihe/template/images/lihepic/icon_prize4.png" width="100" /></td>
+					<td><img src="./source/modules/stonefish_chailihe/template/images/lihepic/icon_prize5.png" width="100" /></td>
+				</tr>
+				<tr>
+					<td>礼盒1</td>
+					<td>礼盒2</td>
+					<td>礼盒3</td>
+					<td>礼盒4</td>
+					<td>礼盒5</td>
+				</tr>
+				</table></td>
+		    </tr>
+			<tr>
+				<td colspan="2"><div class="playlist-box control-group" id="prize">
+					<select class="input-medium select-voice" data-rule-required="true" id="award-giftVoice{$namesuffix}" name="award-giftVoice{$namesuffix}">
+							<option data-link="0" value="0" ><i class="play-btn"></i>无响声</option>
+							<option data-link="./source/modules/stonefish_chailihe/template/images/music/1.mp3" value="1"{if $item['giftVoice']==1} selected="selecteed"{/if}><i class="play-btn"></i>响声1</option>
+							<option data-link="./source/modules/stonefish_chailihe/template/images/music/2.mp3" value="2"{if $item['giftVoice']==2} selected="selecteed"{/if}><i class="play-btn"></i>响声2</option>
+							<option data-link="./source/modules/stonefish_chailihe/template/images/music/3.mp3" value="3"{if $item['giftVoice']==3} selected="selecteed"{/if}><i class="play-btn"></i>响声3</option>
+							<option data-link="./source/modules/stonefish_chailihe/template/images/music/4.mp3" value="4"{if $item['giftVoice']==4} selected="selecteed"{/if}><i class="play-btn"></i>响声4</option>
+							<option data-link="./source/modules/stonefish_chailihe/template/images/music/5.mp3" value="5"{if $item['giftVoice']==5} selected="selecteed"{/if}><i class="play-btn"></i>响声5</option>
+					</select>
+
+					<div class="player">
+						<div class="player-widget">
+							<div class="opts">
+					             <span class="ctrl  playing" data-link="./source/modules/stonefish_chailihe/template/images/music/1.mp3"><i class="icon-pause"></i></span>
+								 <span class="repeat"><i class="icon-stop"></i></span>
+								 <span class="text">响声1</span>
+							</div>
+						</div>
+					</div>
+				</div></td>
+		    </tr>
+		</tbody>	
+	</table>
+	<div id="append-list" class="list">
+		{if !empty($award)}
+			{php $prize = 1;}
+			{loop $award $item}
+			<div class="item" id="ccc-item-{$item['id']}">
+			{php include $this->template('item');}
+			</div>
+			{php $prize++;}
+			{/loop}
+		{/if}
+	</div>
+	<div class="reply-news-edit-button"><a href="javascript:;" onclick="cccHandler.buildAddForm('ccc-form-html', $('#append-list'))" class="btn"><i class="icon-plus"></i> 添加礼盒</a></div>
+</div>
+<script>
+    $(function(){        
+        $("#prize_list_div").on("change","select.input-medium",function(){
+        	var url = $(this).find("option:selected").data("url");
+        		$(this).siblings("img.js_changeUrl").length && $(this).siblings("img.js_changeUrl").attr("src",url);
+        })
+
+        $(".playlist-box").musicPlay();
+    });
+</script>
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<script type="text/javascript">
+	kindeditor($('.richtext-clone'));
+	//document.getElementById("we7_ValidCode_server").value=we7_ValidCode_server;
+    var editor = KindEditor.editor({
+		allowFileManager : true,
+		uploadJson : "./index.php?act=attachment&do=upload",
+		fileManagerJson : "./index.php?act=attachment&do=manager",
+		afterUpload : function(url, data) {
+		}
+	});
+	{php $prize = 1;}
+	{loop $award $item}	
+			
+	$("#upload-image-awardpic{$item['id']}").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-awardpic{$item['id']}").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-awardpic{$item['id']}-old").val($("#upload-image-url-awardpic{$item['id']}").val());
+					$("#upload-image-url-awardpic{$item['id']}").val(val);
+					$("#upload-image-preview-awardpic{$item['id']}").html('<img src="'+url+'" width="180" />');
+				}
+			});
+		});
+	});
+	{php $prize++;}
+	{/loop}
+	
+	$("#upload-image-picture").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-picture").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-picture-old").val($("#upload-image-url-picture").val());
+					$("#upload-image-url-picture").val(val);
+					$("#upload-image-preview-picture").html('<img src="'+url+'" width="100%" />');
+				}
+			});
+		});
+	});
+	$("#upload-image-picbg01").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-picbg01").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-picbg01-old").val($("#upload-image-url-picbg01").val());
+					$("#upload-image-url-picbg01").val(val);
+					$("#upload-image-preview-picbg01").html('<img src="'+url+'" width="100" />');
+				}
+			});
+		});
+	});
+	$("#upload-image-picbg02").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-picbg02").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-picbg02-old").val($("#upload-image-url-picbg02").val());
+					$("#upload-image-url-picbg02").val(val);
+					$("#upload-image-preview-picbg02").html('<img src="'+url+'" width="100" />');
+				}
+			});
+		});
+	});
+	$("#upload-image-picbg03").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-picbg03").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-picbg03-old").val($("#upload-image-url-picbg03").val());
+					$("#upload-image-url-picbg03").val(val);
+					$("#upload-image-preview-picbg03").html('<img src="'+url+'" width="100" />');
+				}
+			});
+		});
+	});
+	
+	$("#upload-image-shangjiapic").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-shangjiapic").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-shangjiapic-old").val($("#upload-image-url-shangjiapic").val());
+					$("#upload-image-url-shangjiapic").val(val);
+					$("#upload-image-preview-shangjiapic").html('<img src="'+url+'"  width="100%" />');
+				}
+			});
+		});
+	});
+	$("#upload-image-imgpic01").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-imgpic01").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-imgpic01-old").val($("#upload-image-url-imgpic01").val());
+					$("#upload-image-url-imgpic01").val(val);
+					$("#upload-image-preview-imgpic01").html('<img src="'+url+'" width="180" />');
+				}
+			});
+		});
+	});
+	$("#upload-image-imgpic02").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-imgpic02").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-imgpic02-old").val($("#upload-image-url-imgpic02").val());
+					$("#upload-image-url-imgpic02").val(val);
+					$("#upload-image-preview-imgpic02").html('<img src="'+url+'" width="180" />');
+				}
+			});
+		});
+	});
+	$("#upload-image-imgpic03").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-imgpic03").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-imgpic03-old").val($("#upload-image-url-imgpic03").val());
+					$("#upload-image-url-imgpic03").val(val);
+					$("#upload-image-preview-imgpic03").html('<img src="'+url+'" width="180" />');
+				}
+			});
+		});
+	});
+	$("#upload-image-imgpic04").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-imgpic04").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-imgpic04-old").val($("#upload-image-url-imgpic04").val());
+					$("#upload-image-url-imgpic04").val(val);
+					$("#upload-image-preview-imgpic04").html('<img src="'+url+'" width="180" />');
+				}
+			});
+		});
+	});
+	$("#upload-image-imgpic05").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-imgpic05").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-imgpic05-old").val($("#upload-image-url-imgpic05").val());
+					$("#upload-image-url-imgpic05").val(val);
+					$("#upload-image-preview-imgpic05").html('<img src="'+url+'" width="180" />');
+				}
+			});
+		});
+	});
+	
+</script>
+<script type="text/html" id="ccc-form-html">
+{php unset($item); include $this->template('item');}
+</script>
+<script type="text/javascript">
+var cccHandler = {
+	'buildAddForm' : function(id, targetwrap) {
+		var obj = buildAddForm(id, targetwrap);
+		obj.html(obj.html().replace(/\(wrapitemid\)/gm, obj.attr('id')));
+
+		//中奖类型提示
+		$("#append-list .item #award-inkind label").mouseenter(function() {
+			$(this).popover('show');
+		});
+		$("#append-list .item #award-inkind label").mouseout(function() {
+			$(this).popover('hide');
+		});
+	}
+};
+
+//奖品类型切换
+$("#append-list").delegate("#award-inkind input", "click", function(){
+	if($(this).val() == 0) {
+		$(this).parents(".item").find(".num").css("display", "none");
+		$(this).parents(".item").find("tr:eq(7),tr:eq(8)").show();
+	} else {
+		$(this).parents(".item").find(".num").css("display", "inline-block");
+		$(this).parents(".item").find("tr:eq(7),tr:eq(8)").hide();
+	}
+});
+</script>

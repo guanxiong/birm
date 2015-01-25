@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="true">
+		<name><![CDATA[跳蚤市场]]></name>
+		<identifie><![CDATA[xfmarket]]></identifie>
+		<version><![CDATA[0.9]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[发布二手商品进行交易]]></ability>
+		<description><![CDATA[发布二手商品进行交易，后台自定义分类,分类可操作是否开启]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		 <message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<home call="gethometiles"></home>
+		<menu> 
+			<entry title="物品管理" do="goods" />
+			<entry title="物品分类" do="category" />
+		</menu>
+	</bindings>
+	<install>
+		<![CDATA[
+			CREATE TABLE IF NOT EXISTS `ims_xfmarket_goods` (
+			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+			  `weid` int(10) unsigned NOT NULL,
+			  `openid` varchar(50) NOT NULL,
+			  `title` varchar(20) NOT NULL,
+			  `rolex` varchar(30) NOT NULL,
+			  `pcate` int(10) unsigned NOT NULL DEFAULT '0',
+ 			  `ccate` int(10) unsigned NOT NULL DEFAULT '0',
+			  `price` int(10) NOT NULL,
+			  `realname` varchar(18) NOT NULL,
+			  `sex` int(1) NOT NULL,
+			  `mobile` varchar(12) NOT NULL,
+			  `description` longtext NOT NULL,
+			  `thumb1` varchar(200)  NOT NULL,
+			  `thumb2` varchar(200)  NOT NULL,
+			  `thumb3` varchar(200)  NOT NULL,
+			  `thumb4` varchar(200)  NOT NULL,
+			  `thumb1_cover` varchar(200)  NOT NULL,
+			  `thumb2_cover` varchar(200)  NOT NULL,
+			  `thumb3_cover` varchar(200)  NOT NULL,
+			  `thumb4_cover` varchar(200)  NOT NULL,
+			  `createtime` int(11) NOT NULL,
+			  `status` int(1) NOT NULL,
+			  PRIMARY KEY (`id`)
+			) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+			CREATE TABLE IF NOT EXISTS `ims_xfmarket_category` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `weid` int(11) NOT NULL,
+			  `name` varchar(30) NOT NULL,
+			  `enabled` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否开启',
+			  PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+			CREATE TABLE IF NOT EXISTS `ims_xfmarket_reply` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `rid` int(11) NOT NULL,
+			  `title` text NOT NULL,
+			  `picture` text NOT NULL,
+			  `description` text NOT NULL,
+			  `content` text NOT NULL,
+			  PRIMARY KEY (`id`)
+			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;	
+			]]>
+	</install>
+	<uninstall>
+		<![CDATA[
+			drop table if exists  `ims_xfmarket_goods`,`ims_xfmarket_category`,`ims_xfmarket_reply`;
+		]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

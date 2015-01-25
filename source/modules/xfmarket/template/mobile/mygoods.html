@@ -1,0 +1,71 @@
+{template 'header'}
+<style>
+.top-bar {
+background: #368FF4;
+height: 50px;
+overflow: hidden;
+box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
+}
+.vline {
+float: left;
+width: 1px;
+height: 50px;
+background-image: url('./source/modules/xfmarket/template/mobile/img/vline.png');
+}
+.top-bar i {
+color: #fff;
+font-size: 24px;
+}
+.top-bar a {
+float: left;
+display: block;
+width: 50%;
+height: 50px;
+text-align: center;
+line-height: 55px;
+margin-left: -1px;
+}
+.top-bar a {
+color: #368FF4;
+text-decoration: none;
+}
+.list li{border-bottom:1px #EEE solid;height:75px;padding:5px; }
+/*.list li a{display:block;float: left; height:60px; padding:5px; color:#333; overflow:hidden; text-decoration:none !important; position:relative;}*/
+.list li  .thumb{width:80px; height:60px;}
+/*手机端分页*/
+.pagination ul > li > a, .pagination ul > li > span{padding:3px 3px;}
+
+
+</style>
+<div class="top-bar">		
+	<a href="{php echo $this->createMobileUrl('list')}"><i class="icon-home"></i></a><div class="vline"></div>
+	<a href="tel:{php echo $this->module['config']['tel'];}"><i class="icon-phone"></i></a>
+</div>
+<div style="height:30px;padding:10px;text-align:center;font-size:24px">我的发布</div>
+<div style="height:3px;background:#368ff4;"></div>
+<ul class="list unstyled">
+	
+	{loop $list $row}
+	<li>
+		<div>
+			<img src="{$_W['attachurl']}{$row['thumb1']}" class="pull-left thumb"  />
+		</div>
+		<span style='margin-left:10px;'>
+			<a style='color:#000;text-decoration:none' href="{php echo $this->createMobileUrl('detail', array('name' => 'detail', 'id' => $row['id'], 'weid' => $_W['weid']))}">
+				{$row['title']}	
+			</a>
+
+		</span>
+		<div style='color:#ff9900;margin-top:8px;'>&nbsp;&nbsp;&nbsp;¥{$row['price']}</div>
+		<div style='float:right;margin-bottom:5px;'>
+			<a class='btn btn-info' href="{php echo $this->createMobileUrl('add',array('id' => $row['id']))}">编辑</a>
+			<a class='btn btn-info' onclick="return confirm('确认删除？');" href="{php echo $this->createMobileUrl('mygoods',array('id' => $row['id'],'op' => 'delete'))}">删除</a>
+		</div>
+		
+	</li>
+	{/loop}
+</ul>
+	<div class="list img-rounded" style="padding-top: 0; padding-bottom: 0;">
+	{$pager}
+	</div>
+{template 'footer'}

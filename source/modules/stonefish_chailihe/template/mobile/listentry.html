@@ -1,0 +1,79 @@
+﻿{template 'header'}
+<link href="./source/modules/stonefish_chailihe/template/images/style.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+.frame{
+	padding:30px 10px 10px;
+	overflow: hidden;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#fff));
+	border-radius: 5px 5px 0 0;
+	border:1px solid #E3E3E3;
+	border-bottom:0px;
+}
+
+.frameCon{
+	overflow: hidden;
+	background: #d1d1d1;
+}
+table tr td{
+	width:80%;
+	height:29px;
+	border-left:1px solid #ccc;
+	text-align: center;
+	color:#333; padding:0px 5px;
+}
+
+table tr td:first-child{
+	width:20%;
+	border-left:none;
+}
+
+table tr td:last-child{
+	width:70%;text-align: left;
+}
+table tr:nth-child(-n+3) td:first-child{
+	color:#333;
+}
+.share{float: right;}
+</style>
+<body class="activity-coupon-winning">
+<div id="normalG">
+    <div id="wrap">
+        <div class="zi"><img src="./source/modules/stonefish_chailihe/template/images/zi.png"></div>
+        <div class="frame">
+            <div class="frameCon"><img src="./source/modules/stonefish_chailihe/template/images/entry.png" alt=""></div>
+        </div>
+        <div class="frameBtn clearfix">
+            <span class="b2">您已领取了 {$usernum} 个礼盒<i class="icon icon-angle-right"></i></span>            
+        </div>		        
+		<div class="turnBox rank">
+            <h2>拆礼盒活动<i class="icon icon-repeat"></i></h2><span class="shuaxin"><a href="javascript:location.reload()">&nbsp;&nbsp;&nbsp;&nbsp;</a></span>
+            <div class="boxCon">
+				<div class="rankList">
+                   {loop $reply $row}
+					<table>
+                        <tbody>
+							<tr>
+							  <td>活动名称</td>
+							  <td>{$row['title']}</td>
+							</tr>
+							<tr>
+							  <td>活动简介</td>
+							  <td>{$row['description']}</td>
+							</tr>
+							<tr>
+							  <td>活动时间</td>
+							  <td>{php echo date('Y-m-d', $row['start_time']);}至{php echo date('Y-m-d', $row['end_time']);}</td>
+							</tr>
+							<tr>
+							  <td>活动举办</td>
+							  <td style="padding:5px;"><span class="btn btndanger btn-small"></span> {if $row['is']>=1}<span class="share btn btndanger btn-small"><a href="{php echo $this->createMobileUrl('chailihe', array('rid' => $row['rid'],'fromuser' => $from_user))}">点击参与</a></span>{else}<span class="share btn btndanger btn-small"><a href="{php echo $this->createMobileUrl('chailihe', array('rid' => $row['rid'],'fromuser' => $from_user))}">我要参与</a></span>{/if}</td>
+							</tr>								
+						</tbody>
+                    </table>
+					{/loop}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{template 'footer'}

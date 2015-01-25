@@ -1,0 +1,238 @@
+{template 'header'}
+<script type="text/javascript" src="./resource/script/bootstrap.js"></script>
+<style>
+.list{}
+.list li a{display:block; height:60px; padding:5px; border-bottom:1px #EEE solid; color:#333; overflow:hidden; text-decoration:none !important; position:relative;}
+.list li a .thumb{width:80px; height:60px;}
+.list li a .title{font-size:16px;}
+.list li a .createtime{font-size:12px; color:#999; position:absolute; bottom:0;}
+.top-bar {
+background: #368FF4;
+height: 50px;
+overflow: hidden;
+box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
+}
+.vline {
+float: left;
+width: 1px;
+height: 50px;
+background-image: url("./source/modules/xfmarket/template/mobile/img/vline.png");
+}
+.top-bar i {
+color: #fff;
+font-size: 24px;
+}
+.top-bar a {
+float: left;
+display: block;
+width: 33.333333%;
+height: 50px;
+text-align: center;
+line-height: 55px;
+margin-left: -1px;
+}
+.top-bar a {
+color: #368FF4;
+text-decoration: none;
+}
+
+</style>
+<!-- <script type="text/javascript" src="./source/modules/xfmarket/template/mobile/js/zxxFile.js"></script> -->
+<div class="top-bar">		
+	<a href="{php echo $this->createMobileUrl('list')}"><i class="icon-home"></i></a><div class="vline"></div>
+	<a href="tel:{php echo $this->module['config']['tel'];}"><i class="icon-phone"></i></a><div class="vline"></div>
+	<a href="{php echo $this->createMobileUrl('mygoods')}"><i class="icon-user"></i></a>	
+</div>
+<div class="main">
+	<form action="" method="post"    enctype="multipart/form-data" onsubmit="return checkInfo(this);">
+		<input type="hidden" name="id"  value="{$good['id']}" />
+		<h4><center>信息发布</center></h4>
+		<table class="table table-bordered">
+			<tr>
+				<!-- <th style='text-align:right;'> <label class="control-label" for="inputTitle">标题:</label></th> -->
+				<td>
+					<input type="text" name="title"  value="{$good['title']}" placeHolder="标题" />
+				</td>
+			</tr>
+			<tr>
+				<!-- <th style='text-align:right;'><label class="control-label" for="inputRolex">成色:</label></th> -->
+				<td>
+					
+						<select name='rolex' class="form-control">
+							<option value='0'>请选择成色</option>
+							<option value='1' {if $good['rolex'] == 1}selected{/if}>9.9成新</option>
+							<option value='2' {if $good['rolex'] == 2}selected{/if}>9.5成新</option>
+							<option value='3' {if $good['rolex'] == 3}selected{/if}>9成新</option>
+							<option value='4' {if $good['rolex'] == 4}selected{/if}>8成新</option>
+							<option value='5' {if $good['rolex'] == 5}selected{/if}>7成新</option>
+							<option value='6' {if $good['rolex'] == 6}selected{/if}>6成新</option>
+						</select>
+				
+					
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<select name='pcate' class="form-control">
+						<option value='0'>请选择分类</option>
+						{loop $categorys $category}
+							<option value="{$category['id']}" {if $good['pcate'] == $category['id']}selected{/if}>{$category['name']}</option>
+						{/loop}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<!-- <th style='text-align:right;'><label class="control-label" for="inputPrice">价格:</label></th> -->
+				<td>
+					<input type="text" name="price" class="span1" value="{$good['price']}" placeHolder="定价¥"/>
+				</td>
+			</tr>
+			<tr>
+<!-- 				<th style='text-align:right;'><label class="control-label" for="inputRealname">联系人:</label></th> -->
+				<td>
+					<input type="text" name="realname" class="span5" value="{$good['realname']}" placeHolder="联系人"/>
+					<!-- <span class="help-block">*</span> -->
+				</td>
+			</tr>
+			<tr>
+				<!-- <th style='text-align:right;'><label class="control-label" for="inputSex">性别:</label></th> -->
+				<td>
+					<label class="radio inline"><input type="radio" name="sex" value="0" {if $good['sex'] == 0} checked="true" {/if}>男生</label>&nbsp;&nbsp;
+                	<label class="radio inline"><input type="radio" name="sex" value="1" {if $good['sex'] == 1} checked="true" {/if}>女生</label>&nbsp;&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<!-- <th style='text-align:right;'><label class="control-label" for="inputMobile">联系手机:</label></th> -->
+				<td>
+					<input type="text" name="mobile" class="span3" value="{$good['mobile']}" placeHolder="联系手机"/>
+				</td>
+			</tr>
+			<tr>
+				 
+				<td>
+					<textarea id="description1" name="description" rows="10" placeHolder="添加描述"></textarea>
+					<script type="text/javascript">
+					document.getElementById("description1").value="{$good['description']}"
+					</script> 
+				</td>
+			</tr>
+			<tr>
+				 
+				<td>
+					<div class="fileupload fileupload-new" data-provides="fileupload" style='float:left;margin-right:5px;'>
+						
+						 
+						
+						<div class="fileupload-preview thumbnail" style="width: 60px; height: 60px;">
+							{if !empty($good['thumb1'])}
+							<input  type="hidden" name="thumb1-old" value="{$good['thumb1']}"  />					
+							<img src="{$_W['attachurl']}{$good['thumb1']}" />					
+							{/if}
+						</div>
+						<div>
+							<span class="btn btn-file" style="margin-left:9px;">
+								<span class="fileupload-new">上传</span>
+								<span class="fileupload-exists">更改</span>
+								<input name="thumb1" type="file" value="{$good['thumb1']}"/>					
+							</span>
+							 
+						</div>
+					</div>
+					<div class="fileupload fileupload-new" data-provides="fileupload" style='float:left;;margin-right:5px;'>
+					<div class="fileupload-preview thumbnail" style="width: 60px; height: 60px;">
+						{if !empty($good['thumb2'])}
+						<input  type="hidden" name="thumb2-old" value="{$good['thumb2']}"  />					
+						<img src="{$_W['attachurl']}{$good['thumb2']}" />					
+						{/if}
+					</div>
+					<div>
+						<span class="btn btn-file" style="margin-left:9px;">
+							<span class="fileupload-new">上传</span>
+							<span class="fileupload-exists">更改</span>
+							<input name="thumb2" type="file" />					
+						</span>
+						 
+					</div>
+					</div>
+					<div class="fileupload fileupload-new" data-provides="fileupload" style='float:left;;margin-right:5px;'>
+						<div class="fileupload-preview thumbnail" style="width: 60px; height: 60px;">
+						{if !empty($good['thumb3'])}
+						<input  type="hidden" name="thumb3-old" value="{$good['thumb3']}"  />					
+						<img src="{$_W['attachurl']}{$good['thumb3']}" />					
+						{/if}
+						</div>
+						<div>
+						<span class="btn btn-file" style="margin-left:9px;">
+							<span class="fileupload-new">上传</span>
+							<span class="fileupload-exists">更改</span>
+							<input name="thumb3" type="file" />					
+						</span>
+						 
+						</div>
+					</div>
+					<div class="fileupload fileupload-new" data-provides="fileupload" style='float:left;;margin-right:5px;'>
+						<div class="fileupload-preview thumbnail" style="width: 60px; height: 60px;">
+						{if !empty($good['thumb4'])}
+						<input  type="hidden" name="thumb4-old" value="{$good['thumb4']}"  />					
+						<img src="{$_W['attachurl']}{$good['thumb4']}" />					
+						{/if}
+						</div>
+						<div>
+						<span class="btn btn-file" style="margin-left:9px;">
+							<span class="fileupload-new">上传</span>
+							<span class="fileupload-exists">更改</span>
+							<input name="thumb4" type="file" />					
+						</span>
+						 
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				
+				<td  style='text-align:center;'>
+					<input name="submit" type="submit" value="发布信息" class="btn btn-info span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	function checkInfo(form) {
+		
+		var mobile = form['mobile'].value;
+		if (!mobile) {
+			alert('请输入您的手机号码！');
+			return false;
+		}
+		if (mobile.search(/^([0-9]{11})?$/) == -1) {
+			alert('请输入正确的手机号码！');
+			return false;
+		}
+		
+		if (!form['title'].value) {
+			alert('请输入商品标题。');
+			return false;
+		}
+		if (!form['rolex'].value && form['rolex'].value==0) {
+			alert('请选择成色。');
+			return false;
+		}
+		if (!form['pcate'].value && form['pcate'].value==0) {
+			alert('请选择分类。');
+			return false;
+		}
+		if (!form['price'].value) {
+			alert(' 请输入价格。');
+			return false;
+		}
+		if (!form['realname'].value) {
+			alert(' 请输入姓名。');
+			return false;
+		}
+	}
+//-->
+</script>
+{template 'footer'}

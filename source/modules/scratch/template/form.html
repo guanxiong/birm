@@ -1,0 +1,31 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<h4 class="alert-heading">刮刮卡回复设置</h4>
+	<table>
+		<tbody>
+			<tr>
+				<th>标题</th>
+				<td>
+					<input type="text" id="" class="span7" placeholder="" name="title" value="{$reply['title']}">
+
+				</td>
+			</tr>        
+			<tr>
+				<th>图文简介</th>
+				<td>
+					<textarea style="height:150px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">用于图文显示的简介</div>
+				</td>
+			</tr>
+			<tr>
+				<th>显示状态：</th>
+				<td>
+					<input name="isshow" type="radio" value="1"  {if $reply['isshow'] == 1} checked="checked"{/if}/>显示
+					<input name="isshow" type="radio" value="0" {if $reply['isshow'] == 0} checked="checked"{/if}/>隐藏
+					<div class="help-block">隐藏了以后没有回复</div>					
+				</td>
+			</tr>	
+ 		</tbody>
+	</table>
+ </div>
+ 
