@@ -3,7 +3,7 @@
 	<application setting="false">
 		<name><![CDATA[预约表单]]></name>
 		<identifie><![CDATA[research]]></identifie>
-		<version><![CDATA[1.56]]></version>
+		<version><![CDATA[2.2]]></version>
 		<type><![CDATA[other]]></type>
 		<ability><![CDATA[可以快速生成调查表单或则预约记录]]></ability>
 		<description><![CDATA[]]></description>
@@ -75,6 +75,7 @@ CREATE TABLE IF NOT EXISTS `ims_research_rows` (
   `rerid` int(11) NOT NULL AUTO_INCREMENT,
   `reid` int(11) NOT NULL,
   `openid` varchar(50) NOT NULL,
+  `status` int(11) NOT NULL,
   `createtime` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`rerid`),
   KEY `reid` (`reid`)

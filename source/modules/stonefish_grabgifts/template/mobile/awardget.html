@@ -17,8 +17,22 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <!-- Mobile Devices Support @end -->
 <style>
-body{background-color:{$reply['bgcolor']};}
-.product li{ width: 96%; float: left; padding:0 2%;}
+body{background-color:{$reply['bgcolor']};color:{$reply['textcolor']};}
+A:link,A:visited,A:hover ,A:active{ color: {$reply['textcolor']};}
+.top span{ color: {$reply['textcolort']};}
+.top a{background-color:{$reply['textcolort']};color: {$reply['bgcolor']};}
+
+.pri .pricebg{border:8px solid {$reply['textcolorb']}; background-color:{$reply['bgcolorjiang']};}
+.pri p{color:{$reply['textcolorjiang']};}
+
+.sub_b{background-color: {$reply['bgcolorbottom']};}
+.sub_b dd{color: {$reply['textcolorbottom']}; background: {$reply['bgcolorbottoman']};}
+.sub_b dd a{ display: block; color: {$reply['textcolorbottom']};}
+.sub_b dt{background:{$reply['bgcolorbottoman']}}
+.sub_b dt span{background:{$reply['textcolort']};}
+.btn input{color:{$reply['textcolorjiang']};background-color:{$reply['bgcolorjiang']};}
+.copyright{color:{$reply['textcolor']};}
+.copyright a:link,.copyright a:visited,.copyright a:hover,.copyright a:active{color:{$reply['textcolor']};}
 </style>
 </head>
 <body onselectstart="return true;" ondragstart="return false;">
@@ -45,21 +59,21 @@ body{background-color:{$reply['bgcolor']};}
 		<li class="email" {if $reply['isemail']==0}style="display:none"{/if}><div class="pad"><input type="email" name="email" value="{$profile['email']}" placeholder="请输入您的邮箱地址" /></div></li>
 		<li class="address" {if $reply['isaddress']==0}style="display:none"{/if}><div class="pad"><input type="text" name="address" value="{$profile['address']}" placeholder="请输入您的联系地址" /></div></li>
 	</ul>
-	<div class="btn" style="width:90%;margin:30px auto 30px;"><input type="submit" value="提交资料" style="width:100%;font-size:100%;" onclick="return submit_data()"/></div>
+	<div class="btn" style="width:95%;margin:30px auto 30px;"><input type="submit" value="提交资料" style="width:100%;font-size:100%;" onclick="return submit_data()"/></div>
 	</form>
 	</div>
     <div class="copyright">
-    {if $reply['iscopyright']==1}<a href="{$reply['copyrighturl']}">&copy;{$reply['copyright']}</a>{else}<a href="javascript:;">{if empty($footer_off)}&copy;{if empty($_W['account']['name'])}微新星团队{else}{$_W['account']['name']}{/if}&nbsp;&nbsp;{$_W['setting']['copyright']['statcode']}{/if}</a>{/if}
+    {if $reply['iscopyright']==1}<a href="{$reply['copyrighturl']}">&copy;{$reply['copyright']}</a>{else}<a href="javascript:;">{if empty($footer_off)}&copy;{if empty($_W['account']['name'])}微动力团队{else}{$_W['account']['name']}{/if}&nbsp;&nbsp;{$_W['setting']['copyright']['statcode']}{/if}</a>{/if}
     </div>
  	<div class="sub_b">
 	    {if !empty($mygift)}
 			<dl>
- 			    <dt><span>&nbsp;</span><img src="./source/modules/stonefish_grabgifts/template/images/a4.jpg"/></dt>
+ 			    <dt><span>&nbsp;</span><img src="./source/modules/stonefish_grabgifts/template/images/a4.png"/></dt>
  			    <dd><a href="{$mygifturl}">我的活动页</a></dd>
  		    </dl>
 		{else}
 		    <dl>
- 			    <dt><span>&nbsp;</span><a href="" class="lb"><img src="./source/modules/stonefish_grabgifts/template/images/a4.jpg" alt="" /></a></dt>
+ 			    <dt><span>&nbsp;</span><a href="" class="lb"><img src="./source/modules/stonefish_grabgifts/template/images/a4.png" alt="" /></a></dt>
  			    <dd><a href="">出错了!联系管理员</a></dd>
  		    </dl>
 		{/if}

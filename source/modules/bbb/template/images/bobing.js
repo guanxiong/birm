@@ -1,4 +1,4 @@
-﻿
+
 if ($.os.webkit ? false : true && $.os.fennec ? false : true && $.os.ie ? false : true && $.os.opera ? false : true) {
     $.os.webkit = true;
     $.feat.cssPrefix = $.os.webkit ? "Webkit" : "";
@@ -666,6 +666,15 @@ bobing.binding = function () {
 
 	
     that = this;
+	if (this.remainder > 0) {
+		}else{
+		 $.query('body').popupbobing({
+                id: "promptnopopup",
+                message: '今天次数用完,点右上角分享到朋友圈或发送给朋友,叫朋友来为你助威吧!'
+            });
+		return;
+	}
+	
     if (window.DeviceMotionEvent) {
         var speed = 10;
         var x = y = lastX = lastY = 0;
@@ -745,7 +754,7 @@ bobing.start = function () {
                 id: "promptnopopup",
                 message: '今天次数用完,点右上角分享到朋友圈或发送给朋友,叫朋友来为你助威吧!'
             });
-			//$("#promptnopopup").bind("click", function () { $("#promptnopopup").trigger("close"); });
+			$("#promptnopopup").bind("click", function () { $("#promptnopopup").trigger("close"); });
 
         };
     

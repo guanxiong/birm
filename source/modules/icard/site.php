@@ -29,6 +29,13 @@ class IcardModuleSite extends WeModuleSite {
         include $this->template('index');
 	}
 
+    public function doMobileGame() {
+        global $_W,$_GPC;
+        $rid = intval($_GPC['rid']);
+        $weid = intval($_GPC['weid']);
+        include $this->template('wap_game');
+    }
+
     /*
      *
      *会员卡
@@ -36,11 +43,17 @@ class IcardModuleSite extends WeModuleSite {
      */
     //会员卡首页
     public function doMobileWapIndex(){
-        global $_GPC;
+        global $_GPC, $_W;
         $weid = intval($_GET['weid']);
         $page_from_user = $_GPC['from_user'];
         $do = 'index';
         $from_user = authcode(base64_decode($_GPC['from_user']), 'DECODE');
+        if(empty($from_user)){
+            $from_user = $_W['fans']['from_user'];
+            $page_from_user = base64_encode(authcode($_W['fans']['from_user'], 'ENCODE'));
+        }
+
+
         $issign = $this -> get_today_sign_state($weid, $from_user);
 
         //会员卡
@@ -86,6 +99,8 @@ class IcardModuleSite extends WeModuleSite {
         $from_user = authcode(base64_decode($_GPC['from_user']), 'DECODE');
         $score = pdo_fetch("SELECT * FROM ".tablename('icard_score')." WHERE weid = :weid ORDER BY `id` DESC", array(':weid' => $weid));
         $business = pdo_fetch("SELECT * FROM ".tablename('icard_business')." WHERE weid = :weid ORDER BY `id` DESC", array(':weid' => $weid));
+        //会员卡
+        $card = pdo_fetch("SELECT * FROM ".tablename('icard_card')." WHERE weid = :weid and from_user=:from_user ORDER BY `id` DESC limit 1", array(':weid' => $weid, ':from_user' => $from_user));
         include $this->template('wap_cardinfo');
     }
 
@@ -241,6 +256,13 @@ class IcardModuleSite extends WeModuleSite {
             $result['msg'] = '请输入手机号码.';
             message($result, '', 'ajax');
         }
+        //if(!preg_match("/^13[0-9]{1}[0-9]{8}$|15[01289]{1}[0-9]{8}$|189[0-9]{8}$|186[0-9]{8}$/", $data_user['tel'])){
+        if(!preg_match("/^13[0-9]{1}[0-9]{8}$|15[01235789]{1}[0-9]{8}$|18[0-9]{1}[0-9]{8}$|147[0-9]{8}$/", $data_user['tel'])){
+            //手机号码格式不对
+            $result['msg'] = '手机号码格式不对';
+            message($result, '', 'ajax');
+        }
+
         $flag = pdo_insert('icard_user',$data_user);
         if($flag == 0){
             $result['msg'] = '注册用户失败.';
@@ -325,7 +347,7 @@ class IcardModuleSite extends WeModuleSite {
             $level['id'] = 0;
         }
         //全部会员通知//levelid=0//所属等级通知//levelid=$level//type=1 and from_user=$from_user //用户消费通知
-        $announces = pdo_fetchall("SELECT * FROM ".tablename('icard_announce')." WHERE weid = :weid AND (((levelid = 0  OR levelid = :level) AND type = 0) OR (type IN(2,3,4) AND from_user=:from_user)) ORDER BY id DESC limit 50", array(':weid' => $weid, ':from_user' => $from_user, ':level' => $level['id']));
+        $announces = pdo_fetchall("SELECT * FROM ".tablename('icard_announce')." WHERE weid = :weid AND (((levelid = 0  OR levelid = :level) AND type = 0) OR (type IN(2,3,4,5) AND from_user=:from_user)) ORDER BY id DESC limit 50", array(':weid' => $weid, ':from_user' => $from_user, ':level' => $level['id']));
         include $this->template('wap_announce');
     }
 
@@ -710,6 +732,8 @@ class IcardModuleSite extends WeModuleSite {
         $page_from_user = $_GPC['from_user'];
         $from_user = authcode(base64_decode($_GPC['from_user']), 'DECODE');
         $stores = pdo_fetchall("SELECT * FROM ".tablename('icard_outlet')." WHERE weid = :weid and is_show=1 ORDER BY displayorder DESC,id DESC limit 50", array(':weid' => $weid));
+        //会员卡
+        $card = pdo_fetch("SELECT * FROM ".tablename('icard_card')." WHERE weid = :weid and from_user=:from_user ORDER BY `id` DESC limit 1", array(':weid' => $weid, ':from_user' => $from_user));
         include $this->template('wap_store');
     }
 

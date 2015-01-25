@@ -9,6 +9,34 @@ if(!pdo_fieldexists('weishare', 'count')) {
 	pdo_query("ALTER TABLE ".tablename('weishare')." ADD `count` int(11) NOT NULL  COMMENT '领卡数量限制';");
 }
 
+if(!pdo_fieldexists('weishare', 'showu')) {
+	pdo_query("ALTER TABLE ".tablename('weishare')." ADD `showu` varchar(1) NOT NULL DEFAULT 0;");
+}
+
+if(!pdo_fieldexists('weishare', 'sortcount')) {
+	pdo_query("ALTER TABLE ".tablename('weishare')." ADD `sortcount` varchar(100) NOT NULL DEFAULT 10 ;");
+}
+
+
+
+
+
+
+if(!pdo_fieldexists('weishare', 'shareIcon')) {
+    pdo_query("ALTER TABLE ".tablename('weishare')." ADD `shareIcon` varchar(200) NOT NULL COMMENT '分享图标' ;");
+}
+
+
+if(!pdo_fieldexists('weishare', 'shareTitle')) {
+    pdo_query("ALTER TABLE ".tablename('weishare')." ADD `shareTitle` varchar(200) NOT NULL ;");
+}
+
+if(!pdo_fieldexists('weishare', 'shareContent')) {
+    pdo_query("ALTER TABLE ".tablename('weishare')." ADD `shareContent` varchar(200) NOT NULL ;");
+}
+
+
+
 if(!pdo_fieldexists('weishare', 'totallimit')) {
     pdo_query("ALTER TABLE ".tablename('weishare')." ADD `totallimit` int(11) NOT NULL  COMMENT '总得助力次数' ;");
 }

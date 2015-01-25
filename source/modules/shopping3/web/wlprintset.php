@@ -3,13 +3,13 @@
  * 2014-2-24
  * 购物车 分类管理 
  * 支持二级分类 来自微擎
- * @author 微新星
+ * @author 微动力
  * @url
  */
 if($_GPC['action']=='test'){
  
 	$title="这里是测试平台，给你发送邮件";
-	$content="微新星祝您生意兴隆，财源广进.";
+	$content="微动力祝您生意兴隆，财源广进.";
 	//$temp=$this->_sendmail($title,$content);
 	if($temp==1){
 		message('邮件发送成功，您的邮件设置成功', $this->createWebUrl('Mailset'), 'success');
@@ -26,6 +26,11 @@ if (checksubmit('submit')) {
 		'print_nums'=>trim($_GPC['print_nums']),
 		'print_top'=>trim($_GPC['print_top']),		
 		'print_bottom'=>trim($_GPC['print_bottom']),
+		'partnerId'=>trim($_GPC['print_partnerId']),
+		'apiKey'=>trim($_GPC['print_apiKey']),
+		'machineCode'=>trim($_GPC['print_machineCode']),
+		'mKey'=>trim($_GPC['print_mKey']),
+			
  	);
 	if (empty($_GPC['id'])) {
 		pdo_insert('shopping3_set', $insert);
@@ -35,6 +40,7 @@ if (checksubmit('submit')) {
 	message('打印机数据保存成功', $this->createWebUrl('Printset'), 'success');
 }
 $set = pdo_fetch("SELECT * FROM ".tablename('shopping3_set')." WHERE weid = :weid", array(':weid' => $_W['weid']));
+
 if($set==false){
 	$set=array(
 		'id'=>0,

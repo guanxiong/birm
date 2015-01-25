@@ -11,6 +11,7 @@ small a{color:#999;}
 </ul>
 <div class="main">
 	<div class="form form-horizontal">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
 		<h4>预约活动信息</h4>
 		<table class="tb">
 			<tr>
@@ -88,6 +89,12 @@ small a{color:#999;}
 					{php echo date('Y-m-d H:i:s', $row['createtime']);}
 				</td>
 			</tr>
+			<tr>
+				<th><label for="">是否通过审核</label></th>
+				<td>
+					<input type="text" name="sta" style="width:50px" value="{php echo $row['status'] == 1?'通过':'未审核';}" /><span style="color:red"> &nbsp; &nbsp;注：2是未审核 | 1是通过</span>
+				</td>
+			</tr>
 			{loop $ds $fid $ftitle}
 			<tr>
 				<th><label for="">{$ftitle['fid']}</label></th>
@@ -99,10 +106,13 @@ small a{color:#999;}
 			<tr>
 				<th></th>
 				<td>
-					<input type="submit" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>&nbsp; &nbsp; &nbsp;
+				</form>
+					<!--<input type="submit" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />-->
 				</td>
 			</tr>
 		</table>
+		
 	</div>
 </div>
 {template 'common/footer'}

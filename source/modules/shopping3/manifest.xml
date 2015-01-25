@@ -3,11 +3,11 @@
 	<application setting="false">
 		<name><![CDATA[新微餐饮]]></name>
 		<identifie><![CDATA[shopping3]]></identifie>
-		<version><![CDATA[2.1]]></version>
+		<version><![CDATA[2.9]]></version>
 		<type><![CDATA[business]]></type>
 		<ability><![CDATA[微商城(餐饮版)]]></ability>
 		<description><![CDATA[微商城 for 餐饮]]></description>
-		<author><![CDATA[微新星]]></author>
+		<author><![CDATA[微动力]]></author>
 		<url><![CDATA[]]></url>
 	</application>
 	<platform>
@@ -217,10 +217,14 @@ CREATE TABLE IF NOT EXISTS `ims_shopping3_set` (
   `sms_resgister` tinyint(1) NOT NULL DEFAULT '1',
   `order_limit` tinyint(4) NOT NULL,
   `print_mkey` varchar(50) NOT NULL,
+  `partnerId` VARCHAR( 200 ) NOT NULL,
+  `apikey` VARCHAR( 200 ) NOT NULL,
+  `machineCode` VARCHAR( 200 ) NOT NULL,
+  `mkey` VARCHAR( 200 ) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></install>
 	<uninstall><![CDATA[
 	DROP TABLE IF EXISTS `ims_shopping3_set`;
 	]]></uninstall>
-	<upgrade><![CDATA[]]></upgrade>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
 </manifest>

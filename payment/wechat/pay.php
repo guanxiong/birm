@@ -51,6 +51,16 @@ if($auth != $_GPC['auth']) {
 
 require_once model('payment');
 $wOpt = wechat_build($params, $_W['account']['payment']['wechat']);
+if (is_error($wOpt)) {
+	if ($wOpt['message'] == 'invalid out_trade_no') {
+		$id = date('YmdH');
+		pdo_update('paylog', array('plid' => $id), array('plid' => $log['plid']));
+		pdo_query("ALTER TABLE ".tablename('paylog')." auto_increment = ".($id+1).";");
+		message("抱歉，发起支付失败，系统已经修复此问题，请重新尝试支付。");
+	}
+	message("抱歉，发起支付失败，具体原因为：“{$wOpt['errno']}:{$wOpt['message']}”。请及时联系站点管理员。");
+	exit;
+}
 ?>
 <script type="text/javascript">
 document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {

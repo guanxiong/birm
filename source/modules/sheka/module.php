@@ -2,8 +2,6 @@
 /**
  * 贺卡模块处理程序
  *
- * @author nuqut
- * @url  heka.weibaza.com
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -193,9 +191,10 @@ if (empty($_GPC['title'])) {message('标题不能为空，请输入标题！');}
 				}	
 				$thumb = explode('/',$insert['thumb']);	
 				$asliname=IA_ROOT . '/resource/attachment/'.$insert['thumb'];
-				$newname=IA_ROOT . '/resource/attachment/'.$thumb[0].'/'.$thumb[1].'/'.$thumb[2].'/'.$thumb[3].'/s_'.$thumb[4];
-				 img2thumb($asliname, $newname,75, 75,1);
-			      message('修改成功！', $this->createWebUrl('list', array('op' => 'post','id' => $id)), 'success');
+				//$newname=IA_ROOT . '/resource/attachment/'.$thumb[0].'/'.$thumb[1].'/'.$thumb[2].'/'.$thumb[3].'/s_'.$thumb[4];
+				$newname=IA_ROOT . '/resource/attachment/'.$thumb[0].'/'.$thumb[1].'/'.$thumb[2].'/'.$thumb[3];
+				img2thumb($asliname, $newname,75, 75,1);
+			    message('修改成功！', $this->createWebUrl('list', array('op' => 'post','id' => $id)), 'success');
 					}
 		
 		}

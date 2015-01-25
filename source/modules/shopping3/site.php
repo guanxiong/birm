@@ -2,7 +2,7 @@
 /**
  * 微商城模块微站定义
  *
- * @author WeNewstar Team
+ * @author 更多模块请浏览bbs.b2ctui.com
  * @url
  */
 
@@ -187,7 +187,7 @@ class Shopping3ModuleSite extends WeModuleSite {
 		
 		$weid=isset($_W['weid'])?$_W['weid']:$_GPC['weid'];
 		if(empty($weid)){
-			message('参数错误，进入微商城');
+			message('参数错误，进入微餐饮');
 		}
 		$from=isset($_W['fans']['from_user'])?$_W['fans']['from_user']:$_GPC['openid'];
 		
@@ -313,7 +313,8 @@ class Shopping3ModuleSite extends WeModuleSite {
  			$params['tid'] = $orderid;
 			$params['user'] = $_W['fans']['from_user'];
 			$params['fee'] = $order['totalprice'];
-			$params['title'] = $_W['account']['name'] . "商城订单{$order['ordersn']}";
+			$params['ordersn'] = $order['ordersn'];
+			$params['title'] = $_W['account']['name'];
 			$this->pay($params);
 		}
 		include $this->template('pay');
@@ -351,8 +352,9 @@ class Shopping3ModuleSite extends WeModuleSite {
 		if (checksubmit()) {
 			$params['tid'] = $orderid;
 			$params['user'] = $_W['fans']['from_user'];
-			$params['fee'] = $order['totalprice'];;
-			$params['title'] = $_W['account']['name'] . "商城订单{$order['ordersn']}";
+			$params['fee'] = $order['totalprice'];
+			$params['ordersn'] = $order['ordersn'];
+			$params['title'] = $_W['account']['name'];
 			$this->pay($params);
 		}
 		include $this->template('pay');
@@ -481,7 +483,7 @@ class Shopping3ModuleSite extends WeModuleSite {
 		
 
 	}
-	//微擎内部已经有了
+	//微动力内部已经有了
 	public function _sendmail($_title='测试标题',$_content='测试内容',$_tomail="",$_Host="",$_Username="",$_Password=""){
 		global $_W;
 		//获取系统中的邮件资料

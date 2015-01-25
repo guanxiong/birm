@@ -2,8 +2,6 @@
 /**
  * 预约与调查模块微站定义
  *
- * @author WeNewstar Team
- * @url http://bbs.we7.cc
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -43,7 +41,18 @@ class ResearchModuleSite extends WeModuleSite {
 	public function doWebDetail() {
 		global $_W, $_GPC;
 		$rerid = intval($_GPC['id']);
+		$status = intval($_GPC['sta']);
+		if (!empty($_GPC['sta'])) {
 
+			$sql = 'UPDATE ' . tablename('research_rows') . ' SET `status`=:status WHERE `rerid`=:rerid';
+			$params = array();
+			$params[':rerid'] = $rerid;
+			$params[':status'] = $status;
+			$row1 = pdo_query($sql, $params);
+			message('修改成功.', 'refresh');
+			//include $this->template('edit');
+
+		}
 		$sql = 'SELECT * FROM ' . tablename('research_rows') . " WHERE `rerid`=:rerid";
 		$params = array();
 		$params[':rerid'] = $rerid;
@@ -84,10 +93,10 @@ class ResearchModuleSite extends WeModuleSite {
 
 		include $this->template('detail');
 	}
-
-	public function doWebManage() {
+	public function doWebExcel() {
 		global $_W, $_GPC;
 		$reid = intval($_GPC['id']);
+		//$select =$_GPC['select'];
 		$sql = 'SELECT * FROM ' . tablename('research') . ' WHERE `weid`=:weid AND `reid`=:reid';
 		$params = array();
 		$params[':weid'] = $_W['weid'];
@@ -118,6 +127,158 @@ class ResearchModuleSite extends WeModuleSite {
 				}
 			}
 		}
+		$sql = 'SELECT * FROM ' . tablename('research_rows') . " WHERE `reid`=:reid AND `createtime` > {$starttime} AND `createtime` < {$endtime} ORDER BY `createtime` DESC " ;
+		$params = array();
+		$params[':reid'] = $reid;
+
+		$list = pdo_fetchall($sql, $params);
+		if($select) {
+			$fids = implode(',', $select);
+			$data = array();
+			foreach($list as $key=>&$r) {
+
+				$data[$key] = array($r['openid'],date('Y-m-d', $r['createtime']),$r['status'] == 1?'通过':'未审核');
+				$r['fields'] = array();
+				$sql = 'SELECT * FROM ' . tablename('research_data') . " WHERE `reid`=:reid AND `rerid`='{$r['rerid']}' AND `refid` IN ({$fids})";
+				$fdatas = pdo_fetchall($sql, $params);
+				$sql1 = 'SELECT * FROM ' . tablename('research_fields') . " WHERE `reid`=:reid  AND `refid` IN ({$fids})";
+				$sel = pdo_fetchall($sql1, $params);
+				foreach($fdatas as $fd) {
+					$r['fields'][$fd['refid']] = $fd['data'];
+					$data[$key][] = $fd['data'];
+				}
+
+			}
+		}else{
+			$data = array();
+			foreach($list as $key=>&$r) {
+				$data[$key] = array($r['openid'],date('Y-m-d', $r['createtime']),$r['status'] == 1?'通过':'未审核');
+			}
+		}
+
+		/////////////////////////////////
+		ini_set('memory_limit', '120M');
+		require_once 'xls/Classes/PHPExcel.php';
+		require_once 'xls/Classes/PHPExcel/Writer/Excel2007.php';
+		require_once 'xls/Classes/PHPExcel/Writer/Excel5.php';
+		include_once 'xls/Classes/PHPExcel/IOFactory.php';
+		$fileName = "test_excel";
+		$headArr = array("用户","创建时间",'是否通过审核');
+		foreach($sel as $v){
+			$headArr[] = $v['title'];
+		}
+		//$data = array(array(iconv('gbk', 'utf-8', '中文Hello'),2,5),array(1,3,6),array(5,7,8));
+		if(empty($data) || !is_array($data)){
+        die("data must be a array");
+		}
+		if(empty($fileName)){
+			exit;
+		}
+		$date = date("Y_m_d",time());
+		$fileName .= "_{$date}.xlsx";
+
+    //创建新的PHPExcel对象
+    $objPHPExcel = new PHPExcel();
+    $objProps = $objPHPExcel->getProperties();
+
+    //设置表头
+    $key = ord("A");
+    foreach($headArr as $v){
+        $colum = chr($key);
+        $objPHPExcel->setActiveSheetIndex(0) ->setCellValue($colum.'1', $v);
+        $key += 1;
+    }
+
+
+    $column = 2;
+    $objActSheet = $objPHPExcel->getActiveSheet();
+    foreach($data as $key => $rows){ //行写入
+        $span = ord("A");
+  $i= '0';    //十进位
+        foreach($rows as $keyName=>$value){// 列写入
+   if($span>90 && $i=='0'){
+    $span=ord("A");
+    $i=ord('A');
+   }else if($span>90){
+    $i++;
+    $span=ord("A");
+   }
+            $j = chr($span);
+   if($i=='0'){
+             $objActSheet->setCellValue($j.$column, $value);
+   }else{
+      $k=chr($i);
+      $objActSheet->setCellValue($k.$j.$column, $value);
+   }
+   $span++;
+
+        }
+        $column++;
+    }
+    $fileName = iconv("utf-8", "gb2312", $fileName);
+    //重命名表
+    $objPHPExcel->getActiveSheet()->setTitle('Simple');
+    //设置活动单指数到第一个表,所以Excel打开这是第一个表
+    $objPHPExcel->setActiveSheetIndex(0);
+    //将输出重定向到一个客户端web浏览器(Excel2007)
+          /*header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+          header("Content-Disposition: attachment; filename=\"$fileName\"");
+          header('Cache-Control: max-age=0');*/
+          $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+     $filename = "yuyue.xlsx";
+
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header('Content-Disposition:inline;filename="'.$filename.'"');
+        header("Content-Transfer-Encoding: binary");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Pragma: no-cache");
+   $objWriter->save('php://output'); //文件通过浏览器下载
+   exit();  //end
+          if(!empty($_GET['excel'])){
+            $objWriter->save('php://output'); //文件通过浏览器下载
+        }else{
+          $objWriter->save($fileName); //脚本方式运行，保存在当前目录
+        }
+  exit;//include $this->template('a');
+	}
+	public function doWebManage() {
+		global $_W, $_GPC;
+		$ret = $_GPC['ret'] == 'true';
+		$set = @json_decode(base64_decode($_GPC['dat']), true);
+		$reid = intval($_GPC['id']);
+		$sql = 'SELECT * FROM ' . tablename('research') . ' WHERE `weid`=:weid AND `reid`=:reid';
+		$params = array();
+		$params[':weid'] = $_W['weid'];
+		$params[':reid'] = $reid;
+		$activity = pdo_fetch($sql, $params);
+		if(empty($activity)) {
+			message('非法访问.');
+		}
+		$sql = 'SELECT * FROM ' . tablename('research_fields') . ' WHERE `reid`=:reid ORDER BY `refid`';
+		$params = array();
+		$params[':reid'] = $reid;
+		$fields = pdo_fetchall($sql, $params);
+		if(empty($fields)) {
+			message('非法访问.');
+		}
+		$ds = array();
+		foreach($fields as $f) {
+			$ds[$f['refid']] = $f['title'];
+		}
+		$sel = $_GPC['select'];
+		$starttime = empty($_GPC['start']) ? strtotime('-1 month') : strtotime($_GPC['start']);
+		$endtime = empty($_GPC['end']) ? TIMESTAMP : strtotime($_GPC['end']) + 86399;
+		$select = array();
+		if (!empty($_GPC['select'])) {
+			foreach ($_GPC['select'] as $field) {
+				if (isset($ds[$field])) {
+					$select[] = $field;
+				}
+			}
+		}
 
 		$pindex = max(1, intval($_GPC['page']));
 		$psize = 50;
@@ -127,87 +288,41 @@ class ResearchModuleSite extends WeModuleSite {
 		$params[':reid'] = $reid;
 		$total = pdo_fetchcolumn("SELECT COUNT(*) FROM " . tablename('research_rows') . " WHERE `reid`=:reid AND `createtime` > {$starttime} AND `createtime` < {$endtime}", $params);
 		$pager = pagination($total, $pindex, $psize);
-
-		$list = pdo_fetchall($sql, $params);
+		$sou = $_GPC['sou'];
+		$title = $_GPC['title'];
+		$list1 = pdo_fetchall($sql, $params);
 		if($select) {
 			$fids = implode(',', $select);
-			foreach($list as &$r) {
+			foreach($list1 as &$r) {
 				$r['fields'] = array();
-				$sql = 'SELECT data, refid FROM ' . tablename('research_data') . " WHERE `reid`=:reid AND `rerid`='{$r['rerid']}' AND `refid` IN ({$fids})";
+				$sql = 'SELECT * FROM ' . tablename('research_data') . " WHERE `reid`=:reid AND `rerid`='{$r['rerid']}' AND `refid` IN ({$fids})";
 				$fdatas = pdo_fetchall($sql, $params);
 				foreach($fdatas as $fd) {
-					$r['fields'][$fd['refid']] = $fd['data'];
+					//if(!empty($_GPC['title'])){
+					//if($fd['refid'] == $_GPC['sou'] && $fd['data'] == $_GPC['title']){
+					//$r['fields'][$fd['refid']] = $fd['data'];}
+					//}else{
+						$r['fields'][$fd['refid']] = $fd['data'];
+					//}
 				}
 			}
-		}
-		if (checksubmit('export',1)) {
-			$sql = 'SELECT title FROM ' . tablename('research_fields') . " AS f JOIN " . tablename('research_rows') ." AS r ON f.reid='{$params[':reid']}' GROUP BY title ORDER BY refid";
-			$tableheader = pdo_fetchall($sql, $params);
-			$tablelength = count($tableheader);		
-			array_unshift($tableheader,array('用户'));
-			$tableheader[] = array('创建时间');
-			$sql = 'SELECT openid,data,createtime FROM ' . tablename('research_data') . " AS d JOIN " .tablename('research_rows') . " AS r ON d.rerid=r.rerid WHERE r.reid='{$params[':reid']}' ORDER BY createtime DESC";
-			$list = pdo_fetchall($sql, $params);
-			
-			foreach ($list as $key=>$value) {
-				$realname[] = $value['openid'];
-			}
-			$realname = array_unique($realname);
-			foreach ($realname as $key=>$value) {
-				$sql = 'SELECT from_user,realname FROM ' . tablename('fans') . " WHERE from_user='$value'";
-				$username[] = pdo_fetchall($sql, $params);
-			}
-			for ($i = 0;$i < count($username);$i++) {
-				foreach ($username[$i] as $key=>$value) {
-					foreach ($value as $k=>$v) {
-						$temp[] = $v;
+			if(!empty($_GPC['title'])){
+				$sql = 'SELECT * FROM ' . tablename('research_data') . " WHERE `reid`=:reid AND `data`='{$title}' AND `refid` = '{$sou}' ";
+				$fdatas1 = pdo_fetchall($sql, $params);
+				$list2 = array();
+				foreach($fdatas1 as $a) {
+				foreach($list1 as $v) {
+					if($v['rerid'] == $a['rerid']){
+						$list2[] = $v;
 					}
 				}
-			}
-			$data = array();
-			for ($i = 1;$i <= count($list) / $tablelength;$i++) {
-				$realname = $list[intval($j)]['openid'];
-				if (in_array($realname,$temp)) {
-					$realname = str_replace($realname, $temp[array_search($realname, $temp) + 1], $realname);
-				}
-				$data[$i] = $realname.',';
-				for ($j = ($i - 1) * $tablelength;$j < $i * $tablelength;$j++){
-					$data[$i] .= $list[$j]['data'].",";
-				}
-				$data[$i] .= date('Y-m-d H:i:s',$list[$j - 1]['createtime']);
-			}
-			for($i = 0;$i < count($data);$i++) {
-				$data[$i] = explode(',', $data[$i]);
-			}
-			
-			include IA_ROOT . '/source/library/phpexcel/phpexcel.php';
-			$excel = new PHPExcel();
-			$letter = array('A','B','C','D','E','F','F','G');
-			for($i = 0;$i < count($tableheader);$i++) {
-				foreach ($tableheader[$i] as $key=>$value) {
-					$excel->getActiveSheet()->setCellValue("$letter[$i]1","$value");
 				}
 			}
-			for ($i = 2;$i <= count($data) + 1;$i++) {
-				$j = 0;
-				foreach ($data[$i - 2] as $key=>$value) {
-					$excel->getActiveSheet()->setCellValue("$letter[$j]$i","$value");
-					$j++;
-				}		
-			}
-			
-			$write = new PHPExcel_Writer_Excel5($excel);
-			header("Pragma: public");
-			header("Expires: 0");
-			header("Cache-Control:must-revalidate, post-check=0, pre-check=0");
-			header("Content-Type:application/force-download");
-			header("Content-Type:application/vnd.ms-execl");
-			header("Content-Type:application/octet-stream");
-			header("Content-Type:application/download");;
-			header('Content-Disposition:attachment;filename="alldata.xls"');
-			header("Content-Transfer-Encoding:binary");			
-			$write->save('php://output');
 		}
+		if(!empty($_GPC['title'])){
+			$list = $list2;
+		}else{$list = $list1;
+		};
 		include $this->template('manage');
 	}
 
@@ -278,9 +393,12 @@ class ResearchModuleSite extends WeModuleSite {
 			$recrod['description'] = trim($_GPC['description']);
 			$recrod['content'] = trim($_GPC['content']);
 			$recrod['information'] = trim($_GPC['information']);
-			if (!empty($_GPC['thumb'])) {
-				$recrod['thumb'] = $_GPC['thumb'];
-				file_delete($_GPC['thumb-old']);
+			if(!empty($_FILES['thumb']['tmp_name'])) {
+				$ret = file_upload($_FILES['thumb']);
+				if(!$ret['success']) {
+					message('上传封面失败, 请稍后重试.');
+				}
+				$recrod['thumb'] = trim($ret['path']);
 			}
 			$recrod['status'] = intval($_GPC['status']);
 			$recrod['inhome'] = intval($_GPC['inhome']);
@@ -297,8 +415,11 @@ class ResearchModuleSite extends WeModuleSite {
 					message('保存预约失败, 请稍后重试.');
 				}
 			} else {
+				if($hasData) {
+					message('已经存在报名记录, 不能修改报名.');
+				}
 				if(pdo_update('research', $recrod, array('reid' => $reid)) === false) {
-					message('保存预约失败, 请稍后重试.');
+					message('保存报名失败, 请稍后重试.');
 				}
 			}
 
@@ -353,10 +474,7 @@ class ResearchModuleSite extends WeModuleSite {
 				$ds = pdo_fetchall($sql, $params);
 			}
 		}
-		
-		if (empty($activity['endtime'])) {
-			$activity['endtime'] = date('Y-m-d', strtotime('+1 day'));
-		}
+
 		include $this->template('post');
 	}
 

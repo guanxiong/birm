@@ -45,7 +45,7 @@ if($_W['ispost']) {
 	$wechat['signkey'] = trim($wechat['signkey']);
 	$wechat['partner'] = trim($wechat['partner']);
 	$wechat['key'] = trim($wechat['key']);
-	if($wechat['switch'] && (empty($wechat['appid']) || empty($wechat['secret']) || empty($wechat['partner']) || empty($wechat['key']))) {
+	if($wechat['switch'] && (empty($wechat['appid']) || empty($wechat['secret']))) {
 		message('请输入完整的微信支付接口信息.');
 	}
 

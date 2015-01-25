@@ -17,8 +17,33 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <!-- Mobile Devices Support @end -->
 <style>
-body{background-color:{$reply['bgcolor']};}
+body{background-color:{$reply['bgcolor']};color:{$reply['textcolor']};}
+A:link,A:visited,A:hover ,A:active{ color: {$reply['textcolor']};}
+.top span{ color: {$reply['textcolort']};}
+.top a{background-color:{$reply['textcolort']};color: {$reply['bgcolor']};}
+
 .product li{ width: 96%; float: left; padding:0 2%;}
+.product{ border:1px solid {$reply['textcolorb']};}
+.product li dt{border:1px solid {$reply['textcolorb']};}
+.product li dd{color: {$reply['textcolor']}}
+.product li dd span{ color: {$reply['textcolort']};}
+
+.cunber_title b{color: {$reply['textcolort']};}
+.cunber_title u{color: {$reply['bgcolorbottoman']};}
+
+.wenz h3{color: {$reply['bgcolorbottoman']};}
+
+.getbtn{color:{$reply['textcolorjiang']};background-color:{$reply['bgcolorjiang']};}
+.getbtnshangjia{color:{$reply['textcolorjiang']};background-color:{$reply['textcolort']};}
+
+.sub_b{background-color: {$reply['bgcolorbottom']};}
+.sub_b dd{color: {$reply['textcolorbottom']}; background: {$reply['bgcolorbottoman']};}
+.sub_b dd a{ display: block; color: {$reply['textcolorbottom']};}
+.sub_b dt{background:{$reply['bgcolorbottoman']}}
+.sub_b dt span{background:{$reply['textcolort']};}
+.paihang{color:{$reply['textcolorjiang']};background-color:{$reply['bgcolorjiang']}; text-align:center;}
+.copyright{color:{$reply['textcolor']};}
+.copyright a:link,.copyright a:visited,.copyright a:hover,.copyright a:active{color:{$reply['textcolor']};}
 </style>
 </head>
 <body onselectstart="return true;" ondragstart="return false;">
@@ -39,7 +64,7 @@ body{background-color:{$reply['bgcolor']};}
  					<dd>{$row3['title']}</dd>
  					<dd>全部<span>{$row3['total']}</span>份  剩余<span>{php echo $row3['total']-$row3['total_winning']}</span>份</dd>
  				</dl>
- 			</li>			 			
+ 			</li>
  		</ul>
 		{if $row3['lingjiang']!=1}
 		<div style=" padding:5px;">{if $row3['total']-$row3['total_winning']>=1}{if $is_user}{if $row3['awardpass']!=''}<a href="{php echo $_W['siteroot'].$this->createMobileUrl('awardgetpass', array('rid' => $rid,'from_user' => $page_from_user,'giftid' => $row3['id']))}"><button class="getbtnshangjia">商家点击兑奖</button></a>{else}<button class="getbtnshangjia">请耐心等待商家兑奖</button>{/if}{else}<a href="{php echo $_W['siteroot'].$this->createMobileUrl('awardget', array('rid' => $rid,'giftid' => $row3['id'],'from_user' => $page_from_user))}"><button class="getbtn">点击领取</button></a>{/if}{/if}</div>
@@ -56,17 +81,17 @@ body{background-color:{$reply['bgcolor']};}
 	    <div class="cunber_title"><span>已邀请<b>{$yaoqingnum}</b>人</span>{if !empty($usergift)}还需<b>{$zgnum}</b>人你就能获得<u>{$zggift}</u>{else}<u>出错了!联系管理员{/if}</div>
 	{/if}
  	<div class="copyright">
-    {if $reply['iscopyright']==1}<a href="{$reply['copyrighturl']}">&copy;{$reply['copyright']}</a>{else}<a href="javascript:;">{if empty($footer_off)}&copy;{if empty($_W['account']['name'])}微新星团队{else}{$_W['account']['name']}{/if}&nbsp;&nbsp;{$_W['setting']['copyright']['statcode']}{/if}</a>{/if}
+    {if $reply['iscopyright']==1}<a href="{$reply['copyrighturl']}">&copy;{$reply['copyright']}</a>{else}<a href="javascript:;">{if empty($footer_off)}&copy;{if empty($_W['account']['name'])}微动力团队{else}{$_W['account']['name']}{/if}&nbsp;&nbsp;{$_W['setting']['copyright']['statcode']}{/if}</a>{/if}
  	</div> 	
  	<div class="sub_b">
 	    {if !empty($mygift)}
 			<dl>
- 			    <dt><span>&nbsp;</span><img src="./source/modules/stonefish_grabgifts/template/images/a4.jpg"/></dt>
+ 			    <dt><span>&nbsp;</span><img src="./source/modules/stonefish_grabgifts/template/images/a4.png"/></dt>
  			    <dd><a href="{$mygifturl}">我的活动页</a></dd>
  		    </dl>
 		{else}
 		    <dl>
- 			    <dt><span>&nbsp;</span><a href="" class="lb"><img src="./source/modules/stonefish_grabgifts/template/images/a4.jpg" alt="" /></a></dt>
+ 			    <dt><span>&nbsp;</span><a href="" class="lb"><img src="./source/modules/stonefish_grabgifts/template/images/a4.png" alt="" /></a></dt>
  			    <dd><a href="">出错了!联系管理员</a></dd>
  		    </dl>
 		{/if}
@@ -74,58 +99,6 @@ body{background-color:{$reply['bgcolor']};}
  </div>
 <div class="share-layer"></div>
 <script type="text/javascript">
-document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-	window.shareData = {
-		"imgUrl": "{$picture}",
-		"timeLineLink": "{$shareurl}",
-		"sendFriendLink": "{$shareurl}",
-		"weiboLink": "{$shareurl}",
-		"tTitle": "{$reply['sharetitle']}",
-        "fTitle": "{$reply['sharetitle']}",
-        "tContent": "{$reply['sharecontent']}",
-        "fContent": "{$reply['sharecontent']}",
-        "wContent": "{$reply['sharecontent']}" 
-	};
-
-	// 发送给好友
-	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
-		WeixinJSBridge.invoke('sendAppMessage', {
-			"img_url": window.shareData.imgUrl,
-			"img_width": "640",
-			"img_height": "640",
-			"link": window.shareData.sendFriendLink,
-			"desc": window.shareData.fContent,
-			"title": window.shareData.fTitle
-		}, function (res) {
-			_report('send_msg', res.err_msg);
-		})
-	});
-
-	// 分享到朋友圈
-	WeixinJSBridge.on('menu:share:timeline', function (argv) {
-		WeixinJSBridge.invoke('shareTimeline', {
-			"img_url": window.shareData.imgUrl,
-			"img_width": "640",
-			"img_height": "640",
-			"link": window.shareData.timeLineLink,
-			"desc": window.shareData.tContent,
-			"title": window.shareData.tTitle
-		}, function (res) {
-			_report('timeline', res.err_msg);
-		});
-	});
-
-	// 分享到微博
-	WeixinJSBridge.on('menu:share:weibo', function (argv) {
-		WeixinJSBridge.invoke('shareWeibo', {
-			"content": window.shareData.wContent,
-			"url": window.shareData.weiboLink
-		}, function (res) {
-			_report('weibo', res.err_msg);
-		});
-	});
-}, false);
-
 function onBridgeReady(){
  WeixinJSBridge.call('hideOptionMenu');
 }

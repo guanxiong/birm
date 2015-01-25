@@ -797,7 +797,7 @@ class stonefish_grabgiftsModuleSite extends WeModuleSite {
 		$page_from_user_oauth2 = base64_encode(authcode($_COOKIE["user_oauth2_openid"], 'ENCODE'));
 		$from_user_putonghao = $_COOKIE["user_putonghao_openid"];
 		$this->checkoauth2($rid,$from_user_oauth2);//查询是否有cookie信息
-		$shouquan = $_GPC['shouquan'];
+		//$shouquan = $_GPC['shouquan'];
 		$realname = $_GPC['realname'];
 		$mobile = $_GPC['mobile'];
 		$weixin = $_GPC['weixin'];

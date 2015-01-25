@@ -106,7 +106,6 @@ return document.cookie=[encodeURIComponent(e),"=",a.raw?b:encodeURIComponent(b),
 		</div>
 		<div class="menu">
 			<div class="menu-title backtomenu">回到首页</div>
-			<ul></ul>
 		</div>
 		<div class="bt-toolbar hnav">
 			<a href="{php echo create_url('index')}" class="backtomenu" style="background-image: -webkit-linear-gradient(#4794c7,#1e6696);background-image: linear-gradient(#4794c7,#1e6696);" original-title="首页">
@@ -117,7 +116,7 @@ return document.cookie=[encodeURIComponent(e),"=",a.raw?b:encodeURIComponent(b),
 				<img src="./resource/wdl07/image/user.png">
 			</a>
 			
-			<a  href="{php echo create_url('index/welcome/' . 'global')}"" target="main" class="setting"  original-title="全局概况">
+			<a  href="{php echo create_url('index/welcome/' . 'global')}" target="main" class="setting"  original-title="全局概况">
 				<img src="./resource/wdl07/image/chart.png">
 				
 			</a>
@@ -156,11 +155,8 @@ return document.cookie=[encodeURIComponent(e),"=",a.raw?b:encodeURIComponent(b),
 						{/loop}
 							</ul>
 						</div>
-						<div title="程序手册" class="menu upgrade">
-							<a href="http://bbs.birm.co/wiki/" target="_blank" ><img class="icon" src="./resource/wdl07/image/lightstore.png">程序手册</a>
-						</div>
-                        	<div title="在线咨询" class="menu upgrade">
-							<a href="http://wpa.qq.com/msgrd?v=3&uin=2740380951&site=qq&menu=yes" target="_blank" ><img class="icon" src="./resource/wdl07/image/lightstore.png">在线咨询</a>
+                        <div title="在线咨询" class="menu upgrade">
+							<a href="http://wpa.qq.com/msgrd?v=3&uin=253076292&site=qq&menu=yes" target="_blank" ><img class="icon" src="./resource/wdl07/image/lightstore.png">在线咨询</a>
 						</div>
                         	<div title="公众平台" class="tuiguang menu">
 							<a href="https://mp.weixin.qq.com/" target="_blank" ><img class="icon" src="./resource/wdl07/image/lightstore.png">公众平台</a>
@@ -768,13 +764,13 @@ $(document).ready(function(){
 	 $("div.red:first").css("background-color:#e16b11");
 });
 
-
 $(window).resize(function(){
 	//调整框架宽高 兼容ie8
 	$(".content-main, .content-main table td").height($(window).height()-40);
 	$("#main").width($(window).width()-200);
+});
 </script>	
-<style>
+<style type="text/css">
 #article_choice_dialog{
 	width: 800px;
 	margin-left: -380px;

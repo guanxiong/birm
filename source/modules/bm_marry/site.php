@@ -2,8 +2,6 @@
 /**
  * 微喜帖
  *
- * @author 微信通
- * @url 
  */
 defined('IN_IA') or exit('Access Denied');
 

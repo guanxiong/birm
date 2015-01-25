@@ -3,7 +3,7 @@
 	<application setting="false">
 		<name><![CDATA[微助力]]></name>
 		<identifie><![CDATA[weishare]]></identifie>
-		<version><![CDATA[2.3]]></version>
+		<version><![CDATA[2.8]]></version>
 		<type><![CDATA[activity]]></type>
 		<ability><![CDATA[分享活动赢好礼]]></ability>
 		<description><![CDATA[分享活动到朋友圈获取朋友的助力，即可获取相应礼品！]]></description>
@@ -22,7 +22,7 @@
 	<bindings>
 
 		<menu>
-			<entry title="分享管理" do="share" state="" />
+			<entry title="助力活动管理" do="share" state="" />
 			
 			
 			<entry title="授权接口设置" do="setting" state="" />
@@ -58,7 +58,13 @@ CREATE TABLE IF NOT EXISTS `ims_weishare` (
   `limittype` int(1) NOT NULL  COMMENT '限制类型',
   createtime	int(10) unsigned NOT NULL COMMENT '日期',
   endtime	int(11) unsigned NOT NULL COMMENT '日期',
+  `shareIcon` varchar(200) NOT NULL COMMENT '分享图标',
+  `shareTitle` varchar(200) NOT NULL ,
+  `shareContent` varchar(200) NOT NULL,
+  
   `copyright` varchar(100) NOT NULL COMMENT '版权',
+  `showu` varchar(1) NOT NULL DEFAULT 0,
+  `sortcount` varchar(100) NOT NULL DEFAULT 10,
   PRIMARY KEY (`id`)
  
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

@@ -61,7 +61,7 @@
             <div class="box_time">
                 {$item['buildingintro']}
             </div>
-            <a href="javascript:void(0);" onclick="ADDetail.switchIndex(this);return false;"
+            <a href="javascript:void(0);" onClick="ADDetail.switchIndex(this);return false;"
             class="btn_more">
                 <span>
                     更多
@@ -100,7 +100,7 @@
         </div>
         {/if}
         
-         {if !empty($item['traffic'])}
+  <!--       {if !empty($item['traffic'])}
         <div class="box box_up">
             <h3>
                 交通配套
@@ -110,7 +110,7 @@
                     {$item['traffic']}
                 </p>
             </div>                        
-            <a href="javascript:void(0);" onclick="ADDetail.switchIndex(this);return false;"
+            <a href="javascript:void(0);" onClick="ADDetail.switchIndex(this);return false;"
             class="btn_more">
                 <span>
                     更多
@@ -128,14 +128,14 @@
                     {$item['projectintro']}
                 </p>
             </div>
-            <a href="javascript:void(0);" onclick="ADDetail.switchIndex(this);return false;"
+            <a href="javascript:void(0);" onClick="ADDetail.switchIndex(this);return false;"
             class="btn_more">
                 <span>
                     更多
                 </span>
             </a>
-        </div>  
-        {/if}  
+        </div> 
+        {/if}   -->
        
      {if !empty($hlist)}
      {php $k=0}
@@ -154,7 +154,7 @@
         {loop $hxlist $lxv}
             
             <li id="boxLi{$j}" {if $j==1} class="current"{/if}>
-            <a href="javascript:void(0);" onclick="ADDetail.toggleList({$j},0);">
+            <a href="javascript:void(0);" onClick="ADDetail.toggleList({$j},0);">
             
 
                     <strong>
@@ -170,13 +170,13 @@
                 {if !empty($lxv['photourl'])||!empty($lxv['panourl'])}
                <div class="house_photo {if $j==1}house_arrow{/if}" {if $j!=1}style="display:none;"{/if}>
                {if !empty($lxv['photourl'])}
-                    <a href="javascript:void(0);" onclick="location='{$lxv['photourl']}';return false;"
+                    <a href="javascript:void(0);" onClick="location='{$lxv['photourl']}';return false;"
                     class="ico_type">
                         户型图
                     </a>
                     {/if}
                     {if !empty($lxv['panourl'])}
-                    <a href="javascript:void(0);" onclick="location='{$lxv['panourl']}';return false;"
+                    <a href="javascript:void(0);" onClick="location='{$lxv['panourl']}';return false;"
                     class="ico_type">
                         全景图
                     </a>

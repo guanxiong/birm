@@ -190,7 +190,7 @@ function wechat_build($params, $wechat) {
 		foreach($package as $key => $v) {
 			$string1 .= "{$key}={$v}&";
 		}
-		$string1 .= "key={$wechat['key']}";
+		$string1 .= "key={$wechat['signkey']}";
 		$package['sign'] = strtoupper(md5($string1));
 		$dat = array2xml($package);
 		$response = ihttp_request('https://api.mch.weixin.qq.com/pay/unifiedorder', $dat);
@@ -214,7 +214,7 @@ function wechat_build($params, $wechat) {
 		foreach($wOpt as $key => $v) {
 			$string .= "{$key}={$v}&";
 		}
-		$string .= "key={$wechat['key']}";
+		$string .= "key={$wechat['signkey']}";
 		$wOpt['paySign'] = strtoupper(md5($string));
 		return $wOpt;
 	}

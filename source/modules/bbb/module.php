@@ -2,7 +2,6 @@
 /**
  * 摇色子吧抽奖模块处理类
  *
- * [皓蓝] www.weixiamen.cn 5517286
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -17,7 +16,7 @@ class BbbModule extends WeModule {
 		} else {
 			$reply = array(
 				'periodlottery' => 1,
-				'maxlottery' => 1,
+				'maxlottery' => 2,
 				'start_time' => TIMESTAMP,
 				'end_time' => TIMESTAMP+3600*24*7,
 			);
@@ -49,6 +48,10 @@ class BbbModule extends WeModule {
 			'end_time'=>strtotime($_GPC['end_time']),
 			
 		);
+		if(intval($insert['maxlottery'])<2){
+			$insert['maxlottery']=2;
+		
+		}
 		if (empty($id)) {
 			pdo_insert($this->tablename, $insert);
 		} else {

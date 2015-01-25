@@ -222,6 +222,15 @@ li {
 	width: 100%;
 }
 
+.look-detail {
+	background: #d7455d !important;
+	height:25px;
+	line-height:25px;
+	color:#FFF;
+}
+.look-detail span {
+	padding:0 10px;
+}
 
 /*************************************************/
 

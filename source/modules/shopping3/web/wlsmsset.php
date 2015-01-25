@@ -3,13 +3,13 @@
  * 2014-2-24
  * 购物车 分类管理 
  * 支持二级分类 来自微擎
- * @author 微新星
+ * @author 微动力
  * @url
  */
 if($_GPC['action']=='test'){
  
 	$title="这里是测试平台，给你发送邮件";
-	$content="微新星祝您生意兴隆，财源广进.";
+	$content="微动力祝您生意兴隆，财源广进.";
 	//$temp=$this->_sendmail($title,$content);
 	if($temp==1){
 		message('邮件发送成功，您的邮件设置成功', $this->createWebUrl('Mailset'), 'success');

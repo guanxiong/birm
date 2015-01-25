@@ -795,17 +795,18 @@ a.J-btn50,a.J-btn50:visited {
 			$("#J-loading").hide();
 		});
 	</script> <!-- 分享送积分开始 --> 
-	<script type="text/javascript" src="./source/modules/goshare/template/js/WeixinApi.js" ></script>
 	{php $shareurl = $_W['siteroot'].$this->createMobileUrl('index',array('whoshare'=>$whoshare,'whosharecookie'=>$cookid,'themeid'=>$theme[id]));}
 	{php $geturl = $this->createMobileUrl('sharecallback',array('addshare'=>$addshare,'addsharecookie'=>$addsharecookie,'themeid'=>$theme[id]));}
-	<script>
-		WeixinApi.ready(function(Api){
-		    // 微信分享的数据
-		    var wxData = {
-		        "imgUrl":'{$_W['attachurl']}{$theme['sharepic']}',
-		        "link":"{php echo $shareurl}",
-		        "desc":'{$theme['headtitle']}',
-		        "title":'{$theme['themetitle']}'
+<script language="javascript" src="./source/modules/WeixinApi.js"></script>
+<script type="text/javascript">
+WeixinApi.ready(function(Api) {
+    // 微信分享的数据
+    var wxData = {
+        "appId": "{$shareappid}", // 服务号可以填写appId
+		"imgUrl":'{$_W['attachurl']}{$theme['sharepic']}',
+		"link":"{php echo $shareurl}",
+		"desc":'{$theme['headtitle']}',
+		"title":'{$theme['themetitle']}'
 		    };
 		    // 分享的回调
 		    var wxCallbacks = {

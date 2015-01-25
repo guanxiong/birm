@@ -87,6 +87,14 @@
 									<div class="help-block">与微信公众平台接入设置值一致，必须为英文或者数字，长度为3到32个字符. 请妥善保管, Token 泄露将可能被窃取或篡改微信平台的操作数据.</div>
 								</td>
 							</tr>
+						<!--	<tr>
+								<th style="color:red">EncodingAESKey</th>
+								<td>
+									<input type="text" name="EncodingAESKey" class="span6" value="{$wechat['EncodingAESKey']}" readonly="readonly" /> <a href="javascript:;" onclick="EncodingAESKey();">生成新的</a>
+									<div class="help-block">与公众平台接入设置值一致，必须为英文或者数字，长度为43个字符. 请妥善保管, EncodingAESKey 泄露将可能被窃取或篡改平台的操作数据.</div>
+								</td>
+							</tr>
+							-->
 							{/if}
 							<tr class="">
 								<th>公众号AppId</th>
@@ -232,6 +240,16 @@
 			//message('请先输入微信公众平台用户名');
 		}
 	}
+	function EncodingAESKey() {
+		var letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		var token = '';
+		for(var i = 0; i < 43; i++) {
+			var j = parseInt(Math.random() * 61 + 1);
+			token += letters[j];
+		}
+		$(':text[name="EncodingAESKey"]').val(token);
+	}
+	EncodingAESKey();
 	verifyGen();
 //-->
 </script>

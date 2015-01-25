@@ -258,58 +258,43 @@ $(document).ready(function() {
 	
 })
 </script>
+
+<script language="javascript" src="./source/modules/WeixinApi.js"></script>
 <script type="text/javascript">
-document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-	window.shareData = {
-		"imgUrl": "{$_W['siteroot']}source/modules/forward/template/images/fornut.png",
-		"timeLineLink": "{$_W['siteroot']}{php echo create_url('mobile/module', array('do' => 'tongji', 'name' => 'forward', 'id' => $id, 'weid' => $pan['weid'], 'url' => urlencode($pan['url']), 'from_user' => $_GPC['from_user']))}&wxref=mp.weixin.qq.com",
-		"sendFriendLink": "{$_W['siteroot']}{php echo create_url('mobile/module', array('do' => 'tongji', 'name' => 'forward', 'id' => $id, 'weid' => $pan['weid'], 'url' => urlencode($pan['url']), 'from_user' => $_GPC['from_user']))}&wxref=mp.weixin.qq.com",
-		"weiboLink": "{$_W['siteroot']}{php echo create_url('mobile/module', array('do' => 'tongji', 'name' => 'forward', 'id' => $id, 'weid' => $pan['weid'], 'url' => urlencode($pan['url']), 'from_user' => $_GPC['from_user']))}&wxref=mp.weixin.qq.com",
-		"tTitle": "{$pan['title']}",
-		"tContent": "{$pan['description']}",
-		"fTitle": "{$pan['title']}",
-		"fContent": "{$pan['description']}",
-		"wContent": "{$pan['description']}"
-	};
+// 需要分享的内容，请放到ready里
+WeixinApi.ready(function(Api) {
+    // 微信分享的数据
+    var wxData = {
+        "appId": "{$shareappid}", // 服务号可以填写appId
+        "imgUrl" : '{$_W['siteroot']}source/modules/forward/template/images/fornut.png',
+        "link" : "{$_W['siteroot']}{php echo create_url('mobile/module', array('do' => 'tongji', 'name' => 'forward', 'id' => $id, 'weid' => $pan['weid'], 'url' => urlencode($pan['url']), 'from_user' => $_GPC['from_user']))}&wxref=mp.weixin.qq.com",
+        "desc" : "{$pan['description']}",
+        "title" : "{$pan['title']}"
+    };
 
-	// 发送给好友
-	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
-		WeixinJSBridge.invoke('sendAppMessage', {
-			"img_url": window.shareData.imgUrl,
-			"img_width": "640",
-			"img_height": "640",
-			"link": window.shareData.sendFriendLink,
-			"desc": window.shareData.fContent,
-			"title": window.shareData.fTitle
-		}, function (res) {
-			_report('send_msg', res.err_msg);
-		})
-	});
+    // 分享的回调
+    var wxCallbacks = {
+        // 收藏操作是否触发回调，默认是开启的
+        favorite : false,
 
-	// 分享到朋友圈
-	WeixinJSBridge.on('menu:share:timeline', function (argv) {
-		WeixinJSBridge.invoke('shareTimeline', {
-			"img_url": window.shareData.imgUrl,
-			"img_width": "640",
-			"img_height": "640",
-			"link": window.shareData.timeLineLink,
-			"desc": window.shareData.tContent,
-			"title": window.shareData.tTitle
-		}, function (res) {
-			_report('timeline', res.err_msg);
-		});
-	});
+        // 用async模式，表示每次分享之前，都需要更新分享内容
+        async:true,
+    };
+    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
+    Api.shareToFriend(wxData, wxCallbacks);
 
-	// 分享到微博
-	WeixinJSBridge.on('menu:share:weibo', function (argv) {
-		WeixinJSBridge.invoke('shareWeibo', {
-			"content": window.shareData.wContent,
-			"url": window.shareData.weiboLink
-		}, function (res) {
-			_report('weibo', res.err_msg);
-		});
-	});
-}, false);
+    // 点击分享到朋友圈，会执行下面这个代码
+    Api.shareToTimeline(wxData, wxCallbacks);
+
+    // 点击分享到腾讯微博，会执行下面这个代码
+    Api.shareToWeibo(wxData, wxCallbacks);
+
+    // iOS上，可以直接调用这个API进行分享，一句话搞定
+    Api.generalShare(wxData,wxCallbacks);
+	
+	//显示分享链接
+	Api.showOptionMenu();
+});
 </script>
 </body>
 </html>

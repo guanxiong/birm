@@ -2,7 +2,6 @@
 /**
  * 摇骰子吧抽奖模块
  *
- * [皓蓝] www.weixiamen.cn 5517286
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -45,7 +44,7 @@ class BbbModuleSite extends WeModuleSite {
 		}
 		
 		
-		$sql = "SELECT a.id,  a.points,a.createtime, b.nickname, b.mobile FROM ".tablename('bbb_user')." AS a
+		$sql = "SELECT a.id,  a.points,a.createtime,a.num b.nickname, b.mobile FROM ".tablename('bbb_user')." AS a
 				LEFT JOIN ".tablename('fans')." AS b ON a.from_user = b.from_user WHERE a.rid = '$id'  $where ORDER BY a.points DESC LIMIT ".($pindex - 1) * $psize.",{$psize}";
 		
 		$list = pdo_fetchall($sql);
@@ -82,15 +81,14 @@ class BbbModuleSite extends WeModuleSite {
 		$title = '摇骰子抽奖';
 		$id = intval($_GPC['id']);
 		
-		$useragent = addslashes($_SERVER['HTTP_USER_AGENT']);
-		if(strpos($useragent, 'MicroMessenger') === false && strpos($useragent, 'Windows Phone') === false ){
-			echo " 404";
-			exit;
-		}
+		//$useragent = addslashes($_SERVER['HTTP_USER_AGENT']);
+		//if(strpos($useragent, 'MicroMessenger') === false && strpos($useragent, 'Windows Phone') === false ){
+		//	echo " 404";
+		//	exit;
+		//}
 		
 		checkauth();
 		
-			
 		$fromuser = $_W['fans']['from_user'];
 		$sql="SELECT COUNT(*) FROM ".tablename('bbb_user')." WHERE  from_user = '{$fromuser}' and rid=".$id;
 		$isuser = pdo_fetchcolumn($sql);
@@ -114,11 +112,11 @@ class BbbModuleSite extends WeModuleSite {
 		if ($bbb['start_time']>TIMESTAMP){
 			
 			$str="活动于". date('Y-m-d H:i') ." 开始!";
-			message('活动没开始', $this->createWebUrl('info', array('id' => $id)));
+			message('活动没开始', $this->createMobileUrl('info', array('id' => $id)));
 		}
 		if ($bbb['end_time']<TIMESTAMP){
 			
-			message('活动已结束,稍等带你去看排名..', $this->createWebUrl('rank', array('id' => $id)));
+			message('活动已结束,稍等带你去看排名..', $this->createMobileUrl('rank', array('id' => $id)));
 		}
 		
 		

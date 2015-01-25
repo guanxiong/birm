@@ -1,4 +1,4 @@
-	{if empty($footer_off)}<div id="footer">{if $_W['account']['siteinfo']['footer']}{php echo htmlspecialchars_decode($_W['account']['siteinfo']['footer'])}{else}&copy;{if empty($_W['account']['name'])}微新星团队{else}{$_W['account']['name']}{/if}&nbsp;&nbsp;{/if}{$_W['setting']['copyright']['statcode']}</div>{/if}
+	{if empty($footer_off)}<div id="footer">{if $_W['account']['siteinfo']['footer']}{php echo htmlspecialchars_decode($_W['account']['siteinfo']['footer'])}{else}&copy;{if empty($_W['account']['name'])}微动力团队{else}{$_W['account']['name']}{/if}&nbsp;&nbsp;{/if}{$_W['setting']['copyright']['statcode']}</div>{/if}
 </div>
 {if $_W['quickmenu']['menus']}
 	<?php  include_once template($_W['quickmenu']['template'], TEMPLATE_INCLUDEPATH);?>

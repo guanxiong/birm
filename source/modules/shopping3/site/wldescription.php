@@ -2,7 +2,7 @@
 /**
  * 商品详情
  *
- * @author 微新星
+ * @author 微动力
  * @url
  */
 	$goodsid=intval($_GPC['goodsid']);

@@ -5,7 +5,48 @@
 {if $operation == 'display'}
 <div class="main">
 
-<h4>{$share['title']} 活动分享用户 统计：领卡人数 {$total}</h4>
+<h4>&nbsp;&nbsp;&nbsp;&nbsp;{$share['title']} 活动分享用户 统计：领卡人数 {$total}</h4>
+
+
+
+
+<h4>&nbsp;&nbsp;参加助力好友数:{$ftotal}</h4>
+	
+	
+	<div class="span8 control-group">
+		<a class="btn"
+					href="{php echo create_url('site/module', array('do' => 'download', 'name' => 'weishare','sid'=>$share['id']))}"><i
+					class="icon-download-alt"></i>导出用户信息</a>
+	</div>
+	
+	<div class="search">
+			
+			<form action="{php echo create_url('site/module/shareuser', array('name' => 'weishare','op'=>'display'));}" method="post" >
+				<input type="hidden" name="sid" value="{$share['id']}" />
+			
+				
+				 
+				 	<table class="table table-bordered tb">
+				<tbody>
+					<tr>
+						<th>手机号</th>
+						<td><input type="text" name="tel" value="{$tel}" /></td>
+						
+							<td><button type="submit" class="btn btn-primary">查询</button></td>
+					</tr>
+					
+
+				</tbody>
+			</table>
+				 
+				  
+			
+			</form>
+
+
+
+		</div>
+
 	<div style="padding: 15px;">
 		<table class="table table-hover">
 			<thead class="navbar-inner">

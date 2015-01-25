@@ -42,20 +42,28 @@
 							</td>
 						</tr>
 						<tr>
-							<th></th>
+							<th>搜索内容</th>
 							<td>
-								<input type="submit" name="" value="搜索" class="btn btn-primary">
-								<input type="submit" name="export" value="导出全部数据" class="btn btn-primary">
+								<select name="sou" style="width:110px">
+								{loop $ds $field $comment}
+									<option value="{$field}">{$comment}</option>
+								{/loop}
+								</select>
+								<input type="text" name="title" value="" style="margin-top:-10px"/>
 							</td>
+						</tr>
+						<tr>
+							<th></th>
+							<td><input type="submit" name="" value="搜索" class="btn btn-primary"></td>
 						</tr>
 					</tbody>
 					</table>
 					</form>
 				</div>
 			</div>
+			<form action="" method="post" onsubmit="">
 			<div class="sub-item" id="table-list">
-				<h4 class="sub-title">详细数据</h4>
-				<form action="" method="post" onsubmit="">
+				<h4 class="sub-title">详细数据  <span style="float:right"><a href="{php echo $this->createWebUrl('excel', array('id' => $reid,'select'=>$sel))}">导出Excel</a></span></h4>
 				<div class="sub-content">
 					<table class="table table-hover">
 						<thead class="navbar-inner">
@@ -65,6 +73,7 @@
 								<th>{$ds[$fid]}<i></i></th>
 								{/loop}
 								<th style="width:130px;">提交时间<i></i></th>
+								<th style="min-width:40px;">是否通过审核</th>
 								<th style="min-width:40px;"></th>
 							</tr>
 						</thead>
@@ -78,7 +87,14 @@
 								<td style="font-size:12px; color:#666;">
 								{php echo date('Y-m-d H:i:s', $row[createtime]);}
 								</td>
-								<td><a href="{php echo $this->createWebUrl('detail', array('id' => $row['rerid']))}">详情</a>&nbsp;|&nbsp;<a href="{php echo $this->createWebUrl('researchdelete', array('id' => $row['rerid']))}">删除</a></td>
+								<td>
+									<div align="center">{php echo $row['status'] == 1?'通过':'未审核';}</div>
+								</td>
+								<td>
+								<!--<a href="{php echo $this->createWebUrl('detail', array('id' => $row['rerid']))}">编辑</a>&nbsp;|&nbsp;-->
+								<a href="{php echo $this->createWebUrl('detail', array('id' => $row['rerid']))}">详情</a>&nbsp;|&nbsp;
+								<a href="{php echo $this->createWebUrl('researchdelete', array('id' => $row['rerid']))}">删除</a>
+								</td>
 							</tr>
 							{/loop}
 						</tbody>

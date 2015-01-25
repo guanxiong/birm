@@ -12,7 +12,13 @@
 	<form action="" method="post" class="form-horizontal form"
 		enctype="multipart/form-data">
 		<input type="hidden" name="id" value="{$item['id']}" />
-		<h4>名称</h4>
+		<p/>
+		<table class="tb">
+		
+		<tr>
+		<th><label for="">活动设置</label></th>
+		<td>
+		<div class="alert alert-block alert-new" >
 		<table class="tb">
 
 			<tr>
@@ -64,15 +70,32 @@
 			</tr>
 			
 			
-			
-			
-			
 			<tr>
 				<th><label for="">限制类型</label></th>
 				<td>
 					<input type="radio" name="limittype" value="0" {if $item['limittype'] == 0}checked="checked"{/if}>总助力次数限制  &nbsp;<font color='red'>*</font>(选择此项时请在上面输入总助力次数限制)&nbsp;&nbsp; <input type="radio" name="limittype" value="1" {if $item['limittype'] == 1}checked="checked"{/if}>每天助力限制 <font color='red'>*</font>(选择此项时请在上面输入每天限制次数)
 				</td>
 			</tr>
+			
+			
+			<tr>
+				<th><label for="">是否显示参加总人数</label></th>
+				<td>
+					<input type="radio" name="showu" value="0" {if $item['"showu"'] == 0}checked="checked"{/if}>否  &nbsp; <input type="radio" name="showu" value="1" {if $item['showu'] == 1}checked="checked"{/if}/>是
+				</td>
+			</tr>
+			
+			
+				<tr>
+				<th><label for="">显示前</label></th>
+				<td>
+					<input type="text" name="sortcount" class="span5"
+					value="{$item['sortcount']}" />人排名
+				</td>
+			</tr>
+			
+			
+			
 			
 			
 			
@@ -98,7 +121,7 @@
 
 			<tr>
 				<th><label for="">活动图片</label></th>
-				<td>{php echo tpl_form_field_image('thumb', $item['thumb']);}</td>
+				<td>{php echo tpl_form_field_image('thumb', $item['thumb']);}<span><font color="red">建议大小(640*400)</font></span></td>
 			</tr>
 
 
@@ -139,15 +162,10 @@
 				</td>
 			</tr>
 			
-			
-			
-			
-			
-
-
+		
 			<tr>
 				<th><label for="">活动背景</label></th>
-				<td>{php echo tpl_form_field_image('image', $item['image']);}</td>
+				<td>{php echo tpl_form_field_image('image', $item['image']);}<span><font color="red">建议大小(640*1130)</font></td>
 			</tr>
 
 
@@ -155,8 +173,6 @@
 				<th><label for="">活动规则</label></th>
 				<td><textarea style="height: 400px; width: 100%;"
 						class="span7 richtext-clone" name="rule" cols="70">{$item['rule']}</textarea>
-
-
 
 				</td>
 			</tr>
@@ -170,6 +186,46 @@
 
 
 
+			
+		</table>
+		
+		</div>
+		</td>
+		</tr>
+		
+		
+		<tr>
+			<th>分享设置</th>
+			<td>
+				<div class="alert alert-block alert-new" >
+				<table>
+						<tr>
+							<th><label for="">分享图标<span style="color:red">*</span></label></th>
+							<td>{php echo tpl_form_field_image('shareIcon', $item['shareIcon']);}</td>
+						</tr>
+						
+						
+						<tr>
+							<th><label for="">分享标题<span style="color:red">*</span></label></th>
+							<td><input type="text" name="shareTitle" value="{$item['shareTitle']}"></td>
+						</tr>
+						
+						<tr>
+							<th><label for="">分享内容<span style="color:red">*</span></label></th>
+							<td><textarea rows="3" cols="20" id="shareContent" name="shareContent">{$item['shareContent']}</textarea></td>
+						</tr>
+						
+						
+						
+						
+						
+					</table>
+			</div>
+				
+			
+			</td>
+		</tr>
+		
 			<tr>
 				<th></th>
 				<td><input name="submit" type="submit" value="提交"

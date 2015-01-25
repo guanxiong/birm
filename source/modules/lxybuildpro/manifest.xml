@@ -3,11 +3,11 @@
 	<application setting="false">
 		<name><![CDATA[微房产]]></name>
 		<identifie><![CDATA[lxybuildpro]]></identifie>
-		<version><![CDATA[0.5]]></version>
+		<version><![CDATA[0.6]]></version>
 		<type><![CDATA[business]]></type>
 		<ability><![CDATA[微房产]]></ability>
 		<description><![CDATA[供房产公司展示楼盘]]></description>
-		<author><![CDATA[大路货 QQ:792454007]]></author>
+		<author><![CDATA[微动力]]></author>
 		<url><![CDATA[]]></url>
 	</application>
 	<platform>
@@ -22,6 +22,7 @@
 		<menu>
 			<entry title="楼盘管理" do="buildlists" state="" direct="false" />
 		</menu>
+		<home call="gethometiles"></home>
 	</bindings>
 	<install><![CDATA[
 	
@@ -91,6 +92,7 @@ CREATE TABLE `ims_lxy_buildpro_full_view` (
   `weid` int(11) DEFAULT NULL,
   `hsid` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
+  `quanjinglink` varchar(500) DEFAULT NULL COMMENT '全景外链',
   `pic_qian` varchar(1023) DEFAULT NULL,
   `pic_hou` varchar(1023) DEFAULT NULL,
   `pic_zuo` varchar(1023) DEFAULT NULL,
@@ -100,7 +102,7 @@ CREATE TABLE `ims_lxy_buildpro_full_view` (
   `sort` int(11) DEFAULT NULL,
   `status` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COMMENT='楼盘户型全景';
+) ENGINE=MyISAM AUTO_INCREMENT=83 DEFAULT CHARSET=utf8 COMMENT='楼盘户型全景';
 
 CREATE TABLE `ims_lxy_buildpro_head` (
   `hid` int(11) NOT NULL AUTO_INCREMENT,
@@ -137,6 +139,7 @@ CREATE TABLE `ims_lxy_buildpro_head` (
   PRIMARY KEY (`hid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COMMENT='楼盘简介';
 
+DROP TABLE IF EXISTS `ims_lxy_buildpro_house`;
 CREATE TABLE `ims_lxy_buildpro_house` (
   `hsid` int(11) NOT NULL AUTO_INCREMENT,
   `hid` int(11) DEFAULT NULL,

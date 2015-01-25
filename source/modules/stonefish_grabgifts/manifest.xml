@@ -3,7 +3,7 @@
 	<application setting="true">
 		<name><![CDATA[全民抢礼品]]></name>
 		<identifie><![CDATA[stonefish_grabgifts]]></identifie>
-		<version><![CDATA[1.10]]></version>
+		<version><![CDATA[1.11]]></version>
 		<type><![CDATA[activity]]></type>
 		<ability><![CDATA[全民抢礼品－分享朋友拉朋友和你一起抢礼品，根据拉来的人数不同，获取的礼品不同！]]></ability>		<description><![CDATA[全民抢礼品－分享朋友拉朋友和你一起抢礼品，根据拉来的人数不同，获取的礼品不同！]]></description>
 		<author><![CDATA[微新星]]></author>
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `ims_stonefish_grabgifts_gift` (
   `activation_url` varchar(215) NOT NULL COMMENT '激活地址',  
   `break` int(3) unsigned NOT NULL DEFAULT '0' COMMENT '需要朋友人数',
   `awardpic` varchar(512) NOT NULL COMMENT '奖品图片', 
-  `awardpass` varchar(20) NOT NULL COMMENT '兑奖密码',  
+  `awardpass` varchar(20) NOT NULL COMMENT '兑奖密码',   
   PRIMARY KEY (`id`),
   KEY `indx_rid` (`rid`)
 ) ENGINE = MYISAM DEFAULT CHARSET = utf8;
@@ -207,5 +207,5 @@ drop table `ims_stonefish_grabgifts_awarding`;
 drop table `ims_stonefish_grabgifts_awardingtype`;
 drop table `ims_stonefish_grabgifts_giftmika`;
 	]]></uninstall>
-	<upgrade><![CDATA[upgrade.php]]></upgrade>
+	<upgrade><![CDATA[]]></upgrade>
 </manifest>

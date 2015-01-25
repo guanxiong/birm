@@ -1,9 +1,6 @@
 ﻿<?php
 /**
  * 微房产
- * QQ：792454007
- *
- * @author 大路货
  * @url 
  */
 defined('IN_IA') or exit('Access Denied');
@@ -20,11 +17,41 @@ class LxybuildproModuleSite extends WeModuleSite {
 	public $billtable='lxy_buildpro_bill';
 	
 	
-	public function getProfileTiles() {
-
-	}
 
 	public function getHomeTiles() {
+		global $_W;
+		$urls = array();
+		$weid=$_W['weid'];
+		$fromuser=$_W['fans']['from_user'];
+		
+		$list = pdo_fetchall("SELECT * FROM ".tablename($this->headtable)." WHERE weid=:weid ", array(':weid'=>$weid));
+		if (!empty($list)) {
+			foreach ($list as $row) {
+				$urls[]=array('title'=>$row['jjname'],'url'=>$this->createMobileurl('buildinfo',array('hid'=>$row['hid'])));
+				$urls[]=array('title'=>$row['xcname'],'url'=>$this->createMobileurl('viewbdalbum',array('hid'=>$row['hid'])));
+				$urls[]=array('title'=>$row['hxname'],'url'=>$this->createMobileurl('huxing',array('hid'=>$row['hid'])));
+				$urls[]=array('title'=>$row['yxname'],'url'=>$this->createMobileurl('review',array('hid'=>$row['hid'])));
+		//		$urls[]=array('title'=>$row['xwname'],'url'=>$row['xwurl']);
+		//		$urls[]=array('title'=>$row['yyname'],'url'=>$row['yyurl']);
+		//		$hyurl="";
+		//		if(empty($row['hyurl']))
+		//		{
+		//			$member = pdo_fetch("SELECT id, cardsn FROM ".tablename('card_members')." WHERE from_user = :from_user", array(':from_user' => $fromuser));
+		//			$hyurl= !empty($member) ? create_url('mobile/channel', array('name' => 'home', 'weid' => $_W['weid'])) : create_url('mobile/module/card', array('name' => 'member', 'weid' => $_W['weid']));
+					//use icard
+					//$hyurl= $_W['siteroot'] . "mobile.php?act=module&name=icard&do=wapindex&weid={$weid}&from_user=".base64_encode(authcode($fromuser, 'ENCODE'));				
+		//		}
+		//		else
+		//		{
+		//			$hyurl=str_replace('{fromuser}', $fromuser, $row['hyurl']);
+		//		}
+				
+		//		$urls[]=array('title'=>$row['hyname'],'url'=>$hyurl);
+				$urls[]=array('title'=>$row['lxname'],'url'=>"tel:{$row['tel']}");
+
+			}
+		}
+		return $urls;
 	}
 	//简介
 	public function doWebAdd() {
@@ -45,9 +72,9 @@ class LxybuildproModuleSite extends WeModuleSite {
 			$data = array(
 					'weid' => $_W['weid'],
 					'title' => $_GPC['title'],
-					'jianjie' => $_GPC['jianjie'],
-					'xiangmu' => $_GPC['xiangmu'],
-					'jiaotong' => $_GPC['jiaotong'],
+					'jianjie' => htmlspecialchars_decode($_GPC['jianjie']),
+					'xiangmu' => htmlspecialchars_decode($_GPC['xiangmu']),
+					'jiaotong' =>htmlspecialchars_decode($_GPC['jiaotong']),
 					'tel' => $_GPC['tel'],
 					'addr' => $_GPC['addr'],
 					'jw_addr' => $_GPC['jw_addr'],
@@ -217,7 +244,7 @@ class LxybuildproModuleSite extends WeModuleSite {
 					'fang' => $_GPC['fang'],
 					'ting' => $_GPC['ting'],
 					'sort' => $_GPC['sort'],
-					'jianjie' => $_GPC['jianjie'],
+					'jianjie' => htmlspecialchars_decode($_GPC['jianjie']),
 					'pic' =>htmlspecialchars_decode($_GPC['hxpiclist']),
 					'createtime'=>time(),
 			);
@@ -278,6 +305,28 @@ class LxybuildproModuleSite extends WeModuleSite {
 		include $this->template('albumlist');
 	}
 	
+	public function doWebdelalbum()
+	{
+	
+		global $_GPC,$_W;
+		checklogin();
+		$id=$_GPC['id'];
+		$hid=$_GPC['hid'];
+		$weid=$_W['weid'];
+		$item=pdo_fetch('select * from '.tablename($this->albumtable)." where hid='{$hid}'and  weid='{$weid}' and id='{$id}'");
+		if(empty($item))
+		{
+			message('抱歉，您删除的相册不存在或已经删除！');
+		}
+		$pic_list=json_decode($item['pic'],true);
+		foreach ($pic_list as $pic )
+		{
+			file_delete($pic['src']);
+		}
+		pdo_delete($this->albumtable,array('id'=>$id));
+		message('删除楼盘户型成功！',$this->createWebUrl('albumlist', array('hid'=>$hid,'id'=>$id)),'success');
+		
+	}
 	public function doWebAlbumadd () {
 		global $_GPC, $_W;
 		$id = intval($_GPC['id']);
@@ -604,6 +653,7 @@ class LxybuildproModuleSite extends WeModuleSite {
 					'title' => $_GPC['title'],
 					'sort' => $_GPC['sort'],
 					'status' => $_GPC['status'],
+					'quanjinglink'=>$_GPC['quanjinglink'],
 			);
 			//上传图片
 			if (!empty($_FILES['pic_qian']['tmp_name'])) {
@@ -895,6 +945,7 @@ class LxybuildproModuleSite extends WeModuleSite {
 			$data['width'] = $data['height'] = 1600;
 			$data['dtitle'] = array($hxtype['title']);
 			$data['dlist'] = array($hxtype['jianjie']);
+
 			$picarr = array();
 			$isfirst = true;
 			foreach ($pics as $pic){
@@ -974,10 +1025,10 @@ class LxybuildproModuleSite extends WeModuleSite {
 		
 			foreach ($yxres as $y){
 				if($y['title']==$red['title']){
-					$u_arr['id'] = $y['id'];
+					$u_arr['id'] = $y['yid'];
 					$u_arr['count'] = $y['yinxiang_number'];
 				}
-				$yx_arr[] = array('content'=>$y['title'],'count'=>$y['yinxiang_number'],'id'=>$y['id']);
+				$yx_arr[] = array('content'=>$y['title'],'count'=>$y['yinxiang_number'],'id'=>$y['yid']);
 			}
 			$res = array('msg'=>'ok','ret'=>'0','user'=>$u_arr,'top'=>$yx_arr,'sum'=>$sum);
 			header('Content-type: '.'application/json');

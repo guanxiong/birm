@@ -3,7 +3,7 @@
 	<application setting="false">
 		<name><![CDATA[攒红包]]></name>
 		<identifie><![CDATA[redpacket]]></identifie>
-		<version><![CDATA[1.0]]></version>
+		<version><![CDATA[2.2]]></version>
 		<type><![CDATA[activity]]></type>
 		<ability><![CDATA[邀请好友红包活动！]]></ability>
 		<description><![CDATA[邀请好友红包活动！]]></description>
@@ -124,6 +124,7 @@ CREATE TABLE `ims_redpacket_firend` (
   `sex` varchar(10) NOT NULL COMMENT '性别',
   `headimgurl` varchar(500) NOT NULL COMMENT '头像',
   `createtime` int(10) unsigned NOT NULL COMMENT '日期',
+   `income` float(10,2) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -162,5 +163,5 @@ CREATE TABLE `ims_redpacket_token` (
 	
 	
 	]]></uninstall>
-	<upgrade><![CDATA[upgrade.php]]></upgrade>
+	<upgrade><![CDATA[]]></upgrade>
 </manifest>

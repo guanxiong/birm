@@ -17,3 +17,8 @@ if (!pdo_fieldexists('research', 'content')) {
 	pdo_query("ALTER TABLE ".tablename('research')." CHANGE `description` `content` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;");
 	pdo_query("ALTER TABLE ".tablename('research')." ADD `description` VARCHAR( 1000 ) NOT NULL DEFAULT '' AFTER `title` ;");
 }
+
+if(!pdo_fieldexists('research', 'status')) {
+	pdo_query("ALTER TABLE ".tablename('research')." ADD `status` VARCHAR(1)  NULL DEFAULT '';");
+}
+

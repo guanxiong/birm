@@ -108,6 +108,7 @@ if (checksubmit('submit') || checksubmit('sync')) {
 			'accountlink' => $data['accountlink'],
 			'original' => $data['original'],
 			'token' => $data['token'],
+			'EncodingAESKey' => $_GPC['EncodingAESKey'],
 			'level' => $data['level'],
 			'key' => $data['key'],
 			'secret' => $data['secret'],
@@ -128,6 +129,7 @@ if (checksubmit('submit') || checksubmit('sync')) {
 	} else {
 		$data['hash'] = random(5);
 		$data['token'] = random(32);
+		$data['EncodingAESKey'] = random(43);
 		if (pdo_insert('wechats', $data)) {
 			$id = pdo_insertid();
 			//保存图片

@@ -29,7 +29,7 @@
                                 <span style="font-size:10px;">推荐</span></a>
                         </dd>
                         <dd>
-                            <em>{$row['marketprice']}元/例</em>
+                            <em>{$row['marketprice']}元/{unit}</em>
                         </dd> 
                         <input type="checkbox" class="favourite" value="{$row['id']}" checked onclick="favourite(this, event);">
 						{if $cart[$row['id']]['total']>0}

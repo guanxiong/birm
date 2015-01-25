@@ -96,19 +96,19 @@
         <tr>
 			<th><label for="">房屋户型</label></th>
 			<td><select name="fang" id="fang" class="input-mini">
-			  <option value="1">1</option>
-			  <option value="2">2</option>
-			  <option value="3">3</option>
-			  <option value="4">4</option>
-			  <option value="5">5</option>
+			  <option value="1" {if $item['fang']==1}selected="selected"{/if}>1</option>
+			  <option value="2" {if $item['fang']==2}selected="selected"{/if}>2</option>
+			  <option value="3" {if $item['fang']==3}selected="selected"{/if}>3</option>
+			  <option value="4" {if $item['fang']==4}selected="selected"{/if}>4</option>
+			  <option value="5" {if $item['fang']==5}selected="selected"{/if}>5</option>
 		    </select>
 			  房
 			  <select name="ting" id="ting" class="input-mini">
-              <option value="1">1</option>
-			  <option value="2">2</option>
-			  <option value="3">3</option>
-			  <option value="4">4</option>
-			  <option value="5">5</option>
+              <option value="1" {if $item['ting']==1}selected="selected"{/if}>1</option>
+			  <option value="2" {if $item['ting']==2}selected="selected"{/if}>2</option>
+			  <option value="3" {if $item['ting']==3}selected="selected"{/if}>3</option>
+			  <option value="4" {if $item['ting']==4}selected="selected"{/if}>4</option>
+			  <option value="5" {if $item['ting']==5}selected="selected"{/if}>5</option>
 	        </select>
 		    厅</td>
 		</tr>

@@ -22,7 +22,11 @@
 			<td><input type="text" name="sort" value="{$item['sort']}" class="span5" />
 		    * 数值越大越靠前</td>
 		</tr>
-        
+        <tr>
+			<th>全景外链：</th>
+			<td><input type="text" name="quanjinglink" value="{$item['quanjinglink']}" class="span7" placeholder="此处为空调用内置的全景展示"/>
+		    可为空。 站外地址前请加上http://</td>
+		</tr>
         <tr>
 					<th>是否显示：</th>
 					<td>
@@ -41,6 +45,17 @@
 				</div></td>
 		</tr>
         
+        
+        
+        <tr>
+			<th>相册图片-右：</th>
+			<td><div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getdefaultfullviewpic(4,$item['pic_you'])}" width="200" /></div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic_you" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a></div>
+				</div></td>
+		</tr>
         <tr>
 			<th>相册图片-后：</th>
 			<td><div class="fileupload fileupload-new" data-provides="fileupload">
@@ -56,15 +71,6 @@
 					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getdefaultfullviewpic(3,$item['pic_zuo'])}" width="200" /></div>
 					<div>
 						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic_zuo" type="file" /></span>
-						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a></div>
-				</div></td>
-		</tr>
-        <tr>
-			<th>相册图片-右：</th>
-			<td><div class="fileupload fileupload-new" data-provides="fileupload">
-					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"><img src="{php echo $this->getdefaultfullviewpic(4,$item['pic_you'])}" width="200" /></div>
-					<div>
-						<span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">更改</span><input name="pic_you" type="file" /></span>
 						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a></div>
 				</div></td>
 		</tr>

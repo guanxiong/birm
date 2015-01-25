@@ -48,9 +48,12 @@
 							<thead class="navbar-inner">
 								<tr>
 									<th style="width:50px;" class="row-first">头像</th>	
-									<th style="width:150px;">领取状态</th>
+									<th style="width:60px;">领取状态</th>
 									<th style="width:150px;">昵称</th>
-									<th class="row-hover">获奖情况</th>									
+									<th style="width:120px;">联系电话</th>
+									<th style="width:100px;">QQ</th>
+									<th>地址</th>
+									<th style="width:180px;">获奖情况</th>									
 									<th style="width:60px;">邀请值<i></i></th>
 									<th style="width:60px;">人气值<i></i></th>
 									<th style="width:150px;">注册/分享时间<i></i></th>
@@ -62,11 +65,14 @@
 								{loop $list_praise $row}
 								<tr>
 									<td class="row-first"><img src="{$row['avatar']}" width="50px;"/></td>
-									<td>{if $row['mobile']}<font color=green>已提交资料</font>{else}<font color=gray>未提交资料</font>{/if}</td>
-									<td>{$row['nickname']}</td>
-									<th class="row-hover">{$row['praiseinfo']}</th>
-									<td>{$row['yaoqingnum']}</td>
-									<td>{$row['sharenum']}</td>
+								    <td style="text-align: center;">{if $row['mobile']}<font color=green>已提交资料</font>{else}<font color=gray>未提交资料</font>{/if}</td>
+									<td style="text-align: center;">{$row['nickname']}</td>
+									<td style="text-align: center;">{$row['mobile']}</td>
+									<td style="text-align: center;">{$row['qqhao']}</td>
+									<td style="text-align: center;">{$row['isaddress']}</td>
+									<th class="row-hover" style="text-align: center;">{$row['praiseinfo']}</th>
+									<td style="text-align: center;">{$row['yaoqingnum']}</td>
+									<td style="text-align: center;">{$row['sharenum']}</td>
 									<td>{php echo date('Y-m-d H:i:s', $row['datatime']);}</br>{php echo date('Y-m-d H:i:s', $row['sharetime']);}</td>
 									<td style="width:60px;font-size:12px; color:#666;">{if $row['status']}未屏蔽{else}已屏蔽{/if}</td>
 								</tr>

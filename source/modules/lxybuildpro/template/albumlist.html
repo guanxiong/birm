@@ -42,7 +42,7 @@
 					<td>{$item['jianjie']}</td>
 					<td>{$item['sort']}</td>
 					<td><a  href="{php echo $this->createWebUrl('albumadd', array('id'=>$item['id'],'hid'=>$hid))}" class="btn " title="编辑"><i class="icon-edit"></i></a>
-					<a onclick="return confirm('是否要删除该相册？');return false;" href="{php echo $this->createWebUrl('delalbum', array('id' => $item['id']))}" class="btn btn-small" title="删除"><i class="icon-remove"></i></a></td>
+					<a onclick="return confirm('是否要删除该相册？');return false;" href="{php echo $this->createWebUrl('delalbum', array('id' => $item['id'],'hid'=>$item['hid']))}" class="btn btn-small" title="删除"><i class="icon-remove"></i></a></td>
 				</tr>
 				{/loop}
 			</tbody>

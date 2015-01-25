@@ -14,9 +14,8 @@ window.onload = function() {
 		},
 		checkForm:function(){
 		    var tel = this.dom.inputanquan.value;
-			if ($.trim(tel) == "d2VpeGluLnd3dzgudG9uZ2RhbmV0LmNvbWFucXVhbl9tYV9ncmFiZ2lmdHM=") {
+		
 			this.dom.shareLayer.classList.add("show");
-			}
 		},
 		bindOpen: function() {
 

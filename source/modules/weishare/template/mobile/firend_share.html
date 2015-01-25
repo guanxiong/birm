@@ -16,6 +16,7 @@
 	<link href="./source/modules/weishare/css/common.css" rel="stylesheet">
 	
 	<script src="./source/modules/weishare/js/require.js"></script>
+	<script src="./source/modules/weishare/js/WeixinApi.js"></script>
 	<script src="./source/modules/weishare/js/app/config.js"></script>
 	<script type="text/javascript" src="./source/modules/weishare/js/lib/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript">
@@ -98,7 +99,7 @@
 			<a href="javascript:void(0)" class="btn btn-primary btn-block">活动已结束!</a>	
 		{/if}
 		
-		<p>{$share['tip']}，<a href="{php echo $this->createMobileUrl('rule',array("id"=>$share['id']))}">点击查看活动规则>>></a></p>
+		<p>{$share['tip']}，<a href="{php echo $this->createMobileUrl('rule',array("id"=>$share['id'],"uid"=>$shareUser['id']))}">点击查看活动规则>>></a></p>
 	</div>
 	</form>
 	<span class="cropyt" style="text-align: center;">{$share['copyright']}</span>
@@ -134,46 +135,66 @@ $(document).ready(function(){
 	require(['WeixinApi','jquery'], function(WeixinApi, $){
 		//图片地址
  
-	var _share_img = "{$_W['attachurl']}{$share['thumb']}";
+	var _share_img = "{$_W['attachurl']}{$share['shareIcon']}";
 
 		//分享内容
-			var _share_content = "{$share[title]}";
+			var _share_content = "{$share[shareContent]}";
 
-WeixinApi.ready(function(Api) {
-	var radom=Math.floor(Math.random()*10);
-	// 微信分享的数据
-	var wxData = {
-		"appId": "",
-		"imgUrl" : _share_img,
-		"link" : "{$_W[siteroot]}{php echo $this->createMobileUrl('firendshare',array('sid'=>$share['id'],"uid"=>$shareUser['id']))}",
-		"desc" : _share_content,
-		"title" : "{$share[title]}"
-	};
-	if(window.sharedata && window.sharedata['link']){
-		wxData['appId'] = window.sharedata['appId'];
-		wxData['imgUrl'] = window.sharedata['imgUrl'];
-		wxData['link'] = window.sharedata['link'];
-		wxData['desc'] = window.sharedata['desc'];
-		wxData['title'] = window.sharedata['title'];
-	}
-	
-	
-	var wxCallbacks = {
-		confirm : function(resp) {
-			
-			
-			if(window['onshared'] && typeof(window['onshared']) == 'function'){
-				window['onshared']();
-				
-			}
-		}
-	};
-	Api.shareToFriend(wxData, wxCallbacks);
-	Api.shareToTimeline(wxData, wxCallbacks);
-	Api.shareToWeibo(wxData, wxCallbacks);
-	Api.generalShare(wxData,wxCallbacks);
-});
-});
+
+		// 需要分享的内容，请放到ready里
+		WeixinApi.ready(function(Api) {
+			// 微信分享的数据
+
+			var wxData = {
+				"appId": "",
+				"imgUrl" : _share_img,
+				"link" : "{$_W[siteroot]}{php echo $this->createMobileUrl('firendshare',array('sid'=>$share['id'],"uid"=>$shareUser['id']))}",
+				"desc" : _share_content,
+				"title" : "{$share[shareTitle]}"
+			};
+
+			// 分享的回调
+			var wxCallbacks = {
+
+				favorite : false,
+
+				// 分享操作开始之前
+				ready : function() {
+
+				},
+				// 分享被用户自动取消
+				cancel : function(resp) {
+
+				},
+				// 分享失败了
+				fail : function(resp) {
+
+				},
+				// 分享成功
+				confirm : function(resp) {
+
+				},
+				// 整个分享过程结束
+				all : function(resp,shareTo) {
+
+				}
+			};
+
+
+			Api.shareToFriend(wxData, wxCallbacks);
+
+
+			Api.shareToTimeline(wxData, wxCallbacks);
+
+
+			Api.shareToWeibo(wxData, wxCallbacks);
+
+
+			Api.generalShare(wxData,wxCallbacks);
+		});
+
+
+	});
 </script>
 </body>
 </html>

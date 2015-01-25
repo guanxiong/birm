@@ -48,7 +48,9 @@
         </h3>
         <ul style="margin-left: 45px;">
             <li>
-                <a href="{php echo $this->createMobileurl('fullview',array('id'=>$q['id']))}">{$q['title']}</a>
+                <a href="
+                {if empty($q['quanjinglink'])}
+                {php echo $this->createMobileurl('fullview',array('id'=>$q['id']))}{else}{$q['quanjinglink']}{/if}">{$q['title']}</a>
             </li>
         </ul>
      {/loop}

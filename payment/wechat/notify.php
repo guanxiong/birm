@@ -1,7 +1,5 @@
 <?php
 error_reporting(0);
-define('IN_MOBILE', true);
-
 $input = file_get_contents('php://input');
 if (!empty($input) && empty($_GET['out_trade_no'])) {
 	$obj = simplexml_load_string($input, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -9,6 +7,7 @@ if (!empty($input) && empty($_GET['out_trade_no'])) {
 	if (empty($data)) {
 		exit('fail');
 	}
+
 	if ($data['result_code'] != 'SUCCESS' || $data['return_code'] != 'SUCCESS') {
 		//logging('pay-wechat', $data['return_msg'] . ' - '. $data['err_code'] . ': '. $data['err_code_des']);
 		exit('fail');
@@ -18,8 +17,12 @@ if (!empty($input) && empty($_GET['out_trade_no'])) {
 	$get = $_GET;
 }
 
-$_POST['weid'] = $get['attach'];
 require '../../source/bootstrap.inc.php';
+$_POST['weid'] = $get['attach'];
+$_W['weid'] = intval($_POST['weid']);
+$sql = "SELECT * FROM " . tablename('wechats') . " WHERE `weid`=:weid LIMIT 1";
+$_W['account'] = pdo_fetch($sql, array(':weid' => $_W['weid']));
+$_W['account']['payment'] = iunserializer($_W['account']['payment']);
 if(is_array($_W['account']['payment'])) {
 	$wechat = $_W['account']['payment']['wechat'];
 	if(!empty($wechat)) {
@@ -30,7 +33,8 @@ if(is_array($_W['account']['payment'])) {
 				$string1 .= "{$k}={$v}&";
 			}
 		}
-		$sign = strtoupper(md5($string1 . "key={$wechat['key']}"));
+		$wechat['signkey'] = ($wechat['version'] == 1) ? $wechat['key'] : $wechat['signkey'];
+		$sign = strtoupper(md5($string1 . "key={$wechat['signkey']}"));
 		if($sign == $get['sign']) {
 			$plid = $get['out_trade_no'];
 			$sql = 'SELECT * FROM ' . tablename('paylog') . ' WHERE `plid`=:plid';
