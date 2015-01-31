@@ -396,7 +396,15 @@ class stonefish_chailiheModule extends WeModule {
 		}		
 		
 	}
-	
+	public function dodelete($id=0){
+		global $_GPC;
+		$rid = $_GPC['rid'];
+		$id = $_GPC['id'];
+		if (!empty($id)) {
+			pdo_delete($this->table_gift, " id = ".$id);
+			message('删除成功！', referer(),'success');
+		}	
+	}
     //导出数据
 	public function dodownload(){
 		require_once 'download.php';

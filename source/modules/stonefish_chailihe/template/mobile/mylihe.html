@@ -13,7 +13,6 @@
 <link rel="stylesheet" type="text/css" href="./source/modules/stonefish_chailihe/template/images/reset.css?2014-08-28" media="all" />
 <link rel="stylesheet" type="text/css" href="./source/modules/stonefish_chailihe/template/images/myPrize.css?2014-08-28" media="all" />
 <script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/zepto_min.js?2014-08-28"></script>
-<script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/WeixinApi.js?2014-08-28"></script>
 <title>{$reply['title']}</title>
 <style>
 	.container{background-color: {$bgcolor};}
@@ -78,59 +77,7 @@
         </footer>
     </div>
     <div class="share-layer"></div>
-<script type="text/javascript">
-// 需要分享的内容，请放到ready里
-    window.shareData = {  
-            "imgUrl": "{$picture}",
-            "timeLineLink": "{$shareurl}",
-            "sendFriendLink": "{$shareurl}",
-            "weiboLink": "{$shareurl}",
-            "tTitle": "{$reply['sharetitle']}",
-            "fTitle": "{$reply['sharetitle']}",
-            "tContent": "{$reply['sharecontent']}",
-            "fContent": "{$reply['sharecontent']}",
-            "wContent": "{$reply['sharecontent']}"
-    };
-WeixinApi.ready(function(Api) {
-    // 微信分享的数据
-	var wxData = {
-        "appId": "{$shareappid}", // 服务号可以填写appId
-        "imgUrl" : '{$picture}',
-        "link" : '{$shareurl}',
-        "desc" : "{$reply['sharecontent']}",
-        "title" : "{$reply['sharetitle']}"
-    };
-    // 分享的回调
-    var wxCallbacks = {
-        // 收藏操作是否触发回调，默认是开启的
-        favorite : false,
-
-        // 用async模式，表示每次分享之前，都需要更新分享内容
-        async:true,
-		// 分享操作开始之前
-        ready : function() {
-        // 你可以在这里对分享的数据进行动态修改：*可以只修改某些字段*
-        this.dataLoaded({
-            link : window.shareData.sendFriendLink,
-            });
-        },
-    };
-    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
-    Api.shareToFriend(wxData, wxCallbacks);
-
-    // 点击分享到朋友圈，会执行下面这个代码
-    Api.shareToTimeline(wxData, wxCallbacks);
-
-    // 点击分享到腾讯微博，会执行下面这个代码
-    Api.shareToWeibo(wxData, wxCallbacks);
-
-    // iOS上，可以直接调用这个API进行分享，一句话搞定
-    Api.generalShare(wxData,wxCallbacks);
-	
-	//显示分享链接
-	Api.showOptionMenu();
-});
-</script>
+{template 'jssdk'}
 
 </body>
 </html>

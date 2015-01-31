@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[场景式微活动]]></name>
+		<identifie><![CDATA[activity]]></identifie>
+		<version><![CDATA[1.5]]></version>
+		<type><![CDATA[wdlshow]]></type>
+		<ability><![CDATA[报名，议程，嘉宾！]]></ability>
+		<description><![CDATA[报名，议程，嘉宾，地图导航，邮件提醒！]]></description>
+		<author><![CDATA[wdl]]></author>
+		<url><![CDATA[www.b2ctui.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="活动管理" do="activityManger" state="" />
+			<entry title="提醒设置" do="tip" state="" />
+
+		</menu>
+	</bindings>
+
+	<install><![CDATA[
+	
+	
+CREATE TABLE IF NOT EXISTS ims_activity(
+	id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	weid INT(11) UNSIGNED DEFAULT NULL,
+	name VARCHAR(50) DEFAULT NULL,
+	ac_pic VARCHAR(100) NOT NULL,
+	begintime INT(11) UNSIGNED DEFAULT NULL,
+	endtime  INT(11) UNSIGNED DEFAULT NULL,
+	createtime INT(11) UNSIGNED DEFAULT NULL,
+	countlimit INT(5) NOT NULL,
+	countvirtual INT(5) DEFAULT 0,
+	visitsCount INT(11) DEFAULT 0,
+	ppt1 VARCHAR(100) DEFAULT NULL,
+	ppt2 VARCHAR(100) DEFAULT NULL,
+	ppt3 VARCHAR(100) DEFAULT NULL,
+	acdes VARCHAR(500) NOT NULL DEFAULT '',
+	address VARCHAR(200) NOT NULL,
+	`location_p` varchar(100) NOT NULL COMMENT '所在地区_省',
+  `location_c` varchar(100) NOT NULL COMMENT '所在地区_市',
+  `location_a` varchar(100) NOT NULL COMMENT '所在地区_区',
+  `lng` decimal(18,10) NOT NULL DEFAULT '0.0000000000',
+  `lat` decimal(18,10) NOT NULL DEFAULT '0.0000000000',
+	
+	tel VARCHAR(20)  DEFAULT NULL,
+	email VARCHAR(20)  DEFAULT NULL,
+	zb VARCHAR(50)  DEFAULT NULL,
+	cb VARCHAR(50)  DEFAULT NULL,
+	xb VARCHAR(50)  DEFAULT NULL,
+	cjdx VARCHAR(50)  DEFAULT NULL,
+	hoteldesc VARCHAR(500) DEFAULT NULL,
+	costdes VARCHAR(500) DEFAULT NULL,
+	isrepeat INT(1) DEFAULT 0,
+	istip INT(1) DEFAULT 0,
+	PRIMARY KEY(id)
+
+) ENGINE=MYISAM  DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS `ims_activity_reply` (
+	  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	  `rid` int(10) unsigned NOT NULL DEFAULT '0',
+	  `aid` int(10) unsigned NOT NULL,
+	  PRIMARY KEY (`id`),
+	  KEY `idx_rid` (`rid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS `ims_activity_mail` (
+	  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	 	email VARCHAR(100)  NOT NULL,
+	 weid INT(11) UNSIGNED DEFAULT NULL,
+	 PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+	
+
+
+CREATE TABLE IF NOT EXISTS ims_activity_note(
+	id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	aid INT(11) UNSIGNED DEFAULT NULL,
+	title VARCHAR(50) NOT NULL,
+	ndesc VARCHAR(500) DEFAULT NULL,
+	PRIMARY KEY(id)
+	
+) ENGINE=MYISAM  DEFAULT CHARSET=utf8;
+
+	
+
+
+
+CREATE TABLE IF NOT EXISTS ims_activity_day(
+	id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	aid INT(11) UNSIGNED DEFAULT NULL,
+	daytime INT(11) UNSIGNED DEFAULT NULL,
+	dname varchar(20) DEFAULT NULL,
+	ddes VARCHAR(50) DEFAULT NULL,
+	PRIMARY KEY(id)
+	
+) ENGINE=MYISAM  DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS ims_activity_user(
+	id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	aid INT(11) UNSIGNED DEFAULT NULL,
+	createtime INT(11) UNSIGNED DEFAULT NULL,
+	uname VARCHAR(20) DEFAULT NULL,
+	sex varchar(10) NOT NULL,
+	tel VARCHAR(20) NOT NULL,
+	email VARCHAR(20) NOT NULL,
+	company VARCHAR(20) NOT NULL,
+	jobtitle VARCHAR(20) NOT NULL,
+	acname VARCHAR(50) DEFAULT NULL,
+	openid VARCHAR(100) DEFAULT NULL,
+	PRIMARY KEY(id)
+	
+) ENGINE=MYISAM  DEFAULT CHARSET=utf8;
+
+
+
+
+
+CREATE TABLE IF NOT EXISTS ims_activity_guest(
+	id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	aid INT(11) UNSIGNED DEFAULT NULL,
+	gname VARCHAR(20) NOT NULL,
+	jobtitle VARCHAR(20) NOT NULL,
+	gdesc VARCHAR(500) NOT NULL,
+	sig VARCHAR(20) NOT NULL,
+	headimage VARCHAR(200) NOT NULL,
+	PRIMARY KEY(id)
+		
+) ENGINE=MYISAM  DEFAULT CHARSET=utf8 COMMENT='嘉宾';
+
+	 
+	]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_activity`;
+	DROP TABLE IF EXISTS `ims_activity_day`;
+	DROP TABLE IF EXISTS `ims_activity_reply`;
+	DROP TABLE IF EXISTS `ims_activity_guest`;
+	DROP TABLE IF EXISTS `ims_activity_user`;
+	DROP TABLE IF EXISTS `ims_activity_note`;
+	DROP TABLE IF EXISTS `ims_activity_mail`;
+	
+	
+	]]></uninstall>
+	<upgrade><![CDATA[]]>
+	</upgrade>
+</manifest>

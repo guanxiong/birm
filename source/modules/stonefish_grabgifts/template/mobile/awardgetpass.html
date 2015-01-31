@@ -88,73 +88,40 @@ function submit_data()
 }
 //-->
 </script>
-<script type="text/javascript">
-document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-	window.shareData = {
-		"imgUrl": "{$picture}",
-		"timeLineLink": "{$shareurl}",
-		"sendFriendLink": "{$shareurl}",
-		"weiboLink": "{$shareurl}",
-		"tTitle": "{$reply['sharetitle']}",
-        "fTitle": "{$reply['sharetitle']}",
-        "tContent": "{$reply['sharecontent']}",
-        "fContent": "{$reply['sharecontent']}",
-        "wContent": "{$reply['sharecontent']}" 
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+	
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+	
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',		
+	];
+	
+	wx.config(jssdkconfig);
+
+	sharedata = {
+		title : "{$reply['sharetitle']}",
+		link : "{$shareurl}",
+		desc : "{$reply['sharecontent']}",
+		imgUrl :"{$picture}"
 	};
-
-	// 发送给好友
-	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
-		WeixinJSBridge.invoke('sendAppMessage', {
-			"img_url": window.shareData.imgUrl,
-			"img_width": "640",
-			"img_height": "640",
-			"link": window.shareData.sendFriendLink,
-			"desc": window.shareData.fContent,
-			"title": window.shareData.fTitle
-		}, function (res) {
-			_report('send_msg', res.err_msg);
-		})
+	
+	wx.ready(function () {
+		wx.showOptionMenu();
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
 	});
-
-	// 分享到朋友圈
-	WeixinJSBridge.on('menu:share:timeline', function (argv) {
-		WeixinJSBridge.invoke('shareTimeline', {
-			"img_url": window.shareData.imgUrl,
-			"img_width": "640",
-			"img_height": "640",
-			"link": window.shareData.timeLineLink,
-			"desc": window.shareData.tContent,
-			"title": window.shareData.tTitle
-		}, function (res) {
-			_report('timeline', res.err_msg);
-		});
-	});
-
-	// 分享到微博
-	WeixinJSBridge.on('menu:share:weibo', function (argv) {
-		WeixinJSBridge.invoke('shareWeibo', {
-			"content": window.shareData.wContent,
-			"url": window.shareData.weiboLink
-		}, function (res) {
-			_report('weibo', res.err_msg);
-		});
-	});
-}, false);
-
-function onBridgeReady(){
- WeixinJSBridge.call('hideOptionMenu');
-}
-
-if (typeof WeixinJSBridge == "undefined"){
-    if( document.addEventListener ){
-        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-    }else if (document.attachEvent){
-        document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-    }
-}else{
-    onBridgeReady();
-}
 </script>
 </body>
 </html>

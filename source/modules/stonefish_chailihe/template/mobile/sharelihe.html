@@ -7,7 +7,6 @@
 <script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/common.js?2014-08-28"></script>
 <script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/openPrize.js?2014-08-28"></script>
 <script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/zepto_min.js?2014-08-28"></script>
-<script type="text/javascript" src="./source/modules/stonefish_chailihe/template/images/WeixinApi.js?2014-08-28"></script>
 <title>{$reply['title']}</title>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
@@ -66,41 +65,6 @@
         </footer>
     </div>
     <div class="share-layer"></div>
-<script type="text/javascript">
-// 需要分享的内容，请放到ready里
-WeixinApi.ready(function(Api) {
-    // 微信分享的数据
-    var wxData = {
-        "appId": "{$shareappid}", // 服务号可以填写appId
-        "imgUrl" : '{$picture}',
-        "link" : '{$shareurl}',
-        "desc" : "{$reply['sharecontent']}",
-        "title" : "{$reply['sharetitle']}"
-    };
-
-    // 分享的回调
-    var wxCallbacks = {
-        // 收藏操作是否触发回调，默认是开启的
-        favorite : false,
-
-        // 用async模式，表示每次分享之前，都需要更新分享内容
-        async:true,
-    };
-    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
-    Api.shareToFriend(wxData, wxCallbacks);
-
-    // 点击分享到朋友圈，会执行下面这个代码
-    Api.shareToTimeline(wxData, wxCallbacks);
-
-    // 点击分享到腾讯微博，会执行下面这个代码
-    Api.shareToWeibo(wxData, wxCallbacks);
-
-    // iOS上，可以直接调用这个API进行分享，一句话搞定
-    Api.generalShare(wxData,wxCallbacks);
-	
-	//显示分享链接
-	Api.showOptionMenu();
-});
-</script>
-
+{template 'jssdk'}
+</body>
 </html>

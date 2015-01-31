@@ -14,8 +14,8 @@ class WeiXinAccount extends WeAccount {
 		if(empty($this->account)) {
 			trigger_error('error uniAccount id, can not construct ' . __CLASS__, E_USER_WARNING);
 		}
-		$this->account['access_token'] = iunserializer($this->account['access_token']);
-		
+		$this->account['access_token'] = @iunserializer($this->account['access_token']);
+		$this->account['jsapi_ticket'] = @iunserializer($this->account['jsapi_ticket']);
 		$this->apis = array(
 			'barcode' => array(
 				'post' => 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=%s',
@@ -290,7 +290,128 @@ class WeiXinAccount extends WeAccount {
 			$row = array();
 			$row['access_token'] = iserializer($record);
 			pdo_update('wechats', $row, array('weid' => $this->account['weid']));
+			$this->account['access_token'] = $record;
+			
 			return $record['token'];
 		}
+	}
+	//0.52增加下载粉丝方法
+	public function fansAll() {
+		global $_GPC;
+		$token = $this->fetch_token();
+		$url = 'https://api.weixin.qq.com/cgi-bin/user/get?access_token=' . $token;
+		if(!empty($_GPC['next_openid'])) {
+			$url .= '&next_openid=' . $_GPC['next_openid'];
+		}
+		$response = ihttp_get($url);
+		if(is_error($response)) {
+			return error(-1, "访问公众平台接口失败, 错误: {$response['message']}");
+		}
+		$result = @json_decode($response['content'], true);
+		if(empty($result)) {
+			return error(-1, "接口调用失败, 元数据: {$response['meta']}");
+		}
+		$return = array();
+		$return['total'] = $result['total'];
+		$return['fans'] = $result['data']['openid'];
+		$return['next'] = $result['next_openid'];
+		return $return;
+	}
+	//同步粉丝信息
+	public function fansSyncInfo($uniid, $isOpen) {
+		if($isOpen) {
+			$openid = $uniid;
+		} else {
+			exit('error');
+		}
+		$token = $this->fetch_token();
+		$url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={$token}&openid={$openid}&lang=zh_CN";
+		$response = ihttp_get($url);
+		if(is_error($response)) {
+			return error(-1, "访问公众平台接口失败, 错误: {$response['message']}");
+		}
+		$result = @json_decode($response['content'], true);
+		if(empty($result)) {
+			return error(-1, "接口调用失败, 元数据: {$response['meta']}");
+		} elseif(!empty($result['errcode'])) {
+			return error(-1, "访问微信接口错误, 错误代码: {$result['errcode']}, 错误信息: {$result['errmsg']}");
+		}
+		return $result;
+	}
+	
+	/**
+	 * 获取 jsapi_ticket
+	 * @return array
+	 */
+	public function getJsApiTicket(){
+		if(!empty($this->account['jsapi_ticket'])
+		&& is_array($this->account['jsapi_ticket'])
+		&& !empty($this->account['jsapi_ticket']['ticket'])
+		&& !empty($this->account['jsapi_ticket']['expire'])
+		&& $this->account['jsapi_ticket']['expire'] > TIMESTAMP) {
+			return $this->account['jsapi_ticket']['ticket'];
+		}
+		$access_token = $this->fetch_token();
+		$url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token={$access_token}&type=jsapi";
+		$content = ihttp_get($url);
+		if(is_error($content)) {
+			return error(-1, '调用接口获取微信公众号 jsapi_ticket 失败, 错误信息: ' . $content['message']);
+		}
+		$result = @json_decode($content['content'], true);
+		if(empty($result) || intval(($result['errcode'])) != 0 || $result['errmsg'] != 'ok') {
+			return error(-1, '获取微信公众号 jsapi_ticket 结果错误, 错误信息: ' . $result['errmsg']);
+		}
+	
+		$record = array();
+		$record['ticket'] = $result['ticket'];
+		$record['expire'] = TIMESTAMP + $result['expires_in'];
+		$row = array();
+		$row['jsapi_ticket'] = iserializer($record);
+		pdo_update('wechats', $row, array('weid' => $this->account['weid']));
+	
+		$this->account['jsapi_ticket'] = $record;
+		return $record['ticket'];
+	}
+	
+	private function createNonceStr($length = 16) {
+		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		$str = "";
+		for ($i = 0; $i < $length; $i++) {
+			$str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+		}
+		return $str;
+	}
+	
+	/**
+	 * 获取 jssdk config
+	 * @return array
+	 */
+	public function getJssdkConfig(){
+		global $_W;
+		
+		$jsapiTicket = $this->getJsApiTicket();
+		if(is_error($jsapiTicket)){
+			$jsapiTicket = $jsapiTicket['message'];
+		}
+		$nonceStr = $this->createNonceStr();
+		$timestamp = TIMESTAMP;
+		$url = "http://{$_SERVER[HTTP_HOST]}{$_SERVER[REQUEST_URI]}";
+		
+		$string = "jsapi_ticket={$jsapiTicket}&noncestr={$nonceStr}&timestamp={$timestamp}&url={$url}";
+		$signature = sha1($string);
+		
+		$config = array(
+			'appId' => $this->account['key'],
+			'nonceStr' => $nonceStr,
+			'timestamp' => "$timestamp",
+			'signature' => $signature,
+		);
+		
+		if(DEVELOPMENT) {
+			$config['url'] = $url;
+			$config['string1'] = $string1;
+			$config['name'] = $this->account['name'];
+		}
+		return $config;
 	}
 }

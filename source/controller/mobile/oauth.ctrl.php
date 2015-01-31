@@ -21,6 +21,31 @@ if(!empty($code)) {
 				'createtime' => TIMESTAMP,
 			);
 			fans_update($auth['openid'], $row);
+			
+			if ($scope == 'userinfo') {
+				$url = "https://api.weixin.qq.com/sns/userinfo?access_token={$auth['access_token']}&openid={$auth['openid']}&lang=zh_CN";
+				$response = ihttp_get($url);
+				
+				if (!is_error($response)) {
+					
+					$userinfo = json_decode($response['content'], true);
+					$data = array(
+						'nickname' => $userinfo['nickname'],
+						'gender' => $userinfo['sex'],
+						'avatar' => $userinfo['headimgurl'],
+						'resideprovince' => $userinfo['province'],
+						'residecity' => $userinfo['city'],
+						'nationality' => $userinfo['country'],
+					);
+					
+					pdo_update('fans', $data, array('from_user'=>$auth['openid'],'weid'=>$_W['weid']));
+				}
+				
+				$forward = base64_decode($_GPC['__state']);
+				header('location: ' . $_W['siteroot'] . 'mobile.php?' . $forward . '&wxref=mp.weixin.qq.com#wechat_redirect');
+				exit;
+			}
+			
 			$cookie = array();
 			$cookie['openid'] = $auth['openid'];
 			$cookie['hash'] = substr(md5("{$auth['openid']}{$row['salt']}{$_W['config']['setting']['authkey']}"), 5, 5);

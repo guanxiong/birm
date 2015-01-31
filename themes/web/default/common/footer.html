@@ -7,5 +7,10 @@
 		</span>
 	</div>
 	<div class="emotions" style="display:none;"></div>
+	<script>
+		{if !empty($_W['weid']) && $_W['account']['level'] == 2}
+			$.post('./account.php?act=fansync');
+		{/if}
+	</script>
 </body>
 </html>

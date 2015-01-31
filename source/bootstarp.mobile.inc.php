@@ -8,12 +8,23 @@ if(empty($_W['account'])) {
 }
 $_W['account']['default_message'] = iunserializer($_W['account']['default_message']);
 $_W['account']['access_token'] = iunserializer($_W['account']['access_token']);
+$_W['account']['jsapi_ticket'] = iunserializer($_W['account']['jsapi_ticket']);
 $_W['account']['payment'] = iunserializer($_W['account']['payment']);
 $_W['account']['siteinfo'] = iunserializer($_W['account']['siteinfo']);
 $_W['weid'] = $_W['account']['weid'];
 $_W['uid'] = $_W['account']['uid'];
 $_W['account']['modules'] = array();
 $_W['isfounder'] = in_array($_W['uid'], (array)explode(',', $_W['config']['setting']['founder'])) ? true : false;
+
+if(!empty($_W['account']['key']) && !empty($_W['account']['secret'])){
+	require_once IA_ROOT . '/source/class/account.class.php';
+	
+	$acc = WeAccount::create($_W['weid']);
+	$_W['account']['jssdkconfig'] = $acc->getJssdkConfig();
+	$accountInfo = $acc->fetchAccountInfo();
+	$_W['account']['access_token'] = $accountInfo['access_token'];
+	$_W['account']['jsapi_ticket'] = $accountInfo['jsapi_ticket'];
+}
 
 $template = pdo_fetchcolumn("SELECT name FROM ".tablename('site_templates')." WHERE id = '{$_W['account']['styleid']}';");
 $_W['account']['template'] = !empty($template) ? $template : 'default';

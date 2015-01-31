@@ -1,0 +1,358 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo create_url('site/module/activityManger', array('name' => 'activity', 'op' => 'post'));}">添加</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo create_url('site/module/activityManger', array('name' => 'activity', 'op' => 'display'));}">管理</a></li>
+	
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}" />
+		<h4>名称</h4>
+		<table class="tb">
+			
+			<tr>
+				<th><label for="">活动名称</label></th>
+				<td>
+					<input type="text" name="acname" class="span5" value="{$item['name']}" />
+					
+					
+					
+				</td>
+			</tr>
+			
+			<tr>
+				<th><label for="">活动开始时间</label></th>
+				<td>
+					
+					
+					{php echo tpl_form_field_date('begintime', $item['begintime'], true)}
+					
+					<label for="writer" class="checkbox inline" style="margin-right:15px;">活动结束时间</label>
+					{php echo tpl_form_field_date('endtime', $item['endtime'], true)}
+				</td>
+			</tr>
+			
+			
+			
+			
+			
+			<tr>
+				<th><label for="">活动人数限制</label></th>
+				<td>
+					<input type="number" name="countlimit" class="span5" value="{$item['countlimit']}" />
+					
+					<label for="writer" class="checkbox inline" style="margin-right:15px;">是否可以重复报名:</label>
+					<input type="radio" name="isrepeat" value="1" {if $item['isrepeat'] == 1}checked="checked"{/if}> 是&nbsp;&nbsp;&nbsp; <input type="radio" name="isrepeat" value="0" {if $item['isrepeat'] == 0}checked="checked"{/if}>否
+				
+				</td>
+			</tr>
+			
+			
+				<tr>
+				<th><label for="">已报名虚拟人数</label></th>
+				<td>
+					<input type="number" name="countvirtual" class="span5" value="{$item['countvirtual']}" />
+					
+					<label for="writer" class="checkbox inline" style="margin-right:15px;">是否开启报名邮件提醒:</label>
+					<input type="radio" name="istip" value="1" {if $item['istip'] == 1}checked="checked"{/if}> 是&nbsp;&nbsp;&nbsp; <input type="radio" name="istip" value="0" {if $item['istip'] == 0}checked="checked"{/if}>否
+					
+					<label for="writer" class="checkbox inline" style="margin-right:15px;">需要到系统全局设置中设置正确的发送邮件！</label>
+				</td>
+			</tr>
+			
+			
+			
+			<tr>
+				<th><label for="">活动背景</label></th>
+				<td>
+					{php echo tpl_form_field_image('ac_pic', $item['ac_pic']);}
+				</td>
+			</tr>
+			
+			
+			
+			
+			<tr>
+				<th><label for="">幻灯片1</label></th>
+				<td>
+					{php echo tpl_form_field_image('ppt1', $item['ppt1']);}
+					
+					
+				</td>
+			</tr>
+			
+			
+				<tr>
+				<th><label for="">幻灯片2</label></th>
+				<td>
+						{php echo tpl_form_field_image('ppt2', $item['ppt2']);}
+				</td>
+			</tr>
+			
+			<tr>
+				<th><label for="">幻灯片3</label></th>
+				<td>
+						{php echo tpl_form_field_image('ppt3', $item['ppt3']);}
+				</td>
+			</tr>
+			
+			
+				<tr>
+				<th>
+				<label for="writer" class="checkbox inline" style="margin-right:15px;">联系电话</label>
+				</th>
+				<td>
+				
+					
+					<input type="text" name="tel" class="span2" value="{$item['tel']}" />
+					<label for="writer" class="checkbox inline" style="margin-right:15px;">Email</label>
+					<input type="text" name="email" class="span2" value="{$item['email']}" />
+					
+				</td>
+			</tr>
+			
+			
+			
+			<tr>
+                <th><label for="">活动举办地区</label></th>
+                <td>
+                    <select name="location_p" id="location_p" class="location"></select>
+                    <select name="location_c" id="location_c" class="location"></select>
+                    <select name="location_a" id="location_a" class="location"></select>
+                    <script type="text/javascript" src="./source/modules/activity/js/region_select.js"></script>
+                    <script type="text/javascript">
+                        var location_p = "{if !empty($item['location_p'])}{$item['location_p']}{else}广东省{/if}";
+                        var location_c = "{if !empty($item['location_c'])}{$item['location_c']}{else}汕头市{/if}";
+                        var location_a = "{if !empty($item['location_a'])}{$item['location_a']}{else}龙湖区{/if}";
+                        new PCAS("location_p", "location_c", "location_a", location_p, location_c, location_a);
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="">活动举办地址</label></th>
+                <td>
+                    <input type="text" name="address" id="address" value="{$item['address']}" class="px" style="width:200px;">
+                </td>
+            </tr>
+            <tr>
+                <th><label for="">经纬度</label></th>
+                <td>
+                 <div id="r-result">
+                        <input type="text" id="lat" name="lat"> <input type="text" id="lng" name="lng">
+                    </div>
+                    <div class="input-append">
+                        <input type="text" id="place" class="input-xlarge valid" name="place" value="汕头市龙湖区长平路127号" data-rule-required="true">
+                        <button class="btn" type="button" id="positioning" onclick="bmap.searchMapByAddress($('#place').val())">搜索</button>
+                    </div>
+                    <span class="maroon" style="color: #f30;margin-left: 5px;">注意：这个只是模糊定位，准确位置请地图上标注!</span>
+                    <div id="l-map" style="overflow: hidden; position: relative; z-index: 0; background-image: url(http://api.map.baidu.com/images/bg.png);width: 600px; height: 500px;margin-top: 10px; color: rgb(0, 0, 0); text-align: left;"></div>
+                   
+                </td>
+            </tr>
+			
+			
+			
+			
+			
+				<tr>
+				<th><label for="">主办方</label></th>
+				<td>
+					<input type="text" name="zb" class="span2" value="{$item['zb']}" />
+					
+						<label for="writer" class="checkbox inline" style="margin-right:15px;">承办方</label>
+						<input type="text" name="cb" class="span2" value="{$item['cb']}" />
+						<label for="writer" class="checkbox inline" style="margin-right:15px;">协办方</label>
+						<input type="text" name="xb" class="span2" value="{$item['xb']}" />
+						<label for="writer" class="checkbox inline" style="margin-right:15px;">参加对象</label>
+						<input type="text" name="cjdx" class="span2" value="{$item['cjdx']}" />
+						
+					
+				</td>
+			</tr>
+			
+			
+			
+				
+			
+			<tr>
+				<th>活动说明</th>
+				<td>
+					<textarea style="height:400px; width:100%;" class="span7 richtext-clone" name="acdes" cols="70">{$item['acdes']}</textarea>
+				</td>
+			</tr>
+			
+			
+		<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+	kindeditor($('.richtext-clone'));
+//-->
+</script>
+
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/getscript?v=1.4&ak=&services=&t=20140102035142"></script>
+<script type="text/javascript">
+    $(function(){
+        $(".location").change(function(){
+            bmap.searchMapByPCD();
+        });
+    });
+new PCAS("location_p", "location_c", "location_a", location_p, location_c, location_a);
+var bmap = {
+    'option' : {
+        'lock' : false,
+        'container' : 'l-map',
+        'infoWindow' : {'width' : 250, 'height' : 100, 'title' : ''},
+        'point' : {'lng' : "{if $item['lng']!='0.0000000000' && !empty($item['lng'])}{$item['lng']}{else}116.735049{/if}", 'lat' : "{if $item['lat']!='0.0000000000' && !empty($item['lat'])}{$item['lat']}{else}23.367896{/if}"}
+    },
+    'init' : function(option) {
+        var $this = this;
+        $this.option = $.extend({},$this.option,option);
+
+        $this.option.defaultPoint = new BMap.Point($this.option.point.lng, $this.option.point.lat);
+        $this.bgeo = new BMap.Geocoder();
+        $this.bmap = new BMap.Map($this.option.container);
+        $this.bmap.centerAndZoom($this.option.defaultPoint, 15);
+        $this.bmap.enableScrollWheelZoom();
+        $this.bmap.enableDragging();
+        $this.bmap.enableContinuousZoom();
+        $this.bmap.addControl(new BMap.NavigationControl());
+        $this.bmap.addControl(new BMap.OverviewMapControl());
+        //添加标注
+        $this.marker = new BMap.Marker($this.option.defaultPoint);
+        $this.marker.setLabel(new BMap.Label('请您移动此标记，选择您的坐标！', {'offset':new BMap.Size(10,-20)}));
+        $this.marker.enableDragging();
+        $this.bmap.addOverlay($this.marker);
+        //$this.marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+        $this.showPointValue($this.marker.getPosition());
+        //拖动地图事件
+        $this.bmap.addEventListener("dragging", function() {
+            $this.setMarkerCenter();
+            $this.option.lock = false;
+        });
+        //缩入地图事件
+        $this.bmap.addEventListener("zoomend", function() {
+            $this.setMarkerCenter();
+            $this.option.lock = false;
+        });
+        //拖动标记事件
+        $this.marker.addEventListener("dragend", function (e) {
+            $this.showPointValue();
+            $this.showAddress();
+            $this.bmap.panTo(new BMap.Point(e.point.lng, e.point.lat));
+            $this.option.lock = false;
+            $this.marker.setAnimation(null);
+        });
+    },
+    'searchMapByAddress' : function(address) {
+        var $this = this;
+        $this.bgeo.getPoint(address, function (point) {
+            if (point) {
+                $this.showPointValue();
+                $this.showAddress();
+                $this.bmap.panTo(point);
+                $this.setMarkerCenter();
+            }
+        });
+    },
+    'searchMapByPCD' : function(address) {
+        //alert($('#location_p').val()+$('#location_c').val()+$('#location_a').val());
+        var $this = this;
+        $this.option.lock = true;
+        $this.searchMapByAddress($('#location_p').val()+$('#location_c').val()+$('#location_a').val());
+    },
+    'setMarkerCenter' : function() {
+        var $this = this;
+        var center = $this.bmap.getCenter();
+        $this.marker.setPosition(new BMap.Point(center.lng, center.lat));
+        $this.showPointValue();
+        $this.showAddress();
+    },
+    'showPointValue' : function() {
+        var $this = this;
+        var point = $this.marker.getPosition();
+        $('#lng').val(point.lng);
+        $('#lat').val(point.lat);
+    },
+    'showAddress' : function() {
+        var $this = this;
+        var point = $this.marker.getPosition();
+        $this.bgeo.getLocation(point, function (s) {
+            if (s) {
+                $('#place').val(s.address);
+                if (!$this.option.lock) {
+                    //cascdeInit(s.addressComponents.province,s.addressComponents.city,s.addressComponents.district);
+                    new PCAS("location_p", "location_c", "location_a", s.addressComponents.province, s.addressComponents.city, s.addressComponents.district);
+                }
+            }
+        });
+    }
+};
+$(function(){
+    var option = {};
+    bmap.init(option);
+});</script>
+
+
+
+{elseif $operation == 'display'}
+<div class="main">
+	
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="min-width:100px;">名称</th>
+					<th style="width:180px;">开始时间</th>
+					<th style="width:180px;">结束时间</th>
+					<th style="width:100px;">活动地址</th>
+					<th style="width:100px;">联系电话</th>
+					<th style="width:80px;">浏览次数</th>
+					
+					<th style="text-align:right; min-width:300px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			 {loop $list $item}
+				<tr>
+					<td><a href='{php echo $this->createMobileUrl('activity',array("id"=>$item['id']))}' target='_blank'>{$item['name']}</a></td>
+					<td>{php echo date('Y-m-d H:i:s', $item['begintime'])}</td>
+					<td>{php echo date('Y-m-d  H:i:s', $item['endtime'])}</td>
+					<td>{$item['address']}</td>
+					<td>{$item['tel']}</td>
+					<td>{$item['visitsCount']}</td>
+					
+					<td style="text-align:right;width:400px">
+					<a href="{php echo create_url('site/module/noteManger', array('name' => 'activity', 'aid' => $item['id'], 'op' => 'display'))}" title="说明项" class="btn btn-small">说明项<i class="icon-book"></i></a>
+					<a href="{php echo create_url('site/module/applyManger', array('name' => 'activity', 'aid' => $item['id']))}" title="报名用户" class="btn btn-small">报名用户<i class="icon-user"></i></a>
+					<a href="{php echo create_url('site/module/dayManger', array('name' => 'activity', 'aid' => $item['id'], 'op' => 'display'))}" title="日程管理" class="btn btn-small">日程<i class="icon-time"></i></a>
+					<a href="{php echo create_url('site/module/guestManger', array('name' => 'activity', 'aid' => $item['id'], 'op' => 'display'))}" title="嘉宾管理" class="btn btn-small">嘉宾<i class="icon-user"></i></a>
+						<a href="{php echo create_url('site/module/activityManger', array('name' => 'activity', 'id' => $item['id'], 'op' => 'post'))}" title="编辑" class="btn btn-small"><i class="icon-edit"></i></a>
+						<a href="{php echo create_url('site/module/activityManger', array('name' => 'activity', 'id' => $item['id'], 'op' => 'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除" class="btn btn-small"><i class="icon-remove"></i></a>
+					</td>
+				</tr>
+				{/loop} 
+			</tbody>
+			
+		</table>
+		{$pager}
+	</div>
+</div>
+{/if}
+
+
+
+
+{template 'common/footer'}

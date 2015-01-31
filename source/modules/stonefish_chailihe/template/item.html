@@ -13,7 +13,7 @@
 		<tr>
 			<th>奖品类型：</th>
 			<td id="award-inkind">
-				<span class="pull-right">{if !empty($item)}（删除后领取此礼盒的粉丝将随机分配一个新礼盒）{/if}<a href="javascript:;" onclick="doDeleteItem('{$itemid}')">删除</a></span>
+				<span class="pull-right">{if empty($item)}<a href="javascript:;" onclick="doDeleteItem('{$itemid}')">删除</a>{else}<a href="{php echo $this->createWebUrl('delete', array('id' => $item['id']))}" onclick="doDeleteItem('{$itemid}', this.href)">删除</a>{/if}</span>
 				<label for="radio_1_{$itemid}" class="radio inline" data-placement="bottom" data-toggle="popover" data-content="领奖需后台确认，适用于O2O" data-original-title="" style="width:50px;"><input type="radio" name="award-inkind{$namesuffix}" id="radio_1_{$itemid}" value="1" {if $item['inkind'] == 1} checked="checked"{/if}{if !empty($item)} disabled=true{/if} /> 实物</label><label for="radio_0_{$itemid}" class="radio inline" data-placement="bottom" data-toggle="popover" data-content="粉丝自主领奖无需后台确认，适用于普通卡密发放" data-original-title="" style="margin-left:0; width:70px;"><input type="radio" name="award-inkind{$namesuffix}" id="radio_0_{$itemid}" value="0" {if $item['inkind'] == 0} checked="checked"{/if}{if !empty($item)} disabled=true{/if} /> 卡密</label>
 			</td>
 		</tr>

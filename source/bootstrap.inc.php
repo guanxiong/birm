@@ -19,7 +19,7 @@ if(!file_exists($configfile)) {
 		require IA_ROOT . '/source/version.inc.php';
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 		echo "·如果你还没安装本程序，请运行<a href='install.php'> install.php 进入安装&gt;&gt; </a><br/><br/>";
-		echo "&nbsp;&nbsp;<a href='http://bbs.birm.co' style='font-size:12px' target='_blank'>Power by WQ " . IMS_VERSION . " &nbsp;微新星微信公众平台自助开源引擎</a>";
+		echo "&nbsp;&nbsp;<a href='http://bbs.b2ctui.com' style='font-size:12px' target='_blank'>Power by WQ " . IMS_VERSION . " &nbsp;微动力微信公众平台自助开源引擎</a>";
 		echo "获取最新版本：<a target='_blank' href='http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA4MzA3NV8yMTc1MThfODAwMDgzMDc1XzJf'><img border='0' src='http://wpa.qq.com/pa?p=2:1797061558:51' alt='点击联系我们' title='点击联系我们'/></a>";
 		exit();
 	} else {
@@ -96,8 +96,12 @@ $_W['script_name'] = htmlspecialchars($_W['script_name']);
 $sitepath = substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/'));
 $_W['siteroot'] = htmlspecialchars('http://'.$_SERVER['HTTP_HOST'].$sitepath);
 if(substr($_W['siteroot'], -1) != '/') {
- 	$_W['siteroot'] .= '/';
+	$_W['siteroot'] .= '/';
 }
+
+$urls = parse_url($_W['siteroot']);
+$_W['siteurl'] = $urls['scheme'].'://'.$urls['host'].((!empty($urls['port']) && $urls['port']!='80') ? ':'.$urls['port'] : '') . $_W['script_name'] . (empty($_SERVER['QUERY_STRING'])?'':'?') . $_SERVER['QUERY_STRING'];
+$_W['siteurl'] = rtrim($_W['siteurl'], '&');
 
 $_W['isajax'] = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 $_W['ispost'] = $_SERVER['REQUEST_METHOD'] == 'POST';

@@ -71,6 +71,7 @@ function fans_search($user, $fields = array()) {
 			if (!empty($row['avatar'])) {
 				if (strexists($row['avatar'], 'avatar_')) {
 					$row['avatar'] = $_W['siteroot'] . 'resource/image/avatar/' . $row['avatar'];
+				} elseif(strexists($row['avatar'], 'http')){
 				} else {
 					$row['avatar'] = $_W['attachurl'] . $row['avatar'];
 				}
@@ -129,4 +130,31 @@ function fans_require($user, $fields, $pre = '') {
 		$site->doMobileRequire($fields, $redirect);
 	}
 	return $profile;
+}
+
+function mc_oauth_userinfo() {
+	global $_W, $_GPC;
+	
+	if(empty($_W['fans']['from_user'])){
+		return;
+	}
+	if(empty($_W['account']['key']) || empty($_W['account']['key'])){
+		return error(-1, '无法使用网页授权');
+	}
+	
+	if(!empty($_SERVER['QUERY_STRING'])) {
+		parse_str($_SERVER['QUERY_STRING'], $arr);
+		unset($arr['from'], $arr['isappinstalled'], $arr['wxref']);
+		$_SERVER['QUERY_STRING'] = http_build_query($arr);
+	}
+	
+	$callback = urlencode($_W['siteroot'] . 'mobile.php?act=oauth&scope=userinfo&weid=' . $_W['weid']);
+	
+	$state = base64_encode($_SERVER['QUERY_STRING']);
+	isetcookie('__state', $state);
+	
+	$url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$_W['account']['key'].'&redirect_uri='.$callback.'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+	
+	header('Location: '.$url);
+	exit;
 }
