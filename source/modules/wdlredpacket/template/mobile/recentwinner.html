@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="”apple-mobile-web-app-capable”" content="”yes”">
+<meta content="telephone=no" name="format-detection"> 
+<title>春节节模块之压岁钱</title>
+<link href="./source/modules/wdlredpacket/template/images/style.css" rel="stylesheet" type="text/css">
+</head>
+<style>
+
+.ranking-list .td.r{ background:RGB(172,12,12) url() no-repeat center center; background-size:contain; max-width:170px; color:#E9E900; font-size:1.6em;text-align:center;}
+.ranking-list .td.td3{ background:RGB(168,18,18) url() no-repeat center center; background-size:contain; max-width:170px; color:#E9E900; font-size:1.1em;}
+.ranking-list .td.td2{ width:25%; background-color:#990000; text-align:center;}
+.ranking-list .th.th1{ width:20%; min-width:60px; max-width:60px; color:#E9E900; background-color:#E01111; font-weight:bold; font-size:1.4em; text-align:center;}
+.ranking-list .th.th2{ width:30%; color:#E9E900; background-color:#CE0E0E; font-weight:bold; font-size:1.4em; text-align:center;}
+.ranking-list .th.th3{ width:60%; color:#E9E900; background-color:#DB2121; font-weight:bold; font-size:1.4em; text-align:center;}
+.to-index-button{width:50px; height:45px; padding-top:4px; text-align:center; position:absolute; right:0px; top:0px; background-color:#A00C0C; color:#E9E900; text-decoration:none; font-size:0.9em; line-height:1.2em;}
+.ranking-list .th{ display:table-cell; line-height:24px; position:relative;}
+.ranking-list .td{ display:table-cell; line-height:50px; height:5px; background-color:#7C0C0C;}
+.ranking-list .td .user-head{ max-width:170px; color:#E9E900; font-size:1.6em;}
+.ranking-list .th .arrow{ position:absolute; left:45%; bottom:-12px; border-top-color:#FF1313;}
+.ranking-list .th.th2 .arrow{border-top-color:#FF1313;}
+
+
+
+</style>
+
+
+<body>
+<div class="page-load-container" style="min-height: 771px; opacity: 1;">
+<div class="page-load-page ranking-page"  style="min-height: 771px;">
+	
+	<div class="ranking-body" style="padding-top:0px;">
+		<div class="ranking-banner">
+			<img src="./source/modules/wdlredpacket/template/images/recentAward.jpg" border="0" alt="">
+			<span class="ranking-time"></span>
+			
+			
+				<a  class="to-index-button" href="mobile.php?act=module&id=195&name=wdlredpacket&do=lottery&weid=4">返回<br>游戏</a>
+		
+
+		</div>
+		
+		<div class="ranking-list" >
+			<div class="tr">
+				<div class="th th1">中奖人<span class="arrow arrow-bottom"></span></div>
+				<div class="th th2">奖项<span class="arrow arrow-bottom"></span></div>
+				<div class="th th3">奖品<span class="arrow arrow-bottom"></span></div>
+			</div>	
+			{loop $winners $winner}
+			<div class="tr">
+				<div class="td td1 r">{$winner['nickname']}</div>
+				<div class="td td2">
+				<div class="user-head ellipsis">
+					<span class="week-crown">
+					</span>
+					{$winner['huode']}				</div>
+				</div>
+				<div class="td td3">{$winner['award']}</div>
+			</div>
+			<div class="tr">
+				<div class="td"></div>
+				<div class="td"></div>
+				<div class="td"></div>
+			</div>
+			{/loop}
+		</div>
+		
+	
+	</div>
+	
+</div>
+</div>
+
+</body>
+</html>

@@ -11,6 +11,17 @@
 					<label class="radio inline"><input type="radio" value="3" name="style[albumlisttype]" {if $styles['albumlisttype']['content'] == '3'} checked{/if}> 瀑布流</label>
 				</td>
 			</tr>
+			
+			<tr>
+				<th>是否显示相册等待进度条</th>
+				<td>
+					<label class="radio inline"><input type="radio" value="1" {if $settings['jd'] == '1'} checked{/if}  name="style[jd]">是</label>
+					<label class="radio inline"><input type="radio" value="2"  {if $settings['jd'] == '2'} checked{/if}  name="style[jd]"> 否</label>
+					
+				</td>
+			</tr>
+			
+			
 			<tr>
 				<th></th>
 				<td>

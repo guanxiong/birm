@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="stylesheet" type="text/css" href="./resource/script/kindeditor/themes/default/default.css?v=2014-05-21" />
+ <script type="text/javascript" src="http://api.map.baidu.com/api?key=24ffad3855e675265336a4cfb46d32b4&amp;v=1.1&amp;services=true"></script>
+<script type="text/javascript" src="./source/modules/izc_lightbox/style/src/jQuery.js?v=2014-05-21"></script>
+<script type="text/javascript" src="./source/modules/izc_lightbox/style/src/bootstrap_min.js?v=2014-05-21"></script>
+<script type="text/javascript" src="./source/modules/izc_lightbox/style/src/plugins/mini_audio_player/jquery_jplayer_min.js?v=2014-05-21"></script>
+<script type="text/javascript" src="./source/modules/izc_lightbox/style/src/plugins/mini_audio_player/jquery_mb_miniPlayer.js?v=2014-05-21"></script>
+<script type="text/javascript" src="./source/modules/izc_lightbox/style/src/plugins/daterangepicker/daterangepicker.js?v=2014-05-21"></script>
+<script type="text/javascript" src="./source/modules/izc_lightbox/style/src/plugins/daterangepicker/moment_min.js?v=2014-05-21"></script>
+<script type="text/javascript" src="./source/modules/izc_lightbox/style/src/plugins/form/jquery_form_min.js?v=2014-05-21"></script>
+<script type="text/javascript" src="./source/modules/izc_lightbox/style/src/plugins/validation/jquery_validate_min.js?v=2014-05-21"></script>
+<script type="text/javascript" src="./source/modules/izc_lightbox/style/src/plugins/validation/jquery_validate_methods.js?v=2014-05-21"></script>
+<script type="text/javascript" src="./source/modules/izc_lightbox/style/src/inside.js?v=2014-05-21"></script>
+<script type="text/javascript" src="./source/modules/izc_lightbox/style/src/resource2.js?v=2014-05-21"></script>
+<script type="text/javascript" src="./source/modules/izc_lightbox/style/src/mulresources.js?v=2014-05-21"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js?v=2014-05-21"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js?v=2014-05-21"></script>
+
+ <title>高级微场景后台设置</title>
+        <!--[if IE 7]>
+            <link href="./source/modules/izc_lightbox/style/css/font_awesome_ie7.css?v=2014-05-21" rel="stylesheet" />
+        <![endif]-->
+        <!--[if lte IE 8]>
+            <script src="./source/modules/izc_lightbox/style/js/excanvas_min.js?v=2014-05-21"></script>
+        <![endif]-->
+        <!--[if lte IE 9]>
+            <script src="./source/modules/izc_lightbox/style/js/watermark.js?v=2014-05-21"></script>
+        <![endif]-->
+    </head>
+	<body>
+<link rel="stylesheet" type="text/css" href="./source/modules/izc_lightbox/style/css/bootstrap_min.css?v=2014-05-21" />
+<link rel="stylesheet" type="text/css" href="./source/modules/izc_lightbox/style/css/bootstrap_responsive_min.css?v=2014-05-21" />
+<link rel="stylesheet" type="text/css" href="./source/modules/izc_lightbox/style/css/todc_bootstrap_button.css?v=2014-05-21" />
+<link rel="stylesheet" type="text/css" href="./source/modules/izc_lightbox/style/css/plugins/daterangepicker/daterangepicker.css?v=2014-05-21" />
+<link rel="stylesheet" type="text/css" href="./source/modules/izc_lightbox/style/css/style.css?v=2014-05-21" />
+<link rel="stylesheet" type="text/css" href="./source/modules/izc_lightbox/style/css/resource.css?v=2014-05-21" />
+<link rel="stylesheet" type="text/css" href="./source/modules/izc_lightbox/style/css/themes.css?v=2014-05-21" />
+<link rel="stylesheet" type="text/css" href="./source/modules/izc_lightbox/style/css/plugins/mini_audio_player/miniplayer.css?v=2014-05-21" />
+<link rel="stylesheet" type="text/css" href="./source/modules/izc_lightbox/style/css/inside.css?v=2014-05-21" />
+ 
+    </head>
+	<body>
+ 	{if $_GPC['op']=='accredit'}
+	<div id="main">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="box">
+                    <div class="box-title">
+                        <div class="span12">
+                            <h3><i class="icon-edit"></i>授权微场景应用</h3>
+                        </div>
+                    </div>
+                    <form action="" method="post" class="form-horizontal form-validate">
+                         <div class="box-content">
+								<div class="control-group">
+                                    <label for="listorder" class="control-label">微信账户：</label>
+                                    <div class="controls">
+                                        {$_W['account']['name']}({$_W['weid']})
+									</div>
+                                </div>
+								<div class="control-group">
+                                    <label for="listorder" class="control-label">场景信息：</label>
+                                    <div class="controls">
+                                        {$app['title']}({$app['iden']})
+									</div>
+                                </div>
+								<div class="control-group">
+                                    <label for="weixin" class="control-label">微场景有效期：</label>
+										<div class="controls">
+											<div class="input-append">
+											<input type="text" name="valid_time" id="valid_time" class="daterangepick input-xlarge" value="{php echo date('Y/m/d H:i:s',$item['start_time'])} - {php echo date('Y/m/d H:i:s',$item['end_time'])}" readonly />
+											<span class="add-on"><i class="icon-calendar"></i></span>
+										</div>
+                                        <span class="help-block" style="color:red">此有效期仅供参考,不在程序中控制</span>										
+                                    </div>
+                                </div> 
+								<div class="control-group">
+                                    <label class="control-label">是否授权：</label>
+                                    <div class="controls">
+										<label class="radio inline"><input type="radio" value="1" name="status" {if $item['status']==1}checked="checked"{/if}>是</label>
+										<label class="radio inline"><input type="radio" value="0" name="status"{if $item['status']==0}checked="checked"{/if} >否</label>
+									</div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="appnums" class="control-label">授权数量：</label>
+                                    <div class="controls">
+                                         <input type="text" id="appnums" name="appnums" value="{$item['appnums']}" class="input-mini valid" data-rule-required="true" data-rule-number="true">
+                                        <span class="help-inline">授权数量，开启状况下，0为不限制</span>
+                                    </div>
+                                </div>
+								
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">保存</button>
+                                <button type="button" class="btn" onclick="window.history.go(-1)">取消</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+	 
+	 
+	{elseif $_GPC['op']=='post'}
+	<div id="main">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="box">
+                    <div class="box-title">
+                        <div class="span12">
+                            <h3><i class="icon-edit"></i>新增微场景应用</h3>
+                        </div>
+                    </div>
+                    <form action="" method="post" class="form-horizontal form-validate">
+                         <div class="box-content">
+								<div class="control-group">
+                                    <label for="listorder" class="control-label">显示顺序：</label>
+                                    <div class="controls">
+                                        <input type="text" id="listorder" name="listorder" value="{$item['listorder']}" class="input-mini valid" data-rule-required="true" data-rule-number="true">
+										</div>
+                                </div>
+						
+                                <div class="control-group">
+                                    <label for="title" class="control-label">微场景名称：</label>
+                                    <div class="controls">
+                                        <input type="text" name="title" id="title" value="{$item['title']}" class="input-medium" data-rule-required="true" data-rule-maxlength="50"><span class="maroon">*</span>
+                                        <span class="help-inline">不能超过50个字</span>
+                                    </div>
+                                </div>
+								<div class="control-group">
+                                    <label for="price" class="control-label">显示价格：</label>
+                                    <div class="controls">
+                                        <input type="text" id="price" name="price" value="{$item['price']}" class="input valid" data-rule-required="true" data-rule-number="true">
+										</div>
+                                </div>
+								<div class="control-group">
+                                    <label for="iden" class="control-label">微场景标识：</label>
+                                    <div class="controls">
+                                        <input type="text" name="iden" id="iden" class="input-medium" value="{$item['iden']}" data-rule-required="true" data-rule-maxlength="25"><span class="maroon">*</span>
+                                        <span class="help-inline">不能超过25个字符</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="thumb" class="control-label">展示图片：</label>
+                                    <div class="controls">
+                                        <div id="thumb" class=""><img upload="image-single" style="max-width:100px;" src="{php echo toimage($item['thumb'])}"  /><input type="hidden" value="{$item['thumb']}" name="thumb" id="thumb" /><span class="help-inline"><button name="button" class="btn select_img" type="button">选择封面</button><span class="help-inline">建议尺寸:宽300像素,高300像素或等比图片</span></span></div>
+                                     </div>
+                                </div>
+								<div class="control-group">
+                                    <label for="qrcode" class="control-label">二维码：</label>
+                                    <div class="controls">
+                                        <div id="qrcode" class=""><img upload="image-single" style="max-width:100px;" src="{php echo toimage($item['qrcode'])}"  /><input type="hidden" value="{$item['qrcode']}" name="qrcode" id="qrcode" /><span class="help-inline"><button name="button" class="btn select_img" type="button">选择封面</button><span class="help-inline">建议尺寸:宽300像素,高300像素或等比图片</span></span></div>
+                                     </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="author" class="control-label">作者：</label>
+                                    <div class="controls">
+                                        <input type="text" name="author" id="author" value="{$item['author']}" class="input-medium" data-rule-required="true" data-rule-maxlength="25"><span class="maroon">*</span>
+                                        <span class="help-inline">不能超过25个字符</span>
+                                    </div>
+                                </div>
+								<div class="control-group">
+                                    <label for="series" class="control-label">作者：</label>
+                                    <div class="controls">
+                                        <input type="text" name="series" id="series" value="{$item['series']}" class="input-medium" data-rule-required="true" data-rule-maxlength="25"><span class="maroon">*</span>
+                                        <span class="help-inline">不能超过25个字符</span>
+                                    </div>
+                                </div>
+								<div class="control-group">
+                                    <label class="control-label">是否显示：</label>
+                                    <div class="controls">
+										<label class="radio inline"><input type="radio" value="1" name="isshow" {if $item['isshow']==1}checked="checked"{/if}>是</label>
+										<label class="radio inline"><input type="radio" value="0" name="isshow"{if $item['isshow']==0}checked="checked"{/if} >否</label>
+									</div>
+                                </div>
+								 
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">保存</button>
+                                <button type="button" class="btn" onclick="window.history.go(-1)">取消</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+	<script>
+	 KindEditor.ready(function(K){
+        var editor = KindEditor.editorObj || K.editor({
+            themeType: 'simple',
+            allowFileManager: true,
+			uploadJson : "./index.php?act=attachment&do=upload",
+			fileManagerJson : "./index.php?act=attachment&do=manager",
+		});
+
+        $('.select_img').click(function(e){
+            editor.loadPlugin('image', function(){
+                editor.plugin.imageDialog({
+                    imageUrl: $(e.target).parent().prev().val(),
+                    clickFn: function(url, title, width, height, border, align){
+						var val = url;
+						
+						if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+							var filename = /images(.*)/.exec(url);
+							if(filename && filename[0]) {
+								val = filename[0];
+							}
+						}
+						$(e.target).parent().prev().val(val);
+
+						if('image-single' == $(e.target).parent().prev().prev().attr('upload')){
+							$(e.target).parent().prev().prev().attr('src', url);
+							$(e.target).parent().prev().prev().attr('alt', url)
+						}
+                        
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });		
+    });</script>
+	{else}
+    <div id="main">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+
+                <div class="box">
+                    <div class="box-title">
+                        <div class="pull-left">
+                            <h3><i class="icon-table"></i>微场景-后台授权管理</h3>
+                        </div>
+                        <div class="pull-right">
+                            <form action="" method="get" class="form-horizontal">
+                                <input type="text" id="keyword-input" name="keyword" class="input-small-z" placeholder="请输入关键词" data-rule-required="true" />
+                                <button class="btn">查询</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="box-content">
+                       
+                        <div class="row-fluid">
+                            <div class="span12 control-group">
+                                <div class="pull-left">
+                                <a class="btn" href="{php echo $this->createWebUrl('app', array('op' => 'post'));}"><i class="icon-plus"></i>新增</a>
+                                    <a class="btn" href="javascript:location.reload()"><i class="icon-refresh"></i>刷新</a>
+                                </div>
+                                <div class="pull-left datatabletool margin-left5">
+                                    <a class="btn delAll" title="删除"><i class="icon-trash"></i>删除</a>
+                                </div>
+								 
+                            </div>
+                            
+                        </div>
+
+                        <div class="row-fluid dataTables_wrapper">
+                            <form action="/plus/formajax.php" method="post" class="form-horizontal">
+                                <table id="listTable" class="table table-bordered table-hover dataTable">
+                                    <thead>
+                                        <tr>
+                                            <!--<th class='with-checkbox'>
+                                                <input type="checkbox" class="check_all" /></th>-->
+                                            <th>ID</th>                                         
+											<th>微场景名称</th>
+											
+											<th>授权</th>
+											<th>价格</th>											
+											<th>标识</th>											
+                                            <th>图片</th>
+                                            <th>二维码</th>
+                                            <th>作者</th>
+                                             <th class="norightborder">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {loop $list $row}
+										{php $vo=pdo_fetch("select * from ".tablename('izc_lightbox_manage')."  where weid=:weid AND appid=:appid",array(':weid'=>$_W['weid'],':appid'=>$row['id']));}
+										<tr>
+											<td>{$row['id']}</td>
+                                            <td>{$row['title']}</td>
+											<td>
+											{if $vo['status']==0}
+												<span class="label label-red">未授权</span>
+											{else}
+												<span class="label label-green">授权</span>
+												{if $vo['appnums']==0}
+													(无限)
+												{else}
+													(上限{$vo['appnums']}个)
+												{/if}
+											{/if}
+											</td>
+											<td>{$row['price']}</td>
+											<td>{$row['iden']}</td>
+                                            <td><img src="{php echo toimage($row['thumb'])}" style="max-height:50px;"></td>
+                                            <td><img src="{php echo toimage($row['qrcode'])}" style="max-height:50px;"></td>
+                                            <td>{$row['series']}</td>
+                                            <td class="norightborder">
+												<a class="btn" href="{php echo $this->createWeburl('app',array('op'=>'import','appid'=>$row['id']))}" rel="tooltip" title="导入演示数据"><i class="icon-cloud-upload"></i></a>
+												 <a class="btn" href="{php echo $this->createWeburl('app',array('op'=>'post','appid'=>$row['id']))}" rel="tooltip" title="微场景画面管理"><i class="icon-edit"></i></a>
+                                                 
+                                                 <a class="btn" rel="tooltip" title="删除" href="javascript:drop_confirm('您确定要删除吗?', '{php echo $this->createWeburl('app',array('op'=>'del','id'=>$row['id']))}');"><i class="icon-remove"></i></a>
+												 <a class="btn" href="{php echo $this->createWeburl('app',array('op'=>'accredit','appid'=>$row['id']))}" rel="tooltip" title="微场景授权页面"><i class="icon-user"></i></a>
+												 
+												 
+												 </td>
+                                            </tr>
+											{/loop}
+                                          </tbody>
+                                </table>
+                            </form>
+                        </div>
+						{$pager}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+	<script>
+	$(function(){
+		$(".delAll").click(function(){
+			var check = $("#listTable input:checked");
+			var id = new Array();
+			check.each(function(i){
+				id[i] = $(this).val();
+			});
+			$.post('/plus/formajax.php', {tid:id, aid:$('#aid').val()},function(data){
+				G.ui.tips.info(data.error);
+			},'json');
+		});
+	});
+
+	function drop_confirm(msg, url){
+		if(confirm(msg)){
+			$.post(url, {},function(data){
+				if(data.type=='success'){
+					window.location = data.redirect;
+				}else{
+					G.ui.tips.info(data.message);
+				}
+			},'json');
+		}
+	}
+	</script>
+ 	</body>
+	<script>
+		window.document.onkeydown = function(e) {
+			if ('BODY' == event.target.tagName.toUpperCase()) {
+				var e=e || event;
+　 				var currKey=e.keyCode || e.which || e.charCode;
+				if (8 == currKey) {
+					return false;
+				}
+			}
+		};
+	</script> 
+	{/if}
+</html>

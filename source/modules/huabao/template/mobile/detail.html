@@ -24,6 +24,11 @@ overflow:-moz-scrollbars-vertical;
 <link rel="stylesheet" type="text/css" href="./source/modules/huabao/template/mobile/css/index.css">
 <link type="text/css" rel="stylesheet" href="./source/modules/huabao/template/mobile/css/manimation.css" />
 <link type="text/css" rel="stylesheet" href="./source/modules/huabao/template/mobile/js/fancybox/fancybox.css" />
+
+<script src="./source/modules/huabao/template/mobile/js/jquery.min.js"></script>
+<script src="./source/modules/huabao/template/mobile/js/swiper.min.js"></script>
+<script src="./source/modules/huabao/template/mobile/js/wechat.min.js"></script>
+<script src="./source/modules/huabao/template/mobile/js/fancybox/fancybox.js"></script>
 </head>
 <body>
 {if (($huabao['open'])&&($huabao['ostyle']==1))}
@@ -58,10 +63,7 @@ overflow:-moz-scrollbars-vertical;
 	<source src="{$huabao['music']}" type="audio/mpeg" />
 </audio>
 {/if}
-<script src="./source/modules/huabao/template/mobile/js/jquery.mobile.js"></script>
-<script src="./source/modules/huabao/template/mobile/js/swiper.min.js"></script>
-<script src="./source/modules/huabao/template/mobile/js/wechat.min.js"></script>
-<script src="./source/modules/huabao/template/mobile/js/fancybox/fancybox.js"></script>
+
 {if (($huabao['open'])&&($huabao['ostyle']==1))}
 <!-- 手指擦除效果 -->
 <script src="./source/modules/huabao/template/mobile/js/tapclip.min.js"></script>
@@ -92,24 +94,29 @@ var mySwiper = new Swiper('.swiper-container',{
 
 <!-- 音频暂停播放 -->
 <script type="text/javascript">
-var audioAuto = document.getElementById('audio');
-{if $huabao['mauto']}
-audioAuto.play();
-{else}
-$(".audio-controls").removeClass("on");
-{/if}
-$(".audio-controls").click(function (){ 
-	if (audioAuto.paused) {
-		$(".audio-controls").addClass("on");	
-		audioAuto.play();
+
+window.addEventListener("DOMContentLoaded", function(){
+	var audioAuto = document.getElementById('audio');
+	{if $huabao['mauto']}
+	audioAuto.play();
+	{else}
+	$(".audio-controls").removeClass("on");
+	{/if}
+	$(".audio-controls").click(function (){ 
+		if (audioAuto.paused) {
+			$(".audio-controls").addClass("on");	
+			audioAuto.play();
 
         }
         else {
 		$(".audio-controls").removeClass("on");		
 		audioAuto.pause();
 
-        }
-});
+	        }
+	});
+}, false);
+
+
 </script>
 <!-- 弹出层设置 -->
 <script type="text/javascript">
@@ -125,8 +132,59 @@ $(document).ready(function() {
 	});
 });
 </script>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+	
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+	
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',		
+	];
+	
+	wx.config(jssdkconfig);
+
+	var sharedata = {
+		title : "{$huabao['title']}",
+		link : 'http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}&wxref=mp.weixin.qq.com',
+		desc : "{$huabao['content']}",
+		imgUrl :"{$_W['attachurl']}{$huabao['icon']}"
+	};
+	// 分享的回调
+	var wxCallbacks = {
+		// 分享被用户自动取消
+		cancel : function(res) {
+			alert("亲，这么好的东西怎么能不分享给好朋友呢！");
+		},
+		// 分享失败了
+		fail : function(res) {
+			alert("分享失败，可能是网络问题，一会儿再试试？");
+		},
+		// 分享成功
+		success : function(res) {
+			window.location.href='{$huabao['share']}';
+		},
+	};
+	
+	wx.ready(function () {
+		wx.showOptionMenu();
+		wx.onMenuShareAppMessage(sharedata, wxCallbacks);
+		wx.onMenuShareTimeline(sharedata, wxCallbacks);
+		wx.onMenuShareQQ(sharedata, wxCallbacks);
+		wx.onMenuShareWeibo(sharedata, wxCallbacks);
+	});
+</script>
 <!-- 微信分享设置 -->
-<script type="text/javascript">
+<!--<script type="text/javascript">
 WeixinApi.ready(function(Api) {
 	Api.showOptionMenu();
 	var wxData = {
@@ -154,7 +212,7 @@ WeixinApi.ready(function(Api) {
 	Api.shareToTimeline(wxData,wxCallbacks);
 	Api.shareToWeibo(wxData,wxCallbacks);
 });
-</script>
+</script>-->
 <div id="mcover" onclick="$(this).hide()"><img src="./source/modules/site/template/image/guide.png"></div>
 <!--浏览量-->
 {php $num = $huabao['num']; $ids = $huabao['id']; pdo_update('huabao', array('num'=>$num+1), array('id'=>$ids));}

@@ -1,0 +1,103 @@
+{template 'common/header'}
+
+{template 'common'}
+
+<style type="text/css">
+table li{padding:5px 0;}
+small a{color:#999;}
+</style>
+<ul class="nav nav-tabs">
+<li{if $_GPC['do'] == 'manage' || $_GPC['do'] == '' } class="active"{/if}><a href="{php echo $this->createWebUrl('manage');}">微调研管理</a></li>
+<li{if $_GPC['do'] == 'post'} class="active"{/if}><a href="{php echo create_url('rule/post',array('module'=>'examine'));}">添加微调研规则</a></li>
+	<li><a href="{php echo $this->createWebUrl('display', array('id' => $row['rid']))}">调研详情</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('detail', array('id' => $row['id']))}">调研记录详情</a></li>
+</ul>
+<div class="main">
+	<div class="form form-horizontal">
+		<h4>调研信息</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">调研标题</label></th>
+				<td>
+					{$reply['title']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">调研说明</label></th>
+				<td>
+					{$reply['description']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">调研提示</label></th>
+				<td>
+					{$reply['information']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">图片介绍</label></th>
+				<td>
+					<img src="{$_W['attachurl']}{$reply['thumb']}" style="height:150px;" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">创建时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $reply['createtime']);}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">活动限制</label></th>
+				<td>
+					{$reply['limits']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">状态</label></th>
+				<td>
+					<label>
+					{if $reply['status'] == '1'}
+						<i class="icon-check"> &nbsp; 当前调研生效中</i>
+					{else}
+						<i class="icon-check-empty"> &nbsp; 当前调研已失效</i>
+					{/if}
+					</label>
+				</td>
+			</tr>
+			 
+		</table>
+		<h4>用户提交的信息</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">用户</label></th>
+				<td>
+					<a href="{php echo create_url('site/module/profile', array('name' => 'fans', 'from_user' => $row['openid']));}">{$row['openid']}</a>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">用户提交时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $row['createtime']);} <span class='label label-blue'>蓝底文字为用户选择项</span>
+				</td>
+			</tr>
+			{loop $questions $q}
+			<tr>
+				<th><label for="">{$q['qid']}</label></th>
+				<td>
+                                    <b>{$q['qtitle']}</b></br><br/>
+                                    {loop $q['items'] $item}
+                                    <span style='font-size:12px;'>{$item['text']}</span><br/><br/>
+                                    {/loop}
+				</td>
+			</tr>
+			{/loop}
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+{template 'common/footer'}

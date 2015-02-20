@@ -1,0 +1,227 @@
+<script>var baseURL = "/source/modules/bj_tgame/template/mobile/sfqtg";var dqdp_csrf_token = "";
+	is_weixn();
+function is_weixn(){
+      var ua = navigator.userAgent.toLowerCase();  
+    if(ua.match(/MicroMessenger/i)=="micromessenger") {  
+       
+    } else {  
+    	location.href = "{php echo $this->createMobileUrl('rule')}";
+    }  
+}  </script>
+
+<div id="id_dqdp_tip" style="position: absolute;"></div>
+<script type="text/javascript">var _dqdp_dict={}; var _dqdp_permissions={};</script>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<title>{$set['title1']}</title>
+<link rel="stylesheet" href="/source/modules/bj_tgame/template/mobile/sfqtg/css/index.css">
+</head>
+
+<body class="cashier">
+<input type="hidden" id="baseURL" value="/source/modules/bj_tgame/template/mobile/sfqtg"/>
+<!-- 加载中...[[ -->	
+<div class="popload" id="popload">
+	<div class="popload-main">
+	<span class="popload-main-ico"></span>
+	<p class="popload-main-txt">疯狂加载中...</p>
+	</div>
+</div>
+<!-- 加载中...]] -->
+<!-- 首页[[ -->	
+<article class="index" id="index">
+
+	<img src="/source/modules/bj_tgame/template/mobile/sfqtg/images/index_bg.png" alt="" width="300" height="280" class="index-img">
+	<p class="index-info">
+		<a href="#" target="_blank" class="index-info"><img src="/source/modules/bj_tgame/template/mobile/sfqtg/images/topFont1.png" width="249"/></a>
+	</p>
+	
+	
+	<a href="javascript:;" class="btn-red index-btn" data-stat="wxzf.action.cashier.play"  id="index_btn">开始游戏 </a>
+	<p class="index-info">
+		<a href="{php echo $this->createMobileUrl('help')}" target="_blank" class="index-info"><span>拼速度，做全球最快的人</span><img src="/source/modules/bj_tgame/template/mobile/sfqtg/images/icon_question.png" width="15" style="margin-left: 5px;" /></a>
+    </p>
+</article>
+<!-- 首页]] -->
+
+<!-- 游戏中[[ -->	
+<article class="game hide" id="game">
+	<header class="game-head">
+		<strong class="order" id="game_order">0</strong>
+		<em class="time" id="game_time">60</em>
+	</header>
+	<!-- 
+		交互说明：
+		1.随机给其中一个 .game-main li 添加class: ico-bird 或 ico-card 或 ico-code
+		2.用户点击了class: ico-bird 或 ico-card 时间减少5秒
+		3.用户点击了class: ico-code 单加 1
+		4.点击 .game-main li 添加class:on
+	-->
+	<ul class="game-main">
+		<li class=""></li>
+		<li class=""></li>
+		<li class=""></li>
+		<li class=""></li>
+		<li class=""></li>
+		<li class=""></li>
+		<li class=""></li>
+		<li class=""></li>
+		<li class=""></li>
+	</ul>
+</article>
+<!-- 游戏中]] -->
+
+<!-- 游戏操作指引[[ -->	 
+<div class="guide hide" id="guide">
+	<div class="guide-bg"></div>
+</div>
+<!-- 游戏操作指引]] -->	 
+
+<!-- 游戏结果[[ -->
+<!-- 
+	交互说明：
+	1.单数小于100，添加class:show-fail
+	1.单数大于100，添加class:show-suc
+-->
+<article class="state hide" id="state">
+	<div class="state-wrap">
+	
+		<div class="state-fail"></div>
+		<div class="state-suc"></div>
+		<div class="state-finish"></div>
+		<div class="state-order"><strong>125</strong>单</div>
+		<p class="state-info">纳尼~游戏结束啦？</p>
+		<p class="state-info-finish">亲，活动已结束，下次再来吧！</p>
+<!-- 		<div class="state-business"> -->
+
+<!-- 		</div> -->
+		<div class="state-btn flex flex-pack-justify state-btnMt10">
+			<a href="{php echo $this->createMobileUrl('phb', array('rid'=>$rid))}" class="btn-red state-btn-again" data-stat="wxzf.action.cashier.again" id="again">查看排行版</a>
+			<a href="{php echo $this->createMobileUrl('index', array('rid' => $rid))}" class="btn-yellow state-btn-fail js-share-btn" data-stat="wxzf.action.cashier.share_fail" onClick="shareInfo()">再挑战一次</a>
+		<!--	<a href="javascript:;" class="btn-yellow state-btn-fail js-share-btn" data-stat="wxzf.action.cashier.share_fail" onClick="shareInfo()">喊朋友挑战</a>-->
+		</div>
+		<div class="ruleDiv"><a href="{php echo $this->createMobileUrl('help')}">如何游戏？</a></div>
+	</div>
+</article>
+<!-- 游戏结果]] -->
+
+<!-- 竖屏体验[[ -->
+<div class="lock flex flex-v flex-pack-center flex-align-center">
+<div class="lock-bg"></div>
+<p class="lock-txt">为了更好的体验，请使用竖屏浏览</p>
+</div>
+<!-- 竖屏体验]] -->
+
+<!-- 邀请好友参加提示层[[ -->
+<div class="mask share-mask hide" id="js_mask_layer">
+	<div class="ico-share"></div>
+	<p class="share-mask-txt">点此选择【发送给朋友】或【分享到朋友圈】</p>
+</div>
+<!-- 邀请好友参加提示层]] -->
+
+</body>
+<script type="text/javascript" src="/source/modules/bj_tgame/template/mobile/sfqtg/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/source/modules/bj_tgame/template/mobile/sfqtg/js/zepto.min.js?v=20141011"></script>
+<script type="text/javascript" src="/source/modules/bj_tgame/template/mobile/sfqtg/js/index.js?v=20141025"></script><!-- 主要功能 -->
+<script type="text/javascript">
+var share_flag;
+var imgUrl = '{$_W['siteroot']}resource/attachment/{$set['fimg']}';
+var imgWidth = '200';
+var imgHeight = '200';
+var link = "{$_W['siteroot']}{php echo $this->createMobileUrl('index', array('rid' => $rid))}";
+var desc = "{$set['description1']}";
+var title = "{$set['title1']}";
+
+function getBaseUS()
+{
+	
+	return "{php echo $this->createMobileUrl('index', array('id'=>$user['id'], 'rid'=>$rid))}";
+}
+function shareFriend() {
+    WeixinJSBridge.invoke('sendAppMessage',{
+        "img_url": imgUrl,
+        "img_width": imgWidth,
+        "img_height": imgHeight,
+        "link": link,
+        "desc": desc,
+        "title": title
+    }, function(res) {
+        //_report('send_msg', res.err_msg);
+    });
+   //ajaxShare();
+}
+function shareTimeline() {
+    WeixinJSBridge.invoke('shareTimeline',{
+        "img_url": imgUrl,
+        "img_width": imgWidth,
+        "img_height": imgHeight,
+        "link": link,
+        "desc": desc,
+        "title": desc
+    }, function(res) {
+    	//_report('timeline', res.err_msg);
+    });
+   // ajaxShare();
+}
+function shareWeibo() {
+    WeixinJSBridge.invoke('shareWeibo',{
+        "content": desc,
+        "url": link,
+    }, function(res) {
+        //_report('weibo', res.err_msg);
+    });
+   // ajaxShare();
+}
+// 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    // 发送给好友
+    WeixinJSBridge.on('menu:share:appmessage', function(argv){
+        shareFriend();
+    });
+    // 分享到朋友圈
+    WeixinJSBridge.on('menu:share:timeline', function(argv){
+        shareTimeline();
+    });
+    // 分享到微博
+    WeixinJSBridge.on('menu:share:weibo', function(argv){
+        shareWeibo();
+    });
+}, false);
+
+/**
+ * ajax分享
+ */
+function ajaxShare() {
+	if(share_flag){
+		return;
+	}
+	share_flag = 1;
+    $.ajax({
+        url:'',
+        data:{'openId':''},
+        type:'post',
+        dataType:'json',
+        success:function (result) { }
+    });
+}
+/*
+ function shareInfo(){
+ 	var test=document.getElementById("js_mask_layer");
+
+	 test.removeClass("hide");
+	 	$(".js_mask_layer").removeClass("hide");
+ }*/
+</script>
+
+
+</html>
+ 
+
+
+

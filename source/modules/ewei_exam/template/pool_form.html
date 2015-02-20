@@ -1,0 +1,51 @@
+{template 'common/header'}
+
+{template 'common'}
+
+<div class="main">
+    <ul class="nav nav-tabs">	 	
+      <li {if $op=='list' || empty($op)}class="active"{/if}><a href="{php echo $this->createWebUrl('pool',array('op'=>'list'));}">题目管理</a></li>    
+      <li {if $op=='edit' && empty($item['id'])}class="active"{/if}><a href="{php echo $this->createWebUrl('pool',array('op'=>'edit'));}">添加题目</a></li>	
+       {if $op=='edit' && !empty($item['id'])}<li class="active"><a href="{php echo $this->createWebUrl('pool', array('op'=>'edit','id'=>$id));}">编辑题目</a></li>{/if}
+    </ul>
+    <form action="" class="form-horizontal form" method="post" enctype="multipart/form-data" onsubmit="return formcheck()">
+        <input type="hidden" name="id" value="{$item['id']}">
+        <h4>题目编辑</h4>
+       <table class='tb'>
+        <tbody>
+          
+            <tr>
+              <th><span class="red">*</span>题库标题：</th>
+              <td>
+                  <input type='text' id='title' name='title' value="{$item['title']}" />
+              </td>
+          </tr>
+               <tr>
+              <th><span class="red">*</span>题库描述：</th>
+              <td>
+                  <textarea style="height:100px;" id="description" name="description" class="span7" cols="60">{$item['description']}</textarea>
+              </td>
+          </tr>
+             <tr>
+                <th></th>
+                <td>
+                    <button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </td>
+            </tr>
+        </tbody>
+    </table>	
+    </form>
+  
+    <script type="text/javascript">
+  
+   function formcheck(){
+  
+   if($("#title").isEmpty()){
+        Tip.focus("title","请填写题库标题!","right");
+        return false;
+    }
+    return  true;
+}
+</script>
+{template 'common/footer'}

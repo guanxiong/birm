@@ -1,0 +1,390 @@
+{template 'common/header'}
+
+{template 'common'}
+
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li {if $op=='list' || empty($op)}class="active"{/if}><a href="{php echo $this->createWebUrl('course');}">课程管理</a></li>
+
+        {if $op=='edit' && empty($item['id'])}
+        <li class="active"><a href="{php echo $this->createWebUrl('course',array('op'=>'edit'));}">添加课程</a></li>
+        <!--<li class="active"><a href="{php echo $this->createWebUrl('paper',array('op'=>'edit'));}">添加试卷</a></li>-->
+        {/if}
+
+        {if $op=='edit' && !empty($item['id'])}
+        <li class="active"><a href="{php echo $this->createWebUrl('course', array('op'=>'edit','id'=>$id));}">编辑课程</a></li>
+        {/if}
+    </ul>
+    <form action="" class="form-horizontal form" method="post" enctype="multipart/form-data" onsubmit="return formcheck()">
+        <input type="hidden" name="id" value="{$item['id']}">
+        <input type="hidden" name="tid" value="{$tid}">
+
+
+        <table class='tb' style="margin-top:10px;">
+            <tbody>
+            <tr>
+                <th><span class="white">*</span> 排序：</th>
+                <td>
+                    <input type='text' id='displayorder' name='displayorder' value="{$item['displayorder']}" />
+                </td>
+            </tr>
+
+            <tr>
+                <th>&nbsp;&nbsp;&nbsp;课程分类：</th>
+                <td>   <input type="text" name="paper_category" maxlength="30" value="{$paper_category['title']}" id="paper_category" class="span5" readonly />
+                    <input type='hidden' id='ccate' name='ccate' value="{$paper_category['id']}" />
+                    <button class="btn" type="button" onclick="popwin = $('#modal-module-menus1').modal();">选择</button>
+                    <button class="btn" type="button" onclick="clear_paper_category()">清除</button>
+                    <div id="modal-module-menus1" class="modal fade hide" tabindex="-1" role="dialog" aria-hidden="true" style=" width:600px;">
+                        <div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3>选择分类</h3></div>
+                        <div class="modal-body">
+                            <table class="tb">
+                                <tr>
+                                    <th><label for="">搜索关键字</label></th>
+                                    <td><input type="text" class="span3" name="keyword" value="" id="search-kwd1" /> <button type="button" class="btn" onclick="search_paper_categorys();">搜索</button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div id="module-menus1"></div>
+                        </div>
+                        <div class="modal-footer"><a href="#" class="btn" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+                    </div>
+
+                </td>
+            </tr>
+
+            <tr>
+                <th><span class="red">*</span>课程标题：</th>
+                <td>
+                    <input type='text' id='title' name='title' value="{$item['title']}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th><span class="red">*</span><label for="">缩略图</label></th>
+                <td>
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;">
+                            <img src="./resource/attachment/{$item['thumb']}" alt="" onerror="$(this).remove();"></div>
+                        <div>
+                            <span class="btn btn-file"  id="thumb_div" tabindex="-1"><span class="fileupload-new">选择图片</span>
+                                <span class="fileupload-exists">更改</span><input name="thumb" id="thumb" type="file" />
+                            <input name="thumb-old" id="thumb-old" type="hidden" value="{$item['thumb']}" /></span>
+                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                        </div>
+                    </div>
+                    <span class="help-block">课程的缩略图</span>
+                </td>
+            </tr>
+
+            <tr>
+                <th><span class="red">*</span>报名限制</th>
+                <td>
+                    <label class="radio inline"  style='margin-right:10px;margin-top:5px;'>
+                        <input type="radio" name="ctype" class="ctype" value="0" {if $item['ctype'] == 0} checked="checked"{/if}/>
+                        时间限制
+                    </label>
+                    {php echo tpl_form_field_daterange('datelimit', array('starttime'=>$item['starttime'],'endtime'=>$item['endtime']),array('time'=>true))}
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <label class="radio inline">
+                        <input type="radio" name="ctype" class="ctype" value="1"  {if $item['ctype'] == 1} checked="checked"{/if}/>
+                        人数限制
+                    </label>
+                    <div class="input-prepend input-append" style='margin-left:10px;'>
+                        <span class="add-on">共</span>
+                        <input type="text" class="span1" name="ctotal" id="ctotal" value="{$item['ctotal']}" />
+                        <span class="add-on">人</span>
+                    </div>
+
+                </td>
+            </tr>
+
+            <tr>
+                <th><span class="red">*</span>授课讲师：</th>
+                <td>
+                    <input type='text' id='teachers' name='teachers' value="{$item['teachers']}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th><span class="red">*</span>授课开始时间</th>
+                <td>
+                    {php echo tpl_form_field_date('coursetime', !empty($item['coursetime']) ? date('Y-m-d H:i',$item['coursetime']) : date('Y-m-d H:i'), 1)}
+                </td>
+            </tr>
+
+            <tr>
+                <th><span class="red">*</span>授课时长：</th>
+                <td>
+                    <div class="input-append">
+                        <input type="text" class="span1" name="times" id="times" value="{$item['times']}"/>
+                        <span class="add-on">分钟</span>
+                    </div>
+                    <!--<span class='help-block'>默认100分，如果选择自动抽题，则根据此分制抽题</span>-->
+                </td>
+            </tr>
+
+            <tr>
+                <th><span class="red">*</span>第几期：</th>
+                <td>
+                    <input type='text' id='week' name='week' value="{$item['week']}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th><span class="white">*</span> 课程简介：</th>
+                <td>
+                    <textarea style="height:100px;" id="description" name="description" class="span7" cols="60">{$item['description']}</textarea>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th><span class="white">*</span> 课程内容：</th>
+                <td>
+                    <textarea style="height:100px;" id="content" name="content" class="span7" cols="60">{$item['content']}</textarea>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th><span class="red">*</span>地址：</th>
+                <td>
+                    <input type='text' id='address' name='address' value="{$item['address']}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th><label for="">所在地区：</label></th>
+                <td>
+                    <select name="location_p" id="location_p" class="location span2"></select>
+                    <select name="location_c" id="location_c" class="location span2"></select>
+                    <select name="location_a" id="location_a" class="location span2"></select>
+                    <script type="text/javascript" src="./source/modules/ewei_exam/style/region_select.js"></script>
+                    <script type="text/javascript">
+                        var location_p = "{if !empty($item['location_p'])}{$item['location_p']}{else}{/if}";
+                        var location_c = "{if !empty($item['location_c'])}{$item['location_c']}{else}{/if}";
+                        var location_a = "{if !empty($item['location_a'])}{$item['location_a']}{else}{/if}";
+                        new PCAS("location_p", "location_c", "location_a", location_p, location_c, location_a);
+                    </script>
+                </td>
+            </tr>
+
+            <tr>
+                <th><label for="">地图：</label></th>
+                <td>
+                    <div class="input-append">
+                        <input type="text" id="place" class="input-xlarge valid" name="place" value="" data-rule-required="true">
+                        <button class="btn" type="button" id="positioning" onclick="bmap.searchMapByAddress($('#place').val())">搜索</button>
+                    </div>
+
+                    <div id="l-map" style="overflow: hidden; position: relative; z-index: 0; background-image: url(http://api.map.baidu.com/images/bg.png);width: 500px; height: 300px;margin-top: 10px; color: rgb(0, 0, 0); text-align: left;"></div>
+                    <div id="r-result">
+                        <input type="hidden" id="lat" name="lat"> <input type="hidden" id="lng" name="lng">
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>状态：</th>
+                <td>    <label class="radio inline">
+                    <input type="radio" name="status" value="1" {if $item['status'] == 1}checked{/if}/>显示
+                </label>
+                    <label class="radio inline">
+                        <input type="radio" name="status" value="0" {if $item['status'] == 0}checked{/if}/>隐藏
+                    </label>
+                    <span class='help-block'>手机前台是否显示</span>
+                </td>
+            </tr>
+
+        </table>
+
+          <table class='tb' style="margin-top:10px;">
+             <tr>
+                <th></th>
+                <td>
+                    <button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                    <input type="hidden" name="id" value="{$id}" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </form>
+
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/getscript?v=1.4&ak=&services=&t=20140102035142"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".location").change(function(){
+                bmap.searchMapByPCD();
+            });
+        });
+        new PCAS("location_p", "location_c", "location_a", location_p, location_c, location_a);
+        var bmap = {
+            'option' : {
+                'lock' : false,
+                'container' : 'l-map',
+                'infoWindow' : {'width' : 250, 'height' : 100, 'title' : ''},
+                'point' : {'lng' : "{if $item['lng']!='0.0000000000' && !empty($item['lng'])}{$item['lng']}{else}116.735049{/if}", 'lat' : "{if $item['lat']!='0.0000000000' && !empty($item['lat'])}{$item['lat']}{else}23.367896{/if}"}
+            },
+            'init' : function(option) {
+                var $this = this;
+                $this.option = $.extend({},$this.option,option);
+
+                $this.option.defaultPoint = new BMap.Point($this.option.point.lng, $this.option.point.lat);
+                $this.bgeo = new BMap.Geocoder();
+                $this.bmap = new BMap.Map($this.option.container);
+                $this.bmap.centerAndZoom($this.option.defaultPoint, 15);
+                $this.bmap.enableScrollWheelZoom();
+                $this.bmap.enableDragging();
+                $this.bmap.enableContinuousZoom();
+                $this.bmap.addControl(new BMap.NavigationControl());
+                $this.bmap.addControl(new BMap.OverviewMapControl());
+                //添加标注
+                $this.marker = new BMap.Marker($this.option.defaultPoint);
+                $this.marker.setLabel(new BMap.Label('请您移动此标记，选择您的坐标！', {'offset':new BMap.Size(10,-20)}));
+                $this.marker.enableDragging();
+                $this.bmap.addOverlay($this.marker);
+                //$this.marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+                $this.showPointValue($this.marker.getPosition());
+                //拖动地图事件
+                $this.bmap.addEventListener("dragging", function() {
+                    $this.setMarkerCenter();
+                    $this.option.lock = false;
+                });
+                //缩入地图事件
+                $this.bmap.addEventListener("zoomend", function() {
+                    $this.setMarkerCenter();
+                    $this.option.lock = false;
+                });
+                //拖动标记事件
+                $this.marker.addEventListener("dragend", function (e) {
+                    $this.showPointValue();
+                    $this.showAddress();
+                    $this.bmap.panTo(new BMap.Point(e.point.lng, e.point.lat));
+                    $this.option.lock = false;
+                    $this.marker.setAnimation(null);
+                });
+            },
+            'searchMapByAddress' : function(address) {
+                var $this = this;
+                $this.bgeo.getPoint(address, function (point) {
+                    if (point) {
+                        $this.showPointValue();
+                        $this.showAddress();
+                        $this.bmap.panTo(point);
+                        $this.setMarkerCenter();
+                    }
+                });
+            },
+            'searchMapByPCD' : function(address) {
+                var $this = this;
+                $this.option.lock = true;
+                $this.searchMapByAddress($('#location_p').val()+$('#location_c').val()+$('#location_a').val());
+            },
+            'setMarkerCenter' : function() {
+                var $this = this;
+                var center = $this.bmap.getCenter();
+                $this.marker.setPosition(new BMap.Point(center.lng, center.lat));
+                $this.showPointValue();
+                $this.showAddress();
+            },
+            'showPointValue' : function() {
+                var $this = this;
+                var point = $this.marker.getPosition();
+                $('#lng').val(point.lng);
+                $('#lat').val(point.lat);
+            },
+            'showAddress' : function() {
+                var $this = this;
+                var point = $this.marker.getPosition();
+                $this.bgeo.getLocation(point, function (s) {
+                    if (s) {
+                        $('#place').val(s.address);
+                        if (!$this.option.lock) {
+                            new PCAS("location_p", "location_c", "location_a", s.addressComponents.province, s.addressComponents.city, s.addressComponents.district);
+                        }
+                    }
+                });
+            }
+        };
+
+        $(function(){
+            var option = {};
+            bmap.init(option);
+        });
+
+
+function clear_paper_category(){
+    $("#ccate").val("");
+    $("#paper_category").val("");
+}
+
+function search_paper_categorys() {
+    $("#module-menus1").html("正在搜索....")
+    $.post('{php echo $this->createWebUrl('course_category',array('op'=>'query'));}', {
+        keyword: $.trim($('#search-kwd1').val())
+    }, function(dat){
+        $('#module-menus1').html(dat);
+    });
+}
+
+        function select_paper_category(o) {
+            $("#ccate").val(o.id);
+            $("#paper_category").val(o.title);
+            $(".close").click();
+        }
+
+        function fill(type, num) {
+
+        }
+        function formcheck() {
+
+            if ($("#title").isEmpty()) {
+                Tip.focus("title", "请填写课程标题!", "right");
+                return false;
+            }
+
+            var has = false;
+            $(".ctype").each(function () {
+
+                if ($(this).get(0).checked) {
+                    has = true;
+                    return false;
+                }
+            });
+            if (!has) {
+                Tip.focus(".ctype:eq(0)", "至少选择一种报名限制类型!", "top");
+                return false;
+            }
+
+            if ($("#teachers").isEmpty()) {
+                Tip.focus("title", "请填写授课讲师!", "right");
+                return false;
+            }
+
+            if ($("#times").isEmpty()) {
+                Tip.focus("times", "请填写授课时长!", "right");
+                return false;
+            }
+
+            if ($("#week").isEmpty()) {
+                Tip.focus("week", "请填写第几期!", "right");
+                return false;
+            }
+
+            if ($("#address").isEmpty()) {
+                Tip.focus("address", "请填写地址!", "right");
+                return false;
+            }
+
+            return  true;
+        }
+</script>
+{template 'common/footer'}

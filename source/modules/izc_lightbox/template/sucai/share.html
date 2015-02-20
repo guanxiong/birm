@@ -1,0 +1,22 @@
+<div class="control-group js_scene_style js_share hide">
+	
+	<div class="control-group">
+		<label for="" class="control-label">按钮图片：</label>
+		<div id="btn_img_image_uploads" class="">
+			<img upload="image-single" style="max-height:50px" src="{php echo toimage($data['btnimg'])}" />
+			<input type="hidden" value="{$data['btnimg']}" name="share[btnimg]" id="btnimg" />
+			<span class="help-inline"><button name="button" class="btn select_img" type="button">传按钮图</button>
+			</span>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label for="" class="control-label">分享图片：</label>
+		<div class="controls">
+			<div id="share_image_uploads" class="">
+			<img upload="image-single" style="max-height:100px;max-width:100px" src="{php echo toimage($data['share_thumb'])}" />
+			<input type="hidden" value="{$data['share_thumb']}" name="share[share_thumb]" id="videobgimg" />
+			<span class="help-inline"><button name="button" class="btn select_img" type="button">分享图片</button><span class="help-inline">（建议尺寸:宽640像素,高960像素或等比图片）</span></span></div> 
+		</div>
+	</div>										
+</div>

@@ -1,0 +1,60 @@
+{template 'common/header'}
+
+{template 'common'}
+
+<div class="main">
+    <ul class="nav nav-tabs">		
+        <li class="active"><a href="{php echo $this->createWebUrl('upload_question',array('op'=>'list'));}">试题导入</a></li>
+    </ul>
+    <div class="search">
+        <form action="site.php" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="leadExcel" value="true">
+            <input type="hidden" name="act" value="module" />
+            <input type="hidden" name="do" value="UploadExcel" />
+            <input type="hidden" name="name" value="ewei_exam" />
+            <input type="hidden" name="ac" value="question" />
+
+            <table class="table table-bordered tb">
+                <tbody>
+                    <tr>
+                        <td>请选择要导入的题库&nbsp;&nbsp;
+                            <select class='span3' name='poolid'>
+                                <option value='0' {if empty($_GPC['poolid'])}selected{/if}></option>
+                                {loop $poollist $key $value}
+                                <option value ="{$value['id']}" {if $_GPC['poolid']== $value['id']}selected="selected"{/if}>{$value['title']}</option>
+                                {/loop}
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <br><br>
+                            <input type="file" class=" pull-left btn-primary span3" name="inputExcel">
+                            <input type="submit" class="btn pull-left btn-primary span2" value="导入数据">
+
+                            <a class="btn btn-primary" href="./source/modules/ewei_exam/example/example_question.xlsx" style="margin-left: 20px;">下载导入模板</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+
+
+
+    </div>
+
+</div>
+
+<script>
+$(function(){
+     $(function () {
+    $('#myTab a').click(function (e) {
+        e.preventDefault();//阻止a链接的跳转行为
+        $(this).tab('show');//显示当前选中的链接及关联的content
+    })
+    })
+});
+</script>
+
+{template 'common/footer'}

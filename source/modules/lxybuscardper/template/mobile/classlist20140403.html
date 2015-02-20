@@ -1,0 +1,21 @@
+﻿<div style=" margin:1em 0.3em 1em 0.3em; height:10px;">
+  
+  {loop $classes $cls}
+    <div class="module border-radius ptb6" style="height:130px;overflow:hidden">
+       <a href="{if !empty($cls['outurl'])}{$cls['outurl']}{else}{php echo $_W['rootsite'].$this->createMobileurl('plist',array('cid'=>$cls['id']))}{/if}" class="no_unl">
+            <section class="product-info">
+                  <div class="product-title">{$cls['cname']}</div>
+                  <div class="product-pic">
+                    <img src="{php echo $_W['attachurl'].$cls['thumb']}" width="100%">
+                  </div>
+            </section>
+        </a>
+    </div>
+    {/loop}      
+   </div>
+   <link href="./source/modules/lxybuscardper/template/css/footer.css" rel="stylesheet" type="text/css">
+<footer>
+          
+        <div><small>个人名片<a href="tel:13999418377"><font color="#008000">电话13999418377</font></a>或<a href="http://www.jinshuju.net/f/zNJbAv"><font color="#FF0000">点击此处在线提交预约表</font></a></small></div>
+        <small></small>
+        </footer>

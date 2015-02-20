@@ -1,0 +1,58 @@
+{template 'header'}
+<style>
+  .highlight {
+    background-color:#ffdddd;
+    padding:5px;
+  }
+  #mcover{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0, 0, 0, 0.7);display:none;z-index:20000;}
+  #mcover img{position:fixed;right: 18px;top:5px;width:260px;height:180px;z-index:20001;}
+</style>
+
+<form method="post">
+<div class="mobile-div img-rounded">
+	<div class="mobile-hd">聚友杀价</div>
+  {if true == $is_result}
+  <div class="alert mobile-content highlight">
+    帮好友杀价成功~！因为你的帮助，他获得了{$event['discount']}元的优惠:)'
+  </div>
+  {/if}
+
+  <div class="mobile-content">
+    <!--H3>{php echo  empty($event['title'])?$goods['title']:$event['share_title']; }</H3-->
+  </div>
+  <div class="mobile-content">
+    {php echo htmlspecialchars_decode($event['share_content']);}
+  </div>
+
+  <div class="mobile-content img-rounded">
+    {if $max_click <= $act_click }
+      <div class="highlight">本订单已经获得{$act_click}个好友帮忙杀价，达到预定目标，杀价成功！</div>
+    {elseif $act_click > 0}
+      <div class="highlight">本订单已经获得{$act_click}个好友帮忙杀价，还差{php echo $max_click-$act_click}个，快来帮忙吧~！</div>
+    {else}
+      <div class="highlight">你是第一个哦，快来帮朋友杀价吧！</div>
+    {/if}
+  </div>
+  {if $_W['fans']['from_user'] != $_GPC['from_user']} 
+  <button type="button" class="btn btn-success btn-large" style="width:100%;margin-top:10px;" onclick='javascript:location.href="{php echo $this->createMobileUrl('discount', array('orderid'=>$orderid, 'goodsid'=>$goodsid))}"'>
+    杀价    </button>
+  {/if}
+   <button type="button" class="btn btn-success btn-large" style="width:100%;margin-top:10px;" onclick="$('#mcover').show()" >
+     聚友帮杀
+    </button>
+    <button type="button" class="btn btn-success btn-large" style="width:100%;margin-top:10px;" onclick='javascript:location.href="{php echo create_url('mobile/module/detail', array('name'=>'shopping', 'weid'=>$_GPC['weid'], 'id'=>$goodsid))}"'>我也想买</button>
+  </div>
+</div>
+</form>
+
+<div id="mcover" onclick="$(this).hide()"><img src="./source/modules/site/template/image/guide.png"></div>
+<script>
+$(function() {
+  document.title="{php echo  empty($event['title'])?$goods['title']:$event['share_title']; }"
+});
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+  WeixinJSBridge.call('hideToolbar');
+  WeixinJSBridge.call('showOptionMenu');
+});
+</script>
+{template 'footer'}

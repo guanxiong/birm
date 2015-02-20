@@ -3,12 +3,12 @@
 	<application setting="true">
 		<name><![CDATA[微相册]]></name>
 		<identifie><![CDATA[album]]></identifie>
-		<version><![CDATA[1.7]]></version>
-		<type><![CDATA[business]]></type>
+		<version><![CDATA[1.8]]></version>
+		<type><![CDATA[wdlshow]]></type>
 		<ability><![CDATA[展示一系列图片来介绍你的公众号]]></ability>
 		<description><![CDATA[]]></description>
-		<author><![CDATA[WeNewstar Team]]></author>
-		<url><![CDATA[http://www.we7.cc]]></url>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
 	</application>
 	<platform>
 		<subscribes>
@@ -64,6 +64,8 @@ CREATE TABLE IF NOT EXISTS `ims_album_reply` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 	]]></install>
-	<uninstall><![CDATA[]]></uninstall>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_album`,`ims_album_photo`,`ims_album_reply`;
+	]]></uninstall>
 	<upgrade><![CDATA[upgrade.php]]></upgrade>
 </manifest>

@@ -1,0 +1,24 @@
+<div style=" margin:1em 0.3em 1em 0.3em; height:10px;">
+  
+  {loop $classes $cls}
+    <div class="module border-radius ptb6" style="height:130px;overflow:hidden">
+            <section class="product-info">
+                  <div class="product-title">{$cls['cname']}</div>
+                         <a href="{if !empty($cls['outurl'])}{$cls['outurl']}{else}{php echo $_W['rootsite'].$this->createMobileurl('plist',array('cid'=>$cls['id']))}{/if}" class="no_unl">
+                  <div class="product-pic">
+                    <img src="{php echo $_W['attachurl'].$cls['thumb']}" height="75px" width="100%" > 
+                  </div>
+                          </a>
+
+                 {if !empty($cls['tel'])}<span><a href="tel:{$cls['tel']}"><div class="product-title">{$cls['tel']}</div></a></span>{/if}
+            </section>            
+    </div>
+    
+    {/loop}      
+   </div>
+   <link href="./source/modules/lxybulletinboard/template/css/footer.css" rel="stylesheet" type="text/css">
+<footer>
+          
+        <div>{$item['version']}</div>
+        <small></small>
+        </footer>

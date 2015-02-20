@@ -1,9 +1,6 @@
 <?php
 /*
  * 分享集赞模块 share
- *
- * @author 石头鱼
- * @url http://www.00393.com/
  */
 defined('IN_IA') or exit('Access Denied');
 

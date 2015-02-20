@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="true">
+		<name><![CDATA[微PUB]]></name>
+		<identifie><![CDATA[jdg_pub]]></identifie>
+		<version><![CDATA[0.1]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[夜夜夜...]]></ability>
+		<description><![CDATA[夜夜夜...]]></description>
+		<author><![CDATA[on3]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="PUB入口设置" do="Pubcover" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="pub信息设置" do="Pubit" state="" direct="false" />
+			<entry title="活动管理" do="Partyit" state="" direct="false" />
+      		<entry title="照片管理" do="Photoit" state="" direct="false" />
+      		<entry title="存酒管理" do="wineAdmin" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pub_name` varchar(50) NOT NULL,
+  `lng` double unsigned NOT NULL DEFAULT '0',
+  `lat` double unsigned NOT NULL DEFAULT '0',
+  `address` varchar(300) NOT NULL DEFAULT '',
+  `tel` varchar(50) NOT NULL DEFAULT '',
+  `header_img` varchar(300) NOT NULL DEFAULT '',
+  `background_img` varchar(300) NOT NULL DEFAULT '',
+  `txt` varchar(500) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_party` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pubid` int(10) unsigned NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `cover` varchar(200) NOT NULL,
+  `txt` varchar(500) NOT NULL DEFAULT '',
+  `createtime` varchar(100) NOT NULL,
+  `begintime` varchar(100) NOT NULL,
+  `endtime` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_photos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pubid` int(10) unsigned NOT NULL,
+  `from_user` varchar(100) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `img_url` varchar(300) NOT NULL,
+  `smallimg_url` varchar(300) NOT NULL,
+  `createtime` varchar(100) NOT NULL,
+  `likeit` int(10) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_partyfans` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pid` int(10) unsigned NOT NULL,
+  `from_user` varchar(100) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `head_img` varchar(200) NOT NULL DEFAULT '',
+  `createtime` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_partycomments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pid` int(10) unsigned NOT NULL,
+  `from_user` varchar(100) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `head_img` varchar(200) NOT NULL DEFAULT '',
+  `createtime` varchar(100) NOT NULL,
+  `txt` varchar(500) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_chatfans` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pubid` int(10) unsigned NOT NULL,
+  `from_user` varchar(100) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `head_img` varchar(200) NOT NULL DEFAULT '',
+  `phone` varchar(50) NOT NULL,
+  `wx` varchar(50) NOT NULL,
+  `createtime` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_chatcomments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pubid` int(10) unsigned NOT NULL,
+  `from_user` varchar(100) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `head_img` varchar(200) NOT NULL DEFAULT '',
+  `createtime` varchar(100) NOT NULL,
+  `txt` varchar(500) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[
+DROP TABLE IF EXISTS `ims_jdg_pub`;
+DROP TABLE IF EXISTS `ims_jdg_pub_party`;
+DROP TABLE IF EXISTS `ims_jdg_pub_photos`;
+DROP TABLE IF EXISTS `ims_jdg_pub_partyfans`;
+DROP TABLE IF EXISTS `ims_jdg_pub_partycomments`;
+DROP TABLE IF EXISTS `ims_jdg_pub_chatfans`;
+DROP TABLE IF EXISTS `ims_jdg_pub_chatcomments`;
+		]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

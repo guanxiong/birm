@@ -1,0 +1,37 @@
+{template 'common/header'}
+
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th>PUB</th>
+					<th>头像</th>
+					<th>用户姓名</th>
+					<th>提交时间</th>
+					<th>openid</th>
+					<th>活动</th>
+					<!-- <th class="norightborder">操作</th> -->
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $row}
+					<tr>
+						<td>{$row['pub_name']}</td>
+						<td><img src="{php echo toimage($row['head_img'])}" style="width: 40px;height: 40px;"></td>
+						<td>{$row['user_name']}</td>
+						<td>{php echo date('Y-m-d H:i:s',$row['createtime'])}</td>
+						<td>{$row['from_user']}</td>
+						<th>{$row['title']}</th>
+						<!-- <td class="norightborder">
+							<a class="btn" rel="tooltip"  href="{php echo $this->createWeburl('photoit', array('id'=>$row['id'],'foo'=>'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;"><i class="icon-remove"></i></a>
+						 						</td> -->
+					</tr>
+					{/loop} 
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+	目前报名总人数:<b>{$count['sum']}</b>人
+</div>
+{template 'common/footer'}

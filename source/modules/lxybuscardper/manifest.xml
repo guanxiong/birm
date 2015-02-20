@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[微名片个人版]]></name>
+		<identifie><![CDATA[lxybuscardper]]></identifie>
+		<version><![CDATA[0.7]]></version>
+		<type><![CDATA[customer]]></type>
+		<ability><![CDATA[微名片个人版]]></ability>
+		<description><![CDATA[供企业业务员、销售员进行营销时的名片展示,同时对企业形象及企业产品进行全面展示,个人版和普通版的不同之处在于分类及名片根据每个人都可以自行设置]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="名片管理" do="cardlist" state="" direct="false" />
+			<entry title="公司设置" do="copadd" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+DROP TABLE IF EXISTS `ims_lxy_bussiness_per_card`;
+CREATE TABLE `ims_lxy_bussiness_per_card` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `username` varchar(20) DEFAULT NULL,
+  `thumb` varchar(255) DEFAULT NULL,
+  `degree` varchar(20) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `company` varchar(100) DEFAULT NULL,
+  `tel` varchar(20) DEFAULT NULL,
+  `qq` varchar(20) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `websiteswitch` tinyint(4) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `addrswitch` tinyint(4) DEFAULT NULL,
+  `addr` varchar(255) DEFAULT NULL,
+  `word` text,
+  `jw_addr` varchar(255) DEFAULT NULL,
+  `lng` varchar(10) DEFAULT NULL,
+  `lat` varchar(10) DEFAULT NULL,
+  `province` varchar(50) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `dist` varchar(50) DEFAULT NULL,
+  `style` varchar(20) DEFAULT 'default',
+  `createtime` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `ims_lxy_bussiness_per_card_class`;
+CREATE TABLE `ims_lxy_bussiness_per_card_class` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `busid` int(11) DEFAULT NULL COMMENT '名片id',
+  `weid` int(11) DEFAULT NULL,
+  `cname` varchar(50) DEFAULT NULL,
+  `outurl` varchar(255) DEFAULT NULL,
+  `thumb` varchar(255) DEFAULT NULL,
+  `isshow` tinyint(4) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `ims_lxy_bussiness_per_card_cop`;
+CREATE TABLE `ims_lxy_bussiness_per_card_cop` (
+  `cid` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `copname` varchar(100) DEFAULT NULL,
+  `copintro` varchar(255) DEFAULT NULL,
+  `thumb` varchar(255) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `addr` varchar(255) DEFAULT NULL,
+  `jw_addr` varchar(255) DEFAULT NULL,
+  `lng` varchar(10) DEFAULT NULL,
+  `lat` varchar(10) DEFAULT NULL,
+  `province` varchar(50) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `dist` varchar(50) DEFAULT NULL,
+  `bankuser` varchar(50) DEFAULT NULL,
+  `bankname` varchar(50) DEFAULT NULL,
+  `bankaccount` varchar(50) DEFAULT NULL,
+  `createtime` int(11) DEFAULT NULL,
+  PRIMARY KEY (`cid`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `ims_lxy_bussiness_per_card_product`;
+CREATE TABLE `ims_lxy_bussiness_per_card_product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `cid` int(11) DEFAULT NULL,
+  `productname` varchar(255) NOT NULL,
+  `outurl` varchar(500) DEFAULT NULL,
+  `createtime` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `ims_lxy_bussiness_per_card_reply`;
+CREATE TABLE `ims_lxy_bussiness_per_card_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+  `title` varchar(50) NOT NULL COMMENT '规则标题',
+  `description` varchar(255) NOT NULL COMMENT '描述',
+  `picture` varchar(100) DEFAULT NULL COMMENT '图片',
+  `cid` int(10) unsigned NOT NULL COMMENT '名片id',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '开关状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[
+	alter table ims_lxy_bussiness_per_card add version text;
+	alter table ims_lxy_bussiness_per_card_class add orderid int(11);
+	]]></upgrade>
+</manifest>

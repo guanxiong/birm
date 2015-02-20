@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[场景魔方]]></name>
+		<identifie><![CDATA[izc_lightbox]]></identifie>
+		<version><![CDATA[8.1]]></version>
+		<type><![CDATA[wdlshow]]></type>
+		<ability><![CDATA[商业信息华丽展示，高级授权]]></ability>
+		<description><![CDATA[商业信息华丽展示，高级授权]]></description>
+		<author><![CDATA[微动力WDL场景应用]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+           <entry title="场景菜单" do="manager"/>
+   		</menu>	
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_izc_lightbox_app` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `listorder` int(11) NOT NULL,
+  `iden` varchar(50) NOT NULL,
+  `price` int(11) NOT NULL,
+  `title` varchar(300) NOT NULL DEFAULT '',
+  `thumb` varchar(300) NOT NULL,
+  `qrcode` varchar(300) NOT NULL,
+  `author` varchar(300) NOT NULL,
+  `series` varchar(50) NOT NULL,
+  `isshow` tinyint(2) NOT NULL,
+  `create_time` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_izc_lightbox_book` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0',
+  `list_id` int(11) NOT NULL,
+  `from_user` varchar(50) NOT NULL DEFAULT '',
+  `str1` varchar(200) NOT NULL DEFAULT '',
+  `str2` varchar(200) NOT NULL DEFAULT '',
+  `str3` varchar(200) NOT NULL DEFAULT '',
+  `status` tinyint(4) NOT NULL,
+  `create_time` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_izc_lightbox_comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `list_id` int(11) NOT NULL,
+  `from` varchar(10) NOT NULL,
+  `content` varchar(255) NOT NULL,
+  `create_time` int(10) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_izc_lightbox_list` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL DEFAULT '',
+  `s_id` int(11) NOT NULL,
+  `iden` varchar(50) NOT NULL,
+  `cover` varchar(300) NOT NULL,
+  `cover_title` varchar(50) NOT NULL,
+  `cover_subtitle` varchar(50) DEFAULT NULL,
+  `cover1` varchar(300) NOT NULL,
+  `cover2` varchar(300) NOT NULL,
+  `thumb` varchar(300) NOT NULL,
+  `share_title` varchar(200) NOT NULL DEFAULT '',
+  `share_thumb` varchar(300) NOT NULL DEFAULT '',
+  `share_content` varchar(1000) NOT NULL,
+  `share_cb_url` varchar(500) NOT NULL,
+  `share_cb_tel` varchar(20) NOT NULL,
+  `diyurl` varchar(100) NOT NULL DEFAULT '',
+  `share_cover` varchar(300) NOT NULL DEFAULT '',
+  `share_url` varchar(300) NOT NULL DEFAULT '',
+  `share_txt` varchar(500) NOT NULL DEFAULT '',
+  `share_button` varchar(300) NOT NULL,
+  `share_tips` varchar(300) NOT NULL,
+  `reply_title` varchar(50) NOT NULL,
+  `reply_thumb` varchar(300) NOT NULL,
+  `reply_description` varchar(1000) NOT NULL,
+  `isadvanced` int(3) NOT NULL DEFAULT '0',
+  `advanced_thumb` varchar(300) NOT NULL,
+  `email` varchar(300) NOT NULL DEFAULT '',
+  `emailtitle` varchar(100) NOT NULL,
+  `first_type` tinyint(2) NOT NULL,
+  `first_btn_select` varchar(10) NOT NULL,
+  `first_btn_value` varchar(500) NOT NULL,
+  `bg_music_switch` tinyint(4) NOT NULL,
+  `bg_music_icon` tinyint(4) NOT NULL,
+  `bg_music_url` varchar(300) NOT NULL,
+  `start_time` int(10) NOT NULL,
+  `end_time` int(10) NOT NULL,
+  `hits` int(10) NOT NULL,
+  `shares` int(10) NOT NULL,
+  `tongji` varchar(1000) NOT NULL,
+  `isyuyue` tinyint(1) NOT NULL DEFAULT '0',
+  `iscomment` tinyint(1) NOT NULL DEFAULT '0',
+  `isdemo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_izc_lightbox_manage` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(11) NOT NULL,
+  `appid` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `appnums` int(11) NOT NULL,
+  `start_time` int(10) NOT NULL,
+  `end_time` int(10) NOT NULL,
+  `create_time` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_izc_lightbox_page` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `list_id` varchar(50) NOT NULL DEFAULT '',
+  `listorder` int(11) NOT NULL,
+  `m_type` tinyint(4) NOT NULL,
+  `thumb` varchar(300) NOT NULL,
+  `param` text NOT NULL,
+  `create_time` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_izc_lightbox_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0',
+  `list_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_rid` (`rid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+INSERT INTO `ims_izc_lightbox_app` (`listorder`, `iden`, `price`, `title`, `thumb`, `qrcode`, `author`, `series`, `isshow`, `create_time`) VALUES
+( 0, 'style2', 0, '【再一次•极致诱惑】唤起你对性感的记忆', 'http://www.liveapp.cn/userfiles/orm/tmp/53fd9b319a37e.jpg', 'http://www.liveapp.cn/userfiles/qrcode/5/4797/0.png', '微动力WDL场景应用', '微动力WDL场景应用', 1, 0),
+( 0, 'style4', 0, '我与自己久别重逢（EVERGREEN）', 'http://www.liveapp.cn/userfiles/orm/tmp/54097ca426726.jpg', 'http://www.liveapp.cn/userfiles/qrcode/5/5056/0.png', '微动力WDL场景应用', '微动力WDL场景应用', 1, 0),
+( 0, 'style6', 0, '一场冰冷世界的革命', 'http://www.liveapp.cn/userfiles/orm/tmp/53df16d26c946.png', 'http://www.liveapp.cn//userfiles/qrcode/5/4327/0.png', '微动力WDL场景应用', '微动力WDL场景应用', 1, 0),
+( 0, 'style3', 0, '变形金刚4•绝迹重生', 'http://www.liveapp.cn/userfiles/orm/tmp/53b64cd30a150.jpg', 'http://www.liveapp.cn/userfiles/qrcode/5/4085/0.png', '微动力WDL场景应用', '微动力WDL场景应用', 1, 0),
+( 0, 'style7', 10000, 'iPhone6 再一次创造', 'http://www.liveapp.cn/userfiles/case4/Logo/35.jpg', 'http://www.liveapp.cn/userfiles/qrcode/5/4101/store.png', '微动力WDL场景应用', '微动力WDL场景应用', 1, 0),
+( 0, 'style8', 12000, '2014 NEW FUN 泳池趴', 'http://www.liveapp.cn/userfiles/orm/tmp/541640b55e383.jpg', 'http://www.liveapp.cn/userfiles/qrcode/5/5261/0.png', '微动力WDL场景应用', '微动力WDL场景应用', 1, 1411316941),
+( 0, 'style9', 12000, '办公家具 就选优的！', 'http://www.liveapp.cn/userfiles/orm/tmp/5416424879cb2.jpg', 'http://www.liveapp.cn/userfiles/qrcode/5/5259/0.png', '微动力WDL场景应用', '微动力WDL场景应用', 1, 1411372542),
+( 0, 'custom', 12000, '自定义场景', '', '', '微动力WDL场景应用', '微动力WDL场景应用', 1, 1411372542);
+	]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_izc_lightbox_reply`;
+    DROP TABLE IF EXISTS `ims_izc_lightbox_page`;
+	DROP TABLE IF EXISTS `ims_izc_lightbox_manage`;
+	DROP TABLE IF EXISTS `ims_izc_lightbox_list`;
+	DROP TABLE IF EXISTS `ims_izc_lightbox_app`;
+	DROP TABLE IF EXISTS `ims_izc_lightbox_book`;
+	DROP TABLE IF EXISTS 'ims_izc_lightbox_comment';
+  ]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

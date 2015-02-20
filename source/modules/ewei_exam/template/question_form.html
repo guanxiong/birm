@@ -1,0 +1,407 @@
+{template 'common/header'}
+
+{template 'common'}
+
+<div class="main">
+    <ul class="nav nav-tabs">	 	
+      <li {if $op=='list' || empty($op)}class="active"{/if}><a href="{php echo $this->createWebUrl('question',array('op'=>'list'));}">试题管理</a></li>
+      <li {if $op=='edit' && empty($item['id'])}class="active"{/if}><a href="{php echo $this->createWebUrl('question',array('op'=>'edit'));}">添加试题</a></li>
+       {if $op=='edit' && !empty($item['id'])}<li class="active"><a href="{php echo $this->createWebUrl('question', array('op'=>'edit','id'=>$id));}">编辑试题</a></li>{/if}
+    </ul>
+    <form action="" class="form-horizontal form" id="data_from" method="post" enctype="multipart/form-data" onsubmit="return formcheck()">
+        <input type="hidden" name="id" value="{$item['id']}">
+        <h4>试题编辑</h4>
+       <table class='tb'>
+        <tbody>
+           <tr>
+              <th>难度：</th>
+                    <td><select class='span3' id='level' name='level'>
+                            <option value ="1" {if $item['level'] == 1 || $item['level'] == 0}selected="selected"{/if}>1</option>
+                            <option value ="2" {if $item['level'] == 2}selected="selected"{/if}>2</option>
+                            <option value ="3" {if $item['level'] == 3}selected="selected"{/if}>3</option>
+                            <option value ="4" {if $item['level'] == 4}selected="selected"{/if}>4</option>
+                            <option value ="5" {if $item['level'] == 5}selected="selected"{/if}>5</option>
+                            <option value ="6" {if $item['level'] == 6}selected="selected"{/if}>6</option>
+                            <option value ="7" {if $item['level'] == 7}selected="selected"{/if}>7</option>
+                            <option value ="8" {if $item['level'] == 8}selected="selected"{/if}>8</option>
+                            <option value ="9" {if $item['level'] == 9}selected="selected"{/if}>9</option>
+                            <option value ="10" {if $item['level'] == 10}selected="selected"{/if}>10</option>
+                    </select>
+                       
+                        </td>
+            </tr>  
+           
+              <tr>
+              <th>所属题库：</th>
+                    <td>   <input type="text" name="pool" maxlength="30" value="{$pool['title']}" id="pool" class="span5" readonly />
+                    <input type='hidden' id='poolid' name='poolid' value="{$pool['id']}" />
+                    <button class="btn" type="button" onclick="popwin = $('#modal-module-menus1').modal();">选择</button>
+                    <button class="btn" type="button" onclick="clear_pool()">清除</button>
+                    <div id="modal-module-menus1" class="modal fade hide" tabindex="-1" role="dialog" aria-hidden="true" style=" width:600px;">
+                        <div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3>选择试卷</h3></div>
+                        <div class="modal-body">
+                            <table class="tb">
+                                <tr>
+                                    <th><label for="">搜索关键字</label></th>
+                                    <td><input type="text" class="span3" name="keyword" value="" id="search-kwd1" /> <button type="button" class="btn" onclick="search_pools();">搜索</button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div id="module-menus1"></div>
+                        </div>
+                        <div class="modal-footer"><a href="#" class="btn" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+                    </div>
+                    
+</td>
+            </tr>
+           {if $paper['id'] != ''}
+           <tr>
+               <th>所属试卷：</th>
+               <td>   <input type="text" name="paper" maxlength="30" value="{$paper['title']}" id="paper" class="span5" readonly />
+                    <input type='hidden' id='paperid' name='paperid' value="{$paper['id']}" />
+                    <span class="help-block">
+                        <span id="page_score" style="color:red;{if $paper['id'] == ''}display: none;{/if}">{$pager_str}</span>
+                    </span>
+
+               </td>
+           </tr>
+           {/if}
+           <!--<tr>-->
+               <!--<th>所属试卷：</th>-->
+               <!--<td>   <input type="text" name="paper" maxlength="30" value="{$paper['title']}" id="paper" class="span5" readonly />-->
+                   <!--<input type='hidden' id='paperid' name='paperid' value="{$paper['id']}" />-->
+                   <!--<button class="btn" type="button" onclick="popwin = $('#modal-module-menus').modal();">选择</button>-->
+                   <!--<button class="btn" type="button" onclick="clear_paper()">清除</button>-->
+                   <!--<div id="modal-module-menus" class="modal fade hide" tabindex="-1" role="dialog" aria-hidden="true" style=" width:600px;">-->
+                       <!--<div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3>选择试卷</h3></div>-->
+                       <!--<div class="modal-body">-->
+                           <!--<table class="tb">-->
+                               <!--<tr>-->
+                                   <!--<th><label for="">搜索关键字</label></th>-->
+                                   <!--<td><input type="text" class="span3" name="keyword" value="" id="search-kwd" /> <button type="button" class="btn" onclick="search_papers();">搜索</button>-->
+                                   <!--</td>-->
+                               <!--</tr>-->
+                           <!--</table>-->
+                           <!--<div id="module-menus"></div>-->
+                       <!--</div>-->
+                       <!--<div class="modal-footer"><a href="#" class="btn" data-dismiss="modal" aria-hidden="true">关闭</a></div>-->
+                   <!--</div>-->
+                    <!--<span class="help-block">如果指定试卷，则该题只在当前试卷中出现-->
+                        <!--<span id="page_score" style="color:red;{if $paper['id'] == ''}display: none;{/if}">{$pager_str}</span>-->
+                    <!--</span>-->
+
+               <!--</td>-->
+           <!--</tr>-->
+           <tr>
+              <th><span class="red">*</span>题目类型：</th>
+                    <td><select class='span3' id='qtype' name='type'>
+                       <option value=''>--请选择题目类型--</option>
+                          {loop $types_config $key $value}
+                            <option id="option_{$key}" class="option_class" value ="{$key}" {if $item['type'] == $key}selected="selected"{/if}>{$value}</option>
+                          {/loop}
+                    </select>
+                       
+                        </td>
+            </tr>
+
+            <tr>
+                <th><span class="red">*</span>题目问题：</th>
+                <td>
+                <textarea style="height:100px;" id="question" name="question" class="span7" cols="60">{$item['question']}</textarea>
+                </td>
+            </tr>
+
+           <tr>
+               <th>题目图片</th>
+               <td>{php echo tpl_form_field_image('thumb',$item['thumb']);}
+               </td>
+           </tr>
+
+           <tr id="answer_isimg" style="display: none;">
+               <th><span class="red">*</span>答案类型</th>
+               <td>
+                   <label class="radio inline"><input type="radio" name="isimg" onclick="changeTo('text')" id='isimg' value="0" {if $item['isimg'] == 0} checked="true" {/if}>文本</label>&nbsp;&nbsp;
+                   <label class="radio inline"><input type="radio" name="isimg" onclick="changeTo('image')" value="1" {if $item['isimg'] == 1} checked="true" {/if}>文本+图片</label>&nbsp;&nbsp;
+               </td>
+           </tr>
+
+            <tr>
+                <th></th>
+                <td id="item">
+                    <!-- 判断题 -->
+                   <div id="item_1" class="alert alert-block alert-new item"  style='width:500px;{if $item['type']!=1}display:none{/if}' >
+                        <label class="radio inline">
+                            <input type="radio" name="answer1" class='answer1' value="1" {if $item['answer']==1}checked{/if} />正确
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" name="answer1" class='answer1'  value="2" {if $item['answer']==2}checked{/if}/>错误
+                        </label>
+                    </div>
+
+                    <!--单选题-->
+                    <div id="item_2" class="alert alert-block alert-new item"  style='width:500px;{if $item['type']!=2}display:none{/if}'>
+                        <table>
+                            {loop $answer_array $key $value}
+                            <tr>
+                                <td> <label class="radio inline"><input type="radio" name="answer2" class="answer2" value="{$value}" {if $item['answer'] == "$value"}checked{/if} />{$value}</label> </td>
+                                <td>
+                                    <input type='text' class='span6 items2' name='items2[]' value="{$item['items'][$key]}"  need="{if $key < 4}true{else}false{/if}"/>
+
+                                    <div class="item-image" {if $item['isimg'] == 0}style="display:none;"{/if}>
+                                    {php echo tpl_form_field_image("img_items2_" . $key, $item['img_items'][$key]);}
+                                    <br>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            {/loop}
+
+                        </table>
+                    </div>
+
+                    <!--多选题-->
+                    <div id="item_3" class="alert alert-block alert-new item"  style='width:500px;{if $item['type']!=3}display:none{/if}'>
+                        <table>
+
+                            {loop $answer_array $key $value}
+                            <tr>
+                                <td> <label class="checkbox inline"><input type="checkbox" name="answer3[]" class="answer3"  value="{$value}" {if stripos($item['answer'], "$value") > -1}checked{/if} />{$value}</label> </td>
+                                <td>
+                                    <input type='text' class='span6 items3' name='items3[]' value="{$item['items'][$key]}" need="{if $key < 4}true{else}false{/if}"/>
+
+                                    <div class="item-image" {if $item['isimg'] == 0}style="display:none;"{/if}>
+                                        {php echo tpl_form_field_image("img_items3_" . $key, $item['img_items'][$key]);}
+                                        <br>
+                                    </div>
+                                </td>
+                            </tr>
+                            {/loop}
+
+                        </table>
+                    </div>
+                    <!--填空题-->
+                     <!--<div id="item_4" class="alert alert-block alert-new item"  style='width:500px;{if $item['type']!=4}display:none{/if}'>-->
+                        <!--在问题中将需要填写的空用户中括号括起来，例如:宋朝的开国皇帝是[赵匡胤]。-->
+                        <!--<input type='hidden' name='answer4' value="{$item['answer']}" />-->
+                    <!--</div>-->
+                    <!--解答题-->
+                     <!--<div id="item_5" class="alert alert-block alert-new item"  style='width:500px;{if $item['type']!=5}display:none{/if}'>-->
+                        <!--标准答案:-->
+                         <!--<textarea style="height:100px;" name="answer5" id='answer5' class="span6" cols="60">{$item['answer']}</textarea>-->
+                    <!--</div>-->
+            </tr>
+
+            <tr>
+                <th><span class="red">*</span>讲解：</th>
+                <td>
+                    <textarea style="height:100px;" id="explain" name="explain" class="span7" cols="60">{$item['explain']}</textarea>
+                </td>
+            </tr>
+             <tr>
+                <th></th>
+                <td>
+                    <button type="button" class="btn btn-primary span3" name="submitsave" onclick="submit_next(0)" value="提交">提交</button>
+                    {if $id == ''}
+                    <button type="button" class="btn btn-primary span3" name="submitnext" onclick="submit_next(1)" value="提交并添加下一题">提交并添加下一题</button>
+                    {/if}
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                    <input type="hidden" name="is_next" id="is_next" value="0" />
+                    <input type="hidden" name="old_type" id="old_type" value="{$item['type']}" />
+                    <input type="hidden" name="referer" id="referer" value="{$referer}" />
+
+                </td>
+            </tr>
+        </tbody>
+    </table>	
+    </form>
+
+    <script type="text/javascript">
+
+        function changeTo(t){
+            if(t=='image'){
+                $(".item-image").show();
+            }
+            else{
+                $(".item-image").hide();
+            }
+        }
+
+        $(function(){
+            $("#qtype").change(function(){
+                var type = $(this).val();
+                $(".item").hide();
+                if(type!=''){
+                    $("#item_" + type).show();
+                }
+                if (type > 1) {
+                    $("#answer_isimg").show();
+                } else {
+                    $("#answer_isimg").hide();
+                }
+            });
+        });
+
+        function submit_next(n){
+            $("#is_next").val(n);
+            $("#data_from").submit();
+        }
+
+//        function clear_paper(){
+//             $("#paperid").val("");
+//           $("#paper").val("");
+//        }
+
+//  function search_papers() {
+//    $("#module-menus").html("正在搜索....")
+//    $.post('{php echo $this->createWebUrl('paper',array('op'=>'query'));}', {
+//       keyword: $.trim($('#search-kwd').val())
+//    }, function(dat){
+//    $('#module-menus').html(dat);
+//    });
+//    }
+
+//    function select_paper(o) {
+//           $("#paperid").val(o.id);
+//           $("#paper").val( o.title );
+//           $(".close").click();
+//           $("#page_score").show();
+//           $("#page_score").html(o.pager_str);
+//    }
+
+       function clear_pool(){
+             $("#poolid").val("");
+           $("#pool").val("");
+        }
+
+  function search_pools() {
+$("#module-menus1").html("正在搜索....")
+    $.post('{php echo $this->createWebUrl('pool',array('op'=>'query'));}', {
+       keyword: $.trim($('#search-kwd1').val())
+    }, function(dat){
+    $('#module-menus1').html(dat);
+    });
+    }
+    function select_pool(o) {
+           $("#poolid").val(o.id);
+           $("#pool").val( o.title );
+           $(".close").click();
+    }
+
+    function item_check() {
+        var isimg = $('input:radio[name="isimg"]:checked').val();
+        var type = $("#qtype").val();
+        var flag = 1;
+        if ($("#paperid").val() > 0 && ($("#old_type").val() != type)) {
+            $.ajax({
+                type: "POST",
+                url: "{php echo $this->createWebUrl('question',array('op'=>'checkaddquestion'))}",
+                data: {type: type, paperid: $("#paperid").val()},
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    if (data.result != 1) {
+                        flag = 0;
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+
+        if (flag == 0) {
+            return false;
+        }
+
+        if (type == '1') {
+            var checked = false;
+            $(".answer1").each(function () {
+                if ($(this).get(0).checked) {
+                    checked = true;
+                    return false;
+                }
+            });
+            if (!checked) {
+                Tip.focus(".answer1:eq(0)", "请选择正确答案!", "top");
+                return false;
+            }
+        } else if (type == 2) {
+            if (isimg == 0) {
+                var ok = true;
+                $(".items2").each(function () {
+                    if ($(this).isEmpty() && $(this).attr("need")=="true") {
+                        Tip.focus($(this), "请填写选项!", "right");
+                        ok = false;
+                        return false;
+                    }
+                });
+                if (!ok) {
+                    return false;
+                }
+            }
+
+            var checked = false;
+            $(".answer2").each(function () {
+                if ($(this).get(0).checked) {
+                    checked = true;
+                    return false;
+                }
+            });
+            if (!checked) {
+                Tip.focus(".answer2:eq(0)", "请选择一个答案!", "top");
+                return false;
+            }
+        } else if (type == '3') {
+            if (isimg == 0) {
+                var ok = true;
+                $(".items3").each(function () {
+                    if ($(this).isEmpty() && $(this).attr("need")=="true") {
+                        Tip.focus($(this), "请填写选项!", "right");
+                        ok = false;
+                        return false;
+                    }
+                });
+                if (!ok) {
+                    return false;
+                }
+            }
+
+            var checked = false;
+            $(".answer3").each(function () {
+                if ($(this).get(0).checked) {
+                    checked = true;
+                    return false;
+                }
+            });
+            if (!checked) {
+                Tip.focus(".answer3:eq(0)", "至少选择一个答案!", "top");
+                return false;
+            }
+        }
+        else if (type == '4') {
+            var patrn = /(\[([\s\S]*?)\])/ig;
+            if (!patrn.test($("#question").val())) {
+                Tip.focus("question", "未找到填空数据，填空请用[]中括号括起来!", "right");
+                return false;
+            }
+        }
+        else if (type == 5) {
+            if ($("#answer5").isEmpty()) {
+                Tip.focus("answer5", "请填写标准答案!", "right");
+                return false;
+            }
+        }
+
+    }
+
+function formcheck(){
+    if($("#qtype").isEmpty()){
+        Tip.focus("qtype","请选择题目类型!","right");
+        return false;
+    }   if($("#question").isEmpty()){
+        Tip.focus("question","请填写题目问题!","right");
+        return false;
+    }
+    return  item_check();
+}
+
+</script>
+{template 'common/footer'}

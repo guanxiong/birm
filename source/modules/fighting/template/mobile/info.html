@@ -1,0 +1,68 @@
+{template 'header'}
+<div class="profile">
+	<div class="tabbable"> <!-- Only required for left/right tabs -->
+		<form action="" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="from_user" value="{$_W['fans']['from_user']}" />
+		<div class="tab-content" style="padding:0 10px; margin-top:10px;">
+			<div class="tab-pane active" id="tab1">
+				<table class="form-table">
+					<tr>
+						<th><label for="">用户名</label></th>
+						<td><input type="text" name="" value="{$_W['fans']['from_user']}" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<th><label for="">昵称</label></th>
+						<td><input type="text" name="nickname" value="{$profile['nickname']}"></td>
+					</tr>
+					<tr>
+						<th><label for="">电话号码</label></th>
+						<td><input type="text" id="" name="mobile" value="{$profile['mobile']}"></td>
+					</tr>
+				</table>
+			</div>
+			<table class="form-table">
+				<tr>
+					<td colspan="2" align="center"><input type="hidden" name="token" value="{$_W['token']}" /><input type="submit" class="btn btn-large submit" value="提交" name="submit"></td>
+				</tr>
+			</table>
+		</div>
+	</form>
+	</div>
+</div>
+<div id="sysavatar" class="modal hide fade" tabindex="-1" style="margin-left:0; left:5%; width:90%;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<style>
+	#sysavatar span{overflow:hidden; display: inline-block; border:2px #E1E1E1 solid; margin-bottom:5px; cursor:pointer;}
+	#sysavatar span img{width:50px; height:50px;}
+	</style>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">选择系统头像</h3>
+	</div>
+	<div class="modal-body" style="padding-bottom:10px;">
+		{php $avatar_url = 'resource/image/avatar/';}
+		<span><img src="{$avatar_url}avatar_1.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_2.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_3.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_4.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_5.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_6.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_7.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_8.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_9.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_10.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_11.jpg" /></span>
+		<span><img src="{$avatar_url}avatar_12.jpg" /></span>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">完成</button>
+	</div>
+</div>
+<script type="text/javascript">
+cascdeInit('{$profile['resideprovince']}','{$profile['residecity']}','{$profile['residedist']}'); //开启地区三级联动
+$("#sysavatar .modal-body").delegate("span", "click", function(){
+	$("#sysavatar .modal-body span").css("border", "2px #E1E1E1 solid");
+	$(this).css("border", "2px #ED2F2F solid");
+	$('#avatar').val($(this).find("img").attr("src"));
+});
+</script>
+{template 'footer'}

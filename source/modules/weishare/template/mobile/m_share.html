@@ -14,10 +14,7 @@
 	<link href="./source/modules/weishare/css/font-awesome.min.css" rel="stylesheet">
 	<link href="./source/modules/weishare/css/animate.css" rel="stylesheet">
 	<link href="./source/modules/weishare/css/common.css" rel="stylesheet">
-
 	<script type="text/javascript" src="./source/modules/weishare/js/lib/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="./source/modules/weishare/js/WeixinApi.js"></script>
-
 </head>
 <body>
 <div class="container container-fill">
@@ -62,90 +59,47 @@
 <div id="mcover" onclick="$(this).hide()"><img src="./source/modules/weishare/images/guide.png"></div>
 <script>require(['bootstrap']);</script>
 <script type="text/javascript">
-
-
-		// 需要分享的内容，请放到ready里
-
-		WeixinApi.ready(function(Api) {
-			// 微信分享的数据
-			var wxData = {
-				"appId": "", // 服务号可以填写appId
-				"imgUrl" : "{$share['shareIcon']}",
-				"link" : "{$_W[siteroot]}{php echo $this->createMobileUrl('firendshare',array('sid'=>$share['id'],'uid'=>$shareUser['id']))}",
-				"desc" :"{$share[shareContent]}",
-				"title" : "{$share[shareTitle]}"
-			};
-
-			// 分享的回调
-			var wxCallbacks = {
-				// 收藏操作是否触发回调，默认是开启的
-				favorite : false,
-
-				// 分享操作开始之前
-				ready : function() {
-					// 你可以在这里对分享的数据进行重组
-					// alert("准备分享");
-				},
-				// 分享被用户自动取消
-				cancel : function(resp) {
-					// 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
-					// alert("分享被取消，msg=" + resp.err_msg);
-				},
-				// 分享失败了
-				fail : function(resp) {
-					// 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
-					// alert("分享失败，msg=" + resp.err_msg);
-				},
-				// 分享成功
-				confirm : function(resp) {
-					// 分享成功了，我们是不是可以做一些分享统计呢？
-					// alert("分享成功，msg=" + resp.err_msg);
-				},
-				// 整个分享过程结束
-				all : function(resp,shareTo) {
-					// 如果你做的是一个鼓励用户进行分享的产品，在这里是不是可以给用户一些反馈了？
-					// alert("分享" + (shareTo ? "到" + shareTo : "") + "结束，msg=" + resp.err_msg);
-				}
-			};
-
-			// 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
-			Api.shareToFriend(wxData, wxCallbacks);
-
-			// 点击分享到朋友圈，会执行下面这个代码
-			Api.shareToTimeline(wxData, wxCallbacks);
-
-			// 点击分享到腾讯微博，会执行下面这个代码
-			Api.shareToWeibo(wxData, wxCallbacks);
-
-			// iOS上，可以直接调用这个API进行分享，一句话搞定
-			Api.generalShare(wxData,wxCallbacks);
-		});
-
-
-
 		$(document).ready(function(){
-
 			$("#share_friend").click(function(){
-
-
 				$("#mcover").show();
 
 			});
 		});
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+	
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+	
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',		
+	];
+	
+	wx.config(jssdkconfig);
 
-		//对分享时的数据处理
-		function _removeHTMLTag(str) {
-			str = str.replace(/<script[^>]*?>[\s\S]*?<\/script>/g,'');
-			str = str.replace(/<style[^>]*?>[\s\S]*?<\/style>/g,'');
-			str = str.replace(/<\/?[^>]*>/g,'');
-			str = str.replace(/\s+/g,'');
-			str = str.replace(/&nbsp;/ig,'');
-			return str;
-		}
-
-
-
-
-	</script>
+	sharedata = {
+		title : "{$share[shareTitle]}",
+		link : "{$_W[siteroot]}{php echo $this->createMobileUrl('firendshare',array('sid'=>$share['id'],'uid'=>$shareUser['id']))}",
+		desc : "{$share[shareContent]}",
+		imgUrl :"{$share['shareIcon']}"
+	};
+	
+	wx.ready(function () {
+		wx.showOptionMenu();
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+	});
+</script>
 </body>
 </html>

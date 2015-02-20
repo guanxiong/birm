@@ -1,0 +1,41 @@
+{template 'common/header'}
+
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th>PUB</th>
+					<th>用户姓名</th>
+					<th>提交时间</th>
+					<th>openid</th>
+					<th>留言内容</th>
+					<th>状态</th>
+					<th class="norightborder">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $row}
+					<tr>
+						<td>{$row['pub_name']}</td>
+						<td>{$row['user_name']}</td>
+						<td>{php echo date('Y-m-d H:i:s',$row['createtime'])}</td>
+						<td>{$row['from_user']}</td>
+						<td>{$row['txt']}</td>
+						<td>{if $row['isok']==0}等待审核{else}通过{/if}</td>
+						<td class="norightborder">
+							<a class="btn" rel="tooltip"  href="{php echo $this->createWeburl('chatit', array('id'=>$row['id'],'foo'=>'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;"><i class="icon-remove"></i></a>
+							{if $row['isok']==0}
+							<a class="btn" rel="tooltip"  href="{php echo $this->createWeburl('chatit', array('id'=>$row['id'],'foo'=>'change','val'=>1))}" onclick="return confirm('确定审核通过?');return false;"><i class="icon-unlock"></i></a>
+							{else}
+							<a class="btn" rel="tooltip"  href="{php echo $this->createWeburl('chatit', array('id'=>$row['id'],'foo'=>'change','val'=>0))}" onclick="return confirm('确认更改为未审核状态?');return false;"><i class="icon-unlock-alt"></i></a>
+							{/if}
+ 						</td>
+					</tr>
+					{/loop} 
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+</div>
+{template 'common/footer'}

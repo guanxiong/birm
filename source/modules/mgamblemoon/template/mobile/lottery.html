@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>中秋节模块之博饼</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="Pragma" content="no-cache">
+<link rel="stylesheet" type="text/css" href="./source/modules/mgamblemoon/template/images/main.css">
+<script >
+var bburl="{php echo $this->createMobileUrl('getaward', array('id' => $id))}";
+</script>
+<script type="text/javascript" charset="utf-8" src="./source/modules/mgamblemoon/template/images/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./source/modules/mgamblemoon/template/images/css3animate.js"></script>
+<script type="text/javascript" charset="utf-8" src="./source/modules/mgamblemoon/template/images/bobing.js?v=222"></script>
+
+<style>
+
+.power-by{ font-size:1.2em; text-align:center; line-height:30px; color:#E9E900;}
+
+
+body {
+	display: block;
+	margin: 0;
+	padding:0;
+	background-image: url(./source/modules/mgamblemoon/template/images/bg-body.jpg);
+	background-size:100% auto;
+	background-repeat:no-repeat;
+	background-color:rgb(68,0,2);
+}
+.afpopupbobing div{
+	display:table-cell;vertical-align:middle;text-align:center;
+	height:196px;
+	width:400px;
+	text-align:left;
+	padding-top:auto;
+	padding-left:auto;
+	padding-right:auto;
+	color:#333;
+	font-size:24px;
+}
+.infoss{
+	margin: 0;
+	padding:0;
+	
+}
+.infos{color:#fff;
+
+}
+.infos span {color:#fff;
+	padding-left:10px;
+	background-color:#6E0F0F;
+}
+.rule {
+	
+	font-color:white;
+}
+.rule {
+	padding: 10px 20px;
+	line-height: 2em;
+}
+
+.bobigwan {
+    background-image: url(./source/modules/mgamblemoon/template/images/UE1gkbmy4gO4h4blngym5rLyyU1uGZ.png);
+}
+</style>
+
+</head>
+<body>
+<div>
+<div id="content" class="hasMenu" style="bottom: 49px; top: 44px;">
+	<div id="electronCoupons" class="panel index" title="" js-scrolling="true" data-title="博饼活动" style="overflow: hidden; display: block;">
+		<div class="index afScrollPanel" js-scrolling="true" style="-webkit-transform: translate3d(0px, 0px, 0); -webkit-transition: 0ms linear; transition: 0ms linear;"> 
+			<div class="infoss">
+			{if empty($mgamblemoon['headurl'])}{else}<a href="{$mgamblemoon['headurl']}" target="_blank">{/if}
+				{if empty($mgamblemoon['headpic'])}
+					
+					<img src="./source/modules/mgamblemoon/template/images/q3LoiTOuz13J2sZFO6UsVj4463MI4V.jpg" width="100%">
+				{else}
+				<img src="{$_W['attachurl']}{$mgamblemoon['headpic']}" width="100%">
+				{/if}
+				{if empty($mgamblemoon['headurl'])}{else}</a>{/if}
+			</div>
+			
+			<div class="bobigwan" id="bobigwan">
+				<div id="wannei">
+					<span id="pic1" class="b1"></span>
+					<span id="pic2" class="b2"></span>
+					<span id="pic3" class="b3"></span>
+					<span id="pic4" class="b4"></span>
+					<span id="pic5" class="b5"></span>
+					<span id="pic6" class="b6"></span>
+				</div>
+			</div>
+			<div class="infos">
+				<span> 您好,<span id="theusername">{$profile['nickname']}</span></span>
+				<span> 今日次数:<span id="theRemaining">{$arr_times['today_has']}</span></span>
+				<span><a class="to-index-button" href="{php echo $this->createMobileUrl('rank',array('id'=>$id,'from_user'=>$from_user))}">我的奖品</a></span>
+				<span> <a class="to-index-button" href="{php echo $this->createMobileUrl('RecentWinner',array('id'=>$id,'from_user'=>$from_user))}">最近中奖</a></span>
+				<span>助威次数<span>{$totals}</span></span>
+				<span><a href="http://meepo.com.cn"> MeepoUnion 精仿</a></span>
+			</div>
+			
+			<audio id="bobigaudio" src="./source/modules/mgamblemoon/template/images/y.mp3"></audio>
+
+		</div>
+
+	</div>
+</div>
+
+
+<div class="afScrollbar" style="position: absolute; width: 5px; height: 20px; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; display: none; background-color: black; top: 0px; background-position: initial initial; background-repeat: initial initial;"></div>
+</div>
+
+
+<div id="aside_menu" style="overflow: hidden;">
+	<div id="aside_menu_scroller" style="-webkit-transform: translate3d(0px, 0px, 0); -webkit-transition: 0ms linear; transition: 0ms linear;"></div>
+	<div class="afScrollbar" style="position: absolute; width: 5px; height: 20px; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; display: none; background-color: black; top: 0px; -webkit-transition: 0ms; transition: 0ms; background-position: initial initial; background-repeat: initial initial;"></div>
+</div>
+
+
+<div id="afui_modal" style="overflow: hidden;">
+	<div id="modalContainer" style="-webkit-transform: translate3d(0px, 0px, 0); -webkit-transition: 0ms linear; transition: 0ms linear;"></div>
+	<div id="modalTransContainer"></div>
+	<div class="afScrollbar" style="position: absolute; width: 5px; height: 20px; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; display: none; background-color: black; top: 0px; background-position: initial initial; background-repeat: initial initial;"></div>
+</div>
+
+<div id="afui_mask" class="ui-loader" style="z-index: 20000; display: none;">
+	<span class="ui-icon ui-icon-loading spin"></span>
+	<h1>Loading Content</h1>
+</div>
+<script type="text/javascript" >
+
+	var bobingright= true ;
+	bobing.username =  "{$profile['nickname']}";
+    bobing.remainder = {$arr_times['today_has']};
+    window.addEventListener('load', initializebobing, false);
+	
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideToolbar');
+	window.shareData = {
+		"imgUrl": "{$_W['siteroot']}source/modules/mgamblemoon/template/images/d1.png",
+		"timeLineLink": "{$_W['siteroot']}{php echo $this->createMobileUrl('lottery', array('id' => $id,'uid' => $myuser['id']))}",
+		"sendFriendLink": "{$_W['siteroot']}{php echo $this->createMobileUrl('lottery', array('id' => $id,'uid' => $myuser['id']))}",
+		"weiboLink": "{$_W['siteroot']}{php echo $this->createMobileUrl('lottery', array('id' => $id,'uid' => $myuser['id']))}",
+		"tTitle": "{$mgamblemoon['title']}",
+		"tContent": "{$mgamblemoon['descriptions']}",
+		"fTitle": "{$mgamblemoon['title']}",
+		"fContent": "{$mgamblemoon['descriptions']}",
+		"wContent": "{$mgamblemoon['descriptions']}"
+	};
+
+	// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+		WeixinJSBridge.invoke('sendAppMessage', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.sendFriendLink,
+			"desc": window.shareData.fContent,
+			"title": window.shareData.fTitle
+		}, function (res) {
+			_report('send_msg', res.err_msg);
+		})
+	});
+
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function (argv) {
+		WeixinJSBridge.invoke('shareTimeline', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.timeLineLink,
+			"desc": window.shareData.tContent,
+			"title": window.shareData.tTitle
+		}, function (res) {
+			_report('timeline', res.err_msg);
+		});
+	});
+
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function (argv) {
+		WeixinJSBridge.invoke('shareWeibo', {
+			"content": window.shareData.wContent,
+			"url": window.shareData.weiboLink
+		}, function (res) {
+			_report('weibo', res.err_msg);
+		});
+	});
+}, false);
+</script>
+</body>
+</html>

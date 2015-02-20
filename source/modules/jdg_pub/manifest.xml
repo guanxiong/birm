@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="true">
+		<name><![CDATA[微夜店]]></name>
+		<identifie><![CDATA[jdg_pub]]></identifie>
+		<version><![CDATA[1.12]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[酒吧、ktv、夜总会等夜场专用模块]]></ability>
+		<description><![CDATA[可实现信息化管理，模块功能堪比小型管理系统]]></description>
+		<author><![CDATA[wdl]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="PUB入口设置" do="Pubcover" state="" direct="false" />
+		</cover>
+		<menu>
+	<entry title="pub信息设置" do="Pubit" state="" direct="false" />
+	<entry title="活动管理" do="Partyit" state="" direct="false" />
+      <entry title="照片管理" do="Photoit" state="" direct="false" />
+      <entry title="存酒管理" do="wineAdmin" state="" direct="false" />
+      <entry title="邻座留言管理" do="Chatit" state="" direct="false" />
+	   <entry title="管理商品" do="Managementgoods"  state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pub_name` varchar(50) NOT NULL,
+  `lng` double unsigned NOT NULL DEFAULT '0',
+  `lat` double unsigned NOT NULL DEFAULT '0',
+  `address` varchar(300) NOT NULL DEFAULT '',
+  `tel` varchar(50) NOT NULL DEFAULT '',
+  `header_img` varchar(300) NOT NULL DEFAULT '',
+  `background_img` varchar(300) NOT NULL DEFAULT '',
+  `txt` varchar(500) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_party` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pubid` int(10) unsigned NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `cover` varchar(200) NOT NULL,
+  `txt` varchar(500) NOT NULL DEFAULT '',
+  `createtime` varchar(100) NOT NULL,
+  `begintime` varchar(100) NOT NULL,
+  `endtime` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_photos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pubid` int(10) unsigned NOT NULL,
+  `from_user` varchar(100) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `img_url` varchar(300) NOT NULL,
+  `smallimg_url` varchar(300) NOT NULL,
+  `createtime` varchar(100) NOT NULL,
+  `likeit` int(10) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_photoslikeit` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pid` int(10) unsigned NOT NULL,
+  `from_user` varchar(100) NOT NULL,
+  `createtime` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_partyfans` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pid` int(10) unsigned NOT NULL,
+  `from_user` varchar(100) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `head_img` varchar(200) NOT NULL DEFAULT '',
+  `createtime` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_partycomments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pid` int(10) unsigned NOT NULL,
+  `from_user` varchar(100) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `head_img` varchar(200) NOT NULL DEFAULT '',
+  `createtime` varchar(100) NOT NULL,
+  `txt` varchar(500) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_chatfans` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pubid` int(10) unsigned NOT NULL,
+  `from_user` varchar(100) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `head_img` varchar(200) NOT NULL DEFAULT '',
+  `phone` varchar(50) NOT NULL,
+  `wx` varchar(50) NOT NULL,
+  `createtime` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_clock` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `now` varchar(100) NOT NULL,
+  `createtime` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `ims_jdg_pub_chatcomments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `pubid` int(10) unsigned NOT NULL DEFAULT '0',
+  `isok` tinyint(2) unsigned NOT NULL,
+  `from_user` varchar(100) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `head_img` varchar(200) NOT NULL DEFAULT '',
+  `createtime` varchar(100) NOT NULL,
+  `txt` varchar(500) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_jdg_pub_wineadmin`;
+CREATE TABLE `ims_jdg_pub_wineadmin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `snid` varchar(110) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `creattime` int(110) DEFAULT NULL,
+  `weid` varchar(110) DEFAULT NULL,
+  `status` varchar(255) DEFAULT '0',
+  `fansid` varchar(110) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_jdg_pub_winelog`;
+CREATE TABLE `ims_jdg_pub_winelog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `snid` varchar(110) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `winename` varchar(255) DEFAULT NULL,
+  `winenumber` int(11) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `creattime` int(110) DEFAULT NULL,
+  `endtime` int(110) DEFAULT NULL,
+  `winenum` int(11) DEFAULT NULL,
+  `status` int(255) unsigned zerofill NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ims_jdg_pub_rule`;
+CREATE TABLE `ims_jdg_pub_rule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `content` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of ims_jdg_pub_rule
+-- ----------------------------
+INSERT INTO `ims_jdg_pub_rule` VALUES ('1', '6', '<p>\r\n	此处填写存酒规则\r\n</p>');
+
+]]></install>
+	<uninstall><![CDATA[
+DROP TABLE IF EXISTS `ims_jdg_pub`;
+DROP TABLE IF EXISTS `ims_jdg_pub_party`;
+DROP TABLE IF EXISTS `ims_jdg_pub_photos`;
+DROP TABLE IF EXISTS `ims_jdg_pub_partyfans`;
+DROP TABLE IF EXISTS `ims_jdg_pub_partycomments`;
+DROP TABLE IF EXISTS `ims_jdg_pub_chatfans`;
+DROP TABLE IF EXISTS `ims_jdg_pub_chatcomments`;
+DROP TABLE IF EXISTS `ims_jdg_pub_photoslikeit`;
+DROP TABLE IF EXISTS `ims_jdg_pub_clock`;
+DROP TABLE IF EXISTS `ims_jdg_pub_rule`;
+
+		]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

@@ -1,0 +1,36 @@
+{template 'common/header'}
+
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th>PUB</th>
+					<th>用户姓名</th>
+					<th>提交时间</th>
+					<th>openid</th>
+					<th>照片</th>
+					<th>点赞次数</th>
+					<th class="norightborder">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $row}
+					<tr>
+						<td>{$row['pub_name']}</td>
+						<td>{$row['user_name']}</td>
+						<td>{php echo date('Y-m-d H:i:s',$row['createtime'])}</td>
+						<td>{$row['from_user']}</td>
+						<td><a href="{$_W['attachurl']}.{$row['img_url']}" target="_blank">{$row['img_url']}</a></td>
+						<td>{$row['likeit']}</td>
+						<td class="norightborder">
+							<a class="btn" rel="tooltip"  href="{php echo $this->createWeburl('photoit', array('id'=>$row['id'],'foo'=>'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;"><i class="icon-remove"></i></a>
+ 						</td>
+					</tr>
+					{/loop} 
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+</div>
+{template 'common/footer'}

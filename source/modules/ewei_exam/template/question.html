@@ -1,0 +1,211 @@
+{template 'common/header'}
+
+{template 'common'}
+
+<div class="main">
+    <ul class="nav nav-tabs">		
+        <li class="active"><a href="{php echo $this->createWebUrl('question',array('op'=>'list'));}">试题管理</a></li>    
+        <li><a href="{php echo $this->createWebUrl('question',array('op'=>'edit'));}">添加试题</a></li>	
+    </ul>
+    <div class="search">
+        <form action="site.php" method="get">
+            <input type="hidden" name="act" value="module" />
+            <input type="hidden" name="do" value="question" />
+            <input type="hidden" name="name" value="ewei_exam" />
+            <input type="hidden" name="add_paper" value="{$add_paper}" />
+            <input type="hidden" name="paperid" value="{$paperid}" />
+
+            <table class="table table-bordered tb">
+                <tbody>
+                    <tr>
+                        <td>试题</td>
+                        <td>
+                            <input class="span4" name="question" type="text" value="{$_GPC['question']}">
+                        </td>
+                        <td>类型</td>
+                        <td>
+                            <select class='span3' name='type'>
+                                <option value='' {if empty($_GPC['type'])}selected{/if}></option>
+                                {loop $types_config $key $value}
+                                <option value ="{$key}" {if $_GPC['type']== $key}selected="selected"{/if}>{$value}</option>
+                                {/loop}
+                            </select>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>题库</td>
+                        <td colspan="3">
+                            <select class='span3' name='poolid'>
+                                <option value='0' {if empty($_GPC['poolid'])}selected{/if}></option>
+                                {loop $poollist $key $value}
+                                <option value ="{$value['id']}" {if $_GPC['poolid']== $value['id']}selected="selected"{/if}>{$value['title']}</option>
+                                {/loop}
+                            </select>
+                        </td>
+
+                    </tr>
+
+                    <tr class="search-submit">
+                        <td colspan="4">
+                            <button class="btn pull-left btn-primary span2" style='margin-left:95px;'><i class="icon-search icon-large"></i> 搜索</button>
+                            <a class="btn btn-primary" rel="tooltip" href="{php echo $this->createWebUrl('upload_question',array('poolid'=>$item['id']))}" style='margin-left:95px;' title="导入试题">导入试题</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+
+        <!--<form action="site.php" method="post" enctype="multipart/form-data">-->
+        <!--<input type="hidden" name="leadExcel" value="true">-->
+        <!--<input type="hidden" name="act" value="module" />-->
+        <!--<input type="hidden" name="do" value="UploadExcel" />-->
+        <!--<input type="hidden" name="name" value="exam" />-->
+        <!--<input type="hidden" name="ac" value="question" />-->
+        <!--<table align="center" width="90%" border="0">-->
+        <!--<tr>-->
+        <!--<td>-->
+        <!--<input type="file" class=" pull-left btn-primary span3" name="inputExcel">-->
+        <!--<input type="submit" class="btn pull-left btn-primary span2" value="导入数据">-->
+        <!--<a class="btn btn-primary" href="./source/modules/ewei_exam/example/example_question.xlsx" style="margin-left: 20px;">下载导入模板</a>-->
+        <!--&lt;!&ndash;<input type="button" class="btn pull-left btn-primary span2" value="下载导入模板" style="margin-left: 20px;">&ndash;&gt;-->
+        <!--</td>-->
+        <!--</tr>-->
+        <!--</table>-->
+        <!--</form>-->
+
+    </div>
+    <div style="padding:15px;">
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+                <tr><tr><th class='with-checkbox'>
+
+                        <input type="checkbox" class="check_all" />
+
+                    </th>
+                    <th>试题</th>
+                    <!--<th>所属试卷</th>-->
+                    <th>所属题库</th>
+                    <th>类型</th>
+                    <th>难度</th>
+                    <th>答题数</th>										
+                    <th>正确率</th>
+
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {loop $list $item}
+                <tr>
+                    <td class="with-checkbox">
+
+                        <input type="checkbox" name="check" value="{$item['id']}">
+
+                    </td>
+                    <td>{php echo mb_substr($item['question'],0,20,'utf-8')}...</td>
+                    <!--<td>{$item['paper_name']}</td>-->
+                    <td>{$item['pooltitle']}</td>
+                    <td>{$item['type_name']}</td>
+                    <td>{$item['level']}</td>
+                    <td>{$item['fansnum']}</td>
+                    <td>{$item['percent']}%</td>
+
+                    <td>
+                        {if $add_paper == 1}
+                        <a class="btn" rel="tooltip" href="{php echo $this->createWebUrl('question',array('op'=>'addquestion','id'=>$item['id'],'type'=>$item['type'],'paperid'=>$paperid))}" title="添加到试卷">添加到试卷</a>
+                        <a class="btn" rel="tooltip" href="{$url}" title="返回试卷">返回试卷</a>
+                        {else}
+                        <a class="btn" rel="tooltip" href="{php echo $this->createWebUrl('question',array('op'=>'edit','id'=>$item['id']))}" title="编辑"><i class="icon-edit"></i></a>
+                        <a class="btn" rel="tooltip" href="#" onclick="drop_confirm('您确定要删除吗?', '{php echo $this->createWebUrl('question',array('op'=>'delete', 'id'=>$item['id']))}');" title="删除"><i class="icon-remove"></i></a>
+                        {/if}
+                    </td>
+                </tr>
+                {/loop}
+                <tr>
+                    <td colspan="8">
+                        {if $add_paper == 1}
+                        <input type="button" class="btn btn-primary" name="addquestionall" value="批量添加到试卷" />
+
+                        <a class="btn" rel="tooltip" href="{$url}" title="返回试卷">返回试卷</a>
+                        {else}
+                        <input type="button" class="btn btn-primary" name="deleteall" value="删除选择的" />
+                        {/if}
+                    </td>
+                </tr>
+            </tbody>
+            <input name="token" type="hidden" value="{$_W['token']}" />
+        </table>
+        {$pager}
+    </div>
+</div>
+
+<script>
+    $(function() {
+
+            $('#myTab a').click(function(e) {
+                e.preventDefault();//阻止a链接的跳转行为
+                $(this).tab('show');//显示当前选中的链接及关联的content
+            });
+  
+        $(".check_all").click(function() {
+            var checked = $(this).get(0).checked;
+            $("input[type=checkbox]").attr("checked", checked);
+        });
+
+        $("input[name=addquestionall]").click(function() {
+
+            var check = $("input:checked");
+            if (check.length < 1) {
+                message('请选择要批量添加的试题!','','error');
+                return false;
+            }
+            if (confirm("确认要批量添加选择的试题?")) {
+                var id = new Array();
+                check.each(function(i) {
+                    id[i] = $(this).val();
+                });
+                $.post("{php echo create_url('site/module', array('do' => 'question','op'=>'addquestion', 'name' => 'ewei_exam','paperid'=>$paperid))}", {idArr: id,type:'{$_GPC['type']}'}, function(data) {
+                    alert(data.error);
+                    if (data.errno == 0)
+                    {
+                        location.reload();
+                    }
+                }, 'json');
+            }
+        });
+
+
+        $("input[name=deleteall]").click(function() {
+
+            var check = $("input:checked");
+            if (check.length < 1) {
+                message('请选择要删除的记录!','','error');
+                return false;
+            }
+            if (confirm("确认要删除选择的记录?")) {
+                var id = new Array();
+                check.each(function(i) {
+                    id[i] = $(this).val();
+                });
+                $.post("{php echo create_url('site/module', array('do' => 'question','op'=>'deleteall', 'name' => 'ewei_exam'))}", {idArr: id}, function(data) {
+                    if (data.errno == 0)
+                    {
+                        location.reload();
+                    } else {
+                        alert(data.error);
+                    }
+                }, 'json');
+            }
+        });
+    });
+</script>
+<script>
+    function drop_confirm(msg, url) {
+        if (confirm(msg)) {
+            window.location = url;
+        }
+    }
+</script>
+
+{template 'common/footer'}

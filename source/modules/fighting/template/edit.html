@@ -1,12 +1,12 @@
 {template 'common/header'}
 <ul class="nav nav-tabs">
-	<li><a href="{php echo create_url('site/module', array('do' => 'addquestion', 'name' => 'fighting'));}">添加题目</a></li>
+	<li><a href="{php echo create_url('site/module/addquestion', array('state' => '', 'name' => 'fighting'));}">添加题目</a></li>
 	<li class="active"><a href="">管理题目</a></li>
-	<li><a href="{php echo create_url('site/module', array('do' => 'ShowPlay', 'name' => 'fighting'));}">活动列表</a></li>
+	<li><a href="{php echo create_url('site/module/playlist', array('state' => '', 'name' => 'fighting'));}">活动列表</a></li>
 </ul>
 <div class="main">
 	<div class="search">
-		<form action="{php echo create_url('site/module', array('do' => 'editok', 'name' => 'fighting'));}" method="post">
+		<form action="{php echo create_url('site/module/questioneditok', array('state' => '', 'name' => 'fighting'));}" method="post">
 			<input type="hidden" name="id" value="{$list['id']}" />
 		<table class="table table-bordered tb">
 			<tbody>
@@ -23,6 +23,13 @@
 					</td>
 				</tr>
 				<tr>
+					<th>公库/私库</th>
+					<td>
+						<input name="weid" type="radio" value="0" {if $list['weid'] == '0'} checked {/if}> 公库
+						<input name="weid" type="radio" value="{$_W['weid']}" {if $list['weid'] == $_W['weid']}checked{/if}> 私库
+					</td>
+				</tr>
+				<tr>
 					<th>分值</th>
 					<td>
 							<input class="span4" name="figure" id="" type="text" value="{$list['figure']}">
@@ -31,13 +38,13 @@
 				<tr>
 					<th>正确答案</th>
 					<td>
-							<input class="span4" name="answer" id="" type="text" value="{php echo an($list[answer],$list['option_num'])}"><span>例如 单选：A 多选：AB</spam>
+							<input class="span4" name="answer" id="" type="text" value="{php echo an($list[answer],$list['option_num'])}"><span>例如 单选：A 多选：AB</span>
 					</td>
 				</tr>
 				<tr>
 					<th>选项个数</th>
 					<td>
-							<input class="span4" name="option_num" id="" type="text" value="{$list['option_num']}"><span> 对应下面的填写几个选择项</spam>
+							<input class="span4" name="option_num" id="" type="text" value="{$list['option_num']}"><span> 对应下面的填写几个选择项</span>
 					</td>
 				</tr>
 				<tr>

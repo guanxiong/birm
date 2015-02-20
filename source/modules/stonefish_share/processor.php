@@ -2,7 +2,7 @@
 /*
  * 分享集赞模块 share
  *
- * @author 微新星
+ * @author 微动力
  * @url 
  */
 defined('IN_IA') or exit('Access Denied');

@@ -1,0 +1,153 @@
+{template 'header'}
+	<link type="text/css" rel="stylesheet" href="./source/modules/quicksurvay/style/base.css" />
+	<link type="text/css" rel="stylesheet" href="./source/modules/quicksurvay/style/style.css?v=205" />
+	<script type="text/javascript" src="./source/modules/quicksurvay/script/script.js?v=200"></script>
+	<script type="text/javascript" src="./source/modules/quicksurvay/script/URI.js"></script>
+	<!--content-->
+	{if $preview }
+			<section class="button">
+				<a onclick="javascript:window.history.back();"><span>返回</span></a>
+			</section>
+	{/if}
+		<section class="canvas">
+			<!--section class="card">
+				<section class="title">
+				{if empty($fans) }
+				姓名:____&nbsp;&nbsp;&nbsp;&nbsp;昵称:_____&nbsp;&nbsp;&nbsp;&nbsp; 电话:_____
+				{else}
+				姓名:<u>{$fans['realname']}</u> &nbsp;&nbsp;&nbsp;&nbsp;昵称:<u>{$fans['nickname']}</u> &nbsp;&nbsp;&nbsp;&nbsp;电话:<u>{$fans['mobile']}</u>
+				{/if}
+			</section>
+			</section-->
+			<section class="card">
+				<section class="title">
+					{$paper['title']}
+				</section>
+				<section class="info">
+					{php echo htmlspecialchars_decode($paper['explain'])}
+				</section>
+			</section>
+		<form action="{php echo $this->createMobileUrl('ScoreSubmit');}" method="post">
+		<input type="hidden" name="op" value="post" />
+			{loop $list $item}
+			<section class="card">
+				<section class="title">
+				<p>{$item['title']}</p>
+				</section>
+				<article class="info">
+					{if $preview}
+						{php $disabled="disabled"}
+					{else}
+						{php $disabled=""}
+					{/if}
+					{if (strlen($item['answer']) == 1) }
+							{php $input_type = "radio" }
+						{else}
+							{php $input_type = "checkbox" }
+						{/if}
+					{loop $item['options'] $option}
+					<section class="check-list-item">
+						{if (strpos($item['user_choices'], $option['seq']) !== false) }
+						<input class="ck" {$disabled} type="{$input_type}" name="choice[{$item['choice_id']}][]" value="{$item['choice_id']}_{$option['seq']}" checked/>
+						{else}
+						<input class="ck" {$disabled} type="{$input_type}" name="choice[{$item['choice_id']}][]" value="{$item['choice_id']}_{$option['seq']}" />
+						{/if}
+						<span>{php echo htmlspecialchars_decode($option['body'])}</span>
+					</section>
+					{/loop}
+					<div class="info">
+						{if 0 < strlen(htmlspecialchars_decode($item['explain']))}<span class="label label-warning">提示</span>{/if}
+						{php echo htmlspecialchars_decode($item['explain'])}
+					</div>
+					<input type="hidden" name="answer[]" value="{$item['choice_id']}_{$item['answer']}" />
+                </article>
+            </section>
+			{/loop}
+			{if $preview}
+			<section class="button">
+				<a onclick="javascript:window.history.back();"><span>返回</span></a>
+			</section>
+			{else}
+			<section class="button">
+			<input type="hidden" name="paper_id" value="{$paper['paper_id']}" />
+			<input type="hidden" name="paper_title" value="{$paper['title']}" />
+				<input type="hidden" id="usermark" name="usermark" value="0" />
+				<a id="submit" href="#"><span>提交问卷</span></a>
+			</section>
+			{/if}
+		</form>
+		</section>
+        <!--content end-->
+
+	<script type="text/javascript">
+		{if !$preview} 
+		$('.check-list-item').click(function(e) {
+			if (!($(e.target).is('input')))
+			{
+					var checkbox = this.getElementsByTagName("input")[0];	
+					$(checkbox).prop("checked", function(i, oldVal) { return !oldVal; });
+				
+				}
+		});
+		{/if}
+		$('#submit').click(function() {
+			var score = getScore();
+			if (0 <= score) {
+				$("#usermark").val(score);
+				$("form").submit();
+			} else {
+				alert("还有题目没有回答哟");
+				return false;
+			}
+		});
+
+		function getScore() {
+			var answer = new HashMap();
+			var choice = new HashMap();
+			$.each($("input[name^=choice]:checked"), function(id, obj) {
+				var kv = obj.value.split("_", 2); // kv = ['choice_id', 'A/B/C/D']
+				if (choice.containsKey(kv[0])) {
+					choice.put(kv[0], choice.get(kv[0]) + "," + kv[1]);
+				} else {
+					choice.put(kv[0], kv[1]);
+				}
+				console.log("choice:" + kv[0] + "=>" + choice.get(kv[0]));
+			});
+			$.each($("input[name^=answer]"), function(id, obj) {
+				var kv = obj.value.split("_", 2); // kv = ['choice_id', 'ref_answer']
+				if (answer.containsKey(kv[0])) {
+					answer.put(kv[0], answer.get(kv[0]) += "," + kv[1]);
+				} else {
+					answer.put(kv[0], kv[1]);
+				}
+				console.log("answer:" + kv[0] + "=>" + answer.get(kv[0]));
+			});
+
+			// 计算分数
+			var correct = 0;
+			var total = answer.size();
+			var not_complete = false;
+			answer.each(function(key, value) {
+				var chosen = 0;
+				if (choice.get(key)) {
+					if (choice.get(key) == value) {
+						correct++;
+						console.log(key + "="+choice.get(key) + " correct");
+					} else {
+						console.log(key + "="+choice.get(key) + " wrong. ref answer is " + value);
+					}
+				} else {
+					not_complete = true;
+					return false;
+					console.log(key + " not chosen. ref answer is " + value);
+				}
+			});
+			if (not_complete) {
+				return -1;
+			} else {
+				return Math.round(correct * 100 / total);	
+			}
+		}
+	</script>
+
+{template 'footer'}

@@ -1,0 +1,26 @@
+{template 'common/header'}
+
+ <table class="table table-hover">
+            <thead>
+            	<tr>
+					<th class="row-hover span2">名次<i></i></th>
+									<th class="row-hover span2">姓名<i></i></th>
+					<th class="row-hover span2">最高分<i></i></th>
+				</tr>
+            </thead>
+            <tbody id="level-list">
+            		{php $num=1}
+            {loop $pms $pm}
+            <tr>
+                <td>{$num}</td>
+                <td>{$pm['realname']}</td>
+                <td>{$pm['score']}</td>
+        
+				        </tr>
+            {/loop}
+            </tbody>
+            <tfoot>
+        
+            </tfoot>
+        </table>   
+{template 'common/footer'}

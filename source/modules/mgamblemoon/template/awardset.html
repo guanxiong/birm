@@ -1,0 +1,30 @@
+{template 'common/header'}
+
+<form method="post">
+
+<input type="hidden" name="id" value="{$row['id']}" />
+<div class="sub-content">
+	<table class="table table-hover">
+		<thead class="navbar-inner">
+			<tr>
+			
+			<th style="width:33%;" class="row-hover">博饼奖项<i></i></th>
+			<th style="width:33%;">博饼奖品<i></i></th>	
+		</thead>
+		<tbody>
+		{loop $names $key $name}
+		<tr>
+			<th name="awardname[]">{$name}</th>
+			<td class="row-first">
+			<input name="{$name}" type="text" class="span3" value="{$row[$key]['award']}"/>
+			</td>
+			
+		</tr>
+		{/loop}
+		
+		</tbody>
+	</table>
+</div>
+<input type="submit" class="btn btn-block btn-primary" value="提交">
+</form>
+{template 'common/footer'}

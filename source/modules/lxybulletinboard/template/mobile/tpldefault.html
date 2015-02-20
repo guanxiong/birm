@@ -1,0 +1,41 @@
+{template 'headnav'}
+
+<div class="fullscreen">
+<div id="avatorimg" style="display: none; z-index: 100; width: 100%; margin: 0px auto; text-align: center; position: fixed; padding-top: 5%; background-color: rgba(0, 0, 0, 0.8); height: 1702px; background-position: initial initial; background-repeat: initial initial;">
+    <img style="width:80%;" src="{php echo $_W['attachurl'].$item['thumb']}">
+</div>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="./source/modules/lxybulletinboard/template/css/index.css">
+<script>
+function qie(){
+    $("#qian").toggle();
+    $("#hou").toggle();
+}
+</script>
+<div class="mar_box" id="qian">
+<div class="xila" onclick="qie()">切换背面</div>
+<div class="mar_car_border" style="background:url(./source/modules/lxybulletinboard/template/img/bg_.png) repeat-y;background-size:100%;">
+  <div class="car_info">
+        <div><span> {$item['boardcontent']}</span></div>
+    </div>
+     <div class="car_location"></div>
+</div>
+</div>
+
+<div class="mar_box" style="display: none;" id="hou">
+<div class="xila" onclick="qie()">切换正面</div>
+	<div class="padd" style="background:url(./source/modules/lxybulletinboard/template/img/bg.png) no-repeat; background-size:100%;">
+		<div class="car_bank">
+        	<div>{$item['word']}</div>
+
+        </div>
+	</div>
+</div>
+
+ {template 'classlist'}
+ </div>
+{template 'footnav'}
+                
+
+
+</body></html>

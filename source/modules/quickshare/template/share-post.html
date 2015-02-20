@@ -1,0 +1,115 @@
+<div class="main">
+	<form action="" method="post" onsubmit="return shareHandler.doAdd(this)" class="form-horizontal form" enctype="multipart/form-data">
+		<h4>编辑</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">商品名称</label></th>
+				<td>
+          {$goods['title']}
+        </td>
+			</tr>
+
+			<tr>
+				<th><label for="">市场单价</label></th>
+				<td>
+          {$goods['marketprice']}
+        </td>
+			</tr>
+
+      <tr>
+				<th><label for="">活动起始日期</label></th>
+				<td>
+          {php echo date('Y-m-d H:i:s', $goods['timestart']); }
+          &nbsp;-&nbsp;
+          {php echo date('Y-m-d H:i:s', $goods['timeend']); }
+          &nbsp;&nbsp;
+          <a href="{php echo create_url('site/module/goods', array('name'=>'shopping','id'=>$goods['id'],'weid'=>$_W['weid'],'op'=>'post'))}">编辑</a>
+					<div class="help-block">参与集赞的商品必须选择【限时卖】，编辑起止时间即可</div>
+        </td>
+			</tr>
+
+
+      <!--tr>
+				<th><label for="">营销标题<span class="red">*</span></label></th>
+				<td>
+          <input type="text" id="share_title" name="share_title" class="span10" value="{$goods['title']}"  />
+				</td>
+			</tr-->
+
+      <tr>
+				<th><label for="">单赞折扣<span class="red">*</span></label></th>
+				<td>
+          <input type="text" id="discount" name="discount" class="span2" value="{php echo empty($item['discount'])?'':$item['discount']}"  />元
+					<div class="help-block">每收到一个赞，为订单减免多少元</div>
+				</td>
+			</tr>
+
+      <tr>
+				<th><label for="">累计最大折扣<span class="red">*</span></label></th>
+				<td>
+          <input type="text" id="discount_limit" name="discount_limit" class="span2" value="{php echo empty($item['discount_limit'])?'':$item['discount_limit']}"  />元
+          <div class="help-block">单个订单最大可获得折扣多少元。例如【单赞折扣】为0.1元，【最大累计折扣】为10元，那么集满100个赞后本订单不再享受更多折扣。</div>
+				</td>
+			</tr>
+
+      <tr>
+				<th>活动详情</th>
+				<td>
+					<textarea style="height:200px; width:535px;" class="span7 richtext-clone" name="share_content" cols="70" id="share_content">{$item['share_content']}</textarea>
+					<div class="help-block">分享图文的详细内容（注意在内容最后加上分享示意图提示）</div>
+				</td>
+			</tr>
+
+      <tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+		    <input type="hidden" name="goodsid" value="{$goodsid}" />
+			</td>
+		</tr>
+		</table>
+	</form>
+</div>
+
+
+<script type="text/javascript">
+<!--
+  kindeditor($('.richtext-clone'));
+
+  var shareHandler = {
+		'doAdd' : function(form) {
+			var parent = $(form);
+			if ($('#title', parent).val() == '') {
+				message('请输入标题！', '', 'error');
+				return false;
+			}
+			if ($('#discount', parent).val() == '') {
+				message('请输入单赞折扣！', '', 'error');
+				return false;
+      }
+			if ($('#discount_limit', parent).val() == '') {
+				message('请输入累计最大折扣！', '', 'error');
+				return false;
+      }
+      if (parseInt($('#discount', parent).val()) < 0) {
+				message('单赞折扣不得小于0！', '', 'error');
+				return false;
+      }
+      if (parseInt($('#discount_limit', parent).val()) < parseInt($('#discount', parent).val())) {
+				message('累计折扣不得小于单赞折扣！', '', 'error');
+				return false;
+      }
+      /*
+			if ($('#share_content', parent).html() == '') {
+				message('请输入宣传内容！', '', 'error');
+				return false;
+      }
+      */
+			return true;
+		},
+	};
+//-->
+</script>
+
+

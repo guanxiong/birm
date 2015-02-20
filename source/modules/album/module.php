@@ -2,7 +2,7 @@
 /**
  * 微相册模块定义
  *
- * @author WeNewstar Team
+ * @author WeEngine Team
  * @url http://www.we7.cc
  */
 defined('IN_IA') or exit('Access Denied');
@@ -56,6 +56,16 @@ class AlbumModule extends WeModule {
 					pdo_insert('site_styles', array('content' => $_GPC['style']['albumlisttype'], 'templateid' => $_W['account']['styleid'], 'variable' => 'albumlisttype', 'weid' => $_W['weid']));
 				}
 			}
+			
+			$jd=array("jd"=>$_GPC['style']['jd']);
+			
+			if($this->saveSettings($jd)) {
+
+				
+
+			}
+			
+			
 			message('设置成功！', referer(), 'success');
 		}
 		include $this->template('setting');

@@ -1,0 +1,20 @@
+{template 'header'}
+<style>
+ul{}
+ul li a{display:block; height:60px; padding:5px; border-bottom:1px #CCC solid; color:#333; overflow:hidden; text-decoration:none !important; position:relative;}
+ul li a .thumb{width:80px; height:60px;}
+ul li a .title{font-size:16px;}
+ul li a .createtime{font-size:12px; color:#999; position:absolute; bottom:0;}
+</style>
+<ul class="unstyled">
+	{loop $plist $row}
+	<li>
+		<a href="{$row['outurl']}">			
+			<div class="title">{$row['productname']}</div>
+			<div class="createtime">{php echo date('Y-m-d H:i:s', $row['createtime'])}</div>
+		</a>
+	</li>
+	{/loop}
+</ul>
+{$result['pager']}
+{template 'footer'}

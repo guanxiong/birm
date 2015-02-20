@@ -1,0 +1,291 @@
+@font-face {
+	font-family: Helvetica, Arial, Verdana, Microsoft Yahei, Î¢ÈíÑÅºÚ, STXihei, »ªÎÄÏ¸ºÚ, sans-serif;
+}
+body {
+	margin: 0px; padding: 0px; font-family: Helvetica,Arial,Verdana,sans-serif; font-size: 10px; background-color: rgb(34, 34, 34); -webkit-text-size-adjust: none;
+}
+html {
+	margin: 0px; padding: 0px; font-family: Helvetica,Arial,Verdana,sans-serif; font-size: 10px; background-color: rgb(34, 34, 34); -webkit-text-size-adjust: none;
+}
+h2 {
+	padding: 0px 0.5em; line-height: 1.8em; font-size: 1.8em; font-weight: bold;
+}
+a {
+	text-decoration: none;
+}
+header > nav {
+	text-align: center; font-size: 1.3em;
+}
+footer > nav {
+	text-align: center; font-size: 1.3em;
+}
+header > nav > ul > li {
+	padding: 0px 1em; height: 3em; line-height: 3em; margin-left: -0.4em; border-top-color: rgb(51, 51, 51); border-bottom-color: rgb(51, 51, 51); border-left-color: rgb(51, 51, 51); border-top-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-bottom-style: solid; border-left-style: solid; display: inline-block;
+}
+footer > nav > ul > li {
+	padding: 0px 1em; height: 3em; line-height: 3em; margin-left: -0.4em; border-top-color: rgb(51, 51, 51); border-bottom-color: rgb(51, 51, 51); border-left-color: rgb(51, 51, 51); border-top-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-bottom-style: solid; border-left-style: solid; display: inline-block;
+}
+header > nav > ul > li:first-child {
+	margin-left: 0px;
+}
+footer > nav > ul > li:first-child {
+	margin-left: 0px;
+}
+header > nav > ul > li:last-child {
+	border-right-color: rgb(51, 51, 51); border-right-width: 1px; border-right-style: solid;
+}
+footer > nav > ul > li:last-child {
+	border-right-color: rgb(51, 51, 51); border-right-width: 1px; border-right-style: solid;
+}
+header {
+	margin: 1em 0px 0.5em;
+}
+header > nav > ul {
+	border-bottom-color: rgb(51, 51, 51); border-bottom-width: 1px; border-bottom-style: solid;
+}
+header > nav > ul > li {
+	margin-bottom: -1px;
+}
+footer {
+	margin: 0px 0px 1em; clear: both;
+}
+footer > nav > ul {
+	border-top-color: rgb(51, 51, 51); border-top-width: 1px; border-top-style: solid;
+}
+footer > nav > ul > li {
+	margin-top: -1px;
+}
+footer > p {
+	margin: 1em 0px; text-align: center;
+}
+#content > nav > ul > li {
+	padding: 0.5em; height: 7.5em; overflow: hidden; border-bottom-color: rgb(51, 51, 51); border-bottom-width: 1px; border-bottom-style: solid; position: relative;
+}
+#content > ol > li {
+	padding: 0.5em; height: 7.5em; overflow: hidden; border-bottom-color: rgb(51, 51, 51); border-bottom-width: 1px; border-bottom-style: solid; position: relative;
+}
+#content > nav > ul > li:last-child {
+	border-bottom-color: currentColor; border-bottom-width: medium; border-bottom-style: none;
+}
+#content > ol > li:last-child {
+	border-bottom-color: currentColor; border-bottom-width: medium; border-bottom-style: none;
+}
+#content > nav > ul > li > a > img {
+	margin-right: 0.5em; float: left;
+}
+#content > ol > li > img {
+	margin-right: 0.5em; float: left;
+}
+#content > nav > ul > li > h3 {
+	padding: 0.2em 1em 0.5em; font-size: 1.3em; font-weight: bold;
+}
+#content > ol > li > h3 {
+	padding: 0.2em 1em 0.5em; font-size: 1.3em; font-weight: bold;
+}
+#content > nav > ul > li > p {
+	font-size: 1.2em;
+}
+#content > ol > li > p {
+	font-size: 1.2em;
+}
+#content > ol > li.message {
+	margin: 1em; padding: 0px 1em; height: 3em; line-height: 3em;
+}
+#content > ol > li.loading {
+	border: 2px solid rgb(107, 165, 239) !important; border-image: none !important; color: rgb(27, 66, 122) !important; font-size: 1.3em !important; background-color: rgb(148, 198, 247) !important;
+}
+#content > ol > li.info {
+	border: 2px solid rgb(107, 165, 239) !important; border-image: none !important; color: rgb(27, 66, 122) !important; font-size: 1.3em !important; background-color: rgb(148, 198, 247) !important;
+}
+a.link.faq.jump {
+	margin: 0px 0.5em 0.5em; border-radius: 0.5em; border: 1px solid rgb(156, 25, 25); border-image: none; text-align: center; color: rgb(255, 255, 255); line-height: 2em; font-weight: bold; display: none;
+}
+p.intro.faq {
+	margin: 1em 0px; padding: 0px 0.5em;
+}
+dl.list.faq {
+	margin: 1em 0px; padding: 0px 0.5em;
+}
+dl.list.faq > dt {
+	padding: 1em 0px; font-weight: bolder;
+}
+dl.list.faq > dd {
+	padding-left: 1.5em;
+}
+a.play.game.jump {
+	margin: 1em; height: 3em; text-align: center; line-height: 3em; font-size: 1.5em; font-weight: bold; display: block;
+}
+#carasoul {
+	margin: 0px auto; padding: 10px 0px; width: 320px; position: relative;
+}
+#carasoul #carasoulBottomNavigation {
+	display: none;
+}
+#carasoul .sideNav {
+	width: 30px; height: 50px;
+}
+#carasoul .sideNav span {
+	display: none;
+}
+#carasoul #gamesOverview {
+	margin: 0px auto; width: 260px; overflow: hidden;
+}
+#carasoul ol {
+	margin: 0px; padding: 0px; width: 960px; -webkit-transition: all 0.5s ease-in-out;
+}
+#carasoul ol li {
+	list-style: none; margin: 0px; float: left;
+}
+#carasoulLeft {
+	background: url("../../../../skel/images/arrow-left-gray.html") no-repeat left; left: 0px; position: absolute;
+}
+#carasoulRight {
+	background: url("../../../../skel/images/arrow-right-gray.html") no-repeat right; right: 0px; position: absolute;
+}
+#carasoul nav {
+	padding-top: 10px; clear: both;
+}
+#carasoul nav ul {
+	margin: 0px; padding: 0px; text-align: center; display: none;
+}
+#carasoul nav ul li {
+	margin: 0px; display: inline-block; list-style-type: none;
+}
+#carasoul nav ul li a span {
+	display: none;
+}
+#carasoul nav ul li a {
+	background: url("../../../../skel/images/carasoul-navigation.html"); width: 16px; height: 16px; display: inline-block;
+}
+#carasoul nav ul li.active a {
+	background: url("../../../../skel/images/carasoul-navigation-active.html");
+}
+* {
+	-webkit-tap-highlight-color: transparent; -webkit-user-select: none; -webkit-focus-ring-color: rgba(0, 0, 0, 0);
+}
+body {
+	background: rgb(34, 34, 34);
+}
+.main {
+	background: rgb(34, 34, 34); margin: 0px auto; padding: 0px; width: 320px; height: 480px; text-align: center;
+}
+#frame {
+	margin: 0px; padding: 0px; width: 320px; height: 480px; border-top-color: rgb(34, 34, 34); border-top-width: 1px; border-top-style: solid;
+}
+#canvas {
+	margin: 100px 0px 0px; width: 320px; height: 240px; z-index: -1;
+}
+#logo {
+	background: url("2000.png") no-repeat 0px 0px; margin: 210px 0px 0px 30px; width: 260px; height: 40px;
+}
+#playButton {
+	background: url("2000.png") no-repeat 0px -40px; margin: 200px 0px 0px 87px; width: 145px; height: 60px;
+}
+#playButton:hover {
+	cursor: pointer;
+}
+#level {
+	color: rgb(255, 255, 255); font-family: Helvetica,Arial,Verdana,Microsoft Yahei,Î¢ÈíÑÅºÚ,STXihei,»ªÎÄÏ¸ºÚ,sans-serif; font-size: 18px;
+}
+#lives {
+	color: rgb(255, 255, 255); font-family: Helvetica,Arial,Verdana,Microsoft Yahei,Î¢ÈíÑÅºÚ,STXihei,»ªÎÄÏ¸ºÚ,sans-serif; font-size: 18px;
+}
+#level {
+	padding: 5px; text-align: left; position: absolute;
+}
+#lives {
+	padding: 5px; width: 310px; text-align: right; position: absolute;
+}
+#hearts {
+	margin-left: 10px; float: right;
+}
+.heart {
+	background: url("2000.png") no-repeat -216px -46px; width: 28px; height: 24px; float: left; display: block;
+}
+#livesLabel {
+	float: right;
+}
+#msg {
+	width: 100%; text-align: center; color: rgb(255, 255, 255); font-family: Helvetica,Arial,Verdana,Microsoft Yahei,Î¢ÈíÑÅºÚ,STXihei,»ªÎÄÏ¸ºÚ,sans-serif; font-size: 18px;
+}
+#b1 {
+	background: none; width: 88px; height: 100px; display: none; position: absolute; z-index: 500;
+}
+#b2 {
+	background: none; width: 88px; height: 100px; display: none; position: absolute; z-index: 500;
+}
+#b3 {
+	background: none; width: 88px; height: 100px; display: none; position: absolute; z-index: 500;
+}
+#b1 {
+	margin: 140px 0px 0px 16px;
+}
+#b2 {
+	margin: 140px 0px 0px 115px;
+}
+#b3 {
+	margin: 140px 0px 0px 216px;
+}
+#b1:hover {
+	cursor: pointer;
+}
+#b2:hover {
+	cursor: pointer;
+}
+#b3:hover {
+	cursor: pointer;
+}
+#tab {
+	
+}
+body {
+	oncontextmenu: return false; onselectstart: return false;
+}
+#play68box {
+	top: 35%; width: 190px; right: -172px; line-height: 15px; font-size: 12px; position: fixed; z-index: 100;
+}
+#tab {
+	list-style: none; margin: 10px 0px 0px; padding: 0px; float: left; position: relative; z-index: 99;
+}
+#tab li span {
+	padding: 0px 5px; display: block; position: relative;
+}
+#links {
+	padding: 1px; border-radius: 8px; width: 100px; float: left; background-color: rgb(246, 187, 66);
+}
+.show {
+	transition:margin-right 0.4s ease-in; -webkit-transition: margin-right .4s ease-in;
+}
+.hide {
+	transition:margin-right 0.4s ease-in; -webkit-transition: margin-right .4s ease-in;
+}
+.hide {
+	margin-right: 0px;
+}
+.show {
+	margin-right: 95px;
+}
+#arrow {
+	cursor: pointer;
+}
+.bt {
+	cursor: pointer;
+}
+.bt {
+	font: bold 15px/normal Arial, Helvetica, "Microsoft Yahei", "?¡é¨¨¨ª??o¨²", STXihei, "?a????o¨²", sans-serif; margin: 2px; border-radius: 6px; width: 95px; height: 41px; text-align: center; font-size-adjust: none; font-stretch: normal; background-color: rgb(218, 68, 83);
+}
+.bt a {
+	color: rgb(255, 255, 255); line-height: 40px; text-decoration: none; display: block;
+}
+.bt:hover {
+	background-color: rgb(55, 188, 155); -webkit-transition: background .3s linear; -moz-transition: background .3s linear;
+}
+#deco {
+	width: 90px; float: left;
+}
+#share-wx {
+	background: rgba(0, 0, 0, 0.8); left: 0px; top: 0px; width: 100%; height: 100%; display: none; position: absolute; z-index: 10000;
+}
+#wx-qr {
+	background: rgba(0, 0, 0, 0.8); left: 0px; top: 0px; width: 100%; height: 100%; display: none; position: absolute; z-index: 10000;
+}

@@ -1,0 +1,58 @@
+em{font-style: normal;}
+  
+.blue_btn{background: #ff6666;-webkit-box-shadow: inset 0 -3px rgba(6,0,1,.2);box-shadow: inset 0 -3px rgba(6,0,1,.2);display: block;font-size: 18px;padding: 10px 0;
+color: #fff;border-radius: 5px;text-align: center}
+.pageBack{text-align: center;color: #21323f;font-size: 16px;}
+.pageBack p{line-height: 22px;}
+
+
+
+.statuc{position: static;}
+.statuc_ion{padding: 15px 35px;}
+.b-box{-webkit-border-radius:5px ;border-radius:5px ;width: 100%;background: rgba(255,255,255,.7);overflow-x: auto;height: 100%;padding:20px 0 15px 0;}
+
+/*×¢²á*/
+.b-boxItem{padding: 20px 15px 15px 0;}
+.apply{text-align: left;color: #ff4f4f;padding:0 0 0 10px;}
+.applyInfo{margin-top: 30px;}
+.applyInfoList{margin-top: 10px;}
+.applyInfo dt{float: left;text-align: right;width: 100px;padding-top: 9px;}
+.applyInfo dd{margin-left: 100px;}
+.applyInput{border-radius:5px ;padding: 9px;border: none;width: 100%;}
+.applyInputItem{width: 50%;}
+.yellowBtn{width: 45%;background: #ff8c3f;display: inline-block;padding: 4px 0;line-height: 15px;font-size: 13px;float: right;}
+.checkFile{text-decoration: underline;color: #ff4f4f;}
+.changebox{padding: 40px 0 0 38px;}
+.changeCheck{width: 19px;height: 19px;background: url(../img/check_off.png) no-repeat;background-size:100% ;-webkit-appearance: none;border: none;border-radius:0 ;vertical-align: -3px;}
+.changeCheck_on{background: url(../img/check_on.png) no-repeat;background-size:100% ;}
+.readREady{font-size: 14px;padding-left: 3px;}
+
+/*×¢²á³É¹¦Ò³Ãæ*/
+.pply_topTips{text-align: center;color: #ff4f4f;font-size: 20px;padding: 20px 0;font-weight: normal;background: rgba(255,255,255,.6);}
+.pagePancel{text-align: center;margin: 20px 0;}
+.pagePancelItem{width: 200px;}
+.pagePancel img{float: left;}
+.present_r p{line-height: 24px;color: #21323f;font-size: 16px;}
+#moneyTr{color: #ff4f4f;padding-right: 3px;}
+.care{color: #ff4f4f;}
+.useInfo{color: #21323f;font-size: 15px;}
+.toUse{padding-bottom: 10px;font-size: 15px;}
+.toUse dt{float: left;text-align: right}
+.toUse dd{overflow: hidden;line-height: 24px;}
+
+.bgItem1{background-color: #FFCB00;}
+.small_btn{display: inline-block;float: right;font-size: 13px;line-height: 15px;padding: 4px 0;width: 45%;}
+.bsn{box-shadow: none;}
+.lbalck{color: #21323F;}
+.pagePancel1 img{float: none;}
+.mlr3{margin-left: 3px;margin-right: 3px;}
+.useIns{font-size: 15px;padding-bottom: 10px;}
+.useIns dt{padding-bottom: 5px;}
+.useIns dd{line-height: 24px;}
+.useIns dd p{text-indent:20px;}
+/*µ¯´°*/
+.fullbg{background:rgba(0,0,0,0.3);left:0px;position:absolute;top:0px;z-index:3;width:100%;height:100%;}
+.dialog{background:#fff; height:10em;left:50%;margin:-100px 0 0 -40%;padding:12px;position:fixed;top:50%;width:80%;z-index:5;border-radius:5px ;padding: 40px 30px;}
+.dialog p {text-align: center;font-size: 15px;}
+.boxGame{width: 100%;position: absolute;left: 0;top:55px;z-index: 1;}
+

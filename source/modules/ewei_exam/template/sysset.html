@@ -1,0 +1,64 @@
+{template 'common/header'}
+
+<style type='text/css'>
+    .tab-pane { padding:20px 0 20px 0;}
+</style>
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>基本设置</h4>
+		<table class="tb">
+			<tr>
+				<th>系统帮助</th>
+				<td>
+                    <textarea style="height:200px;" class="span6 richtext-clone" name="about" id="about"
+                              cols="70">{$item['about']}</textarea>
+				</td>
+			</tr>
+
+            <tr>
+               <th>课程开关：</th>
+               <td>    <label class="radio inline">
+                   <input type="radio" name="classopen" value="1" {if $item['classopen'] == 1}checked{/if}/>显示
+               </label>
+                   <label class="radio inline">
+                       <input type="radio" name="classopen" value="0" {if $item['classopen'] == 0}checked{/if}/>隐藏
+                   </label>
+                   <span class='help-block'>手机前台是否显示</span>
+               </td>
+           </tr>
+            <tr>
+                <th>登录开关：</th>
+                <td>    <label class="radio inline">
+                    <input type="radio" name="login_flag" value="1" {if $item['login_flag'] == 1}checked{/if}/>开启
+                </label>
+                    <label class="radio inline">
+                        <input type="radio" name="login_flag" value="0" {if $item['login_flag'] == 0}checked{/if}/>关闭
+                    </label>
+                    <span class='help-block'>如果开启，需要提前在系统中录入用户基本信息，用户第一次访问，录入的信息在系统中存在才能使用</span>
+                </td>
+            </tr>
+
+            <tr>
+                <th></th>
+                <td>
+                    <input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                    <input type="hidden" name="id" value="{$item['id']}" />
+                </td>
+            </tr>
+		</table>
+	</form>
+</div>
+
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<link type="text/css" rel="stylesheet" href="./source/modules/trip/style/uploadify_t.css" />
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript">
+
+    $(function(){
+        kindeditor($('.richtext-clone'));
+    });
+</script>
+{template 'common/footer'}

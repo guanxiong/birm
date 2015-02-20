@@ -103,7 +103,59 @@ a {
 img{width:100%!important;}
 .show-more{text-align:center; margin:10px 0;}
 .show-more a{display:inline-block; color:#555; font-size:13px; text-shadow:0 1px 1px #fff; box-shadow:0 1px 1px 0 rgba(0,0,0,0.2) inset; padding:8px 50px; background:#DDD; text-decoration:none;}
+
+
+
+.marsking
+{
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    z-index:9999;
+    background:#000000;
+    opacity:0.5;
+    filter: alpha(opacity=50);
+    -moz-opacity:0.5;
+    position:fixed;
+    display:none;
+}    
+
+.timespan
+{
+    position:fixed;
+    left:5%;
+    top:45%;
+    border:1px solid red;
+    width:200px;
+    text-align:center;  
+    vertical-align:middle; 
+    color:#fff;
+    background-color:red;
+    padding:10px;
+    z-index:10000;
+    border-radius:10px;
+    -webkit-border-radius:10px;
+}
+.timespan span
+{
+    color:#fff;
+    font-size:20px;
+    font-weight:bold;
+    padding:0 5 0 5;   
+}             
+     
+
 </style>
+
+
+
+<div class="marsking">
+        <div class="timespan">
+            正在玩命加载...(<span class="time">0</span>)
+        </div>
+</div>
 <div id="photo">
 	<div class="body">
 		<div class="qiandaobanner">
@@ -125,9 +177,12 @@ img{width:100%!important;}
 	</div>
 	<div class="show-more"><a href="javascript:;" onclick="loadRecPage();" class="img-rounded pager">显示更多</a></div>
 </div>
+
+
 <script type="text/javascript">
 var pindex = 1;
 function loadRecPage() {
+	
 	pindex = parseInt(pindex) + 1;
 	var pager = $('.pager');
 	pager.html('正在加载数据...');
@@ -156,6 +211,15 @@ function loadRecPage() {
 }
 
 (function(window){
+	
+	if (document.all){  
+		window.attachEvent('onload',func)//IE中  
+		}  
+		else{  
+		window.addEventListener('load',func,false);//firefox  
+		}  
+	
+	
 	document.addEventListener('DOMContentLoaded', function(){
 		var PhotoSwipe = window.Code.PhotoSwipe;
 		var options = {loop:false},
@@ -165,6 +229,9 @@ function loadRecPage() {
 
 //下面是瀑布流js
 $(function() {
+	{if $jd=="1"}
+	CalculateExecuteTime();
+	{/if}
   $('#gallery').imagesLoaded(function() {
 	// Prepare layout options.
 	var options = {
@@ -180,6 +247,28 @@ $(function() {
 	handler.wookmark(options);
   });
 });
+
+
+
+//开启事件计算情况
+function CalculateExecuteTime() {
+	$('.marsking').show();
+        ExecuteSpan = setInterval(function () {
+      
+            $(".time").html(parseInt($(".time").html()) + 1);
+        }, 1000);
+} 
+
+
+
+
+
+var ExecuteSpan = null;
+function func(){
+	$('.marsking').hide();
+	clearInterval(ExecuteSpan);
+	
+}
 </script>
 {/if}
 {template 'footer'}

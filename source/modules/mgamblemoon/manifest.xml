@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[中秋博饼]]></name>
+		<identifie><![CDATA[mgamblemoon]]></identifie>
+		<version><![CDATA[0.52]]></version>
+		<type><![CDATA[wdlgame]]></type>
+		<ability><![CDATA[中秋博饼]]></ability>
+		<description><![CDATA[中秋博饼]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[http://bbs.b2ctui.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<rule>
+			<entry title="中奖名单" do="awardlist" state="" />
+		</rule>
+		<menu>
+			<entry title="奖项管理" do="awardset" state="" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+	
+CREATE TABLE IF NOT EXISTS `ims_mgamblemoon_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `picture` varchar(100) NOT NULL COMMENT '活动图片',
+  `description` varchar(500) NOT NULL COMMENT '活动描述',
+  `rule` text NOT NULL COMMENT '活动描述',
+  `periodlottery` smallint(10) unsigned NOT NULL DEFAULT '1' COMMENT '0为无周期',
+  `maxlottery` tinyint(3) unsigned NOT NULL COMMENT '最大抽奖数',
+  `headpic` varchar(100) NOT NULL COMMENT '默认提示信息',
+  `headurl` varchar(255) NOT NULL DEFAULT '',
+  `panzi` varchar(100) NOT NULL DEFAULT '',
+  `guzhuurl` varchar(255) NOT NULL DEFAULT '',
+  `prace_times` int(10) NOT NULL DEFAULT '100',
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `start_time` int(10) NOT NULL DEFAULT '0',
+  `end_time` int(10) NOT NULL DEFAULT '1600000000',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_mgamblemoon_user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) NOT NULL DEFAULT '0',
+  `from_user` varchar(50) NOT NULL COMMENT '用户唯一身份ID',
+  `count` int(10) NOT NULL DEFAULT '0',
+  `points` int(10) NOT NULL DEFAULT '0',
+  `num` int(10) NOT NULL DEFAULT '0',
+  `huodeid` int(10) NOT NULL DEFAULT '0',
+  `huode` varchar(50) NOT NULL DEFAULT '',
+  `award` varchar(50) NOT NULL DEFAULT '',
+  `friendcount` int(10) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0未领奖，1不需要领奖，2已领奖',
+  `createtime` int(10) unsigned NOT NULL COMMENT '日期',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_mgamblemoon_award_set` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) NOT NULL,
+  `awardname` varchar(50) NOT NULL,
+  `awardid` int(10) NOT NULL,
+  `award` varchar(50) NOT NULL,
+  `createtime` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `ims_mgamblemoon_winner` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+  `point` int(10) unsigned NOT NULL COMMENT '点数',
+  `huodeid` int(10) unsigned NOT NULL COMMENT '',
+  `huode` varchar(100) NOT NULL,
+  `award` varchar(100) NOT NULL,
+  `from_user` varchar(50) NOT NULL COMMENT '用户唯一身份ID',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0未领奖，1不需要领奖，2已领奖',
+  `createtime` int(10) unsigned NOT NULL COMMENT '获奖日期',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+	]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_mgamblemoon_award`;
+	DROP TABLE IF EXISTS `ims_mgamblemoon_award_set`;
+	DROP TABLE IF EXISTS `ims_mgamblemoon_reply`;
+	DROP TABLE IF EXISTS `ims_mgamblemoon_winner`;
+	DROP TABLE IF EXISTS `ims_mgamblemoon_user`;
+	
+	]]></uninstall>
+	<upgrade><![CDATA[update.php]]></upgrade>
+</manifest>

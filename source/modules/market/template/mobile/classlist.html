@@ -13,25 +13,24 @@
             <meta content="width=device-width, initial-scale=1.0" name="viewport">
             <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
             <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <!-- Mobile Devices Support @end -->       
-<link rel="stylesheet" type="text/css" href="/source/modules/market/images/web/common.css?2014-01-28-1" media="all" />
-<link rel="stylesheet" type="text/css" href="/source/modules/market/images/web/reset.css?2014-01-28-1" media="all" />
-<link rel="stylesheet" type="text/css" href="/source/modules/market/images/mobile/cate12_2.css?2014-01-28-1" media="all" />
-<link rel="stylesheet" type="text/css" href="/source/modules/market/images/mobile/iscroll.css?2014-01-28-1" media="all" />
-<link rel="stylesheet" type="text/css" href="/source/modules/market/images/mobile/circle/plugmenu.css?2014-01-28-1" media="all" />
-<script type="text/javascript" src="/source/modules/market/images/web/js/template/maivl.js?2014-01-28-1"></script>
-<script type="text/javascript" src="/source/modules/market/images/web/js/jQuery.js?2014-01-28-1"></script>
-<script type="text/javascript" src="/source/modules/market/images/mobile/js/jquery_min.js?2014-01-28-1"></script>
-<script type="text/javascript" src="/source/modules/market/images/mobile/js/idangerous_swiper.js?2014-01-28-1"></script>
-<script type="text/javascript" src="/source/modules/market/images/mobile/js/iscroll.js?2014-01-28-1"></script>
-<script type="text/javascript" src="/source/modules/market/images/web/js/swipe.js?2014-01-28-1"></script>
-<script type="text/javascript" src="/source/modules/market/images/web/js/zepto.js?2014-01-28-1"></script>
-<title>微生活-by 微新星</title>
+        <!-- Mobile Devices Support @end -->        <link rel="stylesheet" type="text/css" href="{RES}mobile/css/snower.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}mobile/css/common.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}mobile/css/reset.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}mobile/css/cate12_2.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}mobile/css/iscroll.css?2014-01-28-1" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}mobile/css/plugmenu.css?2014-01-28-1" media="all" />
+<script type="text/javascript" src="{RES}mobile/js/maivl.js?2014-01-28-1"></script>
+<script type="text/javascript" src="{RES}mobile/js/jQuery.js?2014-01-28-1"></script>
+<script type="text/javascript" src="{RES}mobile/js/jquery_min.js?2014-01-28-1"></script>
+<script type="text/javascript" src="{RES}mobile/js/idangerous_swiper.js?2014-01-28-1"></script>
+<script type="text/javascript" src="{RES}mobile/js/iscroll.js?2014-01-28-1"></script>
+<script type="text/javascript" src="{RES}mobile/js/swipe.js?2014-01-28-1"></script>
+<script type="text/javascript" src="{RES}mobile/js/zepto.js?2014-01-28-1"></script>
+<title>微生活-by 微动力</title>
       
 </head>
 <body onselectstart="return true;" ondragstart="return false;">
-
-<link rel="stylesheet" type="text/css" href="./resource/style/font-awesome.min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}mobile/css/font-awesome.css?v=2014020614" media="all" />
 <style>
 	.body{ max-width:640px; margin:auto; }
 	.themeStyle{background:#2BBA14!important; background-color:#2BBA14 !important; }
@@ -60,22 +59,26 @@
 <div style="-webkit-transform:translate3d(0,0,0);">
 	<div id="banner_box" class="box_swipe">
 		<ul>
-			{loop $flashlist $row}
 			<li>
 				<a onclick="return false;">
-				<img src="{$row['picurl']}" alt="微生活" style="width:100%;" />
+				<img src="{RES}20131105155950_85212.jpg" alt="微生活" style="width:100%;" />
 				</a>
 			</li>
-			{/loop}
+			<li>
+				<a onclick="return false;">
+				<img src="{RES}20131106135226_66158.jpg" alt="购物" style="width:100%;" />
+				</a>
+			</li>
+			<li>
+				<a onclick="return false;">
+				<img src="{RES}20131106135210_43610.jpg" alt="美食" style="width:100%;" />
+				</a>
+			</li>
 		</ul>
 		<ol>
-			{loop $flashlist $key $row}
-				{if $key==0}
-				<li class="on"></li>
-				{else}
-				<li></li>
-				{/if}
-			{/loop}
+			<li class="on"></li>
+			<li ></li>
+			<li ></li>
 		</ol>
 	</div>
 </div>
@@ -108,9 +111,9 @@ $(function(){
 						<li>
 							<a href="{php echo ($this->createMobileUrl('fans', array('id' => $shop['id'])));}">
 								<div>
-								<img src="{if empty($shop['logo'])}{$shop['picurl']}{else}{$shop['logo']}{/if}" />
+								<img src="{$shop['logo']}" />
 								</div>
-								<span>{$shop['title']}</span>
+								<span>{$shop['shopname']}</span>
 							</a>
 						</li> 
 						{/loop}
@@ -156,7 +159,7 @@ $(function(){
 </script>
 <footer style="overflow:visible;">
 <div class="weimob-copyright" style="padding-bottom:50px;">
-	<a>©{$row['shopname']} by 微新星</a>
+	<a>©{$row['shopname']} by 微动力</a>
 </div>
 </footer>
 			 

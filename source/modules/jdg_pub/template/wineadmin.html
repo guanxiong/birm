@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!-- 新 Bootstrap 核心 CSS 文件 -->
+		<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<!-- 核心 JavaScript 文件 -->
+		<script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<link href="./source/modules/jdg_pub/template/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="./source/modules/jdg_pub/template/css/bootstrap-responsive.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="./source/modules/jdg_pub/template/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="./source/modules/jdg_pub/template/css/ace.min.css" />
+        <link rel="stylesheet" href="./source/modules/jdg_pub/template/css/ace-responsive.min.css" />
+        <script src="./resource/script/kindeditor/kindeditor-min.js"></script>
+        <!--page specific plugin scripts-->
+		<script src="./source/modules/jdg_pub/template/js/jquery.dataTables.min.js"></script>
+        <script src="./source/modules/jdg_pub/template/js/jquery.dataTables.bootstrap.js"></script>
+
+		<style type="text/css">
+			.adminbody{
+				padding: 30px;
+			}
+		</style>
+		<title>存酒管理</title>
+	</head>
+	<body>
+		<div class="adminbody">
+		<H4><font color="#FF0000">
+		(温馨提示：此存酒功能，还在内测完善中。。。)</font>
+		</H4>		
+		<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <li class="active"><a href="#home" role="tab" data-toggle="tab">存酒列表</a></li>
+  <li class=""><a href="#set" role="tab" data-toggle="tab">基础设置</a></li>
+  
+</ul>
+
+<!-- Tab panes -->
+
+<script type="text/javascript">
+$(function() {
+                var oTable1 = $('#sample-table-2').dataTable( {
+                "aoColumns": [
+                  { "bSortable": false },
+                  null, null,null, null, 
+                  { "bSortable": false }
+                
+        		] 
+        		
+            } );
+                
+                
+                $('table th input:checkbox').on('click' , function(){
+                    var that = this;
+                    $(this).closest('table').find('tr > td:first-child input:checkbox')
+                    .each(function(){
+                        this.checked = that.checked;
+                        $(this).closest('tr').toggleClass('selected');
+                    });
+                        
+                });
+            
+            
+                $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+                function tooltip_placement(context, source) {
+                    var $source = $(source);
+                    var $parent = $source.closest('table')
+                    var off1 = $parent.offset();
+                    var w1 = $parent.width();
+            
+                    var off2 = $source.offset();
+                    var w2 = $source.width();
+            
+                    if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+                    return 'left';
+                }
+            });
+
+  var seting = {
+                                themeType: "simple",
+								uploadJson : "./index.php?act=attachment&do=upload",
+								fileManagerJson:"./index.php?act=attachment&do=manager",								
+                                resizeType: 1,
+                                syncType:"",
+                                allowPreviewEmoticons: false,
+                                items: [
+        'source', 'undo', 'redo', 'plainpaste', 'plainpaste', 'wordpaste', 'clearhtml', 'quickformat', 'selectall', 'fullscreen', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'hr',
+        'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+        'insertunorderedlist', '|', 'emoticons', 'image', 'link', 'unlink', 'baidumap'],
+                                allowFileManager: true,
+                                minWidth: 400,
+                                width: 400,
+                                afterCreate: function () {
+                                    this.sync();
+                                },
+                                afterBlur: function () {
+                                    this.sync();
+                                }
+                            }
+                            KindEditor.ready(function (K) {
+                                var editor1 = K.create('#content', seting);
+                                K('.insertimage').click(function (e) {
+                                   
+                                    editor1.loadPlugin('smimage', function () {
+                                        editor1.plugin.imageDialog({
+                                            imageUrl: $(e.target).prev().val(),
+                                            clickFn: function (url, title, width, height, border, align) {
+												obj=$(e.target).prev();
+
+												if(obj.attr('name')=='start_picurl'){
+                          obj.val(url);
+												}else{
+													$("#end").attr('src',url);
+												};
+                                                obj.val(url);
+                                                editor1.hideDialog();
+                                            }
+                                        });
+                                    });
+                                });
+                            });
+                                
+        </script>
+		 <body>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="home">
+  	
+							<div class="row-fluid">
+								
+								<div class="table-header">
+									存酒列表
+								</div>
+
+								<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+									<thead>
+										<tr>
+											<th class="center">
+												<label>
+													<input type="checkbox" />
+													<span class="lbl"></span>
+												</label>
+											</th>
+											<th>存酒码</th>
+											
+											<th class="hidden-480">存酒人</th>
+
+											<th class="hidden-phone">
+												<i class="icon-time bigger-110 hidden-phone"></i>
+												申请时间
+											</th>
+											<th class="hidden-480">状态</th>
+
+											<th>操作</th>
+										</tr>
+									</thead>
+
+									<tbody>
+								
+
+								
+									{loop $res $row}
+										<tr>
+											<td class="center">
+												<label>
+													<input type="checkbox" value={$row["id"]}/>
+													<span class="lbl"></span>
+												</label>
+											</td>
+
+											<td>
+												<a href="#">{$row['snid']}</a>
+											</td>
+											<td>{$row["name"]}</td>
+											<td >{$row['creattime']}</td>
+											
+
+											<td >
+												<span >{$row["status"]}</span>
+											</td>
+
+											<td >
+												
+												<a href="{php echo create_url('site/module', array('do' => 'updata', 'name' => 'jdg_pub','snid'=>$row['snid'],'id'=>$row['id']))}"><button type="button" class="btn btn-success">编辑</button></a>
+												<a href="{php echo create_url('site/module', array('do' => 'select', 'name' => 'jdg_pub','snid'=>$row['snid'],'id'=>$row['id']))}"><button type="button" class="btn btn-danger">查看</button></a>
+												<a href="{php echo create_url('site/module', array('do' => 'delete', 'name' => 'jdg_pub','snid'=>$row['snid'],'id'=>$row['id']))}"><button type="button" class="btn btn-danger">删除</button></a>
+												
+											</td>
+										</tr>
+
+										{/loop}
+									</tbody>
+								</table>
+							</div>
+								
+
+							
+						
+
+				
+
+		
+				
+</div>
+           
+
+  <div class="tab-pane" id="set">
+  	<form method="post" action="{php echo $this->createWebUrl('insertRule')}">
+  	请填写存酒规则:
+  	 <textarea id="content" name="content" data-rule-required="true">
+  	 	{$select['content']}
+                        </textarea>
+
+       <input type="submit"  class="btn btn-primary ui-wizard-content ui-formwizard-button ui-helper-reset ui-state-default ui-state-active" value="提交" />
+                        
+  	</form>
+  
+  
+
+		</div>
+		
+	</body>
+</html>

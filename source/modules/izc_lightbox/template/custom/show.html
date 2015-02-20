@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> 
+<title>{$list['title']}</title>
+<script type="text/javascript">
+document.write('<div id="load-layer"><div id="loading"></div></div>');
+window.onload=function(){
+	var load = document.getElementById("load-layer");
+	load.parentNode.removeChild(load);
+}
+</script>
+<link rel="stylesheet" type="text/css" href="./source/modules/izc_lightbox/style/custom/css/swiper.css">
+<link rel="stylesheet" type="text/css" href="./source/modules/izc_lightbox/style/custom/css/index.css">
+<link type="text/css" rel="stylesheet" href="./source/modules/izc_lightbox/style/custom/css/manimation.css" />
+<link type="text/css" rel="stylesheet" href="./source/modules/izc_lightbox/style/custom/js/fancybox/fancybox.css" />
+</head>
+<body>
+{if (!empty($list['cover1'])&&($list['first_type']==2))}
+<div id="mas">
+	<canvas id="cas" ></canvas>
+</div>  
+{/if}
+<div class="swiper-container">
+	<!--音乐控制-->
+	<div class="audio-controls on"></div>
+	<!-- 滑动操作指示 -->
+	<div class="start"><strong></strong></div>
+	<!-- 主体 -->
+	<div class="swiper-wrapper">
+		{if (!empty($list['cover1'])&&($list['first_type']==2))}
+		<div class="swiper-slide slide1" style="background: url('{php echo toimage($list['cover2'])}') no-repeat center center; background-size: 100% 100%;">
+		</div> 
+		{else}
+		<div class="swiper-slide slide1" style="background: url('{php echo toimage($list['cover'])}') no-repeat center center; background-size: 100% 100%;">
+		</div> 
+		{/if}
+		{php $i = 1;}
+		{loop $items $item}
+			<!-- 内页 -->
+			{php $data=iunserializer($item['param']);$i++}
+			{if $item['m_type']==1}
+				<div class="swiper-slide slide{$i}" style="background: url('{php echo toimage($item['thumb'])}') no-repeat center center; background-size: 100% 100%;" {if !empty($row['url'])}onclick="javascript:window.location.href='{$row['url']}'"{/if}>
+				</div> 
+			{elseif $item['m_type']==2}
+			<div class="swiper-slide slide{$i}" style="background: url('{php echo toimage($item['thumb'])}') no-repeat center center; background-size: 100% 100%;" {if !empty($row['url'])}onclick="javascript:window.location.href='{$row['url']}'"{/if}>
+ 				{loop $data['thumbs'] $k $row} 
+				{if ($item['type']==0)}
+				{php $size = GetImageSize(toimage($row));}
+				<div class="{$data['animations'][$k]}" style="height:{php echo $size[1]/10.08}%;width:{php echo $size[0]/6.4}%;top:{php echo $data['y'][$k]/10.08}%;left:{php echo $data['x'][$k]/6.40}%;">{if !empty($data['url'][$k])}{if ($data['url'][$k]=='#share')}<a href="javascript:$('#mcover').show()">{else}<a class="fancy iframe" href="{php echo $data['url'][$k]}">{/if}<img src="{php echo toimage($row)}" style="width:100%;height:100%;"/></a>{else}<img src="{php echo toimage($row)}" style="width:100%;height:100%;"/>{/if}</div>
+				{/if}
+				{/loop}
+			</div> 
+			 
+			{/if}
+		{/loop}
+	</div>
+</div>
+{if $list['bg_music_switch']==1}	
+<!-- 背景音乐 -->
+<audio id="audio" {if $huabao['mauto']}autoplay="autoplay"{/if} {if $huabao['mloop']}loop="loop"{/if}>
+	<source src="{$list['bg_music_url']}" type="audio/mpeg" />
+</audio>
+{/if}
+
+<script src="./source/modules/izc_lightbox/style/custom/js/jquery.min.js"></script>
+<script src="./source/modules/izc_lightbox/style/custom/js/swiper.min.js"></script>
+<script src="./source/modules/izc_lightbox/style/custom/js/wechat.min.js"></script>
+<script src="./source/modules/izc_lightbox/style/custom/js/fancybox/fancybox.js"></script>
+{if (!empty($list['cover1'])&&($list['first_type']==2))}
+<!-- 手指擦除效果 -->
+<script src="./source/modules/izc_lightbox/style/custom/js/tapclip.min.js"></script>
+<script type="text/javascript">
+var canvas = document.getElementById("cas"),ctx = canvas.getContext("2d");
+var x1,y1,a=20,timeout,totimes = 100,jiange = 20;
+canvas.width = document.getElementById("mas").clientWidth;
+canvas.height = document.getElementById("mas").clientHeight;
+var img = new Image();
+img.src = "{php echo toimage($list['cover1'])}";
+img.onload = function(){
+	ctx.drawImage(img,0,0,canvas.width,canvas.height)
+	tapClip()
+}
+</script>
+{/if}
+<script type="text/javascript">
+<!-- 滑动 -->
+var mySwiper = new Swiper('.swiper-container',{
+	loop:1,
+	mode:'vertical',
+	tdFlow: {
+		rotate :60,
+		depth: 150,
+	}
+})
+<!-- 音频暂停播放 -->
+var audioAuto = document.getElementById('audio');
+audioAuto.play();
+
+//$(".audio-controls").removeClass("on");
+
+$(".audio-controls").click(function (){ 
+	if (audioAuto.paused) {
+		audioAuto.play();
+		$(".audio-controls").addClass("on");
+        }
+        else {
+		audioAuto.pause();
+		$(".audio-controls").removeClass("on");
+        }
+})
+</script>
+<!-- 弹出层设置 -->
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".fancy").fancybox({
+		'width':'100%',
+		'height'	:'100%',
+		'margin':'0',
+		'padding':'0',
+		'scrolling':'no',
+		'autoScale':'false',
+		'type':'iframe'
+	});
+});
+</script>
+<div id="mcover" onclick="$(this).hide()"><img src="./source/modules/huabao/template/mobile/img/guide.png"></div>
+{template 'share'}
+</body>
+</html>

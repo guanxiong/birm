@@ -57,7 +57,7 @@
 					<span class="help-block"></span>
 				</td>
 			</tr>
-			<tr>
+			<tr class="hide">
 				<th>简介</th>
 				<td>
 					<textarea style="height:200px;" class="span7" name="content" cols="70" id="reply-add-text">{$item['content']}</textarea>
@@ -102,7 +102,9 @@
 		</div>
 	</li>
 	{/loop}
+	
 </ul>
+{$pager}
 {elseif $foo == 'photo'}
 <link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
 <script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
@@ -252,7 +254,7 @@
 				<th>标题</th>
 				<td><input type="text" class="span5" value="{$item['title']}" name="title[{$item['id']}]"></td>
 			</tr>
-			<tr>
+			<tr class="hide">
 				<th>简介</th>
 				<td><textarea class="span5" name="description[{$item['id']}]">{$item['description']}</textarea></td>
 			</tr>

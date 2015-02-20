@@ -1,6 +1,6 @@
 <?php
 /**
- * @author WeNewstar Team
+ * @author WeEngine Team
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -16,6 +16,9 @@ class AlbumModuleSite extends WeModuleSite {
 	public function doMobileDetail() {
 		global $_W, $_GPC;
 		$id = intval($_GPC['id']);
+		$jd = $this->module['config']['jd'];
+	
+		
 		$album = pdo_fetch("SELECT * FROM ".tablename('album')." WHERE id = :id", array(':id' => $id));
 		if (empty($album)) {
 			message('相册不存在或是已经被删除！');
@@ -94,7 +97,7 @@ class AlbumModuleSite extends WeModuleSite {
 			include $this->template('album');
 		} elseif ($foo == 'display') {
 			$pindex = max(1, intval($_GPC['page']));
-			$psize = 20;
+			$psize = 1000;
 			$condition = '';
 			if (!empty($_GPC['keyword'])) {
 				$condition .= " AND title LIKE '%{$_GPC['keyword']}%'";

@@ -1,0 +1,63 @@
+	{php $url = 'http://'.$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '';}
+{php $imgu = $_W['siteroot'].'source/modules/yobyyanli/images/yl.png';}
+<!DOCTYPE HTML>
+<HTML><HEAD><META content="IE=11.0000" 
+http-equiv="X-UA-Compatible">
+     
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">          
+<META name="apple-mobile-web-app-capable" content="yes">     
+<META name="robots" content="index,follow">     
+<META name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;">
+	 <TITLE>最强眼力</TITLE>
+	 <LINK href="source/modules/yobyyanli/images/9.css" rel="stylesheet" type="text/css" media="screen">     
+<SCRIPT>
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    	WeixinJSBridge.call('showOptionMenu');
+    });
+
+	var moreGamesLocation = '{$url}';
+	function play68_init() {		updateShare(0);}
+	function updateShare(bestScore) {
+		imgUrl = '{$imgu}';
+		var domains = ['{$url}'];
+		var domain = domains[new Date().getTime()%4];lineLink = '{$url}';descContent = "考考你的眼力！你的眼睛跟得上吗？";updateShareScore(bestScore);appid = '';
+	}	
+	function updateShareScore(bestScore) {
+		if(bestScore > 0) {shareTitle = "我玩《最强眼力》过了" + bestScore + "关，眼都花了！";}
+		else{shareTitle = "不玩《最强眼力》怎么知道自己的眼力原来那么好？关注[ {$_W['account']['name']} ],更多精彩";}
+	}
+</SCRIPT>
+ 
+
+ 
+<META name="GENERATOR" content="MSHTML 11.00.9600.17126"></HEAD> 
+<BODY class="os-windows osv-6_1 osmv-6" style="background: rgb(34, 34, 34); margin: 0px auto;" 
+onorientationchange="window.scrollTo(0, 1);">
+<DIV class="main">
+<DIV id="frame">
+<DIV id="logo" style="display: none; opacity: 0;"></DIV>
+<DIV id="playButton" style="display: none; opacity: 1;"></DIV>
+<DIV id="level" style="display: none;"><SPAN id="levelLabel">关卡：</SPAN>          
+ <SPAN id="levelNum">1</SPAN>         </DIV>
+<DIV id="lives" style="display: none;">
+<DIV id="hearts">
+<DIV class="heart">&nbsp;</DIV>
+<DIV class="heart">&nbsp;</DIV>
+<DIV class="heart">&nbsp;</DIV></DIV>
+<DIV id="livesLabel">命：</DIV></DIV>
+<DIV id="b" style="display: block;">
+<DIV id="b1" style="display: block;"></DIV>
+<DIV id="b2" style="display: block;"></DIV>
+<DIV id="b3" style="display: block;"></DIV></DIV><CANVAS width="320" height="240" 
+id="canvas" style="display: block;"></CANVAS>
+<DIV id="msg" style="bottom: 50px; display: block; position: relative; opacity: 1;"></DIV></DIV>
+<DIV style="margin: 0px auto; bottom: 120px; display: block; position: relative; z-index: 20000;">
+<A style="height: 30px; color: rgb(255, 0, 0); line-height: 30px; font-size: 15px; font-weight: bold; display: block;" 
+href="{$url}"></A><BR>
+ <BR>
+<A style="height: 30px; color: rgb(255, 0, 0); line-height: 30px; font-size: 15px; font-weight: bold; display: block;" 
+href="{$url}">欢迎关注[ {$_W['account']['name']} ]</A> 
+</DIV>
+<SCRIPT src="source/modules/yobyyanli/images/9.js" type="text/javascript"></SCRIPT>
+     </DIV>
+	 </BODY></HTML>

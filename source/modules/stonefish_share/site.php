@@ -2,8 +2,6 @@
 /*
  * 分享集赞模块 share
  *
- * @author 石头鱼
- * @url http://www.00393.com/
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -69,7 +67,7 @@ class stonefish_shareModuleSite extends WeModuleSite {
 			$show = 1;
 			}
 		}	
-
+		$sharenum = pdo_fetchcolumn("SELECT sharenum FROM ".tablename($this->table_list)." WHERE from_user = '".$fromuser."' and weid = '".$weid."' and rid= '".$rid."' limit 1");
 		//整理数据进行页面显示
 		//判断是否绑定
 		$profile = fans_search($_W['fans']['from_user'], array('realname', 'mobile'));

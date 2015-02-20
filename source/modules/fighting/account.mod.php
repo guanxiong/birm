@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS]更多模块请浏览：BBS.birm.co
+ * [WeEngine System] Copyright (c) 2013 WE7.CC
  */
 defined('IN_IA') or exit('Access Denied');
 

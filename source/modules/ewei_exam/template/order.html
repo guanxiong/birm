@@ -1,0 +1,149 @@
+{template 'common/header'}
+
+{template 'common'}
+
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{php echo $this->createWebUrl('reserve');}">订单管理</a></li>
+    </ul>
+    <div class="search">
+        <form action="site.php" method="get">
+            <input type="hidden" name="act" value="module" />
+            <input type="hidden" name="do" value="reserve" />
+            <input type="hidden" name="name" value="ewei_exam" />
+
+            <table class="table table-bordered tb">
+                <tbody>
+                <tr>
+                    <td>课程标题: <input class="span4" name="title"  type="text" value="{$_GPC['title']}">
+                        状态:
+                        <select name="ctype" class="span2">
+                            <option value="" {if $_GPC['ctype']==''} selected="selected"{/if}></option>
+                            <option value="0" {if $_GPC['ctype']=='0'} selected="selected"{/if}>时间限制</option>
+                            <option value="1" {if $_GPC['ctype'] == 1 } selected="selected"{/if}>人数限制</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        预  定 人 : <input class="span4" name="username" id="" type="text" value="{$_GPC['username']}">
+                        手机: <input class="span4" name="mobile" id="" type="text" value="{$_GPC['mobile']}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        订单编号: <input class="span4" name="ordersn" id="" type="text" value="{$_GPC['ordersn']}">
+
+                        状态:
+                        <select name="status" class="span2">
+                        <option value="" {if $_GPC['status']==''} selected="selected"{/if}></option>
+                        <option value="0" {if $_GPC['status']=='0'} selected="selected"{/if}>等待确认</option>
+                        <option value="-1" {if $_GPC['status'] == -1 } selected="selected"{/if}>订单取消</option>
+                        <option value="1" {if $_GPC['status'] == 1 } selected="selected"{/if}>订单确认</option>
+                        <option value="2" {if $_GPC['status'] == 2 } selected="selected"{/if}>订单拒绝</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr class="search-submit">
+                    <td colspan="2"><button class="btn pull-left btn-primary span2" style='margin-left:95px;'><i class="icon-search icon-large"></i> 搜索</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div style="padding:15px;">
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+            <tr><tr><th class='with-checkbox'>
+                <input type="checkbox" class="check_all" /></th>
+
+                <th>订单编号</th>
+                <th>课程标题</th>
+                <th>报名限制</th>
+                <th>预定人</th>
+                <th>手机</th>
+                <th>订单时间<i></i></th>
+                <th>订单状态<i></i></th>
+                <th>操作<i></i></th>
+            </tr>
+            </thead>
+            <tbody>
+            {loop $list $row}
+            <tr>
+                <td class="with-checkbox">
+                    <input type="checkbox" name="check" value="{$row['id']}"></td>
+                <td>{$row['ordersn']}</td>
+                <td>{php echo mb_substr($row['title'],0,10,'utf-8')}...</td>
+                <td >{if $row['ctype']==1}
+                    人数限制
+                    {else}
+                    时间限制
+                    {/if}
+                </td>
+                <td>{$row['username']}</td>
+                <td>{$row['mobile']}</td>
+                <td >{php echo date("Y-m-d H:i:s",$row['createtime']); }</td>
+                <td>
+                    {if $row['status'] == 0}<span class="label label-info">{if $row['paytype']==1 || $row['paytype']==2}待付款{else}等待确认{/if}</span>{/if}
+                    {if $row['status'] == -1}<span class="label label-info">已取消</span>{/if}
+                    {if $row['status'] == 1}<span class="label label-success">已接受</span>{/if}
+                    {if $row['status'] == 2}<span class="label label-error">已拒绝</span>{/if}
+                    {if $row['status'] == 3}<span class="label label-success">订单完成</span>{/if}
+                </td>
+                <td><span>
+                                            <a href="{php echo $this->createWebUrl('reserve', array('op'=>'edit', 'id' => $row['id'])); }">操作</a>&nbsp;
+                                            <a onclick="return confirm('此操作不可恢复，确认吗？');
+                                                return false;" href="{php echo $this->createWebUrl('reserve', array('op'=>'delete', 'id' => $row['id']))}">删除</a>
+                                        </span></td>
+            </tr>
+            {/loop}
+            <tr>
+                <td colspan="12">
+
+                    <input type="button" class="btn btn-primary" name="deleteall" value="删除选择的" />
+                </td>
+            </tr>
+            </tbody>
+            <input name="token" type="hidden" value="{$_W['token']}" />
+        </table>
+        {$pager}
+    </div>
+</div>
+
+<script>
+    $(function(){
+
+        $(".check_all").click(function(){
+            var checked = $(this).get(0).checked;
+            $("input[type=checkbox]").attr("checked",checked);
+        });
+        $("input[name=deleteall]").click(function(){
+
+            var check = $("input:checked");
+            if(check.length<1){
+                message('请选择要删除的记录!','','error');
+                return false;
+            }
+            if( confirm("确认要删除选择的记录?")){
+                var id = new Array();
+                check.each(function(i){
+                    id[i] = $(this).val();
+                });
+                $.post("{php echo create_url('site/module', array('do' => 'reserve','op'=>'deleteall', 'name' => 'ewei_exam'))}", {idArr:id},function(data){
+                    location.reload();
+                },'json');
+            }
+
+        });
+    });
+</script>
+<script>
+    function drop_confirm(msg, url){
+        if(confirm(msg)){
+            window.location = url;
+        }
+    }
+</script>
+
+{template 'common/footer'}

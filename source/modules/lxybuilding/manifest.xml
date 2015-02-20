@@ -7,7 +7,7 @@
 		<type><![CDATA[business]]></type>
 		<ability><![CDATA[楼盘户型管理]]></ability>
 		<description><![CDATA[供房产公司维护楼盘相关信息，包括户型楼盘的展示]]></description>
-		<author><![CDATA[大路货]]></author>
+		<author><![CDATA[微新星]]></author>
 		<url><![CDATA[]]></url>
 	</application>
 	<platform>
@@ -75,6 +75,8 @@ CREATE TABLE `ims_lxy_building_info_list` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 ]]></install>
-	<uninstall><![CDATA[]]></uninstall>
+	<uninstall><![CDATA[
+	drop table if exists `ims_lxy_building_reply`,`ims_lxy_building_info_list`,
+	]]></uninstall>
 	<upgrade><![CDATA[]]></upgrade>
 </manifest>

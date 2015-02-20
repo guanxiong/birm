@@ -1,0 +1,26 @@
+{template 'common/header'}
+
+<H4>
+(温馨提示：本功能模块是结合微商城模块的，这里只是管理聚友杀的后台！)
+</H4>
+<ul class="nav nav-tabs">
+	<li {if $operation == 'display-event'}class="active"{/if}><a href="{php echo $this->createWebUrl('share', array('op' => 'display-event'));}">推广商品库</a></li>
+	{if $operation == 'post'}<li class="active"><a href="javascript:void()">编辑推广页</a></li>{/if}
+	<li {if $operation == 'display-log'}class="active"{/if}><a href="{php echo $this->createWebUrl('share', array('op' => 'display-log'));}">点击记录</a></li>
+</ul>
+
+
+
+{if $operation == 'post'}
+  {template 'share-post'}
+{/if}
+{if $operation == 'display-event'}
+  {template 'share-event'}
+{/if}
+{if $operation == 'display-log'}
+  {template 'share-log'}
+{/if}
+
+
+
+{template 'common/footer'}

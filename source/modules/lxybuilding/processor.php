@@ -25,7 +25,7 @@ class LxybuildingModuleProcessor extends WeModuleProcessor {
     				'Title' => $row['title'],
     				'Description' => htmlspecialchars_decode($row['description']),
     				'PicUrl' => $_W['attachurl'] . $row['picture'],
-    				'Url' =>$row['buildurl'] ,
+    				'Url' =>$row['buildurl'],
     		));
     		 
     		

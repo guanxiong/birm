@@ -1,12 +1,12 @@
 {template 'common/header'}
 <ul class="nav nav-tabs">
 	<li class="active"><a href="">添加题目</a></li>
-	<li><a href="{php echo create_url('site/module', array('do' => 'detail', 'name' => 'fighting'));}">管理题目</a></li>
-	<li><a href="{php echo create_url('site/module', array('do' => 'ShowPlay', 'name' => 'fighting'));}">活动列表</a></li>
+	<li><a href="{php echo create_url('site/module/questions', array('state' => '', 'name' => 'fighting'));}">管理题目</a></li>
+	<li><a href="{php echo create_url('site/module/playlist', array('state' => '', 'name' => 'fighting'));}">活动列表</a></li>
 </ul>
 <div class="main">
 	<div class="search">
-		<form action="{php echo create_url('site/module', array('do' => 'addok', 'name' => 'fighting'));}" method="post">
+		<form action="{php echo create_url('site/module/questionaddok', array('state' => '', 'name' => 'fighting'));}" method="post">
 			<input type="hidden" name="id" value="{$list['id']}" />
 		<table class="table table-bordered tb">
 			<tbody>
@@ -19,7 +19,14 @@
 				<tr>
 					<th>题目类型</th>
 					<td>
-							<input class="span4" name="classify" id="" type="text" value="">
+						<input class="span4" name="classify" id="" type="text" value="">
+					</td>
+				</tr>
+				<tr>
+					<th>公库/私库</th>
+					<td>
+						{if $_W['isfounder']}<input name="weid" type="radio" value="0"> 公库{/if}
+						<input name="weid" type="radio" value="{$_W['weid']}" checked> 私库
 					</td>
 				</tr>
 				<tr>
@@ -37,7 +44,7 @@
 				<tr>
 					<th>选项个数</th>
 					<td>
-							<input class="span4" name="option_num" id="" type="text" value=""><span> 对应下面的填写几个选择项</spam>
+							<input class="span4" name="option_num" id="" type="text" value=""><span> 对应下面的填写几个选择项</span>
 					</td>
 				</tr>
 				<tr>

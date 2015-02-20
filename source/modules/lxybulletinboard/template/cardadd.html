@@ -1,0 +1,52 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">	
+		<li{if $_GPC['do'] == 'cardlist'} class="active"{/if}><a href="{php echo  $this->createWebUrl('cardlist');}">布告管理</a></li>
+		<li{if $_GPC['do'] == 'cardadd'} class="active"{/if}><a href="{php echo $this->createWebUrl('cardadd');}">添加布告</a></li>	
+</ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="{$item['id']}">
+  <h4>布告信息</h4>
+  <table class="tb">
+  <tr>
+			<th>布告标题</th>
+			<td width="600"><input type="text" id="title" name="title" value="{$item['title']}"  class="span7" /></td>
+    </tr>
+<tr>
+			<th>布告内容</th>
+			<td width="600"><textarea name="boardcontent" class="span7" id="boardcontent">{$item['boardcontent']}</textarea></td>
+	  </tr>
+        <tr>
+		  <th>背面文字</th>
+			<td><textarea name="word" class="span7" id="word">{$item['word']}</textarea></td>
+	  </tr>
+      <tr>
+		  <th>底部版权</th>
+			<td><textarea name="version" cols="70" class="span7" id="version">{$item['version']}</textarea></td>
+		</tr>
+        <tr>
+		  <th>官网</th>
+		  <td><input type="text" id="website" name="website" value="{$item['website']}"  class="span5" /></td>
+		</tr>
+        <tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+        <tbody>
+        </tbody>
+	</table>
+</form>
+
+            
+<script type="text/javascript" src="./resource/script/cascade.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>  
+<script type="text/javascript">
+kindeditor($('#word'));
+kindeditor($('#version'));
+kindeditor($('#boardcontent'));
+</script>
+
+{template 'common/footer'}

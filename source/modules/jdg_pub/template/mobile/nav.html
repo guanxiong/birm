@@ -1,0 +1,70 @@
+	<!-- app底部导航栏 START -->
+	<nav class="app">
+		<span class="nav-prev"></span>
+		<div id="nav-slider" class="swipe" style="visibility: visible;">
+			<div class="swipe-wrap" style="width: 651px;">
+				<ul data-index="0" style="width: 325.5px; left: 0px; transition: 0ms; -webkit-transition: 0ms; -webkit-transform: translate(-325.5px, 0px) translateZ(0px);">
+					<li>
+						<a href="{php echo $this->createMobileUrl('partyit',array('id'=>$list['id']));}">
+							<span>
+								<img src="./source/modules/jdg_pub/template/style/icon-activity-white.png">
+							</span>
+							<p>活动</p>
+						</a>
+					</li>
+					<li>
+						<a href="{php echo $this->createMobileUrl('chatit',array('id'=>$list['id']));}">
+							<span>
+								<img src="./source/modules/jdg_pub/template/style/icon-mask-white.png">
+							</span>
+							<p>邻座的TA</p>
+						</a>
+					</li>
+					<li>
+						<a href="{php echo $this->createMobileUrl('showpics',array('id'=>$list['id']));}">
+							<span>
+								<img src="./source/modules/jdg_pub/template/style/icon-gallery-white.png">
+							</span>
+							<p>相册</p>
+						</a>
+					</li>
+					<li>
+						<a href="{php echo $this->createMobileUrl('inviteit',array('id'=>$list['id']));}">
+							<span>
+								<img src="./source/modules/jdg_pub/template/style/icon-invitation-white.png">
+							</span>
+							<p>邀友帖</p>
+						</a>
+					</li>
+				</ul>
+				<ul data-index="1" style="width: 325.5px; left: -325.5px; transition: 0ms; -webkit-transition: 0ms; -webkit-transform: translate(0px, 0px) translateZ(0px);">
+					<li>
+						<a href="{php echo $this->createMobileUrl('wine',array('id'=>$list['id']));}">
+							<span>
+								<img src="./source/modules/jdg_pub/template/style/icon-deposit-white.png">
+							</span>
+							<p>存酒</p>
+						</a>
+					</li>
+					<li>
+							<a href="{php echo $this->createMobileUrl('Wineark',array('wineid'=>'1','id'=>$list['id']));}">
+							<span>
+								<img src="./source/modules/jdg_pub/template/style/icon-cabinet-white.png">
+							</span>
+							<p>酒柜</p>
+						</a>
+					</li>
+					<li>
+						<a href="{php echo $this->createMobileUrl('aboutit',array('id'=>$list['id']));}">
+							<span>
+								<img src="./source/modules/jdg_pub/template/style/icon-glass-white.png">
+							</span>
+							<p>酒吧介绍</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<span class="nav-next"></span>
+	</nav>
+	<!-- app底部导航栏 END -->

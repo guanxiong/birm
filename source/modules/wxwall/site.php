@@ -54,7 +54,7 @@ class WxwallModuleSite extends WeModuleSite {
 					$row['content'] = iunserializer($row['content']);
 					$row['content'] = '<a href="'.$row['content']['link'].'" target="_blank" title="'.$row['content']['description'].'">'.$row['content']['title'].'</a>';
 				} elseif ($row['type'] == 'image') {
-					$row['content'] = '<img src="'.$_W['attachurl'] . $row['content'].'" />';
+					$row['content'] = '<img src="'. $row['content'].'" />';
 				} else {
 					$row['content'] = emotion($row['content']);
 				}
@@ -238,7 +238,7 @@ class WxwallModuleSite extends WeModuleSite {
 				$row['content'] = iunserializer($row['content']);
 				$row['content'] = '<a href="'.$row['content']['link'].'" target="_blank" title="'.$row['content']['description'].'">'.$row['content']['title'].'</a>';
 			} elseif ($row['type'] == 'image') {
-				$row['content'] = '<img src="'.$_W['attachurl'] . $row['content'].'" />';
+				$row['content'] = '<img src="'.$row['content'].'" />';
 			} elseif ($row['type'] == 'txwall') {
 				$content = unserialize($row['content']);
 				$row['content'] = $content['content'];

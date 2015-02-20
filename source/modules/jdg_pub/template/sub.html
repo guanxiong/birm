@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+		<!-- 核心 JavaScript 文件 -->
+		<script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<title>存酒管理</title>
+		<script type="text/javascript">
+			$(document).ready(function(){
+ 
+			$("#add").bind("click",addinput);
+
+			function addinput(){
+  				$(".controls").eq(-2).append('</br></br><div class="controls">请选择酒的种类：<select name="type[]"><option value ="1" selected="selected">红酒</option><option value ="2">香槟</option><option value ="3">洋酒</option><option value ="4">啤酒</option></select></div></br>  <div class="controls">请填写名称： <input type="text" name="winename[]" placeholder="请填写酒名" class="input-xlarge"></div></br><div class="controls">请填写数量： <input type="text"  name="winenumber[]" placeholder="数量" class="input-xlarge"></div></br>   <div class="controls">存放柜号： <input type="text"  name="winenum[]" placeholder="请填写存放柜号" class="input-xlarge"></div></br>');
+}
+
+
+})
+		</script>
+	</head>
+
+		
+	</span>
+	<body>
+		<style>
+			.s{padding :50px;}
+			
+		</style>
+		   <div class="s">
+      <form action="{php echo $this->createWebUrl('Addwine')}"   method="post">
+      	       <input type="hidden" name="name" value={$arr["name"]}>
+        	   <input type="hidden" name="snid" value={$arr["snid"]}>
+         <div class="controls">
+          填写存酒资料:
+            
+          </div></br>
+
+        
+       
+           <div class="controls">请选择酒的种类：
+          <select name="type[]">
+           <option value ="1" selected="selected">红酒</option>
+           <option value ="2">香槟</option>
+           <option value ="3">洋酒</option>
+           <option value ="4">啤酒</option>
+           
+        </select>
+             </div></br>
+
+ 
+	
+    <div class="controls">
+            请填写酒名： <input type="text" name="winename[]"placeholder="名称" class="input-xlarge">
+        </div></br>
+   <div class="controls">
+           请填写数量： <input type="text"  name="winenumber[]" placeholder="数量" class="input-xlarge">
+            </div></br>
+            
+            <div class="controls">
+           存放柜号： <input type="text"  name="winenum[]" placeholder="请填写存放柜号" class="input-xlarge">
+            </div></br>
+	
+             <button type="button" id="add" class="btn btn-primary ">追加种类</button><br><br><br><br>
+
+          <div class="controls">
+            <input type="submit" class="btn btn-primary" >
+          </div>
+
+          </form>
+       
+ </div>
+	</body>
+</html>

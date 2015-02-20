@@ -797,9 +797,54 @@ a.J-btn50,a.J-btn50:visited {
 	</script> <!-- 分享送积分开始 --> 
 	{php $shareurl = $_W['siteroot'].$this->createMobileUrl('index',array('whoshare'=>$whoshare,'whosharecookie'=>$cookid,'themeid'=>$theme[id]));}
 	{php $geturl = $this->createMobileUrl('sharecallback',array('addshare'=>$addshare,'addsharecookie'=>$addsharecookie,'themeid'=>$theme[id]));}
-<script language="javascript" src="./source/modules/WeixinApi.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+	
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+	
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',		
+	];
+	
+	wx.config(jssdkconfig);
+
+	var sharedata = {
+		title : "{$theme['themetitle']}",
+		link : "{php echo $shareurl}",
+		desc : "{$theme['headtitle']}",
+		imgUrl :"{$_W['attachurl']}{$theme['sharepic']}"
+	};
+ // 分享的回调
+	var wxCallbacks = {
+		        // 分享成功
+		        success:function (res) {
+		            $.get("{php echo $geturl}",function(responseData){
+		                alert(responseData);
+		            });
+		        },
+				// 整个分享过程结束
+				all : function(res,onMenuShare) {
+				}
+		    };
+	wx.ready(function () {
+		wx.showOptionMenu();
+		wx.onMenuShareAppMessage(sharedata, wxCallbacks);
+		wx.onMenuShareTimeline(sharedata, wxCallbacks);
+		wx.onMenuShareQQ(sharedata, wxCallbacks);
+		wx.onMenuShareWeibo(sharedata, wxCallbacks);
+	});  
+</script>
 <script type="text/javascript">
-WeixinApi.ready(function(Api) {
+/*WeixinApi.ready(function(Api) {
     // 微信分享的数据
     var wxData = {
         "appId": "{$shareappid}", // 服务号可以填写appId
@@ -835,7 +880,7 @@ WeixinApi.ready(function(Api) {
 		    Api.shareToWeibo(wxData, wxCallbacks);
 			// iOS上，可以直接调用这个API进行分享，一句话搞定
 			Api.generalShare(wxData,wxCallback);
-		});
+		});*/
 </script>
 	</i>
 	<div class="gmu-media-detect" id="gmu-media-detect0"></div>

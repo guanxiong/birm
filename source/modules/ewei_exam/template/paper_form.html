@@ -1,0 +1,124 @@
+{template 'common/header'}
+
+{template 'common'}
+
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li {if $op=='list' || empty($op)}class="active"{/if}><a href="{php echo $this->createWebUrl('paper',array('op'=>'list'));}">试卷管理</a></li>
+
+        {if $op=='edit' && empty($item['id'])}
+        <li class="active"><a href="{php echo $this->createWebUrl('paper_type',array('op'=>'display'));}">添加试卷</a></li>
+        <!--<li class="active"><a href="{php echo $this->createWebUrl('paper',array('op'=>'edit'));}">添加试卷</a></li>-->
+        {/if}
+
+        {if $op=='edit' && !empty($item['id'])}
+        <li class="active"><a href="{php echo $this->createWebUrl('paper', array('op'=>'edit','id'=>$id));}">编辑试卷</a></li>
+        {/if}
+    </ul>
+    <form action="" class="form-horizontal form" method="post" enctype="multipart/form-data" onsubmit="return formcheck()">
+        <input type="hidden" name="id" value="{$item['id']}">
+        <input type="hidden" name="tid" value="{$tid}">
+        <h4>试卷编辑</h4>
+
+            <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#tab_basic">基本信息</a></li>
+            <!--{if $id != ''}-->
+            <!--<li><a href="#tab_list">试题信息</a></li>-->
+            <!--{/if}-->
+
+           <!--{loop $types_config $key $value}-->
+           <!--<li><a href="#tab_{$key}">{$value}</a></li>-->
+           <!--{/loop}-->
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_basic">
+                    {template 'paper_form_basic'}
+            </div>
+            <div class="tab-pane" id="tab_list">{php include $this->template('paper_form_list')}</div>
+            <!--{loop $types_config $key $value}-->
+            <!--<div class="tab-pane" id="tab_{$key}">{php include $this->template('paper_form_'.$key)}</div>-->
+            <!--{/loop}-->
+        </div>
+
+          <table class='tb' style="margin-top:10px;">
+             <tr>
+                <th></th>
+                <td>
+                    <button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </form>
+
+    <script type="text/javascript">
+
+//         $(function () {
+//            $('#myTab a').click(function (e) {
+//              e.preventDefault();//阻止a链接的跳转行为
+//              {if !empty($item['id'])}
+//              $(this).tab('show');//显示当前选中的链接及关联的content
+//              {else}
+//              alert('请先保存试卷再继续编辑试题!');
+//              {/if}
+//            })
+//          })
+
+         $(function () {
+
+             $('#myTab a').click(function (e) {
+                 e.preventDefault();//阻止a链接的跳转行为
+                 $(this).tab('show');//显示当前选中的链接及关联的content
+             })
+
+             //$('#tab_list').click();
+
+          })
+
+
+function clear_paper_category(){
+    $("#pcate").val("");
+    $("#paper_category").val("");
+}
+
+function search_paper_categorys() {
+    $("#module-menus1").html("正在搜索....")
+    $.post('{php echo $this->createWebUrl('paper_category',array('op'=>'query'));}', {
+        keyword: $.trim($('#search-kwd1').val())
+    }, function(dat){
+        $('#module-menus1').html(dat);
+    });
+}
+function select_paper_category(o) {
+    $("#pcate").val(o.id);
+    $("#paper_category").val( o.title );
+    $(".close").click();
+}
+
+   function fill(type,num){
+
+   }
+   function formcheck(){
+
+    if($("#title").isEmpty()){
+        Tip.focus("title","请填写试卷标题!","right");
+        return false;
+    }
+//    var has = false;
+//    $(".types").each(function(){
+//
+//        if($(this).get(0).checked){
+//            has = true;
+//            return false;
+//        }
+//    });
+//    if(!has){
+//        Tip.focus(".types:eq(0)","至少选择一种题型!","top");
+//        return false;
+//    }
+    return  true;
+}
+</script>
+{template 'common/footer'}

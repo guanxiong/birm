@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[有奖问卷]]></name>
+		<identifie><![CDATA[quicksurvay]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[customer]]></type>
+		<ability><![CDATA[有奖问卷]]></ability>
+		<description><![CDATA[有奖问卷]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[bbs.b2ctui.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+        <cover>
+			<entry title="问卷中心" do="Cover" />
+        </cover>
+		<menu>
+			<entry title="题库管理" do="Choice" />
+			<entry title="问卷管理" do="GenPaper" />
+			<entry title="数据分析" do="MarkManagement" />
+			<entry title="帮助" do="Help" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+
+CREATE TABLE IF NOT EXISTS `ims_quicksurvay_choice` (
+  `choice_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(1024) NOT NULL,
+  `body` varchar(65530) NOT NULL,
+  `answer` varchar(1024) NOT NULL,
+  `explain` varchar(65530),
+  PRIMARY KEY (`choice_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8  AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `ims_quicksurvay_paper` (
+  `paper_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `max_user_cnt` int(10) unsigned NOT NULL,
+  `max_participate_cnt` int(10) unsigned NOT NULL,
+  `title` varchar(1024) NOT NULL,
+  `logo` varchar(512) NOT NULL,
+  `explain` varchar(65530),
+  `choice_ids` varchar(1024)  NOT NULL,
+  `choice_ids_seq` varchar(1024)  NOT NULL,
+  `weid` int(10) unsigned NOT NULL,
+  `redirect_url` varchar(1024) NOT NULL,
+  `redirect_msg` varchar(1024) NOT NULL,
+  `redirect_cond` int(10) unsigned NOT NULL,
+  `credit_award` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`paper_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8  AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `ims_quicksurvay_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `paper_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8   AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `ims_quicksurvay_score_record` (
+  `record_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `from_user` varchar(50) NOT NULL,
+  `paper_id` int(10) unsigned NOT NULL,
+  `paper_title` varchar(1024) NOT NULL,
+  `choice_ids` varchar(1024)  NOT NULL,
+  `user_choices` varchar(1024)  NOT NULL,
+  `usermark` int(10) unsigned NOT NULL,
+  `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+  `weid` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`record_id`),
+  KEY `idx_choice_from_user` (`from_user`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8  AUTO_INCREMENT=1;
+
+	]]></install>
+	<uninstall><![CDATA[
+		
+		
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

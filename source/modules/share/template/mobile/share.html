@@ -127,49 +127,80 @@ body > .tips{display:none;left:50%;padding:20px;position:fixed;text-align:center
 </head>
 <script>
 function viewSource(){
-	location.href = 'bbs.b2ctui.com/#wechat_redirect';
+	location.href = 'http://www.weidim.com/#wechat_redirect';
 }
 </script>
-<!--
-分享前控制
--->
-<script language="javascript" src="./source/modules/WeixinApi.js"></script>
-<script type="text/javascript">
-// 需要分享的内容，请放到ready里
-WeixinApi.ready(function(Api) {
-    // 微信分享的数据
-    var wxData = {
-        "appId": "{$shareappid}", // 服务号可以填写appId
-        "imgUrl" : '{$imgurl}',
-        "link" : '{$loclurl}',
-        "desc" : "{$reply[description]}",
-        "title" : "{$reply[title]}"
-    };
-
-    // 分享的回调
-    var wxCallbacks = {
-        // 收藏操作是否触发回调，默认是开启的
-        favorite : false,
-
-        // 用async模式，表示每次分享之前，都需要更新分享内容
-        async:true,
-    };
-    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
-    Api.shareToFriend(wxData, wxCallbacks);
-
-    // 点击分享到朋友圈，会执行下面这个代码
-    Api.shareToTimeline(wxData, wxCallbacks);
-
-    // 点击分享到腾讯微博，会执行下面这个代码
-    Api.shareToWeibo(wxData, wxCallbacks);
-
-    // iOS上，可以直接调用这个API进行分享，一句话搞定
-    Api.generalShare(wxData,wxCallbacks);
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
 	
-	//显示分享链接
-	Api.showOptionMenu();
-});
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+	
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',		
+	];
+	
+	wx.config(jssdkconfig);
+
+	sharedata = {
+		title : "{$reply[title]}",
+		link : "{$loclurl}",
+		desc : "{$reply[description]}",
+		imgUrl :"{$imgurl}"
+	};
+	
+	wx.ready(function () {
+		wx.showOptionMenu();
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+	});
 </script>
+	<script>
+	/*	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			window.shareData = {
+				"imgUrl": "{$imgurl}",
+				"timeLineLink": "{$loclurl}",
+				"sendFriendLink": "{$loclurl}",				
+				"fTitle": "{$reply[title]}",
+				"fContent": "{$reply[description]}"
+			};
+
+			// 发送给好友
+			WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+				WeixinJSBridge.invoke('sendAppMessage', {
+					"img_url": window.shareData.imgUrl,					
+					"link": window.shareData.sendFriendLink,
+					"desc": window.shareData.fContent,
+					"title": window.shareData.fTitle
+				}, function (res) {
+					_report('send_msg', res.err_msg);
+				})
+			});
+
+			// 分享到朋友圈
+			WeixinJSBridge.on('menu:share:timeline', function (argv) {
+				WeixinJSBridge.invoke('shareTimeline', {
+					"img_url": window.shareData.imgUrl,					
+					"link": window.shareData.timeLineLink,
+					"desc": window.shareData.fContent,
+					"title": window.shareData.fTitle
+				}, function (res) {
+					_report('timeline', res.err_msg);
+				});
+			});
+
+		}, false)*/
+	</script>
 <body id="activity-detail">
 <div class="page-bizinfo">
 	<div class="header">

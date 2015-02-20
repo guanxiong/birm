@@ -1,0 +1,84 @@
+{template 'myheader'}
+<style type="text/css">
+#mask {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background: url(./source/modules/jdg_pub/template/style/opacity_6.png);
+    display: none;
+}
+
+#mask img {
+    float: right;
+    width: 80%;
+}
+</style>
+<body>
+	{template 'nav'}
+	<div id="content">
+		<img src="./source/modules/jdg_pub/template/style/invitation-header.jpg" style="display: block; width: 100%;">
+		<!-- 邀友帖列表 -->
+		<div class="outer-wrap">
+			<div class="inner-wrap invitation-details">
+				<P>不够嗨？还是把那群叽叽歪歪的哥们闺蜜喊出来，请选择一个雷人的请帖主题：</P>
+				<img src="{php echo toimage($img_url)}" class="invitation-img">
+				<p>来自酒吧的呼唤</p>
+				<div>
+					<p>
+						亲，夜色太美，
+						<br>
+						人生太快，
+						<br>
+						来与不来，给个回信。
+					</p>
+					<img src="{php echo toimage($user['avatar'])}" />
+					<p>{$user['nickname']}</p>
+					<a href="#" class="ui-button button-30 button-orange" id="button-share">马上喊人</a>
+				</div>
+				<a href="{php echo $this->createMobileUrl('aboutit',array('id'=>$list['id']));}" class="ui-button button-36 button-orange">酒吧介绍</a>
+			</div>
+		</div>
+	</div>
+
+    <div id="mask"><img src="./source/modules/jdg_pub/template/style/share0.png" /></div>
+
+<script>
+$(function () { 
+    $("#mask").click(function () {
+        $(this).hide();
+    });
+
+
+    $("#button-share").click(function () {
+        //$.modal.close();
+
+        var h = $(document).height();
+        $("#mask").height(h);
+        $("#mask").show();
+
+        return false;
+    });
+});
+</script>
+
+
+</body>
+ 	<script type="text/javascript">
+		function onBridgeReady() {
+			WeixinJSBridge.call('showOptionMenu');
+		}
+
+		if (typeof WeixinJSBridge == "undefined") {
+			if (document.addEventListener) {
+				document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+			} else if (document.attachEvent) {
+				document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+				document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+			}
+		} else {
+			onBridgeReady();
+		}
+	</script></html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" id="viewport" content="width = device-width, initial-scale = 0.9, minimum-scale = 0.9, maximum-scale = 0.9, user-scalable=no">
+<title>中国象棋</title>
+<base href="{$_W['siteroot']}source/modules/yobyxiangqi/" />
+<link href="images/zzsc.css" type="text/css" rel="stylesheet">
+
+</head>
+<body scroll="no">
+<div style="display:none">
+</div>
+<div style="" class="box" id="box">
+	<div class="chess_left">
+		<canvas height="402" width="325" id="chess"></canvas>
+		<div>
+			<div style="display: block;" class="bn_box" id="bnBox">
+				<input name="offensivePlay" id="tyroPlay" value="新手开始" type="button">
+				<input name="offensivePlay" id="normalPlay" value="中级开始" type="button">
+                <input name="offensivePlay" id="superPlay" value="高手开始" type="button">
+				<input name="regret" id="regretBn" value="悔棋" type="button">
+
+			</div>
+		</div>
+	</div>
+	<div class="chess_right" id="chessRight">
+		<select name="billList" id="billList">
+		</select>
+		<ol id="billBox" class="bill_box">
+		</ol>
+	</div>
+	<!-- <div id="moveInfo" class="move_info"> </div> -->
+</div>
+
+<script language="javascript" type="text/javascript">
+var gameDifficulty;
+
+function play68_init() {
+	updateShare(0);
+}
+var HOME_PATH="{$url}";
+function goHome() {
+	window.location.href = HOME_PATH;
+}
+
+function play68_submitScore(score) {
+	updateShareScore(score);
+	show_share();
+}
+
+function updateShare(bestScore) {
+	imgUrl = '{$src}xq.png';
+	lineLink = '{$url}';
+	descContent = "传统中国象棋人人爱,{$weixin}！";
+	updateShareScore(bestScore);
+	appid = '';
+}
+
+function updateShareScore(bestScore) {
+	switch(bestScore) {
+		case 1:
+		shareTitle = "我在《中国象棋》败给了" + gameDifficulty + "的对手，快来帮我报仇！";
+		break;
+		case 2:
+		shareTitle = "我在《中国象棋》赢了" + gameDifficulty + "的对手，你的棋艺如何？";
+		break;
+		default:
+		shareTitle = "《中国象棋》即点即玩，无需下载！";
+		break;
+	}
+}
+</script>
+<script language="javascript" type="text/javascript" src="images/game.js"></script>
+
+<script src="images/gambit.js"></script>
+<script language="javascript" type="text/javascript">
+try {nbg.close_loading()} catch(e) {}
+</script>
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	window.shareData = {
+		"imgUrl": "{$src}xq.png",
+		"timeLineLink": "{$url}",
+		"sendFriendLink": "{$url}",
+		"weiboLink": "{$url}",
+		"tTitle":"《中国象棋》即点即玩，无需下载",
+		"tContent": "传统中国象棋人人爱,{$weixin}！",
+		"fTitle": "《中国象棋》即点即玩，无需下载",
+		"fContent":  "传统中国象棋人人爱,{$weixin}！",
+		"wContent":  "传统中国象棋人人爱,{$weixin}！"
+	};
+
+	// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+		WeixinJSBridge.invoke('sendAppMessage', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.sendFriendLink,
+			"desc": window.shareData.fContent,
+			"title": window.shareData.fTitle
+		}, function (res) {
+			_report('send_msg', res.err_msg);
+		})
+	});
+
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function (argv) {
+		WeixinJSBridge.invoke('shareTimeline', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.timeLineLink,
+			"desc": window.shareData.tContent,
+			"title": window.shareData.tTitle
+		}, function (res) {
+			_report('timeline', res.err_msg);
+		});
+	});
+
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function (argv) {
+		WeixinJSBridge.invoke('shareWeibo', {
+			"content": window.shareData.wContent,
+			"url": window.shareData.weiboLink
+		}, function (res) {
+			_report('weibo', res.err_msg);
+		});
+	});
+}, false);
+</script>
+
+</body></html>

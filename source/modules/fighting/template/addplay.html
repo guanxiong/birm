@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/bootstrap_min.css?2014-01-14-4" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/bootstrap_responsive_min.css?2014-01-14-4" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/style.css?2014-01-14-4" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/todc_bootstrap_button.css?2014-01-14-4" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/themes.css?2014-01-14-4" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/plugins/daterangepicker/daterangepicker.css?2014-01-14-4" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/inside.css?2014-01-14-4" media="all" />
+<link rel="stylesheet" type="text/css" href="./source/modules/public/style/css/plugins/chosen/chosen.css?2014-01-14-4" media="all" />
+<script type="text/javascript" src="./source/modules/public/style/src/jQuery.js?2014-01-14-4"></script>
+<script type="text/javascript" src="./source/modules/public/style/src/plugins/jquery-ui/jquery_ui_widget_min.js?2014-01-14-4"></script>
+<script type="text/javascript" src="./source/modules/public/style/src/bootstrap_min.js?2014-01-14-4"></script>
+<script type="text/javascript" src="./source/modules/public/style/src/plugins/form/jquery_form_min.js?2014-01-14-4"></script>
+<script type="text/javascript" src="./source/modules/public/style/src/plugins/validation/jquery_validate_min.js?2014-01-14-4"></script>
+<script type="text/javascript" src="./source/modules/public/style/src/plugins/validation/jquery_validate_methods.js?2014-01-14-4"></script>
+<script type="text/javascript" src="./source/modules/public/style/src/plugins/wizard/jquery_form_wizard_min.js?2014-01-14-4"></script>
+<script type="text/javascript" src="./source/modules/public/style/src/plugins/daterangepicker/daterangepicker.js?2014-01-14-4"></script>
+<script type="text/javascript" src="./source/modules/public/style/src/plugins/daterangepicker/moment_min.js?2014-01-14-4"></script>
+<script type="text/javascript" src="./source/modules/public/style/src/inside.js?2014-01-14-4"></script>
+<title>一战到底 - {if empty($_W['setting']['copyright']['sitename'])}VFAN - 微信公众平台管理系统{else}{$_W['setting']['copyright']['sitename']}{/if}</title>
+    <!--[if lte IE 9]><script src="./source/modules/public/style/src/watermark.js"></script><![endif]-->
+	<!--[if IE 7]><link href="./source/modules/public/style/css/font_awesome_ie7.css" rel="stylesheet" /><![endif]-->
+</head>
+<body>
+    <div id="main">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="box">
+                        <div class="box-title">
+                            <div class="span10">
+                                <h3><i class="icon-edit"></i>编辑一战到底内容</h3>
+                            </div>
+                            <div class="span2"><a class="btn" href="Javascript:window.history.go(-1)">返回</a></div>
+                        </div>
+                        <div class="box-content">
+                            <form action="" method="post" class='form-horizontal form-wizard'>
+							<input type="hidden" name="action" value="save">
+                                <div class="step" id="firstStep">
+                                    <ul class="wizard-steps steps-4">
+                                        <li class='active'>
+                                            <div class="single-step">
+                                                <span class="title">1</span>
+                                                <span class="circle">
+                                                    <span class="active"></span>
+                                                </span>
+                                                <span class="description">活动开始内容
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="single-step">
+                                                <span class="title">2</span>
+                                                <span class="circle"></span>
+                                                <span class="description">活动结束内容
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="single-step">
+                                                <span class="title">3</span>
+                                                <span class="circle"></span>
+                                                <span class="description">活动设置
+                                                </span>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                    <div class="step-forms">
+                                        <div class="span8">
+                                            <div class="control-group">
+                                                <label for="keyword" class="control-label">关键词：</label>
+                                                <div class="controls">
+                                                    <input type="text" name="keyword" id="keyword" value="一战到底" class="input-xlarge" data-rule-required="true" /><span class="maroon">*</span><span class="help-inline">多个关键字请用空格隔开，用户输入此关键词将会触发此活动。</span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="qutype" class="control-label">题库选择：</label>
+                                                <div class="controls">
+                                                    <label class="radio inline">
+                                                        <input type="radio" name="qutype" value="1" />仅私库
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" name="qutype" value="0"  checked="checked"/>公库+私库
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="title" class="control-label">活动名称：</label>
+                                                <div class="controls">
+                                                    <input type="text" name="title" id="title" value="一战到底" class="input-xlarge" data-rule-required="true" /><span class="maroon">*</span><span class="help-inline">请不要多于50字!</span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="description" class="control-label">简介：</label>
+                                                <div class="controls">
+                                                    <textarea class="input-xlarge" id="description" name="description" data-rule-required="true">一战到底是一档形式新颖，趣味十足，在挑战中挖掘个性，又充满悬念的全新益智攻擂游戏</textarea>
+                                                    <span class="maroon">*</span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="sttxt" class="control-label">活动时间：</label>
+                                                <div class="controls">
+                                                    <div class="input-prepend">
+                                                        <span class="add-on"><i class="icon-calendar"></i></span>
+                                                        <input type="text" name="time" id="time" class="daterangepick input-xlarge" value="{php echo date('Y/m/d H:i')}-{php echo date('Y/m/d H:i',strtotime('+7 day'))}" data-rule-required="true" readonly />
+                                                        <span class="maroon">*</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="reply2" class="control-label">活动未开时提示语：</label>
+                                                <div class="controls">
+                                                    <textarea class="input-xlarge" id="reply2" name="reply2" data-rule-required="true">您好{nickname}，本次活动尚未开始哦</textarea>
+                                                    <span class="maroon">*</span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="reply4" class="control-label">开始答题时提示语：</label>
+                                                <div class="controls">
+                                                    <textarea class="input-xlarge" id="reply4" name="reply4" data-rule-required="true">您好{nickname}，欢迎来到{title}，{description}。您当前的总积分为：{credit}，回复任意字段开始答题，回复“退出”离开答题</textarea>
+                                                    <span class="maroon">*</span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label for="reply5" class="control-label">活动暂停时提示语：</label>
+                                                <div class="controls">
+                                                    <textarea class="input-xlarge" id="reply5" name="reply5" data-rule-required="true">您好{nickname}，{title}暂时停止哦</textarea>
+                                                    <span class="maroon">*</span>
+                                                </div>
+                                            </div>												
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="step" id="secondStep">
+                                    <ul class="wizard-steps steps-4">
+                                        <li>
+                                            <div class="single-step">
+                                                <span class="title">1</span>
+                                                <span class="circle"></span>
+                                                <span class="description">活动开始内容
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li class='active'>
+                                            <div class="single-step">
+                                                <span class="title">2</span>
+                                                <span class="circle">
+                                                    <span class="active"></span>
+                                                </span>
+                                                <span class="description">活动结束内容
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="single-step">
+                                                <span class="title">3</span>
+                                                <span class="circle"></span>
+                                                <span class="description">活动设置
+                                                </span>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                    <div class="span7">
+                                        <div class="control-group">
+                                            <label for="reply3" class="control-label">活动结束说明：</label>
+                                            <div class="controls">
+                                                <textarea class="input-xlarge" rows="5" id="reply3" name="reply3" data-rule-required="true">亲，活动已经结束，请继续关注我们的后续活动哦。</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="step" id="thirdStep">
+                                    <ul class="wizard-steps steps-4">
+                                        <li>
+                                            <div class="single-step">
+                                                <span class="title">1</span>
+                                                <span class="circle"></span>
+                                                <span class="description">活动开始内容
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="single-step">
+                                                <span class="title">2</span>
+                                                <span class="circle"></span>
+                                                <span class="description">活动结束内容
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li class='active'>
+                                            <div class="single-step">
+                                                <span class="title">3</span>
+                                                <span class="circle"></span>
+                                                <span class="active"></span>
+                                                <span class="description">活动设置
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+									<div class="control-group">
+                                        <label for="qnum" class="control-label">题目个数</label>
+                                        <div class="controls">
+                                            <input type="text" name="qnum" id="qnum" class="input-mini" value="10" data-rule-required="true"  data-rule-maxlength="15" />题<span class="maroon">*</span>
+                                            <span class="help-inline">即用户每次进入活动需要解答的题目个数
+                                            </span>
+                                        </div>
+                                    </div>
+									<div class="control-group">
+                                        <label for="tiao" class="control-label">是否允许跳过答题：</label>
+                                        <div class="controls">
+                                            <label class="radio inline">
+                                                <input type="radio" name="tiao" value="1" />是
+                                            </label>
+                                            <label class="radio inline">
+                                                <input type="radio" name="tiao" value="0"  checked="checked"/>否
+                                            </label>
+                                        </div>
+                                    </div>
+									<div class="control-group">
+                                        <label for="tgkf" class="control-label">跳过扣分数：</label>
+                                        <div class="controls">
+                                            <input type="text" name="tgkf" id="tgkf" placeholder="如：1" class="input-mini" data-rule-required="true" data-rule-maxlength="10" />分<span class="maroon">*</span>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                            <label for="ad" class="control-label">活动广告植入：</label>
+                                            <div class="controls">
+                                                <textarea class="input-xlarge" rows="5" name="ad" data-rule-required="true">活动广告</textarea>
+                                            </div>
+                                        </div>
+                                    <div class="control-group">
+                                        <label for="isad" class="control-label">答题页面是否显示广告：</label>
+                                        <div class="controls">
+                                            <label class="radio inline">
+                                                <input type="radio" name="isad" value="1" checked="checked"  />
+                                                显示
+                                            </label>
+                                            <label class="radio inline">
+                                                <input type="radio" name="isad" value="0" />
+                                                不显示
+                                            </label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span12">
+                                    <div class="form-actions">
+                                        <input type="reset" class="btn" value="Back" id="back" />
+                                        <input type="submit" name="submit" class="btn btn-primary" value="Submit" id="next" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

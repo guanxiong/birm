@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="false">
+		<name><![CDATA[聚友杀]]></name>
+		<identifie><![CDATA[quickshare]]></identifie>
+		<version><![CDATA[1.3]]></version>
+		<type><![CDATA[business]]></type>
+    <ability><![CDATA[聚友杀价]]></ability>
+    <description><![CDATA[一起来杀价吧！购物，不再是一个人在战斗~]]></description>
+		<author><![CDATA[微动力]]></author>
+    <url><![CDATA[bbs.b2ctui.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="杀价管理" do="Share" />
+			<entry title="操作指南" do="Helper" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+    CREATE TABLE IF NOT EXISTS `ims_quickshare_iptable` (
+    `weid`  int(10) unsigned NOT NULL ,
+    `ip` varchar(64)  NOT NULL,
+    `orderid`  int(10) unsigned NOT NULL ,
+    `goodsid`  int(10) unsigned NOT NULL ,
+    `title` varchar(128)  NOT NULL,
+    `createtime`  int(10) unsigned NOT NULL ,
+    `from_user` varchar(50) not null default '' COMMENT '用户openid',
+    PRIMARY KEY(ip, orderid, goodsid, createtime)
+    ) ENGINE = MYISAM DEFAULT CHARSET = utf8;
+
+    CREATE TABLE IF NOT EXISTS `ims_quickshare_event` (
+    `weid`  int(10) unsigned NOT NULL ,
+    `goodsid`  int(10) unsigned NOT NULL ,
+    `share_title` varchar(64)  NOT NULL,
+    `share_content` varchar(60000)  NOT NULL,
+    `discount`  double unsigned NOT NULL DEFAULT 0.1,
+    `discount_limit`  double unsigned NOT NULL DEFAULT 10,
+    `createtime`  int(10) unsigned NOT NULL ,
+    PRIMARY KEY (goodsid)
+    ) ENGINE = MYISAM DEFAULT CHARSET = utf8;
+   	]]></install>
+	<uninstall><![CDATA[
+DROP TABLE IF EXISTS `ims_quickshare_iptable`;
+DROP TABLE IF EXISTS `ims_quickshare_event`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

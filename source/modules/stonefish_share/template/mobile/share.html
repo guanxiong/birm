@@ -190,7 +190,7 @@ display:block;
         </div>			
         <div class="frameBtn clearfix">
             <span class="b2"><a href="{$reply['shareurl']}">查看原文</a><i class="icon icon-angle-right"></i></span>
-            <span class="b1" id="forward_btn"><i class="icon icon-mail-forward"></i> {if $profile_s==1}{$profile['realname']} 你好点击这里立即转发{else}点击这里注册信息后转发{/if}</span>
+            <span class="b1" id="stonefish_share_btn"><i class="icon icon-mail-stonefish_share"></i> {if $profile_s==1}{$profile['realname']} 你好点击这里立即转发{else}点击这里注册信息后转发{/if}</span>
         </div>
         <div class="turnTime" id="colockbox1"><span class="day">00</span> <span class="hour">00</span> <span class="minute">00</span> <span class="second">00</span> </div>
         <div class="turnBox rule">
@@ -198,7 +198,7 @@ display:block;
             <div class="boxCon">{php echo htmlspecialchars_decode($reply['content']);}</div>
         </div>
         <div class="turnBox rank">
-            <h2>分享排名<i class="icon icon-repeat"></i></h2>
+            <h2>集赞排名<i class="icon icon-repeat"></i></h2>
             <div class="boxCon">
                 <div class="rankMe">{if $s==0}亲！您还没参加此活动，{if $show==0}无法查看排名情况{else}期待您的参与！{/if}{/if}{if $s==1}亲！您当前排在第 <span class="rankNUM">{$sharepm}</span> 名!{/if}</div>
 				{if $listtotal!=0}<div class="rankMe1">共有 <span class="rankNUM">{$listtotal}</span> 人参与此活动，{if $s==0}就等您来了,亲！{/if}{if $s==1}继续加油,亲！{/if}</div>{/if}
@@ -270,42 +270,40 @@ $(document).ready(function() {
 	        }
 	        //
 </script>
-<script language="javascript" src="./source/modules/WeixinApi.js"></script>
-<script type="text/javascript">
-// 需要分享的内容，请放到ready里
-WeixinApi.ready(function(Api) {
-    // 微信分享的数据
-    var wxData = {
-        "appId": "{$shareappid}", // 服务号可以填写appId
-        "imgUrl" : '{$imgurl}',
-        "link" : '{$staturl}',
-        "desc" : "{$reply[description]}",
-        "title" : "{$reply[title]}"
-    };
-
-    // 分享的回调
-    var wxCallbacks = {
-        // 收藏操作是否触发回调，默认是开启的
-        favorite : false,
-
-        // 用async模式，表示每次分享之前，都需要更新分享内容
-        async:true,
-    };
-    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
-    Api.shareToFriend(wxData, wxCallbacks);
-
-    // 点击分享到朋友圈，会执行下面这个代码
-    Api.shareToTimeline(wxData, wxCallbacks);
-
-    // 点击分享到腾讯微博，会执行下面这个代码
-    Api.shareToWeibo(wxData, wxCallbacks);
-
-    // iOS上，可以直接调用这个API进行分享，一句话搞定
-    Api.generalShare(wxData,wxCallbacks);
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
 	
-	//显示分享链接
-	Api.showOptionMenu();
-});
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+	
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',		
+	];
+	
+	wx.config(jssdkconfig);
+
+	sharedata = {
+		title : "{$reply[title]}",
+		link : "{$staturl}",
+		desc : "{$reply[description]}",
+		imgUrl :"{$imgurl}"
+	};
+	
+	wx.ready(function () {
+		wx.showOptionMenu();
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+	});
 </script>
 </body>
 </html>
