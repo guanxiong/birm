@@ -3,7 +3,7 @@
  * 微信会员卡
  * 作者:迷失卍国度
  * qq: 15595755
- * [WNS]更多模块请浏览：BBS.birm.co
+ * [WDL]更多模块请浏览：BBS.b2ctui.com
  */
 defined('IN_IA') or exit('Access Denied');
 

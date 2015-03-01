@@ -1,6 +1,6 @@
 <?php
 /**
- * @author 更多模块请浏览bbs.birm.co
+ * @author 更多模块请浏览bbs.b2ctui.com
  */
 defined('IN_IA') or exit('Access Denied');
 

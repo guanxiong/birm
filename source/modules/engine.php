@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  * $sn: origins/source/modules/engine.php : v e555ac6ee0e2 : 2014/10/21 09:03:55 : Gorden $
  */
 defined('IN_IA') or exit('Access Denied');

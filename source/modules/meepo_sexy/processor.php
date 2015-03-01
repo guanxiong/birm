@@ -10,7 +10,7 @@ defined('IN_IA') or exit('Access Denied');
 class Meepo_sexyModuleProcessor extends WeModuleProcessor {
 	public function respond() {
 		$content = $this->message['content'];
-		//这里定义此模块进行消息处理时的具体过程, 请查看微新星文档来编写你的代码
+		//这里定义此模块进行消息处理时的具体过程, 请查看微动力文档来编写你的代码
 		global $_W;
 		$settings = pdo_fetch("SELECT * FROM ".tablename('meepo_sexy_set')." WHERE weid=:weid limit 1",array(':weid'=>$_W['weid']));
 		if(empty($settings)){

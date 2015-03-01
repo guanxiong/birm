@@ -2,8 +2,6 @@
 /**
  * 预约与调查模块定义
  *
- * @author WeNewstar Team
- * @url http://bbs.we7.cc
  */
 defined('IN_IA') or exit('Access Denied');
 

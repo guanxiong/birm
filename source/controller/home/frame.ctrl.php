@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  * $sn: origins/source/controller/home/frame.ctrl.php : v 79463ca277ed : 2014/06/13 00:48:48 : RenChao $
  */
 
@@ -156,6 +156,7 @@ if($do == 'profile') {
 			array('个人中心菜单设置', create_url('site/nav', array('position' => 2))),
 			array('幻灯片设置', create_url('site/slide')),
 			array('微站访问入口', create_url('site/cover')),
+			array('微站文章设置', create_url('site/article')),
 			array('页面信息设置', create_url('site/siteinfo')),
 		)
 	);

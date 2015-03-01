@@ -2,8 +2,7 @@
 /**
  * 
  *
- * @author  codeMonkey
- * qq:631872807
+ * @author  weidongli
  * @url
  */
 defined('IN_IA') or exit('Access Denied');

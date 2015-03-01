@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  * $sn: origins/source/model/fans.mod.php : v 866195d935cc : 2014/05/16 09:42:08 : veryinf $
  */
 function fans_update($user, $fields) {
@@ -139,7 +139,7 @@ function mc_oauth_userinfo() {
 		return;
 	}
 	if(empty($_W['account']['key']) || empty($_W['account']['key'])){
-		return error(-1, '无法使用网页授权');
+		return error(-1, '鏃犳硶浣跨敤缃戦〉鎺堟潈');
 	}
 	
 	if(!empty($_SERVER['QUERY_STRING'])) {

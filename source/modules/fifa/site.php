@@ -1,6 +1,6 @@
 <?php
 /**
- * @author WeNewstar Team
+ * @author WeEngine Team
  */
 defined('IN_IA') or exit('Access Denied');
 

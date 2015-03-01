@@ -11,7 +11,7 @@
 <div class="main">
 	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
 	<input type="hidden" name="parentid" value="{$set['id']}" />
-		<h4>GPRS打印机基本设置 <small>微新星的GPRS打印机才有效</small></h4>
+		<h4>GPRS打印机基本设置 <small>微动力的GPRS打印机才有效</small></h4>
 		<table class="tb">
 			<tr>
 				<th><label for="">是否开启</label></th>
@@ -33,13 +33,33 @@
 					<span class="help-block"></span>
 				</td>
 			</tr>			
-			<tr>
+			<!--<tr>
 				<th><label for="">打印机机身号</label></th>
 				<td>
 					<input type="text" name="print_usr" class="span6" value="{$set['print_usr']}" />
 					<p class="help-block">打印机机身号</p>					
 				</td>
-			</tr>
+			</tr>-->
+            <tr>
+        <th><span class="red"></span>商户ID：</th>
+        <td><input type="text" class="span6" style="width:420px;" value="{$set['partnerId']}" name="print_partnerId"></td>
+    </tr>
+    <tr>
+        <th><span class="red"></span>API密钥：</th>
+        <td><input type="text" class="span6" style="width:420px;" value="{$set['apiKey']}" name="print_apiKey"></td>
+    </tr>
+       <tr>
+       	<th>终端设备设备号：</th>
+        	<td>
+            	<input type="text" class="span6" id="mCode" style="width:320px;" value="{$set['machineCode']}" name="print_machineCode"> 
+                </td>
+       </tr>
+       <tr>
+       	<th>终端密钥：</th>
+        	<td>
+            	<input type="text" class="span6" id="mKey" style="width:320px;" value="{$set['mKey']}" name="print_mKey">
+            </td>
+       </tr>
   			<tr>
 				<th><label for="">打印联数</label></th>
 				<td>
@@ -71,6 +91,7 @@
 				</td>
 			</tr>
 		</table>
+        
 	</form>
 </div>
 {template 'common/footer'}

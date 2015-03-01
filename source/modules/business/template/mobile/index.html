@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
+	<meta name="format-detection" content="telephone=no">
+	<title></title>
+	<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<script type="text/javascript" src="{$_W[siteroot]}source/modules/business/template/mobile/js/swipe.js"></script>
+</head>
+<body>
+	
+	<link rel="stylesheet" type="text/css" href="./source/modules/business/template/mobile/style/other.css" />
+	<style>abbr,article,aside,audio,canvas,datalist,details,dialog,eventsource,figure,figcaption,footer,header,hgroup,mark,menu,meter,nav,output,progress,section,small,time,video{display:block;}</style>
+<!-- 广告开始,只有有广告或者没有关注的时候才会出现 -->
+	
+<!-- 普通开始 -->
+{loop $arr $item}
+<article class="dzhV2_box">
+	<h1 style="background-image:url('');background-position:0 -21px;-weibkit-background-size:14px 150px;background-size:14px 150px;">
+		{$item['kword']}</h1>
+	<ul class="box">
+		<div class="touchSlider" id="touchSlider" data-dot-color="#8f8f8f" data-min-height="180" data-drag-callback="_onSliderDragEnd" data-type="1">
+			<div class="inner">
+				<div class="sld_bar" id="sld" style="width: 2920px; ">
+					<div class="sld_page" data-rendered="1" style="width: 292px; min-height: 180px; ">
+					{if is_array($item['row'])}
+						{loop $item['row'] $list}
+						<li style="background-color:#F3F3F3;">
+							<a href="{$list['url']}">
+								<figure>
+									<img src="{$_W['attachurl']}{$list['photo']}"></figure>
+								<br>{$list['userName']}</a>
+						</li>
+						{/loop}
+					{else}
+						<span style='font-size:12px;'>{$item['row']}</span>
+					{/if}
+					</div>
+				</div>
+			</div>
+			<div class="sldDotWarpper">
+				<div class="sld_dots" data-relative-layout="1" style="width: 130px; margin-left: 81px; ">
+					
+				</div>
+			</div>
+		</div>
+	</ul>
+</article>
+{/loop}
+<script type="text/javascript">
+	
+	// new Swipe(document.getElementById('sld'));
+</script>
+<!-- 普通结束 -->
+<div style="height:38px;"></div>
+<footer class="footFix dzh_ft">
+	<span class="city">快快分享到朋友圈吧！</span>
+	<a href="#" class="top">回顶部</a>
+</footer>
+
+<div id="showuserid" style="dispaly:none;"></div>
+<script type="text/javascript">
+	// getUserID(function (id) {
+	// 	document.getElementById("showuserid").innerHTML = id;
+	// });	
+	</script>
+</body>
+</html>

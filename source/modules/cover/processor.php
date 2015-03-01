@@ -2,7 +2,7 @@
 /**
  * 扩展封面回复模块处理程序
  *
- * @author WeNewstar Team
+ * @author WeEngine Team
  * @url 
  */
 defined('IN_IA') or exit('Access Denied');
@@ -11,7 +11,7 @@ class CoverModuleProcessor extends WeModuleProcessor {
 	public function respond() {
 		global $_W;
 		$content = $this->message['content'];
-		//这里定义此模块进行消息处理时的具体过程, 请查看微新星文档来编写你的代码
+		//这里定义此模块进行消息处理时的具体过程, 请查看微动力文档来编写你的代码
 		$reply = pdo_fetch('SELECT * FROM ' . tablename('cover_reply') . ' WHERE `rid`=:rid', array(':rid' => $this->rule));
 		if(!empty($reply)) {
 			$entry = pdo_fetch("SELECT eid FROM ".tablename('modules_bindings')." WHERE module = :module AND do = :do", array(':module' => $reply['module'], ':do' => $reply['do']));

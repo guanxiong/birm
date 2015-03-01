@@ -1,6 +1,6 @@
 <?php
 /**
- * @author WeNewstar Team
+ * @author WeEngine Team
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -16,7 +16,7 @@ class HuabaoModuleSite extends WeModuleSite {
 		if (!preg_match("/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"])*$/", $huabao['music'])){
 			$huabao['music'] = $_W['attachurl'] . $huabao['music'];
 		}
-		$result['list'] = pdo_fetchall("SELECT * FROM ".tablename('huabao_photo')." WHERE huabaoid = :huabaoid ORDER BY displayorder DESC", array(':huabaoid' => $huabao['id']));
+		$result['list'] = pdo_fetchall("SELECT * FROM ".tablename('huabao_photo')." WHERE huabaoid = :huabaoid ORDER BY displayorder ASC", array(':huabaoid' => $huabao['id']));
 		foreach ($result['list'] as &$photo) {
 			$photo['items'] = pdo_fetchall("SELECT * FROM ".tablename('huabao_item')." WHERE photoid = :photoid", array(':photoid' => $photo['id']));
 		}
@@ -223,7 +223,7 @@ class HuabaoModuleSite extends WeModuleSite {
 				}
 				message('画报更新成功！', $this->createWebUrl('list', array('foo' => 'photo', 'huabaoid' => $huabao['id'])));
 			}
-			$photos = pdo_fetchall("SELECT * FROM ".tablename('huabao_photo')." WHERE huabaoid = :huabaoid ORDER BY displayorder DESC", array(':huabaoid' => $huabao['id']));
+			$photos = pdo_fetchall("SELECT * FROM ".tablename('huabao_photo')." WHERE huabaoid = :huabaoid ORDER BY displayorder ASC", array(':huabaoid' => $huabao['id']));
 			foreach ($photos as &$photo1) {
 				$photo1['items'] = pdo_fetchall("SELECT * FROM ".tablename('huabao_item')." WHERE photoid = :photoid", array(':photoid' => $photo1['id']));
 			}

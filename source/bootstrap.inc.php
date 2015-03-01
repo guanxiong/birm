@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  * $sn: origins/source/bootstrap.inc.php : v cd2e9794aeb3 : 2014/06/17 03:32:07 : yuan $
  */
 define('IN_IA', true);

@@ -7,7 +7,7 @@
 		<type><![CDATA[other]]></type>
 		<ability><![CDATA[提供消息记录及分析统计功能]]></ability>
 		<description><![CDATA[能够提供按公众号码查询, 分析统计消息记录, 以及规则关键字命中情况统计]]></description>
-		<author><![CDATA[WeNewstar Team]]></author>
+		<author><![CDATA[WeEngine Team]]></author>
 		<url><![CDATA[http://www.we7.cc]]></url>
 	</application>
 	<platform>

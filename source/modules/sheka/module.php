@@ -73,6 +73,9 @@ private $turlar=array(
             $cfg = array(
                 'name' => $_GPC['name'],
                 'logo' => $_GPC['logo'],
+                'appid' => $_GPC['appid'],
+                'secret' => $_GPC['secret'],
+                'url'=>$_GPC['url']
             );
             if ($this->saveSettings($cfg)) {
                 message('保存成功', 'refresh');

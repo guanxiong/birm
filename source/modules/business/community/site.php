@@ -2,7 +2,7 @@
 /**
  * 微小区模块微站定义
  *
- * @author WeNewstar Team
+ * @author WeEngine Team
  * @url http://we7.cc/
  */
 defined('IN_IA') or exit('Access Denied');

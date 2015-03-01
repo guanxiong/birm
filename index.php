@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright 微动力 (c) 2013 B2CTUI.COM
  */
 define('IN_SYS', true);
 

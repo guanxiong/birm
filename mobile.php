@@ -1,7 +1,7 @@
 <?php
 /**
  * 微站管理
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 define('IN_MOBILE', true);
 require 'source/bootstrap.inc.php';

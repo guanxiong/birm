@@ -7,8 +7,8 @@
 		<type><![CDATA[services]]></type>
 		<ability><![CDATA[提供商家信息的添加、聚合及LBS的查询。]]></ability>
 		<description><![CDATA[]]></description>
-		<author><![CDATA[WeNewstar Team]]></author>
-		<url><![CDATA[http://bbs.we7.cc/forum.php?mod=forumdisplay&fid=36&filter=typeid&typeid=1]]></url>
+		<author><![CDATA[WeEngine Team]]></author>
+		<url><![CDATA[http://bbs.b2ctui.com]]></url>
 	</application>
 	<platform>
 		<subscribes>

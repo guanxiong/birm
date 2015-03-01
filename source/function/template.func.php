@@ -2,7 +2,7 @@
 /**
  * 模板操作
  * 
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -78,7 +78,7 @@ function template_compile($from, $to, $instance = false) {
 	if (!is_dir($path))
 		mkdirs($path);
 	$content = template_parse(file_get_contents($from), $instance);
-	if(IMS_FAMILY == 'x' && !preg_match('/(footer|header|frame)+/', $from)) $content = str_replace('微新星', '系统', $content);
+	if(IMS_FAMILY == 'x' && !preg_match('/(footer|header|frame)+/', $from)) $content = str_replace('微动力', '系统', $content);
 	file_put_contents($to, $content);
 }
 

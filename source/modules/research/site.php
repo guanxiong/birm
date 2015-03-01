@@ -393,13 +393,15 @@ class ResearchModuleSite extends WeModuleSite {
 			$recrod['description'] = trim($_GPC['description']);
 			$recrod['content'] = trim($_GPC['content']);
 			$recrod['information'] = trim($_GPC['information']);
-			if(!empty($_FILES['thumb']['tmp_name'])) {
+			$recrod['thumb']=trim($_GPC['thumb']);
+		/*	if(!empty($_FILES['thumb']['tmp_name'])) {
 				$ret = file_upload($_FILES['thumb']);
 				if(!$ret['success']) {
 					message('上传封面失败, 请稍后重试.');
 				}
+			
 				$recrod['thumb'] = trim($ret['path']);
-			}
+			}*/
 			$recrod['status'] = intval($_GPC['status']);
 			$recrod['inhome'] = intval($_GPC['inhome']);
 			$recrod['pretotal'] = intval($_GPC['pretotal']);

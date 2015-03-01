@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  * $sn: htdocs/source/modules/engine.php : v c80e0abd3cde : 2014/03/26 09:56:12 : veryinf $
  */
 defined('IN_IA') or exit('Access Denied');

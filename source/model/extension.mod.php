@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  * $sn: origins/source/model/extension.mod.php : v 866195d935cc : 2014/05/16 09:42:08 : veryinf $
  */
 defined('IN_IA') or exit('Access Denied');

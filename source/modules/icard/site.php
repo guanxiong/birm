@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS]更多模块请浏览：BBS.birm.co
+ * [WeEngine System] 更多模块请浏览：BBS.b2ctui.com
  */
 defined('IN_IA') or exit('Access Denied');
 include 'plugin/phpqrcode.php';

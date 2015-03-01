@@ -11,7 +11,7 @@ class Feng_testingModuleProcessor extends WeModuleProcessor {
 	public function respond() {
 		global $_W;
 		$content = $this->message['content'];
-		//这里定义此模块进行消息处理时的具体过程, 请查看微新星文档来编写你的代码
+		//这里定义此模块进行消息处理时的具体过程, 请查看微动力文档来编写你的代码
 		$isfill = pdo_fetchcolumn("SELECT isfill FROM ".tablename('feng_testingreply')." WHERE rid =:rid AND testingid = '0'", array(':rid' => $this->rule));
 		$reply = pdo_fetchall("SELECT * FROM ".tablename('feng_testingreply')." WHERE rid = :rid", array(':rid' => $this->rule));
 		if (!empty($reply)) {

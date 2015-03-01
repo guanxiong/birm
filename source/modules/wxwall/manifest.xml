@@ -4,11 +4,11 @@
 		<name><![CDATA[微信墙]]></name>
 		<identifie><![CDATA[wxwall]]></identifie>
 		<version><![CDATA[1.5]]></version>
-		<type><![CDATA[activity]]></type>
+		<type><![CDATA[wdlshow]]></type>
 		<ability><![CDATA[可以实时同步显示现场参与者发送的微信]]></ability>
 		<description><![CDATA[微信墙又称微信大屏幕，是在展会、音乐会、婚礼现场等场所展示特定主题微信的大屏幕，大屏幕上可以同步显示现场参与者发送的微信，使场内外观众能够第一时间传递和获取现场信息。]]></description>
-		<author><![CDATA[微新星]]></author>
-		<url><![CDATA[bbs.birm.co]]></url>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[bbs.b2ctui.com]]></url>
 	</application>
 	<platform>
 		<subscribes>

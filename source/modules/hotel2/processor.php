@@ -2,7 +2,7 @@
 /**
  * 微酒店
  *
- * @author WeNewstar Team & ewei
+ * @author WeEngine Team & ewei
  * @url
  */
 

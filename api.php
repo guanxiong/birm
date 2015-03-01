@@ -2,7 +2,7 @@
 /**
  * 接口文件
  * 
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 define('IN_API', true);
 require 'source/bootstrap.inc.php';

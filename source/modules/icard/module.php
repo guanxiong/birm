@@ -1,7 +1,7 @@
 <?php
 /**
  * 会员卡模块
- * [WNS]更多模块请浏览：BBS.birm.co
+ * [WDL]更多模块请浏览：BBS.b2ctui.com
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -46,10 +46,17 @@ class IcardModule extends WeModule {
         if (empty($id)) {
             pdo_insert($this->tablename, $data);
         } else {
+            //会员图片
             if (!empty($_GPC['picture'])) {
-                file_delete($_GPC['picture-old']);
+                file_delete($_GPC['picture_old']);
             } else {
                 unset($data['picture']);
+            }
+            //非会员图片
+            if (!empty($_GPC['picture_not'])) {
+                file_delete($_GPC['picture_not_old']);
+            } else {
+                unset($data['picture_not']);
             }
             unset($data['dateline']);
             pdo_update($this->tablename, $data, array('id' => $id));
@@ -1307,6 +1314,28 @@ class IcardModule extends WeModule {
         include $this->template('rechargelog_list');
     }
 
+    //所有充值记录
+    public function doAllRechargeLog(){
+        global $_GPC, $_W;
+        checklogin();
+        $action =  'card';
+        $url = create_url('site/module', array('do' => $action, 'name' => $this->modulename));
+        $pindex = max(1, intval($_GPC['page']));
+        $psize = 15;
+        $where = "WHERE weid = '{$_W['weid']}' ";
+        $list = pdo_fetchall("SELECT * FROM ".tablename('icard_card_log')." {$where} order by id desc LIMIT ".($pindex - 1) * $psize.",{$psize}");
+        if (!empty($list)) {
+            $total = pdo_fetchcolumn("SELECT COUNT(*) FROM ".tablename('icard_card_log')." $where");
+            $pager = pagination($total, $pindex, $psize);
+        }
+        $outlets = pdo_fetchall("SELECT * FROM ".tablename('icard_outlet')." WHERE weid = :weid ORDER BY displayorder DESC,id DESC", array(':weid' => $_W['weid']));
+        $outlet = array();
+        foreach($outlets as $key => $value){
+            $outlet[$value['id']] = $value['title'];
+        }
+        include $this->template('allrechargelog_list');
+    }
+
     //消费日志excel
     public function doRechargeLogExcel(){
         global $_GPC, $_W;
@@ -1494,7 +1523,7 @@ class IcardModule extends WeModule {
         //今天新增数量
         $user_today_count = pdo_fetchcolumn("SELECT COUNT(*) FROM ".tablename('icard_card')." WHERE weid = '{$weid}' AND  date_format(from_UNIXTIME(`dateline`),'%Y-%m-%d') = date_format(now(),'%Y-%m-%d')");
         //昨天新增数量
-        $user_yesterday_count = pdo_fetchcolumn("SELECT COUNT(*) FROM ".tablename('icard_card')." WHERE weid = '{$weid}' AND to_days(now())-to_days(`dateline`)<=1");
+        $user_yesterday_count = pdo_fetchcolumn("SELECT COUNT(*) FROM ".tablename('icard_card')." WHERE weid = '{$weid}' AND to_days(now())-to_days(from_UNIXTIME(`dateline`,'%Y-%m-%d %H:%i:%S'))=1");
 
         //一个月内的会员数据
         $data_user = pdo_fetchall("Select date_format(FROM_UNIXTIME(dateline),'%Y-%m-%d') as date,count(date_format(FROM_UNIXTIME(dateline),'%Y-%m-%d')) as usercount FROM (SELECT * FROM ".tablename('icard_card')." where DATE_SUB(CURDATE(), INTERVAL 1 month) <= date(FROM_UNIXTIME(dateline)) AND weid='{$weid}' ) a Group by date_format(FROM_UNIXTIME(dateline),'%Y-%m-%d')");
@@ -1502,7 +1531,7 @@ class IcardModule extends WeModule {
         //今天消费次数
         $consume_today_count = pdo_fetchcolumn("SELECT COUNT(*) FROM ".tablename('icard_money_log')." WHERE weid = '{$weid}' AND  date_format(from_UNIXTIME(`dateline`),'%Y-%m-%d') = date_format(now(),'%Y-%m-%d')");
         //昨天消费次数
-        $consume_yesterday_count = pdo_fetchcolumn("SELECT COUNT(*) FROM ".tablename('icard_money_log')." WHERE weid = '{$weid}' AND to_days(now())-to_days(`dateline`)<=1");
+        $consume_yesterday_count = pdo_fetchcolumn("SELECT COUNT(*) FROM ".tablename('icard_money_log')." WHERE weid = '{$weid}' AND to_days(now())-to_days(from_UNIXTIME(`dateline`,'%Y-%m-%d %H:%i:%S'))<=1");
         //总消费次数
         $consume_total_count = pdo_fetchcolumn("SELECT COUNT(*) FROM ".tablename('icard_money_log')." WHERE weid = '{$weid}'");
         //一个月内的消费数据

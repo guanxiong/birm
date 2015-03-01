@@ -60,7 +60,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,body strong,body em {font-weight
 textarea:focus,input:focus { border: 1px solid #71b643; }
 
 /*sprite图片合并*/
-.css_sprite01 { background-image:url(../img/css_sprite01.png)!important;  background-repeat: no-repeat!important; } 
+.css_sprite01 { background-image:url(../../19/img/css_sprite01.png)!important;  background-repeat: no-repeat!important; } 
 
 /**
  * = function 功能样式
@@ -311,7 +311,7 @@ textarea:focus,input:focus { border: 1px solid #71b643; }
  * -m-page
  */
 .m-page { position: absolute; top:0; left: 0; width:100%; z-index: 9; background: #ddd; }
-.m-page .page-con { position: relative; width: 100%; height: 101%; overflow: hidden; }
+.m-page .page-con { position: relative; width: 100%; height: 100%; overflow: hidden; }
 .m-page.active { z-index:40; }
 .m-page.fixed { position: fixed; }
 .m-page.move {
@@ -482,6 +482,7 @@ textarea:focus,input:focus { border: 1px solid #71b643; }
 .video-title h3 { height: 48px; overflow: hidden; font-size: 48px; margin-bottom: 30px; line-height: 100%; }
 .video-title p { height: 30px; overflow: hidden; font-size: 30px; line-height: 150%; line-height: 100%; }
 .video-con { position: relative; width: 640px; height: 400px; background: #000; }
+.video-con video { position: absolute; top: 0; left: 0; z-index: 1; width: 100%; height: 100%; }
 .video-con .img { position: absolute; top: 0; left: 0; z-index: 10; width: 100%; height: 100%; }
 .video-con .img span { display: inline-block; position: absolute; top: 50%; left: 50%; width:77px; height: 77px; margin-left: -38px; margin-top: -38px; z-index: 11; background-position: 0 -233px; 
 	-webkit-animation: video_btnPlay 1s linear infinite; opacity: 1;

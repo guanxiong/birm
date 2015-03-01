@@ -3,7 +3,7 @@
 /**
  * 微商城模块微站定义
  *
- * @author WeNewstar Team
+ * @author WeEngine Team
  * @url
  */
 defined('IN_IA') or exit('Access Denied');

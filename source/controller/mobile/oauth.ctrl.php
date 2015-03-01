@@ -1,12 +1,14 @@
 <?php
 /**
- * [WNS] Copyright (c) 2013 BIRM.CO
- * $sn: origins/source/controller/mobile/oauth.ctrl.php : v 8c3eea27b11e : 2014/05/16 09:42:29 : veryinf $
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
+ * $sn: origins/source/controller/mobile/oauth.ctrl.php : v 69b7bd20a924 : 2014/12/26 10:05:07 : Gorden $
  */
 defined('IN_IA') or exit('Access Denied');
 
 $account = $_W['account'];
 $code = $_GPC['code'];
+$scope = $_GPC['scope'];
+
 if(!empty($code)) {
 	$url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={$account['key']}&secret={$account['secret']}&code={$code}&grant_type=authorization_code";
 	$ret = ihttp_get($url);

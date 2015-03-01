@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
 	<application setting="false">
-		<name><![CDATA[微新星微拍]]></name>
+		<name><![CDATA[微动力微拍]]></name>
 		<identifie><![CDATA[we7_photomaker]]></identifie>
 		<version><![CDATA[1.2]]></version>
 		<type><![CDATA[activity]]></type>
 		<ability><![CDATA[微拍]]></ability>
 		<description><![CDATA[微拍]]></description>
-		<author><![CDATA[微新星团队]]></author>
+		<author><![CDATA[微动力团队]]></author>
 		<url><![CDATA[]]></url>
 	</application>
 	<platform>

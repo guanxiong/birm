@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  * $sn: origins/source/class/yixin.account.class.php : v 45ae3bc23184 : 2014/06/26 03:37:43 : RenChao $
  */
 defined('IN_IA') or exit('Access Denied');

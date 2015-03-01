@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS]更多模块请浏览：BBS.birm.co
+ * [WDL]更多模块请浏览：BBS.b2ctui.com
  */
 defined('IN_IA') or exit('Access Denied');
 define(EARTH_RADIUS, 6371);//地球半径，平均半径为6371km
@@ -43,7 +43,7 @@ class BusinessModuleProcessor extends WeModuleProcessor {
 				if (!empty($temp)) {
 					$news[] = array(
 						'title' => $temp['title'] . '(距'.$temp['distance'].'米)',
-						'description' => cutstr(strip_tags($temp['content']), 300),
+						'description' => cutstr($temp['content'], 300),
 						'picurl' => $_W['attachurl'] . $temp['thumb'],
 						'url' => create_url('mobile/module/detail', array('name' => 'business', 'id' => $temp['id'], 'weid' => $_W['weid'])),
 					);

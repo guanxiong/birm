@@ -42,8 +42,8 @@ CREATE TABLE IF NOT EXISTS `ims_card_members` (
   `weid` int(10) unsigned NOT NULL,
   `from_user` varchar(50) NOT NULL DEFAULT '',
   `cardsn` varchar(20) NOT NULL DEFAULT '',
-  `credit1` int(10) unsigned NOT NULL DEFAULT '0',
-  `credit2` double unsigned NOT NULL DEFAULT '0',
+  `credit1` varchar(15) NOT NULL DEFAULT '0',
+  `credit2` varchar(15) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   `createtime` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
@@ -269,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `ims_news_reply` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ims_paylog` (
-  `plid` int(11) NOT NULL AUTO_INCREMENT,
+  `plid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(20) NOT NULL DEFAULT '',
   `weid` int(11) NOT NULL,
   `openid` varchar(40) NOT NULL DEFAULT '',
@@ -443,6 +443,7 @@ CREATE TABLE IF NOT EXISTS `ims_wechats` (
   `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '公众号类型，1微信，2易信',
   `uid` int(10) unsigned NOT NULL COMMENT '关联的用户',
   `token` varchar(32) NOT NULL COMMENT '随机生成密钥',
+  `EncodingAESKey` varchar(43) NOT NULL,
   `access_token` varchar(1000) NOT NULL DEFAULT '' COMMENT '存取凭证结构',
   `level` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '接口权限级别, 0 普通订阅号, 1 认证订阅号|普通服务号, 2认证服务号',
   `name` varchar(30) NOT NULL COMMENT '公众号名称',
@@ -471,6 +472,7 @@ CREATE TABLE IF NOT EXISTS `ims_wechats` (
   `menuset` text NOT NULL,
   `groups` varchar(2000) NOT NULL COMMENT '粉丝分组',
   `accountlink` varchar(500) DEFAULT NULL COMMENT '公众号引导关注',
+  `jsapi_ticket` varchar(1000) NOT NULL,
   PRIMARY KEY (`weid`),
   UNIQUE KEY `hash` (`hash`),
   KEY `idx_parentid` (`parentid`),
@@ -592,6 +594,17 @@ CREATE TABLE IF NOT EXISTS `ims_oerrorlog` (
   `createtime` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+ CREATE TABLE IF NOT EXISTS `ims_menu_event` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `keyword` varchar(30) NOT NULL,
+  `type` varchar(30) NOT NULL COMMENT '事件类型',
+  `picmd5` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`weid`),
+  KEY `picmd5` (`picmd5`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `ims_rule` (`id`, `weid`, `name`, `module`) VALUES(1, 1, '默认文字回复', 'basic');
 INSERT INTO `ims_rule` (`id`, `weid`, `name`, `module`) VALUES(2, 1, '默认图文回复', 'news');

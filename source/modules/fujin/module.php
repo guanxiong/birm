@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS]ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½BBS.birm.co
+ * [WDL]¸ü¶àÄ£¿éÇëä¯ÀÀ£ºBBS.b2ctui.com
  */
 defined('IN_IA') or exit('Access Denied');
 

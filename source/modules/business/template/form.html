@@ -1,0 +1,99 @@
+
+
+<div class="alert alert-block alert-new">
+<a class="close" data-dismiss="alert">×</a>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="reply_id" value="{$reply['id']}">
+  <h4 align=center>商家基本信息</h4>
+	<table class="tb">
+		<tr>
+			<th>商家名称</th>
+			<td><input type="text" name="userName" value="{$reply['userName']}" class="span3"></td>
+		</tr>
+		<tr>
+			<th>行业类别</th>
+			<td>
+				<select name='kid' class='span2'>
+				{loop $row $item} 
+				    {if $reply['kid'] == $item['id'] }
+	 					<option value='{$item['id']}' selected = 'selected'>{$item['kword']}</option>
+	 					{else}
+	 					<option value='{$item['id']}' >{$item['kword']}</option>
+ 					{/if}
+ 				{/loop}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>状态</th>
+			<td>
+				<label for="ipt_status" class="checkbox">
+					<input class="" name="status" value='1' id="ipt_status" type="checkbox" {if intval($reply['status'])==1}checked='checked'{/if}/>		
+					推荐
+				</label>
+				<span class="help-block">勾选推荐，该商家会显示在推荐类目下。</span>
+			</td>
+		</tr>
+        <tr>
+			<th>商家简介</th>
+			<td><textarea style="height:100px;" class="span7 richtext-clone" name="descripition" cols="70" rows='7' id="descripition">{$reply['descripition']}</textarea></td>
+		</tr>
+		<tr>
+			<th><label for="">商家照片</label></th>
+			<td>
+				<div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;">{if $reply['photo']}<img src="{$_W['attachurl']}{$reply['photo']}" width="200" />{/if}</div>
+					<div>
+						<span class="btn btn-file"><span class="fileupload-new">选择图片</span>
+						<span class="fileupload-exists">更改</span><input name="photo" type="file" /></span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+						{if $reply['photo']}<button type="submit" name="fileupload-delete" value="{$reply['photo']}" class="btn fileupload-new">删除</button>{/if}
+					</div>
+				</div>
+				<span class="help-block"></span>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">商家电话</label></th>
+			<td><input type="text" id="telephone" name="telephone" value="{$reply['telephone']}"  class="span5" /></td>
+		</tr>
+		<tr>
+			<th><label for="">地区</label></th>
+			<td>
+				<select name="resideprovince" id="sel-provance" onChange="selectCity();bmap.searchMapByPCD();" style="width:100px;">
+					<option value="{$reply['province']}" selected="true">省/直辖市</option>
+				</select>
+				<select name="residecity" id="sel-city" onChange="selectcounty();bmap.searchMapByPCD();" style="width:100px;">
+					<option value="" selected="true">请选择</option>
+				</select>
+				<select name="residedist" id="sel-area" onchange="bmap.searchMapByPCD();" style="width:100px;">
+					<option value="" selected="true">请选择</option>
+				</select>
+				
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">详细地址</label></th>
+			<td><div class="input-append"><input type="text" id="address" name="address" value="{$reply['address']}"  class="span5" /></div></td>
+		</tr>
+		<tr>
+			<th>来源</th>
+			<td>
+				<input type="text" class="span7" id="url" name="url" value="{$reply['url']}">		
+				<span class="help-block">此项为空则表示使用默认链接，设置来源后打开该条商家将跳转到指定链接（注：外部链接需加http://）</span>
+
+			</td>
+		</tr>
+	</table>
+</form>
+</div>
+<!-- 城市三级联动调用 -->
+<script type="text/javascript" src="./resource/script/cascade.js">
+</script>
+<script type="text/javascript">
+//开启地区三级联动
+cascdeInit('{$reply['province']}','{$reply['city']}','{$reply['dist']}'); 
+//文本编辑器调用
+kindeditor($('#descripition'));
+
+</script> 

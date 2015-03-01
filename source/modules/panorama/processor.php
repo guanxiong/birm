@@ -12,7 +12,7 @@ class PanoramaModuleProcessor extends WeModuleProcessor {
 	public function respond() {
 		global $_W,$_GPC;
 		$content = $this->message['content'];
-		//这里定义此模块进行消息处理时的具体过程, 请查看微新星文档来编写你的代码
+		//这里定义此模块进行消息处理时的具体过程, 请查看微动力文档来编写你的代码
 		// $sql = "select * from".tablename('rule_keyword')."where content=".$content;
 		// $item = pdo_fetch($sql);
 		// if (empty($item)) {

@@ -15,7 +15,7 @@
 				{loop $list $row}
 					<tr>
 						<td>{if $_W['isfounder']}{$row['name']}{else}{$_W['account']['name']}{/if}</td>
-						<td>{if $row['t1.type']==1}自备家伙{else}借用微新星高级接口{/if}</td>
+						<td>{if $row['t1.type']==1}自备家伙{else}借用微动力高级接口{/if}</td>
 						<td>{php echo date('Y-m-d H:i:s',$row['createtime'])}</td>
 						<td>{$row['sum']}</td>
 					</tr>

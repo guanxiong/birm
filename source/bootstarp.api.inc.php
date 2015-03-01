@@ -1,7 +1,7 @@
 <?php 
 /**
- * 微新星接口初始化文件
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * 微动力接口初始化文件
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 include_once model('rule');
 

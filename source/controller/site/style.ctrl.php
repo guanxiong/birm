@@ -1,7 +1,7 @@
 <?php 
 /**
  * 微站风格管理
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 defined('IN_IA') or exit('Access Denied');
 $templateid = intval($_GPC['templateid']);

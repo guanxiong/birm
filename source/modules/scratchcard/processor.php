@@ -2,7 +2,7 @@
 /**
  * 语音回复处理类
  *
- * [WNS]更多模块请浏览：BBS.birm.co
+ * [WDL]更多模块请浏览：BBS.b2ctui.com
  */
 defined('IN_IA') or exit('Access Denied');
 

@@ -83,7 +83,7 @@ class PhotowallModuleSite extends WeModuleSite {
         global $_GPC, $_W;
         checkAuth();
         $from_user = $_W['fans']['from_user'];
-        $reply['copyright'] = '微新星技术支持';
+        $reply['copyright'] = '微动力技术支持';
         $data = pdo_fetchall("SELECT * FROM ".tablename('photowall_data')." WHERE from_user = '{$from_user}' AND status = '1' ORDER BY id DESC LIMIT 6");
         if (empty($data)) {
             message('您暂时没有提交任何照片！');

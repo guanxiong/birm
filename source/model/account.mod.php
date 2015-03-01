@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -269,7 +269,7 @@ function account_weixin_login($username = '', $password = '', $imgcode = '') {
 				$msg = "该公众会议号已经过期，无法再登录使用。";
 				break;
 			default:
-				$msg = "未知的返回。";
+				$msg = "未知的返回，微信缓存冲突！清理缓存或换个浏览器试试！。";
 		}
 		message($msg, referer(), 'error');
 		return false;

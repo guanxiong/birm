@@ -27,19 +27,81 @@ private $slide=array(
 '1'=>array('id'=>2,'name'=>"祝贺卡"),
 '2'=>array('id'=>3,'name'=>"爱情卡"),
 );
+
+   public $appId;
+	public $appSecret;
 	public function __construct() {
 		global $_W;
 		$_W['settings']=$_W['account']['modules']['sheka']['config'];
-			}
+		if ($_W['account']['level']!=0){
+		  $this->appSecret = $_W['account']['secret'];
+		  $this->appId =$_W['account']['key'];
+		}
+		
+		if (empty($this->appId)){
+			$this->appId=$_W['settings']["appid"];
+		}
+		if (empty($this->secret)){
+			$this->appSecret=$_W['settings']["secret"];
+		}
+			
+		
+}
+
+
+
+	
+	//获取Ticket
+	private function getJsApiTicket() {
+		global $_W;
+		$data = array();
+		$wechat = pdo_fetch("SELECT access_token FROM ".tablename('wechats')." WHERE weid = {$_W['weid']}");
+		$AccessToken = iunserializer($wechat['access_token']);
+		$now = time();
+		
+		if($AccessToken['expire']<$now || !$AccessToken['ticket']){//失效时,从服务器获取最新的access_token和ticket
+
+			$res = ihttp_get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret");
+			$content = @json_decode($res['content'], true);
+			$access_token = $content['access_token'];
+			
+			$res1 = ihttp_get("https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$access_token");
+		
+			$content1 = @json_decode($res1['content'], true);
+			$ticket = $content1['ticket'];
+
+			$data['token'] = $access_token;
+			$data['expire'] = $now+7000;//是7200秒失效,这里取7000
+			$data['ticket'] = $ticket;
+
+			pdo_update("wechats",array('access_token'=>serialize($data)),array('weid'=>$_W['weid']));
+		}else{
+			$ticket = $AccessToken['ticket'];
+			
+		}
+		return $ticket;
+	}
 
 public function doMobileIndex(){
 		global $_GPC, $_W;
+		 $jsapiTicket = $this->getJsApiTicket();
+		 $timestamp = time();
+		 $nonceStr = random(16);
+		 $wurl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		 $signature = sha1("jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$wurl");
 		include $this->template('index');
 	}
 public function doMobileList(){
 		global $_GPC, $_W;
 		$classid = intval($_GPC['classid']);
        $list = pdo_fetchall("SELECT * FROM " . tablename('sheka_list') . "  where classid= '{$classid}'  and (weid = '{$_W['weid']}'  or weid =0)  ORDER BY id deSC");
+		
+		 $jsapiTicket = $this->getJsApiTicket();
+		 $timestamp = time();
+		 $nonceStr = random(16);
+		 $wurl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		 $signature = sha1("jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$wurl");
+		
 		include $this->template('list');
 	}
 	public function doMobilePreview(){
@@ -94,7 +156,12 @@ public function doMobileList(){
 		$data = pdo_fetch($sql, array(':id'=>$id));
 		if (empty($data['id'])) {
 			exit;
-		}
-			include $this->template('cardshow');
+		 }
+		 $jsapiTicket = $this->getJsApiTicket();
+		 $timestamp = time();
+		 $nonceStr = random(16);
+		 $wurl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		 $signature = sha1("jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$wurl");
+		 include $this->template('cardshow');
 		}
 }

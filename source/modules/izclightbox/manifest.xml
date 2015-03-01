@@ -3,11 +3,11 @@
 	<application setting="false">
 		<name><![CDATA[微场景高级版]]></name>
 		<identifie><![CDATA[izclightbox]]></identifie>
-		<version><![CDATA[0.3]]></version>
-		<type><![CDATA[business]]></type>
+		<version><![CDATA[0.4]]></version>
+		<type><![CDATA[wdlshow]]></type>
 		<ability><![CDATA[商业信息华丽展示]]></ability>
 		<description><![CDATA[商业信息华丽展示]]></description>
-		<author><![CDATA[微新星科技]]></author>
+		<author><![CDATA[微动力科技]]></author>
 		<url><![CDATA[]]></url>
 	</application>
 	<platform>

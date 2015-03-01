@@ -1,7 +1,7 @@
 <?php
 /**
  * 用于调试时模拟用户发送信息到微号公众号 PGCAO改良 www.kl3w.com
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 define('IN_SYS', true);
 require 'source/bootstrap.inc.php';

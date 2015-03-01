@@ -1,7 +1,7 @@
 <?php
 /**
- * 微新星版本公告信息
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * 微动力版本公告信息
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 defined('IN_IA') or exit('Access Denied');
 

@@ -162,7 +162,7 @@ if($action == 'db') {
 					die('<script type="text/javascript">alert("连接不到服务器, 请稍后重试！");history.back();</script>');
 				}
 				if($ins['error']) {
-					die('<script type="text/javascript">alert("链接微新星更新服务器失败, 错误为: ' . $ins['error'] . '！");history.back();</script>');
+					die('<script type="text/javascript">alert("链接微动力更新服务器失败, 错误为: ' . $ins['error'] . '！");history.back();</script>');
 				}
 				if(empty($ins['scripts']) || !is_array($ins['scripts'])) {
 					die('<script type="text/javascript">alert("此服务器未授权, 不能安装！");history.back();</script>');
@@ -208,7 +208,7 @@ if($action == 'db') {
 /**
  * 版本号
  * 
- * [WNS]Copyright (c) 2013 BIRM.CO
+ * [WDL]Copyright (c) 2013 B2CTUI.COM
  */
 
 defined('IN_IA') or exit('Access Denied');
@@ -227,7 +227,7 @@ VER;
 					}
 					runquery($sql);
 				} else {
-					die('<script type="text/javascript">alert("你正在使用本地安装, 但未下载完整安装包, 请从微新星官网下载完整安装包后重试.");history.back();</script>');
+					die('<script type="text/javascript">alert("你正在使用本地安装, 但未下载完整安装包, 请从微动力官网下载完整安装包后重试.");history.back();</script>');
 				}
 			}
 
@@ -342,7 +342,6 @@ defined('IN_IA') or exit('Access Denied');
 \$config['setting']['founder'] = '1';
 \$config['setting']['development'] = 0;
 \$config['setting']['referrer'] = 0;
-\$confi['setting']['copyright']['sitename'] = "微新星";
 
 
 // --------------------------  CONFIG UPLOAD  --------------------------- //
@@ -513,7 +512,7 @@ function tpl_frame() {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=7" />
-<title>微新星 - 微信公众平台自助开源引擎</title>
+<title>微动力 - 微信公众平台自助开源引擎</title>
 <link href="./resource/weidongli/css/install.css" rel="stylesheet" type="text/css" />
 
 </head>
@@ -524,8 +523,8 @@ function tpl_frame() {
 		</div>
 		<div class="top-link">
 			<ul>
-				<li><a href="http://www.birm.co" target="_blank">微新星官方网站</a></li>
-				<li><a href="http://bbs.birm.co" target="_blank">微新星官方论坛</a></li>
+				<li><a href="http://www.b2ctui.com" target="_blank">微动力官方网站</a></li>
+				<li><a href="http://bbs.b2ctui.com" target="_blank">微动力官方论坛</a></li>
 			</ul>
 		</div>
 	</div>
@@ -562,24 +561,24 @@ function tpl_install_license() {
 	echo <<<EOF
 		<div class="pr-title"><h3>阅读许可协议</h3></div>
 		<div class="pr-agreement">
-				<p>版权所有 (c)2013，微新星团队保留所有权利。 </p>
-				<p>感谢您选择微新星 - 微信公众平台自助开源引擎（以下简称WQ，WQ基于 PHP + MySQL的技术开发，全部源码开放。</p>
+				<p>版权所有 (c)2013，微动力团队保留所有权利。 </p>
+				<p>感谢您选择微动力 - 微信公众平台自助开源引擎（以下简称WQ，WQ基于 PHP + MySQL的技术开发，全部源码开放。</p>
 				<p>为了使你正确并合法的使用本软件，请你在使用前务必阅读清楚下面的协议条款：</p>
 			<strong>一、本授权协议适用且仅适用于WQ任何版本，WQ官方对本授权协议的最终解释权。</strong>
 			<strong>二、协议许可的权利 </strong>
 				<p>1、您可以在完全遵守本最终用户授权协议的基础上，将本软件应用于非商业用途，而不必支付软件版权授权费用。 </p>
-				<p>2、您可以在协议规定的约束和限制范围内修改 微新星 源代码或界面风格以适应您的网站要求。 </p>
+				<p>2、您可以在协议规定的约束和限制范围内修改 微动力 源代码或界面风格以适应您的网站要求。 </p>
 				<p>3、您拥有使用本软件构建的网站全部内容所有权，并独立承担与这些内容的相关法律义务。 </p>
 				<p>4、获得商业授权之后，您可以将本软件应用于商业用途，同时依据所购买的授权类型中确定的技术支持内容，自购买时刻起，在技术支持期限内拥有通过指定的方式获得指定范围内的技术支持服务。商业授权用户享有反映和提出意见的权力，相关意见将被作为首要考虑，但没有一定被采纳的承诺或保证。 </p>
 			<strong>二、协议规定的约束和限制 </strong>
 				<p>1、未获商业授权之前，不得将本软件用于商业用途（包括但不限于企业网站、经营性网站、以营利为目的或实现盈利的网站）。</p>
 				<p>2、未经官方许可，不得对本软件或与之关联的商业授权进行出租、出售、抵押或发放子许可证。</p></p>
-				<p>4、未经官方许可，禁止在 微新星 的整体或任何部分基础上以发展任何派生版本、修改版本或第三方版本用于重新分发。</p>
+				<p>4、未经官方许可，禁止在 微动力 的整体或任何部分基础上以发展任何派生版本、修改版本或第三方版本用于重新分发。</p>
 				<p>5、如果您未能遵守本协议的条款，您的授权将被终止，所被许可的权利将被收回，并承担相应法律责任。 </p>
 			<strong>三、有限担保和免责声明 </strong>
 				<p>1、本软件及所附带的文件是作为不提供任何明确的或隐含的赔偿或担保的形式提供的。 </p>
 				<p>2、用户出于自愿而使用本软件，您必须了解使用本软件的风险，在尚未购买产品技术服务之前，我们不承诺对免费用户提供任何形式的技术支持、使用担保，也不承担任何因使用本软件而产生问题的相关责任。 </p>
-				<p>3、电子文本形式的授权协议如同双方书面签署的协议一样，具有完全的和等同的法律效力。您一旦开始确认本协议并安装微新星，即被视为完全理解并接受本协议的各项条款，在享有上述条款授予的权力的同时，受到相关的约束和限制。协议许可范围以外的行为，将直接违反本授权协议并构成侵权，我们有权随时终止授权，责令停止损害，并保留追究相关责任的权力。</p>
+				<p>3、电子文本形式的授权协议如同双方书面签署的协议一样，具有完全的和等同的法律效力。您一旦开始确认本协议并安装微动力，即被视为完全理解并接受本协议的各项条款，在享有上述条款授予的权力的同时，受到相关的约束和限制。协议许可范围以外的行为，将直接违反本授权协议并构成侵权，我们有权随时终止授权，责令停止损害，并保留追究相关责任的权力。</p>
 				<p>4、如果本软件带有其它软件的整合API示范例子包，这些文件版权不属于本软件官方，并且这些文件是没经过授权发布的，请参考相关软件的使用许可合法的使用。</p>
 		</div>
 		<div class="btn-box">
@@ -697,7 +696,7 @@ echo <<<EOF
 	{$chk_dir_html}
 </table>
 <div class="notice">
-	系统要求微新星整个安装目录必须可写, 才能使用微新星所有功能.
+	系统要求微动力整个安装目录必须可写, 才能使用微动力所有功能.
 </div>
 <div class="btn-box">
 	<form action="" method="post">
@@ -746,7 +745,7 @@ EOF;
 			<td>
 				
 				<input name="install" type="radio" value="local" {$insTypes['local']}{$disabled}/> 离线安装 
-				<p><small>在线安装能够直接安装最新版本微新星系统, 如果在线安装困难, 请下载离线安装包后使用本地安装.</small></p>
+				<p><small>在线安装能够直接安装最新版本微动力系统, 如果在线安装困难, 请下载离线安装包后使用本地安装.</small></p>
 				<p><small>离线安装包可能不是最新程序, 如果你不确定, 可以现在访问官网重新下载一份最新的.^_^</small></p>
 			</td>
 		</tr>
@@ -870,7 +869,7 @@ function tpl_install_finish() {
 	echo <<<EOF
 <div class="pr-title"><h3>安装完成</h3></div>
 <div class="install-msg">
-	恭喜您!已成功安装“微新星 - 微信公众平台自助开源引擎”系统，您现在可以:
+	恭喜您!已成功安装“微动力 - 微信公众平台自助开源引擎”系统，您现在可以:
 	<br />
 </div>
 <div class="over-link fs-14">

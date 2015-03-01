@@ -1,7 +1,7 @@
 <?php 
 /**
  * 云服务诊断
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 
 if(empty($_W['isfounder'])) {

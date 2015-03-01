@@ -52,4 +52,93 @@
    
             </div>
         </div>
+        
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js?v=20150120"></script>
+<script>
+
+
+     
+  wx.config({
+       appId: '{php echo $_W["account"]["key"]}',
+      //appId: '',
+      timestamp: {php echo $timestamp},
+      nonceStr: '{php echo $nonceStr}',
+      signature: '{php echo $signature}',
+    jsApiList: [
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+        'hideMenuItems',
+        'showMenuItems',
+        'hideAllNonBaseMenuItem',
+        'showAllNonBaseMenuItem',
+        'translateVoice',
+        'startRecord',
+        'stopRecord',
+        'onRecordEnd',
+        'playVoice',
+        'pauseVoice',
+        'stopVoice',
+        'uploadVoice',
+        'downloadVoice',
+        'chooseImage',
+        'previewImage',
+        'uploadImage',
+        'downloadImage',
+        'getNetworkType',
+        'openLocation',
+        'getLocation',
+        'hideOptionMenu',
+        'showOptionMenu',
+        'closeWindow',
+        'scanQRCode',
+        'chooseWXPay',
+        'openProductSpecificView',
+        'addCard',
+        'chooseCard',
+        'openCard'
+      ]
+  });
+  
+  
+  
+  
+
+	wx.ready(function () {
+ 
+	  var shareData = {
+		title: '{$_W['settings']['name']}',
+		desc: '{$_W['settings']['name']}',
+	
+		link: document.URL,
+		imgUrl: '{$_W['attachurl']}{$_W['settings']['logo']}',
+		trigger: function (res) {
+			//alert('用户点击分享到QQ');
+		},
+		complete: function (res) {
+			//alert(JSON.stringify(res));
+		},
+		success: function (res) {
+			//alert('已分享');
+			//window.location.href="http://mp.weixin.qq.com/s?__biz=MzA5MzIyMTI4MA==&mid=202471938&idx=1&sn=982b4f87b888e5cedf98e27130cd76d5#rd";
+		//  window.location.href="http://baidu.com#rd";
+		},
+		cancel: function (res) {
+		// window.location.href="http://baidu.com#rd";
+		//	window.location.href="http://mp.weixin.qq.com/s?__biz=MzA4MjgzNTYyOA==&mid=209085884&idx=1&sn=bda1d2243ae2a314225df9137efba465#rd";
+		},
+		fail: function (res) {
+		}
+	  };
+	  
+	  
+	  wx.onMenuShareAppMessage(shareData);
+	  wx.onMenuShareTimeline(shareData);
+	  wx.onMenuShareQQ(shareData);
+	  wx.onMenuShareWeibo(shareData);
+	});
+</script>
+        
 {template 'foot'}

@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS]Copyright (c) 2013 BIRM.CO
+ * [WDL]Copyright (c) 2013 B2CTUI.COM
  */
 defined('IN_IA') or exit('Access Denied');
 include model('setting');
@@ -343,7 +343,7 @@ defined('IN_IA') or exit('Access Denied');
 class {$name}ModuleProcessor extends WeModuleProcessor {
 	public function respond() {
 		\$content = \$this->message['content'];
-		//这里定义此模块进行消息处理时的具体过程, 请查看微新星文档来编写你的代码
+		//这里定义此模块进行消息处理时的具体过程, 请查看微动力文档来编写你的代码
 	}
 }
 TPL;
@@ -368,7 +368,7 @@ defined('IN_IA') or exit('Access Denied');
 class {$name}ModuleReceiver extends WeModuleReceiver {
 	public function receive() {
 		\$type = \$this->message['type'];
-		//这里定义此模块进行消息订阅时的, 消息到达以后的具体处理过程, 请查看微新星文档来编写你的代码
+		//这里定义此模块进行消息订阅时的, 消息到达以后的具体处理过程, 请查看微动力文档来编写你的代码
 	}
 }
 TPL;

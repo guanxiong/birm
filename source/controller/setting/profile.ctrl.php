@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -22,6 +22,9 @@ if ($do == 'profile') {
 		$password_old = member_hash($_GPC['pw'], $user['salt']);
 		if ($user['password'] != $password_old) {
 			message('原密码错误，请重新填写！', create_url('setting/profile'), 'error');
+		}
+		if (!strcmp($_GPC['name'],'test')) {
+			message('这个是测试账号，不允许修改！', create_url('setting/profile'), 'error');
 		}
 		$result = '';
 		$members = array(

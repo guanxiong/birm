@@ -16,7 +16,35 @@
                 <td>
                     {php echo tpl_form_field_image('logo', $settings['logo']);}
                 </td>
-            </tr>				
+            </tr>
+            
+              <tr>
+                <th>关注链接</th>
+                <td>
+                    <input type="text" name="url" class="span5" value="{$settings['url']}" />
+                </td>
+            </tr>
+            
+            
+          
+            
+        
+		　　<tr>
+				<th>AppId：</th>
+				<td><input type="text" name="appid" class="span3" value="{$settings['appid']}" /></td>
+		　　</tr>
+			<tr>
+				<th>AppSecret：</th>
+				<td><input type="text" name="secret" class="span5" value="{$settings['secret']}" /></td>
+			</tr>			
+			<tr>
+				<th colspan="2">
+					<div class="help-block">非认证号需要借用认证号的appid和appsecret，并且在账号设置里面设置JS接口安全域名，
+					这样自定义分享标题和图片才会出现。</div>
+				</th>
+			</tr>
+            
+            				
             <tr>
                 <th></th>
                 <td>

@@ -4,7 +4,7 @@
 
  * 微相册模块定义
 
- * @author WeNewstar Team
+ * @author WeEngine Team
 
  * @url http://www.we7.cc
 

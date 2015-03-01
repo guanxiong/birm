@@ -1,7 +1,7 @@
 <?php 
 /**
  * BAE相关设置选项
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 include model('setting');
 if (checksubmit('bae_delete_update') || checksubmit('bae_delete_install')) {

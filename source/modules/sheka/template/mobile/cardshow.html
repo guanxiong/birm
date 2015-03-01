@@ -7,55 +7,11 @@
 <link href="./source/modules/sheka/static/cardshow.css" rel="stylesheet" type="text/css" />
 <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
 <script src="./source/modules/sheka/static/cardshow.js"></script>
-<script>
-var params = {"cardFrom":"{$cardFrom}","cardTo":"{$cardTo}","cardBody":"{$cardBody}"};    
-(function(){
-    var onBridgeReady =  function () {
-    var appId='',
-    <?php 
-    
-    		$thumb = explode('/',$data['thumb']);	
-				$newname=$thumb[0].'/'.$thumb[1].'/'.$thumb[2].'/'.$thumb[3].'/s_'.$thumb[4];
-    ?>
-    
-    imgUrl = '{$_W['attachurl']}{$newname}',
-    link = location.href,
-    title = '{$cardFrom}发来了贺卡',
-    desc = '{$cardBody}';
-    fakeid = '';            
-    WeixinJSBridge.on('menu:share:appmessage', function(argv){
-        WeixinJSBridge.invoke('sendAppMessage',{
-            "appid"      : appId,
-            "img_url"    : imgUrl, 
-            "img_width"  : "200",
-            "img_height" : "200",
-            "link"       : link, 
-            "desc"       : desc,  
-            "title"      : title,   
-            }, function(res) { 
-            });
-    });
 
-    WeixinJSBridge.on('menu:share:timeline', function(argv){
-        WeixinJSBridge.invoke('shareTimeline',{
-            "img_url"    : imgUrl,
-            "img_width"  : "200",
-            "img_height" : "200",
-            "link"       : link,
-            "desc"       : desc,
-            "title"      : title,
-            }, function(res) { 
-            });
-    });
-}
-if(document.addEventListener){
-    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-} else if(document.attachEvent){
-    document.attachEvent('WeixinJSBridgeReady'   , onBridgeReady);
-    document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);
-}
-})();
+<script>
+var params = {"cardFrom":"{$cardFrom}","cardTo":"{$cardTo}","cardBody":"{$cardBody}"};  
 </script>
+
 </head>
 <body>
 <div id="loading" style="width:13%;height:12%;margin: 40% 45%; position: absolute; background: url('./source/modules/sheka/images/loading.gif') no-repeat center;background-size: 100%;">
@@ -87,6 +43,102 @@ if(document.addEventListener){
 <div class="left"><button class="button2" onclick="location.href='{php echo $this->createMobileUrl('sendform', array('id' => $data['id']))}'">挑选更多贺卡</button></div>
 </div>
 </div>
+
+
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js?v=20150120"></script>
+<script>
+
+
+<?php 
+	    
+		$thumb = explode('/',$data['thumb']);	
+		$newname=$thumb[0].'/'.$thumb[1].'/'.$thumb[2].'/'.$thumb[3];
+		$newname=$data['thumb'];
+?>
+
+     
+  wx.config({
+       appId: '{php echo $_W["account"]["key"]}',
+      //appId: '',
+      timestamp: {php echo $timestamp},
+      nonceStr: '{php echo $nonceStr}',
+      signature: '{php echo $signature}',
+    jsApiList: [
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+        'hideMenuItems',
+        'showMenuItems',
+        'hideAllNonBaseMenuItem',
+        'showAllNonBaseMenuItem',
+        'translateVoice',
+        'startRecord',
+        'stopRecord',
+        'onRecordEnd',
+        'playVoice',
+        'pauseVoice',
+        'stopVoice',
+        'uploadVoice',
+        'downloadVoice',
+        'chooseImage',
+        'previewImage',
+        'uploadImage',
+        'downloadImage',
+        'getNetworkType',
+        'openLocation',
+        'getLocation',
+        'hideOptionMenu',
+        'showOptionMenu',
+        'closeWindow',
+        'scanQRCode',
+        'chooseWXPay',
+        'openProductSpecificView',
+        'addCard',
+        'chooseCard',
+        'openCard'
+      ]
+  });
+  
+  
+  
+  
+
+	wx.ready(function () {
+ 
+	  var shareData = {
+		title: '{$cardFrom}发来了贺卡',
+		desc: '{php echo  str_replace(PHP_EOL, '', $cardBody);}',
+	
+		link: document.URL,
+		imgUrl: '{$_W['attachurl']}{$newname}',
+		trigger: function (res) {
+			//alert('用户点击分享到QQ');
+		},
+		complete: function (res) {
+			//alert(JSON.stringify(res));
+		},
+		success: function (res) {
+			//alert('已分享');
+			//window.location.href="http://mp.weixin.qq.com/s?__biz=MzA5MzIyMTI4MA==&mid=202471938&idx=1&sn=982b4f87b888e5cedf98e27130cd76d5#rd";
+		//  window.location.href="http://baidu.com#rd";
+		},
+		cancel: function (res) {
+		// window.location.href="http://baidu.com#rd";
+		//	window.location.href="http://mp.weixin.qq.com/s?__biz=MzA4MjgzNTYyOA==&mid=209085884&idx=1&sn=bda1d2243ae2a314225df9137efba465#rd";
+		},
+		fail: function (res) {
+		}
+	  };
+	  
+	  
+	  wx.onMenuShareAppMessage(shareData);
+	  wx.onMenuShareTimeline(shareData);
+	  wx.onMenuShareQQ(shareData);
+	  wx.onMenuShareWeibo(shareData);
+	});
+</script>
 
 </body>
 </html>

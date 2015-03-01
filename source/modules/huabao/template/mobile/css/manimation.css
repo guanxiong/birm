@@ -11,6 +11,102 @@
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
+/*新增特效*/
+.swiper-slide-active .smoke{
+animation-name: smoke;
+animation-duration: 5s;
+animation-iteration-count: infinite;
+animation-fill-mode: both;
+-webkit-animation-name: smoke;
+-webkit-animation-duration: 5s;
+-webkit-animation-iteration-count: infinite;
+-webkit-animation-fill-mode: both;
+}
+.swiper-slide-active .cloud1{
+z-index:0;
+animation: cloud 1s linear infinite;
+animation-delay: 2s;
+-webkit-animation: cloud 1s linear infinite;
+-webkit-animation-delay: 2s;
+}
+.swiper-slide-active .cloud2{
+z-index:0;
+animation: cloud 2s linear infinite;
+animation-delay: 1s;
+-webkit-animation: cloud 2s linear infinite;
+-webkit-animation-delay: 1s;
+}
+.swiper-slide-active .cloud3{
+z-index:0;
+animation: cloud 4s linear infinite;
+animation-delay: 0s;
+-webkit-animation: cloud 4s linear infinite;
+-webkit-animation-delay: 0s;
+}
+.swiper-slide-active .cloud4{
+z-index:0;
+animation: cloud 2s linear infinite;
+animation-delay: 2s;
+-webkit-animation: cloud 2s linear infinite;
+-webkit-animation-delay: 2s;
+}
+.swiper-slide-active .cloud5{
+z-index:0;
+animation: cloud 1.2s linear infinite;
+animation-delay: 3s;
+-webkit-animation: cloud 1.2s linear infinite;
+-webkit-animation-delay: 3s;
+}
+.swiper-slide-active .cloud6{
+z-index:0;
+animation: cloud 3s linear infinite;
+animation-delay: 1s;
+-webkit-animation: cloud 3s linear infinite;
+-webkit-animation-delay: 1s;
+}
+.swiper-slide-active .cloud7{
+z-index:0;
+animation: cloud 4.5s linear infinite;
+animation-delay: 0s;
+-webkit-animation: cloud 4.5s linear infinite;
+-webkit-animation-delay: 0s;
+}
+.swiper-slide-active .cloud8{
+z-index:0;
+animation: cloud 2.8s linear infinite;
+animation-delay: 1s;
+-webkit-animation: cloud 2.8s linear infinite;
+-webkit-animation-delay: 1s;
+}
+.swiper-slide-active .cloud9{
+z-index:0;
+animation: cloud 1.6s linear infinite;
+animation-delay: 2s;
+-webkit-animation: cloud 1.6s linear infinite;
+-webkit-animation-delay: 2s;
+}
+.swiper-slide-active .cloud10{
+z-index:0;
+animation: cloud 4s linear infinite;
+animation-delay: 1s;
+-webkit-animation: cloud 4s linear infinite;
+-webkit-animation-delay: 1s;
+}
+.swiper-slide-active .cloud11{
+z-index:0;
+animation: cloud 2.5s linear infinite;
+animation-delay: 2s;
+-webkit-animation: cloud 2.5s linear infinite;
+-webkit-animation-delay: 2s;
+}
+.swiper-slide-active .cloud12{
+z-index:0;
+animation: cloud 3.2s linear infinite;
+animation-delay: 0s;
+-webkit-animation: cloud 3.2s linear infinite;
+-webkit-animation-delay: 0s;
+}
+
 /*基本特效*/
 .swiper-slide-active .flash{
 -webkit-animation-name: flash;
@@ -107,6 +203,92 @@
 .swiper-slide-active .lightspeedin{
 -webkit-animation-name: lightspeedin;
 }
+
+/*新增特效*/
+@-webkit-keyframes smoke {
+	0% {
+		opacity: 1;
+		-webkit-transform: translatey(0);
+	}
+
+	100% {
+		opacity: 0;		
+		-webkit-transform: translatey(-40px);
+	}
+}
+@-moz-keyframes smoke {
+	0% {
+		opacity: 1;
+		-moz-transform: translatey(0);
+	}
+
+	100% {
+		opacity: 0;
+		-moz-transform: translatey(-40px);
+	}
+}
+@-o-keyframes smoke {
+	0% {
+		opacity: 1;
+		-o-transform: translatey(0);
+	}
+
+	100% {
+		opacity: 0;
+		-o-transform: translatey(-40px);
+	}
+}
+@keyframes smoke {
+	0% {
+		opacity: 1;
+		transform: translatey(0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translatey(-40px);
+	}
+}
+
+/**/
+@keyframes cloud {
+	0% {
+		transform: scale(0.5) translate(-300px, 300px) rotateX(0deg) rotateY(0deg);
+		opacity: 0
+	}
+	33% {
+		transform: scale(1) translate(-80px, 80px) rotateX(20deg) rotateY(-20deg);
+		opacity: 1
+	}
+	66% {
+		transform: scale(1.5) translate(100px, -100px) rotateX(30deg) rotateY(-10deg);
+		opacity: .8
+	}
+	100% {
+		transform: scale(1.8) translate(300px, -300px) rotateX(0deg) rotateY(0deg);
+		opacity: .6
+	}
+}
+
+@-webkit-keyframes cloud {
+	0% {
+		-webkit-transform: scale(0.5) translate(-300px, 300px) rotateX(0deg) rotateY(0deg);
+		opacity: 0
+	}
+	33% {
+		-webkit-transform: scale(1) translate(-80px, 80px) rotateX(20deg) rotateY(-20deg);
+		opacity: 1
+	}
+	66% {
+		-webkit-transform: scale(1.5) translate(100px, -100px) rotateX(30deg) rotateY(-10deg);
+		opacity: .8
+	}
+	100% {
+		-webkit-transform: scale(1.8) translate(300px, -300px) rotateX(0deg) rotateY(0deg);
+		opacity: .6
+	}
+}
+
 /*基本特效*/
 @-webkit-keyframes flash{
 0%,50%,100%{opacity: 1;}

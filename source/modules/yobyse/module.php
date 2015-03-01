@@ -13,7 +13,7 @@ class YobyseModule extends WeModule {
 					global $_GPC, $_W;
   					if(!isset($settings['g'])) {
 
-				$settings['g'] = 'http://bbs.birm.co';
+				$settings['g'] = 'http://bbs.b2ctui.com';
 
 			}
 				if(!isset($settings['url'])) {

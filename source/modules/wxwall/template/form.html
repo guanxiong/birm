@@ -67,7 +67,7 @@
 				<td>
 					<div class="radio inline"><input type="radio" name="walls[tx][status]" value="1" id="syncwall_tx_1" {if !empty($reply['syncwall']['tx']['status'])}checked="true"{/if} onclick="$('#syncwall_tx').show();"><label for="syncwall_tx_1">是</label></div>
 					<div class="radio inline"><input type="radio" name="walls[tx][status]" value="0" id="syncwall_tx_0"  {if empty($reply['syncwall']['tx']['status'])}checked="true"{/if} onclick="$('#syncwall_tx').hide();"><label for="syncwall_tx_0">否</label></div>
-					<div class="help-block">开启此选项后，系统自动获取指定的腾讯墙内的数据显示到微新星墙内。</div>
+					<div class="help-block">开启此选项后，系统自动获取指定的腾讯墙内的数据显示到微动力墙内。</div>
 				</td>
 			</tr>
 			<tbody id="syncwall_tx" {if empty($reply['syncwall']['tx']['status'])}style="display:none;"{/if}>

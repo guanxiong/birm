@@ -7,7 +7,7 @@ class BrokeModuleSite extends WeModuleSite
 	{
 		global $_W,$_GPC;
 		$modulename='broke';
-		$authortxt=" 请联系作者重新授权</br> 微新星  http://bbs.birm.co";
+		$authortxt=" 请联系作者重新授权</br> 微动力  http://bbs.b2ctui.com";
 		//$key= $modulename.'CarloSs4O00o';
 		$key= $modulename.'1234';
 		$sendapi='http://wx.weixiamen1.cn/';

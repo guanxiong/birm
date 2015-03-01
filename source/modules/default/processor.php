@@ -3,7 +3,7 @@
  * 默认回复处理类
  * 优先回复“优先级”大于默认级别的模块。
  * 
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 defined('IN_IA') or exit('Access Denied');
 

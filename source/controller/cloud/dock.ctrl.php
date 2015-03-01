@@ -1,7 +1,7 @@
 <?php 
 /**
  * 自动更新相关功能
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 require model('cloud');
 if(!empty($_W['setting']['site']['key']) && !empty($_W['setting']['site']['token'])) {

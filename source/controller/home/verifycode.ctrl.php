@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 defined('IN_IA') or exit('Access Denied');
 checklogin();
@@ -38,7 +38,7 @@ if($post['type'] == 'email') {
 	$result = ihttp_email($post['no'], "{$_W['account']['name']}身份确认验证码", $content);
 } else {
 	require model('cloud');
-	$content = "您的短信验证码为: {$code} 您正在使用{$_W['account']['name']}相关功能, 需要你进行身份确认.【微新星】";
+	$content = "您的短信验证码为: {$code} 您正在使用{$_W['account']['name']}相关功能, 需要你进行身份确认.【微动力】";
 	$result = cloud_sms_send($post['no'], $content);
 }
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -48,7 +48,7 @@ function setting_upgrade_version($family, $version, $release) {
 /**
  * 版本号
  * 
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 
 defined('IN_IA') or exit('Access Denied');

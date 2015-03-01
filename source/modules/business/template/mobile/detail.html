@@ -21,7 +21,9 @@
 							<span class="accordion-toggle"><span>商家名称</span>{$item['title']}</span>
 						</div>
 					</div>
-					<div class="accordion-group">
+
+					<div class="accordion-group" style="display:none">
+
 						<div class="accordion-heading">
 							<span class="accordion-toggle"><span>行业</span>{$item['industry1']} > {$item['industry2']}</span>
 						</div>
@@ -41,12 +43,18 @@
 				<div class="accordion business">
 					<div class="accordion-group">
 						<div class="accordion-heading">
-							<span class="accordion-toggle"><span>电话</span><a href="tel:{$item['phone']}">{$item['phone']}</a></span>
+
+							<span class="accordion-toggle"><span>联系电话</span><a href="tel:{$item['phone']}">{$item['phone']}</a></span>
+
 						</div>
 					</div>
-					<div class="accordion-group">
+
+					<div class="accordion-group" style="display:none">
+
 						<div class="accordion-heading">
-							<span class="accordion-toggle"><span>QQ</span><a href="http://wpa.qq.com/msgrd?v=3&uin={$item['qq']}&site=qq&menu=yes">{$item['qq']}</a></span>
+
+							<span class="accordion-toggle"><span>QQ</span>{$item['qq']}</span>
+
 						</div>
 					</div>
 					<div class="accordion-group">

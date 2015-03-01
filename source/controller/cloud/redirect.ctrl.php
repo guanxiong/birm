@@ -1,7 +1,7 @@
 <?php 
 /**
  * 云服务相关操作
- * [WNS] Copyright (c) 2013 BIRM.CO
+ * [WDL] Copyright (c) 2013 B2CTUI.COM
  */
 
 if(empty($_W['isfounder'])) {
@@ -27,7 +27,7 @@ if($do == 'profile') {
 
 if($do == 'promotion') {
 	if(empty($_W['setting']['site']['key']) || empty($_W['setting']['site']['token'])) {
-		message("你的程序需要在微新星云服务平台注册你的站点资料, 来接入云平台服务后才能使用推广功能.", create_url('cloud/profile'), 'error');
+		message("你的程序需要在微动力云服务平台注册你的站点资料, 来接入云平台服务后才能使用推广功能.", create_url('cloud/profile'), 'error');
 	}
 	$auth['forward'] = 'promotion';
 	header('location: ' . __to($auth));

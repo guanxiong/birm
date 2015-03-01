@@ -2,8 +2,8 @@
 /**
  * 多客服转接模块定义
  *
- * @author WeNewstar Team
- * @url http://bbs.birm.co
+ * @author WeEngine Team
+ * @url http://bbs.b2ctui.com
  */
 defined('IN_IA') or exit('Access Denied');
 

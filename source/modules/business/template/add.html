@@ -1,0 +1,109 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+	<li{if $op == 'display'} class="active"{/if}><a href="{php echo $this->createWebUrl('add',array('op' => 'display'))}">行业管理</a></li>
+	<li{if $op == 'post'} class="active"{/if}><a href="{php echo $this->createWebUrl('add',array('op' => 'post') )}">添加行业</a></li>
+</ul>
+{if $op == 'post'}
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}">
+		<h4>行业关键字</h4>
+		<table class="tb">
+			<tr>
+				<th>排序</th>
+				<td><input type="text" name="displayorder" value="{$item['displayorder']}" class="span1" /></td>
+			</tr>
+
+			<tr>
+				<th>标题</th>
+				<td><input type="text" name="kword" value="{$item['kword']}" class="span5" placeHolder="请输入行业类目"/></td>
+			</tr>
+			<tr>
+				<th>状态</th>
+				<td>
+					<label for="ipt_status" class="checkbox">
+						<input class="" name="status" value='1' id="ipt_status" type="checkbox" {if intval($item['status'])==1}checked='checked'{/if}/>推荐
+					</label>
+					 <span class="help-block">勾选推荐，该类目放的是推荐商家,在商家页面同时勾选推荐即可生效。</span>
+				</td>
+			</tr>
+			<tr>
+ 		<th>
+ 			<label for="">上传图标</label>
+ 		</th>
+ 		<td>
+ 			<div class="fileupload fileupload-new" data-provides="fileupload">
+ 				<div class="fileupload-preview thumbnail" style="width: 50px; height: 50px;">
+ 					{if $item['fileicon']}
+ 					<input  type="hidden" name="fileicon-old" value="{$item['fileicon']}"  />
+ 					<img src="{$_W['attachurl']}{$item['fileicon']}" width="50" /> 
+ 					{/if}
+ 				</div>
+ 				<div>
+ 					<span class="btn btn-file">
+ 						<span class="fileupload-new">选择图片</span>
+ 						<span class="fileupload-exists">更改</span>
+ 						<input name="fileicon" type="file" /> 
+ 					</span>
+ 					{if $item['fileicon']}
+ 					<button type="submit" name="fileupload-delete" value="{$item['fileicon']}" class="btn fileupload-new">删除</button>
+ 					{/if}
+ 					<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+ 				</div>
+ 			</div>
+
+ 		</td>
+ 	</tr>
+			<tr>
+				<th></th>
+				<td>
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+{elseif $op == 'display'}
+<form action="" method="post" onsubmit="">
+<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:40px;" class="row-first">选择</th>
+					<th width="150px;">排序</th>
+					<th class="span1">关键词</th>
+<!-- 					<th class="span2">引用地址</th> -->
+					<th class="span2">操作</th>
+				</tr>
+			</thead>
+			
+				{loop $row $item}
+				<tr>
+					<td class="row-first"><input type="checkbox" name="select[]" value="{$item['id']}" /></td>
+					<td><input type="text" class="span1" name="displayorder[{$item['id']}]" value="{$item['displayorder']}" /></td>
+					<td class="span1"><p>{$item['kword']}</p>
+		            <p></td>
+					<td class="span1"><a  href="
+					{php echo $this->createWebUrl('add',array('op' => 'post','id' => $item['id']))}">编辑</a>
+					</td>
+				</tr>
+				{/loop}		
+		</table>
+		<table class="table">
+			<tr>
+				<td style="width:40px;" class="row-first">
+					<input type="checkbox" onclick="selectall(this, 'select');" />		
+				</td>
+				<td class="span1">
+					<input type="submit" name="update" value="提交" class="btn btn-primary" />
+					<input type="submit" name="delete" value="删除" class="btn btn-primary" />		
+					<input type="hidden" name="token" value="{$_W['token']}" />		
+
+				</td>
+			</tr>
+		</table>
+		{$pager}
+	</div>
+</form>
+{/if}
+{template 'common/footer'}
