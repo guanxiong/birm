@@ -149,6 +149,18 @@ class forwardModuleSite extends WeModuleSite {
 		$sql_info = "SELECT * FROM " . tablename('fans') . " WHERE `weid`=".$weid." and `from_user`=:from_user LIMIT 1";
         $info = pdo_fetch($sql_info, array(':from_user' => $fromuser));
 		$credit1=$info['credit1'];
+        //shen: 增加对icard积分的支持
+        $sql_info = "SELECT * FROM " . tablename('icard_card') . " WHERE `weid`=".$weid." and `from_user`=:from_user LIMIT 1";
+        $icard = pdo_fetch($sql_info, array(':from_user' => $fromuser));
+        if(!empty($icard)){
+            $balance_score = $icard['balance_score'];
+            $total_score = $icard['total_score'];
+        }else{
+            $balance_score = $icard['balance_score'];
+            $total_score = $icard['total_score'];
+        }
+        //shen: end
+
 		$shareip = getip();
 		$now = time();		
 		if(!empty($rid)) {
@@ -159,6 +171,12 @@ class forwardModuleSite extends WeModuleSite {
 		  $insertcredit = array(
 				   'credit1' => $credit+$credit1
 		    );
+            if(!empty($icard)){
+                $insert_icard = array(
+                    'balance_score' => $balance_score+$credit,
+                    'total_score' => $total_score+$credit
+                );
+            }
 		  //积分记录相关
 		  $creditlog = array(
 			'weid'       => $weid,
@@ -214,6 +232,9 @@ class forwardModuleSite extends WeModuleSite {
 							pdo_update($this->table_data,$updatedata,array('id' => $sid));
 							pdo_update($this->table_list,$updatelist,array('id' => $shareid));
 							pdo_update('fans', $insertcredit, array('from_user' => $fromuser));
+                            if(!empty($icard)){
+                                pdo_update('icard_card', $insert_icard, array('from_user' => $fromuser));
+                            }
 							pdo_insert($this->table_log, $creditlog);//积分记录
 						}
 					}else{
@@ -232,6 +253,9 @@ class forwardModuleSite extends WeModuleSite {
 							pdo_insert($this->table_data, $insertdata);
 							pdo_update($this->table_list,$updatelist,array('id' => $shareid));							
 					        pdo_update('fans', $insertcredit, array('from_user' => $fromuser));
+                            if(!empty($icard)){
+                                pdo_update('icard_card', $insert_icard, array('from_user' => $fromuser));
+                            }
 							pdo_insert($this->table_log, $creditlog);//积分记录
 					}
 				}else{					
@@ -258,6 +282,9 @@ class forwardModuleSite extends WeModuleSite {
 					pdo_insert($this->table_data, $insertdata);
 					//添加分享记录
 					pdo_update('fans', $insertcredit, array('from_user' => $fromuser));
+                    if(!empty($icard)){
+                        pdo_update('icard_card', $insert_icard, array('from_user' => $fromuser));
+                    }
                     pdo_insert($this->table_log, $creditlog);//积分记录
 				}			
           header("location:$jumpurl");
