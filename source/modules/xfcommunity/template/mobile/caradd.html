@@ -1,0 +1,173 @@
+{template 'header'}
+<form action="" method="post"    enctype="multipart/form-data" onsubmit="return checkInfo(this);" >
+
+	<div id="layout">
+		<div id="left">&nbsp;&nbsp;<a href="javascript:history.go(-1);" style='color:#fff;line-height:40px;text-decoration:none;'><i class="icon-chevron-left"></i>&nbsp;返回</a></div>
+		<div id="center">
+			{if $op =='passenger'}找乘客{else}找车主{/if}
+		</div>
+		<div id='right'>
+			<input name="submit" type="submit" value="发布" style="border:0;background:#368FF4;color:white;line-height:40px;"  />
+		</div>
+	</div>
+		
+	<table class="table table-condensed" style='font-size:11px;color:#6fa8dc'>
+		<input type='hidden' name='id' value='{$good['id']}'>
+		<input type="hidden" name="token" value="{$_W['token']}" /> 
+		{if $op == 'passenger'}
+		<tr>
+			<td cols='2'>
+				<textarea name='content' style='height:100px;border:0;' placeHolder="确认内容" ></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputStartposition">起点</label></td>
+			<td>
+				<input  type='text' name="start_position" id="inputStartposition" style="border:0;" value="" placeHolder="出发地点" />
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputEndposition">终点</label></td>
+			<td>
+				<input  type='text' name="end_position"  style="border:0;" id="inputEndposition" value="" placeHolder="目的地" />
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputStarttime">出发时间</label></td>
+			<td>
+				<script type="text/javascript">  
+                  document.write("<select  name='startMinute' style='border:0;width:45px;'>");
+                   for(var i=0;i<24;i++){
+                   		if( '{$reply['startMinute']}' == i)
+                   		{
+                   			sel = "selected = 'selected' ";
+                   		}
+                   		else{
+                   			sel = " ";
+                   		}
+                   		document.write("<option value= "+i+" "+sel+"/>"+i+'点'+"</option>");
+                    }
+                  document.write("</select>"); 
+               </script>
+               <script type="text/javascript">  
+                  document.write("<select  name='startSeconds' style='border:0;width:45px'>");
+                   for(var i=0;i<59;i++){
+                   		if( '{$reply['startSeconds']}' == i)
+                   		{
+                   			sel = "selected = 'selected' ";
+                   		}
+                   		else{
+                   			sel = " ";
+                   		}
+                   		document.write("<option value= "+i+" "+sel+"/>"+i+'分'+"</option>");
+                    }
+                  document.write("</select>"); 
+               </script>
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputLicensenumber">车牌号(选填)</label></td>
+			<td>
+				<input  type='text' name="license_number"  id='inputLicensenumber' style="border:0;" value="" placeHolder="输入车牌号" />
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputCarmodel">车型(选填)</label></td>
+			<td>
+				<input  type='text' name="car_model"  id='inputCarmodel' style="border:0;" value="" placeHolder="车辆型号" />
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputCarbrand">车品牌(选填)</label></td>
+			<td>
+				<input  type='text' name="car_brand"  id='inputCarbrand' style="border:0;" value="" placeHolder="车辆品牌" />
+			</td>
+		</tr>
+	{elseif $op =='carowner'}
+		<tr>
+			<td cols='2'>
+				<textarea name='content' style='height:100px;border:0;' placeHolder="确认内容" ></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputStartposition">起点</label></td>
+			<td>
+				<input  type='text' name="start_position" id="inputStartposition" style="border:0;" value="" placeHolder="出发地点" />
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputEndposition">终点</label></td>
+			<td>
+				<input  type='text' name="end_position"  style="border:0;" id="inputEndposition" value="" placeHolder="目的地" />
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputStarttime">出发时间</label></td>
+			<td>
+				<script type="text/javascript">  
+                  document.write("<select  name='startMinute' style='border:0;width:45px;'>");
+                   for(var i=0;i<24;i++){
+                   		if( '{$reply['startMinute']}' == i)
+                   		{
+                   			sel = "selected = 'selected' ";
+                   		}
+                   		else{
+                   			sel = " ";
+                   		}
+                   		document.write("<option value= "+i+" "+sel+"/>"+i+'点'+"</option>");
+                    }
+                  document.write("</select>"); 
+               </script>
+               <script type="text/javascript">  
+                  document.write("<select  name='startSeconds' style='border:0;width:45px'>");
+                   for(var i=0;i<59;i++){
+                   		if( '{$reply['startSeconds']}' == i)
+                   		{
+                   			sel = "selected = 'selected' ";
+                   		}
+                   		else{
+                   			sel = " ";
+                   		}
+                   		document.write("<option value= "+i+" "+sel+"/>"+i+'分'+"</option>");
+                    }
+                  document.write("</select>"); 
+               </script>
+			</td>
+		</tr>
+	{/if}
+	</table>
+	
+</form>
+<br>
+<br>
+<br>
+<script type="text/javascript">
+<!--
+	function checkInfo(form) {
+		
+		
+		
+		if (!form['content'].value) {
+			alert('请输入内容。');
+			return false;
+		}
+		if (!form['start_position'].value) {
+			alert('请输入起点。');
+			return false;
+		}
+		if (!form['end_position'].value ) {
+			alert('请输入终点。');
+			return false;
+		}
+		if (!form['zprice'].value) {
+			alert(' 请输入转让价格。');
+			return false;
+		}
+		if (!form['starttime'].value) {
+			alert(' 请选择出发时间。');
+			return false;
+		}
+	}
+//-->
+</script>
+{template 'footer'}

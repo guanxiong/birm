@@ -1,0 +1,113 @@
+{template 'common/header'}
+{template 'common'}
+<script type="text/javascript">
+    function validate() {
+        if ($(':radio[name="upload"]:checked').val() == '1') {
+            if ($.trim($(':text[name="access_key"]').val()) == '') {
+                Tip.focus(':text[name="access_key"]', '请输入七牛 ACCESS_KEY !',  'right');
+                return false;
+            }
+            if ($.trim($(':text[name="secret_key"]').val()) == '') {
+                    Tip.focus(':text[name="secret_key"]', '请输入七牛 SECRET_KEY !', 'right');
+                return false;
+            }
+            if ($.trim($(':text[name="bucket"]').val()) == '') {
+                     Tip.focus(':text[name="bucket"]', '请输入七牛 BUCKET !',  'right');
+                return false;
+            }
+        }
+        return true;
+    }
+    $(function() {
+        $(':radio[name="upload"]').click(function() {
+            if (this.checked) {
+                if ($(this).val() == '0') {
+                    $('.qianniu-params').hide();
+                } else {
+                    
+                    $('.qianniu-params').show();
+                }
+            }
+        });
+    });
+</script>
+<ul class="nav nav-tabs">
+ <li><a href="{php echo $this->createWebUrl('single')}">单品获取</a></li>
+ <li><a href="{php echo $this->createWebUrl('many')}">批量获取</a></li>
+ <li><a href="{php echo $this->createWebUrl('whole')}">整店获取</a></li>
+ <li ><a href="{php echo $this->createWebUrl('goods')}">宝贝仓库</a></li>
+ <li class="active"><a href="{php echo $this->createWebUrl('sysset')}">基本设置</a></li>
+</ul>
+<div class="main">
+ 
+    <form id="setform" action="" method="post" class="form-horizontal form" onsubmit="return validate();">
+        <input type='hidden' name='act' value='entry' />
+        <input type='hidden' name='eid' value='{$_GPC['eid']}' />
+      {if $config['allow']==1}
+        <h4>存储设置</h4>
+        <table class="tb">
+            <tr>
+                <th>图片存储</th>
+                <td>
+                    <label class="radio">
+                        <input type="radio" name="upload" value="0" {if empty($set['upload'])} checked="checked"{/if}/>
+                               本地存储
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="upload" value="1" {if $set['upload']} checked="checked"{/if}/>
+                               七牛存储
+                    </label>
+                    <span class="help-block">宝贝图片存储方式</span>
+                </td>
+            </tr>
+            <tbody class="qianniu-params{if empty($set['upload'])} hide{/if}">
+                <tr>
+                    <th><label for="">ACCESS_KEY</label></th>
+                    <td>
+                        <input type="text" name="access_key" class="span6" value="{$set['access_key']}" autocomplete="off">
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="">SECRET_KEY</label></th>
+                    <td>
+                        <input type="text" name="secret_key" class="span6" value="{$set['secret_key']}" autocomplete="off"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="">BUCKET</label></th>
+                    <td>
+                        <input type="text" name="bucket" class="span6" value="{$set['bucket']}" autocomplete="off"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {/if}
+          <h4>宝贝设置</h4>
+        <table class="tb">
+            <tr>
+                <th>宝贝同步</th>
+                <td>
+                    <label class="radio inline">
+                        <input type="radio" name="auto" value="0" {if empty($set['auto'])} checked="checked"{/if}/>
+                               不同步
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" name="auto" value="1" {if $set['auto']} checked="checked"{/if}/>
+                               同步
+                    </label>
+                    <span class="help-block">从淘宝或天猫获取商品后是否直接存入商城(存入后状态为下架),可在获取时设置</span>
+                </td>
+            </tr>
+        </table>
+        <table class="tb">
+            <tr>
+                <th></th>
+                <td>
+                    <input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{template 'common/footer'}

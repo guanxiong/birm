@@ -1,0 +1,68 @@
+{template 'header'}
+<form class="form-horizontal img-rounded" role="form" method="post">
+	<table class="table table-condensed" style='font-size:11px;color:#6fa8dc'>
+		<input type="hidden" name="id" value="{$member['id']}" />
+		<tr>
+			<td><label class="control-label" for="inputStartposition">我的身份</label></td>
+			<td>
+				<select name="type" id="type" class="form-control">
+				{loop $types $key $type}
+				<option value="{$key}" {if $member['type']==$key}selected{/if}>{$type}</option>
+				{/loop}
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputStartposition">姓名</label></td>
+			<td>
+				<input type="text" id="realname" name="realname" value="{$member['realname']}" class="form-control" />
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputStartposition">手机</label></td>
+			<td>
+				<input type="text" id="mobile" name="mobile" value="{$member['mobile']}" class="form-control" />
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputStartposition">小区</label></td>
+			<td>
+				<select name="regionid" id="regionid" class="form-control" disabled>
+				{loop $regions $region}
+				<option value="{$region['id']}" {if $member['regionid']==$region['id'] }selected{/if}>{$region['title']}</option>
+				{/loop}
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputStartposition">地址</label></td>
+			<td>
+				<input type="text" id="address" name="address" value="{$member['address']}" class="form-control" />
+			</td>
+		</tr>
+		<tr>
+			<td><label class="control-label" for="inputStartposition">备注</label></td>
+			<td>
+				<textarea id="remark" name="remark" class="form-control" rows="3">{$member['remark']}</textarea>
+			</td>
+		</tr>
+	</table>
+
+	<div class="form-group" style='margin-bottom:50px;'>
+		<div  style="float:left;margin-left:80px;">
+			<button type="submit" name="submit" value="yes" class="btn btn-primary">修改登记信息</button>
+			<input type="hidden" name="token" value="{$_W['token']}" />	
+			</form>
+		</div>
+		<div  style="float:left;margin-left:10px;">
+			<form action="" method="post">
+				<input type="submit" name="submit" class="btn btn-danger" value="解绑"  onclick="if(confirm('您确定要解除绑定吗?')){document.getElementById('op').value='unbind';return true;}else{return false;}" />	
+				<input type="hidden" name="token" value="{$_W['token']}" />	
+				<input type="hidden" name="regionid" value="{$member['regionid']}" />	
+				<input type="hidden" name="op" value="unbind" />	
+			</form>
+		</div>
+	</div>
+
+
+{template 'footer'}

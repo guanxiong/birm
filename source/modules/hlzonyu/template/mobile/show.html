@@ -1,0 +1,469 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>{$reply['title']}</title>
+<meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="./source/modules/hlzonyu/template/images/wx.js"></script>
+<link href="./source/modules/hlzonyu/template/images/activity-style.css?ver=55e4" rel="stylesheet" type="text/css">
+<link href="./source/modules/hlzonyu/template/images/style.css?ver=55e4" rel="stylesheet" type="text/css">
+<link href="./resource/style/font-awesome.min.css" type="text/css" rel="stylesheet" />	
+<script src="./source/modules/hlzonyu/template/images/alert.js?ver=55ed44"></script>
+
+<style>
+.startbargin{
+	background: #fc7d11;
+	width:60%;
+	margin:0 auto;
+	text-align:center;
+	padding-top:5px;
+	padding-bottom:5px;
+	font-size:16px;
+	color:#fff;
+	-webkit-box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.2);
+	box-shadow: 5px 1px 1px 0 rgba(0,0,0,0.2);
+	margin-top:5px;
+
+}
+.startbargin a{
+	color:#fff;
+}
+.dstitle{
+	border-radius: 5px 5px 0px 0px;
+	background: #eba703;
+	width:100px;
+	margin-left:12%;
+	
+	
+}
+
+.dstitle p{
+	margin-top:15px;
+	margin-left:12px;
+	font-size:16px;
+	color:#fff;
+}
+.turnBox{width:90%;
+	margin:0 auto;
+}
+.progress-bar {
+	margin: 0 auto;
+	position: absolute;
+	bottom:0;
+	left:0;
+	height: 20px;
+	padding: 0;
+	width: 100%;
+	z-index:100;
+	-moz-border-radius: 15px 15px 15px 15px;
+	-webkit-border-radius: 15px 15px 15px 15px;
+	border-radius: 15px 15px 15px 15px;
+ 
+}
+.progress-bar span {
+	display: inline-block;
+	width: 100%;
+	background-color: #ff9b08;
+	-moz-border-radius: 15px 15px 15px 15px;
+	-webkit-border-radius: 15px 15px 15px 15px;
+	border-radius: 15px 15px 15px 15px;
+	-webkit-transition: height .4s ease-in-out;
+	-moz-transition: height .4s ease-in-out;
+	-ms-transition: height .4s ease-in-out;
+	-o-transition: height .4s ease-in-out;
+	transition: height .4s ease-in-out;
+}
+ 	
+.toupiao span {
+	background-color: #ff9b08;
+}	
+.stripes span {
+	-webkit-background-size: 30px 30px;
+	-moz-background-size: 30px 30px;
+	background-size: 30px 30px;
+	background-image: -webkit-gradient(linear, left top, right bottom, color-stop(.25, rgba(255, 255, 255, .15)), color-stop(.25, transparent), color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .15)), color-stop(.75, rgba(255, 255, 255, .15)), color-stop(.75, transparent), to(transparent));
+	 background-image: -webkit-linear-gradient(-135deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+		background-image: -moz-linear-gradient(-135deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+		 background-image: -ms-linear-gradient(-135deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+		  background-image: -o-linear-gradient(-135deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+		     background-image: linear-gradient(-135deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+	-webkit-animation: animate-stripes 3s linear infinite;
+	-moz-animation: animate-stripes 3s linear infinite;
+}
+ @-webkit-keyframes animate-stripes {
+	0% {background-position: 0 0;}
+	100% {background-position: 60px 0;}
+}
+ @-moz-keyframes animate-stripes {
+	0% {background-position: 0 0;}
+	100% {background-position: 60px 0;}
+}
+  
+
+
+span[data-value] {
+	position: absolute;
+	left: 0px;
+}
+span[data-value]:after {
+	
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin-right: 0;
+	color: #FFF;
+	font-size: 14px;
+	
+	text-align: center;
+}
+.title{ color: #fff;
+	margin: 0 auto;
+	padding: 0;
+	text-align: center;
+	position: absolute;
+	bottom: 3px;
+	white-space: nowrap;
+	right:40%;
+	z-index:1000;
+	}
+
+.toupiao{ 
+	background:#ca0f44;
+	width:50%;
+	display: -moz-box; 
+	display: -webkit-box; 
+	display: box; 
+	-webkit-box-pack:center;
+	-webkit-box-align:center;
+	height: 20px;
+	position: absolute;
+	top:60px; 
+	left:25%;	
+   -moz-border-radius: 15px 15px 15px 15px;
+	-webkit-border-radius: 15px 15px 15px 15px;
+	border-radius: 15px 15px 15px 15px;
+	
+	border:2px solid #ca0f44;
+	
+}
+.zlist-box{width:100%;height:70px; margin-top:5px;border-bottom: none 0;}
+.zlist-box ul{padding: 8px 0; }
+.zlist-box:last-child{ border-bottom: none 0;}
+
+.zlist-box ul li{ float: left;margin-top: 0px;color:#fff;}
+.zlist-box ul li:nth-child(1){ width: 20%; }
+.zlist-box ul li:nth-child(2){ width: 65%; }
+.zlist-box ul li:nth-child(3){ width: 15%;}
+
+.turnBox {
+	background: #f39800;
+	
+	
+}
+.avatar {
+MARGIN: 0px 10px 5px 0px;
+}
+.rankNUM{color:#f00;font-size:16px;}
+.zi img{margin-top:-7px;}
+</style>
+</head>
+<body {if !empty($cfg['bglist'])} style="background:url({$_W['attachurl']}{$cfg['bglist']}) repeat center; "{else} style="background:url(./source/modules/hlzonyu/template/images/bg.jpg) repeat center;" {/if}>
+<div class="zi" >{if !empty($cfg['ranklist'])} <img src="{$_W['attachurl']}{$cfg['ranklist']}" style="margin-top:0;"> {else} <img src="./source/modules/hlzonyu/template/images/i1.jpg?ver=233" style="margin-top:0;">{/if}
+</div>
+	<ul class="tab" style="margin-top:10px;margin-bottom:20px;">
+		<li style="width:50%; "><a href="{php echo $this->createMobileUrl('index',array('rid' => $reply['rid']));}" style="color:#ed6d00">活动首页</a></li>
+		
+		<li style="width:50%;background-color:#ed6d00;" ><a href="{php echo $this->createMobileUrl('mybargin');}" style="color:#FFF">我的亲友团</a></li> 
+		
+		
+	</ul>
+	<div class="zi" >
+	<img src="{$imgurl}"></div>
+	
+	
+	<div style="position:relative;top:-8px">
+		<img src="./source/modules/hlzonyu/template/images/showbg.gif?ver=23" width="100%">
+				
+		<div style="position:absolute;width:100%;top:-10px;right:10px;">
+			
+				<div style="position:absolute;width:90%;top:15px;right:10px;text-align:center;font-size:14px;color:#fff">
+					{if $ztotal==0}还没有人来帮忙砍价哦!
+					
+					{else}已有{$utotal}位好友为您砍价
+						<span class="rankNUM">{$ztotal}</span> 元！
+					{/if}
+				</div>	
+				
+					
+			
+			{if $orderlist}
+			<div style="position:absolute;width:90%;top:65px;right:10px;text-align:center;font-size:14px;color:#fff;">
+					尊敬的：{$profile['realname']}<br />您已经用 <span style="font-size:18px;">{$orderlist['price']}</span> 买下 {$orderlist['goodsname']}, <br />订单号: [ {$orderlist['ordersn']} ]
+			</div>			
+				{else}
+			
+			<div style="position:absolute;width:100%;top:90px;right:0;">
+				
+				
+				
+				
+					{if $statzonyutitle==''}
+						{if $weiguanzhu==''}
+						<div class="startbargin b1"  >
+									
+									{if $profile_s==1}
+										邀请好友来帮砍
+
+									{else}
+										请先注册
+									{/if}
+								
+					
+						</div>
+						{/if}
+				
+			
+				{if $zhongjiang_s==1}
+				<div class="startbargin b2" style=""><a href="{php echo $this->createMobileUrl('confirm',array('rid'=>$rid));}">现在购买</a></div>
+				{else}
+			
+				<div class="startbargin b2" style=""><a href="javascript:alert('您砍价还没有达到可以购买的金额,赶快邀请好友帮你砍价吧！')">现在购买</a></div>
+				
+						{/if}	
+						
+				<!--<div class="rankMe2">{$zhongjiang}</div>-->
+				
+				{else}
+		<div class="nmdz">
+		    <div id="zshutext"><span id="zshu">{$statzonyutitle}</span></div>
+		</div>
+			</div>
+				{/if}	
+			{/if}
+		</div>
+		
+	</div>
+	
+	
+	
+	<!--div class="wx boxs">
+			<div class="b" style="margin-left:20px;margin-right:20px; margin-top:-30px; line-height: 20px;text-align: -webkit-match-parent;">
+				<ul>
+					{$reply['description']},你想要的:
+					<p>友尽与否，在此一戳啊！马上喊人来吧!</p>
+				</ul>
+			</div>
+	</div-->
+       
+		
+	{if $statzonyutitle==''}
+       	
+		{if $profile_s==0}
+			{if $weiguanzhu!=''}
+			<div class="wx boxs">
+				<div class="b" style="line-height: 24px;text-align: -webkit-match-parent;">
+					<ul>
+						<p>{$weiguanzhu}</p>
+					</ul>
+				</div>
+			</div>
+			   
+			{else}
+			<div class="turnBox rule reg">
+				<div class="content">
+				
+					<div id="txt">亲！请提交您的姓名或昵称以及手机号码便于中奖后联系到您</div>
+					<form id="form1" action="javascript:;" method="post">
+						<p><input type="hidden" name="rid" value="{$rid}">
+							<input name="realname"  class="px" type="text" placeholder="请输入您的真实姓名" value="{$profile['realname']}">
+						</p>
+						<p>
+							<input name="mobile"  class="px" type="tel" placeholder="请输入您的手机号码" value="{$profile['mobile']}">
+						</p>
+						<a href="javascript:submit1();" class="txtbtn">注册转发</a> 
+					</form>
+				
+				</div>            
+			</div>
+			{/if}
+		{/if}
+	
+	{/if} 
+<div class="zi" style="margin-top:0px;"><img src="./source/modules/hlzonyu/template/images/gjlb.png?ver=233" width="100%"></div>
+
+<div class="turnBox rank" style="margin-top:-5px;margin-left:11%;width:80.5%;border-radius: 0;">
+	
+   
+	<div class="rankList" style="padding-top:10px;border-radius: 0;">
+	
+		{if $ztotal==0}<span style="color:#fff">还没有人来帮砍价</span><br><br>{else}
+			{loop $list $row}
+			<div  class="zlist-box">
+				<ul>
+					<li><img src="{php echo $row['avatar'] = empty($row['avatar']) ? './source/modules/hlzonyu/template/images/wuavtar.gif' : $row['avatar'];}" class="avatar"></li>
+					<li>&nbsp;<span style="font-weight:bold;color:#333;">{$row['realname']}</span><br>
+						<span style="font-size:12px;">{$row['content']}</span>
+					</li>
+					<li style="color:#FFF;font-weight:bold;">-{$row['viewnum']}元</li>
+				<ul>
+			</div>
+			
+			
+			{/loop}
+			
+		{/if}
+	</div>
+</div>
+		
+		
+	
+		
+		
+
+
+<div id="mcover" onClick="document.getElementById('mcover').style.display='';"><img src="./source/modules/hlzonyu/template/images/121.png"></div>
+<!---
+{if empty($footer_off)}<div id="footer" style="color:#fff;">&copy;{$_W['account']['name']}&nbsp;&nbsp;{$_W['setting']['copyright']['statcode']}</div>{/if}
+-->
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	
+	
+	$(".b1").click(function(){
+		var states = "{$profile_s}";
+		if(states=="0"){
+			$(".window").slideDown(500);
+		}else{
+			document.getElementById('mcover').style.display='block';
+		}
+	});
+	$(".close").click(function(){	
+		$(".window").slideUp(500);
+	});
+	
+})
+
+function submit1(){
+	          
+	        	var form1 = document.getElementById("form1");	        	
+	        	var realname = form1.realname.value;				
+	        	var mobile = form1.mobile.value;
+				var rid = form1.rid.value;	
+	        	if(realname.length == 0){
+	        		alert("请输入您的真实姓名");
+	        		return;
+	        	}				
+	        	if(mobile.length == 0){
+	        		alert("请输入正确的手机号码！");
+	        		return;
+	        	}
+				if(!mobile.match(/^1\d{10}$/g)){
+	        		alert("请输入正确的手机号码！");
+	        		return;
+	        	}				
+	        	$.post('{$regurl}',{mobile:mobile,realname:realname,rid:rid},function(m){
+	        			alert(m);
+	        			location.reload(true);
+	        			form1.reset();
+						$("#overlay_ul").removeClass("on");
+	        	},"html");	
+				
+}
+WeixinApi.ready(function(Api) {
+        Api.showOptionMenu();
+        var wxData = {
+            "appId": "{$_W['account']['key']}",
+			"imgUrl": "{$imgurl}",
+			"link" : "{$staturl}",
+			"desc" : '{$reply['description']}',
+            "title" : '{$reply['sharetitle']}'
+        };
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享被用户自动取消
+            cancel : function(resp) {
+                alert("分享后叫朋友来砍价哦");
+            },
+            // 分享失败了
+            fail : function(resp) {
+                alert("分享失败，可能是网络问题，一会儿再试试？");
+            },
+            // 分享成功
+            confirm : function(resp) {
+                $.getJSON("{php echo $this->createMobileUrl('share')}", {rid: "{$reply['rid']}",fromuser:'{$fromuser}'},function(s){
+					alert(s.message.message);
+					//alert('ok');
+				});
+                
+            },
+        };
+        Api.shareToFriend(wxData,wxCallbacks);
+        Api.shareToTimeline(wxData,wxCallbacks);
+        Api.shareToWeibo(wxData,wxCallbacks);
+    });
+
+
+function showTab(o, tab, count) {
+    o.className = "current";
+    var j;
+    var id;
+    var e;
+    for (var i = 1; i <= count; i++) {
+        id = tab + i;
+        j = document.getElementById(id);
+        e = document.getElementById(tab + "Cont" + i);
+        if (id != o.id) {
+            j.className = "";
+            e.style.display = "none";
+        } else {
+            e.style.display = "block";
+        }
+    }
+}
+
+var sign = {
+		'add' : function(rid) {
+			var $this = this;
+			$this.do(rid, 'add');
+		},
+		'do' : function(rid, operation) {
+			if (!rid) {
+				alert('系统出错！');
+				return;
+			}
+			$.getJSON('{php echo $this->createMobileUrl('Sign');}', {'rid' : rid}, function(s){
+				if (s.message.status) {
+				
+					alert('签到成功!');
+				} else {
+					alert(s.message.message);
+				}
+			});
+		}
+	};
+function tusi(txt){
+	$('.tusi').remove();
+	var div = $('<div style="background: #fff;max-width: 85%;min-height: 77px;min-width: 270px;position: absolute;left: -1000px;top: -1000px;text-align: center;border-radius:10px;border:3px solid #f39800;"><span style="color: #000;line-height: 36px;font-size: 23px;margin:5px;">'+txt+'</span></div>');
+	$('body').append(div);
+	div.css('zIndex',9999999);
+	div.css('left',parseInt(($(window).width()-div.width())/2));
+	var top = parseInt($(window).scrollTop()+($(window).height()-div.height())/2);
+	div.css('top',top);
+	setTimeout(function(){div.remove();},3000);
+}	
+/*
+$(document).ready(function(){ 
+{if $zonyunum==0}
+alert('恭喜亲亲哒！首次领取获得30%以内的折扣！赶紧分享到朋友圈，召唤您的小伙伴来砍价吧！每次砍价可随机砍掉1-11元不等哦~记住，要狠狠砍！');
+{else}
+alert('亲亲哒，小沃目测您心仪的商品，还有一丢丢砍价空间哦~快快爆发小宇宙，召唤伙伴们来助您一臂之力吧！');
+
+{/if}
+});
+*/
+</script>
+</body>
+</html>

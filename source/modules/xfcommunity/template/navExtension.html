@@ -1,0 +1,117 @@
+
+{template 'common/header'}
+{if $op== 'display'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('navExtension', array('op' => 'display'))}">导航扩展管理</a></li>
+	<li {if $op == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('navExtension', array('op' => 'post'))}">导航扩展添加</a></li>
+</ul>
+<div class="main">
+<div style="margin:0;" class="alert alert-info"><i class="icon-warning-sign"></i>&nbsp;主界面下可自定义多个导航,方便用户集成第三方模块。</div>
+	<!-- <form class="form-horizontal form" action="" method="post" onsubmit="return formcheck(this)">
+		<input name="weid" type="hidden" value="{$weid}"> -->
+		<!-- <h4>导航扩展管理</h4> -->
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th class="row-hover span2">导航名称<i></i></th>
+					<th class="row-hover span2">第三方网址<i></i></th>
+					<th class="row-hover span2">说明<i></i></th>
+					<th class="row-hover" style="min-width:370px;">操作</th>
+					<th class="row-hover span1" style="text-align:right;width:100px;"></th>
+				</tr>
+			</thead>
+			<tbody id="status-items">
+			{loop $list $item}
+				<tr>
+					<td>{$item['title']}</td>
+					<td>{$item['navurl']}</td>
+					<td>{$item['content']}</td>
+					<td>
+						<span>
+							<a href="{php echo $this->createWebUrl('navextension',array('op'=>'post','id'=>$item['id']))}">编辑</a>
+							<a href="{php echo $this->createWebUrl('navextension',array('op'=>'delete','id'=>$item['id']))}" onclick="return confirm('此操作不可恢复，确认吗？');">删除</a>
+						</span>
+					</td>
+				</tr>
+			{/loop}
+			</tbody>
+			<!-- <tr>
+				<td colspan="6">
+					<a href="javascript:;" onclick="addStatusItem()"><i class="icon-plus-sign-alt"></i> 添加新导航</a>
+				</td>
+			</tr> -->
+		</table>
+		<!-- <table class="tb">
+			<tr>
+				<td colspan="6">
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table> -->
+<!-- 	</form> -->
+{$pager}
+</div>
+{elseif $op == 'post'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('navExtension', array('op' => 'display'))}">导航扩展管理</a></li>
+	<li {if $op == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('navExtension', array('op' => 'post'))}">导航扩展添加</a></li>
+</ul>
+
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}">
+		<h4>导航扩展添加</h4>
+		<table class="tb">
+			<tr>
+				<th>导航名称</th>
+				<td><input type="text" name="title" value="{$item['title']}" class="span5" placeHolder="请输入主界面导航名称"/></td>
+			</tr>
+			
+		<tr>
+			<th>第三方网址</th>
+			<td>
+				<input type="text" name="navurl" value="{$item['navurl']}" class="span5" placeHolder="请输入导航链接地址"/>（注：链接需加http://）		
+			</td>
+		</tr>
+		<tr>
+            <th>系统图标</th>
+            <td>
+            	<div class="input-append" style="display:block; margin-top:5px;">
+                    <input class="span3" type="text" name="icon" id="icon" value="{$item['icon']}" placeholder="请选择导航背景图标"><button class="btn" onclick="w = ajaxshow('{php echo create_url('site/icon')}', '图标列表', {width : 800});return false;">选择图标</button>
+                </div>
+                <span class="help-block">导航的背景图标，系统提供丰富的图标ICON。</span>
+            </td>
+           </tr>
+           <tr>
+				<th>说明</th>
+				<td><input type="text" name="content" value="{$item['content']}" class="span5" placeHolder="请输主界面导航说明"/></td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+{/if}
+<script type="text/javascript">
+
+function addStatusItem() {
+// var html =
+// 	'<tr>' +
+// 		'<td><input class="span2" name="title[]" title="导航名称" placeholder="导航名称" type="text" value=""/></td>' +
+// 		'<td><input class="span2" name="navurl[]" title="第三方网址" placeholder="第三方网址" type="text" value=""/><input name="ids[]" type="hidden" value=""/></td>' +
+// 		'<td><input class="span2" name="icon[]" title="系统图标" placeholder="系统图标" type="text" value=""><button class="btn" onclick="w = ajaxshow("{php echo $this->createWebUrl("site/icon")}", "图标列表", {width : 800});return false;">选择图标</button></td>' +
+// 		'<td><input class="span2" name="content[]" title="说明" placeholder="说明" type="text" value=""></td>' +
+// 		'<td></td>' +
+// 		'<td style="text-align:right;"><a href="javascript:;" onclick="$(this).parent().parent().remove();" class="btn btn-small" title="删除此条目"><i class="icon-remove"></i></a></td>' +
+// 	'</tr>';
+
+
+// 	$('#status-items').append(html);
+}
+
+</script>
+{template 'common/footer'}

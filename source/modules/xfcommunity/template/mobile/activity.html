@@ -1,0 +1,34 @@
+{template 'header'}
+<link href="{$_W[siteroot]}source/modules/xfcommunity/template/css/theme3.css" type="text/css" rel="stylesheet" />
+<link href="{$_W[siteroot]}source/modules/xfcommunity/template/css/buttons.css" type="text/css" rel="stylesheet" />
+<div class="picListWrapper">
+	<h1>小区活动</h1>
+	<hr />
+	{loop $list $row}
+	<div class="picListWrapperItem">
+		<a href="{php echo $this->createMobileUrl('detail',array('id'=> $row['id']))}" class="attrLink"></a>
+		<a href="{php echo $this->createMobileUrl('detail',array('id'=> $row['id']))}" class="imgLink">
+			<img src="{$_W['attachurl']}{$row['picurl']}" alt=""/>
+		</a>
+		<div class="picListItemAttr hongdong">
+			<h4 class="picListItemTitle " style="color:">{$row['title']}</h4>
+			<p>
+				开始时间：
+				<span class="no-tel">{php echo date('Y-m-d', $row['starttime'])}</span>
+			</p>
+			<p>
+				结束时间：
+				<span class="no-tel">{php echo date('Y-m-d', $row['endtime'])}</span>
+			</p>
+			<p>
+				已经报名：
+				<span class="text-danger">{$row['resnumber']}</span>
+				人
+			</p>
+		</div>
+
+	</div>
+	{/loop}
+</div>
+
+{template 'footer'}

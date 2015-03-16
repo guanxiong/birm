@@ -1,0 +1,130 @@
+{template 'common/header'}
+<style>
+.sub-search input,.sub-search select{margin-bottom:0;}
+</style>
+    <div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="brand">抢礼品管理</span>						
+					</div>
+				</div>
+				<div class="sub-item">
+					<form action="" method="post">
+					<div class="pull-right">
+						<input class="btn btn-primary" type="submit" value="搜索">
+					</div>
+					<div class="pull-left">
+						<input name="act" type="hidden" value="{$_GPC['act']}" />
+						<input name="do" type="hidden" value="{$_GPC['do']}" />
+						电话：<input type="text" class="span2 kw" name="keywordtel" value="{$_GPC['keywordtel']}" placeholder="请输入电话号码">
+						姓名：<input type="text" class="span2 kw" name="keywordname" value="{$_GPC['keywordname']}" placeholder="请输入姓名">
+						规则ID：<input type="text" class="span2 kw" name="keywordid" value="{$_GPC['keywordid']}" placeholder="请输入规则ID">
+					</div>
+					</form>
+				</div>
+	
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">抢礼品详细数据  |  总数:{$total}</h4>
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</td>
+									<th style="width:120px;">姓名<i></i></th>
+									<th style="width:120px;">电话<i></i></th>					
+									
+									<th style="width:50px;">规则<i></i></th>
+									<th style="width:50px;">分享<i></i></th>
+									<th style="width:60px;" class="row-hover">集抢量<i></i></th>
+									<th style="width:80px;">作弊</i></th>
+									<!--<th style="width:80px;">是否中奖<i></i></th>-->
+									<th style="width:150px;">最后助抢时间<i></i></th>
+									<th style="width:60px;">操作</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+							{php $i=1;}
+								{loop $list_zonyu $row}
+								<tr>
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+									<td>{$row['realname']}</td>
+									<td>{$row['mobile']}</td>
+									
+									<td>{$row['rid']}</td>
+									<td><a href="{php echo create_url('site/module/zonyudata', array('name' => 'hlzonyu','uid' => $row['id'], 'rid' => $row['rid']))}">{$row['id']}</a></td>
+									<td class="row-hover">{$row['zonyunum']}</td>
+									<td><a class="btn" href="{php echo create_url('site/module/paiming', array('name' => 'hlzonyu','rid' => $row['rid'], 'id' => $row['id'], 'id' => $row['id'], 'ndrank' => $row['ndrank']))}">{$row['ndrank']}</a></td>
+									<!--<td>{if $row['zhongjiang']==0}未中奖{/if}{if $row['zhongjiang']==1}<a href="{php echo create_url('site/module/dosjiang', array('name' => 'hlzonyu','rid' => $row['rid'], 'id' => $row['id'], 'ac' => 'zonyulist', 'status' => 2))}">发　奖{/if}</a>{if $row['zhongjiang']==2}已领奖{/if}</td>	-->								
+									<td>{php echo date('Y-m-d H:i:s', $row[zonyutime]);}</td>
+									<td style="width:60px;font-size:12px; color:#666;">
+														{if $row['status']}
+					<a href="{php echo create_url('site/module/dos', array('name' => 'hlzonyu','rid' => $row['rid'], 'id' => $row['id'], 'ac' => 'zonyulist', 'status' => 0))}" class="">未屏蔽</a>
+				{else}
+					<a href="{php echo create_url('site/module/dos', array('name' => 'hlzonyu','rid' => $row['rid'], 'id' => $row['id'], 'ac' => 'zonyulist','status' => 1))}" class="">已屏蔽</a>
+				{/if}
+									</td><td></td>
+								</tr>
+								{php $i++;}
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr>
+								<td style="width:40px;" class="row-first"><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+								<td>
+									<input type="submit" name="delete" value="删除" class="btn btn-primary" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+				{$pager}
+				</div>
+			</div>
+		</div>
+    </div>
+
+<script>
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+});
+</script>
+{template 'common/footer'}

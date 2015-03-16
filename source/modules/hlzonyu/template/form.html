@@ -1,0 +1,336 @@
+<style type="text/css">
+.help-block1 { margin:0px 10px;color: #c09853;vertical-align: middle;}
+</style>
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">组团砍价活动设置</h4>
+	<table>
+		<tbody>	
+			<!--<tr>
+				<th>活动状态</th>
+				<td>{if $reply['status']}
+					<a id="jinyong" href="{php echo create_url('site/module/status', array('name' => 'hlzonyu','rid' => $reply['rid'], 'status' => 0))}" onclick="return ajaxopen(this.href)" class="btn btn-primary module-button-switch">禁用</a>
+				{else}
+					<a id="qiyong" href="{php echo create_url('site/module/status', array('name' => 'hlzonyu','rid' => $reply['rid'], 'status' => 1))}" onclick="return ajaxopen(this.href);" class="btn btn-danger module-button-switch">启用</a>
+				{/if}</td>
+			</tr>-->
+			<tr>
+				<th>商品标题</th>
+				<td><input type="text" name="title" value="{$reply['title']}" class="span7"> 
+				<input id="type_1" type="hidden" name="type" value="1"></td>
+			</tr>
+			<tr>
+				<th>分享标题</th>
+				<td><input type="text" name="sharetitle" value="{$reply['sharetitle']}" class="span7"> 
+				<input id="type_1" type="hidden" name="type" value="1"></td>
+			</tr>
+			<tr>
+				<th>活动时间</th>
+				<th><input class="datepicker span2" id="datepicker_start_time" name="start_time" type="text" value="{php echo date('Y-m-d H:i', $reply['start_time'])}"/> <span class="help-block1">至</span> <input class="datepicker  span2" id="datepicker_end_time" name="end_time" type="text" value="{php echo date('Y-m-d H:i', $reply['end_time'])}"/></th>
+			</tr>
+			
+			<!--<tr>
+				<th>产品链接页</th>
+				<td>
+				<input type="text" name="zonyuurl" value="{$reply['zonyuurl']}" class="span7"> 
+				<div class="help-block"></div>
+				</td>
+			</tr>-->
+			<tr>
+				<th>产品图片</th>
+				<td>
+						<div style="display:block; margin-top:5px;" class="input-append">
+						<input type="text" value="{$reply['picture']}" name="picture" id="upload-image-url-picture" class="span3" autocomplete="off">
+						<input type="hidden" value="{$picture}" name="picture_old" id="upload-image-url-picture-old">
+						<button class="btn" type="button" id="upload-image-picture">选择图片</button>
+						</div>
+						<div id="upload-image-preview-picture" style="margin-top:10px;"><img src="{$picture}" width="100%" /></div>
+						<div class="help-block">显示在第二页，建议尺寸：宽640像素 </div>
+				</td>
+			</tr>
+			<!--<tr>
+				<th>顶部图片</th>
+				<td>							
+				<div style="display:block; margin-top:5px;" class="input-append">
+				<input type="text" value="{$reply['dingpic']}" name="dingpic" id="upload-image-url-dingpic" class="span3" autocomplete="off">
+				<input type="hidden" value="{$dingpic}" name="dingpic_old" id="upload-image-url-dingpic-old">
+				<button class="btn" type="button" id="upload-image-dingpic">选择图片</button>
+				</div>
+				<div id="upload-image-preview-dingpic" style="margin-top:10px;"><img src="{$dingpic}" width="100" /></div>
+				<div class="help-block">显示为分享出去后顶部 建议尺寸：宽640像素</div></td>
+		    </tr>
+			
+			<tr>
+				<th>助抢图片</th>
+				<td>
+				<div style="display:block; margin-top:5px;" class="input-append">
+				<input type="text" value="{$reply['zanpic']}" name="zanpic" id="upload-image-url-zanpic" class="span3" autocomplete="off">
+				<input type="hidden" value="{$zanpic}" name="zanpic_old" id="upload-image-url-zanpic-old">
+				<button class="btn" type="button" id="upload-image-zanpic">选择图片</button>
+				</div>
+				<div id="upload-image-preview-zanpic" style="margin-top:10px;"><img src="{$zanpic}" width="100" />
+				<div class="help-block">显示为分享出去后的助抢产品图片，建议尺寸：宽640像素</div></div></td>
+		    </tr>-->
+			<tr>
+				<th>转发话术</th>
+				<td>
+					<textarea style="height:50px;" name="description" class="span7" cols="60">{$reply['description']}</textarea>
+					<div class="help-block">只针对转发该商品，显示给朋友的简介，每款商品建议设成个性化的</div>
+				</td>
+			</tr> 
+			<!--<tr>
+				<th>商品详细介绍</th>
+				<td>
+					<textarea style="height:200px; width:535px;" class="span7 richtext-clone" name="content" cols="70" id="reply-add-text">{$reply['content']}</textarea>					
+					<div class="help-block">分享后，朋友点击进来看到的商品的详细介绍，可以发商品图文介绍，也可以发活动规则</div>
+				</td>
+			</tr> 	-->		
+			<tr>
+				<th colspan="2"><h4 class="alert-heading">抢礼品奖励设置</h4></th>
+			</tr>
+
+			<tr>
+				<th>随机砍价格</th>
+				<td>
+					<input type="text" name="credit" value="{$reply['credit']}" class="span1">至
+					<input type="text" name="creditx" value="{$reply['creditx']}" class="span1">
+				<div class="help-block">不能小于0，每个助抢奖励量。</div></td>
+			</tr>
+			
+			<!--<tr>
+				<th>类型</th>
+				
+				<td>
+						<label for="btype_1" class="radio inline"><input id="btype_1" type="radio" name="btype" value="1" {if $reply['btype'] == '1'}checked="checked"{/if}> 赏大洋</label>
+						<label for="btype_0" class="radio inline"><input id="btype_0" type="radio" name="btype" value="0"  {if $reply['btype'] == '0'}checked="checked"{/if}> 砍价</label>
+				
+				
+				<div class="help-block">礼品类型</div></td>
+			</tr>-->
+			
+			<tr>
+				<th>可砍价格</th>
+				<td><input type="text" name="zonyunum" value="{$reply['zonyunum']}" class="span1"><div class="help-block">空间。</div></td>
+			</tr>
+			
+			<tr>
+				<th>实际价格</th>
+				<td><input type="text" name="productprice" value="{$reply['productprice']}" class="span1"><div class="help-block">商品的价格。</div></td>
+			</tr>
+			<!--<tr>
+				<th>通知邮箱</th>
+				<td><input type="text" name="email" value="{$reply['email']}" class="span3"><div class="help-block">粉丝成功集抢到达奖励时，提醒的邮箱。最好使用ＱＱ手机邮箱可以收到短信提醒哟。</div></td>
+			</tr>
+			<tr>
+				<th>中奖提醒</th>
+				<td><input type="text" name="zhongjiang" value="{$reply['zhongjiang']}" class="span7"><div class="help-block">粉丝成功集抢到达奖励时，提醒用户已中奖的提示词语。</div></td>
+			</tr>
+			
+			<tr>
+				<th colspan="2"><h4 class="alert-heading">抢礼品参数设置</h4></th>
+			</tr>
+
+			<tr>
+				<th>内定排名</th>
+				<td>
+						<label for="ndrankstatus_1" class="radio inline"><input id="ndrankstatus_1" type="radio" name="ndrankstatus" value="1" {if $reply['ndrankstatus'] == '1'}checked="checked"{/if}> 开启内定排名</label>
+						<label for="ndrankstatus_0" class="radio inline"><input id="ndrankstatus_0" type="radio" name="ndrankstatus" value="0"  {if $reply['ndrankstatus'] == '0'}checked="checked"{/if}> 关闭内定排名</label>
+				</td>
+            </tr>			
+			<tr class="msgdnd{if $reply['ndrankstatus'] == '0'} hide{/if}">
+				<th>排名数量</th>
+				<td>
+					<input type="text" name="ndrankstatusnum" class="span1" value="{$reply['ndrankstatusnum']}" />
+					<div class="help-block">内定前几名。比如：你想定内前三名，就输入3即可</div>
+				</td>
+			</tr>-->
+			<!--<tr>
+				<th>助抢方式</th>
+				<td>
+						<label for="zonyu_type_1" class="radio inline"><input id="zonyu_type_1" type="radio" name="zonyu_type" value="1"  {if $reply['zonyu_type'] == '1'}checked="checked"{/if}> 实名限制</label>
+						<label for="zonyu_type_0" class="radio inline"><input id="zonyu_type_0" type="radio" name="zonyu_type" value="0" {if $reply['zonyu_type'] == '0'}checked="checked"{/if}> IP限制</label>
+						<div class="help-block">实名限制：同一个用户不同IP只算一次；IP限制：同个用户同一个IP算一次，不同IP算多次。只限高级认证号使用，其他类型公众号以Cookies控制，不能完美实现实名限制</div>
+				</td>
+			</tr>
+			<tr>
+				<th>显示方式</th>
+				<td>
+						<label for="zonyu_show_0" class="radio inline"><input id="zonyu_show_0" type="radio" name="zonyu_show" value="0" {if $reply['zonyu_show'] == '0'}checked="checked"{/if}> 公开</label>
+						<label for="zonyu_show_1" class="radio inline"><input id="zonyu_show_1" type="radio" name="zonyu_show" value="1"  {if $reply['zonyu_show'] == '1'}checked="checked"{/if}> 隐藏</label>
+						<div class="help-block">是否公开显示助抢者</div>
+				</td>
+            </tr>
+			<tr class="msgd0{if $reply['zonyu_show'] == '1'} hide{/if}">
+				<th>显示类型</th>
+				<td>
+						<label for="zonyu_imgtext_0" class="radio inline"><input id="zonyu_imgtext_0" type="radio" name="zonyu_imgtext" value="0" {if $reply['zonyu_imgtext'] == '0'}checked="checked"{/if}> 显示头像</label>
+						<label for="zonyu_imgtext_1" class="radio inline"><input id="zonyu_imgtext_1" type="radio" name="zonyu_imgtext" value="1"  {if $reply['zonyu_imgtext'] == '1'}checked="checked"{/if}> 显示昵称</label>
+						<div class="help-block">不是高级认证号只能显示昵称无法显示头像。</div>
+				</td>
+            </tr>
+			<tr class="msgd1{if $reply['zonyu_show'] == '1'} hide{/if}">
+				<th>显示数量</th>
+				<td><input type="text" name="zonyu_shownum" value="{$reply['zonyu_shownum']}" class="span1"><div class="help-block">助抢者显示多少名</div></td>
+			</tr>
+			</div>
+			<tr>
+				<th>排名显示</th>
+				<td>
+						<label for="zonyu_rankshow_0" class="radio inline"><input id="zonyu_rankshow_0" type="radio" name="zonyu_rankshow" value="0" {if $reply['zonyu_rankshow'] == '0'}checked="checked"{/if}> 公开显示</label>
+						<label for="zonyu_rankshow_1" class="radio inline"><input id="zonyu_rankshow_1" type="radio" name="zonyu_rankshow" value="1"  {if $reply['zonyu_rankshow'] == '1'}checked="checked"{/if}> 隐藏显示</label>
+						<div class="help-block">是否公开显示分享排名</div>
+				</td>
+            </tr>
+			<tr class="msgds{if $reply['zonyu_rankshow'] == '1'} hide{/if}">
+				<th>显示数量</th>
+				<td><input type="text" name="zonyu_ranknum" value="{$reply['zonyu_ranknum']}" class="span1"><div class="help-block">排名榜显示多少名</div></td>
+			</tr>-->
+			<tr>
+				<th>助抢周期</th>
+				<td>
+					    <label for="zonyu_numtype_0" class="radio inline"><input id="zonyu_numtype_0" type="radio" name="zonyu_numtype" value="0" checked="checked"> 只能一次</label>
+						<label for="zonyu_numtype_1" class="radio inline"><input id="zonyu_numtype_1" type="hidden" name="zonyu_numtype" value="1"  {if $reply['zonyu_numtype'] == '1'}checked="checked"{/if}> </label>
+						<span class="hide"><input type="text" name="zonyu_num" class="span1" value="{$reply['zonyu_num']}" /><span class="help-block1">天一次</span></span>
+					<div class="help-block">默认每人只可助抢一次，</div>
+				</td>
+			</tr>
+			
+		</tbody>
+	</table>	
+</div>
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<script type="text/javascript">
+	var editor = KindEditor.editor({
+		allowFileManager : true,
+		uploadJson : "./index.php?act=attachment&do=upload",
+		fileManagerJson : "./index.php?act=attachment&do=manager",
+		afterUpload : function(url, data) {
+		}
+	});
+	$("#upload-image-picture").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-picture").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-picture-old").val($("#upload-image-url-picture").val());
+					$("#upload-image-url-picture").val(val);
+					$("#upload-image-preview-picture").html('<img src="'+url+'" width="100%" />');
+				}
+			});
+		});
+	});
+	$("#upload-image-dingpic").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-dingpic").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-dingpic-old").val($("#upload-image-url-dingpic").val());
+					$("#upload-image-url-dingpic").val(val);
+					$("#upload-image-preview-dingpic").html('<img src="'+url+'" width="100" />');
+				}
+			});
+		});
+	});
+	$("#upload-image-zanpic").click(function() {
+		editor.loadPlugin("image", function() {
+			editor.plugin.imageDialog({
+				tabIndex : 1,
+				imageUrl : $("#upload-image-url-zanpic").val(),
+				clickFn : function(url) {
+					editor.hideDialog();
+					var val = url;
+					if(url.toLowerCase().indexOf("http://") == -1 && url.toLowerCase().indexOf("https://") == -1) {
+						var filename = /images(.*)/.exec(url);
+						if(filename && filename[0]) {
+							val = filename[0];
+						}
+					}
+					$("#upload-image-url-zanpic-old").val($("#upload-image-url-zanpic").val());
+					$("#upload-image-url-zanpic").val(val);
+					$("#upload-image-preview-zanpic").html('<img src="'+url+'" width="100" />');
+				}
+			});
+		});
+	});
+	
+</script>
+<link type="text/css" rel="stylesheet" href="./resource/style/datetimepicker.css" />
+<script type="text/javascript" src="./resource/script/datetimepicker.js"></script>
+<script type="text/javascript">
+		$("#datepicker_start_time").datetimepicker({
+			format: "yyyy-mm-dd hh:ii",
+			minView: "0",
+			//pickerPosition: "top-right",
+			autoclose: true
+		});
+		$("#datepicker_end_time").datetimepicker({
+			format: "yyyy-mm-dd hh:ii",
+			minView: "0",
+			//pickerPosition: "top-right",
+			autoclose: true
+		});
+		kindeditor($('.richtext-clone'));
+</script>	
+<script type="text/javascript">
+	$(function(){
+		var option = {};
+	    {if !empty($reply['lng']) && !empty($reply['lat'])}
+	    option = {'point' : {'lng' : '{$reply['lng']}', 'lat' : '{$reply['lat']}'}}
+	    {/if}
+	      
+		$(':radio[name="ndrankstatus"]').click(function(){
+			if($(':radio[name=ndrankstatus]:checked').val() == '1') {
+				$('.msgdnd').show();
+			} else {
+				$('.msgdnd').hide();
+			}
+		});
+		
+		$(':radio[name="zonyu_show"]').click(function(){
+			if($(':radio[name=zonyu_show]:checked').val() == '0') {
+				$('.msgd0').show();
+				$('.msgd1').show();
+			} else {
+				$('.msgd0').hide();
+				$('.msgd1').hide();
+			}
+		});
+		$(':radio[name="zonyu_rankshow"]').click(function(){
+			if($(':radio[name=zonyu_rankshow]:checked').val() == '0') {
+				$('.msgds').show();
+			} else {
+				$('.msgds').hide();
+			}
+		});
+		
+		$(':radio[name="zonyu_numtype"]').click(function(){
+			if($(':radio[name=zonyu_numtype]:checked').val() == '1') {
+				$('.zonyu_numtypes').show();
+			} else {
+				$('.zonyu_numtypes').hide();
+			}
+		});
+	});
+</script>
+<script type="text/javascript" src="./resource/script/cascade.js"></script>

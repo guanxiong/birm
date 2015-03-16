@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51,0.52">
+	<application setting="true">
+		<name><![CDATA[组团来砍价]]></name>
+		<identifie><![CDATA[hlzonyu]]></identifie>
+		<version><![CDATA[1.8]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[砍价帮]]></ability>		
+		<description><![CDATA[砍价帮，组团来砍价]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[http://bbs.b2ctui.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="入口设置" do="index" />
+		</cover>
+		
+		<rule>
+			<entry title="查看砍价排行榜" do="zonyuranklist" state="" />
+			<entry title="查看助砍数据" do="zonyudatalist" state="" />
+			
+		</rule>
+		<menu>
+			<entry title="查看订单" do="order" state="" />
+			
+			
+		</menu>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_hlzonyu_data` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+  `from_user` varchar(50) NOT NULL DEFAULT '' COMMENT '用户openid',
+  `avatar` varchar(512) NOT NULL DEFAULT '' COMMENT '用户头像',
+  `realname` varchar(50) NOT NULL DEFAULT '' COMMENT '点赞人姓名',
+  `rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+  `uid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分享人UID',
+  `zonyuip` varchar(15) NOT NULL DEFAULT '' COMMENT '集赞人IP',
+  `zonyutime` int(10) unsigned NOT NULL COMMENT '集赞时间',
+  `viewnum` int(10) NOT NULL DEFAULT '1' COMMENT '查看次数',
+  `content` varchar(512) NOT NULL DEFAULT '' COMMENT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=47 ;
+
+CREATE TABLE IF NOT EXISTS `ims_hlzonyu_list` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+  `weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+  `from_user` varchar(50) NOT NULL DEFAULT '' COMMENT '用户openid',
+  `zonyunum` int(10) NOT NULL DEFAULT '0' COMMENT '分享量',
+  `ndrank` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '内定排名',
+  `ndranknum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '内定分享量',
+  `ndranknums` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '内定增加量',
+  `zhongjiang` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否中奖',
+  `zonyutime` int(10) unsigned NOT NULL COMMENT '最后分享时间',
+  `createtime` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '是否禁止',
+  `btype` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '类型',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33 ;
+
+CREATE TABLE IF NOT EXISTS `ims_hlzonyu_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+  `weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+  `title` varchar(50) NOT NULL COMMENT '规则标题',
+  `zonyuurl` varchar(255) NOT NULL COMMENT '活动网址',
+  `picture` varchar(100) NOT NULL COMMENT '图片',
+  `start_time` int(10) unsigned NOT NULL COMMENT '开始时间',
+  `end_time` int(10) unsigned NOT NULL COMMENT '结束时间',
+  `description` varchar(255) NOT NULL COMMENT '描述',
+  `content` text NOT NULL COMMENT '内容',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '开关状态',
+  `credit` int(10) NOT NULL DEFAULT '0' COMMENT '奖励最小积分',
+  `creditx` int(10) NOT NULL DEFAULT '0' COMMENT '奖励最大积分',
+  `zonyunum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '集多少赞奖励',
+  `email` varchar(100) NOT NULL COMMENT '通知邮箱',
+  `zhongjiang` varchar(200) NOT NULL COMMENT '中奖提醒词',
+  `type` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '活动类型0为分享、1为集赞',
+  `dingpic` varchar(512) NOT NULL COMMENT '顶部图片',
+  `zanpic` varchar(512) NOT NULL COMMENT '点赞图片',
+  `shangjia` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否显示赞助商',
+  `shangjianame` varchar(50) NOT NULL COMMENT '赞助商名称',
+  `shangjiapic` varchar(512) NOT NULL COMMENT '赞助商图片展示',
+  `shangjiatel` varchar(50) NOT NULL COMMENT '赞助商联系电话',
+  `shangjiaaddress` varchar(90) NOT NULL COMMENT '赞助商联系地址',
+  `shangjiamap` varchar(50) NOT NULL COMMENT '赞助商地图导航',
+  `shangjialink` varchar(250) NOT NULL COMMENT '赞助商链接',
+  `ndrankstatus` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否开启内定排名',
+  `ndrankstatusnum` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '内定前几排名',
+  `zonyu_type` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '点赞方式',
+  `zonyu_show` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '显示方式投赞者',
+  `zonyu_imgtext` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '显示头像或昵称',
+  `zonyu_rankshow` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '显示方式排名',
+  `zonyu_shownum` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '显示多少投赞者',
+  `zonyu_ranknum` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排名显示多少位',
+  `zonyu_numtype` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否可以重复累计',
+  `zonyu_num` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '点赞周期',
+  `btype` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `sharetitle` varchar(200) NOT NULL COMMENT '分享标题',
+  `productprice` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+CREATE TABLE IF NOT EXISTS `ims_hlzonyu_log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL COMMENT '公众号ID',
+  `from_user` varchar(50) NOT NULL DEFAULT '' COMMENT '用户openid',
+  `type` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '1积分，2金额',
+  `credit` int(10) NOT NULL DEFAULT '0' COMMENT '分值或金额',
+  `nametype` varchar(50) NOT NULL COMMENT '类型',
+  `name` varchar(50) NOT NULL COMMENT '类型名称',
+  `content` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+  `createtime` int(10) unsigned NOT NULL,
+  `ip` varchar(20) NOT NULL DEFAULT '' COMMENT 'IP地址',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_hlzonyu_order` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `ordersn` varchar(20) NOT NULL,
+  `price` varchar(10) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '-1取消状态，0普通状态，1为已付款，2为已发货，3为成功',
+  `sendtype` tinyint(1) unsigned NOT NULL COMMENT '1为快递，2为自提',
+  `paytype` tinyint(1) unsigned NOT NULL COMMENT '1为余额，2为在线，3为到付',
+  `transid` varchar(30) NOT NULL DEFAULT '0' COMMENT '微信支付单号',
+  `goodstype` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `remark` varchar(1000) NOT NULL DEFAULT '',
+  `rid` int(10) unsigned NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  `address` varchar(1000) NOT NULL DEFAULT '',
+  `goodsprice` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `goodsname` varchar(100) NOT NULL DEFAULT '',
+  `tjname` varchar(100) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+
+	]]></install>
+	<uninstall><![CDATA[
+drop table `ims_hlzonyu_data`;
+drop table `ims_hlzonyu_list`;
+drop table `ims_hlzonyu_reply`;
+drop table `ims_hlzonyu_log`;
+drop table `ims_hlzonyu_order`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

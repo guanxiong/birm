@@ -1,0 +1,106 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>物业公司信息</h4>
+		<table class="tb">
+			<tr>
+				<th>物业名称</th>
+				<td>
+					<input type="text" name="cname" class="span3" value="{$settings['cname']}" />
+				</td>
+			</tr>
+			<tr>
+				<th>物业电话</th>
+				<td>
+					<input type="text" name="tel" class="span3" value="{$settings['tel']}" />
+				</td>
+			</tr>
+			<tr>
+				<th>物业地址</th>
+				<td>
+					<input type="text" name="address" class="span3" value="{$settings['address']}" />
+				</td>
+			</tr>
+			<tr>
+				<th>底部名称</th>
+				<td>
+					<input type="text" name="title" class="span3" value="{$settings['title']}" />
+				</td>
+			</tr>
+			<tr>
+				<th>底部链接</th>
+				<td>
+					<input type="text" name="burl" class="span7" value="{$settings['burl']}" />
+					<span class='class="help-block"'>(外链需要添加http://)</span>
+				</td>
+			</tr>
+		</table>
+		<h4>系统设置</h4>
+		<table class="tb">
+			<!-- <tr>
+				<th>是否开启人工审核</th>
+				<td>
+					<label for="radio_1" class="radio inline"><input type="radio" name="data[verify]" id="radio_1" value="1" {if $settings['verify'] == 1} checked{/if} /> 审核</label>
+					<label for="radio_0" class="radio inline"><input type="radio" name="data[verify]" id="radio_0" value="0" {if empty($settings['verify']) && $settings['verify'] == 0} checked{/if} /> 不审核</label>
+					<span class="help-block">开启人工审核后，用户绑定需要管理人员审核方可使用物业相关功能，默认不开启审核</span>
+				</td>
+			</tr>
+			<tr>
+				<th>是否开启短信验证</th>
+				<td>
+					<label for="radio_1" class="radio inline"><input type="radio" name="data[verifymobile]" id="radio_1" value="1" {if $settings['verifymobile'] == 1} checked{/if} /> 验证</label>
+					<label for="radio_0" class="radio inline"><input type="radio" name="data[verifymobile]" id="radio_0" value="0" {if empty($settings['verifymobile']) && $settings['verifymobile'] == 0} checked{/if} /> 不验证</label>
+					<span class="help-block">开启短信验证后，用户提交信息时自动验证其手机号的真实性（发送验证码）。</span>
+				</td>
+			</tr> -->
+			<tr>
+				<th><label for="">底部导航颜色</label></th>
+				<td>
+					<input type="text" class="span3" id="nav_color" name="nav_color" value="{$settings['nav_color']}" />
+					<input class="colorpicker" target="nav_color" value="{$settings['nav_color']}" />
+					<span class="help-block">底部导航颜色</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">功能视图菜单颜色</label></th>
+				<td>
+					<input type="text" class="span3" id="toggle_color" name="toggle_color" value="{$settings['toggle_color']}" />
+					<input class="colorpicker" target="toggle_color" value="{$settings['toggle_color']}" />
+					<span class="help-block">功能视图菜单颜色</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">背景颜色</label></th>
+				<td>
+					<input type="text" class="span3" id="bg_color" name="bg_color" value="{$settings['bg_color']}" />
+					<input class="colorpicker" target="bg_color" value="{$settings['bg_color']}" />
+					<span class="help-block">如果设置背景图片就无需在设置背景颜色</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">背景图片</label></th>
+				<td>
+					{php echo tpl_form_field_image('bg_image', $settings['bg_image'])}
+					<span class="help-block">背景图片优先背景颜色</span>
+				</td>
+			</tr>
+			
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript" src="./resource/script/colorpicker/spectrum.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/script/colorpicker/spectrum.css" />
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<script type="text/javascript">
+	$(function(){
+		colorpicker();
+	});
+</script>
+{template 'common/footer'}

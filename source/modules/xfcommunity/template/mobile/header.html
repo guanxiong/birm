@@ -1,0 +1,174 @@
+
+{php $bootstrap_type = 3;}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{if $title}{$title}{else}{if !empty($_W['account']['name'])}{$_W['account']['name']}{/if}{/if}</title> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- Mobile Devices Support @begin -->
+	<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+	<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+	<meta content="no-cache" http-equiv="pragma">
+	<meta content="0" http-equiv="expires">
+	<meta content="telephone=no, address=no" name="format-detection">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<!-- apple devices fullscreen -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<!-- Mobile Devices Support @end -->
+	<script type="text/javascript" src="./resource/script/jquery-1.7.2.min.js"></script>
+	{if $bootstrap_type == 3}
+	<link type="text/css" rel="stylesheet" href="./themes/mobile/default/style/bootstrap.css">
+	<script type="text/javascript" src="./themes/mobile/default/script/bootstrap.min.js"></script>
+	{else}
+	<link type="text/css" rel="stylesheet" href="./resource/style/bootstrap.css">
+	<script type="text/javascript" src="./resource/script/bootstrap.js"></script>
+	{/if}
+	<link type="text/css" rel="stylesheet" href="./resource/style/font-awesome.min.css" />
+	<link type="text/css" rel="stylesheet" href="./themes/mobile/default/style/common.mobile.css">
+	<script type="text/javascript" src="./resource/script/cascade.js"></script>
+	<script type="text/javascript" src="./themes/mobile/default/script/jquery.touchwipe.js"></script>
+	<script type="text/javascript" src="./themes/mobile/default/script/swipe.js"></script>
+	<!--[if IE 7]>
+	<link rel="stylesheet" href="./resource/style/font-awesome-ie7.min.css">
+	<![endif]-->
+
+<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		WeixinJSBridge.call('hideToolbar');
+		});
+</script>
+</head>
+<body>
+	{if empty($main_off)}
+	<div class="main">
+		{/if}
+<style>
+body{{if $this->module['config']['bg_image']}background-image:url({$_W['attachurl']}{php echo $this->module['config']['bg_image']}){else}background:{php echo $this->module['config']['bg_color']};{/if}font-family:黑体;}
+.head{height:40px; line-height:40px; background:#769cdc; margin-bottom:0px; padding:0 5px; color:#FFF;}
+.head .bn{display:inline-block; height:30px; line-height:30px; padding:0 10px; margin-top:4px; font-size:20px; border:1px #6c94d6 solid; background:#86a8e2; color:#FFF; text-decoration:none;}
+.head .bn.pull-right{position:absolute; right:5px; top:0;}
+.head .title{font-size:14pt;display:block;padding-left:10px;font-weight:bolder;margin-right:49px;text-align:center;height:40px;line-height:40px;text-overflow:ellipsis;white-space:nowrap;overflow: hidden;}
+.head .order{background:#F9F9F9; position:absolute; z-index:9999; right:0;}
+.head .order li > a{display:block; padding:0 10px; min-width:100px; height:35px; line-height:35px; font-size:16px; color:#666; text-decoration:none; border-top:1px #EEE solid;}
+.head .order li > a i{display:inline-block; width:20px;}
+.head .order li.icon-caret-up{font-size:20px;color:#F9F9F9;position:absolute;top:-11px;right:16px;}
+.navbar-fixed-bottom{max-width:700px; margin:0 auto; background-color:#f9f9f9; overflow:hidden; height:50px;}
+/*.navbar-fixed-bottom > a{display:inline-block; color:#769cdc; height:50px; line-height:40px; font-size:14px; text-decoration:none; text-align:center; width:100%;}*/
+.navbar-fixed-bottom > .pull-left{border-right:1px #d4d4d4 solid; width:90px; position:absolute; left:0; top:5px;}
+.navbar-fixed-bottom > .pull-right{border-left:1px #d4d4d4 solid; width:90px; position:absolute; right:0; top:5px;}
+/**/
+.form-horizontal{margin:5px; background:#fafafa; padding:20px 10px 10px 10px; overflow:hidden;}
+.form-horizontal label{color:#555;}
+.form-horizontal .sendverify{margin-right:15px; width:100%;}
+.form-horizontal .resolve{background:#FFF; border-top:2px #769cdc solid; padding:10px;}
+.form-horizontal .resolve .resolver, .resolve .date{text-align:right; color:#888;}
+.form-horizontal .resolve .resolver{color:#779cdc;}
+/**/
+.list{background:#fafafa; padding:10px; margin:5px;}
+.list .hd{border-bottom:1px #DDD dotted; margin-bottom:5px; padding-bottom:5px;}
+.list .hd > span{display:block;}
+.list .hd > span.title{font-size:16px; color:#000;}
+.list .hd > span.date{color:#666; font-size:12px;}
+.list .content{color:#545454; line-height:25px;}
+.list .content .author{color:#999; text-align:right; margin-top:10px;}
+.list .reply{background:#FFF; border-top:2px #769cdc solid; padding:10px; margin-top:10px; overflow:hidden;}
+.list .reply > .pull-left .label, .list .reply > .pull-right .label{display:inline-block;text-align:left;line-height:20px;padding:3px 5px;white-space:normal;}
+.list .reply > .pull-right{width:60%; margin-bottom:10px; text-align:right;}
+.list .reply > .pull-left{width:60%; margin-bottom:10px;}
+.list .reply .reply-more{display:none;}
+.list .reply .reply-more-btn{float:left;width:100%;margin-bottom:-13px; text-align:center; cursor:pointer; border-top:1px #DDD dotted; margin-top:10px; padding-top:10px;}
+.list .reply .reply-more-btn span{padding:5px 30px; background:#9dc0fb; color:#FFF;}
+/**/
+.table{background:#FFF;}
+.table thead th{background:#ecedee; color:#686868; font-weight:normal; border-bottom:1px #c0c0c0 solid !important;}
+.table tbody td{border-color:#e4e6e6 !important;}
+.table tbody td a{color:#333;}
+/**/
+.home-box{overflow:hidden; margin:10px 5px;}
+.home-box > a{float:left; display:block; width:{php echo 100/4;}%; text-align:center; margin-bottom:10px; text-decoration:none;color:white;}
+.home-box > a div{margin:0 14px; padding:12px 0;}
+.home-box > a div i{display:block; font-size:24px;}
+.home-box > a div span{display:block; margin-top:10px;}
+/**/
+.tips{background:#fafafa; margin:5px;  padding:10px; text-align:center; font-size:16px; color:#555;}
+.tips .icon{border-bottom:1px #DDD dotted; margin-bottom:10px; padding-bottom:10px;}
+.tips .icon i{font-size:50px; color:#769cdc;}
+/**/
+.pagination {margin:8px 0; padding: 5px 0;}
+.pagination ul li {float:left;}
+.pagination ul li.active a {background-color:#428bca; color:white;}
+/**/
+.width-auto {width:auto;}
+.pull-right {float:right;}
+.pull-left {float:left;}
+.top-bar{background:{if $this->module['config']['nav_color']}{php echo $this->module['config']['nav_color']}{else}#f6b26b{/if};height:50px;overflow:hidden;box-shadow:0px -2px 2px rgba(0,0,0,0.2)}
+.top-bar a{float:left;display:block;width:25%;padding-top:10px;height:50px;text-align:center;margin-left:-1px;font-size:12px;color:#fff;}
+.top-bar a:hover{background:rgba(0,0,0,0.2);text-decoration: none;}
+.top-bar i{color:#fff;font-size:16px;}
+.vline {
+float: left;
+width: 1px;
+height: 40px;
+background-image: url('./source/modules/xfmarket/template/mobile/img/vline.png');
+}
+.nav-collapse {
+display: none;
+margin: 0;
+padding: 0;
+position:fixed;
+bottom:40px;
+left:0;
+z-index:9999;
+width: 100%;
+}
+.nav-collapse ul{padding:10px;background:{if $this->module['config']['toggle_color']}{php echo $this->module['config']['toggle_color']}{else}#4a86e8{/if};overflow:hidden;border-bottom:2px solid rgba(0,0,0,0.2);list-style:none;height: 315px;}
+.nav-collapse ul li{float:left;width:44%;line-height:35px;margin:5px 3%}
+.nav-collapse ul li a{color:#fff;font-size:12px;display:block;width:100%;background:rgba(0,0,0,0.2);text-align:center;text-decoration: none;}
+.nav-collapse ul li a:hover{background:rgba(0,0,0,0.3);text-decoration: none;}
+.nav-collapse ul li.currentPage a{background:#fff;color:#a15b28;font-weight:700;}
+/**/
+#layout{
+background-color: #368FF4;
+width: 100%;
+height:40px;
+position:relative;
+opacity: 0.8;
+}
+#left{
+width: 20%;
+height:40px;
+float:left;
+}
+
+
+#center{
+width: 120px;
+height:25px;
+position:absolute;
+left:50%;
+top:50%;
+margin-left:-50px;
+margin-top:-10px;
+color:#fff;
+
+}
+#right{
+width: 20%;
+height:40px;
+float:right;
+position:absolute;
+left:80%;
+}
+.cl {
+	color:white;opacity: 0.8;font-family:仿宋_GB2312;text-decoration: none;
+}
+.list{border-radius:8px;}
+.list li a{display:block; height:80px; padding:5px; border-bottom:1px #EEE solid; color:#333; overflow:hidden; text-decoration:none !important; position:relative;}
+.list li a .thumb{width:80px; height:60px;}
+.list li a .title{font-size:13px;font-weight: bold;}
+.list li a .createtime{font-size:12px; color:#999; position:absolute; bottom:0;}
+</style>
+
+	

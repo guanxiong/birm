@@ -1,0 +1,90 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+	<!-- <li><a href="{php echo $this->createWebUrl('shopset')}">基本设置</a></li> -->
+	<!-- <li><a href="{php echo $this->createWebUrl('printset')}">打印机设置</a></li>	
+	<li><a href="{php echo $this->createWebUrl('mailset')}">邮件设置</a></li>	
+	 -->
+	<li  class="active"><a href="{php echo $this->createWebUrl('smsset')}">短信设置</a></li>	
+	<li><a href="{php echo $this->createWebUrl('printset')}">打印机设置</a></li>
+</ul>
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+	
+		<h4>短信平台基本设置(物业名称一定要在参数设置中填写,短信才能生效)</p><!--  <small><a href="{php echo $this->createWebUrl('Smsset',array('action'=>'test'))}">测试短信发送</a></small> --></h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">是否开启</label></th>
+				<td>
+					<label for="isshow1" class="radio inline"><input type="radio" name="sms_status" value="1" id="isshow1" {if $set['sms_status']==1}checked="true"{/if} /> 是</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for="isshow2" class="radio inline"><input type="radio" name="sms_status" value="0" id="isshow2"  {if $set['sms_status']==0}checked="true"{/if} /> 否</label>
+					<span class="help-block"></span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">注册短信验证</label></th>
+				<td>
+					<label for="sms_resgister1" class="radio inline"><input type="radio" name="sms_resgister" value="1" id="sms_resgister1" {if $set['sms_resgister']==1}checked="true"{/if} /> 开启</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for="sms_resgister2" class="radio inline"><input type="radio" name="sms_resgister" value="0" id="sms_resgister2"  {if $set['sms_resgister']==0}checked="true"{/if} /> 关闭</label>
+					<span class="help-block"></span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">报修投诉提醒</label></th>
+				<td>
+					<label for="sms_type1" class="radio inline"><input type="radio" name="sms_type" value="1" id="sms_type1" {if $set['sms_type']==1}checked="true"{/if} /> 开启</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for="sms_type2" class="radio inline"><input type="radio" name="sms_type" value="0" id="sms_type2"  {if $set['sms_type']==0}checked="true"{/if} /> 关闭</label>
+					<span class="help-block"></span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">报修投诉模板ID</label></th>
+				<td>
+					<input type="text" name="sms_reportid" class="span1" value="{$set['sms_reportid']}" />
+					<p class="help-block"></p>	(填写聚合数据的模板ID,变量用#content#代表报修内容,#mobile#粉丝手机,#company#物业名字，调用全局参数里面的物业名字,例如：
+					【#company#报修】报修信息#content#,报修人电话#mobile#)				
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">短信注册模板ID</label></th>
+				<td>
+					<input type="text" name="sms_resgisterid" class="span1" value="{$set['sms_resgisterid']}" />
+					<p class="help-block"></p>
+					(填写聚合数据的模板ID,变量用#code#代表验证码,#company#物业名字，调用全局参数里面的物业名字,例如：
+					【#company#】您的验证码是#code#。如非本人操作，请忽略本短信)				
+				</td>
+			</tr>			
+			<tr>
+				<th><label for="">短信接口Key</label></th>
+				<td>
+					<input type="text" name="sms_account" class="span6" value="{$set['sms_account']}" />
+					<p class="help-block">目前暂时1个短信平台(聚合数据http://www.juhe.cn/)</p>					
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+					<input type="hidden" name="id" value="{$set['id']}" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+ 
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+$(':radio[name="sms_from"]').click(function() {
+	tt=$(this).val();
+	if(tt==2){
+		$("#api").show();
+	}else{
+		$("#api").hide();
+	}
+});
+</script>	
+{template 'common/footer'}

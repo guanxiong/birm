@@ -1,0 +1,123 @@
+
+{template 'common/header'}
+<div class="main">
+	{if $operation == 'post'}
+	<ul class="nav nav-tabs">
+		<li><a href="{php echo $this->createWebUrl('property', array('op' => 'display'));}">管理</a></li>
+		<li {if intval($_GPC['id'])==0}class="active"{/if}><a href="{php echo $this->createWebUrl('property', array('op' => 'post'));}">创建介绍</a></li>
+		{if intval($_GPC['id'])!=0}
+		<li class="active"><a href="{php echo $this->createWebUrl('property', array('op'=>'post','id'=>$item['id']));}">编辑介绍</a></li>
+		{/if}
+	</ul>
+	<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}">
+		<h4>物业团队信息</h4>
+		<table class="tb">
+			<tr>
+				<th>标题</th>
+				<td><input type="text" name="title" value="{$item['title']}" class="span5" placeHolder="请输入物业团队名称"/></td>
+			</tr>
+			<tr>
+			<th><label for="">公司照片</label></th>
+			<td>
+				<div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;">
+					 
+					  {if !empty($item['topPicture'])}
+						<input  type="hidden" name="topPicture-old" value="{$item['topPicture']}"  />
+					    <img src="{$_W['attachurl']}{$item['topPicture']}" />
+					  {/if}
+					</div>
+					<div>
+						<span class="btn btn-file">
+						   <span class="fileupload-new">选择图片</span>
+						   <span class="fileupload-exists">更改</span>
+						   <input name="topPicture" type="file" />
+						</span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+					</div>
+				</div>
+				<span class="help-block"></span>
+			</td>
+		</tr>
+		<!-- <tr>
+			<th>物业微社区</th>
+			<td>
+				<input type="text" name="mcommunity" value="{$item['mcommunity']}" class="span5" placeHolder="请输入物业微社区链接地址"/>（注：链接需加http://）		
+			</td>
+		</tr> -->
+			<tr>
+				<th>团队介绍</th>
+				<td>
+					<textarea style="height:100px;" class="span7 richtext-clone" name="content" cols="70" id="reply-add-text">{$item['content']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+	<script type="text/javascript">
+		kindeditor($('#reply-add-text'));
+	</script>
+{elseif $operation == 'display'}
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="{php echo $this->createWebUrl('property', array('op' => 'display'));}">管理</a></li>
+		<li><a href="{php echo $this->createWebUrl('property', array('op' => 'post'));}">创建介绍</a></li>
+	</ul>
+	<div class="search">
+		<form action="" method="post">
+		<input type="hidden" name="act" value="module" />
+		<input type="hidden" name="op" value="display" />
+		<input type="hidden" name="do" value="property">
+		<input type="hidden" name="name" value="xfcommunity" />
+		<table class="table table-bordered tb">
+			<tbody>
+				<tr>
+					<th>标题</th>
+					<td>
+						<input class="span5" name="title" id="" type="text" value="{$title}" />
+					</td>
+				</tr>
+				<tr class="search-submit">
+					<td colspan="2"><button class="btn pull-right span2"><i class="icon-search icon-large"></i> 搜索</button></td>
+				 </tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:20%;">团队名称</th>
+					<th style="width:10%;">发布人</th>
+					<th style="width:15%;">发布日期</th>
+					<th style="width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['title']}</td>
+					<td>{$_W['username']}</td>
+					<td>{php echo date('Y-m-d H:i:s', $item[createtime]);}</td>
+					<td>
+						<span>
+							<a href="{php echo $this->createWebUrl('property',array('op'=>'post','id'=>$item['id']))}">编辑</a>
+							<a href="{php echo $this->createWebUrl('property',array('op'=>'delete','id'=>$item['id']))}" onclick="return confirm('此操作不可恢复，确认吗？');">删除</a>
+						</span>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+{/if}
+</div>
+{template 'common/footer'}

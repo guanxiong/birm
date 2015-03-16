@@ -1,0 +1,139 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>活动参数设置</h4>
+		<table class="tb">
+			<tr>
+					<th>活动规则</th>
+					<td>
+						<textarea id="rule" style="height:150px;" name="rule" class="span7" cols="60">{$settings['rule']}</textarea>
+						<div class="help-block">活动的相关说明</div>
+					</td>
+			</tr>
+			<tr>
+				<th>顶部图片</th>
+				<td>{php echo tpl_form_field_image('ranklist', $settings['ranklist']);}
+					
+					图片建议尺寸：640像素 * 500像素
+				</td>
+			</tr>
+			<tr>
+				<th>背景图片</th>
+				<td>{php echo tpl_form_field_image('bglist', $settings['bglist']);}
+					
+					图片建议尺寸：640像素 * 10像素,纯色背景！
+				</td>
+			</tr>
+			<tr>
+				<th>首次分享砍价区间</th>
+				<td>大于<input type="text" name="zk1" class="span1" {if !empty($settings['zk1'])} value="{$settings['zk1']}" {else} value="1" {/if}  />小于
+				<input type="text" name="zk2" class="span1" {if !empty($settings['zk2'])} value="{$settings['zk2']}" {else} value="9" {/if}/></td>
+			</tr>
+				<tr>
+				<th>新用户关注引导页</th>
+				<td><input type="text" name="xgzurl" class="span7" value="{$settings['xgzurl']}"/>此处为空，就是不需要关注也能参与活动，如果要粉丝关注才能参与活动，请先在微信官方发布一条引导关注的图文信息，然后把地址填入，必须http://开头。</td>
+			</tr>
+			</table>
+			<h4>助砍提示话术设置</h4>
+			<table class="tb">
+			<!-- 第一个砍价区间设置和提示话术设置 -->
+			
+			<tr>
+				<th>助砍区间一</th>
+				<td>大于<input type="text" class="span1" value="0"  disabled="disabled"/>小于
+				<input type="text" name="qj1" class="span1" {if !empty($settings['qj1'])} value="{$settings['qj1']}" {else} value="5" {/if}/></td>
+			</tr>
+			<tr>
+				<th>提示话术</th>
+				<td><input type="text" name="hs1" class="span7" {if !empty($settings['hs1'])} value="{$settings['hs1']}" {else} value="大哥，砍得有点少哦~弱弱问您砍价前洗手了么？"{/if}/>(不超过40个汉字！)</td>
+			</tr>
+			
+			<!-- 第二个砍价区间设置和提示话术设置 -->
+			<tr>
+				<th>助砍区间二</th>
+				<td>大于<input type="text" name="qj2" class="span1" {if !empty($settings['qj2'])} value="{$settings['qj2']}" {else} value="4" {/if}  />小于
+				<input type="text" name="qj3" class="span1" {if !empty($settings['qj3'])} value="{$settings['qj3']}" {else} value="9" {/if}/></td>
+			</tr>
+			<tr>
+				<th>提示话术</th>
+				<td><input type="text" name="hs2" class="span7" {if !empty($settings['hs2'])} value="{$settings['hs2']}" {else} value="哟~手气好像还不错哦，是不是最近有扶老奶奶过马路呀~"{/if}/>(不超过40个汉字！)</td>
+			</tr>
+			<!-- 第三个砍价区间设置和提示话术设置 -->
+			<tr>
+				<th>助砍区间三</th>
+				<td>大于<input type="text" name="qj4" class="span1" {if !empty($settings['qj4'])} value="{$settings['qj4']}" {else} value="8" {/if} />小于
+				<input type="text" name="qj5" class="span1"  {if !empty($settings['qj5'])} value="{$settings['qj5']}" {else} value="12" {/if} /></td>
+			</tr>
+			<tr>
+				<th>提示话术</th>
+				<td><input type="text" name="hs3" class="span7" {if !empty($settings['hs3'])} value="{$settings['hs3']}" {else} value="哇！RP爆发了有木有~一下帮砍这么多！老板娘又要心疼好半天！"{/if} />(不超过40个汉字！)</td>
+			</tr>
+			<!-- 第四个砍价区间设置和提示话术设置 
+		
+			<tr>
+				<th>助砍小于0提示话术</th>
+				<td><input type="text" name="hs4" class="span7" {if !empty($settings['hs4'])} value="{$settings['hs4']}" {else} value="啊呀！亲您的刀砍偏啦！砍到人啦~您还是回家练练刀工，下次再来吧！"{/if} />(不超过40个汉字！)</td>
+			</tr>-->
+			<!-- 第五个砍价区间设置和提示话术设置 -->
+			
+			<tr>
+				<th>砍到底价提示话术</th>
+				<td><input type="text" name="hs5" class="span7" {if !empty($settings['hs5'])} value="{$settings['hs5']}" {else} value="亲，求放过！这件商品已经是底裤价了，不能再砍了！您就给老板一条活路吧~~~"{/if}/>(不超过40个汉字！)</td>
+			</tr>
+			
+			<tr>
+				<th>助砍时间限制</th>
+				<td>超过<input type="text" name="sjxz" class="span1" {if !empty($settings['sjxz'])} value="{$settings['sjxz']}" {else} value="72" {/if}/>小时就不能再助砍了！</td>
+			</tr>
+			
+		</table>
+			<h4>抢礼品借用高级认证设置(自己是认证服务号忽悠此项)</h4>
+		<table class="tb">
+		　　<tr>
+				<th>AppId：</th>
+				<td><input type="text" name="appid" class="span3" value="{$settings['appid']}" /></td>
+		　　</tr>
+			<tr>
+				<th>AppSecret：</th>
+				<td><input type="text" name="secret" class="span5" value="{$settings['secret']}" /></td>
+			</tr>			
+			<tr>
+				<th colspan="2">
+					<div class="help-block">借用说明：必需设置借用高级认证号的OAuth2.0网页授权的回调域名为你公众号第三方平台的全域名。
+					如：你的域名为：wx.weixin.com ，你必需让借用高级认证号设置OAuth2.0网页授权的回调域名为:wx.weixin.com</div>
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2">
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</th>
+			</tr>
+				<tr>
+				<th colspan="2"><b>1.使用的AppId和AppSecret在 [开发者中心]，可以找到。</b>
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2">
+					<img src="./source/modules/hlzonyu/template/images/appkey.jpg" width="395">
+					
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2"><b>2.借用说明：必需设置借用高级认证号的OAuth2.0网页授权的回调域名为你公众号第三方平台的全域名。
+					如：你的域名为：wx.weixin.com ，你必需让借用高级认证号设置OAuth2.0网页授权的回调域名为:wx.weixin.com<br>
+					只是为了完善一下头像和呢称,性别,要不很多功能没法完成</b>
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2"><a href="./source/modules/hlzonyu/template/images/help.jpg" target='_blank'><img src="./source/modules/hlzonyu/template/images/help.jpg" width="500"></a>	
+				</th>
+			</tr>
+					
+		</table>
+	</form>
+</div>
+<script>
+kindeditor($('#rule'));
+</script>
+{template 'common/footer'}

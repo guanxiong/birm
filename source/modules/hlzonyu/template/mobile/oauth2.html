@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{$reply[title]}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="./source/modules/hlzonyu/template/images/do.css?ver=55e4" type="text/css">
+</head>
+<body>
+<header></header>
+<ul class="tab" >
+			<li style="width:33.3%" ><a href="{php echo $this->createMobileUrl('index',array('rid' => $reply['rid']));}">活动首页</a></li>
+			<li style="border-left:1px solid RGB(241,111,145)"></li>
+			
+			<li style="width:32.4%" onclick="" ><a href="{php echo $this->createMobileUrl('zonyu',array('rid' => $reply['rid']));}">活动详情</a></li> 
+			<li style="border-left:1px solid RGB(241,111,145)"></li>
+			
+			<li style="width:33.3%" ><a href="{php echo $this->createMobileUrl('zonyu',array('rid' => $reply['rid']));}">参与活动</a></li> 
+</ul>
+<div class="content">
+	<img src="{$dingpic}" width="100%">
+	<div>
+		<div class="wx box">
+		<div class="b" style="margin-left:20px;margin-right:20px; margin-top:-80px; line-height: 20px;text-align: -webkit-match-parent;">
+			<ul style="font-size:12px;">
+				<p>亲爱滴，我 {$profiles['realname']} 正在参与 {$reply['title']} 活动，若友情未尽,你只要手指轻轻一点，就能助我一臂之力！</p>
+				<p>{if $ztotal==0}好可怜，一个助抢都没有呢！{else}当前已验证 <font color="#ff0000" style="font-size: 24px;">{$ztotal}</font>个人友情未尽！{/if}</p>
+				<p><font color="#ffffff">小贴士：关注 [ {$_W['account']['name']} ]后可以参加活动哦</font></p>
+			</ul>
+		</div>	
+		</div>
+	
+		<p>
+			<img src="{$imgurl}" width="100%">		
+		</p>
+		
+		
+		<div class="wx box">
+		<div class="b" style="margin-left:20px;margin-right:20px;  line-height: 20px;text-align: -webkit-match-parent;">
+			<ul style="font-size:12px;">
+				<p>共有 <span class="rankNUM">{$listtotal}</span> 人参与此活动!</p>
+				<p>您的朋友 {$profiles['realname']} 当前排在第 <span class="rankNUM">{$sharepm}</span> 名!</p>
+			{if $statzonyutitle==''}
+				
+				<p>没有授权登录，无法助抢！</p>
+			{else}
+				<p>{$statzonyutitle} <p>
+			{/if}
+			</ul>
+		</div>	
+		</div>
+		
+		
+
+		
+	</div>
+
+<!--温馨提示-->
+	<div class="wx box">
+
+
+		<div class="b" style="line-height: 24px;text-align: -webkit-match-parent;">
+			<ul>
+				<p style="font-size:18px;margin-bottom:5px">【活动规则】</p>
+					{php echo htmlspecialchars_decode($reply['content']);}
+
+			</ul>
+		</div>
+
+
+	</div>
+
+	<img src="./source/modules/hlzonyu/template/images/bottom1.png" width="100%" style=" margin-bottom: -5px; ">
+
+
+</div>
+
+
+
+{if empty($footer_off)}<div id="footer">&copy;{$_W['account']['name']}&nbsp;&nbsp;{$_W['setting']['copyright']['statcode']}</div>{/if}
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	window.shareData = {
+		"imgUrl": "{$imgurl}",
+		"timeLineLink": "{$staturl}",
+		"sendFriendLink": "{$staturl}",
+		"weiboLink": "{$staturl}",
+		"tTitle": "{$reply['title']}",
+		"tContent": "{$reply['description']}",
+		"fTitle": "{$reply['title']}",
+		"fContent": "{$reply['description']}",
+		"wContent": "{$reply['description']}"
+	};
+
+	// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+		WeixinJSBridge.invoke('sendAppMessage', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.sendFriendLink,
+			"desc": window.shareData.fContent,
+			"title": window.shareData.fTitle
+		}, function (res) {
+			_report('send_msg', res.err_msg);
+		})
+	});
+
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function (argv) {
+		WeixinJSBridge.invoke('shareTimeline', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.timeLineLink,
+			"desc": window.shareData.tContent,
+			"title": window.shareData.tTitle
+		}, function (res) {
+			_report('timeline', res.err_msg);
+		});
+	});
+
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function (argv) {
+		WeixinJSBridge.invoke('shareWeibo', {
+			"content": window.shareData.wContent,
+			"url": window.shareData.weiboLink
+		}, function (res) {
+			_report('weibo', res.err_msg);
+		});
+	});
+}, false);
+</script>
+</body>
+</html>

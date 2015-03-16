@@ -1,0 +1,284 @@
+{template 'header'}
+<link type="text/css" rel="stylesheet" href="./resource/style/bootstrap.css">
+<script type="text/javascript" src="./resource/script/bootstrap.js"></script>
+<style type="text/css">
+#layout{
+background-color: #368FF4;
+width: 100%;
+height:40px;
+position:relative;
+opacity: 0.8;
+}
+#left{
+width: 20%;
+height:40px;
+float:left;
+}
+
+
+#center{
+width: 120px;
+height:25px;
+position:absolute;
+left:50%;
+top:50%;
+margin-left:-50px;
+margin-top:-10px;
+color:#fff;
+font-size: 15px;
+}
+</style>
+<link type="text/css" rel="stylesheet" href="./resource/style/bootstrap.css">
+<div class="main">
+	<div id="layout">
+		<div id="left">&nbsp;&nbsp;<a href="javascript:history.go(-1);" style='color:#fff;line-height:40px;text-decoration:none;'><i class="icon-chevron-left"></i>&nbsp;返回</a></div>
+		<div id="center">
+			{if $op =='sell'}我要转让{else}我要求购{/if}
+		</div>
+	</div>
+	<div style='width:100%;'>
+		<form action="" method="post"    enctype="multipart/form-data" onsubmit="return checkInfo(this);" >
+			<table class="table table-condensed" >
+				<input type='hidden' name='id' value='{$good['id']}'> 
+				{if $op == 'sell'}
+				<tr>
+					<td style='text-align:center;'>
+						<input  type='text' name="title"   style='width:80%;height:30px;outline:none' value="{$good['title']}" placeHolder="宝贝标题" />
+					</td>
+				</tr>
+				<tr>
+					<td style='text-align:center;'>
+						<textarea name='description' style='width:80%;height:80px;resize:none' placeHolder="简单介绍宝贝的入手时间、使用方式、转让原因等" >{$good['description']}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td style='text-align:center;'>
+						<input type="text" name="zprice" class="form-control" style='width:40%;height:30px;' value="{$good['zprice']}" placeHolder="转让价¥"/>
+						<input type="text" name="yprice" class="form-control" style='width:40%;height:30px;' value="{$good['yprice']}" placeHolder="原价¥"/>
+					</td>
+				</tr>
+				<tr>
+					<td style='text-align:center;'>
+						<div style='margin-left:30px;'>
+							<select name='rolex' class="form-control" style='width:80%;'>
+								<option value='0'>新旧程度</option>
+								<option value='全新' {if $good['rolex'] == '全新'}selected{/if}>全新</option>
+								<option value='九成新' {if $good['rolex'] == '九成新'}selected{/if}>九成新</option>
+								<option value='八成新' {if $good['rolex'] == '八成新'}selected{/if}>八成新</option>
+								<option value='七成新' {if $good['rolex'] == '七成新'}selected{/if}>七成新</option>
+								<option value='六成新' {if $good['rolex'] == '六成新'}selected{/if}>六成新</option>
+								<option value='五成新' {if $good['rolex'] == '五成新'}selected{/if}>五成新</option>
+								<option value='四成新' {if $good['rolex'] == '四成新'}selected{/if}>四成新</option>
+							</select>
+						</div>
+
+					</td>
+				</tr>
+				<tr>
+					<td style='text-align:center;'>
+						<div style='margin-left:30px;'>
+							<select name='category' class="form-control" style='width:80%;'>
+								<option value='0'>分类</option>
+								{loop $categories $category}
+									<option value='{$category['name']}' {if $good['category'] == $category['name']}selected{/if}>{$category['name']}</option>
+								{/loop}
+							</select>
+						</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td style='text-align:center;'>
+						<input type="text" name="realname" class="form-control" style='width:80%;height:30px;' value="{$good['realname']}" placeHolder="联系人"/>
+					</td>
+				</tr>
+
+				<tr>
+
+					<td style='text-align:center;'>
+						<input type="text" name="mobile" class="form-control" style='width:80%;height:30px;'  value="{$good['mobile']}" placeHolder="联系手机"/>
+					</td>
+				</tr>
+				
+				 <tr>
+
+				<td style='text-align:center;'>
+
+					<div class="fileupload fileupload-new" data-provides="fileupload" style='float:left;margin-right:5px;margin-left:30px;'>
+						<div class="fileupload-preview thumbnail" style="width: 60px; height: 60px;">
+							{if !empty($good['thumb1'])}
+							<input  type="hidden" name="thumb1-old" value="{$good['thumb1']}"  />
+							<img src="{$_W['attachurl']}{$good['thumb1']}" />
+							{/if}
+						</div>
+						<div>
+							<span class="btn btn-file" style="margin-left:3px;">
+								<span class="fileupload-new">上传</span>
+								<span class="fileupload-exists">更改</span>
+								<input name="thumb1" type="file" />
+							</span>
+
+						</div>
+					</div>
+					<div class="fileupload fileupload-new" data-provides="fileupload" style='float:left;;margin-right:5px;'>
+						<div class="fileupload-preview thumbnail" style="width: 60px; height: 60px;">
+							{if !empty($good['thumb2'])}
+							<input  type="hidden" name="thumb2-old" value="{$good['thumb2']}"  />
+							<img src="{$_W['attachurl']}{$good['thumb2']}" />
+							{/if}
+						</div>
+						<div>
+							<span class="btn btn-file" style="margin-left:3px;">
+								<span class="fileupload-new">上传</span>
+								<span class="fileupload-exists">更改</span>
+								<input name="thumb2" type="file" />
+							</span>
+
+						</div>
+					</div>
+					<div class="fileupload fileupload-new" data-provides="fileupload" style='float:left;;margin-right:5px;'>
+						<div class="fileupload-preview thumbnail" style="width: 60px; height: 60px;">
+							{if !empty($good['thumb3'])}
+							<input  type="hidden" name="thumb3-old" value="{$good['thumb3']}"  />
+							<img src="{$_W['attachurl']}{$good['thumb3']}" />
+							{/if}
+						</div>
+						<div>
+							<span class="btn btn-file" style="margin-left:3px;">
+								<span class="fileupload-new">上传</span>
+								<span class="fileupload-exists">更改</span>
+								<input name="thumb3" type="file" />
+							</span>
+
+						</div>
+					</div>
+					<div class="fileupload fileupload-new" data-provides="fileupload" style='float:left;;margin-right:5px;'>
+						<div class="fileupload-preview thumbnail" style="width: 60px; height: 60px;">
+							{if !empty($good['thumb4'])}
+							<input  type="hidden" name="thumb4-old" value="{$good['thumb4']}"  />
+							<img src="{$_W['attachurl']}{$good['thumb4']}" />
+							{/if}
+						</div>
+						<div>
+							<span class="btn btn-file" style="margin-left:3px;">
+								<span class="fileupload-new">上传</span>
+								<span class="fileupload-exists">更改</span>
+								<input name="thumb4" type="file" />
+							</span>
+
+						</div>
+					</div>
+				</td>
+			</tr>
+			{elseif $op =='buy'}
+			
+				<tr>
+					<td style='text-align:center;'>
+						<input  type='text' name="title"   style='width:80%;height:30px;outline:none' value="{$good['title']}" placeHolder="简单一句话描述你要找的宝贝" />
+					</td>
+				</tr>
+				<tr>
+					<td style='text-align:center;'>
+						<textarea name='description' style='width:80%;height:80px;resize:none' placeHolder="说说你对宝贝的要求，比如性能、细节等" >{$good['description']}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td style='text-align:center;'>
+						<input type="text" name="zprice" class="form-control" style='width:80%;height:30px;' value="{$good['zprice']}" placeHolder="期望价格¥"/>
+					</td>
+				</tr>
+				<tr>
+					<td style='text-align:center;'>
+						<div style='margin-left:30px;'>
+							<select name='rolex' class="form-control" style='width:80%;'>
+								<option value='0'>新旧程度</option>
+								<option value='全新' {if $good['rolex'] == '全新'}selected{/if}>全新</option>
+								<option value='九成新' {if $good['rolex'] == '九成新'}selected{/if}>九成新</option>
+								<option value='八成新' {if $good['rolex'] == '八成新'}selected{/if}>八成新</option>
+								<option value='七成新' {if $good['rolex'] == '七成新'}selected{/if}>七成新</option>
+								<option value='六成新' {if $good['rolex'] == '六成新'}selected{/if}>六成新</option>
+								<option value='五成新' {if $good['rolex'] == '五成新'}selected{/if}>五成新</option>
+								<option value='四成新' {if $good['rolex'] == '四成新'}selected{/if}>四成新</option>
+							</select>
+						</div>
+
+					</td>
+				</tr>
+				<tr>
+					<td style='text-align:center;'>
+						<div style='margin-left:30px;'>
+							<select name='category' class="form-control" style='width:80%;'>
+								<option value='0'>分类</option>
+								{loop $categories $category}
+									<option value="{$category['name']}" {if $good['category'] == $category['name']}selected{/if}>{$category['name']}</option>
+								{/loop}
+							</select>
+						</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td style='text-align:center;'>
+						<input type="text" name="realname" class="form-control" style='width:80%;height:30px;' value="{$good['realname']}" placeHolder="联系人"/>
+					</td>
+				</tr>
+
+				<tr>
+
+					<td style='text-align:center;'>
+						<input type="text" name="mobile" class="form-control" style='width:80%;height:30px;'  value="{$good['mobile']}" placeHolder="联系手机"/>
+					</td>
+				</tr>
+
+
+			{/if}
+			<tr>
+
+				<td  style='text-align:center;'>
+					<input name="submit" type="submit" value="发布信息" class="btn btn-info span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+	</div>
+</div>
+<br/><br/>
+<script type="text/javascript">
+<!--
+	function checkInfo(form) {
+		
+		var mobile = form['mobile'].value;
+		if (!mobile) {
+			alert('请输入您的手机号码！');
+			return false;
+		}
+		if (mobile.search(/^([0-9]{11})?$/) == -1) {
+			alert('请输入正确的手机号码！');
+			return false;
+		}
+		
+		if (!form['title'].value) {
+			alert('请输入宝贝标题。');
+			return false;
+		}
+		if (!form['rolex'].value && form['rolex'].value==0) {
+			alert('请选择成色。');
+			return false;
+		}
+		if (!form['category'].value && form['pcate'].value==0) {
+			alert('请选择分类。');
+			return false;
+		}
+		if (!form['zprice'].value) {
+			alert(' 请输入转让价格。');
+			return false;
+		}
+		if (!form['realname'].value) {
+			alert(' 请输入姓名。');
+			return false;
+		}
+	}
+//-->
+</script>
+{template 'footer'}

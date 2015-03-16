@@ -1,0 +1,42 @@
+{template 'common/header'}
+<style type="text/css">
+.help-block1 { margin:0px 10px;color: #c09853;vertical-align: middle;}
+</style>
+<div class="stat">
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="brand">设置内定排名</span>						
+					</div>
+				</div>
+	<form action="" method="post" class="form-horizontal form">
+	    <input type="hidden" name="action" value="save" />
+		<input type="hidden" name="id" value="{$id}" />
+		<h4>设置：{$user['realname']}　手机号：{$user['mobile']} 的用户排名</h4>
+		<table class="tb">			
+			<tr>
+				<td>
+					<span class="help-block1">内定排名：</span><select name="ndrank" id="ndrank" class="input-medium">
+								<option value="0">选择排名</option>
+								{php $i=1;}
+								{loop $paimingnum $v}
+								<option value="{$v}"{if $ndrank==$v} selected="selected"{/if}>第{$v}名</option>
+								{php $i++;}
+								{/loop}
+								<option value="0">取消内定</option>
+					</select>　　<span class="help-block1">排名变化量：</span><input type="text" name="ndranknums" value="{$user['ndranknums']}" class="span1" placeholder="排名变化量">
+				</td>
+			</tr>
+			<tr>
+				<td><div class="help-block">排名变化量为当前排名与下面排名之间的间隔数量，如：选择第1名，排名变化量输入8；就是第1名与第2名之间抢礼品数量相差为1-8之间的随机数</div></td>
+			</tr>
+			<tr>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div></div>
+{template 'common/footer'}

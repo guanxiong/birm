@@ -1,0 +1,56 @@
+{template 'header'}
+
+<div id="layout">
+	<div id="left">&nbsp;&nbsp;<a href="{php echo $this->createMobileUrl('carindex')}" style='color:#fff;line-height:40px;text-decoration:none;'><i class="icon-chevron-left"></i>&nbsp;返回</a></div>
+	<div id="center">
+		{if $row['status'] == '1'}找乘客{else}找车主{/if}
+	</div>
+	<div id="right">
+		{if $row['openid'] == $_W['fans']['from_user'] }
+		<div class="dropdown">
+			<a style='font-size:10px;text-align:center;color:white;display:block;line-height:40px;' role="menuitem" tabindex="-1" 
+					href="{php echo $this->createMobileUrl('cardetail',array('op' => 'delete','id' => $row['id']))}">删除</a>
+			<!-- <a  class="dropdown-toggle"  data-toggle="dropdown" href="#" > <i class='icon-tasks' style='color: #fff;line-height:40px;'></i>
+			</a> -->
+			<ul class="dropdown-menu" role="menu" aria-labelledby="dLabe3" style='min-width:60px;'>
+				<!-- {if $row['enable'] == 1}
+				<li role="presentation">
+					<a style='font-size:10px;padding: 3px 0px;text-align:center;' role="menuitem" tabindex="-1" 
+					href="{php echo $this->createMobileUrl('cardetail',array('op' => 'update','enable' =>0 ,'id' => $item['id']))}">关闭帖子</a>
+				</li>
+				{else}
+				<li role="presentation">
+					<a style='font-size:10px;padding: 3px 0px;text-align:center;' role="menuitem" tabindex="-1" 
+					href="{php echo $this->createMobileUrl('cardetail',array('op' => 'update','enable' =>1,'id' => $item['id']))}">开启帖子</a>
+				</li>
+				{/if} -->
+				<!-- <li role="presentation">
+					<a style='font-size:10px;padding: 3px 0px;text-align:center' role="menuitem" tabindex="-1" 
+					href="{php echo $this->createMobileUrl('cardetail',array('op' => 'delete','id' => $row['id']))}">删除</a>
+				</li> -->
+			</ul>
+		</div>
+		{/if}
+	</div>
+</div>
+<ul class="list">
+	
+		<li>
+			<a href="" style='height:100%;'>
+				<div class="title">
+					<img src='{$_W['fans']['avatar']}' style='width:40px;height:40px;'/>
+					{$_W['fans']['nickname']}
+				</div>
+				<div style='font-size:12px;margin-top:2px;'>手机:{$fans['mobile']}</div>
+				<div style='font-size:14px;margin-top:2px;'>起点:{$row['start_position']}</div>
+				<div style='font-size:14px;'>终点:{$row['end_position']}</div>
+				<div style='font-size:12px;margin-top:10px;'>{$row['content']}</div>
+				<div style='font-size:10px;margin:10px 0px;color:#999;'>出发时间:&nbsp;{if $row['startMinute']>9}{$row['startMinute']}{else}0{$row['startMinute']}{/if}:{if $row['startSeconds']>9}{$row['startSeconds']}{else}0{$row['startSeconds']}{/if}</div>
+				<div class="createtime">{php echo date('Y-m-d H:i:s', $row['createtime'])}</div>
+			</a>
+		</li>
+
+</ul>
+
+
+{template 'footer'}

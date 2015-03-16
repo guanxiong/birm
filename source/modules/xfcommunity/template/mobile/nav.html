@@ -1,0 +1,49 @@
+<style>
+.top-bar {
+background: #368FF4;
+height: 40px;
+overflow: hidden;
+box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
+opacity: 0.8;
+}
+.vline {
+float: left;
+width: 1px;
+height: 40px;
+background-image: url('./source/modules/xfmarket/template/mobile/img/vline.png');
+}
+.top-bar i {
+color: #fff;
+font-size: 24px;
+}
+.top-bar a {
+float: left;
+display: block;
+width: 25%;
+height: 40px;
+text-align: center;
+line-height: 45px;
+margin-left: -1px;
+}
+.top-bar a {
+color: #368FF4;
+text-decoration: none;
+}
+</style>
+<div class="top-bar">
+		<a href="{php echo $this->createMobileUrl('home')}">
+			<i class="icon-home"></i>
+		</a>
+		<div class="vline"></div>
+		<a href="tel:{php echo $this->module['config']['tel'];}">
+			<i class="icon-phone"></i>
+		</a>
+		<div class="vline"></div>
+		<a href="#" id="toggle">
+			<i class="icon-th"></i>
+		</a>
+		<div class="vline"></div>
+		<a href="{php echo $this->createMobileUrl('member')}">
+			<i class="icon-user"></i>
+		</a>
+	</div>

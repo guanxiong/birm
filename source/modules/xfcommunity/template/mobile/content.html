@@ -1,0 +1,115 @@
+{template 'header'}
+<style type="text/css">
+
+.cl {
+	color:white;opacity: 0.8;font-size:13px;font-family:仿宋_GB2312;text-decoration: none;
+}
+/*#center a:active{color:#FFFFFF;height: 24px;opacity: 1;text-decoration: none; }*/
+#layout{
+background-color: #368FF4;
+width: 100%;
+height:40px;
+position:relative;
+opacity: 0.8;
+}
+#left{
+width: 20%;
+height:40px;
+float:left;
+}
+#right{
+width: 20%;
+height:40px;
+float:right;
+position:absolute;
+left:80%;
+}
+
+#center{
+width: 120px;
+height:25px;
+position:absolute;
+left:50%;
+top:50%;
+margin-left:-30px;
+margin-top:-10px;
+color:#fff;
+}
+.ttmenu { position:relative;}
+.list{}
+.list li a{display:block; height:80px; padding:5px; border-bottom:1px #EEE solid; color:#333; overflow:hidden; text-decoration:none !important; position:relative;}
+.list li a .thumb{width:80px; height:60px;}
+.list li a .title{font-size:13px;font-weight: bold;}
+.list li a .createtime{font-size:12px; color:#999; position:absolute; bottom:0;}
+img{width:24%; height:70px;padding:5px 8px;}
+</style>
+<div id="layout">
+	<div id="left">&nbsp;&nbsp;<a href="{php echo $this->createMobileUrl('index')}" style='color:#fff;line-height:40px;text-decoration:none;'><i class="icon-chevron-left"></i>&nbsp;返回</a></div>
+	<div id="center">
+		{if $item['status'] == '1'}转让{else}求购{/if}
+	</div>
+	<div id="right">
+		{if $item['openid'] == $from_user }
+		<div class="dropdown">
+			<a  class="dropdown-toggle"  data-toggle="dropdown" href="#" > <i class='icon-tasks' style='color: #fff;line-height:40px;'></i>
+			</a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="dLabe3" style='min-width:60px;'>
+				<li role="presentation">
+				{if $item['status'] == '1'}
+					<a style='font-size:10px;padding: 3px 0px;text-align:center;' role="menuitem" tabindex="-1" 
+					href="{php echo $this->createMobileUrl('add',array('op' => 'sell','id' => $item['id']))}">编辑</a>
+				{else}
+					<a style='font-size:10px;padding: 3px 0px;text-align:center;' role="menuitem" tabindex="-1" 
+					href="{php echo $this->createMobileUrl('add',array('op' => 'buy','id' => $item['id']))}">编辑</a>
+				{/if}
+				</li>
+				<li role="presentation">
+					<a style='font-size:10px;padding: 3px 0px;text-align:center' role="menuitem" tabindex="-1" 
+					href="{php echo $this->createMobileUrl('content',array('op' => 'delete','id' => $item['id']))}">删除</a>
+				</li>
+			</ul>
+		</div>
+		{/if}
+	</div>
+</div>
+<div style='background-color:#F2F2F2;height:500px;z-index:-1' class='ttmenu'>
+	<div style='padding-top:30px;'>
+		<p style='float:left;margin-left:10px;font-weight:bold;'>{$item['title']}</p>
+		<p style='float:right;color:red;padding-right:10px;'>¥{$item['zprice']}</p>
+		<p style='clear:both;padding:5px 10px;font-size:10px;'>{php echo date('Y-m-d H:i:s', $item['createtime'])}</p>
+		<div>
+			{if $item['thumb1']}
+			<img src='{$_W['attachurl']}{$item['thumb1']}' />
+			{/if}
+			{if $item['thumb2']}
+			<img src='{$_W['attachurl']}{$item['thumb2']}' />
+			{/if}
+			{if $item['thumb3']}
+			<img src='{$_W['attachurl']}{$item['thumb3']}' />
+			{/if}
+			{if $item['thumb4']}
+			<img src='{$_W['attachurl']}{$item['thumb4']}' />
+			{/if}
+		</div>
+		<div style='padding:10px;'>{$item['description']}</div>
+	</div>
+	<div>
+		<table  class="table">
+			<tr>
+				<td>新旧程度：</td>
+				<td style='text-align:left;'>{$item['rolex']}</td>
+			</tr>
+			<tr>
+				<td>&nbsp;&nbsp;&nbsp;联系人：</td>
+				<td  style='text-align:left'>{$item['realname']}</td>
+			</tr>
+			<tr>
+				<td>联系电话：</td>
+				<td  style='text-align:left'>{$item['mobile']}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+
+{template 'footer'}

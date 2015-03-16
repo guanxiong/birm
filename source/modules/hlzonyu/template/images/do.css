@@ -1,0 +1,321 @@
+box@charset "utf-8";
+
+/* 
+@名称: base
+@功能: 重设浏览器默认样式
+*/
+
+/* 防止用户自定义背景颜色对网页的影响，添加让用户可以自定义字体 */
+html{
+color:#000;background:#fff;
+-webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+/* 内外边距通常让各个浏览器样式的表现位置不同 */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+margin:0;padding:0;
+font-family: "微软雅黑","新宋体","宋体",Verdana, Arial;
+}
+
+/* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section { 
+    display:block;
+}
+
+/* HTML5 媒体文件跟 img 保持一致 */
+audio,canvas,video {
+    display: inline-block;*display: inline;*zoom: 1;
+}
+
+/* 要注意表单元素并不继承父级 font 的问题 */
+body,button,input,select,textarea{
+font:14px/1.5 tahoma,arial,\5b8b\4f53;
+}
+input,select,textarea{
+font-size:100%;
+}
+
+/* 去掉各Table  cell 的边距并让其边重合 */
+table{
+border-collapse:collapse;border-spacing:0;
+}
+
+/* IE bug fixed: th 不继承 text-align*/
+th{
+text-align:inherit;
+}
+
+/* 去除默认边框 */
+fieldset,img{
+border:0;
+}
+
+/* ie6 7 8(q) bug 显示为行内表现 */
+iframe{
+display:block;
+}
+
+/* 去掉 firefox 下此元素的边框 */
+abbr,acronym{
+border:0;font-variant:normal;
+}
+
+/* 一致的 del 样式 */
+del {
+text-decoration:line-through;
+}
+
+address,caption,cite,code,dfn,em,th,var {
+font-style:normal;
+font-weight:500;
+}
+
+/* 去掉列表前的标识, li 会继承 */
+ol,ul {
+list-style:none;
+}
+
+/* 对齐是排版最重要的因素, 别让什么都居中 */
+caption,th {
+text-align:left;
+}
+
+/* 来自yahoo, 让标题都自定义, 适应多个系统应用 */
+h1,h2,h3,h4,h5,h6 {
+font-size:100%;
+font-weight:500;
+}
+
+q:before,q:after {
+content:'';
+}
+
+/* 统一上标和下标 */
+sub, sup {
+    font-size: 75%; line-height: 0; position: relative; vertical-align: baseline;
+}
+sup {top: -0.5em;}
+sub {bottom: -0.25em;}
+
+ 
+
+/* 让链接在 hover 状态下显示下划线 */
+a:hover {
+color: #994b00;
+/*text-decoration:underline;*/
+}
+a:link { 
+color: #994b00; 
+/*text-decoration: underline;*/ 
+} 
+a:visited { 
+color: #994b00; 
+/*text-decoration: underline; */
+}
+
+/* 默认不显示下划线，保持页面简洁 */
+ins,a {
+text-decoration:none;
+}
+
+/* 清理浮动 */
+.fn-clear:after {
+visibility:hidden;
+display:block;
+font-size:0;
+content:" ";
+clear:both;
+height:0;
+}
+.fn-clear {
+zoom:1; /* for IE6 IE7 */
+}
+
+/* 隐藏, 通常用来与 JS 配合 */
+body .fn-hide {
+display:none;
+}
+
+/* 设置内联, 减少浮动带来的bug */
+.fn-left,.fn-right {
+display:inline;
+}
+.fn-left {
+float:left;
+}
+.fn-right {
+float:right;
+}
+
+
+.cr{ color:#b90003;}
+header{ position:relative;}
+.logo{ 
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 50%;
+}
+.logo img{
+	width: 45%;
+	float: right;
+}
+.btn{ position:absolute;bottom:-30px;/*left:50%; margin-left:-138px; text-align:center;*/}
+.content{  margin:0 auto;}
+footer{ text-align:center;}
+
+.tz{ margin-top:0px;}
+.tz p{ font-size:0px; line-height:0px; padding:0; margin:0;}
+
+.box{position:relative;}
+.box .t{margin:0px 15px;}
+.box .t a{
+	font-size:18px;
+font-family:"微软雅黑";
+display:block;
+background:url(ii_18.png) no-repeat right center;
+color:#f5de78;
+height:64px;
+line-height:64px;
+padding:0px 0px 0px 10px;
+
+position:absolute;
+top:-45px;
+}
+
+.box .b{border-radius:5px;margin:0px 15px;}
+
+.box .b .list{}
+.box .b .list li{
+	border-radius: 5px;
+	margin: 0px 5px 5px 5px;
+	background: #bef5dc;
+	font-size: 14px;
+	padding: 10px 10px;
+
+}
+.box .b .list li .num{ 
+	color: #9d1d04;
+	float: left;
+	width: 20px;
+	height: 20px;
+	border: #9d1d04 2px dotted;
+	text-align: center;
+	border-radius: 20px;
+	margin-top: 8px;
+}
+.box .b .list li img{ border:#9f270e 1px solid;border-radius:100px; margin:0px 10px; vertical-align:middle;}
+.box .b .list li .price{ color:#994b00; float:right;margin-top:10px;}
+
+.box .b .list li em{ 
+font-size:14px; 
+color:#994b00;
+}
+
+.box .b .pg{ text-align:right;}
+
+/*分享*/
+.share{margin-top:50px;}
+.share .t a{ width:120px;}
+.share .b{ background:#fff;padding:24px 15px 15px 15px;}
+
+.share img{ 
+	float: left;
+	width: 37px;
+}
+.share .name{ float:left;}
+.share .a name{ float:left;}
+.share .name em{ display:block;}
+
+/*排行*/
+.top{margin-top:50px;}
+.top .t a{ width:120px;}
+.top .b{ background:#fff;padding:24px 15px 15px 15px;}
+
+.list img{
+	width:37px;
+	height:37px;
+}
+
+.wx .t a{ 
+ width:120px;
+}
+.wx .b{ 
+	padding: 10px 15px 10px 15px;
+	background: RGB(255,219,135);
+	font-size: 14px;
+}
+
+#layer{ position:fixed; width:100%; height:120%; background:#4f4b4c; z-index:999; float:left;top:0px; left:0px; opacity:0.8;}
+#layer img{ margin-top:20px;}
+#layer1{ position:fixed; width:100%; height:120%; background:#4f4b4c; z-index:999; float:left;top:0px; left:0px; opacity:1.0;}
+#layer1 img{ margin-top:20px;}
+@charset "utf-8";
+/* CSS Document */
+.cpRight{ position:absolute; left:0px; width:100%; bottom:0px; text-align:center; font-size:12px; color:#999; line-height:40px;}
+.pageContent{ padding:10px 10px;}
+.roundBox{ background-color:#fff;  border-radius:8px; line-height:40px; overflow:hidden;border:1px solid #b0b0b0;}
+/*body{ background-color:#942323;}*/
+body > header { width:100%; height:25px;}
+body > section{ padding:10px;background-color:#942323;}
+.btnShare a{ display:block; height:35px; line-height:35px; background:#fadf9f; border-radius:5px; margin-bottom:15px; text-align:center; font-size:18px; color:#942323; font-weight:bold}
+.tab{ overflow:hidden;margin-left:15px;margin-right:15px;background:#ffffff; border-radius:5px 5px 0px 0px;}
+.tab li{height: 35px; float:left; }
+.tab li a{ display:block; height: 35px;line-height: 35px;text-align: center;color: RGB(241,88,88);cursor: pointer;outline: none;font-size:16px; font-weight:bold}
+.tab li.current{ background:RGB(241,88,88); }
+.tab li.current a{color:#ffffff}
+.tab li.current a.visited{color:RGB(241,88,88)}
+.tabArt{ background:#fadf9f; padding:5px;}
+.tabArt .content{background:#fff; padding:10px;}
+.tabContent{ display:none;}
+ul.Txt li{ padding-bottom:10px; border-bottom:1px dashed #9a3328; margin-bottom:10px; color:#aaa; line-height:24px;}
+ul.Txt li h2{ line-height:30px; font-size:14px; color:#942323; font-weight:bold}
+ul.Txt li h2 em{ display:inline-block; width:15px; height:15px; font-size:11px; text-align:center; line-height:15px; background:url(numbg.png) no-repeat center center; background-size:100%;  margin-right:10px; color:#942323;margin-top:-5px;}
+ul.Txt li p{color:#595758; line-height:24px;}
+ul.picTxt li{ margin-bottom:10px; border-radius:5px; background:#ffe4a1; padding:5px 10px;}
+ul.picTxt li em{ display:inline-block; width:15px; height:15px; font-size:11px; text-align:center; line-height:15px; background:url(numbg.png) no-repeat center center; background-size:100%; vertical-align:middle; margin-right:10px; color:#942323; }
+ul.picTxt li img{ width:35px; height:35px; border:1px solid #942423; border-radius:20px; vertical-align:middle; margin-left:10px;}
+ul.picTxt li span{ display:inline-block; margin-left:20px; font-size:14px; line-height:20px; color:#000}
+ul.picTxt li span time{ color:#934c23}
+ul.picTxt li:last-child{ margin-bottom:0px;}
+#mcover,#mcover2
+{
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	display: none;
+	position: fixed;
+	z-index: 20000;
+	background-image: none;
+	background-attachment: scroll;
+	background-repeat: repeat;
+	background-position-x: 0%;
+	background-position-y: 0%;
+	background-size: auto;
+	background-origin: padding-box;
+	background-clip: border-box;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+#mcover img,#mcover2 img
+{
+	top: 5px;
+	width: 260px !important;
+	height: 180px !important;
+	right: 18px;
+	position: fixed;
+	z-index: 20001;
+}
+.footer{ line-height:24px; text-align:center; margin-top:40px;}
+.pop{ position:fixed; left:0px; top:0px; width:100%; height:100%;z-index: 20000;background-color: rgba(0, 0, 0, 0.7); display:none}
+.pop .inputBox{ width:80%; background:#f7f8f8; border-radius:5px; overflow:hidden; margin:0 auto; margin-top:50px;}
+.pop .inputBox header{ line-height:35px; height:35px; background:#e5452b; text-align:center; color:#fff; font-size:18px; border-radius:5px 5px 0px 0px;}
+.pop .btnSubmit{ width:70%; height:30px; line-height:30px;background:#e5452b; text-align:center; color:#fff; font-size:18px; margin:20px auto; border-radius:5px; border:none}
+.pop .inputBox P{ padding:0px 20px; color:#000; font-size:14px; margin-bottom:10px;}
+.pop .inputBox P .ipt{ height:26px; width:75%; background:#fff; line-height:26px; border:1px solid #ccc; border-radius:5px; overflow:hidden; text-indent:10px;}
+.page{ line-height:30px;  height:30px; overflow:hidden; margin-top:10px}
+.page a{ display:block;width:40%; height:30px; text-align:center; font-size:14px; color:#666}
+body{
+background:#fec10e;
+}

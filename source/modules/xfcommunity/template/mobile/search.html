@@ -1,0 +1,13 @@
+{template 'header'}
+<style type="text/css">
+.list{width:29.33333%;float:left;text-align:center;margin:8px 2%;height:80px;line-height:20px;background:#76b3f7;font-size:16px;box-shadow:2px 2px 4px rgba(0,0,0,0.3);}
+.list a{display:block;width:100%;color:#fff;text-decoration: none;text-align: center;line-height: 80px;}
+.list a:hover{text-decoration: none;}
+</style>
+<ul>
+	{loop $list $item}
+	<li class='list'><a href='{$item['surl']}'>{$item['sname']}</a></li>
+	{/loop}
+</ul>
+
+{template 'footer'}

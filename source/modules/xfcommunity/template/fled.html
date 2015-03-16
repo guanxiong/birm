@@ -1,0 +1,72 @@
+{template 'common/header'}
+	<ul class="nav nav-tabs">
+		<li {if $op == 'sell' }class="active"{/if}>
+			<a href="{php echo $this->createWebUrl('fled', array('op' => 'sell'));}">转让</a>
+		</li>
+		<li {if $op == 'buy' }class="active"{/if}>
+			<a href="{php echo $this->createWebUrl('fled', array('op' => 'buy'));}">求购</a>
+		</li>
+	</ul>
+	{if $op == 'sell'}
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:100px;">商品名称</th>
+					<th style="width:100px;"> 转让价格</th>
+					<th style="width:100px;">联系人</th>
+					<th style="width:120px;">联系电话</th>
+					<th style="width:100px;">发布时间</th>
+					<th style="min-width:100px; width:30%;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $good}
+				<tr>
+					<td>{$good['title']}</td>
+					<td>{$good['zprice']}元</td>
+					<td>{$good['realname']}</td>
+					<td>{$good['mobile']}</td>
+					<td>{php echo date('Y-m-d',$good['createtime'])}</td>
+					<td>
+						<a href="{php echo $this->createWebUrl('fled', array('foo' => 'delete','id' => $good['id']))}" onclick="return confirm('确认删除此商品吗？');return false;" title="删除" class="btn btn-small"><i class="icon-remove"></i>
+						</a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+	{elseif $op == 'buy'}
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:100px;">求购商品名称</th>
+					<th style="width:100px;">求购价格</th>
+					<th style="width:100px;">联系人</th>
+					<th style="width:120px;">联系电话</th>
+					<th style="width:100px;">发布时间</th>
+					<th style="min-width:100px; width:30%;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $good}
+				<tr>
+					<td>{$good['title']}</td>
+					<td>{$good['zprice']}元</td>
+					<td>{$good['realname']}</td>
+					<td>{$good['mobile']}</td>
+					<td>{php echo date('Y-m-d',$good['createtime'])}</td>
+					<td>
+						<a href="{php echo $this->createWebUrl('fled', array('foo' => 'delete','id' => $good['id']))}" onclick="return confirm('确认删除此商品吗？');return false;" title="删除" class="btn btn-small"><i class="icon-remove"></i>
+						</a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+
+	{/if}
+{template 'common/footer'}

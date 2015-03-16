@@ -1,0 +1,70 @@
+{template 'header'}
+<link href="{$_W[siteroot]}source/modules/xfcommunity/template/css/theme3.css" type="text/css" rel="stylesheet" />
+<link href="{$_W[siteroot]}source/modules/xfcommunity/template/css/buttons.css" type="text/css" rel="stylesheet" />
+<div class="pageWrapper add-form">
+  <h3 class="pageTitle">{$item['title']}</h3>
+  <hr />
+  <form action="" method="post" onsubmit="return checkInfo(this);">
+    <input type='hidden' name='rid' value='{$item['id']}'> 
+    <fieldset>
+      <div class="formFieldWrapper">
+        <label class="formTitle">姓名:</label>
+        <input type="text" name="truename" class="titleLeft" data-rule="联系人:required" style="width:50%;"/><em class="req">*</em>
+      </div>
+      <div class="formFieldWrapper" >
+          <label class="formTitle">性别:</label>
+          <div style='padding-top:6px;'>
+            <input type="radio" name="sex" checked value="先生" />
+            先生
+            <input name="sex" type="radio" value="女士" />
+            女士
+          </div>
+        </div> 
+      <div class="formFieldWrapper">
+        <label class="formTitle">电话:</label>
+        <input type="text" value="" class="titleLeft" data-rule="手机:required;mobile;" name="mobile" /> <em class="req">*</em>
+      </div>
+      <div class="formFieldWrapper">
+        <label class="formTitle">报名数量:</label>
+            <select name='num' class='titleLeft'>
+              <?php
+                for ($i=1; $i <=$item['number'] ; $i++) { 
+                   echo "<option value='$i'>$i</option>";
+                }
+
+              ?>
+            </select>
+      </div>
+
+      <div class="formButtonWrapper">
+        <input type="submit" class="add-form-button button button-block button-rounded button-highlight button-large" value="立即报名"/>
+      </div>
+    </fieldset>
+  </form>
+</div>
+<script type="text/javascript">
+<!--
+  function checkInfo(form) {
+    
+    var mobile = form['mobile'].value;
+    if (!mobile) {
+      alert('请输入您的手机号码！');
+      return false;
+    }
+    if (mobile.search(/^([0-9]{11})?$/) == -1) {
+      alert('请输入正确的手机号码！');
+      return false;
+    }
+    
+    if (!form['truename'].value) {
+      alert('请输入真实的姓名。');
+      return false;
+    }
+    if (!form['num'].value) {
+      alert(' 请选择报名数量。');
+      return false;
+    }
+  }
+//-->
+</script>
+{template 'footer'}

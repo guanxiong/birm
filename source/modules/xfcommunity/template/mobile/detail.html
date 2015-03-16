@@ -1,0 +1,71 @@
+{template 'header'}
+<link href="{$_W[siteroot]}source/modules/xfcommunity/template/css/theme3.css" type="text/css" rel="stylesheet" />
+<link href="{$_W[siteroot]}source/modules/xfcommunity/template/css/buttons.css" type="text/css" rel="stylesheet" />
+<div class="pageContentWrapper">
+	<!-- page title starts -->
+	<h3 class="pageTitle " style="color:">{$detail['title']}</h3>
+	<!-- page title ends -->
+	<div class="singleProjectImageWrapper">
+		<img src="{$_W['attachurl']}{$item['picurl']}" class="singleProjectImage" alt=""/>
+	</div>
+	<!-- table starts -->
+	<table>
+		<tbody>
+			<tr>
+				<td width="30%"> <b>活动时间</b>
+				</td>
+				<td>
+					开始时间：
+					<span class="text-warning no-tel">{php echo date('Y-m-d',$item['starttime'])}</span>
+					<br />
+					结束时间：
+					<span class="text-warning no-tel">{php echo date('Y-m-d',$item['endtime'])}</span>
+				</td>
+			</tr>
+			<tr>
+				<td> <b>报名截止</b>
+				</td>
+				<td>
+					<span class="text-danger no-tel">{$item['enddate']}</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<b>活动状态</b>
+				</td>
+				<td>
+					<label class="label bg-info">{if $_W['timestamp']>$enddate }报名结束...{else}火热报名中...{/if}</label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<b>参与人数</b>
+				</td>
+				<td>
+					<span class="text-danger">{$item['resnumber']}</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	{if $_W['timestamp']>$enddate }
+		<span class="baoming-btn button button-block button-rounded button-highlight button-large"> <i class="icon-user"></i>
+		报名结束
+		</span>
+	{else}
+		<a href="{php echo $this->createMobileUrl('res',array('rid' => $item['id']))}" class="baoming-btn button button-block button-rounded button-highlight button-large"> <i class="icon-user"></i>
+		开始报名
+		</a>
+	{/if}
+	
+	<!-- table ends -->
+
+	<div class="hongdong_info" style='margin-bottom:100px;'>
+		<p class="info_title">
+			<b>活动详情：</b>
+		</p>
+		<div class="info_content" style='margin-bottom:100px;'>
+			{$item['content']}
+		</div>
+	</div>
+</div>
+{template 'footer'}

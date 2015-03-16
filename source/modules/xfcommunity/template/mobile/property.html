@@ -1,0 +1,21 @@
+
+
+{template 'header'}
+{if empty($list)}
+<div class="list img-rounded">没有相关团队介绍</div>
+{else}
+<div class="list img-rounded" style='margin-bottom:50px;'>
+	<div class="hd">
+		<span class="title" style='text-align:center'>{php echo cutstr($list['title'], 20, true);}</span>
+		<span class="date" style='text-align:right'>{php echo date('Y-m-d', $list[createtime]);}</span>
+	</div>
+	<div class="content" style='text-align:center;'>
+		<img src='{$_W['attachurl']}{$list['topPicture']}' width='50%' height='30%' />
+	</div>
+	<div class="content" style='margin-bottom:20px;'>
+		{$list['content']}
+	</div>
+</div>
+{/if}	
+
+{template 'footer'}

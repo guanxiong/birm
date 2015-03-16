@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>结算中心</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- Mobile Devices Support @begin -->
+	<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+	<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+	<meta content="no-cache" http-equiv="pragma">
+	<meta content="0" http-equiv="expires">
+	<meta content="telephone=no, address=no" name="format-detection">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<!-- Mobile Devices Support @end -->
+	<script type="text/javascript" src="./resource/script/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="./resource/script/common.js"></script>
+	<link type="text/css" rel="stylesheet" href="./themes/mobile/default/style/bootstrap.css">
+	<script type="text/javascript" src="./themes/mobile/default/script/bootstrap.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="./resource/style/font-awesome.min.css" />
+	<link type="text/css" rel="stylesheet" href="./themes/mobile/default/style/common.mobile.css">
+	<script type="text/javascript" src="./resource/script/cascade.js"></script>
+	<script type="text/javascript" src="./source/modules/lotery/template/js/alert.js"></script>
+</head>
+<body>
+<div class="main"><link type="text/css" rel="stylesheet" href="./source/modules/hlzonyu/template/images/styles.css">
+<div class="head">
+	<a href="javascript:history.back();" class="bn pull-left"><i class="icon-angle-left"></i></a>
+	<span class="title">结算</span>
+	
+</div>
+<form id="form1" action="" method="post" onsubmit="return check();" >
+<div class="order-main">
+	<h5>收货地址</h5>
+	<div id="myaddress"> 
+      <div class="add-address img-rounded" id="addAddressPanel" style="">
+		
+		<div class="add-address-main">
+			<div class="form-group">
+				<label for="" class="col-sm-3 control-label">收货人：</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="realname"  name="realname" value="{$profile['realname']}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="col-sm-3 control-label">联系电话：</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="mobile" name="mobile" value="{$profile['mobile']}">
+				</div>
+			</div>
+			
+
+			<div class="form-group">
+				<label for="" class="col-sm-3 control-label">详细地址：</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="address" name="address" value="{$profile['address']}">
+				</div>
+			</div>
+			
+			
+		</div>
+	</div></div>
+ 	
+	<h5>订单详情</h5>
+	<div class="order-detail">
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="name">名称</th>
+					<th class="num">数量</th>
+					<th class="total">原价</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+                    <td class="name"><span  style="float:left;">{$reply['title']}</span>
+					</td>
+					<td class="num">1</td>
+                    <td class="total"><span class='goodsprice'>{$reply['productprice']}元</span></td>
+				</tr>
+			</tbody>
+		</table>
+            <div class="order-detail-hd"> <span class="pull-right" style="color:#E74C3C;">
+                    [砍价后实际需支付：<span id='totalprice'>{$order['price']}</span>元]</span></div>
+		<div style="clear:both;"></div>
+	</div>
+	 
+	<h5>备注</h5>
+	<div class="message-box">
+		<textarea class="form-control" rows="3" name="remark" placeholder="亲，还用什么能帮助到您吗？就写到这里吧！"></textarea>
+	</div>
+	
+	<input type="hidden" name="token" value="{$_W['token']}" />
+	<input type="submit" name="submit" value="确定" class="btn btn-success order-submit btn-lg" style="margin-bottom:20px;">
+</div>
+<script language='javascript'>
+       
+function check(){
+	var realname = $('#realname').val();
+	var mobile = $('#mobile').val();
+	var province = $('#sel-provance').val();
+	var city = $('#sel-city').val();
+	
+	var address = $('#address').val();
+	if (!realname) {
+		alert('请输入您的真实姓名！');
+		return false;
+	}
+	if (!mobile) {
+		alert('请输入您的手机号码！');
+		return false;
+	}
+	if (mobile.search(/^([0-9]{11})?$/) == -1) {
+		alert('请输入正确的手机号码！');
+		return false;
+	}
+	if (!address) {
+		alert('请输入您的详细地址！');
+		return false;
+	} 
+	return true;
+}
+
+
+</script>
+            
+</div>
+<script type="text/javascript">
+$(function() {
+	$(".user-box .box-item").each(function(i) {
+		i = i +1;
+		if(i%3 == 0) $(this).css("border-right", "0");
+	});
+	$(window).scroll(function(){
+		$(".menu-button").find("i").removeClass("icon-minus-sign").addClass("icon-plus-sign");
+		$(".menu-main").hide();
+	});
+	$(".menu-main a").click(function(){ $(".menu-main").hide(); });
+
+	//控制tab宽度
+	var profile_tab = $(".nav-tabs li");
+	profile_tab.css({"width": 100/profile_tab.length+"%", "text-align": "center"});
+
+	//手机表单处理
+	$(".form-table").delegate(".checkbox input[type='checkbox']", "click", function(){
+		$(this).parent().toggleClass("btn-inverse");
+	});
+	$(".form-table").delegate(".file input[type='file']", "change", function(){
+		var a = $(this).next("button");
+		a.html(a.html() +' '+  $(this).val());
+	});
+
+	//处理固定横向导航条
+	var navbarFixedTop = false, navbarFixedBottom = false;
+	navbarFixedTop = $(".navbar").hasClass("navbar-fixed-top");
+	navbarFixedBottom = $(".navbar").hasClass("navbar-fixed-bottom");
+	if(navbarFixedTop) $("body").css("padding-top", "41px");
+	if(navbarFixedBottom) $("body").css("padding-bottom", "41px");
+});
+
+//对分享时的数据处理
+function _removeHTMLTag(str) {
+	str = str.replace(/<script[^>]*?>[\s\S]*?<\/script>/g,'');
+	str = str.replace(/<style[^>]*?>[\s\S]*?<\/style>/g,'');
+    str = str.replace(/<\/?[^>]*>/g,'');
+    str = str.replace(/\s+/g,'');
+    str = str.replace(/&nbsp;/ig,'');
+    return str;
+}
+
+</script>
+</div>
+<style>
+.footerbar{position:fixed; left:0; bottom:0; width:100%; height:50px; background:#f1f1f1; border-top:1px solid #c9c9c9;}
+.footerbar a{display:block; float:left; padding-top:3px; width:25%; height:45px; text-align:center; color: #4f4f4f; text-decoration:none; border-left:1px solid #e1e1e1;}
+.footerbar a:first-child{border-left:0;}
+.footerbar a i{font-size:20px; display:block;}
+#footer { position: fixed;width:100%;bottom:0px;height:25px;line-height:25px;color:#333;background:#f1f1f1}
+</style>
+<!--div class="footerbar">
+	<a href="#"><i class="icon-gift"></i> 商城首页</a>
+	<a href="#"><i class="icon-shopping-cart"></i> 购物车</a>
+	<a href="#"><i class="icon-user"></i> 我的订单</a>
+        <a href="#"><i class="icon-globe"></i> 品牌介绍</a>
+</div-->
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            WeixinJSBridge.call('hideToolbar');
+                            WeixinJSBridge.call('hideOptionMenu');
+             });
+</script>
+</body>
+</html>

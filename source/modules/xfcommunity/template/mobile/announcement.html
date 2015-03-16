@@ -1,0 +1,102 @@
+
+{template 'header'}
+{if $op == 'display'}
+<table class="table">
+	<thead>
+		<tr>
+			<th>公告标题</th>
+			<th style="width:110px; text-align:right;">发布时间</th>
+			{if !empty($row['manage_status'])}
+			<th style="text-align:right;">状态</th>
+			{/if}
+		</tr>
+	</thead>
+	<tbody>
+	{if empty($list)}
+	<tr>
+		<td colspan="2">没有任何公告</td>
+	</tr>
+	{/if}
+	{loop $list $item}
+	<tr>
+		<td><a href="{php echo $this->createMobileUrl('announcement',array('id'=>$item['id'],'op'=>'detail'));}">
+		{php echo cutstr($item['title'], 15, true);}</a></td>
+		<td style="text-align:right; color:#888;">{php echo date('Y-m-d', $item[createtime]);}</td>
+		{if !empty($row['manage_status'])}
+		<td style="text-align:right;">
+			{if intval($item['status'])==1}启用{else}禁用{/if}	
+		</td>
+		{/if}
+	</tr>
+	{if !empty($row['manage_status'])}
+	<tr>
+		<td colspan=3 align='right'>    
+			<a href="
+			{php echo  $this->createMobileUrl('announcement',array('id' => $item['id'],'op' => 'delete'))}">删除</a>&nbsp;|&nbsp;
+			<a href="{php echo  $this->createMobileUrl('announcement',array('id' => $item['id'],'op' => 'update'))}">修改</a>&nbsp;|&nbsp;
+			{if empty($item['status'])}
+			<a href="
+			{php echo $this->createMobileUrl('announcement',array('id' => $item['id'],'op' => 'verify','status' => 1,))}">启用</a>{else}
+			<a href="
+			{php echo $this->createMobileUrl('announcement',array('id' => $item['id'],'op' => 'verify','status' => 0,))}">禁用</a>{/if}
+		</td>
+	</tr>
+	{/if}
+	{/loop}
+	</tbody>
+</table>
+	{if !empty($list)}
+	<div class="list img-rounded" style="padding-top: 0; padding-bottom: 0;">
+	{$pager}
+	</div>
+	{/if}
+	{if !empty($row['manage_status'])}
+		<div style='margin-top:50px;margin-left:60px;'>
+		<a class="btn btn-primary" style="width:80%;" href="
+			{php echo $this->createMobileUrl('announcement',array('op' => 'update'))}">发布公告</a>
+		</div>
+	{/if}
+{/if}
+{if $op == 'detail'}
+<div class="list img-rounded">
+	<div class="hd">
+		<span class="title">{php echo cutstr($item['title'], 20, true);}</span>
+		<span class="date">{php echo date('Y-m-d', $item[createtime]);}</span>
+	</div>
+	<div class="content">
+		{$item['content']}
+		<div class="author">{$item['author']}</div>
+	</div>
+</div>
+{/if}
+{if $op == 'update'}
+<form class="form-horizontal img-rounded" role="form" method="post">
+	<input type="hidden" name="id" value="{$item['id']}" />
+	<!-- <h4 align='center'>公告信息</h4> -->
+	<div class="form-group">
+		<label for="title" class="col-xs-3 control-label" style='padding-right:0px;'>公告标题</label>
+		<div class="col-xs-9">
+			<input type="text" id="title" name="title" value="{$item['title']}" class="form-control" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="status" class="col-xs-3 control-label" style='padding-right:0px;'>公告状态</label>
+		<div class="col-xs-6">
+			<input class="" name="status" value='1' class="form-control" style='margin-top:12px;' id="ipt_status" type="checkbox" {if intval($item['status'])==1}checked='checked'{/if}/>启用
+			<span class="help-block">公告在住户显示状态</span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="content" class="col-xs-3 control-label" style='padding-right:0px;'>公告内容</label>
+		<div class="col-xs-9">
+			<textarea style="height:100px;"  name="content" class="form-control" cols="70" >{$item['content']}</textarea>
+		</div>
+	</div>
+	<div class='form-group' style='text-align:center;'>
+		<button type="submit" name="submit" value="yes" class="btn btn-primary" style="width:60%;">提交</button>
+		<input type="hidden" name="token" value="{$_W['token']}" />
+	</div>
+</form>
+{/if}
+{template 'footer'}

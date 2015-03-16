@@ -1,0 +1,44 @@
+{template 'common/header'}
+
+
+
+
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:100px;">订单号</th>
+					<th style="width:100px;">姓名</th>
+					<th style="width:80px;">电话</th>
+					<th style="width:120px;">地址</th>
+					<th style="width:120px;">现价/原价</th>
+                    <th style="width:150px;">下单时间</th>
+					<th style="width:150px;">商品</th>
+					
+					<th >备注</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['ordersn']}</td>
+					<td>{$item['realname']}/{$item['nickname']}</td>
+					<td>{$item['mobile']}</td>
+					<td>{$item['address']}</td>
+					<td>{$item['price']} /{php echo intval($item['goodsprice'])}元</td>
+
+					<td>{php echo date('Y-m-d H:i:s', $item['createtime'])}</td>
+					<td >{$item['goodsname']}</td>
+					
+					<td >{$item['remark']}</td>
+				</tr>
+				{/loop}
+			</tbody>
+			
+		</table>
+		{$pager}
+	</div>
+</div>
+
+{template 'common/footer'}

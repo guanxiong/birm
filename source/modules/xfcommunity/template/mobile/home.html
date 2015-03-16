@@ -1,0 +1,140 @@
+{template 'header'}
+
+<style type="text/css">
+ .home-box div{
+ 	border-radius:15px;
+ 	width: 50px;
+ 	height:50px;
+ }
+ .home-box span{
+ 	font-size:10px;
+ 	color:black;
+ 	margin: auto;
+ }
+</style>
+{if !empty($member['status'])}
+{template 'mslide'}
+
+<div style='width:100%;height:40px;background:{if $this->module['config']['bg_color']}#f5f5f5{/if};line-height:40px;'>&nbsp;&nbsp;&nbsp;物业服务</div>
+<div class="home-box">
+	<a href="{php echo $this->createMobileUrl('property')}">
+		<div style='background:#ffb81c'>
+			<i class="icon-user"></i>
+		</div>
+		<span>物业介绍</span>
+	</a>
+	<a href="{php echo $this->createMobileUrl('announcement',array('op' =>'display'))}">
+		<div style='background:#95bd38'> <i class="icon-bullhorn icon-white"></i>
+
+		</div>
+		<span>公告信息</span>
+	</a>
+	<a href="{php echo $this->createMobileUrl('repair', array('op' => 'display'))}">
+		<div style='background:#3c87c8'> <i class="icon-wrench"></i>
+			
+		</div>
+		<span>小区报修</span>
+	</a>
+	<a href="{php echo $this->createMobileUrl('report', array('op' => 'display'))}">
+		<div style='background:#dd4b2b'> <i class="icon-legal icon-white"></i>
+			
+		</div>
+		<span>投诉建议</span>
+	</a>
+	<a href="{php echo $this->createMobileUrl('phone')}">
+		<div style='background:#ab5e90'>
+			<i class="icon-phone icon-white"></i>
+			
+		</div>
+		<span>便民号码</span>
+	</a>
+</div>
+<div style='width:100%;height:40px;background:{if $this->module['config']['bg_color']}#f5f5f5{/if};line-height:40px;'>&nbsp;&nbsp;&nbsp;小区互动</div>
+<div class="home-box">
+	<a href="{php echo $this->createMobileUrl('activity')}">
+		<div style='background:#65944e'>
+			<i class="icon-tasks"></i>
+		</div>
+		<span>小区活动</span>
+	</a>
+	<a href="{php echo $this->createMobileUrl('homemaking', array('op'=>'display'))}">
+		<div style='background:#95bd38'>
+			<i class="icon-group icon-white"></i>
+			
+		</div>
+		<span>家政服务</span>
+	</a>
+	<a href="{php echo $this->createMobileUrl('houselease', array('op'=>'display'))}">
+		<div style='background:#38bfc8'>
+			<i class="icon-info icon-white"></i>
+			
+		</div>
+		<span>房屋租赁</span>
+	</a>
+	<a href="{php echo $this->createMobileUrl('search')}">
+		<div style='background:#ec9510'>
+			<i class="icon-search"></i>
+		</div>
+		<span>常用查询</span>
+	</a>
+	<a href="{php echo $this->createMobileUrl('index')}">
+		<div style='background:#666699'>
+			<i class="icon-magnet"></i>
+		</div>
+		<span>二手市场</span>
+	</a>
+	<a href="{php echo $this->createMobileUrl('carindex')}">
+		<div style='background:#666699'>
+			<i class="icon-magnet"></i>
+		</div>
+		<span>拼车</span>
+	</a>
+</div>
+{if $navExtension}<div style='width:100%;height:40px;background:{if $this->module['config']['bg_color']}}#f5f5f5{/if};line-height:40px;'>&nbsp;&nbsp;&nbsp;其他</div>{/if}
+<div class="home-box" style='margin-bottom:100px;'>
+	{loop $navExtension $item}
+	<a href="{$item['navurl']}">
+		<div style='background:#65944e'>
+			<i class="{$item['icon']}"></i>
+		</div>
+		<span>{$item['title']}</span>
+	</a>
+	{/loop}
+</div>
+{else}
+<div class="tips img-rounded">
+	{if !empty($member)}
+	<div class="icon">
+		<i class="icon-spinner"></i>
+	</div>
+	<div class="text-danger" style="margin-bottom:10px;">请耐心等待审核</div>
+	<table class="table">
+		<tr>
+			<td style="text-align:left; width:80px;">所属小区</td>
+			<td style="text-align:right; font-size:14px;">{$member['regionname']}</td>
+		</tr>
+		<tr>
+			<td style="text-align:left;">物业电话</td>
+			<td style="text-align:right; font-size:14px;">
+				<a href="tel:{php echo $this->
+					module['config']['phone']}">{php echo $this->module['config']['tel']}
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:left;">地址</td>
+			<td style="text-align:right; font-size:14px;">{php echo $this->module['config']['address']}</td>
+		</tr>
+	</table>
+	{else}
+	<div class="icon">
+		<i class="icon-info-sign"></i>
+	</div>
+	您需要先
+	<a href="{php echo $this->createMobileUrl('register');}" > 注册</a>
+	个人信息。
+	{/if}
+</div>
+{/if}
+
+{template 'footer'}

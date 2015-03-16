@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>友尽与否,在此一戳!</title>
+<meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<link href="./source/modules/hlzonyu/template/images/activity-style.css?ver=55e4" rel="stylesheet" type="text/css">
+<link href="./source/modules/hlzonyu/template/images/style.css?ver=55e4" rel="stylesheet" type="text/css">
+
+<script>
+function tusi(txt){
+	$('.tusi').remove();
+	var div = $('<div style="background: #fe9db7;max-width: 85%;min-height: 77px;min-width: 270px;position: absolute;left: -1000px;top: -1000px;text-align: center;border-radius:10px;"><span style="color: #ffffff;line-height: 77px;font-size: 23px;">'+txt+'</span></div>');
+	$('body').append(div);
+	div.css('zIndex',9999999);
+	div.css('left',parseInt(($(window).width()-div.width())/2));
+	var top = parseInt($(window).scrollTop()+($(window).height()-div.height())/2);
+	div.css('top',top);
+	setTimeout(function(){div.remove();},2000);
+}	
+	
+function showTab(o, tab, count) {
+    o.className = "current";
+    var j;
+    var id;
+    var e;
+    for (var i = 1; i <= count; i++) {
+        id = tab + i;
+        j = document.getElementById(id);
+        e = document.getElementById(tab + "Cont" + i);
+        if (id != o.id) {
+            j.className = "";
+            e.style.display = "none";
+        } else {
+            e.style.display = "block";
+        }
+    }
+}
+//展开显示
+function show(id){
+	var v_ID = document.getElementById(id);
+	jQuery(v_ID).show();
+}	
+	
+
+	
+
+</script>
+
+<style>
+.list .list-item{
+	width: 45%;
+	overflow: hidden;
+	
+	float: left;
+	
+	margin: 0 2.4% 15px 2.4%;
+	
+}
+
+.list .list-item > div{
+	overflow: hidden;
+}
+.list .list-item img{
+	display: block;
+	max-width: 100%;
+	height: 120px;
+	margin: 0 auto;
+	margin-top: 10px;
+	
+}
+.list .list-item .title{
+	text-align: center;
+	height:36px;
+	line-height:18px;
+	color: #333;
+	text-overflow: ellipsis;
+	
+	overflow: hidden;
+}
+.list .list-item a{
+	color: #000;
+}
+a{
+	text-decoration: none;
+	cursor: pointer;
+}
+.list {
+overflow: hidden;
+}
+.startbargin{
+background: #ff6a6c;
+padding : 5px 20px 5px 20px;
+width:60%;
+margin:0 auto;
+
+-webkit-box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.2);
+box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.2);
+
+}
+.list .list-item .startbargin a{
+color:#fff;
+font-size:16px;
+}
+
+.listsl {
+overflow: hidden;
+}
+.listsl .list-item{
+	width: 90%;
+	overflow: hidden;
+	
+	margin: 0 2.4% 15px 2.4%;
+	border-bottom: #9d1d04 2px dotted;
+	padding-bottom:10px;
+}
+
+.listsl .list-item > div{
+	overflow: hidden;
+}
+.listsl .list-item img{
+	display: block;
+	max-width: 100%;
+	height: 120px;
+	margin: 0 auto;
+	margin-top: 10px;
+	
+}
+.listsl .list-item .title{
+	
+	font-size:20px;
+	line-height:26px;
+	color: #8c3021;
+	height:53px;
+	text-align:center;
+}
+.listsl .list-item .zonyunum{
+	font-size:22px;
+	line-height:26px;
+	color: #8c3021;
+	text-align:center;
+}
+.listsl .list-item a{
+	color: #8c3021;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.listsl .list-item .startbargin{
+	background: #ff6a6c;
+	padding : 5px 20px 5px 20px;
+	width:60%;
+	margin:0 auto;
+	text-aligin:center;
+	-webkit-box-shadow: 5px 5px 3px 0 rgba(0,0,0,0.2);
+	box-shadow: 5px 5px 3px 0 rgba(0,0,0,0.2);
+	margin-bottom:10px;
+	border-radius: 10px;
+}
+.listsl .list-item .startbargin a{
+	color:#fff;
+	font-size:16px;
+}
+
+</style>
+</head>
+<body>
+<ul class="tab" style="margin-top:10px;">
+		<li style="width:50%;background-color:#eba703;"><a href="{php echo $this->createMobileUrl('index',array('rid' => $reply['rid']));}" style="color:#fff">活动首页</a></li>
+		
+		
+		<li style="width:50%"  id="tab3"><a href="javascript:void(0)" style="color:#eba703">我的奖品</a></li> 
+		
+		
+		
+	</ul>
+		<div class="zi">
+			<img src="./source/modules/hlzonyu/template/images/indextop.jpg">
+		</div>
+
+
+<div class="listsl">	
+{loop $dayan $row}
+	<div class="list-item ">
+		<div style="width:40%;text-align:center;float:left;">
+			<a href="{$row['lpurl']}"><img src="{$_W['attachurl']}{$row['picture']}"></a>
+		</div>
+		<div style="width:60%;">
+			<div class="title" style="padding-top:10px;"><a href="{$row['lpurl']}">{$row['title']}</a></div>
+			<div class="zonyunum" >{$row['zonyunum']}大洋 </div>
+			<div class="startbargin" ><a href="{$row['lpurl']}" > 进去拉人</a></div>
+				
+		</div>
+	</div>
+	
+ {/loop}	
+</div>	
+
+
+
+<script type="text/javascript">
+
+
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	window.shareData = {
+		"imgUrl": "{$_W['attachurl']}source/modules/hlzonyu/icon.jpg",
+		"timeLineLink": "{$staturl}",
+		"sendFriendLink": "{$staturl}",
+		"weiboLink": "{$staturl}",
+		"tTitle": "友尽与否,在此一戳!",
+		"tContent": "友友们，最近{$_W['account']['name']}微信上的一款游戏超火的耶？宝贝从天而降，只要你呼朋唤友，帮你轻轻一戳即可拿大奖哦！",
+		"fTitle": "友尽与否,在此一戳!",
+		"fContent": "友友们，最近{$_W['account']['name']}微信上的一款游戏超火的耶？宝贝从天而降，只要你呼朋唤友，帮你轻轻一戳即可拿大奖哦！",
+		"wContent": "友友们，最近{$_W['account']['name']}微信上的一款游戏超火的耶？宝贝从天而降，只要你呼朋唤友，帮你轻轻一戳即可拿大奖哦！"
+	};
+
+	// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+		WeixinJSBridge.invoke('sendAppMessage', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.sendFriendLink,
+			"desc": window.shareData.fContent,
+			"title": window.shareData.fTitle
+		}, function (res) {
+			_report('send_msg', res.err_msg);
+		})
+	});
+
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function (argv) {
+		WeixinJSBridge.invoke('shareTimeline', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.timeLineLink,
+			"desc": window.shareData.tContent,
+			"title": window.shareData.tTitle
+		}, function (res) {
+			_report('timeline', res.err_msg);
+		});
+	});
+
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function (argv) {
+		WeixinJSBridge.invoke('shareWeibo', {
+			"content": window.shareData.wContent,
+			"url": window.shareData.weiboLink
+		}, function (res) {
+			_report('weibo', res.err_msg);
+		});
+	});
+}, false);
+
+function showTab(o, tab, count) {
+    o.className = "current";
+    var j;
+    var id;
+    var e;
+    for (var i = 1; i <= count; i++) {
+        id = tab + i;
+        j = document.getElementById(id);
+        e = document.getElementById(tab + "Cont" + i);
+        if (id != o.id) {
+            j.className = "";
+            e.style.display = "none";
+        } else {
+            e.style.display = "block";
+        }
+    }
+}
+</script>
+</body>
+</html>
