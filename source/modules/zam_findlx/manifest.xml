@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.52">
+	<application setting="true">
+		<name><![CDATA[找老乡]]></name>
+		<identifie><![CDATA[zam_findlx]]></identifie>
+		<version><![CDATA[1.1]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[通过本模块可以快速找到老乡以及和老乡打招呼，通过平台进行聊天 等 功能]]></ability>
+		<description><![CDATA[通过本模块可以快速找到老乡以及和老乡打招呼，通过平台进行聊天 等 功能]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[http://bbs.b2ctui.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		 <menu>
+			<entry title="基本设置" do="set" state="" direct="false" />
+			<entry title="注册列表管理" do="manage" state="" direct="false" />
+			<entry title="消息管理" do="news" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+	
+
+CREATE TABLE IF NOT EXISTS `ims_zam_userinfo` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+  `openid` varchar(255) NOT NULL,
+  `nickname` varchar(255) NOT NULL,
+  `avatar` text NOT NULL,
+  `sex` varchar(255) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `phone` varchar(100) NOT NULL,
+  `province` varchar(20) NOT NULL,
+  `city` varchar(20) NOT NULL,
+  `area` varchar(20) NOT NULL,
+  `banji` varchar(50) NOT NULL,
+  `createtime` int(12) NOT NULL,
+  `jointime` int(12) NOT NULL,
+  `fakeid` varchar(100) NOT NULL,
+  `msgid` varchar(12) NOT NULL,
+  `chattime` int(100) NOT NULL,
+  `isblacklist` tinyint(1) NOT NULL,
+  `weid` int(11) NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_zam_cookie` (
+  
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`cookie` text NOT NULL,
+  
+`cookies` text NOT NULL,
+  
+`token` int(11) NOT NULL,
+ `weid` int(11) NOT NULL,
+ 
+PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `ims_zam_chatlog` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+  `openid` varchar(100) NOT NULL,
+  `toopenid` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `tousername` varchar(100) NOT NULL,
+  `content` varchar(300) NOT NULL,
+  `createtime` int(12) NOT NULL,
+  `weid` int(11) NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[
+	DROP table ims_zam_userinfo;
+	DROP table ims_zam_cookie;
+	DROP table ims_zam_chatlog;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

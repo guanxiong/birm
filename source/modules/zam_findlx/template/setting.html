@@ -1,0 +1,50 @@
+{template 'common/header'}
+<div class="panel panel-default">
+	<div class="panel-heading">
+	  图文回复基本设置
+	</div>
+	<form id="reply-form" class="form-horizontal form"  method="post" enctype="multipart/form-data">
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">本公众号登录账号</label>
+			<div class="col-sm-9">
+				<input type="text"  class="form-control" name="user" value="{$settings['user']}">
+				<span class="help-block">本公众号登录账号【必须填写且必须填写正确】
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">本公众号登录密码</label>
+			<div class="col-sm-9">
+				<input type="text"  class="form-control" name="pass" value="{$settings['pass']}">
+				<span class="help-block">本公众平台登录密码【必须填写且必须填写正确】
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">头图标题设置</label>
+			<div class="col-sm-9">
+				<input type="text"  class="form-control" name="title" value="{$settings['title']}">
+				<span class="help-block">头图标题设置
+				</span>
+			</div>
+		</div>
+		 <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">头图</label>
+			<div class="col-sm-9">
+				{php echo tpl_form_field_image('logo', $settings['logo']);}
+				<span class="help-block">头图</span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input name="submit" type="submit" value="保存" class="btn btn-primary" />
+				
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</div>
+		</div>
+	</form>
+</div>
+
+{template 'common/footer'}

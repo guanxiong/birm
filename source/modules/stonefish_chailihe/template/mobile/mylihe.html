@@ -77,7 +77,66 @@
         </footer>
     </div>
     <div class="share-layer"></div>
-{template 'jssdk'}
-
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+	
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+	
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',		
+	];
+	
+	wx.config(jssdkconfig);
+	
+	window.shareData = {  
+            "imgUrl": "{$picture}",
+            "timeLineLink": "{$shareurl}",
+            "sendFriendLink": "{$shareurl}",
+            "weiboLink": "{$shareurl}",
+            "tTitle": "{$reply['sharetitle']}",
+            "fTitle": "{$reply['sharetitle']}",
+            "tContent": "{$reply['sharecontent']}",
+            "fContent": "{$reply['sharecontent']}",
+            "wContent": "{$reply['sharecontent']}"
+    };
+  wx.ready(function () {
+  //分享朋友
+  wx.onMenuShareAppMessage({
+      title: window.shareData.title,
+      desc: window.shareData.tContent,
+      link: window.shareData.sendFriendLink,
+      imgUrl:window.shareData.imgUrl,
+    });
+ //朋友圈
+  wx.onMenuShareTimeline({
+      title: window.shareData.title,
+      link: window.shareData.timeLineLink,
+      imgUrl:window.shareData.imgUrl,
+    });   
+ //QQ
+  wx.onMenuShareQQ({
+      title: window.shareData.title,
+	  desc: window.shareData.tContent,
+      link: window.shareData.timeLineLink,
+      imgUrl:window.shareData.imgUrl,
+    }); 
+  //weibo
+  wx.onMenuShareWeibo({
+      title: window.shareData.title,
+	  desc: window.shareData.tContent,
+      link: window.shareData.timeLineLink,
+      imgUrl:window.shareData.imgUrl,
+    }); 
+  });
+</script>
 </body>
 </html>

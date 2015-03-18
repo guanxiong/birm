@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{RES}css/main.css?2014-05-21" media="all" />
+	<link rel="stylesheet" type="text/css" href="{RES}css/dialog.css?2014-05-21" media="all" />
+	<script type="text/javascript" src="{RES}js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="{RES}js/jquery.cityselect.js"></script>
+	<title>找老乡</title>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+	<meta name="Keywords" content="" />
+	<meta name="Description" content="" />
+	<!-- Mobile Devices Support @begin -->
+		<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+		<meta content="telephone=no, address=no" name="format-detection">
+		<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<!-- Mobile Devices Support @end -->
+</head>
+<body >
+<script type="text/javascript">
+
+function validate(){
+		 if($.trim($('#content').val()) == ''){
+			alert('聊天内容必须填写');
+			document.myform.content.focus();
+			return false;
+		 }
+		
+		
+	}
+</script>
+<div class="container info_tx">
+	<div class="body pt_10">
+		<ul class="list_ul_card">
+			<form  method="post" onsubmit="return validate();" id="myform" name="myform" enctype="multipart/form-data">
+				
+				<li data-card>
+					<header class="center">
+						<label style="display:inline-block;">聊天窗口(正在与{$res['username']}聊天)</label>
+					</header>
+					<div class="forms">
+						<dl>
+							<dt><span title="必填项" style="color: #e80000;">*</span>聊天内容： </dt>
+							<dd>
+								<textarea type="text" name="content" id="content"  placeholder="请输入聊天内容" maxlength="300"  class="input"/></textarea>
+							</dd>
+							<dt><span style="color: #e80000;">*</span>聊天内容提交后，可以关闭窗口，返回到平台界面直接发送：@{$res['username']}@聊天内容)</dt>
+						</dl>
+		            
+     			</li>
+				<div id="loading"></div>
+				<div class="pt_10 pb_10">
+					<input type="hidden" value="{$msgid}" name="msgid"/>
+                    <input type="hidden" value="{$fakeid}" name="fakeid"/>
+					<input type="hidden" value="{$toopenid}" name="toopenid"/>
+					<button name="submit" type="submit" class="button" value="提交" style="width:100%" id="tijiao">提&nbsp;&nbsp;&nbsp;交</button>
+					
+				</div>
+				<div class="pt_10 pb_10">
+				<a  class="button"  style="width:100%" href="{php echo $this->createMobileUrl('list')}" style="color:#fff">返回老乡列表</a>
+				</div>
+				<div class="pt_10 pb_10">
+					<a  class="button"  style="width:100%"   id="fanhui2" onclick="WeixinJSBridge.call('closeWindow');">返回微信端</a>
+			    </div>
+			</form>
+		</ul>
+	</div>
+</div>
+</body>
+
+</script>
+</html>

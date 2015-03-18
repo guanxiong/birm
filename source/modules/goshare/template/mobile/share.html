@@ -821,27 +821,27 @@ a.J-btn50,a.J-btn50:visited {
 		title : "{$theme['themetitle']}",
 		link : "{php echo $shareurl}",
 		desc : "{$theme['headtitle']}",
-		imgUrl :"{$_W['attachurl']}{$theme['sharepic']}"
-	};
- // 分享的回调
-	var wxCallbacks = {
-		        // 分享成功
-		        success:function (res) {
-		            $.get("{php echo $geturl}",function(responseData){
+		imgUrl :"{$_W['attachurl']}{$theme['sharepic']}",
+		trigger: function(res) {},
+			success: function(res) {
+			$.get("{php echo $geturl}",function(responseData){
 		                alert(responseData);
 		            });
-		        },
-				// 整个分享过程结束
-				all : function(res,onMenuShare) {
-				}
-		    };
+			},
+			cancel: function(res) {
+			 alert("分享后!可以让朋友帮你分享，集分享噢!");
+			},
+			fail: function(res) {
+			 alert("分享失败，可能是网络问题，一会儿再试试？");
+			}
+	};
 	wx.ready(function () {
 		wx.showOptionMenu();
-		wx.onMenuShareAppMessage(sharedata, wxCallbacks);
-		wx.onMenuShareTimeline(sharedata, wxCallbacks);
-		wx.onMenuShareQQ(sharedata, wxCallbacks);
-		wx.onMenuShareWeibo(sharedata, wxCallbacks);
-	});  
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+	});
 </script>
 <script type="text/javascript">
 /*WeixinApi.ready(function(Api) {

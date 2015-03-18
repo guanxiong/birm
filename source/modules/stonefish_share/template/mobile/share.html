@@ -294,7 +294,17 @@ $(document).ready(function() {
 		title : "{$reply[title]}",
 		link : "{$staturl}",
 		desc : "{$reply[description]}",
-		imgUrl :"{$imgurl}"
+		imgUrl :"{$imgurl}",
+		trigger: function(res) {},
+			success: function(res) {
+			_report('send_msg', res.err_msg);
+			},
+			cancel: function(res) {
+			 alert("分享后!可以让朋友帮你分享，集分享噢!");
+			},
+			fail: function(res) {
+			 alert("分享失败，可能是网络问题，一会儿再试试？");
+			}
 	};
 	
 	wx.ready(function () {
