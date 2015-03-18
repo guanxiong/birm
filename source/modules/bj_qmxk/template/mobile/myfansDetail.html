@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<title>下级代理名单</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="./source/modules/bj_qmxk/style/css/oder.css?r={php echo time()}"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+</head>
+
+<style>
+
+.pagination li{
+	margin-left:12px;
+	background-color: #fa614b;
+	display: inline-block;
+	padding: 0 4%;
+	border-radius: 5px;
+}
+.ranking-list .td.r{ filter:alpha(opacity=50); background:rgba(255, 255, 255, 0.2) none repeat scroll 0 0 !important; background-size:contain; max-width:170px; color:#FFF; font-size:14px;text-align:center;}
+.ranking-list .td.td3{width:20%; filter:alpha(opacity=50); background:rgba(255, 255, 255, 0.2) none repeat scroll 0 0 !important;background-size:contain; max-width:170px; color:#FFF; font-size:14px;text-align:center;}
+.ranking-list .td.td4{width:20%; filter:alpha(opacity=50); background:rgba(255, 255, 255, 0.2) none repeat scroll 0 0 !important; background-size:contain; max-width:170px; color:#FFF; font-size:14px;text-align:center;}
+.ranking-list .td.td2{ width:50%;filter:alpha(opacity=50); background:rgba(255, 255, 255, 0.2) none repeat scroll 0 0 !important;color:#FFF; font-size:14px;text-align:center;}
+.ranking-list .th.th1{ width:50%; min-width:90px; max-width:90px; color:#E9E900; filter:alpha(opacity=50); background:rgba(255, 255, 255, 0.4) none repeat scroll 0 0 !important;font-size:14px; text-align:center;}
+.ranking-list .th.th2{ width:50%; color:#E9E900; filter:alpha(opacity=50); background:rgba(255, 255, 255, 0.4) none repeat scroll 0 0 !important;font-size:14px; text-align:center;}
+.ranking-list .th.th3{ width:20%; color:#E9E900; filter:alpha(opacity=50); background:rgba(255, 255, 255, 0.4) none repeat scroll 0 0 !important; font-size:14px; text-align:center;}
+.ranking-list .th.th4{ width:20%; color:#E9E900; filter:alpha(opacity=50); background:rgba(255, 255, 255, 0.4) none repeat scroll 0 0 !important; font-size:14px; text-align:center;}
+.to-index-button{width:50px; height:45px; padding-top:4px; text-align:center; position:absolute; right:0px; top:0px; background-color:#7C0C0C; color:#E9E900; text-decoration:none; font-size:0.9em; line-height:1.2em;}
+.ranking-list .th{ display:table-cell; line-height:40px; position:relative;}
+.ranking-list .td{ display:table-cell; line-height:60px; height:1px; filter:alpha(opacity=50); background:rgba(255, 255, 255, 0.4) none repeat scroll 0 0 !important;}
+.ranking-list .td .user-head{ max-width:170px; color:#E9E900; font-size:1.6em;}
+.ranking-list .th .arrow{ position:absolute; left:45%; bottom:-12px; border-top-color:#FF1313;}
+.ranking-list .th.th2 .arrow{border-top-color:#FF1313;}
+
+</style>
+
+<body>
+	
+<div class="page-load-container" style="min-height: 771px; opacity: 1;">
+<div class="page-load-page ranking-page"  style="min-height: 771px;">
+	
+	<div class="ranking-body" style="padding-top:0px;">
+	
+
+		<div class="ranking-list" >
+			<div class="tr">
+				<div class="th th1">昵称<span class="arrow arrow-bottom"></span></div>
+				<div class="th th2">关注时间<span class="arrow arrow-bottom"></span></div>
+				
+			</div>
+
+				{loop $fansall $fanslist}
+		  {loop $fanslist $fans}
+			<div class="tr">
+			
+				<div class="td r">{$fans['nickname']}</div>
+				<div class="td td2">{php echo date('Y-m-d', $fans['createtime']);} </div>
+				
+				
+			
+			</div>
+			<div class="tr">
+				<div class="td"></div>
+				<div class="td"></div>
+				
+			</div>
+			
+			{/loop}
+    		{/loop}
+			
+				
+		
+		</div>
+		
+		<div style="padding-top:10px;color:#FFF;font-size:1.6em;">说明：您转发的好友（包括下级代理转发）必须首次购买一笔订单，才会出现在上面！</div>
+	
+	
+	</div>		
+		
+		
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+
+
+
+</div>
+</div>
+<nav class="nav fn-clear">
+	<a href="{php echo $this->createMobileUrl('fansindex')}"><i class="icon-adult"></i>个人中心</a>
+</nav>
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="./source/modules/bj_qmxk/style/js/com.js"></script>
+<script src="./source/modules/bj_qmxk/style/js/wx.js"></script>
+<script type="text/javascript">
+
+WeixinApi.ready(function(Api) {
+        Api.showOptionMenu();
+        var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : '{$_W['siteroot']}/source/modules/bj_qmxk/style/images/icon.jpg',
+            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('fansindex',array('id'=>$id))}',
+            "desc" : '赶快来邀请好友赚佣金！',
+            "title" : '百家微客-{$_W['account']['name']}'
+        };
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享被用户自动取消
+            cancel : function(resp) {
+                TopBox.alert("分享后获得积分,还有可能得到佣金哦!不要错过发大财的机会!");
+            },
+            // 分享失败了
+            fail : function(resp) {
+                TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+            },
+            // 分享成功
+            confirm : function(resp) {
+             TopBox.alert("分享后成功,等着收佣金吧!");
+            },
+        };
+        Api.shareToFriend(wxData,wxCallbacks);
+        Api.shareToTimeline(wxData,wxCallbacks);
+        Api.shareToWeibo(wxData,wxCallbacks);
+        Api.generalShare(wxData,wxCallbacks);
+    });
+
+</script>
+</body>
+</html>

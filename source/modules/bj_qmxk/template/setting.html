@@ -1,0 +1,154 @@
+{template 'common/header'}
+{template 'common'}
+<div class="main">
+ 
+    <form action="" method="post" class="form-horizontal form">
+       <!-- <h4>提醒设置</h4>
+        <table class="tb">
+            <tr>
+                <th>提醒接收邮箱</th>
+                <td>
+                    <input type="text" name="noticeemail" class="span5" value="{$settings['noticeemail']}" />
+                </td>
+            </tr>
+            
+        </table>-->
+
+		<h4>商城设置</h4>
+        <table class="tb">
+        		 <!-- <tr>
+               <th>授权</th>
+                <td>
+                   <a href="{php echo $this->createWebUrl('auth', array('op' => 'doauth'))}">同步授权</a>
+                </td>
+            </tr>-->
+		 <tr>
+                <th>佣金打款限额</th>
+                <td>
+                    <input type="text" name="zhifuCommission" class="span1" value="{$settings['zhifuCommission']}"  />满足此金额的佣金才能打款！
+                </td>
+            </tr>
+            <tr>
+                <th>1级整站佣金</th>
+                <td>
+                    <input type="text" name="globalCommission" class="span1" value="{$settings['globalCommission']}"  />%
+                </td>
+            </tr>
+            <tr>
+                <th>2级整站佣金</th>
+                <td>
+                    <input type="text" name="globalCommission2" class="span1" value="{$settings['globalCommission2']}"  />%
+                </td>
+            </tr>
+            <tr>
+                <th>3级整站佣金</th>
+                <td>
+                    <input type="text" name="globalCommission3" class="span1" value="{$settings['globalCommission3']}" />%
+                </td>
+            </tr>
+			<tr>
+                <th>首页限时特卖<br>显示条数</th>
+                <td>
+                    <input type="text" name="indexss" class="span1" value="{$settings['indexss']}" />
+                </td>
+            </tr>
+			<tr>
+                <th>未关注引导页面</th>
+                <td>
+                    <input type="text" name="ydyy" class="span7" value="{$settings['ydyy']}" /> 请到把引导页面链接缩短成短网址形式，以防止报错！<a target="_blank" href="http://www.dwz.cn">百度短网址</a>
+                </td>
+            </tr>
+			</table>
+		 <h4>转发参数设置</h4>
+        <table class="tb">
+			   <tr>
+                <th>转发图片：</th>
+                <td>
+                    {php echo tpl_form_field_image('logo', $settings['logo']);}
+                </td>
+            </tr>
+		 <tr>
+                <th>转发话术：</th>
+                <td>
+                    <textarea style="height:100px;" id="description" name="description" class="span7" cols="60">{$settings['description']}</textarea>
+                </td>
+            </tr>
+            
+        </table>
+       <!-- <h4>商城信息</h4>
+        <table class="tb">
+            <tr>
+                <th>品牌名称</th>
+                <td>
+                    <input type="text" name="shopname" class="span5" value="{$settings['shopname']}" />
+                </td>
+            </tr>
+
+            <tr>
+                <th><label for="">官方网址</label></th>
+                <td>
+                    <input type="text" name="officialweb" class="span6" value="{$settings['officialweb']}" />
+                </td>
+            </tr>				
+        				
+           	
+               <tr>
+                <th>联系电话：</th>
+                <td><input type="text" id="phone" name="phone"  class="span7" value="{$settings['phone']}"> </td>
+            </tr>
+            <tr>
+                <th>所在地址：</th>
+                <td><input type="text" id="address" name="address"  class="span7" value="{$settings['address']}"> </td>
+            </tr>
+          
+      
+          <tr>
+                <th></th>
+                <td>
+                    <input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </td>
+            </tr>-->
+			
+        
+		<h4>借用高级认证</h4>
+			<table class="tb">
+		　　<tr>
+				<th>AppId：</th>
+				<td><input type="text" name="appid" class="span3" value="{$settings['appid']}" /></td>
+		　　</tr>
+			<tr>
+				<th>AppSecret：</th>
+				<td><input type="text" name="secret" class="span5" value="{$settings['secret']}" /></td>
+			</tr>			
+			<tr>
+				<th colspan="2">
+					<div class="help-block">借用说明：必需设置借用高级认证号的"网页授权获取用户基本信息"的回调域名为你公众号第三方平台的全域名。
+					如：你的域名为：weixin.baijiaweixin.com.cn ，你必需让借用高级认证号设置"网页授权获取用户基本信息"的回调域名为:demo.wdlcms.com</div>
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2">
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					   <input type="hidden" name="token" value="{$_W['token']}" />
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2">
+					<div class="help-block">使用的AppId和AppSecret在 [开发者中心]，可以找到。</div>
+				</th>
+			</tr>
+			<!--<tr>
+				<th colspan="2"><a href="./source/modules/hldpm/template/image/help.jpg" target='_blank'><img src="./source/modules/hldpm/template/image/help.jpg" width="500"></a></th>
+			</tr>		-->	
+		</table>
+    </form>
+</div>
+<link type="text/css" rel="stylesheet" href="./resource/script/kindeditor/themes/default/default.css" />
+<script type="text/javascript" src="./resource/script/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="./resource/script/kindeditor/lang/zh_CN.js"></script>
+ 
+<script type="text/javascript">
+    kindeditor($(".description"));
+</script>
+{template 'common/footer'}

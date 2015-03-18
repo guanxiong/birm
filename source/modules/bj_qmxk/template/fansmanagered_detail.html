@@ -1,0 +1,96 @@
+{template 'common/header'}
+<div class="main">
+	<div class="form form-horizontal">
+		<h4>代理详细信息</h4>
+		<table class="tb">
+		<form action="">
+			<input type="hidden" name="id" value="{$user['id']}" />
+			<input type="hidden" name="op" value="status" />
+			<input type="hidden" name="opp" value="nocheck" />
+			<input type="hidden" name="act" value="module" />
+			<input type="hidden" name="name" value="bj_qmxk" />
+			<input type="hidden" name="do" value="fansmanager" />
+
+			<tr >
+				<th style="width:200px"><label>设置权限</label></th>
+				<td style="text-align: left;">
+					<label class="radio inline"><input type="radio" name="status" value="1" {if $user['status']==1}checked{/if}>可用</label>
+					<label class="radio inline" ><input type="radio" name="status" value="0" {if $user['status']==0}checked{/if}>禁用</label>
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label>是否为代理</label></th>
+				<td style="text-align: left;">
+					<label class="radio inline"><input type="radio" name="flag" value="1" {if $user['flag']==1}checked{/if}>是</label>
+					<label class="radio inline" ><input type="radio" name="flag" value="0" {if $user['flag']==0}checked{/if}>否</label>
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">真实姓名</label></th>
+				<td>
+					{if $user['realname']!=""} {$user['realname']}{else}--{/if}
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">手机号码</label></th>
+				<td>
+					{if $user['mobile']!=""} {$user['mobile']}{else}--{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">注册时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $user['createtime']);}
+				</td>
+			</tr>			
+			<tr>
+				<th><label for="">银行卡号</label></th>
+				<td>
+					{if $user['banktype']!=""} {$user['banktype']}－<span id="bankcard">{$user['bankcard']}</span> {else}--{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">支付宝号</label></th>
+				<td>
+					{if $user['alipay']!=""} {$user['alipay']}{else}--{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">微信号码</label></th>
+				<td>
+					{if $user['wxhao']!=""} {$user['wxhao']}{else}--{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">备注</label></th>
+				<td>
+					<textarea name="content">{$user['content']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input type="button" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />
+					<input type="submit" class="btn btn-primary span3" name="submit"  value="提交" />
+				</td>
+			</tr>
+			</form>
+		</table>
+	</div>
+</div>
+
+<script type="text/javascript">
+window.onload = function(){
+	var bankcard = "{$user['bankcard']}";
+	//var bankcard = bankcard.toString();
+	if(bankcard != ''){
+		var card = '';
+		for(var i=0; i<5; i++){
+			card = card + bankcard.substr(4*i,4) + ' ';
+		}
+		window.document.getElementById('bankcard').innerHTML = card;
+	}
+}
+
+</script>
+{template 'common/footer'}

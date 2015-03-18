@@ -1,0 +1,170 @@
+{template 'common/header'}
+<div class="main">
+	<div class="form form-horizontal">
+		<h4>结算详细信息</h4>
+		<table class="tb">
+		<form action="">
+			<input type="hidden" name="id" value="{$info['id']}">
+			<input type="hidden" name="shareid" value="{$shareid}">
+			<input type="hidden" name="op" value="applyed">
+			<input type="hidden" name="opp" value="jieyonged">
+			<input type="hidden" name="act" value="module" />
+			<input type="hidden" name="name" value="bj_qmxk" />
+			<input type="hidden" name="do" value="commission" />
+			
+			<tr>
+				<th style="width:200px"><label>设置状态</label></th>
+				<td style="text-align: left;">
+					<label class="radio inline"><input type="radio" name="status" value="-1" {if $info['status']==-1}checked{/if}>无效</label>
+					<label class="radio inline" ><input type="radio" name="status" value="1" {if $info['status']==1}checked{/if}>暂不处理</label>
+					<label class="radio inline" ><input type="radio" name="status" value="2" {if $info['status']==2}checked{/if}>通过</label>
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">真实姓名</label></th>
+				<td>
+					{if $user['realname']!=""} {$user['realname']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">手机号码</label></th>
+				<td>
+					{if $user['mobile']!=""} {$user['mobile']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">审核时间</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $info['applytime']);}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">商品名称</label></th>
+				<td>
+					{$info['title']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">商品价格</label></th>
+				<td>
+					{$info['price']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">购买数量</label></th>
+				<td>
+					{$info['total']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">充值佣金</label></th>
+				<td>
+					<input type="text" value="{php echo ($info['commission']*$info['total'])-$commission}" readonly name="commission"/>
+				</td>
+			</tr>
+					<tr>
+				<th style="width:200px"><label for="">上级分销员</label></th>
+				<td>
+					{if $user2['realname']!=""} {$user2['realname']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">手机号码</label></th>
+				<td>
+					{if $user2['mobile']!=""} {$user2['mobile']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">充值佣金</label></th>
+				<td>
+					<input type="text" value="{php echo ($info['commission2']*$info['total'])-$commission2}" readonly name="commission2"/>
+				</td>
+			</tr>
+			
+			<tr>
+				<th style="width:200px"><label for="">下级分销员</label></th>
+				<td>
+					{if $user3['realname']!=""} {$user3['realname']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th style="width:200px"><label for="">手机号码</label></th>
+				<td>
+					{if $user3['mobile']!=""} {$user3['mobile']}{else}未完善{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">充值佣金</label></th>
+				<td>
+					<input type="text" value="{php echo ($info['commission3']*$info['total'])-$commission3}" readonly name="commission3"/>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">备注</label></th>
+				<td>
+					<textarea name="content">{$info['content']}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<a href="{php echo $this->createWebUrl('commission', array('op'=>'applyed'))}"><input type="button" class="btn btn-primary span3" name="submit" value="返回" /></a>
+					<input type="submit" class="btn btn-primary span3" name="submit" onclick="return check();" value="结算" />
+					<a href="{php echo $this->createWebUrl('order',array('operation'=>'display','status'=>-1, 'shareid' => $user['id']));}"><input type="button" class="btn btn-primary span3" value="查看所有订单" /></a>
+				</td>
+			</tr>
+			</form>
+		</table>
+		{if !empty($commissions)}
+		<table class="table table-hover">
+				<thead class="navbar-inner">
+					<tr>
+						<th class="row-hover" style="text-align: center;">结算佣金</th>
+						<th class="row-hover" style="text-align: center;">结算时间</th>
+						<th class="row-hover" style="text-align: center;">备注</th>
+						
+					</tr>
+				</thead>
+				<tbody>
+					{loop $commissions $comm}
+						<tr>
+							<td style="text-align: center;">
+								{$comm['commission']}	{if $comm['isshare']==1}(下级抽成佣金){/if}
+							</td>
+							<td style="text-align: center;">
+								{php echo date('Y-m-d H:i:s',$comm['createtime'])}
+							</td>
+							<td style="text-align: center;">
+								{if empty($comm['content'])}无{else}{$comm['content']}{/if}
+							</td>
+						</tr>
+					{/loop}
+				</tbody>
+			</table>
+		{/if}
+	</div>
+</div>
+
+<script type="text/javascript">
+
+function check(){
+	var flag = false;
+	if(confirm('确认结佣吗？')){
+		flag = true;
+	} else {
+		return false;
+	}
+
+	//if({$info['commission']}*{$info['total']}-{$commission} <= 0){
+	//	if(confirm('充值已符合条件，确认充值吗？')){
+	//		flag = true;
+	//	}else{
+	//		flag = false;
+	//	}
+//	}
+	
+	return flag;
+}
+
+</script>
+{template 'common/footer'}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
+	<application setting="true">
+		<name><![CDATA[全民分销系统]]></name>
+		<identifie><![CDATA[bj_qmxk]]></identifie>
+		<version><![CDATA[2.2]]></version>
+		<type><![CDATA[server]]></type>
+		<ability><![CDATA[全民CMS分销系统]]></ability>
+		<description><![CDATA[全民CMS分销系统]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="购物入口设置" do="list" />
+			<entry title="代理入口" do="fansindex" />
+			<entry title="排行榜入口设置" do="phb" />
+			<entry title="积分兑换入口设置" do="award" />
+		</cover>
+		<menu>
+			<entry title="订单管理" do="order" />
+			<entry title="CRM会员管理" do="charge" />
+			<entry title="商品管理" do="goods" />
+			<entry title="商品分类" do="category" />
+			<entry title="积分商品设置" do="award" />
+			<entry title="积分兑换管理" do="credit" />
+			<entry title="代理管理" do="fansmanager" />
+			<entry title="佣金审核" do="commission" />
+		    <entry title="物流配送设置" do="dispatch" />
+			<entry title="基础设置" do="rules" />
+			<entry title="首页广告设置" do="adv" />
+		</menu>
+		
+	</bindings>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[uninstall.php]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

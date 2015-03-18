@@ -1,0 +1,82 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+ 	<li  class="active"><a href="{php echo create_url('site/module', array('do' => 'charge', 'op' => 'list','name' => 'bj_qmxk','weid'=>$_W['weid']))}">会员信息</a></li>	
+ 	
+</ul>
+    <div class="main">
+		<div class="stat">
+				<form >
+				<input type="hidden" name="act" value="module" />
+				<input type="hidden" name="name" value="bj_qmxk" />
+				<input type="hidden" name="do" value="charge" />
+				<input type="hidden" name="op" value="list" />
+				
+
+				<table class="table sub-search">
+				<table class="table sub-search">
+					<tbody>
+						
+							<th style="width:80px;text-align: right;">手机</th>
+							<td>
+								<input type="text"  name="mobile" /> <input type="submit" name="submit" value="搜索" class="btn btn-primary">
+							</td>
+						</tr>
+					
+						
+					</tbody>
+					</table>
+						
+		</form>
+			<div class="stat-div">
+				
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title" style="float:right;color:red;">总数：{$total} <a href="">刷新</a> </h4>
+					<h4 class="sub-title">名单</h4>
+
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th class="row-hover">姓名</th>
+									<th class="row-hover">电话</th>
+									<th class="row-hover"> 账户余额</th>
+									<th class="row-hover">积分</th>
+									<th class="row-hover">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+							
+								{loop $list $v}
+									
+								<tr>
+									<td style="text-align: center;">
+										{$v['realname']}
+									</td>
+									<td style="text-align: center;">
+										{$v['mobile']}
+									</td>
+									<td style="text-align: center;">
+										{$v['credit2']}
+									</td>
+									<td style="text-align:center;">
+									{$v['credit1']}
+									</td>
+									<td style="text-align: center;">
+
+										<a href="{php echo create_url('site/module', array('do' => 'charge', 'op' => 'post','name' => 'bj_qmxk','weid'=>$_W['weid'],'from_user'=>$v['from_user']))}" class="btn btn-primary">详情</a>
+									</td>
+								</tr>
+									
+								{/loop}
+							</tbody>
+						</table>
+					</div>
+					
+					{$pager}
+				</div>
+			</div>
+		</div>
+    </div>
+
+
+{template 'common/footer'}

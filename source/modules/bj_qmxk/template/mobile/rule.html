@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<title>帮助说明</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="./source/modules/bj_qmxk/style/css/style.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+</head>
+<body style="background: #e7e7e7 url(./source/modules/bj_qmxk/style/images/bg5.jpg) repeat-y ;">
+	
+<section class="main animated fadeInDown">
+	<div class="main-box">
+	
+		<div class="rule-detail border-box">
+			{$rule}
+		</div>
+	</div>
+</section>
+<nav class="nav fn-clear">
+	<a style=" width: 100%;filter:alpha(opacity=50); background:rgba(255, 255, 255, 0.2) none repeat scroll 0 0 !important;color:#fff;" href="{php echo $this->createMobileUrl('fansindex')}"><i class="icon-adult"></i>个人中心</a>
+</nav>
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="./source/modules/bj_qmxk/style/js/com.js"></script>
+<script src="./source/modules/bj_qmxk/style/js/wx.js"></script>
+<script type="text/javascript">
+
+WeixinApi.ready(function(Api) {
+        Api.showOptionMenu();
+		var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : '{$_W['siteroot']}/source/modules/bj_qmxk/style/images/icon.jpg',
+            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('fansindex',array('id'=>$id))}',
+            "desc" : '看你能捞多少佣金',
+            "title" : '全民销客-{$_W['account']['name']}'
+        };
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享被用户自动取消
+            cancel : function(resp) {
+                TopBox.alert("分享后获得积分,还有可能得到佣金哦!不要错过发大财的机会!");
+            },
+            // 分享失败了
+            fail : function(resp) {
+                TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+            },
+            // 分享成功
+            confirm : function(resp) {
+             TopBox.alert("分享后成功,等着收佣金吧!");
+            },
+        };
+        Api.shareToFriend(wxData,wxCallbacks);
+        Api.shareToTimeline(wxData,wxCallbacks);
+        Api.shareToWeibo(wxData,wxCallbacks);
+        Api.generalShare(wxData,wxCallbacks);
+    });
+
+</script>
+
+</body>
+</html>
