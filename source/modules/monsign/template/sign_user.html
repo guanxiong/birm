@@ -1,0 +1,149 @@
+{template 'common/header'}
+<style>
+    .modal-body{
+        max-height:100%;
+        width: 600px;
+        overflow-x: hidden;
+        overflow-y:auto;
+    }
+
+    .modal{
+        width: 650px;
+    }
+
+
+</style>
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li><a href="{php echo $this->createWebUrl('sign');}">签到管理</a></li>
+        <li class="active"> <a href="">签到用户</a></li>
+
+    </ul>
+
+
+    <div class="search">
+        <form action="site.php" method="get">
+            <input type="hidden" name="act" value="module" />
+            <input type="hidden" name="name" value="monsign" />
+            <input type="hidden" name="do" value="SignUser" />
+            <input type="hidden" name="sid" value="{$sid}" />
+            <table class="table table-bordered tb">
+                <tbody>
+                <tr>
+                    <th>关键字</th>
+                    <td>
+                        <input class="span6" name="keywords" id="" type="text" value="{$_GPC['keywords']}" placeholder="昵称">
+
+                    </td>
+                    <td>
+                        <button class="btn btn-primary pull-left span2" style='margin-left:95px;'><i class="icon-search icon-large"></i> 搜索</button>
+
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+
+
+    <div style="padding: 0 15px 0  15px;">
+        <div class="row-fluid">
+            <div class="span8 control-group">
+             <a class="btn" href="{php echo $this->createWebUrl('userDownload', array('sid'=>$sid))}"><i class="icon-download-alt"></i>导出用户信息</a>
+                <a class="btn" href="#">参与用户共{$total}人</a>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div style="padding:15px;">
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+                <tr>
+                    <th style="width:200px;">昵称</th>
+                    <th>头像</th>
+                    <th>积分</th>
+                    <th>连续签到天数</th>
+                    <th>签到次数</th>
+                    <th style="min-width:60px;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {loop $list $user}
+                <tr>
+
+
+                    <td>{$user['nickname']}</td>
+                    <td><img src="{$user['headimgurl']}" height="50px" width="50px"/></td>
+                    <td>{$user['credit']}</td>
+                    <td>{$user['sin_serial']}</td>
+                    <td>{$user['sin_count']}</td>
+                    <td >
+                     
+                        <a href="javascript:userAward('{$user['id']}')" class="btn" rel="tooltip" title="参与用户"><i class="icon-file"></i>积分详细</a>
+                        <a class="btn" rel="tooltip" href="{php echo $this->createWebUrl('Systemaward', array('uid'=>$user['id'],'sid'=>$sid))}" title="奖励积分"><i class="icon-plus">奖励积分</i></a>
+
+                        <a href="{php echo $this->createWebUrl('signUser', array( 'id' => $user['id'],'sid'=>$sid, 'op' => 'delete'))}"
+                           onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除"
+                           class="btn btn-small"><i class="icon-remove"></i>删除</a>
+
+
+                  
+                    </td>
+                </tr>
+                {/loop}
+
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+
+</div>
+
+
+
+<!-- Modal -->
+<div id="awardDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <h3 id="myModalLabel">积分签到详细</h3>
+    </div>
+    <div class="modal-body">
+
+        <iframe width="600px" align="center" height="400px" id="ward_frame"   frameborder="0" scrolling="yes" ></iframe>
+
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <button class="btn btn-primary" id="gift_save">保存</button>
+    </div>
+</div>
+
+<script>
+
+
+    function userAward(uid){
+
+
+
+        $("#ward_frame").attr("src",'{php echo $this->createWebUrl('UserAward')}&uid='+uid);
+
+
+        $("#awardDialog").modal('show');
+
+
+    }
+
+
+
+
+</script>
+
+
+{template 'common/footer'}

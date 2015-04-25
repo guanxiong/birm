@@ -13,14 +13,15 @@
 
 </head>
 <body id="page_viewLarge" onorientationchange="window.location.reload()">
+
 <section class="picBox"><div class="box">
     <div id="ts1" class="touchSlider" data-min-height="364" data-dot-color="#fff" data-drag-callback="showshopInfor">
         <div class="inner">
             <div class="sld_bar">
-                {loop $store['thumb_url'] $item}
+                {loop $thumb_Arr $item}
                 <section class="sld_page">
                     <figure>
-                        <img src="{$_W['attachurl']}{$item['attachment']}"/>
+                        <img src="{$item}"/>
                     </figure>
                 </section>
                 {/loop}
@@ -40,6 +41,7 @@
         </div>
     </div>
 </div></section>
+
 <script>
 
     window.addEventListener('DOMContentLoaded', function(){

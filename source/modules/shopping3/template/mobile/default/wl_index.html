@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <link rel="stylesheet" type="text/css" href="{RES}css/wei_canyin.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="{RES}css/wei_canyin.css?2014" media="all" />
 <link rel="stylesheet" type="text/css" href="{RES}css/wei_dialog.css" media="all" />
 <script type="text/javascript" src="{RES}js/jQuery.js"></script>
 <script type="text/javascript" src="{RES}js/wei_webapp_v2_common.js"></script>
@@ -11,9 +10,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="format-detection" content="telephone=no" />
 </head>
+<style>
+#page_allMenu {
+background-color: #e9e9eb;
+color: #5e6060;
+font-size: 14px;
+-webkit-text-size-adjust: none;
+}
+.ordernotice-close-icon {
+position: absolute;
+z-index: 2;
+right: 0;
+top: 0;
+bottom: 0;
+width: 35px;
+padding: 0;
+background: url(./source/modules/shopping3/style/img/mar-close.png) no-repeat center center;
+background-size: 15px 15px;
+}
+.shop-marquee .notice-icon {
+top: 10px;
+left: 10px;
+}
+.shop-marquee .marquee-content {
+position: absolute;
+float: left;
+height: 30px;
+line-height: 30px;
+padding-top: 2px;
+margin-left: 35px;
+margin-right: 35px;
+}
+.notice-icon {
+position: absolute;
+z-index: 2;
+left: 0;
+top: 16px;
+width: 16px;
+height: 13px;
+padding: 0;
+background: url(./source/modules/shopping3/style/img/mar-v.png) no-repeat center center;
+background-size: 16px 13px;
+}
+.shop-marquee {
+position: absolute;
+z-index: 2;
+top: 0;
+height: 34px;
+line-height: 34px;
+width: 100%;
+background: #fff9e9;
+}
+.p40{
+	padding-top:35px
+}
+</style>
 <body id="page_allMenu">
-    
-<div class="center">
+<div class="center p40" id="box1">
+	{if $set['shop_notice']}
+	<div class="shop-marquee" id="shop_notices">
+		<div class="notice-icon"></div>
+		<div class="marquee-content">
+			<marquee scrollamount="2" behavior="alternate" style="">
+				{$set['shop_notice']}	
+			</marquee>
+		</div>
+		<div class="ordernotice-close-icon">
+		</div>
+	</div>
+	{/if}
     <nav id='navBar'>
         <dl>
             <!--<dt>分类</dt>-->
@@ -32,7 +97,7 @@
 </div>
     <script type="text/javascript">
         window.selected = {
-            total:{$totalnum},
+            total:{php echo intval($totalnum)},
             dishes: {if empty($idstr)}{}{else}{$idstr}{/if},
         };
         var cardid = '3414907165';
@@ -60,7 +125,7 @@
                     (function(){
                        var dds_HTML = iTemplate.makeList(TPL, res, function(k,v){
                             return {
-                                selectedClass: 0 ==k?"active":""
+                               // selectedClass: 0 ==k?"active":""
                             }
                        });
                        navBar.innerHTML = "<dl>" + dds_HTML + "</dl>";
@@ -74,39 +139,64 @@
             if(id){
                 var dds = _qAll('#navBar dd');
                 for(var i = 0;ci=window.res[i]; i++){
-                    dds[i].className = null;
+                    //dds[i].className = null;
                     if(id == ci.id){
                         ai = ci;
+						//alert(dds[i].innerHTML);
                         dds[i].className = "active";
-                    }
+                    }else{
+					   dds[i].className = "";
+					}
+					//alert(ci.price);
                 }
             }else{
                 ai = window.res[0];
             }
-//            alert(id);return false;
+//          alert(id);return false;
             var checkHtml = '';
-            var TPL = '<dl dunitname="例" dsubcount="1" dishid="{id}" dname="{name}" dtaste="" ddescribe="{note}" dprice="{price}" dishot="{tag_name}" dspecialprice="{discount_price}" disspecial="1" onclick="selectOne(this, {id}, {price});">\
+			
+            var TPL = '<dl dunitname="{unit}" dsubcount="1" dishid="{id}" dname="{name}" dtaste="" ddescribe="{note}" dprice="{price}" dishot="{tag_name}" dspecialprice="{discount_price}" disspecial="1" people="{sellnums}" >\
                     <dt><h3>{name}{html_name}</h3></dt>\
-                    <dd>\
+					<dd>\
                         <a href="javascript:void(0)" class="dataIn" onclick="showImgDetail(this);event.stopPropagation();">\
                             <img src="{pic}" alt="" title="">';
-
 					TPL += '<span style="font-size:10px;">{tag_name}</span>';
-                 TPL +='</a>\
+					TPL +='</a>\
                     </dd>\
-                    <dd>\
-                        <em>{price}元/{unit}</em>\
-                    </dd>\
-                     <input type="checkbox" class="favourite" style="border:0;" value="{id}" {check} onclick="favourite(this, event);">\
-                    <button shopinfo="" class="{curState}"></button>\
+					<dd><em class="sale">{price}元/{unit}<br><del>{discount_price}元/{unit}</del>\
+					<span>{label}</span><p><b>销量:{sellnums}</b>库存:{total}</p></em>\
+					</dd>\
+					<dd class="btn">\
+						<button class="minus" style="display: {curstate}" onclick="selectOne(this, {id}, {price},0,0);"><strong></strong></button>\
+						<i style="display: {curstate}">{nums}</i>\
+						<button class="add" onclick="selectOne(this, {id}, {price},1,{total});"><strong></strong></button>\
+						<em class="fixBig  fake"></em>\
+					</dd>\
                 </dl>';
             document.getElementById("pInfo").innerHTML = iTemplate.makeList(TPL, ai.dishes, function(k,v){
 				if(v.discount_price){
-					v.price = v.discount_price;
+					//v.price = v.discount_price;
+				}
+				if(v.id in window.selected.dishes){
+					v.nums=window.selected.dishes[v.id].num;
+					//alert(v.id+'+'+v.nums);
+					if(v.nums>0){
+						v.curstate='inline-block';
+					}
+				}else{
+					//alert(v.id+'+=+'+v.nums);
+					if(v.nums>0){
+						v.curstate='inline-block';
+						window.selected.dishes[v.id] = {
+							price:v.price,
+							nums:v.nums
+						}
+					}
 				}
                 return {
-                    curState: (v.id in window.selected.dishes)? "selectBtn choose choosen":"selectBtn choose  unchoose",
-                    check : (v.check == '1') ? "checked" : ''
+					//nums:(v.id in window.selected.dishes)? window.selected.dishes[v.id][num]:0;
+                   // curState: (v.id in window.selected.dishes)? "selectBtn choose choosen":"selectBtn choose  unchoose",
+                   // check : (v.check == '1') ? "checked" : ''
                 }
             });
         }
@@ -117,21 +207,23 @@
             if(childImg.nodeType == 3){
                 childImg = thi.childNodes[1];
             }
-            popPic(childImg.src,
-                    parentDl.getAttribute('dname'),
-                    parentDl.getAttribute('dprice') + '元/' + parentDl.getAttribute('dunitName'),
-                    parentDl.getAttribute('dIsSpecial'),
+            popPic(childImg.src,//imgUrl
+                    parentDl.getAttribute('dname'),//,title,price, isSpecial, specialPrice, people,teast,assess,isHot
+                    parentDl.getAttribute('dprice') + '元/' + parentDl.getAttribute('dunitName'),//price, 
+					parentDl.getAttribute('dIsSpecial'),//specialPrice
                     parentDl.getAttribute('dSpecialPrice') + '元/' + parentDl.getAttribute('dunitName'),
-                    parentDl.getAttribute('dsubCount'),
-                    parentDl.getAttribute('dtaste'),
+					parentDl.getAttribute('people'),
+					parentDl.getAttribute('dtaste'),
                     parentDl.getAttribute('ddescribe'),
                     parentDl.getAttribute('dishot')
+				 
+					
                 );
         }
         //
 
-       function selectOne(container, dishid, price) {
-            var btn = container.querySelectorAll("button")[0];
+       function selectOne(container, dishid, price,_t,_left) {
+           /* var btn = container.querySelectorAll("button")[0];
             if (btn.className.indexOf("choosen")>-1) {
                 _removeClass(btn, 'choosen');
                 _addClass(btn, 'unchoose');
@@ -147,13 +239,62 @@
                     num:1
                 }
                 window.selected.total +=1;
+            }
+			*/
+ 			var btn = container.parentNode;
+			
+			window.selected.origTotal = parseInt(_q(".footer_menu .num").innerHTML);
 
-            }
-            if(!("origTotal" in window.selected)){
-                window.selected.origTotal = parseInt(_q(".footer_menu .num").innerHTML);
-            }
-            _q(".footer_menu .num").innerHTML = window.selected.origTotal + window.selected.total;
-            console.log(window.selected);
+			if(_t==1){
+				_input=btn.querySelectorAll("i")[0];
+				_value=_input.innerHTML;
+				_value=parseInt(_value)+1;
+				if(_value>_left){
+					alert('超过库存总量，库存不足');
+					return false;
+				}
+				btn.querySelectorAll("button")[0].style.display ="inline-block";
+				_input.style.display ="inline-block";
+
+				
+				_input.innerHTML=_value;
+				
+				//alert(container.html());
+				//container.prev().show();
+				window.selected.dishes[dishid] = {
+					price:price,
+					num:_value,
+				}
+				_q(".footer_menu .num").innerHTML = window.selected.origTotal + 1;
+			}else{
+				_input=btn.querySelectorAll("i")[0];
+				_value=_input.innerHTML;
+				_value=parseInt(_value)-1;
+				_q(".footer_menu .num").innerHTML = window.selected.origTotal - 1;
+				if(_value>0){
+					_input.innerHTML=_value;
+					window.selected.dishes[dishid] = {
+						price:price,
+						num:_value
+					}
+				}else{
+					//delete window.selected.dishes[dishid];
+					window.selected.dishes[dishid] = {
+						price:price,
+						num:0
+					}
+					_input.innerHTML=0;
+					btn.querySelectorAll("button")[0].style.display ="none";
+					_input.style.display ="none";
+				}
+			}
+			
+           
+			
+			
+            /*
+			console.log(window.selected);
+			*/
         }
         //
         function addToMenu(){
@@ -172,7 +313,7 @@
                 'type':'POST',
                 'async':'false',
                 'success':function(db){
-                    location.href='{php echo  $this->createMobileUrl('wlcart')}';
+					 location.href='{php echo  $this->createMobileUrl('wlcart')}';
                 }
             });
 
@@ -183,11 +324,10 @@
         function popPic(imgUrl,title,price, isSpecial, specialPrice, people,teast,assess,isHot){
             var _title = title,
                 _price = price,
-                _people = null;//people,
+                _people = people;//people,
                 _teast = teast,
                 _assess = assess;
-
-                var hotHtml = '<b>'+isHot+'</b>';
+                 var hotHtml = '<b>'+isHot+'</b>';
                 _tmpHtml = "<div class='content'>"+hotHtml+"<img src='"+imgUrl+"' alt='' title=''><h2>"+_title;
 
                  if (isSpecial == view_const_dish_SPECIAL_PRICE_YES) {
@@ -210,6 +350,7 @@
                 }
 
                 _tmpHtml += '</div>';
+ 				
             MDialog.popupCustom(_tmpHtml,true,true);
         }
 
@@ -218,40 +359,18 @@
             setHeight();
         }, false);
         window.onresize = function(){setHeight();}
-        function favourite(thi, evt){
-            evt.stopPropagation();
-            var id = $(thi).val();
-            var check = '';
-            if($(thi).is(':checked')){
-                check = '1';
-            }else{
-                check = '0';
-            }
-            $.ajax({
-                url:"{php echo  $this->createMobileUrl('wllike')}",
-                data:{'id':id,'check':check},
-                type:'POST',
-                dataType:'json',
-                cache:false,
-                beforeSend:function(){
-                    MLoading.show('加载中');
-                },
-                success:function(msgObj){
-                    MLoading.hide();
-                    if(msgObj.status == '0'){
-                        return false;
-                    }
-                }
-            });
-        }
     </script>
 
 <script>
 $(document).ready(function(){
+	$('#shop_notices').click(function(){
+		$('#shop_notices').hide();
+		$('#box1').removeClass('p40');
+		
+	});
 	$('#my_menu').click(function(){
 		addToMenu();
 	});
-
 });
 	
 document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {

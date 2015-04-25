@@ -34,7 +34,7 @@ $operation = $_GPC['op'];
 			pdo_insert('shopping3_cart', $data);
 		}
 	} else {
-		if ($goods['total'] != -1 && $row['total'] > $goods['total']) {
+		if ($goods['total'] != -1 && $row['total'] >= $goods['total']&&$_GPC['action']!=1) {
 			$result['message'] = '抱歉，该商品库存不足！';
 			message($result, '', 'ajax');
 		}

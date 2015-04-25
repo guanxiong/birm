@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51,0.52">
+	<application setting="false">
+		<name><![CDATA[积分签到]]></name>
+		<identifie><![CDATA[monsign]]></identifie>
+		<version><![CDATA[1.1]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[积分签到！]]></ability>
+		<description><![CDATA[积分签到！]]></description>
+		<author><![CDATA[微赞]]></author>
+		<url><![CDATA[http://bbs.012wz.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="subscribe" />
+			<message type="unsubscribe" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="签到管理" do="sign" state="" />
+			<entry title="统计分析" do="analyse" state="" />
+
+
+		</menu>
+	</bindings>
+
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[uninstall.php]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

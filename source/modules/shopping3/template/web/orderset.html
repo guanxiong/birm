@@ -5,7 +5,7 @@
  	<li><a href="{php echo $this->createWebUrl('printset')}">打印机设置</a></li>	
 	<li><a href="{php echo $this->createWebUrl('smsset')}">短信设置</a></li>	
 	<li  class="active"><a href="{php echo $this->createWebUrl('orderset')}">订单限制</a></li>	
-
+	<li><a href="{php echo $this->createWebUrl('ordertype')}">店铺类型</a></li>	
 </ul>
 
 <div class="main">
@@ -17,7 +17,7 @@
   			<tr>
 				<th><label for="">订单数量</label></th>
 				<td>
-					<input type="number" name="order_limit" class="span6" value="{$set['order_limit']}" />
+					<input type="number" name="order_limit" class="span2" value="{$set['order_limit']}" />
 					<p class="help-block">后台允许的 未处理订单数，超过此数，无法下单</p>					
 				</td>
 			</tr>

@@ -17,6 +17,7 @@
 	
   <section id="page-index" class="__page__" style="display: block;">
 		<div class="header">
+			<div class="btn_back"></div>
 			<p>{$set['shop_name']}</p>
 		</div>
 		<div id="page-index-content">
@@ -51,6 +52,11 @@
 						<p>店铺信息</p>
 					</div>
 					<div class="shopinfo-content">
+						<div class="shopinfo-item">
+							<p class="shopinfo-name">营业时间：</p>
+							<p class="shopinfo-value"><a href="tel:{$set['shop_tel']}">{$set['yy_start_time']}-{$set['yy_end_time']}</a></p>
+						</div>
+
 						<div id="gogooglemap" class="shopinfo-item">
 								<p class="shopinfo-name">店铺地址：</p>
 								<p class="shopinfo-value"><a href="http://api.map.baidu.com/marker?location={$set['lat']},{$set['lng']}&title={$set['shop_name']}&name={$set['shop_name']}&content={$set['shop_address']}&output=html&src=weiba|weiweb">{$set['shop_address']}</a></p>
@@ -61,6 +67,7 @@
 							<p class="shopinfo-name">电话：</p>
 							<p class="shopinfo-value"><a href="tel:{$set['shop_tel']}">{$set['shop_tel']}</a></p>
 						</div>
+
 					</div>
 				</div>
 				
@@ -71,11 +78,11 @@
 	</section>
 		<div id="footer_menu" class="footer footer_menu">
             <ul class="clear">
-				<li><a href="{php echo  $this->createMobileUrl('wlgenius')}" ><span class="icons icons_1"></span><label>智能选餐</label></a></li>				
-				<li><a  href="{php echo  $this->createMobileUrl('wlindex')}" ><span class="icons icons_2"></span><label>点菜</label></a></li>
+				<li><a  href="{php echo  $this->createMobileUrl('wlindex')}" class="onactive" ><span class="icons icons_4"></span><label>店铺首页</label></a></li>		
+				<li><a  href="{php echo  $this->createMobileUrl('wlindex')}" ><span class="icons icons_2"></span><label>开始选购</label></a></li>
+				<li><a href="{php echo  $this->createMobileUrl('wlgenius')}" {if $_GPC['do']=='wlgenius'}class="onactive"{/if}><span class="icons icons_1"></span><label>掌柜推荐</label></a></li>		
 				<li><a href="{php echo  $this->createMobileUrl('wlmember')}" ><span class="icons icons_3"></span><label>我的订单</label></a></li>
-                <li><a href="{php echo  $this->createMobileUrl('wlmylike')}" ><span class="icons icons_4"></span><label>我喜欢</label></a></li>
-                <li><a href="{php echo  $this->createMobileUrl('wlmylike')}" id="my_menu"><span class="icons icons_5"><label id="num" class="num">{$totalnum}</label></span></a></li>
+                <li><a href="javascript:void(0);" id="my_menu"><span class="icons icons_5"><label id="num" class="num">{php echo intval($totalnum)}</label></span></a></li>
             </ul>
         </div>
 </div>

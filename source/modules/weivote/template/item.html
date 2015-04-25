@@ -1,0 +1,67 @@
+{if empty($item)}
+{php $namesuffix = '-new[(wrapitemid)]';}
+{php $itemid = '(itemid)';}
+{else} 
+{php $namesuffix = '['.$item['id'].']';}
+{php $itemid = 'weivote-item-' . $item['id'];}
+{/if}
+
+
+<div class="alert alert-info reply-market-list">
+	<table class="tb reply-news-edit">
+        <tr>
+			<th>操作：</th>
+			
+            <td id="option-inkind">
+				<span class="pull-right">
+                    {if empty($item)}<a href="javascript:;" onclick="doDeleteItem('{$itemid}')">删除</a>
+                    {else}<a href="{php echo create_url('index/module/delete', array('name' => 'weivote', 'id' => $item['id']))}" onclick="doDeleteItem('{$itemid}', this.href)">删除</a>{/if}
+                </span>
+				<label for="radio_0_{$itemid}" ><input type="hidden" name="option-inkind{$namesuffix}" id="radio_0_{$itemid}" value="0" /> </label>
+			</td>
+            
+		</tr>            
+		<tr>
+			<th>标题：</th>
+			<td>
+				<input type="text" value="{$item['title']}" style="width:275px;" name="option-title{$namesuffix}">
+			</td>
+		</tr>            
+		<tr>
+            <th>图片：</th>
+            <td>
+                <div id="" class="uneditable-input reply-edit-cover">
+                    <div class="detail">
+                        <span class="pull-right">大图片建议尺寸：100像素 * 150像素</span>
+                        <input type="button" id="item-picture-{$itemid}" fieldname="option-picture{$namesuffix}" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+                        <button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'item-picture-value')" style="{if empty($item['picture'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+                    </div>
+                    {if !empty($item['picture'])}
+                    <input type="hidden" name="option-picture{$namesuffix}" value="{$item['picture']}">
+                    <div id="upload-file-view">
+                        <input type="hidden" id="item-picture-value" value="{$item[picture]}">
+                        <img width="auto" src="{$_W['attachurl']}{$item['picture']}">&nbsp;&nbsp;
+                    </div>
+                    {else}
+                    <div id="upload-file-view"></div>
+                    {/if}
+                </div>
+            </td>
+		</tr>            
+		<tr>
+			<th>描述：</th>
+			<td>
+
+          <textarea id="item-description-{$itemid}" name="option-description{$namesuffix}" class="textarea" placeholder="请在这里输入 ..." style="width: 100%; height: 200px">
+            {$item['description']}
+          </textarea>
+
+      </td>
+            
+		</tr>
+				
+	</table>
+
+</div>
+
+

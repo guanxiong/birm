@@ -3,6 +3,11 @@
 	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('order', array('op' => 'display'))}">管理订单</a></li>
 	<li><a href="{php echo $this->createWebUrl('order', array('op' => 'cprint'))}">取消所有未打印订单</a></li>
 </ul>
+<style>
+.label-red{
+	background-color: red;
+}
+</style>
 {if $operation == 'display'}
 <link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
 <script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
@@ -44,33 +49,66 @@ function range(days) {
 			<div class="stat-div">
 				<div class="navbar navbar-static-top">
 					<div class="navbar-inner">
-						<span class="brand">订单统计<small>[不包含截止日期当天]</small></span>
+						<span class="brand">订单统计</span>
 						<div class="pull-left"></div>
 					</div>
 				</div>
 				<div class="sub-item">
-					<form action="" method="get">
-					<div class="pull-right">
-						<input class="btn btn-primary" type="submit" value="导出Excel">
-					</div>
-					<div class="pull-left">
-						<input name="act" type="hidden" value="module" />
-						<input name="do" type="hidden" value="download" />
-						<input name="name" type="hidden" value="shopping3" />
- 						<input name="start" type="hidden" value="{php echo date('Y-m-d',strtotime('-1 day'))}" />
-						<input name="end" type="hidden" value="{php echo date('Y-m-d')}" />
-						<button class="btn date" id="date-range" type="button"><span class="date-title">{php echo date('Y-m-d',strtotime("-1 day"))} 至 {php echo date('Y-m-d')}</span> <i class="icon-caret-down"></i></button>
-						<span class="date-section"><a href="javascript:;" onclick="range(7);">7天</a><a href="javascript:;" onclick="range(14);">14天</a><a href="javascript:;" onclick="range(30);">30天</a></span>
-					</div>
- 
+					<div class="sub-content">
+
+ 					<form action="" method="post">
+					<table class="table sub-search">
+						<tbody>
+						<tr>
+							<th>联系方式</th>
+							<td>
+								<input type="text" name="tel" value="{$_GPC['tel']}" class="">
+							</td>
+						</tr>
+						<tr>
+							<th>预约时间</th>
+							<td>
+							<div class="pull-left">
+								<input name="start" type="hidden" value="{$start}" />
+								<input name="end" type="hidden" value="{$end}" />
+								<button class="btn date" id="date-range" type="button"><span class="date-title">{$start} 至 {$end}</span> <i class="icon-caret-down"></i></button>
+								<span class="date-section"><a href="javascript:;" onclick="range(7);">7天</a><a href="javascript:;" onclick="range(14);">14天</a><a href="javascript:;" onclick="range(30);">30天</a></span>
+							</div>
+							</td>
+						</tr>	
+						<tr>
+							<th>类型</th>
+							<td>
+								<select name="status">
+ 									<option value="-1" {if $_GPC['status']==-1}selected{/if}>全部</option>
+									<option value="0" {if isset($_GPC['status'])&&$_GPC['status']==0}selected{/if}>未下单</option>
+									<option value="1" {if !isset($_GPC['status'])||$_GPC['status']==1}selected{/if}>未确认</option>
+									<option value="2" {if $_GPC['status']==2}selected{/if}>已确认</option>
+									<option value="3" {if $_GPC['status']==3}selected{/if}>已完成</option>
+ 								</select>
+							</td>
+						</tr>	
+						<tr>
+							<th></th>
+							<td>
+								<button type="submit" class="btn btn-primary span2"  name="confrim"  value="1">搜索</button>
+								<button type="submit" class="btn btn-primary span2"  name="confrim"  value="2">导出数据</button>
+								<input type="hidden" name="token" value="{$_W['token']}" />
+							</td>
+						</tr>
+					</tbody></table>
 					</form>
+					</div>
 				</div>
+				
 				<div class="sub-item" id="table-list">
 					<h4 class="sub-title">详细数据</h4>
 					<div class="sub-content">
+						<form action="" method="post" onsubmit="">
 						<table class="table table-hover">
 							<thead class="navbar-inner">
 								<tr>
+									<th style="width:30px;" class="row-first">选择</th>
 									<th style="width:30px;">ID</th>
 									<th style="width:60px;">订单号</th>
 									<th style="width:50px;">姓名</th>
@@ -84,13 +122,27 @@ function range(days) {
 								</tr>
 							</thead>
 							<tbody>
+								<tr>
+									<td class="row-first"><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+									<td colspan="8" style="text-align:left;">
+										<input name="token" type="hidden" value="{$_W['token']}" />
+										<input type="submit" class="btn btn-primary" name="submit1" value="批量确认" />
+										<input type="submit" name="submit2" value="批量取消" class="btn btn-success" />
+										<input type="submit" name="submit3" value="批量完成" class="btn btn-info" />
+									</td>
+								</tr>
 								{loop $list $item}
 								<tr>
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$item['id']}" /></td>
 									<td>{$item['id']}</td>
 									<td>{$item['ordersn']}</td>
 									<td>{$item['guest_name']}</td>
 									<td>{$item['tel']}</td>
-									<td style="text-align:left;">{if $item['order_type']==2}<span class="label label-info">[店内]</span>{else}<span class="label label-info">[外卖]</span>{/if}{if !empty($item['guest_address'])}地址：{$item['guest_address']}{else}桌号：{$item['desk']}{/if}</td>
+									<td style="text-align:left;">
+									{if $item['order_type']==2}<span class="label label-success">[店内]</span>
+									{elseif $item['order_type']==3}<span class="label label-red">[自提]</span>
+									{else}<span class="label label-info">[外卖]</span>{/if}
+									{if !empty($item['guest_address'])}地址：{$item['guest_address']}{else}桌号：{$item['desk']}({$item['nums']}){/if}</td>
 									<td>{$item['totalprice']} 元</td>
 									<td>
 									{if $item['status'] == 0}<span class="label label-info">未生成订单</span>
@@ -109,9 +161,10 @@ function range(days) {
 									<td style="text-align:right;"><a href="{php echo $this->createWebUrl('order', array('op' => 'detail', 'id' => $item['id']))}">查看</a>&nbsp;&nbsp;<a onclick="return confirm('删除订单无法恢复，确认吗？');return false;" href="{php echo $this->createWebUrl('order', array('op' => 'delete', 'id' => $item['id']))}">删除</a></td>
 								</tr>
 								{/loop}
+								 
 							</tbody>
-						 
 					</table>
+					</form>
 					{$pager}
 				</div>
 			</div>
@@ -128,6 +181,13 @@ function range(days) {
 				<th><label for="">订单号</label></th>
 				<td>
 					{$item['ordersn']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">订单类型</label></th>
+				<td>{if $item['order_type']==2}<span class="label label-success">[店内]</span>
+					{elseif $item['order_type']==3}<span class="label label-red">[自提]</span>
+					{else}<span class="label label-info">[外卖]</span>{/if}
 				</td>
 			</tr>
 			<tr>
@@ -167,6 +227,7 @@ function range(days) {
 				<td>
 					{if $item['print_sta'] == -1}<span class="label label-success">未打印</span>
 					{else}<span class="label label-info">已打印</span>{/if}
+					({$item['sms_sta']})
 				</td>
 			</tr>			
 			<tr>
@@ -176,7 +237,7 @@ function range(days) {
 				</td>
 			</tr>
 			<tr>
-				<th><label for="">就餐时间</label></th>
+				<th><label for="">预约时间</label></th>
 				<td>
 					{$item['time_day']} {$item['time_hour']}:{$item['time_second']}
 				</td>
@@ -202,13 +263,21 @@ function range(days) {
 					{$item['tel']}
 				</td>
 			</tr>
-			{$if 
+			{if $item['order_type']==2}
+			<tr>
+				<th><label for="">桌号</label></th>
+				<td>
+					{$item['desk']}（人数：{$item['nums']}）
+				</td>
+			</tr>
+			{elseif $item['order_type']==1}
 			<tr>
 				<th><label for="">地址</label></th>
 				<td>
 					{$item['guest_address']}
 				</td>
 			</tr>
+			{/if}
 		</table>
 		<h4>商品信息</h4>
 		<table class="table table-hover">

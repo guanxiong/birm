@@ -63,19 +63,6 @@ h2 {
 </div>
 <div id="mcover" onclick="$(this).hide()"><img src="./source/modules/site/template/image/guide.png"></div>
 
-<div class="toogle_wrap">
-  <hr style="border:1px dashed #000; height:1px">
-  <div class="toggle_container">
-    <ul class="lists">
-      <p style="padding:4px;weight:bold">相关推荐</p>
-      {php include_once IA_ROOT . '/source/modules/site/model.php'}
-      {php $slide = site_article_search($detail['pcate'], '');}
-      {loop $slide['list'] $v}
-      <p style="padding:2px 4px"><a href="{php echo create_url('mobile/channel', array('name' => 'detail', 'id' => $v['id'], 'weid' => $_W['weid']))}">{$v['title']}→</a></li>
-      {/loop}
-    </ul>
-  </div>
-</div>
 <div class="clear"></div>
 
 <script>

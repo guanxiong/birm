@@ -196,7 +196,14 @@ if($do == 'global') {
 		$user['items'][] = array('用户管理', create_url('member/display'), 'childItems' => array('<i class="icon-plus"></i>', create_url('member/create')));
 		$user['items'][] = array('用户组管理', create_url('member/group'), 'childItems' => array('<i class="icon-plus"></i>', create_url('member/group/post')));
 		$menus[] = $user;
-
+		
+		$update = array(
+		'title' => '一键更新',
+		'items' => array()
+		);
+		$update['items'][] = array('立即更新', create_url('update/update'));
+		$menus[] = $update;
+		
 		//$service = array(
 			//'title' => '云服务',
 			//'items' => array()

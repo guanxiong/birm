@@ -3,7 +3,7 @@
 <application setting="false">
     <name><![CDATA[微点餐多店]]></name>
     <identifie><![CDATA[idish]]></identifie>
-    <version><![CDATA[2.0]]></version>
+    <version><![CDATA[2.1.6]]></version>
     <type><![CDATA[business]]></type>
     <ability><![CDATA[微点餐]]></ability>
     <description><![CDATA[微点餐]]></description>
@@ -22,7 +22,8 @@
     </cover>
     <menu>
         <entry title="微点餐首页设置" do="nave" />
-        <entry title="店面管理" do="stores" />
+        <entry title="门店管理" do="stores" />
+		<entry title="区域管理" do="area" />
         <entry title="参数配置" do="setting" />
     </menu>
     <home>
@@ -30,7 +31,17 @@
     </home>
 </bindings>
 <install><![CDATA[
-    DROP TABLE IF EXISTS `ims_idish_reply`;
+    CREATE TABLE IF NOT EXISTS `ims_idish_area` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属帐号',
+        `name` varchar(50) NOT NULL COMMENT '区域名称',
+        `parentid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级分类ID,0为第一级',
+        `displayorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+        `dateline` int(10) unsigned NOT NULL DEFAULT '0',
+        `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
+        PRIMARY KEY (`id`)
+    ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
     CREATE TABLE IF NOT EXISTS `ims_idish_reply` (
         `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
         `rid` int(10) unsigned NOT NULL,
@@ -115,6 +126,7 @@
     CREATE TABLE IF NOT EXISTS `ims_idish_stores` (
         `id` int(10) NOT NULL AUTO_INCREMENT,
         `weid` int(10) NOT NULL DEFAULT '0' COMMENT '公众号id',
+        `areaid` int(10) NOT NULL DEFAULT '0' COMMENT '区域id',
         `title` varchar(50) NOT NULL DEFAULT '' COMMENT '名称',
         `logo` varchar(200) NOT NULL DEFAULT '' COMMENT '商家logo',
         `info` varchar(1000)  NOT NULL DEFAULT '' COMMENT '简短描述',
@@ -155,6 +167,7 @@
         `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
         `address` varchar(250) NOT NULL DEFAULT '' COMMENT '地址',
         `tel` varchar(50) NOT NULL DEFAULT '' COMMENT '联系电话',
+        `reply` varchar(1000) NOT NULL DEFAULT '' COMMENT '回复',
         `meal_time` varchar(50) NOT NULL DEFAULT '' COMMENT '就餐时间',
         `counts` tinyint(4) DEFAULT '0' COMMENT '预订人数',
         `seat_type` tinyint(1) DEFAULT '0' COMMENT '位置类型1大厅2包间',
@@ -163,6 +176,7 @@
         `remark` varchar(1000) NOT NULL DEFAULT '' COMMENT '备注',
         `tables` varchar(10) NOT NULL DEFAULT '' COMMENT '桌号',
         `print_sta` tinyint(1) DEFAULT '-1' COMMENT '打印状态',
+        `sign` tinyint(1) NOT NULL DEFAULT '0' COMMENT '-1拒绝，0未处理，1已处理',
         `dateline` int(10) unsigned NOT NULL DEFAULT '0',
         PRIMARY KEY (`id`)
     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -184,10 +198,20 @@
         `weid` int(10) unsigned NOT NULL,
         `title` varchar(50) DEFAULT '' COMMENT '网站名称',
         `thumb` varchar(200) DEFAULT '' COMMENT '背景图',
+        `storeid` int(10) unsigned NOT NULL DEFAULT '0',
         `entrance_type` tinyint(1) unsigned NOT NULL COMMENT '入口类型1:首页2门店列表3菜品列表4我的菜单',
         `entrance_storeid` tinyint(1) unsigned NOT NULL COMMENT '入口门店id',
         `order_enable` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '订餐开启',
         `dining_mode` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '用餐类型 1:到店 2:外卖',
+        `dateline` int(10) DEFAULT '0',
+        PRIMARY KEY (`id`)
+    ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+    CREATE TABLE IF NOT EXISTS `ims_idish_store_setting` (
+        `id` int(10) NOT NULL AUTO_INCREMENT,
+        `weid` int(10) unsigned NOT NULL,
+        `storeid` int(10) unsigned NOT NULL,
+        `order_enable` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '订餐开启',
         `dateline` int(10) DEFAULT '0',
         PRIMARY KEY (`id`)
     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -238,25 +262,5 @@
     )  ENGINE=MyISAM  DEFAULT CHARSET=utf8;
     ]]></install>
 <uninstall><![CDATA[]]></uninstall>
-<upgrade><![CDATA[
-    CREATE TABLE IF NOT EXISTS `ims_idish_print_setting` (
-        `id` int(10) NOT NULL AUTO_INCREMENT,
-        `weid` int(10) unsigned NOT NULL,
-        `storeid` int(10) unsigned NOT NULL,
-        `print_status` tinyint(1) NOT NULL,
-        `print_type` tinyint(1) NOT NULL,
-        `print_usr` varchar(50) DEFAULT '',
-        `print_nums` tinyint(3) DEFAULT '1',
-        `print_top` varchar(40) DEFAULT '',
-        `print_bottom` varchar(40) DEFAULT '',
-        `dateline` int(10) DEFAULT '0',
-        PRIMARY KEY (`id`)
-    )  ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-    ALTER TABLE `ims_idish_order` ADD `print_sta` tinyint(1) DEFAULT '-1' COMMENT '打印状态';
-
-    ALTER TABLE `ims_idish_order` ADD `tables` varchar(10) NOT NULL DEFAULT '' COMMENT '桌号';
-    ALTER TABLE `ims_idish_order` ADD `dining_mode` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '用餐类型 1:到店 2:外卖';
-    ALTER TABLE `ims_idish_order` ADD `address` varchar(250) NOT NULL DEFAULT '' COMMENT '地址';
-    ALTER TABLE `ims_idish_setting` ADD `dining_mode` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '用餐类型 1:到店 2:外卖';
-]]></upgrade>
+<upgrade><![CDATA[upgrade.php]]></upgrade>
 </manifest>

@@ -3,11 +3,11 @@
 	<application setting="true">
 		<name><![CDATA[微商城]]></name>
 		<identifie><![CDATA[shopping]]></identifie>
-		<version><![CDATA[2.9.3]]></version>
+		<version><![CDATA[3.0.0]]></version>
 		<type><![CDATA[business]]></type>
 		<ability><![CDATA[微商城]]></ability>
 		<description><![CDATA[微商城]]></description>
-		<author><![CDATA[WeEngine Team & ewei]]></author>
+		<author><![CDATA[WDL]]></author>
 		<url><![CDATA[]]></url>
 	</application>
 	<platform>
@@ -30,6 +30,7 @@
                                                       <entry title="配送方式" do="dispatch" />
                                                       <entry title="幻灯片管理" do="adv" />
 			<entry title="维权与告警" do="notice" />
+			<entry title="短信设置" do="smsset" />
 		</menu>
 		<home>
 			<entry title="商城" do="list" />
@@ -63,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `ims_shopping_cart` (
   `total` int(10) unsigned NOT NULL,
   `optionid` int(10) default 0,
   `marketprice` decimal(10,2) default 0,
+  `appointmenttime` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idx_openid` (`from_user`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -108,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `ims_shopping_goods` (
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `displayorder` int(10) unsigned NOT NULL DEFAULT '0',
   `title` varchar(100) NOT NULL DEFAULT '',
-  `thumb` varchar(100) NOT NULL DEFAULT '',
+  `thumb` varchar(255) NOT NULL DEFAULT '',
   `unit` varchar(5) NOT NULL DEFAULT '',
   `description` varchar(1000) NOT NULL DEFAULT '',
   `content` text NOT NULL,
@@ -160,6 +162,7 @@ CREATE TABLE IF NOT EXISTS `ims_shopping_order` (
   `dispatchprice` decimal(10,2) default 0,
   `dispatch` int(10) default 0,
   `createtime` int(10) unsigned NOT NULL,
+  `appointmenttime` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -280,6 +283,33 @@ CREATE TABLE if not exists `ims_shopping_adv` (
   `displayorder` int(11) default 0,
   PRIMARY KEY (`id`),KEY `indx_weid` (`weid`),KEY `indx_specid` (`specid`),KEY `indx_show` (`show`),KEY `indx_displayorder` (`displayorder`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ims_shopping_set` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT NULL,
+  `shop_name` varchar(50) DEFAULT NULL,
+  `thumb` varchar(1000) DEFAULT NULL,
+  `paytype1` tinyint(1) NOT NULL,
+  `paytype2` tinyint(1) NOT NULL,
+  `paytype3` tinyint(1) NOT NULL,
+  `print_status` tinyint(1) NOT NULL,
+  `print_type` tinyint(2) NOT NULL,
+  `print_usr` varchar(50) NOT NULL,
+  `print_nums` tinyint(3) NOT NULL,
+  `print_bottom` varchar(30) NOT NULL,
+  `sms_status` tinyint(1) NOT NULL,
+  `sms_type` tinyint(2) NOT NULL COMMENT '0商家，1客户，2both',
+  `sms_phone` varchar(20) NOT NULL,
+  `sms_from` tinyint(2) NOT NULL DEFAULT '1' COMMENT '1是打印机自己发，2是短信平台',
+  `sms_account` varchar(30) NOT NULL,
+  `sms_secret` varchar(80) NOT NULL,
+  `sms_text` varchar(200) NOT NULL,
+  `sms_resgister` tinyint(1) NOT NULL DEFAULT '1',
+  `sms_customer` tinyint(1) NOT NULL,
+  `sms_verifytxt` varchar(70) NOT NULL,
+  `sms_paytxt` varchar(70) NOT NULL,
+  `sms_bosstxt` varchar(70) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 	]]></install>
 	<uninstall><![CDATA[]]></uninstall>
 	<upgrade><![CDATA[upgrade.php]]></upgrade>

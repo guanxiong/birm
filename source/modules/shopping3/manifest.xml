@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+<manifest xmlns="http://www.we7.cc" versionCode="0.5,0.51">
 	<application setting="false">
 		<name><![CDATA[新微餐饮]]></name>
 		<identifie><![CDATA[shopping3]]></identifie>
-		<version><![CDATA[2.9]]></version>
+		<version><![CDATA[3.3]]></version>
 		<type><![CDATA[business]]></type>
 		<ability><![CDATA[微商城(餐饮版)]]></ability>
 		<description><![CDATA[微商城 for 餐饮]]></description>
@@ -20,15 +20,18 @@
 	</platform>
 	<bindings>
 		<cover>
-			<entry title="微餐饮入口设置" do="wlhome" />
+			<entry title="微餐饮入口设置" do="wlindex" />
+			<entry title="订单查询入口设置" do="wlmember" />			
 		</cover>
 		<menu>
-			<entry title="基本设置" do="shopset" />
+			<entry title="基本设置" do="shopset" />			
 			<entry title="订单管理" do="order" />
-			<entry title="商品管理" do="goods" />
 			<entry title="商品分类" do="category" />
+			<entry title="商品管理" do="goods" />
 			<entry title="智能选餐" do="genius" />
-			 <entry title="模板设置" do="template" />
+			<entry title="会员管理" do="member" />
+			<entry title="支付设置" do="pay" />
+			<entry title="模板设置" do="template" />
 		</menu>
 		<home>
 			<entry title="微餐饮" do="wlindex" />
@@ -37,7 +40,7 @@
 			<entry title="我的订单" do="wlorder" />
 		</profile>
 	</bindings>
-	<install><![CDATA[
+<install><![CDATA[
 CREATE TABLE IF NOT EXISTS `ims_shopping3_address` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `weid` int(10) unsigned NOT NULL,
@@ -46,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `ims_shopping3_address` (
   `address` varchar(200) DEFAULT NULL,
   `tel` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ims_shopping3_cart` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -78,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `ims_shopping3_express` (
   `express_price` varchar(10) DEFAULT NULL,
   `express_area` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ims_shopping3_fans` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -90,8 +93,9 @@ CREATE TABLE IF NOT EXISTS `ims_shopping3_fans` (
   `login_nums` int(11) DEFAULT NULL,
   `login_time` int(10) DEFAULT NULL,
   `crteate_time` int(10) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0,拉黑1正常',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ims_shopping3_fans_like` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -102,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `ims_shopping3_fans_like` (
   `checked` tinyint(1) NOT NULL,
   `create_time` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ims_shopping3_genius` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -110,11 +114,12 @@ CREATE TABLE IF NOT EXISTS `ims_shopping3_genius` (
   `rens` tinyint(4) NOT NULL,
   `displayorder` tinyint(4) NOT NULL,
   `sort` tinyint(4) DEFAULT NULL,
+  `thumb` varchar(100) NOT NULL DEFAULT '',
   `nums` tinyint(4) NOT NULL,
   `dishes` text NOT NULL COMMENT '菜品的ID，以逗号隔开',
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ims_shopping3_goods` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -139,6 +144,7 @@ CREATE TABLE IF NOT EXISTS `ims_shopping3_goods` (
   `thumb_url` varchar(1000) DEFAULT NULL,
   `createtime` int(10) unsigned NOT NULL,
   `hits` int(10) DEFAULT NULL,
+  `label` varchar(2) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -170,6 +176,7 @@ CREATE TABLE IF NOT EXISTS `ims_shopping3_order` (
   `sms_sta` varchar(3) NOT NULL,
   `createtime` int(10) unsigned NOT NULL,
   `desk` varchar(10) NOT NULL,
+  `nums` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -206,8 +213,8 @@ CREATE TABLE IF NOT EXISTS `ims_shopping3_set` (
   `print_type` tinyint(2) NOT NULL,
   `print_usr` varchar(50) NOT NULL,
   `print_nums` tinyint(3) NOT NULL,
-  `print_top` varchar(30) NOT NULL,
-  `print_bottom` varchar(30) NOT NULL,
+  `print_top` varchar(1000) NOT NULL,
+  `print_bottom` varchar(1000) NOT NULL,
   `sms_status` tinyint(1) NOT NULL,
   `sms_type` tinyint(2) NOT NULL COMMENT '0商家，1客户，2both',
   `sms_phone` varchar(20) NOT NULL,
@@ -216,15 +223,18 @@ CREATE TABLE IF NOT EXISTS `ims_shopping3_set` (
   `sms_text` varchar(200) NOT NULL,
   `sms_resgister` tinyint(1) NOT NULL DEFAULT '1',
   `order_limit` tinyint(4) NOT NULL,
-  `print_mkey` varchar(50) NOT NULL,
-  `partnerId` VARCHAR( 200 ) NOT NULL,
-  `apikey` VARCHAR( 200 ) NOT NULL,
-  `machineCode` VARCHAR( 200 ) NOT NULL,
-  `mkey` VARCHAR( 200 ) NOT NULL,
+  `sms_user` varchar(50) NOT NULL DEFAULT '',
+  `address_list` varchar(500) NOT NULL DEFAULT '',
+  `desk_list` varchar(1000) NOT NULL DEFAULT '',
+  `room_list` varchar(1000) NOT NULL DEFAULT '',
+  `ordretype1` tinyint(1) NOT NULL DEFAULT '1',
+  `ordretype2` tinyint(1) NOT NULL DEFAULT '1',
+  `ordretype3` tinyint(1) NOT NULL DEFAULT '1',
+  `yy_start_time` varchar(5) NOT NULL DEFAULT '00:00',
+  `yy_end_time` varchar(5) NOT NULL DEFAULT '23:59',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></install>
-	<uninstall><![CDATA[
-	DROP TABLE IF EXISTS `ims_shopping3_set`;
-	]]></uninstall>
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[]]></uninstall>
 	<upgrade><![CDATA[upgrade.php]]></upgrade>
 </manifest>

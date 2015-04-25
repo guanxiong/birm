@@ -2,7 +2,7 @@
 /**
  * 2014-2-24
  * 购物车 分类管理 
- * 支持二级分类 来自微擎
+ * 支持二级分类 来自微动力
  * @author 微动力
  * @url
  */
@@ -23,6 +23,7 @@ if (checksubmit('submit')) {
 		'sms_status'=>trim($_GPC['sms_status']),
 		'sms_type'=>trim($_GPC['sms_type']),
 		'sms_from'=>trim($_GPC['sms_from']),
+		'sms_user'=>trim($_GPC['sms_user']),
 		'sms_secret'=>trim($_GPC['sms_secret']),
 		'sms_phone'=>trim($_GPC['sms_phone']),
 		'sms_text'=>trim($_GPC['sms_text']),
@@ -41,6 +42,32 @@ if($set==false){
 		'id'=>0,
 	);
 }else{
-
+	if(!empty($set['sms_user'])&&!empty($set['sms_secret'])){
+		$msm=ihttp_request("http://big.smsbao.com/query.action?u=".$set['sms_user']."&p=".md5($set['sms_secret'])."");
+		
+		$msm_arr=explode("\n",$msm['content']);
+		if($msm_arr[0]==30){
+			$msg='密码错误 ';
+		}elseif($msm_arr[0]==40){
+			$msg='账号不存在 ';
+		}elseif($msm_arr[0]==41){
+			$msg='余额不足 ';
+		}elseif($msm_arr[0]==42){
+			$msg='帐号过期 ';
+		}elseif($msm_arr[0]==43){
+			$msg='IP地址限制 ';
+		}elseif($msm_arr[0]==50){
+			$msg='内容含有敏感词';
+		}elseif($msm_arr[0]==51){
+			$msg='手机号码不正确';
+		}else{
+			$msg='';
+		}
+	 
+		if(empty($msg)){
+			$msm_arr=explode(',',$msm_arr[1]);
+		}
+		
+	}
 }
 include $this->template('web/smsset');

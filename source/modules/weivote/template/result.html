@@ -1,0 +1,144 @@
+{template 'common/header'}
+ 
+
+<style>
+    .sub-search input,.sub-search select{margin-bottom:0;}
+</style>
+	<div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="brand">投票结果</span>
+					</div>
+				</div>
+				<div class="sub-item">
+					<h4 class="sub-title">结果&nbsp;&nbsp;(总票数：{php echo $options_count}票, 总参与人数：{php echo $voter_count}人)</h4>
+                    
+                    
+					<div class="main-container" id="main-container">
+
+                            <div class="main-content">
+
+                                    <div style="font-size: 14px;font-weight: normal;font-family: Microsoft YaHei,SimHei,Arial,sans-serif;">
+                                        <div class="col-xs-12">
+                                            <!-- PAGE CONTENT BEGINS -->
+
+                                            {php $option_index = 0;}
+                                            {loop $options $option_one}
+                                                <div class="row" style="margin-bottom:20px;margin-left: 0px;">
+                                                    
+                                                    {if $option_one['picture'] != ''}
+                                                    <div class="span4 center">
+                                                        
+                                                        <a class="thumbnail">
+                                                          <img alt="image" src="{php echo $_W['attachurl'].$option_one['picture']}" />
+                                                        </a>
+                                                        
+                                                    </div><!-- /span -->
+                                                    {/if}
+
+                                                    <div class="span8 center" style="font-size: 14px;font-weight: normal;font-family: Microsoft YaHei,SimHei,Arial,sans-serif;">
+
+                                                        选项： {php echo $option_one['title']}<br> 
+                                                        排名： 第{php echo $option_index+1;}<br>
+
+                                                        票数： {php echo $option_one['total']}<br> 
+                                                        占比： {php echo $option_one['proportion']}%<br> 
+                                                        
+                                                        <div class="progress progress-striped active">
+                                                            <div class="bar" style="width: {php echo $option_one['proportion']}%;">{php echo $option_one['proportion']}%</div>
+                                                        </div>
+                                                    </div><!-- /span -->
+                                                    
+                                                </div><!-- /row-fluid -->
+                                            <hr>
+				                            {php $option_index++;}
+                                            {/loop}
+
+                                            <!-- PAGE CONTENT ENDS -->
+                                        </div><!-- /.col -->
+                                    </div><!-- /.row -->
+
+
+                            </div><!-- /.main-content -->
+
+                    </div><!-- /.main-container -->
+
+                    
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+
+
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+
+
+<!-- inline scripts related to this page -->
+
+
+<script>
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+	$('#date-range').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=start]').val(),
+		endDate: $(':hidden[name=end]').val(),
+		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=start]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=end]').val(end.format('YYYY-MM-DD'));
+	});
+});
+</script>
+
+
+{template 'common/footer'}

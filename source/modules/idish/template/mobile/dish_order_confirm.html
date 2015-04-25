@@ -55,6 +55,7 @@
                 <ul>
                     <li style="border-top: 0; margin-top: 0;" class="arrow">
                         <a href="#" style="color: #888; display: block;">
+                            <p style="font-size: 12px;">订单号：{$order['ordersn']}</p>
                             <p style="font-size: 12px;">订餐人：{$order['username']} 门店名称：{$store['title']}</p>
                             <p style="font-size: 15px; color: #000;">门店地址：{$store['address']}</p>
                         </a>
@@ -77,7 +78,17 @@
                     {/loop}
                 </ul>
                 <div class="group_1" data-title="选择支付方式">
-                    <a href="#" class="btn_1 arrow">{if $order['dining_mode']==1}到店付款{else}货到付款{/if}</a>
+                    <select style="width: 100%; height: 38px;" onchange="selectpaytype(this);" id="selpaytype">
+                        <option value="0" selected="selected">线下付款</option>
+                        <option value="1">余额支付</option>
+                    </select>
+                    <p id="cardinfo" style="width: 100%;color:#f00;padding: 5px;display: none;">
+                        {if empty($card)}
+                        您还没申请会员卡!
+                        {else}
+                        您的卡号是{$card['cardpre']}{$card['cardno']},剩余余额<span id="cardcoin">{$card['coin']}</span>
+                        {/if}                                               　
+                    </p>
                 </div>
             </article>
         </section>
@@ -95,22 +106,41 @@
         $(function () {
             $("#confirm_order").click(function () {
                 MDialog.confirm(
-                        '', '确认下单吗？', null,
-                        '确定', function(){
-                            postmain();
-                        }, null,
-                        '取消', null, null,null, true, true
+                    '', '确认下单吗？', null,
+                    '确定', function(){
+                        postmain();
+                    }, null, '取消', null, null,null, true, true
                 );
             });
         });
-        function postmain(){
+        //提交数据
+        function postmain() {
+            //付款类型
+            var paytype = $("#selpaytype").val();
+            //剩余余额
+            if (paytype == 1) {
+                "{if !empty($card)}"
+                var cardcoin = parseFloat("{$card['coin']}");
+                var orderprice = parseFloat("{$order['totalprice']}");
+                if (orderprice > cardcoin) {
+                    alert('您的余额不足,请使用别的支付方式!');
+                    return false;
+                }
+                "{else}"
+                    alert('您还没申请会员卡,请使用别的支付方式!');
+                    return false;
+                "{/if}"
+
+            }
             var url = "{php echo create_url('mobile/module', array('do' => 'orderconfirmupdate', 'from_user' => $page_from_user, 'name' => 'idish', 'weid' => $weid, 'storeid' => $storeid, 'orderid' => $orderid))}";
             $.ajax({
                 url: url, type: "post", dataType: "json", timeout: "10000",
-                data: {},
+                data: {
+                    "paytype": paytype
+                },
                 success: function (data) {
                     if (data['message']['code'] == "1") {
-                        alert("订单已处理.");
+                        alert("订单确认成功.");
                         window.location.href = "{php echo create_url('mobile/module', array('do' => 'orderlist', 'from_user' => $page_from_user, 'name' => 'idish', 'weid' => $weid, 'storeid' => $storeid))}";
                         $("#confirm_order").hide();
                     } else {
@@ -121,6 +151,13 @@
                     alert("网络异常!...");
                 }
             });
+        }
+        function selectpaytype(obj){
+            if (obj.value == 1) {
+                $("#cardinfo").show();
+            } else {
+                $("#cardinfo").hide();
+            }
         }
     </script>   
 </body>

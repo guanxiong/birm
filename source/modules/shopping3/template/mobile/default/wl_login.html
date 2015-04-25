@@ -1,0 +1,49 @@
+ 
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>会员中心</title>
+<link href='./source/modules/shopping2/style/css/global.css' rel='stylesheet' type='text/css' />
+<link href='./source/modules/shopping2/style/css/user.css' rel='stylesheet' type='text/css' />
+<script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+
+<script type='text/javascript' src='./source/modules/shopping2/style/js/global.js'></script>
+<script type='text/javascript' src='./source/modules/shopping2/style/js/user.js'></script>
+</head>
+
+<div id="header" class="wrap">
+	<ul>
+		<li class="home first"><a href="{php echo $this->createMobileUrl('wlindex', array('weid' => $weid,'openid'=>$from))}"></a></li>
+		<li class="tel"><!--<a href="tel:"></a>--></li>
+		<li class="lbs"><!--<a ajax_url="/api/0ed579daaa/user/lbs/"></a>--></li>
+	</ul>
+</div>
+<script language="javascript">$(document).ready(user_obj.user_login_init);</script>
+<form id="user_form">
+	<div class="tips">您还未登录，请先登录！</div>
+	<h1>没有帐号</h1>
+	<div class="reg"><a href="{php echo $this->createMobileUrl('wlregister', array('weid' => $weid,'openid'=>$from))}">注册只需10秒</a></div>
+	<h1>已有帐号</h1>
+	<div class="input"><input type="tel" name="MobilePhone" value="" maxlength="11" placeholder="手机号码" pattern="[0-9]*" notnull /></div>
+	<div class="input"><input type="password" name="Password" value="" maxlength="16" placeholder="登录密码" notnull /></div>
+	<input type="hidden" value="save" name="action">
+	{if empty($user)}
+		{if empty($from)}
+			<div class="submit"><input type="button" value="立即登录" /></div>
+		{else}
+			<div class="submit"><input type="button" value="立即绑定" /></div>
+		{/if}
+	{else}
+		<!--已经注册用户，解除绑定-->
+		<div class="submit"><input type="button" value="重新绑定" /></div>
+	{/if}
+	
+</form>
+</body>
+</html>
+ 

@@ -3,8 +3,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <meta name="format-detection" content="telephone=no">
 <title>全部菜品</title>
-<link rel="stylesheet" type="text/css" href="./source/modules/idish/template/css/1/wei_canyin_v1.8.4.css?v=1.1" media="all">
-<link rel="stylesheet" type="text/css" href="./source/modules/idish/template/css/1/wei_dialog_v1.2.1.css?v=1.1" media="all">
+<link rel="stylesheet" type="text/css" href="./source/modules/idish/template/css/1/wei_canyin_v1.8.4.css?v=1.0" media="all">
+<link rel="stylesheet" type="text/css" href="./source/modules/idish/template/css/1/wei_dialog_v1.2.1.css?v=1.0" media="all">
 <style>
     /*
         解决右边背景总是为灰色的bug
@@ -70,12 +70,11 @@
         </article>
     </section>
     <footer class="footFix footLeft">
-    <button class="btn_change" onclick="location.href='{php echo $this->createMobileurl('wapmenu', array('from_user' => $page_from_user, 'storeid' => $storeid))}'">我的菜单<!--span class="num">2</span--></button>
+    <button class="btn_change" onclick="location.href='{php echo create_url('mobile/module', array('do' => 'wapmenu', 'from_user' => $page_from_user, 'name' => 'idish', 'weid' => $weid, 'storeid' => $storeid))}'">我的菜单<!--span class="num">2</span--></button>
     {if !empty($intelligents)}
-    <button onclick="location.href='{php echo $this->createMobileurl('wapselect', array('from_user' => $page_from_user, 'storeid' => $storeid))}'">智能选餐</button>
+    <button onclick="location.href='{php echo create_url('mobile/module', array('do' => 'wapselect', 'from_user' => $page_from_user, 'name' => 'idish', 'weid' => $weid, 'storeid' => $storeid))}'">智能选餐</button>
     {/if}
-    <button onclick="location.href='{php echo $this->createMobileurl('orderlist', array('from_user' => $page_from_user, 'storeid' => $storeid))}'">我的订单</button>
-
+    <button onclick="location.href='{php echo create_url('mobile/module', array('do' => 'orderlist', 'from_user' => $page_from_user, 'name' => 'idish', 'weid' => $weid, 'storeid' => $storeid))}'">我的订单</button>
     </footer>
 </div>
 <script type="text/javascript">
@@ -470,6 +469,9 @@
         var params = {
         };
         _doAjax("{php echo create_url('mobile/module', array('do' => 'GetDishNumOfCategory', 'from_user' => $page_from_user, 'name' => 'idish', 'weid' => $weid, 'storeid' => $storeid))}", 'POST', params, function(ret) {
+//                if (ret['code'] != 0) {
+//                    return;
+//                }
             for(var i in ret.message.data) {
                 var val = ret['message']['data'][i];
                 if (val > 0) {

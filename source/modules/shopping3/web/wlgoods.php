@@ -5,8 +5,7 @@
  * 
  * @author 微动力
  * @url
- */
-$category = pdo_fetchall("SELECT * FROM ".tablename('shopping3_category')." WHERE weid = '{$_W['weid']}' ORDER BY parentid ASC, displayorder DESC", array(), 'id');
+ */$category = pdo_fetchall("SELECT * FROM ".tablename('shopping3_category')." WHERE weid = '{$_W['weid']}' ORDER BY parentid ASC, displayorder DESC", array(), 'id');
 if (!empty($category)) {
 	$children = '';
 	foreach ($category as $cid => $cate) {
@@ -41,6 +40,12 @@ if ($operation == 'post') {
 		if (empty($_GPC['pcate'])) {
 			message('请选择商品分类！');
 		}
+		if (empty($_GPC['marketprice'])) {
+			message('请输入商品优惠价');
+		}
+		if (empty($_GPC['productprice'])) {
+			message('请输入商品原价');
+		}
 		$data = array(
 			'weid' => intval($_W['weid']),
 			'displayorder' => intval($_GPC['displayorder']),
@@ -58,7 +63,9 @@ if ($operation == 'post') {
 			'productprice' => $_GPC['productprice'],
 			'total' => intval($_GPC['total']),
 			'unit' => $_GPC['unit'],
+			'label'=> $_GPC['label'],
 			'createtime' => TIMESTAMP,
+			'sellnums'=>$_GPC['sellnums'],
 		);
 		//缩略图
 		

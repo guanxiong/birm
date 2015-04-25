@@ -34,6 +34,9 @@
 					'price'=>empty($row['marketprice'])?$row['productprice']:$row['marketprice'],
 					'selected_count'=>intval($cart[$row['id']]['total']),
 					'discount_price'=>$row['marketprice'],
+					'label'=>$row['label'],
+					'total'=>$row['total'],
+					'unit'=>(empty($row['unit'])?'份':$row['unit']),
 				);
 				//购物车不考虑库存
 				/* if ($row['total'] != -1 && $row['total'] < $cart[$row['id']]['total']) {
@@ -53,22 +56,23 @@
   }elseif ($subcp=='mylike'){
   
   
-  }else{
-	$curcategory = pdo_fetchall("SELECT * FROM ".tablename('shopping3_category')." WHERE weid = '{$weid}'  and parentid=0 order  BY displayorder DESC");
-	$likearr= pdo_fetchall("SELECT goodsid,checked FROM ".tablename('shopping3_fans_like')." WHERE   weid ={$weid}  and from_user='{$from}' ",array(),'goodsid');
- 	
+  }else{	$curcategory = pdo_fetchall("SELECT * FROM ".tablename('shopping3_category')." WHERE weid = '{$weid}'  and parentid=0 order by displayorder desc");
+	$cartarr= pdo_fetchall("SELECT goodsid,total FROM ".tablename('shopping3_cart')." WHERE   weid ={$weid}  and from_user='{$from}' ",array(),'goodsid');
+  
+	
 	
 	$cate=array();
 	$return=array();
  	foreach($curcategory as $k=>$v){
 		$cate=array(
-		"id"=>$v['id'],
-        "weid"=>$v['weid'],
-        "name"=>$v['name'],
-        "sort"=>$v['displayorder'],
-        "flag"=>"0",
+			"id"=>$v['id'],
+			"weid"=>$v['weid'],
+			"name"=>$v['name'],
+			"sort"=>$v['displayorder'],
+			"flag"=>"0",
 		);
-		$goods = pdo_fetchall("SELECT * FROM ".tablename('shopping3_goods')." WHERE weid = '{$weid}' and status = '1' and pcate=".$v['id']."");
+		$goods = pdo_fetchall("SELECT * FROM ".tablename('shopping3_goods')." WHERE weid = '{$weid}'  and pcate=".$v['id']." AND status=1 order by displayorder desc");
+		 
 		foreach($goods  as $k2=>$v2){
 			$cate['dishes'][]=array(
 				"id"=>$v2['id'],
@@ -76,7 +80,7 @@
                 "name"=>$v2['title'],
                 "price"=>empty($v2['marketprice'])?$v2['productprice']:$v2['marketprice'],
                 "discount_name"=>$v2['title'],
-                "discount_price"=>empty($v2['marketprice'])?$v2['productprice']:$v2['marketprice'],
+                "discount_price"=>empty($v2['productprice'])?$v2['marketprice']:$v2['productprice'],
                 "class_id"=>$v2['pcate'],
                 "tag_id"=>"0",
                 "pic"=>$v2['thumb'],
@@ -86,9 +90,13 @@
                 "ctime"=>"",
                 "flag"=>"1",
                 "tag_name"=>"",
-                "check"=>($likearr[$v2['id']]['checked']==1)?"1":"0",
+                //"check"=>($cartarr[$v2['id']]['checked']==1)?"1":"0",
                 "html_name"=>"",
-				"unit"=>empty($v2['unit'])?"份":$v2['unit'],
+				'label'=>$v2['label'],
+				'nums'=>intval($cartarr[$v2['id']]['total']),
+				'unit'=>(empty($v2['unit'])?'份':$v2['unit']),
+				'sellnums'=>$v2['sellnums'],
+				'total'=>($v2['total']==-1?999:$v2['total']),
 			);
 		}
 		$return[]=$cate;

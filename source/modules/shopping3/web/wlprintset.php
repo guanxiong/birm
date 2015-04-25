@@ -2,7 +2,7 @@
 /**
  * 2014-2-24
  * 购物车 分类管理 
- * 支持二级分类 来自微擎
+ * 支持二级分类 来自微动力
  * @author 微动力
  * @url
  */
@@ -30,7 +30,6 @@ if (checksubmit('submit')) {
 		'apiKey'=>trim($_GPC['print_apiKey']),
 		'machineCode'=>trim($_GPC['print_machineCode']),
 		'mKey'=>trim($_GPC['print_mKey']),
-			
  	);
 	if (empty($_GPC['id'])) {
 		pdo_insert('shopping3_set', $insert);
@@ -40,7 +39,6 @@ if (checksubmit('submit')) {
 	message('打印机数据保存成功', $this->createWebUrl('Printset'), 'success');
 }
 $set = pdo_fetch("SELECT * FROM ".tablename('shopping3_set')." WHERE weid = :weid", array(':weid' => $_W['weid']));
-
 if($set==false){
 	$set=array(
 		'id'=>0,

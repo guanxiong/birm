@@ -13,7 +13,8 @@
 			<tr>
 				<th><label for="">排序</label></th>
 				<td>
-					<input type="text" name="displayorder" class="span2" value="{$item['displayorder']}" />  <input type="checkbox" name="isindex" value="1" {if $item['isindex']==1}checked{/if} >是否首页推荐
+					<input type="text" name="displayorder" class="span2" value="{$item['displayorder']}" />
+					<!--<input type="checkbox" name="isindex" value="1" {if $item['isindex']==1}checked{/if} >是否首页推荐-->
 				</td>
 			</tr>
 			<tr>
@@ -40,15 +41,17 @@
 				<th><label for="">商品单位</label></th>
 				<td>
 					<input type="text" name="unit" class="span3" value="{$item['unit']}" />
+					<span class="help-block">一个字，例如，份，只，个，两，瓶。</span>										
 				</td>
 			</tr>
 			<tr>
-				<th><label for="">商品类型</label></th>
+				<th><label for="">自定义标签</label></th>
 				<td>
-					<label for="isshow3" class="radio inline"><input type="radio" name="type" value="1" id="isshow3" {if empty($item) || $item['type'] == 1}checked="true"{/if} onclick="$('#product').show()" /> 实体商品</label>&nbsp;&nbsp;&nbsp;<label for="isshow4" class="radio inline"><input type="radio" name="type" value="2" id="isshow4"  {if $item['type'] == 2}checked="true"{/if}  onclick="$('#product').hide()" /> 虚拟商品</label>
-					<span class="help-block">虚拟商品，例如：优惠券，打折卡等，需要用户去店里消费使用的。实体商品，需要进行用户自提或是邮递的商品。</span>
+					<input type="text" name="label" class="span3" value="{$item['label']}" />
+					<span class="help-block">最多2个字，例如：特价，推荐，新品等。可为空</span>					
 				</td>
 			</tr>
+			 
 			<tr>
 				<th><label for="">是否上架</label></th>
 				<td>
@@ -75,10 +78,10 @@
 						</ul>
 						<div id="file_upload_queue" class="uploadifyQueue"></div>
 					</div>
- 					<span class="help-block" style="clear:both">商品展示图片，第一张默认为商品缩略图</span>					
+ 					<span class="help-block" style="clear:both">商品展示图片，第一张默认为商品缩略图(尺寸建议：300*230px)</span>					
 				</td>
 			</tr>	
-			<tr>
+			<!--tr>
 				<th><label for="">商品编号</label></th>
 				<td>
 					<input type="text" name="goodssn" class="span6" value="{$item['goodssn']}" />
@@ -89,17 +92,17 @@
 				<td>
 					<input type="text" name="productsn" class="span6" value="{$item['productsn']}" />
 				</td>
-			</tr>
-			<tr>
-				<th><label for="">优惠价</label></th>
-				<td>
-					<input type="text" name="marketprice" class="span3" value="{$item['marketprice']}" /> 元
-				</td>
-			</tr>
+			</tr-->
 			<tr>
 				<th><label for="">销售价</label></th>
 				<td>
-					<input type="text" name="productprice" class="span3" value="{$item['productprice']}" /> 元
+					<input type="text" name="marketprice" class="span3" value="{$item['marketprice']}" /> 元 <span style="color:red">*</span>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">原价</label></th>
+				<td>
+					<input type="text" name="productprice" class="span3" value="{$item['productprice']}" /> 元 <span style="color:red">*</span>
 				</td>
 			</tr>
 			<tr>
@@ -110,18 +113,26 @@
 				</td>
 			</tr>
 			<tr>
+				<th><label for="">销量</label></th>
+				<td>
+					<input type="text" name="sellnums" class="span2" value="{$item['sellnums']}" />
+					<span class="help-block">可以虚拟，订单完成后，菜品数量+1,不建议修改</span>
+				</td>
+			</tr>			
+			<tr>
 				<th>简介</th>
 				<td>
 					<textarea style="height:150px;" class="span7" name="description" cols="70">{$item['description']}</textarea>
 				</td>
 			</tr>
+			<!--
 			<tr>
 				<th>内容</th>
 				<td>
 					<textarea style="height:400px; width:100%;" class="span7 richtext-clone" name="content" cols="70">{$item['content']}</textarea>
 				</td>
 			</tr>
-		
+			-->
 		<tr>
 			<th></th>
 			<td>
@@ -222,7 +233,7 @@ var editor = KindEditor.editor({
 					<th style="width:60px;">显示顺序</th>
 					<th style="width:30px;">ID</th>
 					<th style="min-width:150px;">商品标题</th>
- 					<th style="width:100px;">销售价/成本价</th>
+ 					<th style="width:100px;">销售价/原价</th>
 					<th style="width:100px;">销售量/库存</th>
 					<th style="width:100px;">属性</th>
 					<th style="text-align:right; min-width:60px;">操作</th>

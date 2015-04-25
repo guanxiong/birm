@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+<manifest xmlns="http://www.we7.cc" versionCode="0.52">
 	<application setting="false">
 		<name><![CDATA[砸金蛋]]></name>
 		<identifie><![CDATA[smashegg]]></identifie>
-		<version><![CDATA[1.5]]></version>
+		<version><![CDATA[1.7]]></version>
 		<type><![CDATA[activity]]></type>
 		<ability><![CDATA[砸金蛋，抽奖营销活动，带兑换页面]]></ability>
 		<description><![CDATA[砸金蛋，抽奖营销活动，带兑换页面]]></description>
@@ -84,16 +84,19 @@ CREATE TABLE IF NOT EXISTS `ims_smashegg_reply` (
   `c_num_two` int(11) DEFAULT NULL,
   `c_draw_two` int(11) DEFAULT '0',
   `c_pic_two` varchar(200) DEFAULT NULL,
+  
   `c_type_three` varchar(20) DEFAULT NULL,
   `c_name_three` varchar(50) DEFAULT NULL,
   `c_num_three` int(11) DEFAULT '0',
   `c_draw_three` int(11) DEFAULT '0',
-  `c_pic_three` int(200) DEFAULT NULL,
+  `c_pic_three` varchar(200) DEFAULT NULL,
+  
   `c_type_four` varchar(20) DEFAULT NULL,
   `c_name_four` varchar(50) DEFAULT NULL,
   `c_num_four` int(11) DEFAULT '0',
   `c_draw_four` int(11) DEFAULT '0',
   `c_pic_four` varchar(200) DEFAULT NULL,
+  
   `c_type_five` varchar(20) DEFAULT NULL,
   `c_name_five` varchar(50) DEFAULT NULL,
   `c_num_five` int(11) DEFAULT NULL,
@@ -129,5 +132,5 @@ CREATE TABLE IF NOT EXISTS `ims_smashegg_reply` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;]]></install>
 	<uninstall><![CDATA[DROP TABLE ims_smashegg_fans;
 	DROP TABLE ims_smashegg_reply;]]></uninstall>
-	<upgrade><![CDATA[]]></upgrade>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
 </manifest>

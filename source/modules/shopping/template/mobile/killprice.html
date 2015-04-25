@@ -1,0 +1,28 @@
+{if $item['paytype'] != 3}
+{if $item['status'] == 0}
+
+<?php
+$tmp_goods = "";
+if (!isset($item['istime']))
+{
+  $tmp_goods = pdo_fetch("SELECT istime FROM " . tablename('shopping_goods') . " WHERE `id`=:id", array(":id"=>$goods['id']));
+  $item['istime'] = $tmp_goods['istime'];
+}
+?>
+{if $item['istime'] == 1}
+<style>
+  .myoder .myoder-detail {
+    height:90px !important;
+  }
+  .kill-price {}
+</style>
+
+<div class="kill-price">
+  <a href="{php echo create_url('mobile/module/share', array('name'=>'quickshare', 'goodsid'=>$goods['id'], 'orderid' => $item['id'], 'weid'=>$_W['weid'], 'from_user'=>$_W['fans']['from_user']))}" class="btn btn-info btn-sm">好友砍价</a>
+</div>
+{/if}
+<?php
+unset($tmp_goods);
+?>
+{/if}
+{/if}

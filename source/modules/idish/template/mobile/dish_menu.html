@@ -156,9 +156,6 @@
     .group_checkbox input[type="checkbox"]:checked{
         background-position:0px center;
     }
-    .btn_myorder {
-        padding: 5px 8px; border: 0; border-radius: 2px; cursor: pointer; background-color: #2ec366; color: #fff;
-    }
 </style>
 </head>
 <body id="page_intelOrder" class="myOrderCon">
@@ -167,12 +164,6 @@
         <span class="pCount">请叫服务员下单</span>
         <label><i>共计：</i><b class="duiqi" id="total">0</b><b class="duiqi">元</b></label>
     </header>
-    <section style="margin-bottom: 10px;">
-        <article style="overflow: hidden;">
-            <a href="{php echo $this->createMobileurl('orderlist', array('from_user' => $page_from_user, 'storeid' => $storeid))}" class="btn_add btn_myorder">我的订单</a>
-            <span style="float: right;">{$my_order_total}</span>
-        </article>
-    </section>
     <section>
         <article>
             <h2>我的菜单
@@ -224,12 +215,12 @@
                     <tr>
                         <td width="80px" style="width: 80px;">手机号码：</td>
                         <td colspan="2">
-                            <input type="tel" id="tel" name="tel" value="{if !empty($user['mobile'])}{$user['mobile']}{else}(必填*)请输入您的手机号码{/if}" maxlength="13" style="width: 200px;"></td>
+                            <input type="tel" id="tel" name="tel" value="{if !empty($order['tel'])}{$order['tel']}{else}(必填*)请输入您的手机号码{/if}" maxlength="13" style="width: 200px;"></td>
                     </tr>
                     <tr>
                         <td style="width: 80px;">用户姓名：</td>
                         <td style="width: 50%;">
-                            <input type="text" name="guest_name" id="name" value="{if !empty($user['realname'])}{$user['realname']}{else}(必填*)请输入您的真实姓名{/if}" maxlength="10" style="width: 100px;">
+                            <input type="text" name="guest_name" id="name" value="{if !empty($order['username'])}{$order['username']}{else}(必填*)请输入您的真实姓名{/if}" maxlength="10" style="width: 100px;">
                         </td>
                         <td>
                             <div class="group_checkbox" style="width: 70px; display: inline;">
@@ -332,10 +323,10 @@
         </article>
     </section>
     {/if}
-    <!--<footer class="footFix">-->
-        <!--&lt;!&ndash;<a onclick="shareMenu()">分享给好友</a>&ndash;&gt;-->
-        <!--<a onclick="location.href='{php echo create_url('mobile/module', array('do' => 'waplist', 'from_user' => $page_from_user, 'name' => 'idish', 'weid' => $weid, 'storeid' => $storeid))}'">继续点菜</a>-->
-    <!--</footer>-->
+    <footer class="footFix">
+        <!--<a onclick="shareMenu()">分享给好友</a>-->
+        <a onclick="location.href='{php echo create_url('mobile/module', array('do' => 'waplist', 'from_user' => $page_from_user, 'name' => 'idish', 'weid' => $weid, 'storeid' => $storeid))}'">继续点菜</a>
+    </footer>
 </div>
 <script>var pageName = 'menuFilled';</script>
 <script type="text/javascript">
@@ -613,24 +604,21 @@ function postmain() {
         data = data.substring(0, data.length - 1); data += "]";
         var url = "{php echo create_url('mobile/module', array('do' => 'addtoorder', 'from_user' => $page_from_user, 'name' => 'idish', 'weid' => $weid, 'storeid' => $storeid))}";
         //alert(url);
-        var address = $("#address").val();
-        if (address == "(必填*)请输入您的联系地址！") address = "";
         $.ajax({
             url: url, type: "post", dataType: "json", timeout: "10000",
             data: {
                 "type": "add", "total": $("#total").text(), "ordertype":$(':radio[name="order_type"]:checked').val(),"tables": $("#tables").val(),
                 "guest_name": $("#name").val(), "tel": $("#tel").val(), "sex": $("input:checkbox[name='sex']").attr("checked") == "checked" ? "1" : "0",
                 "time": $("#sdate").val() + " " + $("#hour").val() + ":" + $("#minute").val(), "counts": $("#counts").val(),
-                "seat_type": $("input:radio[name='seat_type']:checked").val(), "remark": $("#remark").val(), "data": data, "carports": $("#carports").val(), "address":address
+                "seat_type": $("input:radio[name='seat_type']:checked").val(), "remark": $("#remark").val(), "data": data, "carports": $("#carports").val(), "address":$("#address").val()
             },
             success: function (data) {
                 if (data.message['code'] != 0) {
-                    //alert(data.message['msg']);
+                    alert(data.message['msg']);
                     //跳转去我的订单
                     window.location.href = "{php echo create_url('mobile/module', array('do' => 'orderconfirm', 'from_user' => $page_from_user, 'name' => 'idish', 'weid' => $weid, 'storeid' => $storeid))}"+"&orderid="+data.message['orderid'];
                 } else {
-                    alert(data.message['msg']);
-                    //'网络不稳定，请重新尝试!'
+                    alert('网络不稳定，请重新尝试!'+data.message['msg']);
                 }
                 $("#submit_form").show();
             },error: function () {
@@ -656,8 +644,7 @@ $(':radio[name="order_type"]').click(function () {
         $(".in").show();
         $(".book").show();
         $(".out").hide();
-        $("#tr_tables").hide();
-        //$("#tables").hide();
+        $("#tables").hide();
     }
 });
 order_type = $(':radio[name="order_type"]:checked').val();

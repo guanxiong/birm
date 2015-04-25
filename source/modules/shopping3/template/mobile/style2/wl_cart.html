@@ -1,15 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-   <link rel="stylesheet" type="text/css" href="{RES}css/wei_canyin.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/wei_canyin.css" media="all" />
 <link rel="stylesheet" type="text/css" href="{RES}css/wei_dialog.css" media="all" />
 <link rel="stylesheet" type="text/css" href="{RES}css/datepicker_canyin.css" media="all" />
 <script type="text/javascript" src="{RES}js/jQuery.js"></script>
- <script type="text/javascript" src="{RES}js/wei_webapp_v2_common.js"></script>
+<script type="text/javascript" src="{RES}js/wei_webapp_v2_common.js"></script>
 <script type="text/javascript" src="{RES}js/bootstrap-datepicker_canyin.js"></script>
-  
- <title>我的菜单</title>
+<title>我的订单</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="format-detection" content="telephone=no" />
@@ -51,15 +49,15 @@
 
 
 <header  style="padding-top:20px;">
-    <span class="pCount" style="">已点<l style="color:red" id="countnums" nums="{$totalnum}">{$totalnum}</l>个菜</span>
+    <span class="pCount" style="">已点<l style="color:red" id="countnums" nums="{$totalnum}">{$totalnum}</l>个</span>
     <label><i>共计：</i><b class="duiqi" id="total"></b><b class="duiqi">元</b></label>
 </header>
 
 <section style="margin-bottom:10px;">
     <article>
-        <h2>我的菜单
+        <h2>我的订单
             <button class="btn_add emptyIt" id="clearBtn" onclick="clearAll();">清空</button>
-            <button class="btn_add" onClick="location.href = '{php echo  $this->createMobileUrl('wlindex')}'">+加菜</button>
+            <button class="btn_add" onClick="location.href = '{php echo  $this->createMobileUrl('wlindex')}'">+添加</button>
         </h2>
         <ul id="myorder" class="myorder">
             <!---->
@@ -73,7 +71,7 @@
             <table class="table_book">
                 <tr>
                     <td width="80px" style="width:80px;">手机号码：</td>
-                    <td colspan="2"><input type="tel" id="tel" name="tel" value="{$fans['mobile']}" maxlength="11" placeholder="(必填*)请输入您的手机号码" style="width:200px;" class="input_text"/></td>
+                    <td colspan="2"><input type="tel" id="tel" name="tel" value="{$fans['mobile']}" maxlength="20" placeholder="(必填*)请输入您的手机号码" style="width:200px;" class="input_text"/></td>
                 </tr>
                 <tr>
                     <td style="width:80px;">用户姓名：</td>
@@ -87,34 +85,35 @@
                     </td>
                 </tr>
                 <tr>
+					{php $hour=date('H');}
                     <td style="width:80px;">预约时间：</td>
                     <td colspan="2">
                         <input id="dpd1" type="text" name="time_day" readonly="readonly" style="width:80px;"/>
                         <select name="time_hour">
-                                                            <option value="01">01时</option>
-                                                            <option value="02">02时</option>
-                                                            <option value="03">03时</option>
-                                                            <option value="04">04时</option>
-                                                            <option value="05">05时</option>
-                                                            <option value="06">06时</option>
-                                                            <option value="07">07时</option>
-                                                            <option value="08">08时</option>
-                                                            <option value="09">09时</option>
-                                                            <option value="10">10时</option>
-                                                            <option value="11">11时</option>
-                                                            <option value="12">12时</option>
-                                                            <option value="13">13时</option>
-                                                            <option value="14">14时</option>
-                                                            <option value="15">15时</option>
-                                                            <option value="16">16时</option>
-                                                            <option value="17">17时</option>
-                                                            <option value="18">18时</option>
-                                                            <option value="19">19时</option>
-                                                            <option value="20">20时</option>
-                                                            <option value="21">21时</option>
-                                                            <option value="22">22时</option>
-                                                            <option value="23">23时</option>
-                                                            <option value="24">24时</option>
+                                                            <option value="01" {if $hour=='01'}selected{/if}>01时</option>
+                                                            <option value="02" {if $hour=='02'}selected{/if}>02时</option>
+                                                            <option value="03" {if $hour=='03'}selected{/if}>03时</option>
+                                                            <option value="04" {if $hour=='04'}selected{/if}>04时</option>
+                                                            <option value="05" {if $hour=='05'}selected{/if}>05时</option>
+                                                            <option value="06" {if $hour=='06'}selected{/if}>06时</option>
+                                                            <option value="07" {if $hour=='07'}selected{/if}>07时</option>
+                                                            <option value="08" {if $hour=='08'}selected{/if}>08时</option>
+                                                            <option value="09" {if $hour=='09'}selected{/if}>09时</option>
+                                                            <option value="10" {if $hour=='10'}selected{/if}>10时</option>
+                                                            <option value="11" {if $hour=='11'}selected{/if}>11时</option>
+                                                            <option value="12" {if $hour=='12'}selected{/if}>12时</option>
+                                                            <option value="13" {if $hour=='13'}selected{/if}>13时</option>
+                                                            <option value="14" {if $hour=='14'}selected{/if}>14时</option>
+                                                            <option value="15" {if $hour=='15'}selected{/if}>15时</option>
+                                                            <option value="16" {if $hour=='16'}selected{/if}>16时</option>
+                                                            <option value="17" {if $hour=='17'}selected{/if}>17时</option>
+                                                            <option value="18" {if $hour=='18'}selected{/if}>18时</option>
+                                                            <option value="19" {if $hour=='19'}selected{/if}>19时</option>
+                                                            <option value="20" {if $hour=='20'}selected{/if}>20时</option>
+                                                            <option value="21" {if $hour=='21'}selected{/if}>21时</option>
+                                                            <option value="22" {if $hour=='22'}selected{/if}>22时</option>
+                                                            <option value="23" {if $hour=='23'}selected{/if}>23时</option>
+                                                            <option value="24" {if $hour=='24'}selected{/if}>24时</option>
                                                     </select>
                         <select name="time_second">
                                                             <option value="00">00分</option>
@@ -127,26 +126,73 @@
                                                     </select>
                     </td>
                  </tr>
+				{if $mycoupons}
+                <tr>
+                    <td style="width:80px;">优惠券：</td>
+                    <td colspan='2'>
+                        <select name="coupon_id">
+							<option value="">选择优惠券</option>
+							{loop $mycoupons $coupon}
+                            <option value="{$coupon['coupon_id']}">{$coupon['coupon_name']}(满{$coupon['total_money']}抵{$coupon['discount_money']}元)</option>
+							{/loop}
+                        </select>
+                    </td>
+                 </tr>
+				{/if}
                 <tr>
                     <td style="width:80px;">类型：</td>
                     <td colspan="2">
                         <div class="group_radio">
-                                                        <span >
-                                <input type="radio" name="order_type" value="2" checked="checked" />
+							{php $isordertype=1}
+							{if $set['ordretype2']==1}
+							<span >
+                                <input type="radio" name="order_type" value="2" {if $isordertype==1}checked="checked"{/if} />
                                 <label>店内</label>
                             </span>
-                                                                                    <span>
-                                <input type="radio" name="order_type" value="1" />
+							{php $isordertype=0}
+							{/if}
+							{if $set['ordretype1']==1}							
+							<span>
+                                <input type="radio" name="order_type" value="1" {if $isordertype==1}checked="checked"{/if} />
                                 <label>外卖</label>
                             </span>
-                    </div>
+							{php $isordertype=0}
+							{/if}
+							{if $set['ordretype3']==1}	
+							<span>
+                                <input type="radio" name="order_type" value="3" {if $isordertype==1}checked="checked"{/if} />
+                                <label>自提</label>
+                            </span>
+							{php $isordertype=0}
+							{/if}
+						</div>
                     </td>
-                </tr>	
-				<tbody id="out" style="display:none">
-                <tr>
-                    <td width="80px" style="width:80px;">送餐地址：</td>
-                    <td colspan="2"><input type="text" id="text" name="address" value="{$fans['address']}" placeholder="请输入您的送货地址" class="input_text"/></td>
                 </tr>
+				<tbody id="out" style="display:none">
+				{if empty($set['address_list'])}
+				<tr>
+                    <td width="80px" style="width:80px;">送货地址：</td>
+                    <td colspan="2">
+						<input type="text" id="text" name="address" value="{$fans['address']}" placeholder="请输入您的送货地址" class="input_text" style="desplay:inline"/></td>
+                </tr>
+				{else}
+					{php $arr=explode(PHP_EOL,$set['address_list']);}
+                <tr>
+                    <td width="80px" style="width:80px;">送货地址：</td>
+                    <td colspan="2">
+						<select name="pre_address" style="width:120px">
+							{loop $arr $v}
+							<option value="{$v}">{$v}</option>
+							{/loop}
+						</select>
+					</td>
+                </tr>
+				<tr>
+                    <td width="80px" style="width:80px;"></td>
+                    <td colspan="2">
+					<input type="text" id="text" name="address" value="{$fans['address']}" placeholder="请输入您的送货地址" class="input_text" style="desplay:inline"/></td>
+                </tr>
+				{/if}
 				</tbody>
 				<tbody id="in">
                 <tr>
@@ -159,28 +205,53 @@
                     <td style="width:80px;">就餐形式：</td>
                     <td colspan="2">
                         <div class="group_radio">
-                                                        <span >
+							<span >
                                 <input type="radio" name="seat_type" value="2" checked="checked" />
-                                <label>包房</label>
+                                <label>包间</label>
                             </span>
-                                                                                    <span>
+							<span>
                                 <input type="radio" name="seat_type" value="1" />
                                 <label>大厅</label>
                             </span>
-                    </div>
+						</div>
                     </td>
                 </tr>
-				<tr>
+				<tr id="t_room">
+                    <td style="width:80px;">包间：</td>
+                    <td colspan="2">
+						{if empty($set['room_list'])}
+							<input type="text" name="room_t" id="room_t" value="" maxlength="5" placeholder="请填写您的包间，不清楚可以联系店员" style="width:120px;" class="input_text"/>
+						{else}
+						{php $arr=explode(PHP_EOL,$set['room_list']);}
+						<select name="room_t" style="width:120px">
+							{loop $arr $v}
+							<option value="{$v}">{$v}</option>
+							{/loop}
+						</select>
+						{/if}
+					</td>
+				</tr>
+				<tr id="t_desk" style="display:none">
                     <td style="width:80px;">桌号：</td>
                     <td colspan="2">
-                        <input type="text" name="desk" id="desk" value="" maxlength="5" style="width:100px;" class="input_text"/>
+						{if empty($set['desk_list'])}
+							<input type="text" name="desk_t" id="desk_t" value="" maxlength="5" placeholder="请填写您的桌号，不清楚可以联系店员" style="width:120px;" class="input_text"/>
+						{else}
+							{php $arr=explode(PHP_EOL,$set['desk_list']);}
+							<select name="desk_t" style="width:120px">
+								{loop $arr $v}
+								<option value="{$v}">{$v}</option>
+								{/loop}
+							</select>
+						{/if}
+						
 					</td>
 				</tr>		
 				</tbody>
             <tr>
                     <td style="width:80px;vertical-align:top;line-height:25px;">备注说明：</td>
                     <td colspan="2">
-                        <textarea name="remark" style="height:60px;" maxlength="100" class="input_text"></textarea>
+                        <textarea name="remark" style="height:60px;" maxlength="100" placeholder="如有附加需求，请备注，店小二会尽量安排" class="input_text"></textarea>
                     </td>
                 </tr>
             </table>
@@ -188,8 +259,16 @@
 				<input type="hidden" name="totalnum" id="totalnum" value="{$totalnum}">
 				<input type="hidden" name="totalprice" id="totalprice">
 				<input type="hidden" name="params" id="params">
+				{if !empty($shopping_fans)&&$shopping_fans['status']==0}
+                <input type="button" value="系统正忙,请稍后" class="btn_2"/>
+				{else}
+					{if $status}
                 <input type="button" value="立即预定" class="btn_2" id="submit_form" />
-            </footer>
+					{else}
+                <input type="button" value="立即预定" class="btn_2" id="submit"/>
+					{/if}
+				{/if}
+			</footer>
         </form>
     </article>
 </section>
@@ -260,8 +339,7 @@
     function switchMenu() {
         var TPL = '<li class="dish_item">\
                     <span class="dishName">{name}</span>\
-                    <i>{price}元/份</i>\
-                    <span class="btn_common" onclick="slideOn(this, event);">添加备注</span>\
+                    <i>{price}元/{unit}</i>\
                     <div><textarea name="description" onblur="changeDescription(this, event, {dishes_id});">{description}</textarea></div>\
                     <section class="bbox" dishname="{name}" onclick="changeCount(this, event, {dishes_id});">\
                         <input class="btn-reduce" type="button" value="-">\
@@ -301,16 +379,20 @@
 			if(val >= 0){
                 if ("btn-reduce" == evt.target.className) {
                     var num = countnums - 1;
+					var action=1;
                 } else {
                     var num = countnums + 1;
+					var action=0;
                 }
 
-				$.post("{php echo $this->createMobileUrl('wlupdatecart');}", {"dishes_id":dishes_id,"total": val},function(data){
+				$.post("{php echo $this->createMobileUrl('wlupdatecart');}", {"dishes_id":dishes_id,"total": val,"action":action},function(data){
 					if(data.message.status==1){
 						//数据成功
 						counter.value = Math.max(0, val);
 
 						document.getElementById("countnums").innerHTML = num;
+						document.getElementById("num").innerHTML = num;
+						
 						$("#countnums").attr("nums",num);
 						$("#totalnum").val(num);
 						var totalPrice = 0;
@@ -377,9 +459,22 @@
         li["toggleClass"]("on");
     }
 	
+	$(':radio[name="seat_type"]').click(function () {
+		seat_type=$(':radio[name="seat_type"]:checked').val();
+ 		if(seat_type==2){
+			$("#t_room").show();
+			$("#t_desk").hide();
+		}else{
+			$("#t_room").hide();
+			$("#t_desk").show();
+		}
+	});
 	$(':radio[name="order_type"]').click(function () {
 		order_type=$(':radio[name="order_type"]:checked').val();
-		if(order_type==2){
+		if(order_type==3){
+			$("#out").hide();
+			$("#in").hide();
+		}else if(order_type==2){
 			$("#in").show();
 			$("#out").hide();
 		}else{
@@ -392,11 +487,14 @@
 
 <script type="text/javascript">
     $(function() {
+		$('#submit').click(function() {
+			alert("请在{$set['yy_start_time']}~{$set['yy_end_time']}下单");
+		});
         $('#submit_form').click(function() {
-            if (null == $('#tel').val().match(/^1\d{10,13}$/g)) {
-                alert("请输入正确的手机号");return false;
-                MDialog.alert(null, "请输入正确的手机号", null, "确定");
-                return false;
+            if($("#tel").val() == ''){
+                alert("请输入手机号码");return false;
+//                MDialog.alert(null, "请输入手机号码", null, "确定");
+//                return false;
             }
             
             if($("#guest_name").val() == ''){
@@ -410,6 +508,16 @@
                 MDialog.alert(null, "请输入正确的预定人数", null, "确定");
                 return false;
             }
+			order_type=$(':radio[name="order_type"]:checked').val();
+			if(order_type==1){
+				//外卖的时候验证地址
+				$address=$('#text').val();
+				if($address==''){
+					alert("请输入送货地址");
+					return false;
+				}
+			}
+	 
             var price = 0;
             for (var i = 0, ci; ci = window.res.data[i]; i++) {
                 price += parseFloat(ci.price);
@@ -450,8 +558,19 @@
 <script>
     $(document).ready(function(){
         $('#my_menu').click(function(){
-            addToMenu();
+            $("#mLoading").hide();
 		});
+		order_type=$(':radio[name="order_type"]:checked').val();
+		if(order_type==3){
+			$("#out").hide();
+			$("#in").hide();
+		}else if(order_type==2){
+			$("#in").show();
+			$("#out").hide();
+		}else{
+			$("#in").hide();
+			$("#out").show();		
+		}
     });
      $('.input_text').focus(function() {
         $("#footer_menu").css("display","none");

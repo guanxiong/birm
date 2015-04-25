@@ -2,11 +2,10 @@
 /**
  * 2014-2-24
  * 购物车 分类管理 
- * 支持二级分类 来自微擎
+ * 支持二级分类 来自微动力
  * @author 微动力
  * @url
- */
-$operation = !empty($_GPC['op']) ? $_GPC['op'] : 'display';
+ */$operation = !empty($_GPC['op']) ? $_GPC['op'] : 'display';
 if($operation=='display'){
 	$list = pdo_fetchall("SELECT * FROM ".tablename('shopping3_express')." WHERE weid = '{$_W['weid']}' ORDER BY displayorder DESC");
 }elseif($operation=='post'){

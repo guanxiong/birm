@@ -412,65 +412,50 @@ font-size: 0;
 </footer>
 尾部结束-->
 <div id="mcover" onClick="document.getElementById('mcover').style.display='';"><img src="./source/modules/hlzonyu/template/images/121.png"></div>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
 <script type="text/javascript">
-document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
 	
-	window.shareData = {
-		"imgUrl": "{$_W['siteroot']}/source/modules/hlzonyu/template/images/share.jpg",
-		"timeLineLink": "{$staturl}",
-		"sendFriendLink": "{$staturl}",
-		"weiboLink": "{$staturl}",
-		"tTitle": "{$reply['sharetitle']}",
-		"tContent": "亲朋好友砍价团——{$reply['title']}!",
-		"fTitle": "{$reply['sharetitle']}微信团购",
-		"fContent": "亲朋好友砍价团——{$reply['title']}微信团购",
-		"wContent": "亲朋好友砍价团——{$reply['title']}微信团购"
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+	
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',		
+	];
+	
+	wx.config(jssdkconfig);
+
+	sharedata = {
+		title : '{$reply['sharetitle']}!',
+		link : '{$staturl}',
+		desc : '亲朋好友砍价团——{$reply['title']}!',
+		imgUrl :'{$_W['siteroot']}/source/modules/hlzonyu/template/images/share.jpg',
+		trigger: function(res) {},
+		success: function(res) {
+		TopBox.alert("分享后成功,等着朋友帮你砍价吧!");
+		},
+		cancel: function(res) {
+		 TopBox.alert("分享后组团砍价哦!");
+		},
+		fail: function(res) {
+		 TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+		}		
 	};
-
-	// 发送给好友
-	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
-		WeixinJSBridge.invoke('sendAppMessage', {
-			"img_url": window.shareData.imgUrl,
-			"img_width": "640",
-			"img_height": "640",
-			"link": window.shareData.sendFriendLink,
-			"desc": window.shareData.fContent,
-			"title": window.shareData.fTitle
-		}, function (res) {
-			_report('send_msg', res.err_msg);
-		})
-	});
-
-	// 分享到朋友圈
-	WeixinJSBridge.on('menu:share:timeline', function (argv) {
-		WeixinJSBridge.invoke('shareTimeline', {
-			"img_url": window.shareData.imgUrl,
-			"img_width": "640",
-			"img_height": "640",
-			"link": window.shareData.timeLineLink,
-			"desc": window.shareData.tContent,
-			"title": window.shareData.tTitle
-		}, function (res) {
-			_report('timeline', res.err_msg);
-		});
-	});
-
-	// 分享到微博
-	WeixinJSBridge.on('menu:share:weibo', function (argv) {
-		WeixinJSBridge.invoke('shareWeibo', {
-			"content": window.shareData.wContent,
-			"url": window.shareData.weiboLink
-		}, function (res) {
-			_report('weibo', res.err_msg);
-		});
-	});
 	
-	WeixinJSBridge.call(showOptionMenu);
-}, false);
-
-
-
-
+	wx.ready(function () {
+		wx.showOptionMenu();
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+	});
 </script>
 </body>
 </html>

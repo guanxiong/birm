@@ -356,6 +356,21 @@ return document.cookie=[encodeURIComponent(e),"=",a.raw?b:encodeURIComponent(b),
                             case '我的服务' : 
 							  $snav_icon = 'wdfw';
 							  break; 
+						    case '杀价商城' : 
+							  $snav_icon = 'red';
+							  break; 
+							case '新微小区' : 
+							  $snav_icon = 'red';
+							  break; 
+							case '微夜店' : 
+							  $snav_icon = 'red';
+							  break; 
+							case '场景魔方' : 
+							  $snav_icon = 'red';
+							  break; 
+							case '攒红包' : 
+							  $snav_icon = 'red';
+							  break; 
 							default:
 							  $snav_icon = 'jqgn';
 						}
@@ -616,7 +631,7 @@ $(function(){
 $(function(){
 	showNoticeTip();
 	function showNoticeTip(){
-		$.post("/index/index.php/main/notice",{}, function(result){
+		$.post("/",{}, function(result){
 			if(result.success && result.data){
 				var data = result.data;
 				$.messagetip.show({
@@ -727,7 +742,7 @@ function jumpAccount(){
 		$(function(){
 			var show = getUrlParam("show");
 			if(show == null || show!="false"){
-				$.get("/index/index.php/main/counter?action=showWsiteTip",{},
+				$.get("/",{},
 					function(result){
 					if(result.success && result.show){
 						$dlg = $("#wsite_tip_dialog");
@@ -765,13 +780,13 @@ $(document).ready(function(){
 	 $("div.red:first").css("background-color:#e16b11");
 });
 
+
 $(window).resize(function(){
 	//调整框架宽高 兼容ie8
 	$(".content-main, .content-main table td").height($(window).height()-40);
 	$("#main").width($(window).width()-200);
-});
 </script>	
-<style type="text/css">
+<style>
 #article_choice_dialog{
 	width: 800px;
 	margin-left: -380px;

@@ -9,7 +9,6 @@
 $table_goods=tablename('shopping3_goods');
 $table_category=tablename('shopping3_category');
 $table_genius=tablename('shopping3_genius');
-
 $category = pdo_fetchall("SELECT * FROM ".$table_category." WHERE weid = '{$_W['weid']}' ORDER BY parentid ASC, displayorder DESC", array(), 'id');
 $operation = !empty($_GPC['op']) ? $_GPC['op'] : 'display';
 if ($operation == 'post') {
@@ -73,14 +72,20 @@ if ($operation == 'post') {
 	$pager = pagination($total, $pindex, $psize);
 } elseif ($operation == 'delete') {
 	$id = intval($_GPC['id']);
-	$row = pdo_fetch("SELECT id, thumb FROM ".$table_genius." WHERE id = :id", array(':id' => $id));
+	$row = pdo_fetch("SELECT * FROM ".$table_genius." WHERE id = {$id}");
+	
 	if (empty($row)) {
 		message('抱歉，商品不存在或是已经被删除！');
 	}
+	
 	if (!empty($row['thumb'])) {
 		file_delete($row['thumb']);
 	}
-	pdo_delete($table_genius, array('id' => $id));
+	
+	//pdo_query($table_genius, array('id' => $id));
+	pdo_query("delete from ".$table_genius." where id = {$id}");
+	//echo 123;
+	//die;
 	message('删除成功！', referer(), 'success');
 }elseif ($operation == 'query') {
 	if(!empty($_GPC['classid'])){
@@ -88,10 +93,13 @@ if ($operation == 'post') {
 	}else{
 		$condition="";
 	}
+	if(!empty($_GPC['keyword'])){
+		$condition=" AND title like '%".$_GPC['keyword']."%' ";
+	}
 	$pindex = max(1, intval($_GPC['page']));
 	$psize = 20;
-	$list = pdo_fetchall("SELECT id,title FROM ".$table_goods." WHERE weid = '{$_W['weid']}' AND status=1  $condition ORDER BY  displayorder DESC, id DESC LIMIT ".($pindex - 1) * $psize.','.$psize);
-	$total = pdo_fetchcolumn('SELECT COUNT(*) FROM ' . $table_goods . " WHERE weid = '{$_W['weid']}' AND status=1  $condition");
+	$list = pdo_fetchall("SELECT id,title FROM ".$table_goods." WHERE weid = '{$_W['weid']}' $condition AND status=1  $condition ORDER BY  displayorder DESC, id DESC LIMIT ".($pindex - 1) * $psize.','.$psize);
+	$total = pdo_fetchcolumn('SELECT COUNT(*) FROM ' . $table_goods . " WHERE weid = '{$_W['weid']}' $condition AND status=1  $condition");
 	//$pager = pagination($total, $pindex, $psize);
 	
 	include $this->template('web/genius_query');

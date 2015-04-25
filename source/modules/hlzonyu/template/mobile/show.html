@@ -5,7 +5,7 @@
 <title>{$reply['title']}</title>
 <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
 <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
-<script src="./source/modules/hlzonyu/template/images/wx.js"></script>
+
 <link href="./source/modules/hlzonyu/template/images/activity-style.css?ver=55e4" rel="stylesheet" type="text/css">
 <link href="./source/modules/hlzonyu/template/images/style.css?ver=55e4" rel="stylesheet" type="text/css">
 <link href="./resource/style/font-awesome.min.css" type="text/css" rel="stylesheet" />	
@@ -326,7 +326,51 @@ MARGIN: 0px 10px 5px 0px;
 <!---
 {if empty($footer_off)}<div id="footer" style="color:#fff;">&copy;{$_W['account']['name']}&nbsp;&nbsp;{$_W['setting']['copyright']['statcode']}</div>{/if}
 -->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+	
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+	
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',		
+	];
+	
+	wx.config(jssdkconfig);
 
+	sharedata = {
+		title : '{$reply['sharetitle']}',
+		link : '{$staturl}',
+		desc : '{$reply['description']}',
+		imgUrl :'{$imgurl}',
+		trigger: function(res) {},
+		success: function(res) {
+		$.getJSON("{php echo $this->createMobileUrl('share')}", {rid: "{$reply['rid']}",fromuser:'{$fromuser}'},function(s){
+					alert(s.message.message);
+		},
+		cancel: function(res) {
+		 TopBox.alert("分享后叫朋友来砍价哦!");
+		},
+		fail: function(res) {
+		 TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+		}		
+	};
+	wx.ready(function () {
+		wx.showOptionMenu();
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+	});
+</script>
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -372,39 +416,6 @@ function submit1(){
 	        	},"html");	
 				
 }
-WeixinApi.ready(function(Api) {
-        Api.showOptionMenu();
-        var wxData = {
-            "appId": "{$_W['account']['key']}",
-			"imgUrl": "{$imgurl}",
-			"link" : "{$staturl}",
-			"desc" : '{$reply['description']}',
-            "title" : '{$reply['sharetitle']}'
-        };
-        // 分享的回调
-        var wxCallbacks = {
-            // 分享被用户自动取消
-            cancel : function(resp) {
-                alert("分享后叫朋友来砍价哦");
-            },
-            // 分享失败了
-            fail : function(resp) {
-                alert("分享失败，可能是网络问题，一会儿再试试？");
-            },
-            // 分享成功
-            confirm : function(resp) {
-                $.getJSON("{php echo $this->createMobileUrl('share')}", {rid: "{$reply['rid']}",fromuser:'{$fromuser}'},function(s){
-					alert(s.message.message);
-					//alert('ok');
-				});
-                
-            },
-        };
-        Api.shareToFriend(wxData,wxCallbacks);
-        Api.shareToTimeline(wxData,wxCallbacks);
-        Api.shareToWeibo(wxData,wxCallbacks);
-    });
-
 
 function showTab(o, tab, count) {
     o.className = "current";
@@ -465,5 +476,7 @@ alert('亲亲哒，小沃目测您心仪的商品，还有一丢丢砍价空间�
 });
 */
 </script>
+
+
 </body>
 </html>

@@ -938,7 +938,7 @@ figure[hidden] {
 	background-color: #279251;
 }
 
-#page_allMenu section article dl button {
+#page_allMenu section article dl button2 {
 	border: 0;
 	height: 25px;
 	width: 25px;
@@ -956,6 +956,97 @@ figure[hidden] {
 	background-size: cover;
 }
 
+#pInfo dd em.sale b{
+	background-color: #f00;
+	color: #fff;
+	padding:2px;
+}
+#pInfo dd em.sale p{
+	//background-color: #f00;
+	color: green;
+	padding:2px;
+}
+
+#page_allMenu section article dl .btn {
+	background-color: transparent;
+	position: absolute;
+	right: -5px;
+	top: 28%;
+	cursor: pointer;
+	padding: 3px;
+	height: 38px;
+}
+
+#page_allMenu section article dl .btn span {
+	border: 0;
+	display: block;
+	height: 25px;
+	width: 25px;
+	background: url("../img/unchoosen.png") no-repeat;
+	background-size: cover;
+	left: -20px;
+	top: -2px;
+}
+
+#page_allMenu section article dl.choosen .btn span {
+	background: url("../img/choosen.png") no-repeat;
+	background-size: cover;
+}
+#page_allMenu section article dl .btn button {
+	width: 40px;
+	height: 40px;
+	border: 0;
+	background-color: transparent;
+	padding: 0;
+}
+
+#page_allMenu section article dl .btn button strong {
+	padding: 5px 10px;
+	font-size: 15px;
+	display: inline-block;
+	text-indent: -100px;
+	padding: 5px 11px;
+	height: 12px;
+}
+
+#page_allMenu section article dl .btn button.minus {
+	display: none;
+	margin-right: -10px;
+}
+
+#page_allMenu section article dl .btn button.add {
+	margin-left: -10px;
+}
+
+#page_allMenu section article dl .btn button.minus strong {
+	background: url("../img/typebtn1a.png") no-repeat;
+	background-size: 22px 22px;
+}
+
+#page_allMenu section article dl .btn button.add strong {
+	background: url("../img/typebtn2a.png") no-repeat;
+	background-size: 22px 22px;
+}
+
+#page_allMenu section article dl .btn button.minus:active strong {
+	background: url("../img/typebtn1.png") no-repeat;
+	background-size: 22px 22px;
+}
+
+#page_allMenu section article dl .btn button.add:active strong {
+	background: url("../img/typebtn2.png") no-repeat;
+	background-size: 22px 22px;
+}
+
+#page_allMenu section article dl .btn i {
+	display: none;
+	width: 22px;
+	text-align: center;
+	font-style: normal;
+	vertical-align: top;
+	margin-top: 11px;
+	line-height: 18px;
+}
 #page_allMenu .freeSet {
 	padding: 0;
 	background-color: #fff;

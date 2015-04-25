@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.52">
+	<application setting="false">
+		<name><![CDATA[微v投票]]></name>
+		<identifie><![CDATA[weivote]]></identifie>
+		<version><![CDATA[1.2]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[微v投票]]></ability>
+		<description><![CDATA[微v投票]]></description>
+		<author><![CDATA[回忆]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+            <message type="text" />
+        </subscribes>
+        <handles>
+            <message type="text" />
+        </handles>
+        <rule embed="true" />
+
+	</platform>
+    
+
+	<bindings>
+        <rule>
+            <!-- <entry title="规则列表" do="rurl" state="" direct="false" />-->
+            <entry title="查看投票详细数据" do="log" state="" />
+            <entry title="查看投票结果" do="result" state="" />
+        </rule>
+<!--
+        <menu>
+            <entry title="管理中心" do="murl" state="" direct="false" />
+        </menu>
+        <home>
+            <entry title="微站首页" do="vurl" state="" direct="false" />
+        </home>
+        <profile>
+            <entry title="微站个人中心" do="uurl" state="" direct="false" />
+        </profile>
+        <shortcut>
+            <entry title="微站快捷" do="furl" state="" direct="false" />
+        </shortcut>
+-->
+	</bindings>
+	<install>
+        <![CDATA[
+            CREATE TABLE IF NOT EXISTS `ims_weivote_setting` (
+            `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+            `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+            `title` varchar(100) NOT NULL COMMENT '活动标题',
+            `picture` varchar(100) NOT NULL COMMENT '活动图片',
+            `description` varchar(1000) NOT NULL COMMENT '活动描述',
+            `rule` varchar(1000) NOT NULL COMMENT '规则',
+            `max_vote_day` SMALLINT( 10 ) UNSIGNED NOT NULL DEFAULT '1' COMMENT '每人每天最大投票数',
+            `max_vote_count` SMALLINT( 10 ) UNSIGNED NOT NULL DEFAULT '1' COMMENT '每人总共最大投票数',
+            `type_vote` SMALLINT( 10 ) UNSIGNED NOT NULL DEFAULT '1' COMMENT '每天必须投不同用户1每天可重复投同一用户2',
+            `name_state` SMALLINT( 10 ) UNSIGNED NOT NULL DEFAULT '1' COMMENT '是否登记用户信息1登记2不登记',
+            `default_tips` varchar(100) NOT NULL COMMENT '默认提示信息',
+            `start_time` int(11) NOT NULL COMMENT '开启日期',
+            `end_time` int(11) NOT NULL COMMENT '结束日期',
+            `state` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0开启，1关闭',
+
+            PRIMARY KEY (`id`)
+          ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+          CREATE TABLE IF NOT EXISTS `ims_weivote_option` (
+            `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+            `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+            `title` varchar(50) NOT NULL COMMENT '名称',
+            `description` text NOT NULL DEFAULT '' COMMENT '描述',
+            `picture` varchar(100) NOT NULL COMMENT '图片',
+            `state` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0开启，1关闭',
+            
+            PRIMARY KEY (`id`)
+          ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+          CREATE TABLE IF NOT EXISTS `ims_weivote_log` (
+            `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+            `rid` int(10) unsigned NOT NULL COMMENT '规则ID',
+            `oid` int(10) unsigned NOT NULL COMMENT '选项ID',
+            `options` varchar(50) NOT NULL COMMENT '选项',
+            `realname` varchar(100) NOT NULL DEFAULT '' COMMENT '姓名',
+            `qq` varchar(100) NOT NULL DEFAULT '' COMMENT 'QQ',
+            `mobile` varchar(100) NOT NULL DEFAULT '' COMMENT '手机',
+            `from_user` varchar(50) NOT NULL COMMENT '用户唯一身份ID',
+            `state` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0有效,1无效',
+            `createtime` int(10) unsigned NOT NULL COMMENT '投票日期',
+            `clientip` varchar(50) NOT NULL COMMENT '客户端IP',
+
+            PRIMARY KEY (`id`)
+          ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+        ]]>
+    </install>
+	<uninstall><![CDATA[
+		DROP TABLE IF EXISTS `ims_weivote_setting`;
+		DROP TABLE IF EXISTS `ims_weivote_option`;
+		DROP TABLE IF EXISTS `ims_weivote_log`;
+		]]></uninstall>
+	<upgrade><![CDATA[
+        ]]>
+    </upgrade>
+</manifest>

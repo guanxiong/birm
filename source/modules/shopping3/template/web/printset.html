@@ -5,13 +5,13 @@
  	<li class="active"><a href="{php echo $this->createWebUrl('printset')}">打印机设置</a></li>	
 	<li><a href="{php echo $this->createWebUrl('smsset')}">短信设置</a></li>	
 	<li><a href="{php echo $this->createWebUrl('orderset')}">订单限制</a></li>	
-
+	<li><a href="{php echo $this->createWebUrl('ordertype')}">店铺类型</a></li>	
 </ul>
 
 <div class="main">
 	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
 	<input type="hidden" name="parentid" value="{$set['id']}" />
-		<h4>GPRS打印机基本设置 <small>微动力的GPRS打印机才有效</small></h4>
+		<h4>GPRS打印机基本设置 <small>由程序指定的GPRS打印机才有效</small></h4>
 		<table class="tb">
 			<tr>
 				<th><label for="">是否开启</label></th>
@@ -23,24 +23,16 @@
 				</td>
 			</tr>
 			<tr>
-				<th><label for="">打印方式</label></th>
+				<th><label for="">打印机款式</label></th>
 				<td>
-					<label for="print_type2" class="radio inline"><input type="radio" name="print_type" value="0" id="print_type2" {if $set['print_type']==0}checked="true"{/if}/>只打印确认订单</label>
+					<label for="print_type2" class="radio inline"><input type="radio" name="print_type" value="0" id="print_type2" {if $set['print_type']==0}checked="true"{/if}/>旧款打印机</label>
 					&nbsp;&nbsp;&nbsp;
-					<label for="print_type2" class="radio inline"><input type="radio" name="print_type" value="1" id="print_type2"  {if $set['print_type']==1}checked="true"{/if}/>只打印付款订单</label>
+					<label for="print_type2" class="radio inline"><input type="radio" name="print_type" value="1" id="print_type2"  {if $set['print_type']==1}checked="true"{/if}/>新款打印机</label>
 					&nbsp;&nbsp;&nbsp;
- 					
 					<span class="help-block"></span>
 				</td>
 			</tr>			
-			<!--<tr>
-				<th><label for="">打印机机身号</label></th>
-				<td>
-					<input type="text" name="print_usr" class="span6" value="{$set['print_usr']}" />
-					<p class="help-block">打印机机身号</p>					
-				</td>
-			</tr>-->
-            <tr>
+			<tr>
         <th><span class="red"></span>商户ID：</th>
         <td><input type="text" class="span6" style="width:420px;" value="{$set['partnerId']}" name="print_partnerId"></td>
     </tr>
@@ -91,7 +83,6 @@
 				</td>
 			</tr>
 		</table>
-        
 	</form>
 </div>
 {template 'common/footer'}

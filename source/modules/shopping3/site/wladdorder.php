@@ -5,6 +5,8 @@
  * @author 微动力
  * @url
  */
+ //print_r($_GPC);
+  
  if($subcp=='unchoose'){
 	$temp=pdo_delete('shopping3_cart', array('from_user' => $from, 'weid' => $weid, 'goodsid' => $_GPC['goodsid']));
 	echo $temp;
@@ -34,18 +36,27 @@
 	}else{
 		$goodsArr=json_decode($order,true);
 		foreach($goodsArr as $k=>$v){
-			$goods= pdo_fetch("SELECT id FROM ".tablename('shopping3_cart')." WHERE goodsid={$v['dishes_id']} AND weid = '{$weid}'  and from_user='{$from}' ");
-			if($goods==false){
-				$data=array(
-					'weid'=>$weid,
-					'goodsid'=>$v['dishes_id'],
-					'price'=>$v['price'],
-					'total'=>$v['nums'],
-					'from_user'=>$from,
-					'create_time'=>time(),
-				);
-				pdo_insert('shopping3_cart',$data);
-			}
+		
+				$goods= pdo_fetch("SELECT id FROM ".tablename('shopping3_cart')." WHERE goodsid={$v['dishes_id']} AND weid = '{$weid}'  and from_user='{$from}' ");
+				if($v['nums']>0){
+					if($goods==false){
+						$data=array(
+							'weid'=>$weid,
+							'goodsid'=>$v['dishes_id'],
+							'price'=>$v['price'],
+							'total'=>$v['nums'],
+							//'unit'=>(empty($v['unit'])?'份':$v['unit']),
+							'from_user'=>$from,
+							'create_time'=>time(),
+						);
+						pdo_insert('shopping3_cart',$data);
+					}else{
+						pdo_update('shopping3_cart',array('total'=>$v['nums']),array('id'=>$goods['id']));
+					}
+				}else{
+					pdo_delete('shopping3_cart',array('id'=>$goods['id']));
+				}
+			
 		}
 	}
 }	 

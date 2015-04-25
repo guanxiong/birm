@@ -69,6 +69,20 @@
 		<input type="hidden" name="id" value="{$item[id]}">
 		<h4>订单信息</h4>
 		<table class="tb">
+			{if $item['ordersn']}
+			<tr>
+				<th><label for="">订单号</label></th>
+				<td>
+					{$item['ordersn']}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">条形码</label></th>
+				<td>
+					<img src="./barcode/get.php?codebar=BCGcode39&text={$item['ordersn']}"/>
+				</td>
+			</tr>
+			{/if}
 			{if $item['transid']}
 			<tr>
 				<th><label for="">交易号</label></th>
@@ -105,6 +119,12 @@
 					{if $item['status'] == 2}<span class="label label-info">待收货</span>{/if}
 					{if $item['status'] == 3}<span class="label label-success">已完成</span>{/if}
 					{if $item['status'] == -1}<span class="label label-success">已关闭</span>{/if}
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">预约日期</label></th>
+				<td>
+					{php echo date('Y-m-d H:i:s', $item['appointmenttime'])}
 				</td>
 			</tr>
 			<tr>
@@ -147,7 +167,7 @@
 				</td>
 			</tr>
 		</table>
-		<h4>商品信息 (2014年7月18号以前的订单商品的成交价为0正常，以后会记录购买时商品的价格，防止商品价格变动记录困难)</h4>
+		<h4>商品信息</h4>
 		<table class="table table-hover">
 			<thead class="navbar-inner">
 				<tr>

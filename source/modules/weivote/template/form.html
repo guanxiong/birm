@@ -1,0 +1,260 @@
+<input type="hidden" name="setting_id" value="{$setting['id']}" />
+
+<link rel="stylesheet" type="text/css" href="./source/modules/weivote/template/mobile/wyshtml5/css/bootstrap-wysihtml5.css" />
+<script src="./source/modules/weivote/template/mobile/wyshtml5/js/wysihtml5-0.3.0.js"></script>
+ 
+
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加投票活动</h4>
+	<table>
+		<tbody>
+			<tr>
+
+
+				<th>查看结果</th>
+				<td><a href="{php echo create_url('site/module', array('do' => 'result', 'name' => 'weivote', 'id' => $setting['rid']))}">查看投票结果</a></td>
+			</tr>
+            
+			<tr>
+				<th>查看数据</th>
+				<td><a href="{php echo create_url('site/module', array('do' => 'log', 'name' => 'weivote', 'id' => $setting['rid']))}">查看投票详细数据</a></td>
+			</tr>
+            
+			<tr>
+				<th>活动标题</th>
+				<td>
+					<input type="text" name="title" value="{$setting['title']}" />
+				</td>
+			</tr>
+			<tr>
+				<th>活动图片</th>
+				<td>
+					<div id="" class="uneditable-input reply-edit-cover">
+						<div class="detail">
+							<span class="pull-right">大图片建议尺寸：700像素 * 300像素</span>
+							<input type="button" id="picture" fieldname="picture{$namesuffix}" class="btn btn-mini reply-edit-cover-upload" value="<i class='icon-upload-alt'></i> 上传" style="" />
+							<button type="button" class="btn btn-mini reply-news-edit-cover-remove" id="upload-delete" onclick="doDeleteItemImage(this, 'picture-value')" style="{if empty($setting['picture'])} display:none;{/if}"><i class="icon-remove"></i> 删除</button>
+						</div>
+						{if !empty($setting['picture'])}
+						<input type="hidden" name="picture-old" value="{$setting['picture']}">
+						<div id="upload-file-view" class="upload-view">
+							<input type="hidden" id="picture-value" value="{$setting[picture]}">
+							<img width="100" src="{$_W['attachurl']}{$setting['picture']}">&nbsp;&nbsp;
+						</div>
+						{else}
+						<div id="upload-file-view"></div>
+						{/if}
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>活动简介</th>
+				<td>
+					<textarea style="height:150px;" name="description" class="span7" cols="60">{$setting['description']}</textarea>
+					<div class="help-block">用于回复显示的简介</div>
+				</td>
+			</tr>
+			<tr>
+				<th>底部说明</th>
+				<td>
+					<textarea id="rule" style="height:150px;" name="rule" class="span7" cols="60">{$setting['rule']}</textarea>
+					<div class="help-block">投票的相关说明和介绍。
+						<input type="hidden" name="default_tips" value=''>
+					</div>
+				</td>
+			</tr>
+			
+			
+            <tr>
+                <th>投票时间</th>
+                <td>
+                    <button style="margin:0;" class="btn span5" id="date-range" type="button"><span class="date-title">{php echo date('Y-m-d H:i', $setting['start_time'])} 至 {php echo date('Y-m-d H:i', $setting['end_time'])}</span> <i class="icon-caret-down"></i></button>
+                    <input name="start_time" type="hidden" value="{php echo date('Y-m-d H:i', $setting['start_time'])}" />
+                    <input name="end_time" type="hidden" value="{php echo date('Y-m-d H:i', $setting['end_time'])}" />
+                </td>
+            </tr>
+            
+            
+            <tr>
+				<th>投票票数</th>
+                <td>
+					<span class="uneditable-input span7">
+                      
+                    每天每人可投最大票数：<input id="form-max-vote-day" type="text" value="{$setting['max_vote_day']}" class="span1" name="max_vote_day" placeholder="请填入票数" onchange="weivoteHandler.MaxVoteDay()"> 
+                    </span>
+                    <br>
+                    <span class="uneditable-input span7">
+                     
+                    期间个人总共可投票数：<input id="form-max-vote-count" type="text" value="{$setting['max_vote_count']}" class="span1" name="max_vote_count" placeholder="请填入票数" onchange="weivoteHandler.MaxVoteCount()"> 
+                    </span>
+                    <br>
+                    <span class="uneditable-input span7">
+                        
+                       每个用户每天的票可否重复投同一选项：
+                       <input id="form-type-vote-1" type="radio" value="1" class="span1" name="type_vote" checked>不可 
+                       <input id="form-type-vote-2" type="radio" value="2" class="span1" name="type_vote" >可以
+                  
+                    </span>
+                             
+				</td>
+                       
+			</tr>
+
+            <tr>
+                <th>实名登记</th>
+                <td>
+                    <span class="uneditable-input span7">
+                        
+                       用户是否需要实名登记：
+                       <input id="form-name-state-1" type="radio" value="1" class="span1" name="name_state" checked>登记 
+                       <input id="form-name-state-2" type="radio" value="2" class="span1" name="name_state" >不登记
+                  
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <th>页面网址</th>
+                <td>
+                    <span class="span7" style="margin-left: 0px;">
+                       {$_W['siteroot']}{php echo $this->createMobileUrl('url', array('id' => $id))}&amp;id={$setting['rid']}
+                    </span>
+                    <div class="help-block">仅可在微信中打开, 此链接可用于图文回复设置来源</div>
+                </td>
+            </tr>
+			
+		</tbody>
+	</table>
+
+    
+    <div id="append-list" class="list">
+	{if !empty($option)}
+		{php $prize = 1;}
+		{loop $option $item}
+		<div class="item" id="option-item-{$item['id']}">
+            <!--<h5>序号 :{$item['id']}</h5>-->
+            {php include $this->template('weivote/item');}
+		</div>
+
+		<script>
+            kindeditorUploadBtn($("#item-picture-weivote-item-{$item['id']}"));
+            //item-description-weivote-item-1
+            //kindeditor($('#item-description-weivote-item-{$item['id']}'));
+        </script>
+		{php $prize++;}
+		{/loop}
+	{/if}
+	</div>
+	<div class="reply-news-edit-button"><a href="javascript:;" onclick="weivoteHandler.buildAddForm('weivote-form-html', $('#append-list'))" class="btn"><i class="icon-plus"></i> 添加选项</a></div>
+	
+</div>
+
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+
+<script type="text/html" id="weivote-form-html">
+{php unset($item); include $this->template('weivote/item');}
+</script>
+
+<script>
+kindeditor($('#rule'));
+kindeditorUploadBtn($('#picture'));
+
+    
+var weivoteHandler = {
+    'buildAddForm' : function(id, targetwrap) {
+        var obj = buildAddForm(id, targetwrap);
+        obj.html(obj.html().replace(/\(wrapitemid\)/gm, obj.attr('id')));
+        
+        kindeditorUploadBtn($('#item-picture-'+obj.attr('id')));
+        
+		$('.textarea').wysihtml5();
+        
+        //修改为图文描述信息
+        //alert('#option-description-'+obj.attr('id'));
+        //kindeditor($('#item-description-'+obj.attr('id')));
+    },
+    'MaxVoteDay' : function() {
+        if(parseInt($('#form-max-vote-day').attr("value")) < 1) {
+            alert("每天投票最小设置为1");
+            $('#form-max-vote-day').attr({"value":"1"});
+            return;
+        }
+        if(parseInt($('#form-max-vote-day').attr("value"))  > parseInt($('#form-max-vote-count').attr("value")) ) {
+            alert("每天投票数不可超过个人投票总限制数");
+            $('#form-max-vote-day').attr({"value":$('#form-max-vote-count').attr("value")});
+            return;
+        }
+    },
+    'MaxVoteCount' : function() {
+        if(parseInt($('#form-max-vote-count').attr("value")) < 1) {
+            alert("个人总投票数最小设置为1");
+            $('#form-max-vote-count').attr({"value":"1"});
+            return;
+        }
+        if(parseInt($('#form-max-vote-day').attr("value"))  > parseInt($('#form-max-vote-count').attr("value"))) {
+            alert("每天投票数不可超过个人投票总限制数");
+            $('#form-max-vote-day').attr({"value":$('#form-max-vote-count').attr("value")});
+            return;
+        }
+    }
+};
+
+function add_row() {
+    $.getJSON('{php echo create_url('index/module/formdisplay', array('name' => 'weivote'))}', function(data){
+        if (data.error === 0 && data.content.html != '') {
+            $('#append-list').append(data.content.html);
+            row = $('#'+data.content.id);
+        }
+    });
+}
+
+
+
+$(function() {
+    
+    //详细数据相关操作
+	$('#date-range').daterangepicker({
+		format: 'YYYY-MM-DD HH:mm',
+		startDate: $(':hidden[name=start_time]').val(),
+		endDate: $(':hidden[name=end_time]').val(),
+		ranges: {
+         '明天': [moment(), moment().subtract('days', -1)],
+         '一周内': [moment(), moment().subtract('days', -6)],
+         '两周内': [moment(), moment().subtract('days', -13)],
+         '一个月': [moment(), moment().subtract('days', -30)]
+        },
+        locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		},
+        timePicker: true,
+        timePicker12Hour: false,
+        timePickerIncrement:5
+	}, function(start_time, end_time){
+		$('#date-range .date-title').html(start_time.format('YYYY-MM-DD HH:mm') + ' 至 ' + end_time.format('YYYY-MM-DD HH:mm'));
+		$(':hidden[name=start_time]').val(start_time.format('YYYY-MM-DD HH:mm'));
+		$(':hidden[name=end_time]').val(end_time.format('YYYY-MM-DD HH:mm'));
+	});
+	
+	//初始化投票方式
+    $("#form-type-vote-{php echo $setting['type_vote'];}").attr("checked", true);
+    
+	//初始化实名登记
+    $("#form-name-state-{php echo $setting['name_state'];}").attr("checked", true);
+    
+});
+</script>
+
+<script src="./source/modules/weivote/template/mobile/wyshtml5/js/bootstrap-wysihtml5.js"></script>
+<script src="./source/modules/weivote/template/mobile/wyshtml5/js/bootstrap-wysihtml5.zh-CN.js"></script>
+<script>
+	$('.textarea').wysihtml5();
+</script>

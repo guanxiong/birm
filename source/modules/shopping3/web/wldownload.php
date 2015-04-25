@@ -7,20 +7,31 @@ require_once './source/modules/public/Classes/PHPExcel.php';
 
   $id = $_GPC['id'];
 
-		 
+		if(!empty($id)){
+			$where.=" AND  a.qid={$id} ";
+		}
+		if (!empty($_GPC['tel'])) {
+			$where .= " AND a.tel LIKE '%{$_GPC['tel']}%'";
+		}
+		if (!empty($_GPC['status'])&&$_GPC['status']!=-1) {
+			$status = intval($_GPC['status']);
+			$where .= " AND a.status = '{$status}'";
+		} 
+
 		if(!empty($_GPC['start']) &&!empty($_GPC['end']) ){
 			$starttime=strtotime($_GPC['start']);
 			$endtime=strtotime($_GPC['end']);
- 			$where.=" AND  createtime>{$starttime}  AND  createtime<{$endtime}";
+ 			$where.=" AND  a.createtime>{$starttime}  AND  a.createtime<{$endtime}";
  		}else{
 			exit;
 		}
 		
 
  	//$list = pdo_fetchall("SELECT a.*,b.tel FROM ".tablename('award')." as a  left join ".tablename('bigwheel_fans')." as b on  a.rid=b.rid , a.from_user=b.from_user WHERE a.rid = :rid   ORDER BY `a.id` DESC ", array(':rid' => $rid,':weid'=>$_W['weid']));				
-	$sql="SELECT *  FROM ".tablename('shopping3_order')."  WHERE weid = {$_W['weid']} ".$where." ORDER BY createtime asc ";
+	$sql="SELECT a.*  FROM ".tablename('shopping3_order')." as a WHERE a.weid = '{$_W['weid']}' ".$where." ORDER BY a.createtime asc ";
  	$list = pdo_fetchall($sql);
- // Create new PHPExcel object
+ 
+// Create new PHPExcel object
 $objPHPExcel = new PHPExcel();
 
 // Set document properties
@@ -46,39 +57,33 @@ $objPHPExcel->setActiveSheetIndex(0)
 			->setCellValue('I1', '顾客姓名')
 			->setCellValue('J1', '顾客电话')
 			->setCellValue('K1', '顾客地址')
-			->setCellValue('L1', '订单时间')
-			->setCellValue('M1', '订单详情');
+			->setCellValue('L1', '订单时间');
 
 $i=2;
 foreach($list as $row){
-	if($row['paytype']==1){
-		$row['paytypestr']='余额支付';
-	}elseif($row['paytype']==2){
-		$row['paytypestr']='在线支付';
-	}elseif($row['paytype']==3){
-		$row['paytypestr']='货到付款';
-	}
-	if($row['status']==1){
-		$row['statusstr']='下单成功';
-	}elseif($row['status']==2){
-		$row['statusstr']='订单确认';
-	}elseif($row['status']==3){
-		$row['statusstr']='订单成功';
-	}elseif($row['status']==-1){
-		$row['statusstr']='订单取消';	
-	}elseif($row['status']==-2){
-		$row['statusstr']='退款成功';	
-	}elseif($row['status']==0){
-		$row['statusstr']='已下单';
-	}else{
-		$row['statusstr']='未知状态';	
-	}
-	$goodsid = pdo_fetchall("SELECT goodsid, total,description FROM ".tablename('shopping3_order_goods')." WHERE orderid = '{$row['id']}'", array(), 'goodsid');
-	$goods = pdo_fetchall("SELECT title FROM ".tablename('shopping3_goods')."  WHERE id IN ('".implode("','", array_keys($goodsid))."')");
-	$goodsstr='';
-	foreach($goods as $row2){
-		$goodsstr.=$row2['title'].',';
-	}
+if($row['paytype']==1){
+	$row['paytypestr']='余额支付';
+}elseif($row['paytype']==2){
+	$row['paytypestr']='在线支付';
+}elseif($row['paytype']==3){
+	$row['paytypestr']='货到付款';
+}
+if($row['status']==1){
+	$row['statusstr']='下单成功';
+}elseif($row['status']==2){
+	$row['statusstr']='订单确认';
+}elseif($row['status']==3){
+	$row['statusstr']='订单成功';
+}elseif($row['status']==-1){
+	$row['statusstr']='订单取消';	
+}elseif($row['status']==-2){
+	$row['statusstr']='退款成功';	
+}elseif($row['status']==0){
+	$row['statusstr']='已下单';
+}else{
+	$row['statusstr']='未知状态';	
+}
+
 $objPHPExcel->setActiveSheetIndex(0)			
             ->setCellValue('A'.$i, $row['id'])
             ->setCellValue('B'.$i, $row['ordersn'])
@@ -91,8 +96,7 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('I'.$i, $row['guest_name'])
             ->setCellValue('J'.$i, $row['tel'])
             ->setCellValue('K'.$i, $row['guest_address'])
-			->setCellValue('L'.$i, $row['createtime']>0?date('Y/m/d H:i',$row['createtime']):'')
-			->setCellValue('M'.$i, $goodsstr);
+			->setCellValue('L'.$i, $row['createtime']>0?date('Y/m/d H:i',$row['createtime']):'');
 	$i++;		
 }					
 $objPHPExcel->getActiveSheet()->getStyle('A1:L1')->getFont()->setBold(true);

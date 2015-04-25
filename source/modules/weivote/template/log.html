@@ -1,0 +1,145 @@
+{template 'common/header'}
+
+<style>
+    .sub-search input,.sub-search select{margin-bottom:0;}
+</style>
+	<div class="main">
+		<div class="stat">
+			<div class="stat-div">
+				<div class="navbar navbar-static-top">
+					<div class="navbar-inner">
+						<span class="brand">投票结果</span>
+					</div>
+				</div>
+				
+				<div class="sub-item" id="table-list">
+					<h4 class="sub-title">详细数据&nbsp;&nbsp;(总计：{php echo $options_count}条)</h4>
+					<form action="" method="post" onsubmit="">
+					<div class="sub-content">
+						<table class="table table-hover">
+							<thead class="navbar-inner">
+								<tr>
+									<th style="width:40px;" class="row-first">选择</td>
+									<th style="width:40px;">编号</td>
+									<th style="width:250px;">微信fakeid</td>
+									<th style="width:120px;">姓名<i></i></th>
+									<th style="width:100px;">手机<i></i></th>
+									<th style="width:100px;">QQ<i></i></th>
+									<th style="width:140px;">客户端IP<i></i></th>
+									<th style="width:70px;">选项编号</td>
+									<th >选项<i></i></th>
+									<th style="width:120px;">投票时间<i></i></th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $list $row}
+								<tr>
+									<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+									<td >{$row['id']}</td>
+									<td >{$row['from_user']}</td>
+									<td >{$row['realname']}</td>
+									<td >{$row['mobile']}</td>
+									<td >{$row['qq']}</td>
+									<td >{$row['clientip']}</td>
+									<td >{$row['oid']}</td>
+									<td >{$row['options']}</td>
+									<td style="font-size:12px; color:#666;">
+										{php echo date('Y-m-d H:i:s', $row[createtime]);}
+									</td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
+						<table class="table">
+							<tr>
+								<td style="width:40px;" class="row-first"><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+								<td>
+									<input type="button" value="导出Excel" class="btn btn-info" onclick="exportExcel()"/>
+									<input type="submit" name="delete" value="删除" class="btn btn-primary" />
+									<input type="hidden" name="token" value="{$_W['token']}" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+				{$pager}
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+
+
+
+<script>
+$(function() {
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+	$('#date-range').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=start]').val(),
+		endDate: $(':hidden[name=end]').val(),
+		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=start]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=end]').val(end.format('YYYY-MM-DD'));
+	});
+});
+
+function exportExcel()
+{
+	window.location.href="{php echo create_url('site/module', array('do' => 'export', 'name' => 'weivote', 'id' => $id))}";
+	return false;
+}
+</script>
+
+
+
+{template 'common/footer'}

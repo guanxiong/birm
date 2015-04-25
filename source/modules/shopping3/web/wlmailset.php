@@ -2,7 +2,7 @@
 /**
  * 2014-2-24
  * 购物车 分类管理 
- * 支持二级分类 来自微擎
+ * 支持二级分类 来自微动力
  * @author 微动力
  * @url
  */
@@ -16,8 +16,7 @@ if($_GPC['action']=='test'){
 	}else{
 		message('邮件发送成功，您的邮件设置成功,错误原因:'.$temp);
 	}
-}
-if (checksubmit('submit')) {
+}if (checksubmit('submit')) {
 	$insert=array(
 		'weid'=>$_W['weid'],
 		'mail_smtp'=>trim($_GPC['mail_smtp']),

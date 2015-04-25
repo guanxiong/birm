@@ -211,7 +211,6 @@ function get_search_box(){
  	}
 }
 </script><!--页面底部-->
-<script src="./source/modules/bj_qmxk/style/js/wx.js?v=1420269187"></script>
 <script type="text/javascript">
 
 //获取指定cookes函数
@@ -227,37 +226,51 @@ function getCookie(name)
 } 
 
 //alert(mid);
-WeixinApi.ready(function(Api) {
-        Api.showOptionMenu();
-		var mid=getCookie("mid");
-        var wxData = {
-       //     "appId": "{$_W['account']['key']}",
-            "imgUrl" : '{$_W['attachurl']}{$logo}',
-            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('list',array('id'=>$id))}&mid='+mid,
-            "desc" : '{$description}',
-            "title" : '{$_W['account']['name']}'
-        };
-        // 分享的回调
-        var wxCallbacks = {
-            // 分享被用户自动取消
-            cancel : function(resp) {
-                TopBox.alert("分享后获得积分,还有可能得到佣金哦!不要错过发大财的机会!");
-            },
-            // 分享失败了
-            fail : function(resp) {
-                TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
-            },
-            // 分享成功
-            confirm : function(resp) {
-             TopBox.alert("分享后成功,等着收佣金吧!");
-            },
-        };
-        Api.shareToFriend(wxData,wxCallbacks);
-        Api.shareToTimeline(wxData,wxCallbacks);
-        Api.shareToWeibo(wxData,wxCallbacks);
-        Api.generalShare(wxData,wxCallbacks);
-    });
 
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+	
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+	
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',		
+	];
+	
+	wx.config(jssdkconfig);
+
+	sharedata = {
+		title : '{$_W['account']['name']}',
+		link : '{php echo $_W['siteroot'].$this->createMobileUrl('list',array('id'=>$goods['id'],'weid'=>$_W['weid']))}&mid='+mid,
+		desc : '{$description}',
+		imgUrl :'{$_W['attachurl']}{$logo}',
+		trigger: function(res) {},
+		success: function(res) {
+		 TopBox.alert("分享后成功,等着收佣金吧!");
+		},
+		cancel: function(res) {
+		 TopBox.alert("分享后获得积分,还有可能得到佣金哦!不要错过发大财的机会");
+		},
+		fail: function(res) {
+		 TopBox.alert("分享失败，可能是网络问题，一会儿再试试？");
+		}		
+	};
+	wx.ready(function () {
+		wx.showOptionMenu();
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+	});
 </script>
 </body>
 </html>

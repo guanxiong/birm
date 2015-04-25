@@ -26,6 +26,10 @@
 	</div>
 	{/loop}
 	<div class="myoder-express">
+	<span class="express-company">条形码</span>
+	 <center><img src="./barcode/get.php?codebar=BCGcode39&text={$item['ordersn']}"/></center>
+	</div>
+	<div class="myoder-express">
 		<span class="express-company">状态</span>
 		<span class="express-num">
 		{if $item['paytype'] == 3}

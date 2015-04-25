@@ -1,0 +1,20 @@
+<head>
+<script language="javascript">
+var secs = 0; //倒计时的秒数 
+var URL ;
+function Load(url){
+URL = url;
+for(var i=secs;i>=0;i--) 
+{ 
+   window.setTimeout('doUpdate(' + i + ')', (secs-i) * 1000); 
+} 
+}
+function doUpdate(num) 
+{ 
+if(num == 0) { window.location = URL; }
+}
+</script>
+</head>
+<body onload="Load('account.php?act=payment&id=current')">
+<div id="ShowDiv">
+</body>

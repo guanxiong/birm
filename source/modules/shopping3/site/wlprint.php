@@ -16,7 +16,7 @@
 		exit;
 	}
 	//获取订单
-	$set = pdo_fetch("SELECT * FROM ".tablename('shopping3_set')." WHERE weid = :weid limit 1", array(':weid' => $weid));
+	$set = pdo_fetch("SELECT * FROM ".tablename('shopping3_set')." WHERE print_usr = :usr", array(':usr' =>$usr));
 	if($set==false){
 		exit;
 	}
@@ -37,7 +37,7 @@
 	$item['goods'] = $goods;
 
 
- 	/*if(!empty($set['print_top'])){
+ 	if(!empty($set['print_top'])){
 		$content="%10".$set['print_top']."\n";
 	}else{
 		$content='';
@@ -92,7 +92,7 @@
 	$setting='<setting>124:'.$set['print_nums'].'|134:0</setting>';					
 	$setting=iconv("UTF-8","GB2312//IGNORE",$setting);
 	echo '<?xml version="1.0" encoding="GBK"?><r><id>'.$item['id'].'</id><time>'.date('Y-m-d H:i:s', $item['createtime']).'</time><content>'.$content.$content1.$content2.'</content>'.$setting.'</r>';
-	*/
+	
 	//订单号：	{$item['ordersn']}
 	//价钱		{$item['totalprice']} 
 	//配送方式 	{php echo $express[$item['sendtype']]['express_name']} 
@@ -146,119 +146,4 @@
 			{/loop}
 		</table>
 	*/	
-	
-	
-	//微动力打印开始
-	if($set['print_status']){
-		$msg = formatMsg($item,$set);
-		if($set['print_nums']){
-			for($i=1;$i<=$set['print_nums'];$i++){
-				$res = sendMsgToElink($msg, $set['apiKey'], $set['mKey'], $set['partnerId'], $set['machineCode']);
-			}
-		}
-		echo $msg;
-	}
-	
-	
-	function httppost1($params) {
-		$host = '42.121.115.77';
-		$port = '8888';
-		//需要提交的post数据
-		$p = '';
-		foreach ($params as $k => $v) {
-			$p .= $k.'='.$v.'&';
-		}
-		$p = rtrim($p, '&');
-		$header = "POST / HTTP/1.1\r\n";
-		$header .= "Host:$host:$port\r\n";
-		$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-		$header .= "Content-Length: " . strlen($p) . "\r\n";
-		$header .= "Connection: Close\r\n\r\n";
-		$header .= $p;
-		$fp = fsockopen($host, $port);
-		fputs($fp, $header);
-		while (!feof($fp)) {
-			$str = fgets($fp);
-		}
-		fclose($fp);
-		return $str;
-	}
-	
-	//向微动力提交信息 返回微动力返回标志
-	function sendMsgToElink($msg,$apiKey,$mKey,$partner,$machine_code){
-	
-		$params = array(
-				'partner'=>$partner,
-				'machine_code'=>$machine_code,
-				'content'=>$msg,
-		);
-	
-		$sign = generateSign($params,$apiKey,$mKey);
-		$params['sign'] = $sign;
-	
-		$return = httppost1($params);
-		return $return;
-	}
-	
-	//微动力签名算法
-	function generateSign($params, $apiKey, $msign)
-	{
-	
-		//所有请求参数按照字母先后顺序排序
-		ksort($params);
-		//定义字符串开始 结尾所包括的字符串
-		$stringToBeSigned = $apiKey;
-		//把所有参数名和参数值串在一起
-		foreach ($params as $k => $v)
-		{
-			$stringToBeSigned .= urldecode($k.$v);
-		}
-		unset($k, $v);
-		//把venderKey夹在字符串的两端
-		$stringToBeSigned .= $msign;
-		//使用MD5进行加密，再转化成大写
-		return strtoupper(md5($stringToBeSigned));
-	}
-	
-	function formatMsg($result,$set){
-		$msg = '';
-		if($set['print_top']){
-			$msg .= $set['print_top']."\r\n";
-		}
-		$msg .= "-----------------------------\r\n";
-		$msg .= "订单编号：".$result['ordersn']."\r\n";
-		switch ($result['order_type']){
-			case '2':
-				$msg .= '姓名：'.$result['guest_name']."\r\n";
-				$msg .= '电话：'.$result['tel']."\r\n";
-				$msg .= "就餐方式：预订\r\n";
-				$msg .= '预订日期：'.date('Y-m-d H:i:s',$result['reservetime'])."\r\n";
-				$msg .= '预订餐桌：'.$result['tablename']."\r\n";
-				break;
-			case '1':
-				$msg .= '预订人：'.$result['guest_name']."\r\n";
-				$msg .= '联系电话：'.$result['tel']."\r\n";
-				$msg .= '联系地址：'.$result['guest_address']."\r\n";
-				$msg .= "就餐方式：外卖\r\n";
-				$msg .= '下单日期：'.date('Y-m-d H:i:s',$result['createtime'])."\r\n";
-				break;
-			default:;
-		}
-		$msg .= "-----------------------------\r\n";
-		$msg .= "名称\t\t\t\t单价\t\t数量\t\t总价\r\n";
-		foreach ($result['goods'] as $k=>$v){
-			$c_name  = $v['title'] . str_repeat(' ', (7-strlen($v['title'])/3)*2);
-			$c_price = str_pad($v['marketprice'], 5, " ", STR_PAD_RIGHT);
-			$c_num = str_pad($v['sellnums'], 5, " ", STR_PAD_RIGHT);
-			$msg .= $c_name.$c_price."\t".$c_num."\t".$v['marketprice']*$v['sellnums']."\r\n";
-		}
-		$msg .="-----------------------------\r\n";
-		$msg .='总计：'.$result['totalprice'].'元'."\r\n";
-		$msg .= '备注：'.$result['remark']."\r\n";
-	
-		if($set['print_bottom']){
-			$msg .= chr(10).$set['print_bottom'];
-		}
-		return $msg;
-	}
 	

@@ -970,6 +970,7 @@ abstract class WeModuleSite {
 			message('这个订单已经支付成功, 不需要重复支付.');
 		}
 		include $this->template('paycenter');
+		exit;
 	}
 
 	public function payResult($ret) {

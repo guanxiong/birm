@@ -15,10 +15,7 @@
     <div {if $status==0}class='sel'{else}class="nosel"{/if} style='border-top-left-radius: 5px;border-bottom-left-radius:5px;border:1px solid #e9342a;text-align: center;float:left;width:30%' onclick="location.href='{php echo $this->createMobileUrl('myorder',array('status'=>0))}'">
         待支付
     </div>
-    <div {if $status==1 || $status==2}class='sel'{else}class="nosel"{/if} style='border:1px solid #e9342a;margin-left:-1px;float:left;width:30%;text-align: center;' onclick="location.href='{php echo $this->createMobileUrl('myorder',array('status'=>2))}'">
-        待收货
-    </div>
-    <div {if $status==3}class='sel'{else}class="nosel"{/if} style='border-top-right-radius: 5px;margin-left:-1px;border-bottom-right-radius:5px;text-align: center;border:1px solid #e9342a;float:left;width:30%' onclick="location.href='{php echo $this->createMobileUrl('myorder',array('status'=>3))}'">
+    <div {if $status==1 || $status==3}class='sel'{else}class="nosel"{/if} style='border-top-right-radius: 5px;margin-left:-1px;border-bottom-right-radius:5px;text-align: center;border:1px solid #e9342a;float:left;width:30%' onclick="location.href='{php echo $this->createMobileUrl('myorder',array('status'=>3))}'">
         已完成
     </div>
 </div>
@@ -67,8 +64,8 @@
 			<div class="name"><a href="{php echo $this->createMobileUrl('detail', array('id' => $goods['id']))}">{$goods['title']}</a></div>
 			<div class="price">
 				<span>{$goods['marketprice']} 元{if $goods['unit']} / {$goods['unit']}{/if}</span>
-				<span class="num">{$item['total'][$goods['id']]['total']}{if $goods['unit']} {$goods['unit']}{/if}</span>
-			</div>
+        {template 'killprice'}
+      </div>
 		</div>
 	</div>
 	{/loop}

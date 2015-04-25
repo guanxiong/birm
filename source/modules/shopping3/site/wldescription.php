@@ -4,8 +4,7 @@
  *
  * @author 微动力
  * @url
- */
-	$goodsid=intval($_GPC['goodsid']);
+ */	$goodsid=intval($_GPC['goodsid']);
 	//搜索订单
  	$goods = pdo_fetch("SELECT content FROM ".tablename('shopping3_goods')." WHERE weid={$weid} and  id = {$goodsid}");
 	if (empty($goods)) {

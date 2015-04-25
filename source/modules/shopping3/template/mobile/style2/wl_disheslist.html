@@ -1,9 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <link rel="stylesheet" type="text/css" href="{RES}css/wei_canyin.css?2014-03-07-1" media="all" />
- <script type="text/javascript" src="{RES}js/jQuery.js?2014-03-07-1"></script>
+    <link rel="stylesheet" type="text/css" href="{RES}css/wei_canyin.css" media="all" />
+<link rel="stylesheet" type="text/css" href="{RES}css/wei_dialog.css" media="all" />
+<script type="text/javascript" src="{RES}js/jQuery.js"></script>
 <script type="text/javascript" src="{RES}js/wei_webapp_v2_common.js"></script>
 <title>{$set['shop_name']}</title>
     <meta charset="utf-8" />
@@ -61,7 +61,7 @@
             window.res.randIndex = window.res.randIndex%window.res.data.length;
 			
             var TPL = '<article><h2>{title}</h2>\
-                                <dl dunitname="例" dsubcount="0"  dname="" dtaste=""   dprice="0" dishot="0" dpicture="{thumb}" dspecialprice="{marketprice}" >\
+                                <dl dunitname="{unit}" dsubcount="{sellnums}"  dname="{title}" dtaste=""   dprice="{productprice}" dishot="0" dpicture="{thumb}" dspecialprice="{marketprice}" >\
                                     <dt><h3>{title}</h3></dt>\
                                     <dd>\
                                         <a href="javascript:void(0)" class="dataIn" onclick="showImgDetail(this);">\
@@ -98,7 +98,6 @@
             if(childImg.nodeType == 3){
                 childImg = thi.childNodes[1];
             }
-
             popPic(childImg.src,
                     parentDl.getAttribute('dname'),
                     parentDl.getAttribute('dprice') + '元/' + parentDl.getAttribute('dunitName'),
@@ -116,7 +115,7 @@
         function popPic(imgUrl,title,price, isSpecial, specialPrice, people,teast,assess,isHot){
             var _title = title,
                 _price = price,
-                _people = null;//people,
+                _people = people;//people,
                 _teast = teast,
                 _assess = assess;
 

@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+<title>首次订购认证</title>   
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1, initial-scale=1, user-scalable=0">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="./source/modules/shopping3/style/css/bswx.v3.min.css" rel="stylesheet"/>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="./source/modules/shopping3/style/js/jquery-2.0.0.min.js"><\/script>');</script>
+<script src="./source/modules/shopping3/style/js/bswx.v3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="./source/modules/shopping3/style/css/minimal/red.css">
+<script type='text/javascript' src='./source/modules/shopping3/style/js/jquery.icheck.min.js'></script>
+<script type='text/javascript' src='./source/modules/shopping3/style/js/layer.min.js'></script>
+<style>
+.selbtn{float:left;display:inline;height:45px;line-height:43px;border-radius:6px;border:1px solid #ccc;background-color:#fff;color:#000;font-size:18px;text-align:center;}
+.active{border:1px solid #0a64a4;background-color:#fff;color:#0a64a4;background:url(./source/modules/shopping3/style/img/selected.png) right bottom no-repeat;}
+#sex{width:42%;margin:5px 0px 20px 5px;}
+</style>	
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 page-header">
+		  <h2>首次<small>启用</small></h2>
+		</div>
+		<div class="col-xs-12">
+			<form action="{php echo $this->createMobileUrl('reg',array('action'=>'reg'))}" method="post" onSubmit="return checkSubmit();">
+			  	<label for="mobile">手机号码 *</label>
+				<div class="form-group input-group input-group-lg">
+				  	<input type="tel" class="form-control input-lg" name="mobile" id="mobile" maxlength="11" placeholder="11位手机号码" value="">
+				  	<span class="input-group-btn">
+				  		<button class="btn btn-warning" type="button" id="btnVerificode">获取验证码</button>
+					</span>
+				</div>
+				<div class="form-group input-group-lg">
+				  <label for="verificode">验证码 *</label>
+				  <input type="tel" class="form-control input-lg" name="verificode" id="verificode" maxlength="6" placeholder="6位短信验证码">
+				</div>
+				<div class="form-group input-group-lg">
+					<div id="sex" class="selbtn active" style="margin-left: 8%"  title="1">先生</div>	
+					<div id="sex" class="selbtn " title="2">女士</div>
+					<div style="clear:both;"></div>
+					<input type="hidden" name="pvSex" id="pvSex" value="1"/>
+				</div>		
+				<div class="form-group input-group hide" id="sqcard">
+					<span class="input-group-btn">
+				 	<input type="checkbox" name="chksqcard" id="chksqcard"  />
+				 	<input type="hidden" name="issqcard" id="issqcard" value=""/>
+				 	<label for="chksqcard">&nbsp;同时申请成为商户会员</label>
+					</span>
+				</div>
+			  	<div class="form-group input-group hide" id="sqcardmsg"></div>			  	
+			  	<button type="submit" class="btn btn-primary btn-block btn-lg">开启</button>
+			</form>
+		</div>
+		<p>&nbsp;</p>
+	</div>
+</div>
+
+<script type="text/javascript">   
+	setTimeout(function(){$(".alert").fadeOut(500);},6000);
+	
+	function goHref(action, params){
+		var url = "?paramIn=cHRpZD1naF9mYWJiMTFi:jk1:j:8d3hpZD1vbGpGQ3VHaD:kWUw2b1UycmRVcWpl:U00ZXZjfHd4TWVtYmVySWQ9:Tg0:TZ8Z2:JZD0zMTEwfGlXYXk9MA==4G";
+		url += (params != undefined)?params:"";
+		window.location.href = action + url + "#wechat_webview_type=1#wechat_redirect";
+	}
+	
+	$("input[type='checkbox'][name='chksqcard']").iCheck({
+		checkboxClass: 'icheckbox_minimal-red',
+		radioClass: 'iradio_minimal-red'
+	}).parent().css("float","left");
+	
+	var mobile_reg = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/;			
+	
+	function checkSubmit(){
+		var mobile = $.trim($("#mobile").val());
+		if (!mobile_reg.test(mobile)){
+			layer.msg("输入正确手机号");
+			return false;
+		}
+		var verificode = $.trim($("#verificode").val());
+		var verificode_reg = /\d{6}$/;
+		if (!verificode_reg.test(verificode)){
+			layer.msg("输入正确验证码");
+			return false;
+		}
+		$("button[type='submit']").removeClass("btn-primary").addClass("disabled");
+		return true;
+	}
+	//性别点击事件
+	$("div[id='sex']").click(function(){
+		$("div[id='sex']").each(function(){
+			$(this).removeClass("active");
+		});
+		$(this).addClass("active");
+		$("#pvSex").val($(this).attr("title"));
+	});
+	
+	function startdowncount(txt, nowcount) {
+		if (nowcount < 1){
+			$("#btnVerificode").text(txt).removeClass("disabled").addClass("btn-warning");
+		} else {
+			$("#btnVerificode").text(nowcount--+"秒后重试");	
+			setTimeout("startdowncount('" + txt + "'," + nowcount + ")",1000);
+		}
+	}
+	
+	$(function () {
+		$("#btnVerificode").click(function(){
+			var mobile = $.trim($("#mobile").val());
+			if (!mobile_reg.test(mobile)){
+				layer.msg("请输入正确手机号");
+				return false;
+			}
+			$.ajax({
+				url: "{php echo $this->createMobileUrl('reg',array('action'=>'code'))}",
+				async : false, 
+				type: 'POST',
+				data:{mobile:mobile},
+				dataType: 'json',
+				timeout: 5000,
+				error: function(){
+					$("#btnVerificode").removeClass("disabled").addClass("btn-warning");
+					layer.msg("短信验证码发送失败");
+				},
+				success: function(result){
+					var json = eval(result);
+					var code = json.code;
+					if (code == 1){
+						layer.msg(result.msg,2,9);		
+						var $gvc = $("#btnVerificode"); 
+						$gvc.removeClass("btn-warning").addClass("disabled");
+						startdowncount($gvc.text(),json.lefttime);
+					} else if (code == 0) {
+						layer.alert(result.msg);
+					} 
+				}
+			});			
+		});	
+			
+		 
+		
+		$("#chksqcard").on("ifChecked", function(event){
+			$("#issqcard").val(1);
+		}).on("ifUnchecked", function(event){
+			$("#issqcard").val(0);
+		});
+		
+	});
+    </script>
+  </body>
+</html>

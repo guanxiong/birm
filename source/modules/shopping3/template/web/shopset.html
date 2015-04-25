@@ -6,13 +6,13 @@
  	<li><a href="{php echo $this->createWebUrl('printset')}">打印机设置</a></li>	
 	<li><a href="{php echo $this->createWebUrl('smsset')}">短信设置</a></li>	
 	<li><a href="{php echo $this->createWebUrl('orderset')}">订单限制</a></li>	
-	
+	<li><a href="{php echo $this->createWebUrl('ordertype')}">店铺类型</a></li>	
 </ul>
 
 <div class="main">
 	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
 	<input type="hidden" name="parentid" value="{$set['id']}" />
-		<h4>商城基本设置</h4>
+		<h4>店铺基本设置</h4>
 		<table class="tb">
 			<tr>
 				<th><label for="">店铺名称</label></th>
@@ -43,7 +43,6 @@
 				<th>店铺公告</th>
 				<td><textarea name="shop_notice" rows="5" cols="50" class="span7">{$set['shop_notice']}</textarea></td>
 			</tr>
-			
 			<tr>
 				<th><label for="">电话</label></th>
 				<td><input type="text" id="" name="shop_tel" value="{$set['shop_tel']}"  class="span5" /></td>
@@ -51,6 +50,28 @@
 			<tr>
 				<th><label for="">商家地址</label></th>
 				<td><input type="text" id="" name="shop_address" value="{$set['shop_address']}"  class="span5" /></td>
+			</tr>
+			<tr>
+				<th>送货区域</th>
+				<td><textarea name="address_list" rows="5" cols="50" class="span7">{$set['address_list']}</textarea>
+					<span class="help-block">外卖地址库，一行一个，每行不超过20个字</span></td>
+				</td>
+			</tr>
+			<tr>
+				<th>包房</th>
+				<td><textarea name="room_list" rows="5" cols="50" class="span7">{$set['room_list']}</textarea>
+					<span class="help-block">包间名称，一行一个，每行不超过20个字</span></td>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="">营业时间：</label></th>
+				<td><input type="text" name="yy_start_time" value="{$set['yy_start_time']}"  class="span3" /> - <input type="text" name="yy_end_time" value="{$set['yy_end_time']}"  class="span3" /><span class="help-block" style='color:red'>时间格式填写要正确,不然前台会报错,格式  00:00到23:59</span></td>
+			</tr>
+			<tr>
+				<th>大厅</th>
+				<td><textarea name="desk_list" rows="5" cols="50" class="span7">{$set['desk_list']}</textarea>
+					<span class="help-block">桌号名称，一行一个，每行不超过20个字</span></td>
+				</td>
 			</tr>			
 			<tr>
 				<th><label for="">定位地址搜索</label></th>

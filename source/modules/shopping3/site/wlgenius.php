@@ -4,8 +4,7 @@
  *
  * @author 微动力
  * @url
- */
-	if($subcp=='disheslist'){
+ */	if($subcp=='disheslist'){
 		include $this->template('wl_disheslist');
 	}elseif($subcp=='bynum'){
 		//获取菜单
@@ -16,9 +15,12 @@
 			if(!empty($item['dishes'])){
 				$idstr=implode(",",$item['dishes']['id']);
 			}
-			$goods = pdo_fetchall("SELECT id,weid,title,thumb,marketprice,productprice,total FROM ".tablename('shopping3_goods')." WHERE weid = '{$weid}' AND status=1  $condition ORDER BY  displayorder DESC",array(),'id');
+			$goods = pdo_fetchall("SELECT id,weid,title,thumb,marketprice,productprice,total,unit,sellnums FROM ".tablename('shopping3_goods')." WHERE weid = '{$weid}' AND status=1  $condition ORDER BY  displayorder DESC",array(),'id');
 			
 			foreach($item['dishes']['id'] as $k1=>$v1){
+				if(empty($goods[$v1]['unit'])){
+					$goods[$v1]['unit']='份';
+				}
 				$goods[$v1]['total']=$item['dishes']['num'][$k1];
 				$item["goods"][]=$goods[$v1];
 			}

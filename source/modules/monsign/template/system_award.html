@@ -1,0 +1,39 @@
+{template 'common/header'}
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="uid" value="{$signUser['id']}" />
+		<input type="hidden" name="sid" value="{$sid}" />
+
+		<h4>奖励积分</h4>
+		<table class="tb">
+			
+			<tr>
+				<th><label for="">昵称</label></th>
+				<td>
+					<input type="text" name="title" class="span5" value="{$signUser['nickname']}" disabled="disabled" />
+					
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<th><label for="">积分</label></th>
+				<td>
+					<input type="text" name="credit" class="span5" value="" />
+				</td>
+			</tr>
+			
+
+		<tr>
+			<th></th>
+			<td>
+				<input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+		</table>
+	</form>
+</div>
+
+{template 'common/footer'}

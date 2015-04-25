@@ -2,9 +2,6 @@
 /**
  * 微点餐
  *
- * 作者:迷失卍国度
- *
- * qq : 15595755
  */
 defined('IN_IA') or exit('Access Denied');
 
@@ -42,7 +39,12 @@ class IdishModuleSite extends WeModuleSite
 
         include $this->template($template_name);
     }
-
+    //区域管理
+	public function doWebArea()
+    {
+        global $_GPC, $_W;
+        include $this->template('area');
+    }
     //导航首页
     public function doMobileWapIndex()
     {
@@ -773,7 +775,7 @@ class IdishModuleSite extends WeModuleSite
         global $_W, $_GPC;
         include $this->template('orderdetail');
     }
-
+	
     //提示信息
     public function showMessageAjax($msg, $code)
     {

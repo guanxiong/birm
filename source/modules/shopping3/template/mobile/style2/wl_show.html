@@ -12,17 +12,18 @@
 				<li>订单状态: {if $order['status']==0}待确认{elseif $order['status']==1}已确认{elseif $order['status']==3}已完成{elseif $order['status']==-1}订单失效{/if}</li>
 				<li>订单数量:<strong class="fc_red">{$order['totalnum']}</strong></li>
 				<li>订单总价:<strong class="fc_red">￥{$order['totalprice']}</strong></li>
-				<li>付款方式: {if $order['paytype']==1}余额支付{elseif $order['paytype']==2}在线支付{elseif $order['paytype']==3}现金支付{else}未知方式{/if}{if $order['ispay']==1}<strong class="fc_red">【已付款】</strong>{else}【未支付】{/if}</li>				
+				<li>预约日期: <strong class="fc_red">{$order['time_day']}日/{$order['time_hour']}时/{$order['time_second']}分</strong></li>
+				<li>付款方式: {if $order['paytype']==1}余额支付{elseif $order['paytype']==2}在线支付{elseif $order['paytype']==3}现金支付{else}余额支付{/if}{if $order['ispay']==1}<strong class="fc_red">【已付款】</strong>{else}【未支付】{/if}</li>				
 				<li>就餐类型: {if $order['order_type']==2}店内就餐【桌号:{$order['desk']}】{else}外卖外送{/if}</li>
 				{if  $order['order_type']!=2}<li>就餐类型: {if $order['sendstatus']==1}<strong class="fc_red">已经配送</strong>{else}未配送{/if} </li>{/if}
- 				<li>订单备注: {$order['remark']}</li>
+ 				{if !empty($order['remark'])}<li>订单备注: {$order['remark']}</li>{/if}
 			</ul>
 		</div>
 		<div class="item">
 			<ul>
 				<li>姓名: {$order['guest_name']}</li>
 				<li>手机：{$order['tel']}</li>
-				{if !empty($order['guest_address'])}<li>地址：{$order['guest_address']}</li>{/if}
+				{if !empty($order['guest_address'])&&$order['order_type']==1}<li>地址：{$order['guest_address']}</li>{/if}
 			</ul>
 		</div>
 

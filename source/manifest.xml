@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.51">
+	<application setting="false">
+		<name><![CDATA[一战到底]]></name>
+		<identifie><![CDATA[fighting]]></identifie>
+		<version><![CDATA[2.0]]></version>
+		<type><![CDATA[wdlgame]]></type>
+		<ability><![CDATA[一战到底是一档形式新颖，趣味十足，在挑战中挖掘个性，又充满悬念的全新益智攻擂游戏。]]></ability>
+		<description><![CDATA[一战到底是一档形式新颖，趣味十足，在挑战中挖掘个性，又充满悬念的全新益智攻擂游戏。]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[#]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="一战到底管理" do="playlist" state="" direct="false" />
+			<entry title="题库管理" do="questions" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_fighting_fans` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `rid` int(10) NOT NULL,
+  `fid` int(10) unsigned NOT NULL,
+  `fansID` int(10) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `nickname` varchar(100) NOT NULL,
+  `todayannum` int(10) NOT NULL,
+  `rightannum` int(10) NOT NULL,
+  `wrongannum` int(10) NOT NULL,
+  `last_time` int(10) NOT NULL,
+  `last_credit` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `ims_fighting_reply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rid` int(10) unsigned NOT NULL,
+  `keyword` varchar(2000) NOT NULL,
+  `title` varchar(20) NOT NULL COMMENT '活动标题',
+  `description` longtext NOT NULL COMMENT '活动介绍',
+  `qutype` TINYINT( 1 ) UNSIGNED NOT NULL,
+  `qnum` int(10) unsigned NOT NULL DEFAULT '10' COMMENT '题目个数',
+  `tgkf` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '跳过扣分',
+  `tiao` tinyint(1) unsigned NOT NULL COMMENT '1允许跳过0不允许',
+  `answertime` int(10) unsigned NOT NULL COMMENT '答题时间',
+  `fansnum` int(10) unsigned NOT NULL,
+  `viewnum` int(10) unsigned NOT NULL,
+  `isshow` int(1) unsigned NOT NULL,
+  `starttime` int(10) unsigned NOT NULL DEFAULT '1383235200' COMMENT '开始时间',
+  `endtime` int(10) unsigned NOT NULL DEFAULT '1383235200' COMMENT '结束时间',
+  `reply1` varchar(500) NOT NULL COMMENT '未绑定回复语',
+  `reply2` varchar(500) NOT NULL COMMENT '活动未开始时回复语',
+  `reply3` varchar(500) NOT NULL COMMENT '活动已结束时回复语',
+  `reply4` varchar(500) NOT NULL COMMENT '开始答题提示语',
+  `reply5` varchar(500) NOT NULL COMMENT '暂停回复',
+  `ad` varchar(2000) NOT NULL,
+  `isad` int(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `ims_fighting_question_bank` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `figure` varchar(2) DEFAULT NULL,
+  `question_types` varchar(2) DEFAULT NULL,
+  `question` varchar(255) DEFAULT NULL,
+  `option_num` int(11) DEFAULT NULL,
+  `optionA` varchar(100) DEFAULT NULL,
+  `optionB` varchar(100) DEFAULT NULL,
+  `optionC` varchar(100) DEFAULT NULL,
+  `optionD` varchar(100) DEFAULT NULL,
+  `optionE` varchar(100) DEFAULT NULL,
+  `optionF` varchar(100) DEFAULT NULL,
+  `answer` varchar(6) DEFAULT NULL,
+  `classify` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+		]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[
+ALTER TABLE  `ims_fighting_question_bank` ADD  `weid` INT( 10 ) UNSIGNED NOT NULL AFTER  `id`;
+ALTER TABLE  `ims_fighting_reply` ADD  `qutype` TINYINT( 1 ) UNSIGNED NOT NULL AFTER  `description`
+    ]]></upgrade>
+</manifest>

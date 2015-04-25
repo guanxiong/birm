@@ -41,7 +41,7 @@ function formcheck() {
 		msg += '必须输入有效的模块发布页. <br />';
 	}
 	if($(':checkbox[name="versions[]"]:checked').length == 0) {
-		msg += '必须选择模块支持的微新星版本. <br />';
+		msg += '必须选择模块支持的微动力版本. <br />';
 	}
 	if(msg != '') {
 		message(msg, '', 'error');
@@ -101,7 +101,7 @@ a:hover, a:active{text-decoration:none; color:red;}
 				<th><label for="">模块标识</label></th>
 				<td>
 					<input type="text" class="span2" placeholder="" name="application[identifie]" value="{$m['application']['identifie']}" />
-					<span class="help-block">模块标识符, 应对应模块文件夹的名称, 微新星系统按照此标识符查找模块定义, 只能由字母数字下划线组成 </span>
+					<span class="help-block">模块标识符, 应对应模块文件夹的名称, 微动力系统按照此标识符查找模块定义, 只能由字母数字下划线组成 </span>
 				</td>
 			</tr>
 			<tr>
@@ -147,7 +147,7 @@ a:hover, a:active{text-decoration:none; color:red;}
 				<th><label for="">发布页</label></th>
 				<td>
 					<input type="text" class="span8" placeholder="" name="application[url]" value="{$m['application']['url']}" />
-					<span class="help-block">模块的发布页, 用于发布模块更新信息的页面, 推荐使用微新星模块版块</span>
+					<span class="help-block">模块的发布页, 用于发布模块更新信息的页面, 推荐使用微动力模块版块</span>
 				</td>
 			</tr>
 			<tr>
@@ -171,8 +171,8 @@ a:hover, a:active{text-decoration:none; color:red;}
 						<input name="subscribes[]" type="checkbox" value="{$k}" {if in_array($v, $m['platform']['subscribes'])} checked="checked"{/if} /> {$v}
 					</label>
 					{/loop}
-					<span class="help-block">订阅特定的消息类型后, 此消息类型的消息到达微新星系统后将会以通知的方式(消息数据只读, 并不能返回处理结果)调用模块的接受器, 用这样的方式可以实现全局的数据统计分析等功能. 请参阅 <a href="http://bbs.birm.co">模块消息订阅</a></span>
-					<div class="alert-warning alert" style="width:auto;margin-top:5px;">注意: 订阅的消息信息是只读的, 只能用作分析统计, 不能更改, 也不能改变微新星处理主流程</div>
+					<span class="help-block">订阅特定的消息类型后, 此消息类型的消息到达微动力系统后将会以通知的方式(消息数据只读, 并不能返回处理结果)调用模块的接受器, 用这样的方式可以实现全局的数据统计分析等功能. 请参阅 <a href="http://bbs.b2ctui.com">模块消息订阅</a></span>
+					<div class="alert-warning alert" style="width:auto;margin-top:5px;">注意: 订阅的消息信息是只读的, 只能用作分析统计, 不能更改, 也不能改变微动力处理主流程</div>
 				</td>
 			</tr>
 			<tr>
@@ -243,14 +243,14 @@ a:hover, a:active{text-decoration:none; color:red;}
 		<h4>模块发布 <small>这里来定义模块发布时需要的配置项</small></h4>
 		<table class="tb">
 			<tr>
-				<th><label for="">兼容的微新星版本</label></th>
+				<th><label for="">兼容的微动力版本</label></th>
 				<td>
 					{loop $versions $v}
 					<label class="checkbox">
 						<input name="versions[]" type="checkbox" value="{$v}" {if in_array($v, $m['versions'])} checked="checked"{/if} />WeEngine {$v}
 					</label>
 					{/loop}
-					<span class="help-block">当前模块兼容的微新星系统版本, 安装时会判断版本信息, 不兼容的版本将无法安装</span>
+					<span class="help-block">当前模块兼容的微动力系统版本, 安装时会判断版本信息, 不兼容的版本将无法安装</span>
 				</td>
 			</tr>
 			<tr>

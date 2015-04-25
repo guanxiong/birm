@@ -4,8 +4,7 @@
  *
  * @author 微动力
  * @url
- */
-if(empty($from)){
+ */if(empty($from)){
 	//来路
 	$nofrom=false;
 }else{

@@ -2,12 +2,11 @@
 /**
  * 2014-2-24
  * 购物车 分类管理 
- * 支持二级分类 来自微擎
+ * 支持二级分类 来自微动力
  * @author 微动力
  * @url
  */
- 
-if (checksubmit('submit')) {
+ if (checksubmit('submit')) {
 	$insert=array(
 		'weid'=>$_W['weid'],
 		'order_limit'=>trim($_GPC['order_limit']),

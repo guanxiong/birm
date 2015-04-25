@@ -30,11 +30,11 @@
     </div>
 		<div id="footer_menu" class="footer footer_menu">
             <ul class="clear">
-				<li style="width: 65px;"><a href="{php echo  $this->createMobileUrl('wlgenius')}" class="onactive"><span class="icons icons_1"></span><label>智能选餐</label></a></li>	
-				<li style="width: 65px;"><a  href="{php echo  $this->createMobileUrl('wlindex')}" ><span class="icons icons_2"></span><label>点菜</label></a></li>
-				<li style="width: 65px;"><a href="{php echo  $this->createMobileUrl('wlmember',array('status'=>1))}" ><span class="icons icons_3"></span><label>我的订单</label></a></li>
-                <li style="width: 65px;"><a href="{php echo  $this->createMobileUrl('wlmylike')}" ><span class="icons icons_4"></span><label>我喜欢</label></a></li>
-                <li style="width: 60px;"><a href="javascript:void(0);" id="my_menu"><span class="icons icons_5"><label id="num" class="num">{$totalnum}</label></span></a></li>			
+				<li style="width:20%"><a  href="{php echo  $this->createMobileUrl('wlindex')}"><span class="icons icons_4"></span><label>店铺首页</label></a></li>	
+				<li style="width:20%"><a  href="{php echo  $this->createMobileUrl('wlindex')}" ><span class="icons icons_2"></span><label>开始选购<label></a></li>
+              	<li><a href="{php echo  $this->createMobileUrl('wlgenius')}" {if $_GPC['do']=='wlgenius'}class="onactive"{/if}><span class="icons icons_1"></span><label>掌柜推荐</label></a></li>	
+				<li style="width:20%"><a href="{php echo  $this->createMobileUrl('wlmember',array('status'=>1))}" ><span class="icons icons_3"></span><label>我的订单</label></a></li>
+                <li style="width:20%"><a href="javascript:void(0);" id="my_menu"><span class="icons icons_5"><label id="num" class="num">{php echo intval($totalnum)}</label></span></a></li>			
             </ul>
         </div>
         <script>

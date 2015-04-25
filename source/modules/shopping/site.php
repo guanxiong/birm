@@ -1693,8 +1693,12 @@ class ShoppingModuleSite extends WeModuleSite {
     private function changeWechatSend($id, $status, $msg = '') {
         global $_W;
         $paylog = pdo_fetch("SELECT plid, openid, tag FROM " . tablename('paylog') . " WHERE tid = '{$id}' AND status = 1 AND type = 'wechat'");
+		 
         if (!empty($paylog['openid'])) {
             $paylog['tag'] = iunserializer($paylog['tag']);
+	    if ($_W['account']['payment']['wechat']['version'] != 1){
+            return ;
+			}
             $send = array(
                 'appid' => $_W['account']['payment']['wechat']['appid'],
                 'openid' => $paylog['openid'],
@@ -1943,5 +1947,105 @@ class ShoppingModuleSite extends WeModuleSite {
             echo 0;
         }
     }
-
+	
+	//短信后台设置
+	public function doWebSmsset() {
+		global $_W, $_GPC;
+		$operation = !empty ($_GPC['op']) ? $_GPC['op'] : 'display';
+		
+		if($operation=='test'){
+			$phone="15852511994";
+			$content="Zombieszy,微信号fuck-zombie 短信测试.";
+			$temp=$this->_sendsms($content,$phone);
+			if($temp==1){
+				message($temp, $this->createWebUrl('smsset'), 'success');
+			}else{
+				message('短信发送失败,错误原因:'.$temp);
+			}
+		} 
+		
+		if (checksubmit('submit')) {
+			$insert=array(
+				'weid'=>$_W['weid'],
+				'sms_status'=>trim($_GPC['sms_status']),
+				'sms_type'=>trim($_GPC['sms_type']),
+				'sms_from'=>trim($_GPC['sms_from']),
+				'sms_secret'=>trim($_GPC['sms_secret']),
+				'sms_phone'=>trim($_GPC['sms_phone']),
+				'sms_text'=>trim($_GPC['sms_text']),
+				'sms_account'=>trim($_GPC['sms_account']),
+				'sms_resgister'=>intval($_GPC['sms_resgister']),
+				'sms_customer'=>intval($_GPC['sms_customer']),
+				'sms_verifytxt'=>trim($_GPC['sms_verifytxt']),
+				'sms_paytxt'=>trim($_GPC['sms_paytxt']),
+				'sms_bosstxt'=>trim($_GPC['sms_bosstxt']),
+				'shop_name'=>trim($_GPC['shop_name']),
+		 	);
+			if (empty($_GPC['id'])) {
+				pdo_insert('shopping_set', $insert);
+			} else {
+				pdo_update('shopping_set', $insert, array('weid'=>$_W['weid'],'id' => $_GPC['id']));
+			}
+			message('短信数据保存成功', $this->createWebUrl('Smsset'), 'success');
+		}
+		$set = pdo_fetch("SELECT * FROM ".tablename('shopping_set')." WHERE weid = :weid", array(':weid' => $_W['weid']));
+		if($set==false){
+			$set=array(
+				'id'=>0,
+			);
+		}
+		if(empty($set['sms_verifytxt'])){
+			$set['sms_verifytxt']='您的验证码是：[verifytxt]。请不要把验证码泄露给其他人。如非本人操作，可不用理会！';
+		}
+		if(empty($set['sms_text'])){
+			$set['sms_text']='亲爱的客户 [name],您于 [date] 购买了商品[goodsname],订单编码：[sn]，预约时间为：[attime]。请赶紧来取吧！';
+		}
+		
+		if(empty($set['sms_bosstxt'])){
+			$set['sms_bosstxt']='客户： [name] ，手机号[tel]，于 [date] 购买了商品[goodsname]，订单号为：[sn] 预定时间为:[attime]。';
+		}
+	 
+		if(empty($set['sms_paytxt'])){
+			$set['sms_paytxt']='您的订单：[sn]，已于[变量]付款成功。感谢您的购买！';
+		}
+		if(empty($set['sms_bosstxt'])){
+			$set['sms_bosstxt']='您的订单：[变量]，已于[变量]付款成功。感谢您的购买！';
+		}
+		
+		if(empty($set['shop_name'])){//发货模板
+			$set['shop_name']='尊敬的[name]，您预订的订单号为：[sn]，的[goodsname]，已经取走了,感谢您的惠顾，祝您生活愉快！';
+		}
+		
+		include $this->template('smssetting');
+	}
+	
+	//发送短信
+	public function _sendsms($_txt,$_phone,$_oid=0,$_uid="",$_key=""){
+		global $_W;
+		if(empty($_txt)||empty($_phone)){
+			return '';
+		}
+	 	if(empty($_uid) || empty($_key) ){
+			$sms = pdo_fetch("SELECT sms_account,sms_secret FROM ".tablename('shopping_set')." WHERE weid = :weid" , array(':weid' => $_W['weid']));
+			if($sms==false){
+				return '';
+			}else{
+				$_uid=$sms['sms_account'];
+				$_key=$sms['sms_secret'];
+			}
+		} 
+		if(empty($_uid) ||empty($_key)){
+			return $_uid.'\n'.$_key;
+		}
+		$smsapi = "api.smsbao.com";
+		$charset = "utf8";
+		$_key = md5($_key); //短信平台密码 
+		include_once("snoopy.php"); 
+		$snoopy = new snoopy();
+		$sendurl = "http://{$smsapi}/sms?u={$_uid}&p={$_key}&m={$_phone}&c=".urlencode($_txt);
+		$snoopy->fetch($sendurl);
+		$result = $snoopy->results;
+		//var_dump($result);
+		return true;
+	}
 }

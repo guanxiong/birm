@@ -38,7 +38,7 @@
             {loop $nave $row}
             <li>
                 {if $row['type']==-1}
-                <a href="{$row['link']}&from_user={$page_from_user}">
+                <a href="{$row['link']}">
                 {elseif $row['type']==2}
                 <a href="{php echo create_url('mobile/module', array('do' => 'waprestlist', 'from_user' => $page_from_user, 'name' => 'idish', 'weid' => $weid))}">
                 {elseif $row['type']==3}
@@ -57,11 +57,16 @@
 		</ul>
 	</section>
 </div>
-<!--导航菜单 后台设置的快捷菜单-->
+<!--
+导航菜单
+   后台设置的快捷菜单
+-->
 <footer style="overflow:visible;">
-    <div style="color: #fff;">
-        {$_W['account']['name']}
+    <div class="weimob-copyright" style="padding-bottom:50px;">
+	    <a href="#">© 微点餐--微动力WDL技术支持</a>
 	</div>
+	<span class="weimob-support" style="display:none;">©微动力WDL提供</span>
 </footer>
+<div mark="stat_code" style="width:0px; height:0px; display:none;"></div>
 </body>
 </html>

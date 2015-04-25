@@ -5,7 +5,6 @@
  * @author 微动力
  * @url
  */
-
 	$cateid=$_GPC['cateid'];
 	if($cateid==0){
 		//全部列表

@@ -7,7 +7,7 @@
 	{template wl_menu} 
 	<div id="payment">
 		<div class="i-ture">
-			<h1 class="t">订单提交成功！</h1>
+			<h1 class="t"><strong class="fc_red">订单保存成功！请选择支付方式</strong></h1>
 			<div class="info">
 				订 单 号：{$order['ordersn']}<br />
 				订单数量：<span class="fc_red">{$order['totalnum']}</span><br />
@@ -18,9 +18,9 @@
 			<div class="i-ture">
 				<h1 class="t">选择支付方式</h1>
 				<ul>
-					<li><input type="radio" name="paytype" value="1" id="out"  /> <label for="out"><strong>余额支付</strong></label>
-					<li><input type="radio" name="paytype" value="2" id="zfb" checked /> <label for="zfb"><strong>在线支付</strong></label></li>
-					<li><input type="radio" name="paytype" value="3" id="out2"  /> <label for="out2"><strong>现金支付</strong></label>
+				    <li><input type="radio" name="paytype" value="3" id="out2" checked /> <label for="out2"><strong>现金支付</strong><span class="fc_red">（货到付款）</span></label></li>
+					<li><input type="radio" name="paytype" value="1" id="out"  /> <label for="out"><strong>余额支付</strong><span class="fc_red">（领取微会员并充值）</span></label></li>
+					<li><input type="radio" name="paytype" value="2" id="zfb"  /> <label for="zfb"><strong>在线支付</strong><span class="fc_red">（支付宝、微信支付）</span></label></li>
 						<div class="payment_info">
 							<textarea name="PaymentInfo" placeholder="请输入支付信息，如转账帐号、时间等"></textarea>
 						</div>
