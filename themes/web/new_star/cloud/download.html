@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>微新星官方网站 - 微信公众平台自助引擎</title>
+<meta name="keywords" content="微新星,微信,微信公众平台" />
+<meta name="description" content="微信公众平台自助引擎，简称微新星，微新星是一款免费开源的微信公众平台管理系统。" />
+<script type="text/javascript" src="./resource/script/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="./resource/script/bootstrap.js"></script>
+<link type="text/css" rel="stylesheet" href="./resource/style/bootstrap.css" />
+<link type="text/css" rel="stylesheet" href="./resource/style/font-awesome.css" />
+<!--[if IE 7]>
+<link rel="stylesheet" href="./resource/style/font-awesome-ie7.min.css">
+<![endif]-->
+<!--[if lte IE 6]>
+<link rel="stylesheet" type="text/css" href="./resource/style/bootstrap-ie6.min.css">
+<link rel="stylesheet" type="text/css" href="./resource/style/ie.css">
+<![endif]-->
+</head>
+<body>
+<style>
+/*global*/
+.wrapper{width:970px; margin:0 auto; overflow:hidden;}
+#header{background:#F3F3F3; border-top:5px #478FCE solid; border-bottom:1px #CCC solid;}
+#header .wrapper{height:70px;}
+#header .logo{float:left; display:block; height:70px; width:450px; text-indent:-9999px; background:url("http://www.birm.co/resource/img/logo.png") no-repeat left center;}
+#header .nav{float:right; overflow:hidden;margin-top:20px;}
+#header .nav a{font-size:14px; color:#333; text-decoration:none; display:inline-block; width:80px; height:30px; line-height:30px; text-align:center;}
+#header .nav a:hover, #header .nav a.active{color:#FFF; background:#84BCE2;}
+.features div{width:222.5px; height:158px; background:#F1F1F1; overflow:hidden; padding:10px 10px 10px 9px; float:left; border-left:1px #FFF solid; border-bottom:1px #FFF solid;}
+.features i{display:block;}
+.features p{float:right; width:150px;}
+.features p.title{font-size:16px; font-weight:600;}
+.features p.description{font-size:12px; color:#666;}
+.content > div{border-left:1px #FFF solid; line-height:25px; font-size:14px;}
+.content > div h5{height:30px; line-height:30px; border-bottom:2px #CCC solid; padding-right:10px;}
+.content > div h5 span.title{font-size:16px; position:relative; display:inline-block; height:30px; border-bottom:2px #333 solid;}
+.content > div ul li{line-height:25px;}
+.content > div ul a{color:#555;}
+#download{position:absolute; top:40px; left:50%; margin-left:140px; padding:25px 25px 20px; background-color:#EEE; width:265px; overflow:hidden;
+border-radius:5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+-moz-box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+-webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5) black;
+-moz-box-shadow: 3px 3px 5px rgba(0,0,0,0.5) #000;
+-webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5) black;
+}
+#download > span{display:block; margin:15px 0; font-size:14px; color:#333;}
+#download > span em{font-style:normal; font-weight:bold;}
+#download > span .download{display:block; margin:0 auto; width:250px; height:60px; background:transparent url("http://www.we7.cc/resource/img/common.png") 0 0 no-repeat;}
+#download > span .download:hover{background-position:0 -60px;}
+#function{padding-top:20px;overflow:hidden;}
+#footer{background:#666; color:#EEE; margin-top:20px;}
+#footer .wrapper{ z-index:0;}
+#footer a{color:#EEE;}
+#footer a:hover{text-decoration:underline;}
+</style>
+<script>
+$(function() {
+	$('#myCarousel').carousel();
+});
+</script>
+<div id="header">
+	<div class="wrapper">
+		<div class="nav">
+			<a href="/" class="active">首页</a>
+			<a href="/">开发文档</a>
+			<a href="/">模块下载</a>
+			<a href="/">官方论坛</a>
+		</div>
+		<a href="/" class="logo">微新星</a>
+	</div>
+</div>
+<div id="function" style="padding-top:0; margin-bottom:15px;">
+	<div id="myCarousel" class="carousel slide" style="background:#84BCE2; margin-bottom:0;">
+		<ol class="carousel-indicators" style="cursor:pointer;top:inherit;bottom:15px;right:50%;">
+			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			<li data-target="#myCarousel" data-slide-to="1" class=""></li>
+		</ol>
+		<div class="carousel-inner" style="width:970px; margin:0 auto;">
+			<div class="item active">
+				<img src="/resource/image/1.jpg" alt="">
+			</div>
+			<div class="item">
+				<img src="/resource/image/2.jpg" alt="">
+			</div>
+		</div>
+		<!--a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+		<a class="right carousel-control" href="#myCarousel" data-slide="next">›</a-->
+
+		<div id="download">
+			<span><a href="{$_W['siteroot']}cloud.php?act=download&do=online" class="download"></a></span>
+			<span>
+				<a href="{$_W['siteroot']}cloud.php?act=download&do=online"><i class="icon-cloud-download"></i> 在线安装包</a>
+				<span style="font-size:12px; color:#666;">方便！快捷！推荐使用！</span>
+			</span>
+			<span>
+				<a href="{$_W['siteroot']}cloud.php?act=download&do=offline"><i class="icon-download-alt"></i> 离线安装包</a>
+				<span style="font-size:12px; color:#666;">在线安装失败的最佳解决方案！</span>
+			</span>
+			<span><em>版本信息：</em>微新星 v0.52 UTF8</span>
+			<span>IIS/Apache + PHP4/PHP5 + MySQL4/5</span>
+		</div>
+	</div>
+</div>
+<div class="wrapper features">
+	<div>
+		<i class="icon-globe icon-4x"></i>
+		<p class="title">免费的开源系统</p>
+		<p class="description">高度的安全特性！100%的自由控制！便于二次开发！</p>
+	</div>
+	<div>
+		<i class="icon-group icon-4x"></i>
+		<p class="title">多用户分权管理</p>
+		<p class="description">微新星多用户可简单的实现管理员与各个用户间的授权与管理！</p>
+	</div>
+	<div>
+		<i class="icon-sitemap icon-4x"></i>
+		<p class="title">功能模块化</p>
+		<p class="description">微新星已强化了功能模块的管理与应用，方便开发者出售与发布！</p>
+	</div>
+	<div>
+		<i class="icon-book icon-4x"></i>
+		<p class="title">开发文档</p>
+		<p class="description">微新星提供开发文档，方便开发者在这款开源的管理系统中进行二次开发！</p>
+	</div>
+</div>
+<div class="wrapper content">
+	<div>
+		<h5><span class="title">微新星产品介绍</span></h5>
+		<div>
+			<p>公众平台自助引擎，简称微新星，微新星是一款免费开源的微信公众平台管理系统。</p>
+			<p>注：使用微新星必须要有自己的服务器、虚拟空间或者自己的BAE，且必须要支持PHP+MYSQL，上传微新星程序后按系统指引安装即可。</p>
+			<p>微新星 v0.51 以后将采用自动升级的方式提供补丁和升级版本。为保证程序安全性和第一时间获取最新功能，请及时按照提示进行自动更新。</p>
+		</div>
+	</div>
+
+	<div>
+		<h5><span class="title">微新星安装方法</span></h5>
+		<div>
+			<p>下载 微新星 v0.51 将微新星独立安装文件 install.php 上传到服务器或者虚拟空间后访问 {安装URL}/install.php 按照系统指引安装即可，系统将会在过程中自动下载最新的程序文件。</p>
+           
+	</div>
+
+	<div>
+		<h5><span class="title">微新星版本说明</span></h5>
+		<div>
+			<p>微新星从 0.51 开始将提供两条产品线，公众版和商业版。这两个版本的核心是一致的，商业版会提供一些附加的商业模块，并且附带技术支持和产品授权(允许用作商业运营)。购买商业版，请联系微新星团队。</p>
+			<p>商业版演示地址：http://wz1.birm.co </p>
+		</div>
+	</div>
+</div>
+
+<div id="footer">
+	<div class="wrapper">
+		<div style="width:100%; overflow:hidden; height:50px; line-height:50px; color:#999; text-align:center;">
+			<span>Copyright &#169; 2014 微新星 ww.birm.co All Rights Reserved.</span>
+		</div>
+	</div>
+</div>
+</body>
+</html>

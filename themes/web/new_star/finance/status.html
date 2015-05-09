@@ -1,0 +1,57 @@
+{template 'common/header'}
+<script type="text/javascript">
+	var u ={};
+	u.deny = function(uid, status){
+		var uid = parseInt(uid);
+		if(isNaN(uid)) {
+			return;
+		}
+		if(!confirm('确认要禁用/解禁此用户吗? ')) {
+			return;
+		}
+		$.post('{php echo create_url('agent/edit');}', {'do': 'deny', uid: uid, status: status}, function(dat){
+			if(dat == 'success') {
+				location.href = location.href;
+			} else {
+				message('操作失败, 请稍后重试. ' + dat);
+			}
+		});
+	};
+
+</script>
+<ul class="nav nav-tabs">
+			<li><a href="{php echo create_url('finance/userlist');}">用户列表</a></li>
+			<li   class="active"><a href="{php echo create_url('finance/status');}">到期用户</a></li>
+</ul>
+<div class="rule">
+	<table class="table table-hover">
+		<thead class="navbar-inner">
+			<tr>
+				<th style="max-width:100px;">用户名</th>
+				<th style="max-width:100px;">权限管理</th>
+				<th style="width:200px;">用户等级</th>
+				<th style="width:60px;">余额</th>
+				<th style="width:150px;">开通日期</th>
+				<th style="width:150px;">结束日期</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{loop $member $m}
+			<tr>
+				<td>			   <a href="{php echo create_url('member/edit',array('uid'=>$m['uid']));}">{$m['username']}</a> </td>
+				<td>			   <a href="{php echo create_url('member/permission',array('uid'=>$m['uid']));}">权限管理</a> </td>
+								<td>{$group[$m['groupid']]['name']}</td>
+				<td>{$m['money']}</td>
+				<td><?php echo date('Y-m-d  h:i:s', $m['stattime']);?></td>
+				<td><?php echo date('Y-m-d  h:i:s', $m['endtime']);?></td>
+				<td><a href="{php echo create_url('finance/edit',array('id'=>$m['uid']));}">编制</a>    <a href="{php echo create_url('finance/userpay',array('id'=>$m['uid']));}">充值</a>
+								   <a href="{php echo create_url('finance/log',array('uid'=>$m['uid']));}">查看日记</a>
+				
+				</td>
+			</tr>
+			{/loop}
+		</tbody>
+	</table>
+</div>
+{template 'common/footer'}

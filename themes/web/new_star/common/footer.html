@@ -1,0 +1,16 @@
+	<div id="footer">
+		<span class="pull-left">
+			<p>{if empty($_W['setting']['copyright']['footerleft'])}Powered by <a href="http://birm.co"><b>新星科技有限公司</b></a> V4.12 &copy; 2014 <a href="http://birm.co">birm.co</a>{else}{$_W['setting']['copyright']['footerleft']}{/if}</p>
+		</span>
+		<span class="pull-right">
+			<p>{if empty($_W['setting']['copyright']['footerright'])}<a href="http://bbs.birm.co">关于微新星</a>&nbsp;&nbsp;<a href="http://birm.co/wiki/">微新星手册</a>{else}{$_W['setting']['copyright']['footerright']}{/if}&nbsp;&nbsp;{if !empty($_W['setting']['copyright']['statcode'])}{$_W['setting']['copyright']['statcode']}{/if}</p>
+		</span>
+	</div>
+	<div class="emotions" style="display:none;"></div>
+	<script>
+		{if !empty($_W['weid']) && $_W['account']['level'] == 2}
+			$.post('./account.php?act=fansync');
+		{/if}
+	</script>
+</body>
+</html>

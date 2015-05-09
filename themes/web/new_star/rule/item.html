@@ -1,0 +1,48 @@
+{if empty($item)}
+	{php $namesuffix = '-new[]';}
+	{php $itemid = '(itemid)';}
+	{php $item['type'] = 2;}
+{else}
+	{php $namesuffix = '['.$item['id'].']'}
+	{php $itemid = 'keyword-item-' . $item['id'];}
+{/if}
+<div id="form" class="alert alert-block alert-new {if !empty($item)}hide{/if}">
+	<a class="close" data-dismiss="alert">×</a>
+	<h4 class="alert-heading">添加关键字</h4>
+	<table>
+		<tr{if $item['type'] == 4} class="hidden"{/if}>
+			<th>关键字</th>
+			<td>
+				<input type="text" id="keyword-name-{$itemid}" name="keyword-name{$namesuffix}" class="span7 keyword-name-new" placeholder="" autocomplete="off" value="{$item['content']}">
+				<span class="help-block">根据此处设置的关键字进行对应回复，关键词单次添一个，可多次添加 <a class="iconEmotion" href="javascript:;" inputid="keyword-name-{$itemid}"><i class="icon-github-alt"></i> 表情</a></span>
+			</td>
+		</tr>
+		<tr>
+			<th>对应方式</th>
+			<td>
+				<input type="hidden" id="keyword-type-new" name="keyword-type{$namesuffix}" class="span7 keyword-type-new" value="{$item['type']}" autocomplete="off">
+				<div class="btn-group" data-toggle="buttons-radio">
+					{loop $types $value $type}
+						{if $value == $item['type']}
+							{php $currenttype = $type;}
+						{/if}
+						<span class="btn {if $value == $item['type']}active{/if}" value="{$value}" onclick="{if $value == 4}$(this).parent().parent().parent().prev().hide();{else}$(this).parent().parent().parent().prev().show();{/if}" description="{$type['description']}">{$type['name']}</span>
+					{/loop}
+				</div>
+				{if empty($item)}
+				<span class="help-block rule-description">用户进行微信交谈时，对话内容完全等于上述关键字才会执行这条规则。</span>
+				{else}
+				<span class="help-block rule-description">{$currenttype['description']}</span>
+				{/if}
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td><button type="button" class="btn btn-primary span2" onclick="keywordHandler.doAdd('{$itemid}')">添加</button></td>
+		</tr>
+	</table>
+</div>
+<div id="show" class="alert alert-info {if empty($item)}hide{/if}">
+	<span class="pull-right">{if !empty($item['id'])}<a href="{php echo create_url('rule/delete', array('type' => 'keyword', 'rid' => $item['rid'], 'kid' => $item['id']))}" onclick="return doDeleteItem('keyword-item-{$item['id']}', this.href)" style="margin-right:5px;">删除</a>{else}<a onclick="doDeleteItem('{$itemid}')" href="javascript:;" style="margin-right:5px;">删除</a>{/if}<a onclick="keywordHandler.doEditItem('{$itemid}')" href="javascript:;">编辑</a></span>
+	<div class="content"><span id="content">{$item['content']}</span>&nbsp;（<span id="type">{$types[$item['type']]['name']}</span>）</div>
+</div>

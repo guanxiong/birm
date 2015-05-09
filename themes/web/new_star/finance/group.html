@@ -1,0 +1,99 @@
+{template 'common/header'}
+
+{if $do == 'post'}
+<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+<div class="main">
+	<input type="hidden" name="id" value="{$id}" />
+	<h4>用户组管理</h4>
+	<table class="tb">
+		<tr>
+			<th><label for="">名称</label></th>
+			<td>
+			{$item['name']}
+			</td>
+		</tr>
+					<tr>
+				<th><label for="">logo图片</label></th>
+				<td>
+					<input id="icon" type="text"   name="icon"  class="span6" value="{$item['icon']}" />
+											<input type="file" name="icon" class="span6" value="" />
+						{if $item['icon']}
+						<p style="margin-top:10px;"><img src="{$_W['attachurl']}{$item['icon']}" width="100"/></p>
+						{/if}
+					<span class="help-block"></span>
+				</td>
+			</tr>
+				<tr>
+			<th><label for="">价格</label></th>
+			<td>
+				<input type="text" class="span4" name="price" id="name" value="{$item['price']}" />
+			</td>
+		</tr>
+						<tr>
+			<th><label for="">代理价格</label></th>
+			<td>
+				<input type="text" class="span4" name="dprice" id="name" value="{$item['dprice']}" />
+			</td>
+		</tr>
+
+											<tr>
+				<th>是否代理:</th>
+				<td>
+	
+					<label for="did_1" class="radio inline"><input type="radio" name="did" id="did_1" value="1"  {if $item['did']==1}checked="checked"{/if} /> 是</label>
+					<label for="did_0" class="radio inline"><input type="radio" name="did" id="did_0" value="0" {if $item['did']==0}checked="checked"{/if}  /> 否</label>
+
+					
+					<div class="help-block"></div>
+				</td>
+			</tr>
+												<tr>
+				<th>是否显示:</th>
+				<td>
+	
+					<label for="status_1" class="radio inline"><input type="radio" name="status" id="status_1" value="1"  {if $item['status']==1}checked="checked"{/if} /> 是</label>
+					<label for="status_0" class="radio inline"><input type="radio" name="status" id="status_0" value="0" {if $item['status']==0}checked="checked"{/if}  /> 否</label>
+
+					
+					<div class="help-block"></div>
+				</td>
+			</tr>
+		<tr>
+			<th></th>
+			<td>
+				<input name="token" type="hidden" value="{$_W['token']}" />
+				<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+			</td>
+		</tr>
+	</table>
+</div>
+</form>
+{elseif $do == 'display'}
+<div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:150px;">名称</th>
+					<th>价格</th>
+					<th>代理价格</th>
+					<th style="min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['name']}</td>
+					<td>{$item['price']}</td>
+					<td>{$item['dprice']}</td>
+					<td><span><a href="{php echo create_url('finance/group/post', array('id' => $item['id']))}">编辑</a></span></td>
+				</tr>
+				{/loop}
+			</tbody>
+
+		</table>
+	</div>
+</div>
+
+{/if}
+{template 'common/footer'}

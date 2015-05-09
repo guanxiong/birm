@@ -1,0 +1,92 @@
+{template 'common/header'}
+<script src="./resource/script/update.min.js" type="text/javascript"></script>
+<link href="./resource/style/update.css" type="text/css" rel="stylesheet">
+<ul class="nav nav-tabs">
+	<li{if $do == 'upgrade'} class="active"{/if}><a href="{php echo create_url('update/update');}">自动更新</a></li>
+</ul>
+<div class="main">
+	<div style="padding:15px;">
+		<div class="alert alert-info">
+			更新时请注意备份网站数据和相关数据库文件！官方不强制要求用户跟随官方意愿进行更新尝试！
+		</div>
+		{if $op == 'display'}
+<!--版本信息-->
+<div class="box">
+	<div class="alert alert-error"><h3>[微动力WQ版本信息]</h3></div>
+    <div class="alert alert-info" style="line-height:20px;margin-top:20px;">
+    <div class="update">
+    <p>服务器环境：{php echo PHP_OS;}<?php echo $_SERVER[SERVER_SOFTWARE];?> MySql:{php echo mysql_get_server_info();} php:{php echo PHP_VERSION;}</p>
+    <p>服务器IP：{php echo $_SERVER['SERVER_ADDR'].":".$_SERVER['SERVER_PORT'];}</p>
+    <p>当前网站语言：{php echo getenv("HTTP_ACCEPT_LANGUAGE");}</p>
+    <p>官方网站：<a href="http://bbs.b2ctui.com" class="blue">http://bbs.b2ctui.com</a></p>
+
+    <p class="red">[当前系统版本]：微动力WQ_V3.{$ver}</p>
+		{if $lastver == $ver}
+	<p class="red">[最新系统版本]：微动力WQ_V3.{$ver} （恭喜,已经是最新版本.）</p>
+	{/if}
+	{if $lastver != $ver}
+	<p class="red">[下一个系统版本]：微动力WQ_V3.{$lastver} &nbsp;&nbsp;<button onclick="chanage();" class="btn btn-primary">查看版本</button></p>
+	<script type="text/javascript">
+		function chanage()
+		  {
+			location = "{php echo create_url('update/update',array('op'=>'chanage'));}";
+		}
+		</script>
+	{/if}
+    </div>
+
+	<div class="alert alert-error">
+		 {if $domain_time == '0'}[授权版本：授权已过期，请联系客服QQ:800083075]
+        {else}
+           授权版本：高级商业版 &nbsp;免费更新服务截止：({php echo date("Y-m-d", $domain_time);})
+		 {/if}
+		</div>
+
+    </div>
+</div>
+<!--版本信息-->
+
+<!--论坛动态-->
+<div class="box">
+	<div class="alert alert-error"><h3>[论坛在线更新动态]</h3></div>
+     <div class="alert alert-info" style="line-height:20px;margin-top:20px;">
+<script type="text/javascript" src="http://bbs.wdlcms.com/api.php?mod=js&bid=21"></script>
+    </div>
+</div>
+<!--论坛动态end-->
+{/if}
+
+{if $op == 'chanage'}
+<!--更新信息-->
+<div class="box">
+	<div class="alert alert-error"><h3>[待更新的升级包]</h3></div>
+    <div class="alert alert-info" style="line-height:20px;margin-top:20px;">
+	<p class="red">[待更新的程序版本]：微动力WQ_V3.{$lastver} &nbsp;&nbsp;<button onclick="disp_confirm();" class="btn btn-primary" >在线升级</button></p>
+	<script type="text/javascript">
+		function disp_confirm()
+		  {
+		  var r=confirm("确定已备份好系统，并更新系统到最新版本吗？")
+		  if (r==true)
+			{
+			location = "{php echo create_url('update/update',array('op'=>'update'));}";
+			}
+		  }
+		function alert(title) {
+            $("#windowcenter").slideToggle("slow");
+            $("#txt").html(title);
+            setTimeout('$("#windowcenter").slideUp(500)', 4000);
+        } 
+		</script>
+	<br/>
+	<div class="alert alert-error">
+		[本次更新的内容]：{$cinfo}
+    </div>
+    </div>
+</div>
+<!--更新信息end-->
+{/if}
+
+	</div>
+</div>
+
+{template 'common/footer'}

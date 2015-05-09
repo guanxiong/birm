@@ -1,0 +1,62 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li><a href="{php echo create_url('site/nav', array('position' => 3, 'name' => $modulename));}">快捷导航管理</a></li>
+	<li class="active"><a href="{php echo create_url('site/shortcut');}">快捷导航风格</a></li>
+	<li><a href="{php echo create_url('site/nav/post', array('position' => 3));}"><i class="icon-plus"></i> 添加导航条目</a></li>
+</ul>
+<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+<div class="main">
+	<div class="alert alert-info" style="margin-top:10px; width:100%">
+		设置微站底部的快捷菜单显示的模板与风格，并可以定制快捷菜单在模块中是否显示。
+	</div>
+	<input type="hidden" name="id" value="{$id}" />
+	<input type="hidden" name="templateid" value="{$template['id']}">
+	<h4>快捷菜单风格模板</h4>
+	<table class="tb">
+		<tr>
+			<th><label for="">选择模板</label></th>
+			<td>
+				<select name="template" onchange="$('#preview').attr('src', '{php echo create_url('site/shortcut/preview')}&file='+this.options[this.options.selectedIndex].value);$('#preview').document.reload();" autocomplete="off">
+					{loop $template $path}
+					<option value="{$path}" {if !empty($_W['account']['quickmenu']['enablemodule']) && is_array($_W['account']['quickmenu']['enablemodule']) && ($_W['account']['quickmenu']['template'] == $path)} selected{/if}>{$path}</option>
+					{/loop}
+				</select>
+				<div class="help-block">选择微站底部快捷菜单的风格模板，选择后可通过下方的模板预览进得查看。</div>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">启用显示模块</label></th>
+			<td>
+
+				<div style="overflow:hidden;">
+					{loop $_W['account']['modules'] $item}
+					{if !in_array($item['name'], $ignore)}
+					<label class="checkbox" style="width:200px; float:left;"><input type="checkbox" name="module[]" value="{$item['name']}" {if !empty($_W['account']['quickmenu']['enablemodule']) && is_array($_W['account']['quickmenu']['enablemodule']) && in_array($item['name'], (array)$_W['account']['quickmenu']['enablemodule'])} checked{/if} /> {$item['title']}</label>
+					{/if}
+					{/loop}
+				</div>
+				<div class="help-block">微站底部快捷菜单只在勾选上的模块中显示，未勾选则不显示快捷菜单。</div>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>
+				<input name="token" type="hidden" value="{$_W['token']}" />
+				<input type="submit" class="btn btn-primary" name="submit" value="提交" />
+			</td>
+		</tr>
+		<tr>
+			<th><label for="">模板预览</label></th>
+			<td>
+				<iframe width="100%" scrolling="yes" frameborder="0" src="{php echo create_url('site/shortcut/preview', array('file' => !empty($_W['account']['quickmenu']['template']) ? $_W['account']['quickmenu']['template'] : 'default'))}" id="preview" name="preview" style="width: 320px; overflow: visible; height: 280px;"></iframe>
+			</td>
+		</tr>
+	</table>
+</div>
+</form>
+<script type="text/javascript">
+<!--
+
+//-->
+</script>
+{template 'common/footer'}

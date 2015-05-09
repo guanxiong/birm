@@ -1,0 +1,128 @@
+{template 'common/header'}
+
+<link type="text/css" rel="stylesheet" href="./resource/style/daterangepicker.css" />
+<script type="text/javascript" src="./resource/script/daterangepicker.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#date-range').daterangepicker({
+		format: 'YYYY-MM-DD',
+		startDate: $(':hidden[name=stattime]').val(),
+		endDate: $(':hidden[name=endtime]').val(),
+		locale: {
+			applyLabel: '确定',
+			cancelLabel: '取消',
+			fromLabel: '从',
+			toLabel: '至',
+			weekLabel: '周',
+			customRangeLabel: '日期范围',
+			daysOfWeek: moment()._lang._weekdaysMin.slice(),
+			monthNames: moment()._lang._monthsShort.slice(),
+			firstDay: 0
+		}
+	}, function(start, end){
+		$('#date-range .date-title').html(start.format('YYYY-MM-DD') + ' 至 ' + end.format('YYYY-MM-DD'));
+		$(':hidden[name=stattime]').val(start.format('YYYY-MM-DD'));
+		$(':hidden[name=endtime]').val(end.format('YYYY-MM-DD'));
+	});
+});
+function range(days) {
+	var end = moment().add('days', 0 + days).format('YYYY-MM-DD');
+	var start = moment().format('YYYY-MM-DD');
+	$('#date-range .date-title').html(start + ' 至 ' + end);
+	$(':hidden[name=stattime]').val(start);
+	$(':hidden[name=endtime]').val(end);
+	$('form[method=get]')[0].submit();
+}
+</script>
+<script type="text/javascript">
+	function check() {
+		if($.trim($(':text[name="username"]').val()) == '') {
+			message('没有输入用户名.', '', 'error');
+			return false;
+		}
+
+		return true;
+	}
+</script>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo create_url('finance/useredit');}">用户查询</a></li>
+</ul>
+<div class="main">
+	{if $operation == 'search'}
+	<form action="{php echo create_url('finance/useredit');}" class="form-horizontal form"  method="post">
+		<table class="tb">
+					<tr>
+				<th colspan=2><label for="">编辑用户</label></th>
+			</tr>
+		<tbody>
+			<tr>
+				<th><label for="">用户名</label></th>
+				<td>
+					<input id="" name="username" type="text" class="span3" value="{$member['username']}" />
+				</td>
+			</tr>
+
+				<tr>
+				<td  colspan=2>		<input name="op" type="hidden" value="display" />
+					<input type="submit" class="btn btn-primary span2" name="submit" value="确认" /><input type="hidden" name="token" value="{$_W['token']}" />
+	
+</td>
+
+	
+			</tr>
+				</tbody>
+	</table>
+	
+	{/if}
+	{if $operation == 'display'}
+
+	<form action="" class="form-horizontal form" onsubmit="return check();" method="post">
+		<h4>充值用户</h4>
+		<table class="tb">
+			<tr>
+				<th><label for="">用户名</label></th>
+				<td>
+					<input id="" name="username" type="text" class="span6" value="{$member['username']}" />
+				</td>
+			</tr>
+				<tr>
+					<th><label for="">所属用户组</label></th>
+					<td>
+						<select name="groupid">
+																	{if $_W['member']['groupid']==0}
+													<option value="0" {if $member['groupid'] ==0}selected{/if}>管理员</option>
+													
+														{/if}
+							{loop $groups $row}
+							<option value="{$row['id']}" {if $member['groupid'] == $row['id']}selected{/if}>{$row['name']}</option>
+							{/loop}
+						</select>
+						<span class="help-block">分配用户所属用户组后，该用户会自动拥有此用户组内的模块操作权限</span>
+					</td>
+				</tr>
+			<tr>
+				<th><label for="">开始日期</label></th>
+				<td>
+														<input name="stattime" type="hidden" value="{php echo date('Y-m-d', $starttime)}" />
+						<input name="endtime" type="hidden" value="{php echo date('Y-m-d', $endtime)}" />
+						<button class="btn" id="date-range" class="date" type="button"><span class="date-title">{php echo date('Y-m-d', $starttime)} 至 {php echo date('Y-m-d', $endtime)}</span> <i class="icon-caret-down"></i></button>
+						<span class="date-section"><a href="javascript:;" onclick="range(1);">1天</a>&nbsp;|&nbsp;<a href="javascript:;" onclick="range(3);">3天</a>&nbsp;|&nbsp;<a href="javascript:;" onclick="range(7);">7天</a>&nbsp;|&nbsp;<a href="javascript:;" onclick="range(14);">14天</a>&nbsp;|&nbsp;<a href="javascript:;" onclick="range(30);">30天</a>&nbsp;|&nbsp;<a href="javascript:;" onclick="range(90);">3个月</a>&nbsp;|&nbsp;<a href="javascript:;" onclick="range(180);">6个月</a>&nbsp;|&nbsp;<a href="javascript:;" onclick="range(365);">一年</a></span>
+					
+					
+					
+				</td>
+			</tr>
+
+			<tr>
+				<th></th>
+				<td>
+												<input name="op" type="hidden" value="save" />
+												<input name="uid" type="hidden" value="{$member['uid']}" />
+					<input type="submit" class="btn btn-primary span2" name="submit" value="确认充值" /><input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{/if}
+{template 'common/footer'}

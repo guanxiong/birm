@@ -1,0 +1,93 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo create_url('rule/system/display')}">系统回复</a></li>
+	<li><a href="{php echo create_url('rule/system/message')}">特殊消息类型处理</a></li>
+</ul>
+<div class="main">
+	<form class="form" action="" method="post">
+		<input type="hidden" name="id" value="{$rule['rule'][id]}">
+		<h4>系统回复 </h4>
+		<table class="tb">
+			<tr>
+				<th>欢迎信息</th>
+				<td>
+					{if $wechat[welcomerid]}
+					<table class="tb table table-bordered">
+						<tr class="control-group">
+							<td class="rule-content">
+								<h4>
+									<span class="pull-right"><a onclick="return confirm('取消设置的系统回复，确认吗？');return false;" href="{php echo create_url('rule/system/cancel', array('type' => 'welcome'))}">取消</a><a href="{php echo create_url('rule/post', array('id' => $wechat[welcome][rule]['id']))}">编辑</a></span>
+									{$wechat[welcome][rule][name]} <small>（{$_W['modules'][$wechat['welcome']['rule']['module']]['title']}）</small>
+								</h4>
+							</td>
+						</tr>
+						<tr class="control-group">
+							<td class="rule-kw">
+								<div>
+									{loop $wechat[welcome][keyword] $kw}
+									<span>{$kw['content']}</span>
+									{/loop}
+								</div>
+							</td>
+						</tr>
+					</table>
+					{else}
+					<div class="alert alert-info" style="width:508px;">你可以直接添加欢迎的文字信息, 或者在规则列表中找到已存在的规则, 然后点击"设置为欢迎信息", 将已有的规则设置为欢迎信息. (这种方式可以设置其他类型的消息, 例如:图文和音乐)</div>
+					<textarea name="welcome" id="welcome" cols="55" class="span7" style="height:200px;">{$_W['account']['welcome']}</textarea>
+					{/if}
+					<div>关联关键字：<input type="text" name="welcomekeyword" class="span5" placeholder="可根据关键字直接关联指定的回复规则" autocomplete="off" /></div>
+					<div class="help-block">设置用户添加公众帐号好友时，发送的欢迎信息。<a class="iconEmotion" href="javascript:;" inputid="welcome"><i class="icon-github-alt"></i> 表情</a></div>
+				</td>
+			</tr>
+			<tr>
+				<th>默认回复</th>
+				<td>
+					{if $wechat[defaultrid]}
+					<table class="tb table table-bordered">
+						<tr class="control-group">
+							<td class="rule-content">
+								<h4>
+									<span class="pull-right"><a onclick="return confirm('取消设置的系统回复，确认吗？');return false;" href="{php echo create_url('rule/system/cancel', array('type' => 'default'))}">取消</a><a href="{php echo create_url('rule/post', array('id' => $wechat['default']['rule']['id']))}">编辑</a></span>
+									{$wechat['default']['rule']['name']} <small>（{$_W['modules'][$wechat['default']['rule']['module']]['title']}）</small>
+								</h4>
+							</td>
+						</tr>
+						<tr class="control-group">
+							<td class="rule-kw">
+								<div>
+									{loop $wechat['default']['keyword'] $kw}
+									<span>{$kw['content']}</span>
+									{/loop}
+								</div>
+							</td>
+						</tr>
+					</table>
+					{else}
+					<div class="alert alert-info" style="width:508px;">你可以直接添加默认的文字信息, 或者在规则列表中找到已存在的规则, 然后点击"设置为默认信息", 将已有的规则设置为默认信息. (这种方式可以设置其他类型的消息, 例如:图文和音乐)</div>
+					<textarea name="default" id="default" cols="55" class="span7" style="height:200px;">{$_W['account']['default']}</textarea>
+					{/if}
+					<div>关联关键字：<input type="text" name="defaultkeyword" class="span5" placeholder="可根据关键字直接关联指定的回复规则" /></div>
+					<div class="help-block">当系统不知道该如何回复粉丝的消息时，默认发送的内容。<a class="iconEmotion" href="javascript:;" inputid="default"><i class="icon-github-alt"></i> 表情</a></div>
+				</td>
+			</tr>
+			<tr>
+				<th>默认回复时间间隔</th>
+				<td>
+					<div class="input-append">
+						<input type="text" name="default-period" class="span6" value="{$_W['account']['default_period']}" />
+						<span class="add-on">秒</span>
+					</div>
+					<div class="help-block">此条设置只针对“默认回复”。设置“默认回复”对同一用户的回复间隔。为空表示不限制。</div>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}
