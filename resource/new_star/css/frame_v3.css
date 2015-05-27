@@ -22,7 +22,7 @@ body.hidemenu .right1{left:0;}
 	color:#f2f2f2;
 	/*margin-bottom: 38px;*/
 }
-#site-logo{display:block;margin:20px 0 0 15px;background:url("/resource/new_star/images/logo_admin.png") no-repeat 0 0;height:80px;}
+#site-logo{display:block;margin:20px 0 0 15px;background:url("../images/logo_admin.png") no-repeat 0 0;height:80px;}
 .site-welcome{margin-bottom:35px;padding:0 15px;cursor:pointer;}
 .site-welcome h3{margin:0;font-size:24px;}
 .site-welcome .huanying{text-align:right;font-size:16px;padding-right:18px;}
