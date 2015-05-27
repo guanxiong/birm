@@ -153,6 +153,7 @@ class VoteModule extends WeModule {
                 $condition = "`rid`={$item['id']}";
                 $item['keywords'] = rule_keywords_search($condition);
                 $vote = pdo_fetch("SELECT title,votenum,votetimes,votelimit,votetotal,viewnum,starttime,endtime,status FROM " . tablename('vote_reply') . " WHERE rid = :rid ", array(':rid' => $item['id']));
+				$item['rid'] = $item['id'];
                 $item['title'] = $vote['title'];
                 $item['votenum'] = $vote['votenum'];
                 $item['votetimes'] = $vote['votetimes'];
@@ -269,11 +270,13 @@ class VoteModule extends WeModule {
     }
   //投票记录
     public function dovotelist() {
-        global $_W;
+        global $_GPC,$_W;
 
         checklogin();
         checkaccount();
-        $list = pdo_fetchall("select from_user,votes,votetime from " . tablename('vote_fans') . "  order by votetime desc");
+		$rid = $_GPC['id'];
+        $list = pdo_fetchall("select from_user,votes,votetime from " . tablename('vote_fans') . " WHERE rid={$rid} order by votetime desc");
+		echo "select from_user,votes,votetime from " . tablename('vote_fans') . " WHERE rid={$rid} order by votetime desc";
         foreach($list as &$r)
         {
             $votes = "";
