@@ -24,15 +24,15 @@ pdo_run($sql);
 
 //字段长度
 if(pdo_fieldexists('idish_setting', `storeid`)) {
-     pdo_query("ALTER TABLE  ".tablename('idish_setting')." ADD  `storeid` int(10) unsigned NOT NULL DEFAULT '0',;");
+     pdo_query("ALTER TABLE  ".tablename('idish_setting')." ADD  `storeid` int(10) unsigned NOT NULL DEFAULT '0';");
 }
 //2015/04/07新增
 if(!pdo_fieldexists(`idish_order`, `reply`)) {
-	pdo_query("ALTER TABLE ".tablename(`ims_idish_order`)." ADD `reply` varchar(1000) NOT NULL DEFAULT '' COMMENT '回复',;");
+	pdo_query("ALTER TABLE ".tablename(`ims_idish_order`)." ADD `reply` varchar(1000) NOT NULL DEFAULT '' COMMENT '回复';");
 }
 if(!pdo_fieldexists(`idish_order`, `sign`)) {
-	pdo_query("ALTER TABLE ".tablename(`idish_order`)." ADD `sign` tinyint(1) NOT NULL DEFAULT '0' COMMENT '-1拒绝，0未处理，1已处理',;");
+	pdo_query("ALTER TABLE ".tablename(`idish_order`)." ADD `sign` tinyint(1) NOT NULL DEFAULT '0' COMMENT '-1拒绝，0未处理，1已处理';");
 }
 if(!pdo_fieldexists(`idish_setting`,  `storeid`)) {
-	pdo_query("ALTER TABLE ".tablename(`idish_setting`)." ADD `storeid` int(10) unsigned NOT NULL DEFAULT '0',;");
+	pdo_query("ALTER TABLE ".tablename(`idish_setting`)." ADD `storeid` int(10) unsigned NOT NULL DEFAULT '0';");
 }

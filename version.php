@@ -1,1 +1,1 @@
-<?php return array ('ver' => 'wdl8.4');?>
+<?php return array ('ver' => 'wdl8.5');?>

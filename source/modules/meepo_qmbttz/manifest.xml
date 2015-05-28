@@ -3,7 +3,7 @@
 	<application setting="false">
 		<name><![CDATA[冰桶挑战]]></name>
 		<identifie><![CDATA[meepo_qmbttz]]></identifie>
-		<version><![CDATA[0.7]]></version>
+		<version><![CDATA[0.8]]></version>
 		<type><![CDATA[wdlgame]]></type>
 		<ability><![CDATA[冰桶挑战]]></ability>
 		<description><![CDATA[冰桶挑战]]></description>
@@ -26,8 +26,8 @@
 	<install><![CDATA[
 	<upgrade><![CDATA[
 CREATE TABLE IF NOT EXISTS `ims_meepo_qmbttz_set` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `weid` int(11) DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属帐号',
   `title` varchar(50) DEFAULT NULL,
   `share_title` varchar(200) DEFAULT '',
   `share_desc` varchar(300) DEFAULT '',

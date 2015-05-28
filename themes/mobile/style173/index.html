@@ -1,0 +1,61 @@
+{template '../0173/site/header'}
+{template '../0173/site/slide'}
+	<section class="body_main">
+		<div class="index">
+			<ul>
+				<li class="left">
+					<ul class="index_aa">
+{loop $navs $nav}
+{if $nav[displayorder] == 8}                    
+						<li><a href="{$nav['url']}"><img src="{$_W['attachurl']}{$nav['icon']}"></a></li>
+{/if}
+{if $nav[displayorder] == 7}                         
+						<li><a href="{$nav['url']}"><img src="{$_W['attachurl']}{$nav['icon']}"><span class="index_bb">{$nav['name']}</span></a></li>
+{/if}                        
+{/loop}                         
+					</ul>
+				</li>
+				<li class="right">
+					<ul class="index_aa">
+{loop $navs $nav}
+{if $nav[displayorder] == 6}                    
+						<li><a href="{$nav['url']}"><img src="{$_W['attachurl']}{$nav['icon']}"></a></li>
+{/if}
+{if $nav[displayorder] == 5}                         
+						<li><a href="{$nav['url']}"><img src="{$_W['attachurl']}{$nav['icon']}"><span class="index_bb">{$nav['name']}</span></a></li>
+{/if}                        
+{/loop} 
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="index">
+			<ul>
+				<li class="left">
+					<ul class="index_aa">
+{loop $navs $nav}
+{if $nav[displayorder] == 4}                    
+						<li><a href="{$nav['url']}"><img src="{$_W['attachurl']}{$nav['icon']}"><span class="index_bb">{$nav['name']}</span></a></li>
+{/if}
+{if $nav[displayorder] == 3}                         
+						<li><a href="{$nav['url']}"><img src="{$_W['attachurl']}{$nav['icon']}"></a></li>
+{/if}                        
+{/loop} 
+					</ul>
+				</li>
+				<li class="right">
+					<ul class="index_aa">
+{loop $navs $nav}
+{if $nav[displayorder] == 2}                    
+						<li><a href="{$nav['url']}"><img src="{$_W['attachurl']}{$nav['icon']}"><span class="index_bb">{$nav['name']}</span></a></li>
+{/if}
+{if $nav[displayorder] == 1}                         
+						<li><a href="{$nav['url']}"><img src="{$_W['attachurl']}{$nav['icon']}"></a></li>
+{/if}                        
+{/loop} 
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</section>
+{template '../style5/site/footer'}
