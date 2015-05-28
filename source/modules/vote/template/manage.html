@@ -53,7 +53,7 @@
                     <td>{$row['status']}</td>
                     <td >
                         <a class="btn" rel="tooltip" href="{php echo create_url('rule/post', array( 'module' => 'vote','id'=>$row['id']))}" title="编辑"><i class="icon-edit"></i></a>
-                        <a class="btn" href="{php echo create_url('site/module', array('do' => 'votelist', 'name' => 'vote', 'id' => $reply['rid']))}" title="投票名单"><i class="icon-list-alt"></i></a>
+                        <a class="btn" href="{php echo create_url('site/module', array('do' => 'votelist', 'name' => 'vote', 'id' => $row['rid']))}" title="投票名单"><i class="icon-list-alt"></i></a>
                         {if $row['show']==1}
                         <a class="btn" title="开始投票" href="#" onclick="drop_confirm('您确定要开始吗,设置中途可以随时修改!', '{php echo create_url('site/module', array('do' => 'status', 'name' => 'vote','rid'=>$row['id'],'status'=>1))}');"><i class="icon-play"></i></a>                                       
                         {elseif $row['show']==2}
