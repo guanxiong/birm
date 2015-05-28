@@ -276,7 +276,6 @@ class VoteModule extends WeModule {
         checkaccount();
 		$rid = $_GPC['id'];
         $list = pdo_fetchall("select from_user,votes,votetime from " . tablename('vote_fans') . " WHERE rid={$rid} order by votetime desc");
-		echo "select from_user,votes,votetime from " . tablename('vote_fans') . " WHERE rid={$rid} order by votetime desc";
         foreach($list as &$r)
         {
             $votes = "";
