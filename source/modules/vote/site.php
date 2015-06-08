@@ -20,7 +20,6 @@ class VoteModuleSite extends WeModuleSite {
     
     public function doMobileindex() {
         global $_GPC, $_W;
-
         $rid = $_GPC['id'];
         $weid = $_W['weid'];
 
@@ -88,8 +87,14 @@ class VoteModuleSite extends WeModuleSite {
         $votetimes =$votetimes['cnt'];
        
         $isvote = $votetimes>0;
+
+        if(empty($_GPC['search'])){
+            $list = pdo_fetchall("SELECT * FROM " . tablename('vote_option') . " WHERE rid = :rid ORDER by `id` ASC", array(':rid' => $rid));
+        }else{
+            $list = pdo_fetchall("SELECT * FROM " . tablename('vote_option') . " WHERE rid = :rid and `title` like :search ORDER by `id` ASC", array(':rid' => $rid,':search' => '%'.$_GPC['search'].'%'));
+        }
        
-        $list = pdo_fetchall("SELECT * FROM " . tablename('vote_option') . " WHERE rid = :rid ORDER by `id` ASC", array(':rid' => $rid));
+
         $sumnum = pdo_fetch("SELECT sum(vote_num) FROM " . tablename('vote_option') . " WHERE rid = :rid ", array(':rid' => $rid));
         $sumnum = $sumnum["sum(vote_num)"];
          foreach ($list as &$r) {

@@ -139,6 +139,10 @@
       
 
             }
+            function search_entries() {
+                $('#searchs-form').submit();
+                $.get
+            }
         </script>
     </head>
     <body>
@@ -151,7 +155,17 @@
                     <p class="title">{$reply['title']}</p>
                     <p class="timeout" style='padding-left:15px;'><img class="clock" src="./source/modules/vote/style/images/clock.png"><span class="text">{$limits}</span></p>
                     <p>&nbsp;</p>
+                    <form action="" id="searchs-form" method="post" enctype="multipart/form-data">
+                    <p class="search">
+                        <input type="text" class="input-search" name="search" placeholder="请输入选项名称" value="{$search}">
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                        <submit id="search-btn" class="search-btn" onclick="search_entries();return;">搜索</submit>
+                    </p>
+                    </form>
                 </div>
+            </div>
+            <div class="top">
+
             </div>
             {if !empty($reply['thumb'])}
             <div class="cover">
